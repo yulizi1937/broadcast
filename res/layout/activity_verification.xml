@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_application"
+    android:orientation="vertical" >
+
+    <include layout="@layout/toolbar_plain" />
+    
+    <include layout="@layout/toolbar_shadow" />
+
+    <include layout="@layout/include_crouton_handle" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/rootLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/activityVerificationLogoIv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/login_logo_margin_top"
+                android:contentDescription="@string/desc_activity_login_logo"
+                android:scaleType="center"
+                android:src="@drawable/login_logo" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityVerificationTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    android:gravity="center"
+                    android:text="@string/textview_verification"
+                    android:textColor="@color/textview_login_color"
+                    android:textSize="@dimen/login_textview_size" />
+
+                <LinearLayout
+                    android:id="@+id/activityVerificationLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/login_editbox_height"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/transparent"
+                    android:orientation="horizontal"
+                    android:padding="1dp" >
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/activityVerificationCode1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_editbox_normal"
+                        android:gravity="center"
+                        android:hint="@string/hint_verification_code"
+                        android:inputType="phone"
+                        android:maxLength="1"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:paddingEnd="1dp"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="1dp"
+                        android:paddingStart="4dp"
+                        android:textSize="@dimen/login_edittext_size" />
+                    
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/activityVerificationCode2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_editbox_normal"
+                        android:gravity="center"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:hint="@string/hint_verification_code"
+                        android:inputType="phone"
+                        android:maxLength="1"
+                        android:paddingEnd="1dp"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="1dp"
+                        android:paddingStart="4dp"
+                        android:textSize="@dimen/login_edittext_size" />
+                    
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/activityVerificationCode3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/shape_editbox_normal"
+                        android:gravity="center"
+                        android:hint="@string/hint_verification_code"
+                        android:inputType="phone"
+                        android:maxLength="1"
+                        android:paddingEnd="1dp"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="1dp"
+                        android:paddingStart="4dp"
+                        android:textSize="@dimen/login_edittext_size" />
+                    
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/activityVerificationCode4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/shape_editbox_normal"
+                        android:gravity="center"
+                        android:hint="@string/hint_verification_code"
+                        android:inputType="phone"
+                        android:maxLength="1"
+                        android:paddingEnd="1dp"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="1dp"
+                        android:paddingStart="4dp"
+                        android:textSize="@dimen/login_edittext_size" />
+                </LinearLayout>
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/activityVerificationBtn"
+                    android:layout_width="@dimen/login_btn_next_width"
+                    android:layout_height="@dimen/login_btn_next_height"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/shape_button_normal"
+                    android:gravity="center"
+                    android:text="@string/button_verify"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/login_edittext_size"
+                    android:textStyle="bold" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityVerificationAdminstration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:text="@string/textview_verify_administration"
+                    android:textColor="@color/editbox_color"
+                    android:textSize="@dimen/login_admin_size" />
+                
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityVerificationRetryTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center"
+                    android:text="@string/textview_verify_administration"
+                    android:textColor="@color/editbox_color"
+                    android:textSize="@dimen/verification_retry_size" />
+                
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/activityVerificationResendBtn"
+                    android:layout_width="@dimen/verification_btn_resend_width"
+                    android:layout_height="@dimen/login_btn_next_height"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="7dp"
+                    android:background="@drawable/shape_button_pressed"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:text="@string/button_resend"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/verfication_retry_size_btn"
+                    android:textStyle="bold" />
+                
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityVerificationAdminstrationTryAgain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:text="@string/textview_verify_administration_tryagain"
+                    android:textColor="@color/editbox_color"
+                    android:textSize="@dimen/login_admin_size" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

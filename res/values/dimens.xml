@@ -1,0 +1,33 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="tab_height">48dp</dimen>
+    <dimen name="toolbar_height">48dp</dimen>
+    <dimen name="toolbar_elevation">2dp</dimen>
+
+    
+    <dimen name="crouton_height">24dp</dimen>
+    
+    <!-- activity_login -->
+    <dimen name="login_logo_margin_top">50dp</dimen>
+    <dimen name="login_textview_size">14sp</dimen>
+    <dimen name="login_edittext_size">18sp</dimen>
+    <dimen name="login_countrycode_size">16sp</dimen>
+    <dimen name="login_admin_size">8sp</dimen>
+    <dimen name="login_editbox_height">40dp</dimen>
+    <dimen name="login_btn_next_width">200dp</dimen>
+    <dimen name="login_btn_next_height">40dp</dimen>
+    
+    <!-- activity_set_profile -->
+    <dimen name="set_profile_upload_another_size">12sp</dimen>
+    <dimen name="set_profile_skip_size">12sp</dimen>
+    
+    <!-- activity_verification -->
+    <dimen name="verification_retry_size">12sp</dimen>
+    <dimen name="verfication_retry_size_btn">14sp</dimen>
+    <dimen name="verification_btn_resend_width">150dp</dimen>
+    
+
+</resources>

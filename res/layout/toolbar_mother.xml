@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbarLayout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/abc_action_bar_default_height_material"
+    android:background="@color/toolbar_background"
+    app:contentInsetEnd="0dp"
+    app:contentInsetStart="0dp"
+    app:popupTheme="@style/Theme.AppCompat"
+    app:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:id="@+id/toolbarBackIv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="start|center"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:id="@+id/toolbarTitleTv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Mobcast"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/toolbarOverflowIv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_overflow" />
+    </RelativeLayout>
+
+</android.support.v7.widget.Toolbar>

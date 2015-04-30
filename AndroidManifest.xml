@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.mobcast"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="22" />
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.wifi"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.screen.PORTRAIT"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <application
+        android:name="com.application.utils.ApplicationLoader"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="UnusedAttribute" >
+        <activity
+            android:name="com.application.ui.activity.FacebookConcealActivity"
+            android:configChanges="locale|orientation"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.application.ui.activity.SetProfileActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.CountrySelectActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.VerificationActivity"
+            android:configChanges="locale|orientation" />
+
+        <!-- SMS RADAR SERVICE -->
+        <service
+            android:name="com.application.sms.SmsRadarService"
+            android:exported="false"
+            android:label="@string/app_name" />
+
+        <provider
+            android:name="com.application.sqlite.ApplicationDB"
+            android:authorities="com.application.sqlite.mobcast.ApplicationDB"
+            android:exported="false" />
+    </application>
+
+</manifest>
