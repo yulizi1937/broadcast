@@ -2247,18 +2247,19 @@ containing a value of this type.
         public static final int drawer_shadow=0x7f02003c;
         public static final int ic_ab_search=0x7f02003d;
         public static final int ic_back=0x7f02003e;
-        public static final int ic_launcher=0x7f02003f;
-        public static final int ic_overflow=0x7f020040;
-        public static final int ic_remove_white=0x7f020041;
-        public static final int login_logo=0x7f020042;
-        public static final int selector_button=0x7f020043;
-        public static final int selector_editbox=0x7f020044;
-        public static final int shape_button_normal=0x7f020045;
-        public static final int shape_button_pressed=0x7f020046;
-        public static final int shape_editbox_normal=0x7f020047;
-        public static final int shape_editbox_selected=0x7f020048;
-        public static final int shape_pop_up=0x7f020049;
-        public static final int shape_toolbar_shadow=0x7f02004a;
+        public static final int ic_back_shadow=0x7f02003f;
+        public static final int ic_launcher=0x7f020040;
+        public static final int ic_overflow=0x7f020041;
+        public static final int ic_remove_white=0x7f020042;
+        public static final int login_logo=0x7f020043;
+        public static final int selector_button=0x7f020044;
+        public static final int selector_editbox=0x7f020045;
+        public static final int shape_button_normal=0x7f020046;
+        public static final int shape_button_pressed=0x7f020047;
+        public static final int shape_editbox_normal=0x7f020048;
+        public static final int shape_editbox_selected=0x7f020049;
+        public static final int shape_pop_up=0x7f02004a;
+        public static final int shape_toolbar_shadow=0x7f02004b;
     }
     public static final class id {
         public static final int action_bar=0x7f090040;

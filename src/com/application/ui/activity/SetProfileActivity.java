@@ -145,6 +145,18 @@ public class SetProfileActivity extends AppCompatActivity{
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Utilities.showCrouton(SetProfileActivity.this,mCroutonViewGroup, "Crouton", Style.CONFIRM);
+				Intent mIntent = new Intent(SetProfileActivity.this, MotherActivity.class);
+				startActivity(mIntent);
+			}
+		});
+		
+		mSkipTv.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent mIntent = new Intent(SetProfileActivity.this, FacebookConcealActivity.class);
+				startActivity(mIntent);
 			}
 		});
 	}

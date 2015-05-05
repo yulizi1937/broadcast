@@ -43,7 +43,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="UnusedAttribute" >
         <activity
-            android:name="com.application.ui.activity.FacebookConcealActivity"
+            android:name="com.application.ui.activity.LoginActivity"
             android:configChanges="locale|orientation"
             android:label="@string/app_name" >
             <intent-filter>
@@ -60,6 +60,13 @@
             android:configChanges="locale|orientation" />
         <activity
             android:name="com.application.ui.activity.VerificationActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.FacebookConcealActivity"
+            android:configChanges="locale|orientation" />
+        
+        <activity
+            android:name="com.application.ui.activity.MotherActivity"
             android:configChanges="locale|orientation" />
 
         <!-- SMS RADAR SERVICE -->

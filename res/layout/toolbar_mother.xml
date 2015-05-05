@@ -21,7 +21,7 @@
             android:layout_alignParentLeft="true"
             android:gravity="start|center"
             android:layout_marginLeft="8dp"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_back_shadow" />
 
         <TextView
             android:id="@+id/toolbarTitleTv"

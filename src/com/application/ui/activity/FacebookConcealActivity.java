@@ -46,8 +46,6 @@ public class FacebookConcealActivity extends AppCompatActivity {
 	private AppCompatButton mEncryptBtn;
 	private AppCompatButton mDecryptBtn;
 
-	private Crypto crypto;
-	private Entity entity;
 
 	private File mEncryptedFile;
 	private File mDecryptedFile;
@@ -107,7 +105,7 @@ public class FacebookConcealActivity extends AppCompatActivity {
 		mAppCompatDialog.setTitle("Encrypting...");
 		mAppCompatDialog.show();
 		mEncryptStart = String.valueOf(System.currentTimeMillis());
-		crypto = new Crypto(new SharedPrefsBackedKeyChain(
+		Crypto crypto = new Crypto(new SharedPrefsBackedKeyChain(
 				FacebookConcealActivity.this), new SystemNativeCryptoLibrary());
 
 		// Check for whether the crypto functionality is available
@@ -117,12 +115,12 @@ public class FacebookConcealActivity extends AppCompatActivity {
 		}
 
 		mEncryptedFile = new File(Environment.getExternalStorageDirectory()
-				.getPath() + "/.con/Encrypted.mp4");
+				.getPath() + "/download/Encrypted.mp4");
 		OutputStream fileStream;
 		try {
 			fileStream = new BufferedOutputStream(new FileOutputStream(
 					mEncryptedFile));
-			entity = new Entity("mobcast");
+			Entity entity = new Entity("mobcast");
 			// Creates an output stream which encrypts the data as
 			// it is written to it and writes it out to the file.
 			OutputStream outputStream;
@@ -163,8 +161,20 @@ public class FacebookConcealActivity extends AppCompatActivity {
 			mAppCompatDialog.setTitle("Decrypting...");
 			mAppCompatDialog.show();
 			mDecryptStart = String.valueOf(System.currentTimeMillis());
+			mEncryptedFile = new File(Environment.getExternalStorageDirectory()
+					.getPath() + "/download/Encrypted.mp4");
 			FileInputStream fileStream = new FileInputStream(mEncryptedFile);
 
+			
+			Crypto crypto = new Crypto(new SharedPrefsBackedKeyChain(
+					FacebookConcealActivity.this), new SystemNativeCryptoLibrary());
+			Entity entity = new Entity("mobcast");
+			// Check for whether the crypto functionality is available
+			// This might fail if android does not load libaries correctly.
+			if (!crypto.isAvailable()) {
+				return;
+			}
+			
 			// Creates an input stream which decrypts the data as
 			// it is read from it.
 			InputStream inputStream;
@@ -185,8 +195,7 @@ public class FacebookConcealActivity extends AppCompatActivity {
 			}
 
 			mDecryptedFile = new File(Environment.getExternalStorageDirectory()
-					.getPath() + "/.con/Decrypted.mp4");
-			
+					.getPath() + "/download/Decrypted.mp4");
 			OutputStream outputStream = new FileOutputStream (mDecryptedFile); 
 			out.writeTo(outputStream);
 			

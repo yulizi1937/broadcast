@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:gravity="left|center"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_back_shadow" />
 
         <TextView
             android:id="@+id/toolbarTitleTv"
