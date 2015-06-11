@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="Instantiatable">
+        <ignore path="src/com/application/ui/view/ClosableSlidingLayout.java" />
+        <ignore path="src/com/application/ui/view/HeaderLayout.java" />
+        <ignore path="src/com/application/ui/view/PinnedSectionGridView.java" />
+    </issue>
+    <issue id="MissingTranslation" severity="ignore" />
+</lint>

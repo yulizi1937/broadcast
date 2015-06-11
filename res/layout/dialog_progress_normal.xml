@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:progresswheel="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp" >
+
+    <com.application.ui.view.ProgressWheel
+        android:id="@+id/dialogProgressNormalProgressWheel"
+        android:layout_width="@dimen/dialog_progress_normal_progress_width"
+        android:layout_height="@dimen/dialog_progress_normal_progress_width"
+        android:layout_gravity="start|center"
+        android:visibility="visible"
+        progresswheel:matProg_barColor="@color/toolbar_background"
+        progresswheel:matProg_barWidth="2dp"
+        progresswheel:matProg_progressIndeterminate="true"
+        tools:ignore="RtlHardcoded" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/dialogProgressNormalTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center"
+        android:layout_marginLeft="@dimen/dialog_progress_normal_text_margin_start"
+        android:layout_marginStart="@dimen/dialog_progress_normal_text_margin_start"
+        android:gravity="center"
+        android:text="@string/textview_login"
+        android:textColor="@color/textview_login_color"
+        android:textSize="@dimen/dialog_progress_normal_text_size" />
+
+</FrameLayout>

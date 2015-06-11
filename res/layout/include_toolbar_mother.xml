@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/toolbarBackIv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:gravity="start|center"
+        android:src="@drawable/ic_back_shadow"
+        tools:ignore="RtlCompat,ContentDescription" />
+
+    <ImageView
+        android:id="@+id/toolbarOverflowIv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_overflow"
+        tools:ignore="ContentDescription,RtlHardcoded" />
+
+    <FrameLayout
+        android:id="@+id/toolbarEventIv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        tools:ignore="RtlHardcoded" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:padding="@dimen/toolbar_mother_padding"
+            android:src="@drawable/ic_toolbar_event"
+            tools:ignore="ContentDescription,RtlCompat,RtlHardcoded" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/toolbarEventTv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="top|right"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/shape_toolbar_unread_counter"
+            android:gravity="center"
+            android:text="9+"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/toolbar_mother_unread_counter_text_size" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/toolbarAwardIv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="80dp"
+        tools:ignore="RtlHardcoded" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:padding="@dimen/toolbar_mother_padding"
+            android:src="@drawable/ic_toolbar_award"
+            tools:ignore="ContentDescription,RtlCompat,RtlHardcoded" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/toolbarAwardTv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="top|right"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/shape_toolbar_unread_counter"
+            android:gravity="center"
+            android:text="9+"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/toolbar_mother_unread_counter_text_size" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/toolbarBirthdayIv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="130dp"
+        tools:ignore="RtlHardcoded" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:padding="@dimen/toolbar_mother_padding"
+            android:src="@drawable/ic_toolbar_birthday"
+            tools:ignore="ContentDescription,RtlCompat,RtlHardcoded" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/toolbarBirthdayTv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="top|right"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/shape_toolbar_unread_counter"
+            android:gravity="center"
+            android:text="9+"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/toolbar_mother_unread_counter_text_size" />
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/toolbarSearchIv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="180dp"
+        android:padding="@dimen/toolbar_mother_padding"
+        android:src="@drawable/ic_toolbar_search"
+        tools:ignore="ContentDescription,RtlCompat,RtlHardcoded" />
+
+</RelativeLayout>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_application"
+    android:orientation="vertical" >
+
+    <include layout="@layout/toolbar_plain" />
+
+    <include layout="@layout/toolbar_shadow" />
+
+    <include layout="@layout/include_crouton_handle" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/rootLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/activityFacebookConcealEncrptBtn"
+                    android:layout_width="@dimen/login_btn_next_width"
+                    android:layout_height="@dimen/login_btn_next_height"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/shape_button_pressed"
+                    android:gravity="center"
+                    android:text="@string/button_encrypt"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/login_edittext_size"
+                    android:textStyle="bold" />
+                
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityFacebookConcealEncryptTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center"
+                    android:text="@string/textview_login"
+                    android:textColor="@color/textview_login_color"
+                    android:textSize="@dimen/login_textview_size" />
+                
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/activityFacebookConcealDecryptBtn"
+                    android:layout_width="@dimen/login_btn_next_width"
+                    android:layout_height="@dimen/login_btn_next_height"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/shape_button_pressed"
+                    android:gravity="center"
+                    android:text="@string/button_decrypt"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/login_edittext_size"
+                    android:textStyle="bold" />
+                
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityFacebookConcealDecryptTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center"
+                    android:text="@string/textview_login"
+                    android:textColor="@color/textview_login_color"
+                    android:textSize="@dimen/login_textview_size" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

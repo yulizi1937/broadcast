@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/actionItemLayout"
+    android:layout_width="32dp"
+    android:layout_height="32dp"
+    android:background="@drawable/ic_toolbar_event" >
+
+    <RelativeLayout
+        android:id="@+id/actionItemCounterPanelLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        tools:ignore="RtlHardcoded,UselessParent" >
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/actionItemCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|right"
+            android:background="@drawable/shape_toolbar_unread_counter"
+            android:gravity="center"
+            android:minHeight="15dp"
+            android:minWidth="15dp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/toolbar_mother_unread_counter_text_size" />
+    </RelativeLayout>
+
+</FrameLayout>

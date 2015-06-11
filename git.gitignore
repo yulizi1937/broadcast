@@ -1,0 +1,6 @@
+#ignore all files
+*.class
+*.dex
+*.ap_
+/bin/classes/
+/bin/dexedLibs/

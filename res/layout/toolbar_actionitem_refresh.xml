@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.application.ui.view.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ripple="http://schemas.android.com/apk/res-auto"
+    xmlns:progresswheel="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolBarActionItemRefresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    ripple:mrl_rippleAlpha="0.1"
+    ripple:mrl_rippleBackground="@color/toolbar_background"
+    ripple:mrl_rippleColor="@android:color/darker_gray"
+    ripple:mrl_rippleHover="true"
+    ripple:mrl_rippleOverlay="true" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:padding="7dp"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:id="@+id/toolBarActionItemImageView"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_action_refresh"
+            android:visibility="visible"
+            tools:ignore="ContentDescription" />
+
+        <com.application.ui.view.ProgressWheel
+            android:id="@+id/toolBarActionItemProgressWheel"
+            android:layout_width="32dp"
+            android:layout_height="20dp"
+            android:layout_gravity="start|center"
+            android:visibility="gone"
+            progresswheel:matProg_barColor="@android:color/white"
+            progresswheel:matProg_barWidth="2dp"
+            progresswheel:matProg_progressIndeterminate="true"
+            tools:ignore="RtlHardcoded" />
+        
+
+    </FrameLayout>
+
+</com.application.ui.view.MaterialRippleLayout>

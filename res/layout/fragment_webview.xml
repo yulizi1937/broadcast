@@ -1,0 +1,21 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.application.ui.view.SmoothProgressBar
+        android:id="@+id/fragmentWebViewProgressBar"
+        style="@style/SmoothProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_gravity="top"
+        android:indeterminate="true" />
+
+    <WebView
+        android:id="@+id/fragmentWebViewWebView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="4dp"
+        android:layout_gravity="fill" />
+
+</FrameLayout>

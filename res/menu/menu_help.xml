@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.mobcast.MotherActivity" >
+
+    <item
+        android:id="@+id/action_help_how"
+        android:icon="@drawable/ic_toolbar_search"
+        android:orderInCategory="100"
+        android:title="@string/action_help_video"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_help_mobcast"
+        android:icon="@drawable/ic_toolbar_search"
+        android:orderInCategory="100"
+        android:title="@string/action_help_mobcast"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_help_faq"
+        android:icon="@drawable/ic_toolbar_search"
+        android:orderInCategory="100"
+        android:title="@string/action_help_faq"
+        app:showAsAction="never"/>
+
+</menu>

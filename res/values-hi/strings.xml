@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="app_name">mobcast</string>
+    <string name="toolbar_background">#254E7A</string>
+    <string name="LanguageName">English</string>
+    <string name="LanguageNameInEnglish">English</string>
+    <string name="LanguageCode">hi</string>
+
+    <!-- OverFlow : Action -->
+    <string name="action_settings">सेटिंग</string>
+    <string name="action_refresh">ताज़ा करे</string>
+    <string name="action_report">रिपोर्ट</string>
+    <string name="action_search">खोज</string>
+    <string name="action_event">घटना</string>
+    <string name="action_award">पुरस्कार</string>
+    <string name="action_birthday">जन्मदिन</string>
+    <string name="action_quiz">प्रश्नोत्तरी</string>
+    <string name="action_feedback">प्रतिक्रिया</string>
+    <string name="search_hint">खोज संकेत</string>
+    <string name="action_image">छवि</string>
+    <string name="action_audio">ऑडियो</string>
+    <string name="action_video">वीडियो</string>
+    <string name="action_text">टेक्स्ट</string>
+    <string name="action_pdf">पीडीएफ</string>
+    <string name="action_doc">डॉक्टर</string>
+    <string name="action_xls">फ़ाइल</string>
+    <string name="action_ppt">पीपीटी</string>
+    <string name="action_news">समाचार</string>
+    <string name="action_interactive">इंटरएक्टिव</string>
+    <string name="action_about">के बारे में</string>
+    <string name="action_app_feedback">ऐप प्रतिक्रिया</string>
+    <string name="action_livestream_youtube">YouTube LiveStream</string>
+
+    <!-- Time -->
+    <string name="Yesterday">yesterday</string>
+    <string name="TodayAt">today at</string>
+    <string name="YesterdayAt">yesterday at</string>
+    <string name="Online">online</string>
+    <string name="LastSeen">last seen</string>
+    <string name="LastSeenDate">last seen</string>
+    <string name="InviteFriends">Invite Friends</string>
+    <string name="GlobalSearch">GLOBAL SEARCH</string>
+    <string name="Lately">last seen recently</string>
+    <string name="WithinAWeek">last seen within a week</string>
+    <string name="WithinAMonth">last seen within a month</string>
+    <string name="ALongTimeAgo">last seen a long time ago</string>
+
+    <!-- date formatters -->
+    <string name="formatterMonth">MMM dd</string>
+    <string name="formatterYear">dd.MM.yy</string>
+    <string name="formatterYearMax">dd.MM.yyyy</string>
+    <string name="chatDate">MMMM d</string>
+    <string name="chatFullDate">MMMM d, yyyy</string>
+    <string name="formatterWeek">EEE</string>
+    <string name="formatterDay24H">HH:mm</string>
+    <string name="formatterDay12H">h:mm a</string>
+    <string name="formatDateAtTime">%1$s at %2$s</string>
+
+    <!-- activity_login -->
+    <string name="textview_login">अपना मोबाइल नंबर दर्ज करें</string>
+    <string name="textview_login_countrycode">+91</string>
+    <string name="textview_login_administration">आप प्रवेश नहीं कर सकते अगर आपके प्रशासन से संपर्क करें</string>
+    <string name="hint_login_id">98201</string>
+    <string name="button_next">अगला</string>
+    <string name="LoginActivityTitle">आपका फोन नंबर</string>
+
+    <!-- activity_facebook_conceal -->
+    <string name="button_encrypt">Encrypt</string>
+    <string name="button_decrypt">Decrypt</string>
+
+    <!-- activity_country_select -->
+    <string name="CountrySelectActivityTitle">देश चुनें</string>
+    <string name="NoResult">कोई परिणाम नहीं</string>
+    <string name="hint_country_search">खोज</string>
+
+    <!-- activity_verification -->
+    <string name="textview_verification">हम अपने फोन नंबर को सत्यापित करने और आप एक मानव पुनः साबित करने के लिए आप एक OTP कोड भेज दिया है!</string>
+    <string name="hint_verification_code">0</string>
+    <string name="button_verify">सत्यापित</string>
+    <string name="button_resend">पुन: भेजें</string>
+    <string name="button_raised_ticket">उठाया टिकट</string>
+    <string name="textview_verify_administration">Didn टी एक प्राप्त ? एक और मिलेगा</string>
+    <string name="textview_verify_administration_tryagain">गलत नंबर दर्ज किया ? पुनः प्रयास करें</string>
+    <string name="validate_verfication_code_empty">सही ढंग से OTP ऊपर भरें</string>
+    <string name="VerificationActivityTitle">OTP सत्यापन</string>
+    <string name="raise_ticket_info">एक टिकट के लिये उठाया गया है :</string>
+
+    <!-- activity_set_login -->
+    <string name="textview_upload_another">एक और अपलोड</string>
+    <string name="textview_upload_remove">निकालें</string>
+    <string name="hint_email_id">abc@xyz.com</string>
+    <string name="hint_name">Carving Dezin</string>
+    <string name="hint_employee_id">3130894</string>
+    <string name="textview_skip">छोड़ें</string>
+    <string name="SetProfileActivityTitle">आपका प्रोफाइल सेट</string>
+
+    <!-- activity_recycler_award -->
+    <string name="AwardRecyclerActivityTitle">पुरस्कार</string>
+
+    <!-- activity_recycler_event -->
+    <string name="EventRecyclerActivityTitle">घटनाक्रम</string>
+
+    <!-- activity recycler birthday -->
+    <string name="BirthdayRecyclerActivityTitle">जन्मदिन</string>
+
+    <!-- item_recycler_award -->
+    <string name="sample_winner_name">RYAN GOSLING</string>
+    <string name="sample_award_name">AWARD FOR BEST SALES OF THE WEEK</string>
+
+    <!-- item_recycler_birthday -->
+    <string name="sample_birthday_name">RYAN GOSLING</string>
+    <string name="sample_birthday_department">SALES</string>
+
+    <!-- item_recycler_event -->
+    <string name="sample_event_title">SUNDAY - 8TH MARCH 15  WOMEN DAYS SPECIAL</string>
+    <string name="sample_event_by">BY:TECHNOLOGY TEAM TECHNOLOGY TEAM TECHNOLOGY TEAM - SEPTEMBER 31 2029</string>
+    <string name="sample_event_view">1,00,000,000</string>
+    <string name="sample_event_left_number">3655</string>
+    <string name="sample_event_left_string">DAYS LEFT</string>
+    <string name="sample_event_summary">Lorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more\nLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more\nLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more</string>
+
+    <!-- layout_mother -->
+    <string name="layout_mother_mobcast">मोबकास्ट </string>
+    <string name="layout_mother_chat">चैट</string>
+    <string name="layout_mother_training">प्रशिक्षण</string>
+    
+    <!-- fragment_event_detail -->
+    <string name="sample_event_date">31</string>
+    <string name="sample_event_month">September</string>
+    <string name="sample_event_day">Wednesday</string>
+    <string name="sample_event_hours">99</string>
+    <string name="sample_event_till">10:15PM-13:30PM</string>
+    <string name="sample_event_hours_text">Hours</string>
+    <string name="sample_event_location_text">Conference Room, Head Office, Bandra, Mumbai, Maharastra, India</string>
+    <string name="sample_event_view_map"><![CDATA[<u>]]>नक्शा देखें<![CDATA[</u>]]></string>
+    <string name="fragment_event_detail_button_join">शामिल हों</string>
+    <string name="fragment_event_detail_button_decline">गिरावट</string>
+    <string name="sample_event_attend_count">1,00,000</string>
+    <string name="fragment_event_detail_invite">आमंत्रित</string>
+    <string name="fragment_event_detail_going">जा रहे हैं</string>
+    <string name="fragment_event_detail_about">घटना के बारे में</string>
+    <string name="EventDetailActivityTitle">घटना</string>
+
+    <!-- fragment_quiz -->
+    <string name="sample_quiz_timer_seconds">86400</string>
+    <string name="sample_quiz_timer_seconds_text">SECONDS</string>
+    <string name="sample_quiz_header_number_text">QUESTION 1</string>
+    <string name="sample_quiz_pager_counter">12/60</string>
+    <string name="button_previous">पिछले</string>
+    <string name="button_submit">पेश</string>
+    <string name="sample_question_header_box">प्रश्न</string>
+    <string name="QuizActivityTitle">प्रश्नोत्तरी</string>
+
+    <!-- fragment_quiz_score -->
+    <string name="sample_quiz_score_header_time_taken">TOTAL TIME TAKEN</string>
+    <string name="sample_quiz_score_header_score">TOTAL SCORE</string>
+    <string name="sample_quiz_score_time_taken">59</string>
+    <string name="sample_quiz_score_time_taken_sec">SECONDS</string>
+    <string name="sample_quiz_score">348</string>
+    <string name="sample_quiz_score_statement">YOU ARE CERTAINLY A PRO!</string>
+    <string name="sample_quiz_score_goofed_up">YOU GOT 3 OUT OF 4 QUESTIONS RIGHT!</string>
+    <string name="sample_quiz_score_goofed_up_at">FIND OUT WHICH ANSWER DO YOU GOOFED UP AT!</string>
+    <string name="sample_quiz_score_correct_answer">CORRECT ANSWER IS:</string>
+
+    <!-- fragment_quiz_selective_radio -->
+    <string name="sample_quiz_selective_radio_title">INDICATOR OF MUNLIER LC KIDS?</string>
+    <string name="sample_quiz_selective_radio_group_a">INTERMITTENT RHYNTIS MONOTHERAPY IN MILDAR</string>
+    <string name="sample_quiz_selective_radio_group_b">PROPHYLATIC THERAPY IN SAR</string>
+    <string name="sample_quiz_selective_radio_group_c">IN ASTHAMA COEXECUTING AR</string>
+    <string name="sample_quiz_selective_radio_group_d">ALL OF THE ABOVE</string>
+
+    <!-- fragment_feedback_subjective -->
+    <string name="hint_feedback_subjective_message_edittext">लिखें जवाब</string>
+
+    <!-- fragment_feedback -->
+    <string name="FeedbackActivityTitle">प्रतिक्रिया</string>
+
+    <!-- fragment_image -->
+    <string name="ImageDetailActivityTitle">चित्र</string>
+
+    <!-- fragment_audio -->
+    <string name="AudioDetailActivityTitle">ऑडियो</string>
+    <string name="sample_audio_detail_seekbar">3:48</string>
+
+    <!-- fragment_video -->
+    <string name="VideoDetailActivityTitle">वीडियो</string>
+
+    <!-- fragment_text -->
+    <string name="TextDetailActivityTitle">टेक्स्ट</string>
+
+    <!-- fragment_pdf -->
+    <string name="PdfDetailActivityTitle">पीडीएफ</string>
+
+    <!-- fragment_doc -->
+    <string name="DocDetailActivityTitle">दस्तावेज़</string>
+
+    <!-- fragment_ppt -->
+    <string name="PptDetailActivityTitle">प्रस्तुति</string>
+
+    <!-- fragment_xls -->
+    <string name="XlsDetailActivityTitle">एक्सेल</string>
+
+    <!-- fragment_news -->
+    <string name="NewsDetailActivityTitle">समाचार</string>
+    <string name="sample_news_detail_link"><![CDATA[<u><b>]]>स्रोत देखें<![CDATA[</b></u>]]></string>
+
+    <!-- fragment_webview -->
+    <string name="WebViewActivity">वेब</string>
+
+    <!-- fragment_interactive -->
+    <string name="InteractiveDetailActivityTitle">इंटरएक्टिव</string>
+
+    <!-- fragment_birthday_profile -->
+    <string name="BirthdayProfileActivityTitle">प्रोफ़ाइल</string>
+    <string name="sample_fragment_birthday_profile_name">Ryan Gosling</string>
+    <string name="sample_fragment_birthday_profile_date">May 18 1995</string>
+    <string name="sample_fragment_birthday_profile_department">SALES DEPARTMENT</string>
+    <string name="sample_fragment_birthday_profile_sun_sign">TAURUS</string>
+    <string name="sample_fragment_birthday_profile_age">29 YRS</string>
+    <string name="sample_fragment_birthday_profile_send_wishes">शुभकामनाएं भेजने</string>
+    <string name="sample_fragment_birthday_profile_send_sms">एसएमएस भेजें</string>
+
+    <!-- fragment_about -->
+    <string name="AboutActivityTitle">के बारे में</string>
+
+    <!-- fragment_about -->
+    <string name="sample_about_version">VERSION 2</string>
+    <string name="sample_about_version_detail">2015 ALL RIGHTS RESERVED TO MOBCAST</string>
+    <string name="sample_about_send_feedback">प्रतिक्रिया भेजें</string>
+    <string name="sample_about_send_feedback_detail">हमें बताएँ आप क्या सोचते हैं</string>
+    <string name="sample_about_report_problem">समस्या के बारे में बताएं</string>
+    <string name="sample_about_report_problem_detail">अमेरिका एक बग या समस्या के बारे में बताने</string>
+    <string name="sample_about_detail">Lorm ipsum dolor sit amer cosectetur adipiscing elit Nulla ut leo nec lectus tempor aliquet sit amet tempus risus Mauris venenatis velit auctor mauris placerat ac feugiat neque tincidunt</string>
+    <string name="sample_about_detail_1">Vestibulum eu bibendum nisi vel finibus leo Versitbulum est enim eleifend ac posuere vel tempor sed turpis Nulla sagittis porta ante a luctus Quisque ultricies semper libero nec cursus massa efficiur id</string>
+    <string name="sample_about_privacy_policy"><![CDATA[<u>]]>गोपनीयता नीति<![CDATA[<u>]]></string>
+
+    <!-- fragment_report -->
+    <string name="sample_report_category_header">श्रेणी का चयन करें:</string>
+    <string name="sample_report_category_text">Others</string>
+    <string name="sample_report_category_include_logs">सिस्टम लॉग शामिल करें</string>
+    <string name="sample_report_category_submit">पेश</string>
+    <string name="sample_report_category_hint">हमें एक बग या समस्या के बारे में पता करते हैं</string>
+    <string name="ReportActivityTitle">रिपोर्ट</string>
+
+    <string-array name="report_category_array">
+        <item>Android</item>
+        <item>Android:Audio</item>
+        <item>Android:Doc</item>
+        <item>Android:Feedback</item>
+        <item>Android:Image</item>
+        <item>Android:Interactive</item>
+        <item>Android:Login</item>
+        <item>Android:News</item>
+        <item>Android:OTP</item>
+        <item>Android:Pdf</item>
+        <item>Android:Profile</item>
+        <item>Android:Ppt</item>
+        <item>Android:Push</item>
+        <item>Android:Settings</item>
+        <item>Android:Text</item>
+        <item>Android:Video</item>
+        <item>Android:Quiz</item>
+        <item>Android:Xls</item>
+        <item>Web</item>
+        <item>General</item>
+        <item>Others</item>
+        <item>Support</item>
+    </string-array>
+
+    <!-- fragment_app_feedback -->
+    <string name="sample_app_feedback_hint">हमें बताएँ आप क्या सोचते हैं</string>
+    <string name="FeedbackAppActivityTitle">प्रतिक्रिया</string>
+    <string-array name="feedback_app_array">
+        <item>फ़ीचर</item>
+        <item>समस्या</item>
+        <item>वेब</item>
+        <item>सामान्य</item>
+        <item>दूसरों</item>
+        <item>समर्थन</item>
+    </string-array>
+    
+    <!-- fragment_settings -->
+    <string name="sample_fragment_settings_header_general">सामान्य</string>
+    <string name="sample_fragment_settings_general_language_header">भाषा चुनें</string>
+    <string name="sample_fragment_settings_header_notification">अधिसूचना</string>
+    <string name="sample_fragment_settings_general_language_text">English</string>
+    <string name="sample_fragment_settings_notification_birthday_time_text">9:00 am</string>
+    <string name="sample_fragment_settings_notification_birthday_time">पर जन्मदिन सूचित करें</string>
+    <string name="sample_fragment_settings_notification_birthday_mute">मौन जन्मदिन अधिसूचना</string>
+    <string name="sample_fragment_settings_notification_download_notify">डाउनलोड करें और सूचित करें</string>
+    <string name="sample_fragment_settings_header_about">के बारे में</string>
+    <string name="sample_fragment_settings_about_text">Mobcast के बारे में</string>
+    <string name="sample_fragment_settings_about_build_version_text">Build Version\n v2.0.1(1)</string>
+    <string name="sample_fragment_settings_dialog_language_title">आप सुनिश्चित करें कि आवेदन भाषा बदलने के लिए चाहते हैं </string>
+    <string name="sample_fragment_settings_dialog_language_positive">ठीक</string>
+    <string name="sample_fragment_settings_dialog_language_negative">रद्द</string>
+    <string name="SettingsActivityTitle">सेटिंग</string>
+    <string name="sample_fragment_settings_dialog_birthday_notify_1">09:00 am</string>
+    <string name="sample_fragment_settings_dialog_birthday_notify_2">12:00 pm</string>
+    <string name="sample_fragment_settings_dialog_birthday_notify_3">03:00 pm</string>
+
+    <string-array name="langugae_array">
+        <item>English</item>
+        <item>हिन्दी</item>
+        <item>Marathi</item>
+    </string-array>
+    
+    <string-array name="langugae_code_array">
+        <item>en</item>
+        <item>hi</item>
+        <item>ma</item>
+    </string-array>
+    
+    <string-array name="birthday_time_array">
+        <item>9:00am</item>
+        <item>12:00pm</item>
+        <item>3:00pm</item>
+    </string-array>
+    
+    <!-- fragment_language -->
+    <string name="LanguageActivityTitle">भाषा चुनें</string>
+    
+    <!-- item_simple -->
+    <string name="CategoryActivityTitle">Category</string>
+
+    <!-- item_recycler_event -->
+    <string name="sample_item_recycler_event_detail_days_left">5 Days Left</string>
+    <string name="sample_item_recycler_event_detail_attendance">400 Going</string>
+    <string name="sample_item_recycler_event_detail_is_going">Accepted</string>
+
+    <!-- item_recycler_mobcast_text -->
+    <string name="sample_item_recycler_mobcast_text_title">ALIQUAM AC ENIM IN NIBH ULLAMCORPER AUCTOR AC A DOLOR</string>
+    <string name="sample_item_recycler_mobcast_text_by">BY: HR TEAM - A YEAR AGO</string>
+    <string name="sample_item_recycler_mobcast_text_view_count">21000</string>
+    <string name="sample_item_recycler_mobcast_text_summary">Proin ac risus eu metus confimentim viverra. Donce ut neque sed elit tincidunt condimentum. Read More</string>
+
+    <!-- item_recycler_mobcast_image -->
+    <string name="sample_item_recycler_mobcast_image_title">SUSPENDISSE CONVALLIS SED ORCI A ELEMENTUM</string>
+    <string name="sample_item_recycler_mobcast_image_by">BY: MARKETING - 3 SEC AGO</string>
+    <string name="sample_item_recycler_mobcast_image_view_count">1200</string>
+
+    <!-- item_recycler_mobcast_video -->
+    <string name="sample_item_recycler_mobcast_video_title">PRAESENT SED LEO IN SEM VENENATI</string>
+    <string name="sample_item_recycler_mobcast_video_by">BY: DIRECTORS - 2 HOURS AGO</string>
+    <string name="sample_item_recycler_mobcast_video_view_count">300</string>
+
+    <!-- item_recycler_mobcast_audio -->
+    <string name="sample_item_recycler_mobcast_audio_title">SUSPENDISSE DIFNISSIM MAGNA EU VEHICULA CONVALLIS MASSA DUI FERMENTUM TORTOR NON VENENTIS DOLOR ELIT IN PURUS</string>
+    <string name="sample_item_recycler_mobcast_audio_by">BY: TECHNOLOGY TEAM - YESTERDAY</string>
+    <string name="sample_item_recycler_mobcast_audio_view_count">290</string>
+    <string name="sample_item_recycler_mobcast_audio_summary">Lorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec, condimentum magna. Read More</string>
+    <string name="sample_item_recycler_mobcast_audio_file_name">MANI_AU.MP3</string>
+    <string name="sample_item_recycler_mobcast_audio_file_info">3:48</string>
+
+    <!-- item_recycler_mobcast_pdf -->
+    <string name="sample_item_recycler_mobcast_pdf_title">DONEC TEMPOR SED MASSA TEMPOR MAXIMUS PORTA IN SCELERISQUE NON FEUGIAT LEO INTERDUM VITA</string>
+    <string name="sample_item_recycler_mobcast_pdf_by">BY: TECHNOLOGY TEAM - YESTERDAY</string>
+    <string name="sample_item_recycler_mobcast_pdf_view_count">290</string>
+    <string name="sample_item_recycler_mobcast_pdf_file_name">MANI_CV.PDF</string>
+    <string name="sample_item_recycler_mobcast_pdf_file_info">12 PAGES</string>
+
+    <!-- item_recycler_mobcast_doc -->
+    <string name="sample_item_recycler_mobcast_doc_title">PELLENTESQUE VEHICULA DAPIBUS</string>
+    <string name="sample_item_recycler_mobcast_doc_by">BY: HR TEAM - NOVEMEBER 21 2014</string>
+    <string name="sample_item_recycler_mobcast_doc_view_count">290</string>
+    <string name="sample_item_recycler_mobcast_doc_file_name">ANNUAL_REPORT.DOC</string>
+    <string name="sample_item_recycler_mobcast_doc_file_info">21 PAGES</string>
+
+    <!-- item_recycler_mobcast_xls -->
+    <string name="sample_item_recycler_mobcast_xls_title">QUISQUE TINCIDUNT LIBERO SEM ID LACINIA ODIO FERMENTUM SIT AMET</string>
+    <string name="sample_item_recycler_mobcast_xls_by">BY: HR TEAM - A YEAR AGO</string>
+    <string name="sample_item_recycler_mobcast_xls_view_count">210</string>
+    <string name="sample_item_recycler_mobcast_xls_file_name">PAYSCALE.XLS</string>
+    <string name="sample_item_recycler_mobcast_xls_file_info">08 SHEETS</string>
+
+    <!-- item_recycler_mobcast_ppt -->
+    <string name="sample_item_recycler_mobcast_ppt_title">QUISQUE TINCIDUNT LIBERO SEM ID LACINIA ODIO FERMENTUM SIT AMET</string>
+    <string name="sample_item_recycler_mobcast_ppt_by">BY: HR TEAM - A YEAR AGO</string>
+    <string name="sample_item_recycler_mobcast_ppt_view_count">210</string>
+    <string name="sample_item_recycler_mobcast_ppt_file_name">PAYSCALE.PPT</string>
+    <string name="sample_item_recycler_mobcast_ppt_file_info">04 SLIDES</string>
+
+    <!-- item_recycler_mobcast_feedback -->
+    <string name="sample_item_recycler_mobcast_feedback_title">PELLENTESQUE VIVERRA EX AC JUST VARIUS UT ACCUMSAN SAPIEN</string>
+    <string name="sample_item_recycler_mobcast_feedback_by">BY: HR TEAM - A YEAR AGO</string>
+    <string name="sample_item_recycler_mobcast_feedback_count">1.5K</string>
+    <string name="sample_item_recycler_mobcast_feedback_question">18 Questions</string>
+
+    <!-- item_recylcer_training_quiz -->
+    <string name="sample_item_recycler_training_question_time">03 mins</string>
+    <string name="sample_item_recycler_training_question_attempted">02 attempts</string>
+    <string name="sample_item_recycler_training_question_score">556 pts</string>
+
+    <!-- item_reycler_mobcast_news -->
+    <string name="sample_item_recycler_mobcast_news_link">http://www.google.com/</string>
+
+    <!-- section_layout_birthday_header -->
+    <string name="sample_section_layout_birthday_header">APRIL 22,WEDNESDAY</string>
+
+    <!-- include_layout_drawer -->
+    <string name="textview_last_sync">अंतिम सिंक :</string>
+    <string name="textview_profile_name">Ryan Gosling</string>
+    <string name="textview_profile_email">abc@mobcast.in</string>
+    <string name="textview_last_sync_content">इंटरनेट के रूप में विफल मई 04:10 26 पर उपलब्ध नहीं था </string>
+
+    <string-array name="drawer_array">
+        <item>प्रोफ़ाइल</item>
+        <item>सेटिंग</item>
+        <item>मदद</item>
+        <item>रिपोर्ट</item>
+        <item>प्रतिक्रिया</item>
+        <item>लॉग आउट</item>
+        <item>के बारे में</item>
+    </string-array>
+
+    <!-- dialog_birthday_message -->
+    <string name="dialog_birthday_message_textview">0/140</string>
+    <string name="hint_dialog_birthday_message_edittext">संदेश लिखना</string>
+    <string name="dialog_birthday_message_title">मेसेज भेजें</string>
+    <string name="dialog_birthday_message_positive">भेजें</string>
+    <string name="dialog_birthday_message_negative" tools:ignore="ButtonCase">रद्द</string>
+
+    <!-- ImageView Description -->
+    <string name="desc_toolbar_plain_back">ToolBarPlainBack</string>
+    <string name="desc_activity_login_logo">LogingLogo</string>
+    <string name="desc_activity_login_validation">LoginValidation</string>
+
+    <!-- BottomSheet -->
+    <string name="bs_more">अधिक</string>
+
+</resources>

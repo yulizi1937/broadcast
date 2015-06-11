@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fadingEdge="none"
+    android:scrollbars="none"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/fragmentEventDetailRootLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:id="@+id/fragmentEventDetailEventCoverFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/event_detail_cover_layout_height"
+            tools:ignore="UselessParent" >
+
+            <ImageView
+                android:id="@+id/fragmentEventDetailEventCoverIv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sample_picture_event_cover"
+                tools:ignore="ContentDescription" />
+
+            <LinearLayout
+                android:id="@+id/fragmentEventDetailEventLeftLayout"
+                android:layout_width="@dimen/event_detail_time_left_layout_height"
+                android:layout_height="@dimen/event_detail_time_left_layout_height"
+                android:layout_gravity="center"
+                android:background="@drawable/shape_round_event_cover_left"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/fragmentEventDetailLeftNumberTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/sample_event_left_number"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/event_left_number_textview_size"
+                    android:textStyle="bold" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/fragmentEventDetailLeftTextTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/sample_event_left_string"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/event_left_string_textview_size" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/fragmentEventDetailEventShareIv"
+                android:layout_width="@dimen/event_detail_share_width"
+                android:layout_height="@dimen/event_detail_share_width"
+                android:layout_gravity="bottom|start"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_event_share"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/fragmentEventDetailEventAddToCalendarIv"
+                android:layout_width="@dimen/event_detail_share_width"
+                android:layout_height="@dimen/event_detail_share_width"
+                android:layout_gravity="bottom|end"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_event_add_cal"
+                tools:ignore="ContentDescription" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/event_detail_cover_transparency_height"
+                android:layout_gravity="bottom"
+                android:background="@color/transparency_event_cover" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/fragmentEventDetailTextLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/fragment_detail_padding" >
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/fragmentEventDetailTitleTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:gravity="start|center"
+                android:textStyle="bold"
+                android:text="@string/sample_event_title"
+                android:textColor="@color/toolbar_background"
+                android:textSize="@dimen/event_title_textview_size" />
+
+            <RelativeLayout
+                android:id="@+id/fragmentEventDetailByLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_detail_title_by_content_margin_top"
+                android:orientation="horizontal" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/fragmentEventDetailByTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="left|center"
+                    android:layout_marginRight="90dp"
+                    android:background="@color/item_event_by"
+                    android:gravity="left|center"
+                    android:padding="4dp"
+                    android:text="@string/sample_event_by"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/event_by_textview_size"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/fragmentEventDetailViewTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="right|center"
+                    android:background="@drawable/shape_rectange_app"
+                    android:drawableLeft="@drawable/item_view"
+                    android:gravity="right|center"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="2dp"
+                    android:text="@string/sample_event_view"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/event_by_textview_size"
+                    tools:ignore="RtlHardcoded" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/fragmentEventDetailEventTimeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="@dimen/fragment_detail_title_by_content_margin_top"
+                android:baselineAligned="false"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    tools:ignore="UselessParent" >
+
+                    <ImageView
+                        android:id="@+id/fragmentEventDetailEventDateIv"
+                        android:layout_width="@dimen/event_detail_date_image_width"
+                        android:layout_height="@dimen/event_detail_date_image_width"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_event_detail_cal"
+                        tools:ignore="ContentDescription" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/fragmentEventDetailEventDateTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/sample_event_date"
+                        android:textColor="@color/text_highlight"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/event_detail_event_date_size" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/fragmentEventDetailEventDateTextTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/sample_event_month"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/event_detail_event_date_text_size" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@android:color/darker_gray" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:orientation="vertical"
+                    tools:ignore="UselessParent" >
+
+                    <ImageView
+                        android:id="@+id/fragmentEventDetailEventDayIv"
+                        android:layout_width="@dimen/event_detail_date_image_width"
+                        android:layout_height="@dimen/event_detail_date_image_width"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_event_detail_time"
+                        tools:ignore="ContentDescription" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/fragmentEventDetailEventDayTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:text="@string/sample_event_day"
+                        android:textColor="@color/text_highlight"
+                        android:textSize="@dimen/event_detail_event_till_size" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/fragmentEventDetailEventDayTillTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:text="@string/sample_event_till"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/event_detail_event_till_text_size" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@android:color/darker_gray" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    tools:ignore="UselessParent" >
+
+                    <ImageView
+                        android:id="@+id/fragmentEventDetailEventHoursIv"
+                        android:layout_width="@dimen/event_detail_date_image_width"
+                        android:layout_height="@dimen/event_detail_date_image_width"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_event_detail_hours"
+                        tools:ignore="ContentDescription" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/fragmentEventDetailEventHoursTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/sample_event_hours"
+                        android:textColor="@color/text_highlight"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/event_detail_event_date_size" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/fragmentEventDetailEventHoursTextTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/sample_event_hours_text"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/event_detail_event_date_text_size" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
+                android:background="@android:color/darker_gray" />
+
+            <ImageView
+                android:id="@+id/fragmentEventDetailEventLocationIv"
+                android:layout_width="@dimen/event_detail_date_image_width"
+                android:layout_height="@dimen/event_detail_date_image_width"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_event_location"
+                tools:ignore="ContentDescription" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/fragmentEventDetailEventLocationTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/sample_event_location_text"
+                android:textColor="@color/text_highlight"
+                android:textSize="@dimen/event_detail_event_location_text_size" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/fragmentEventDetailEventLocationViewMapTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="@string/sample_event_view_map"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/event_detail_event_location_view_map_size" />
+
+            <LinearLayout
+                android:id="@+id/fragmentEventDetailEventActionLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/event_button_height"
+                android:orientation="horizontal" >
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/fragmentEventDetailJoinBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_button_orange_fill"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:text="@string/fragment_event_detail_button_join"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/event_button_size"
+                    tools:ignore="RtlHardcoded" />
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/fragmentEventDetailDeclineBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_button_orange_border"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:text="@string/fragment_event_detail_button_decline"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/event_button_size"
+                    tools:ignore="RtlHardcoded" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fragmentEventDetailAttendLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:id="@+id/fragmentEventDetailTotalAttendLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center"
+                    android:layout_marginRight="16dp"
+                    android:layout_weight="1"
+                    android:gravity="end|center"
+                    android:orientation="vertical"
+                    tools:ignore="UselessParent,RtlHardcoded" >
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/fragmentEventDetaiTotalAttendTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center"
+                        android:gravity="end|center"
+                        android:text="@string/sample_event_attend_count"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/event_detail_event_invite_size"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/fragmentEventDetaiTotalAttendTextTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center"
+                        android:gravity="end|center"
+                        android:text="@string/fragment_event_detail_invite"
+                        android:textColor="@color/toolbar_background"
+                        android:textSize="@dimen/event_detail_event_invite_text_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/fragmentEventDetailTotalInviteLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end|center"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:orientation="vertical"
+                    tools:ignore="UselessParent,RtlHardcoded" >
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/fragmentEventDetaiTotalGoingTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="start|center"
+                        android:text="@string/sample_event_attend_count"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/event_detail_event_invite_size"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/fragmentEventDetaiTotalGoingTextTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="start|center"
+                        android:text="@string/fragment_event_detail_going"
+                        android:textColor="@color/toolbar_background"
+                        android:textSize="@dimen/event_detail_event_invite_text_size" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/fragmentEventDetailAboutEventTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="start|center"
+                android:layout_marginTop="8dp"
+                android:text="@string/fragment_event_detail_about"
+                android:textColor="@color/toolbar_background"
+                android:textSize="@dimen/event_detail_event_invite_size" />
+            
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/fragmentEventDetailSummaryTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="start|center"
+                android:layout_marginTop="8dp"
+                android:text="@string/sample_event_summary"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/event_detail_event_summary_size" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

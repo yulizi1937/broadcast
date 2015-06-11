@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <integer name="snackbar_text_max_lines">2</integer>
+
+    <bool name="default_circle_indicator_centered">true</bool>
+
+    <color name="default_circle_indicator_fill_color">#FFFFFFFF</color>
+    <color name="default_circle_indicator_page_color">#00000000</color>
+
+    <integer name="default_circle_indicator_orientation">0</integer>
+
+    <dimen name="default_circle_indicator_radius">3dp</dimen>
+
+    <bool name="default_circle_indicator_snap">false</bool>
+
+    <color name="default_circle_indicator_stroke_color">#FFDDDDDD</color>
+
+    <dimen name="default_circle_indicator_stroke_width">1dp</dimen>
+
+    <integer name="fragment_feedback_ratingbar_stars_count">5</integer>
+    <integer name="bs_grid_colum">3</integer>
+    <integer name="bs_initial_grid_row">3</integer>
+    <integer name="bs_initial_list_row">5</integer>
+
+    
+    <!-- SmoothProgressBar -->
+    <color name="spb_default_color">#ff254E7A</color>
+    <dimen name="spb_default_stroke_separator_length">4dp</dimen>
+    <dimen name="spb_default_stroke_width">2dp</dimen>
+    <integer name="spb_default_sections_count">4</integer>
+    <integer name="spb_default_interpolator">0</integer>
+    <item name="spb_default_speed" format="float" type="string">1</item>
+    <bool name="spb_default_reversed">false</bool>
+    <bool name="spb_default_mirror_mode">false</bool>
+    <bool name="spb_default_progressiveStart_activated">false</bool>
+    
+    <!-- BottomSheet : Any.Do Notification -->
+    <integer name="anydo_limit">5</integer>
+
+</resources>

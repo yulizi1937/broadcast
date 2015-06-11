@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/dialogBirthdayMessageTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="right|center"
+        android:text="@string/dialog_birthday_message_textview"
+        android:textColor="@color/dialog_birthday_message_textview_color"
+        android:textSize="@dimen/dialog_birthday_message_textview_size"
+        tools:ignore="RtlHardcoded" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/dialogBirthdayMessageEd"
+        android:layout_width="match_parent"
+        android:layout_margin="2dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center"
+        android:gravity="top|left"
+        android:scrollbars="vertical"
+        android:hint="@string/hint_dialog_birthday_message_edittext"
+        android:inputType="textMultiLine"
+        android:minLines="4"
+        android:maxLines="6"
+        android:paddingEnd="1dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="1dp"
+        android:paddingStart="4dp"
+        android:singleLine="false"
+        android:textSize="@dimen/login_edittext_size"
+        tools:ignore="RtlHardcoded" />
+
+</LinearLayout>

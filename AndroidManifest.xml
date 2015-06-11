@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.mobcast"
+    android:versionCode="1"
+    android:versionName="2.0" >
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="22" />
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.wifi"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.screen.PORTRAIT"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application
+        android:name="com.application.utils.ApplicationLoader"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="UnusedAttribute" >
+
+        <!-- <meta-data -->
+        <!-- android:name="com.google.android.gms.version" -->
+        <!-- android:value="@integer/google_play_services_version" /> -->
+
+        <activity
+            android:name="com.application.ui.activity.SplashActivity"
+            android:configChanges="locale|orientation"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.application.ui.activity.LoginActivity"
+            android:configChanges="locale|orientation"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.application.ui.activity.SetProfileActivity"
+            android:configChanges="locale|orientation"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.application.ui.activity.EditProfileActivity"
+            android:configChanges="locale|orientation"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.application.ui.activity.CountrySelectActivity"
+            android:configChanges="locale|orientation"
+            android:noHistory="true" />
+        <activity
+            android:name="com.application.ui.activity.VerificationActivity"
+            android:configChanges="locale|orientation"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.application.ui.activity.FacebookConcealActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.MotherActivity"
+            android:configChanges="locale|orientation" >
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.application.ui.activity.AwardRecyclerActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.BirthdayRecyclerActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.BirthdayProfileActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.EventRecyclerActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.QuizActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.QuizScoreActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.FeedbackActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.EventDetailActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.ImageDetailActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.ImageFullScreenActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.AudioDetailActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.VideoDetailActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.VideoFullScreenActivity"
+            android:configChanges="locale|orientation"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.application.ui.activity.YouTubeLiveStreamActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.TextDetailActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.PdfDetailActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.DocDetailActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.XlsDetailActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.PptDetailActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.NewsDetailActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.InteractiveDetailActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.WebViewActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.AboutActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.ReportActivity"
+            android:configChanges="locale|orientation"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.application.ui.activity.FeedbackAppActivity"
+            android:configChanges="locale|orientation"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.application.ui.activity.SettingsActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.LanguageActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.FileManagerActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.SimpleRecyclerItemActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.TutorialActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.YouTubeLiveFullScreenActivity"
+            android:screenOrientation="landscape" />
+
+        <!-- GCM Receiver -->
+        <receiver
+            android:name="com.application.receiver.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.mobcast" />
+            </intent-filter>
+        </receiver>
+        <!-- Any.DO Notification Activity -->
+        <activity
+            android:name="com.application.ui.activity.AnyDoNotificationActivity"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:theme="@style/Theme.AppCompat.Translucent" />
+
+        <service
+            android:name="com.application.ui.service.AnyDoNotificationService"
+            android:exported="false"
+            android:label="@string/app_name" />
+
+        <!-- SMS RADAR SERVICE -->
+        <service
+            android:name="com.application.sms.SmsRadarService"
+            android:exported="false"
+            android:label="@string/app_name" />
+
+        <provider
+            android:name="com.application.sqlite.ApplicationDB"
+            android:authorities="com.application.sqlite.mobcast.ApplicationDB"
+            android:exported="false" />
+    </application>
+
+</manifest>

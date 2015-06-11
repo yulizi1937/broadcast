@@ -1,0 +1,756 @@
+package com.application.ui.activity;
+
+import java.util.ArrayList;
+
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+
+import com.application.beans.MotherHeader;
+import com.application.ui.calligraphy.CalligraphyContextWrapper;
+import com.application.ui.fragment.MotherPagerAdapter;
+import com.application.ui.view.CircleImageView;
+import com.application.ui.view.DrawerArrowDrawable;
+import com.application.ui.view.ScrimInsetsFrameLayout;
+import com.application.ui.view.SlidingTabLayout;
+import com.application.utils.AndroidUtilities;
+import com.application.utils.AppConstants;
+import com.application.utils.FileLog;
+import com.application.utils.ObservableScrollViewCallbacks;
+import com.application.utils.ScrollState;
+import com.application.utils.ScrollUtils;
+import com.application.utils.Scrollable;
+import com.mobcast.R;
+import com.nineoldandroids.view.ViewHelper;
+import com.nineoldandroids.view.ViewPropertyAnimator;
+
+/**
+ * 
+ * @author Vikalp Patel(VikalpPatelCE)
+ * 
+ */
+public class MotherActivity extends BaseActivity implements
+		ObservableScrollViewCallbacks {
+	/*
+	 * Drawer
+	 */
+	private ScrimInsetsFrameLayout mScrimInsetsFrameLayout;
+	private DrawerLayout mDrawerLayout;
+	private ListView mDrawerList;
+
+	private CircleImageView mDrawerProfileIv;
+	private AppCompatTextView mDrawerUserNameTv;
+	private AppCompatTextView mDrawerUserEmailTv;
+	private AppCompatTextView mDrawerSyncTv;
+
+	private ImageView mDrawerSyncIv;
+
+	private LinearLayout mDrawerSyncLayout;
+
+	private DrawerArrowDrawable drawerArrowDrawable;
+	private float offset;
+	private boolean flipped;
+	private Resources mResources;
+
+	private Toolbar mToolBar;
+	private View mHeaderView;
+	private View mToolbarView;
+
+	private FrameLayout mCroutonViewGroup;
+
+	private SlidingTabLayout mSlidingTabLayout;
+	private ViewPager mPager;
+
+	private int mBaseTranslationY;
+
+	private MotherPagerAdapter mPagerAdapter;
+
+	private ArrayList<MotherHeader> mArrayListMotherHeader;
+
+	private static final String TAG = MotherActivity.class.getSimpleName();
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_mother);
+		initToolBar();
+		initUi();
+		setSlidingTabPagerAdapter();
+		setUiListener();
+		propagateToolbarState(toolbarIsShown());
+		setDrawerLayout();
+	}
+
+	@SuppressLint("NewApi")
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_mother, menu);
+
+		MenuItem menuItemEvent = menu.findItem(R.id.action_event);
+		menuItemEvent.setIcon(buildCounterDrawable(1,
+				R.drawable.ic_toolbar_event));
+
+		MenuItem menuItemAward = menu.findItem(R.id.action_award);
+		menuItemAward.setIcon(buildCounterDrawable(1,
+				R.drawable.ic_toolbar_award));
+
+		MenuItem menuItemBirthday = menu.findItem(R.id.action_birthday);
+		menuItemBirthday.setIcon(buildCounterDrawable(1,
+				R.drawable.ic_toolbar_birthday));
+		if (AndroidUtilities.isAboveHoneyComb()) {
+			MenuItem searchItem = menu.findItem(R.id.action_search);
+			SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+			SearchView searchView = null;
+			if (searchItem != null) {
+				searchView = (SearchView) searchItem.getActionView();
+			}
+			if (searchView != null) {
+				searchView.setSearchableInfo(searchManager
+						.getSearchableInfo(getComponentName()));
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		switch (item.getItemId()) {
+		case R.id.action_award:
+			Intent mIntent = new Intent(MotherActivity.this,
+					AwardRecyclerActivity.class);
+			startActivity(mIntent);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		case R.id.action_birthday:
+			Intent mIntentBirthday = new Intent(MotherActivity.this,
+					BirthdayRecyclerActivity.class);
+			startActivity(mIntentBirthday);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		case R.id.action_event:
+			Intent mIntentEvent = new Intent(MotherActivity.this,
+					EventRecyclerActivity.class);
+			startActivity(mIntentEvent);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		case R.id.action_quiz:
+			Intent mIntentQuiz = new Intent(MotherActivity.this,
+					QuizActivity.class);
+			startActivity(mIntentQuiz);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		case R.id.action_feedback:
+			Intent mIntentFeedback = new Intent(MotherActivity.this,
+					FeedbackActivity.class);
+			startActivity(mIntentFeedback);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		case R.id.action_image:
+			Intent mIntentImage = new Intent(MotherActivity.this,
+					ImageDetailActivity.class);
+			startActivity(mIntentImage);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		case R.id.action_audio:
+			Intent mIntentAudio = new Intent(MotherActivity.this,
+					AudioDetailActivity.class);
+			startActivity(mIntentAudio);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		case R.id.action_video:
+			Intent mIntentVideo = new Intent(MotherActivity.this,
+					VideoDetailActivity.class);
+			startActivity(mIntentVideo);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		case R.id.action_text:
+			Intent mIntentText = new Intent(MotherActivity.this,
+					TextDetailActivity.class);
+			startActivity(mIntentText);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		case R.id.action_pdf:
+			Intent mIntentPdf = new Intent(MotherActivity.this,
+					PdfDetailActivity.class);
+			startActivity(mIntentPdf);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		case R.id.action_doc:
+			Intent mIntentDoc = new Intent(MotherActivity.this,
+					DocDetailActivity.class);
+			startActivity(mIntentDoc);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		case R.id.action_xls:
+			Intent mIntentXls = new Intent(MotherActivity.this,
+					XlsDetailActivity.class);
+			startActivity(mIntentXls);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		case R.id.action_ppt:
+			Intent mIntentPpt = new Intent(MotherActivity.this,
+					PptDetailActivity.class);
+			startActivity(mIntentPpt);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		case R.id.action_news:
+			Intent mIntentNews = new Intent(MotherActivity.this,
+					NewsDetailActivity.class);
+			startActivity(mIntentNews);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		case R.id.action_interactive:
+			Intent mIntentInteractive = new Intent(MotherActivity.this,
+					InteractiveDetailActivity.class);
+			startActivity(mIntentInteractive);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		case R.id.action_about:
+			Intent mIntentAbout = new Intent(MotherActivity.this,
+					AboutActivity.class);
+			startActivity(mIntentAbout);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		case R.id.action_report:
+			Intent mIntentReport = new Intent(MotherActivity.this,
+					ReportActivity.class);
+			startActivity(mIntentReport);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		case R.id.action_app_feedback:
+			Intent mIntentAppFeedback = new Intent(MotherActivity.this,
+					FeedbackAppActivity.class);
+			startActivity(mIntentAppFeedback);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		case R.id.action_livestream_youtube:
+			Intent mIntentLiveStreamYouTube = new Intent(MotherActivity.this,
+					YouTubeLiveStreamActivity.class);
+			startActivity(mIntentLiveStreamYouTube);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	@Override
+    protected void attachBaseContext(Context newBase) {
+        try{
+        	if(AndroidUtilities.isAppLanguageIsEnglish()){
+        		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        	}else{
+        		super.attachBaseContext(newBase);
+        	}
+        }catch(Exception e){
+        	FileLog.e(TAG, e.toString());
+        }
+    }
+	
+	/**
+	 * <b>Description:</b></br> Initialise Ui Elements from XML
+	 * 
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
+	private void initUi() {
+		mHeaderView = findViewById(R.id.header);
+
+		ViewCompat.setElevation(mHeaderView,
+				getResources().getDimension(R.dimen.toolbar_elevation));
+
+		mToolbarView = findViewById(R.id.toolbarLayout);
+		mPager = (ViewPager) findViewById(R.id.pager);
+		mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+		mCroutonViewGroup = (FrameLayout) findViewById(R.id.croutonViewGroup);
+	}
+
+	/**
+	 * <b>Description: </b></br>Initialize ToolBar</br></br>
+	 * 
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
+	private void initToolBar() {
+		mToolBar = (Toolbar) findViewById(R.id.toolbarLayout);
+		mToolBar.setNavigationIcon(R.drawable.ic_back_shadow);
+		mToolBar.setTitle("");
+		setSupportActionBar(mToolBar);
+	}
+
+	/**
+	 * <b>Description:</b></br> Sets Listener on Ui Elements</br></br>
+	 * 
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
+	private void setUiListener() {
+		mSlidingTabLayout
+				.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+					@Override
+					public void onPageScrolled(int i, float v, int i2) {
+					}
+
+					@Override
+					public void onPageSelected(int i) {
+						propagateToolbarState(toolbarIsShown());
+					}
+
+					@Override
+					public void onPageScrollStateChanged(int i) {
+					}
+				});
+	}
+
+	@SuppressLint("InflateParams")
+	private Drawable buildCounterDrawable(int count, int backgroundImageId) {
+		LayoutInflater inflater = LayoutInflater.from(this);
+		View view = inflater.inflate(R.layout.include_toolbar_action_layout,
+				null);
+		view.setBackgroundResource(backgroundImageId);
+
+		if (count == 0) {
+			View counterTextPanel = view
+					.findViewById(R.id.actionItemCounterPanelLayout);
+			counterTextPanel.setVisibility(View.GONE);
+		} else {
+			AppCompatTextView textView = (AppCompatTextView) view
+					.findViewById(R.id.actionItemCounter);
+			textView.setText("" + count);
+		}
+
+		view.measure(View.MeasureSpec.makeMeasureSpec(0,
+				View.MeasureSpec.UNSPECIFIED), View.MeasureSpec
+				.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+		view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+
+		view.setDrawingCacheEnabled(true);
+		view.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+		Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
+		view.setDrawingCacheEnabled(false);
+
+		return new BitmapDrawable(getResources(), bitmap);
+	}
+
+	private void setSlidingTabPagerAdapter() {
+		mArrayListMotherHeader = getMotherPagerHeader();
+		// mPagerAdapter = new NavigationAdapter(getSupportFragmentManager());
+		mPagerAdapter = new MotherPagerAdapter(getSupportFragmentManager(),
+				mArrayListMotherHeader);
+		mPager.setAdapter(mPagerAdapter);
+		mSlidingTabLayout.setDistributeEvenly(true);
+		mSlidingTabLayout.setViewPager(mPager);
+	}
+
+	private ArrayList<MotherHeader> getMotherPagerHeader() {
+		mArrayListMotherHeader = new ArrayList<MotherHeader>();
+
+		MotherHeader obj1 = new MotherHeader();
+		obj1.setmIsUnread(true);
+		obj1.setmTitle(getResources().getString(R.string.layout_mother_mobcast));
+		obj1.setmUnreadCount("99");
+		mArrayListMotherHeader.add(obj1);
+
+		MotherHeader obj2 = new MotherHeader();
+		obj2.setmIsUnread(false);
+		obj2.setmTitle(getResources().getString(R.string.layout_mother_chat));
+		obj2.setmUnreadCount("0");
+		mArrayListMotherHeader.add(obj2);
+
+		MotherHeader obj3 = new MotherHeader();
+		obj3.setmIsUnread(true);
+		obj3.setmTitle(getResources().getString(R.string.layout_mother_training));
+		obj3.setmUnreadCount("90");
+		mArrayListMotherHeader.add(obj3);
+
+		return mArrayListMotherHeader;
+	}
+
+	@Override
+	public void onScrollChanged(int scrollY, boolean firstScroll,
+			boolean dragging) {
+		if (dragging) {
+			int toolbarHeight = mToolbarView.getHeight();
+			float currentHeaderTranslationY = ViewHelper
+					.getTranslationY(mHeaderView);
+			if (firstScroll) {
+				if (-toolbarHeight < currentHeaderTranslationY) {
+					mBaseTranslationY = scrollY;
+				}
+			}
+			float headerTranslationY = ScrollUtils.getFloat(
+					-(scrollY - mBaseTranslationY), -toolbarHeight, 0);
+			ViewPropertyAnimator.animate(mHeaderView).cancel();
+			ViewHelper.setTranslationY(mHeaderView, headerTranslationY);
+		}
+	}
+
+	@Override
+	public void onDownMotionEvent() {
+	}
+
+	@Override
+	public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+		mBaseTranslationY = 0;
+
+		Fragment fragment = getCurrentFragment();
+		if (fragment == null) {
+			return;
+		}
+		View view = fragment.getView();
+		if (view == null) {
+			return;
+		}
+
+		// ObservableXxxViews have same API
+		// but currently they don't have any common interfaces.
+		adjustToolbar(scrollState, view);
+	}
+
+	private void adjustToolbar(ScrollState scrollState, View view) {
+		int toolbarHeight = mToolbarView.getHeight();
+		final Scrollable scrollView = (Scrollable) view
+				.findViewById(R.id.scroll);
+		if (scrollView == null) {
+			return;
+		}
+		int scrollY = scrollView.getCurrentScrollY();
+		if (scrollState == ScrollState.DOWN) {
+			showToolbar();
+		} else if (scrollState == ScrollState.UP) {
+			if (toolbarHeight <= scrollY) {
+				hideToolbar();
+			} else {
+				showToolbar();
+			}
+		} else {
+			// Even if onScrollChanged occurs without scrollY changing, toolbar
+			// should be adjusted
+			if (toolbarIsShown() || toolbarIsHidden()) {
+				// Toolbar is completely moved, so just keep its state
+				// and propagate it to other pages
+				propagateToolbarState(toolbarIsShown());
+			} else {
+				// Toolbar is moving but doesn't know which to move:
+				// you can change this to hideToolbar()
+				showToolbar();
+			}
+		}
+	}
+
+	private Fragment getCurrentFragment() {
+		return mPagerAdapter.getItemAt(mPager.getCurrentItem());
+	}
+
+	/**
+	 * <b>Description: </b></br>When the page is selected, other fragments'
+	 * scrollY should be adjusted according to the toolbar
+	 * status(shown/hidden)</br></br> <b>Referenced
+	 * :</b></br>com.github.ksoichiro
+	 * .android.observablescrollview.samples</br></br>
+	 * 
+	 * @param isShown
+	 */
+	private void propagateToolbarState(boolean isShown) {
+		int toolbarHeight = mToolbarView.getHeight();
+
+		// Set scrollY for the fragments that are not created yet
+		mPagerAdapter.setScrollY(isShown ? 0 : toolbarHeight);
+
+		// Set scrollY for the active fragments
+		for (int i = 0; i < mPagerAdapter.getCount(); i++) {
+			// Skip current item
+			if (i == mPager.getCurrentItem()) {
+				continue;
+			}
+
+			// Skip destroyed or not created item
+			Fragment f = mPagerAdapter.getItemAt(i);
+			if (f == null) {
+				continue;
+			}
+
+			View view = f.getView();
+			if (view == null) {
+				continue;
+			}
+			propagateToolbarState(isShown, view, toolbarHeight);
+		}
+	}
+
+	/**
+	 * <b>Description:</b></br>propogateToolbarState
+	 * 
+	 * @param isShown
+	 * @param view
+	 * @param toolbarHeight
+	 */
+	private void propagateToolbarState(boolean isShown, View view,
+			int toolbarHeight) {
+		Scrollable scrollView = (Scrollable) view.findViewById(R.id.scroll);
+		if (scrollView == null) {
+			return;
+		}
+		if (isShown) {
+			// Scroll up
+			if (0 < scrollView.getCurrentScrollY()) {
+				scrollView.scrollVerticallyTo(0);
+			}
+		} else {
+			// Scroll down (to hide padding)
+			if (scrollView.getCurrentScrollY() < toolbarHeight) {
+				scrollView.scrollVerticallyTo(toolbarHeight);
+			}
+		}
+	}
+
+	private boolean toolbarIsShown() {
+		return ViewHelper.getTranslationY(mHeaderView) == 0;
+	}
+
+	private boolean toolbarIsHidden() {
+		return ViewHelper.getTranslationY(mHeaderView) == -mToolbarView
+				.getHeight();
+	}
+
+	private void showToolbar() {
+		float headerTranslationY = ViewHelper.getTranslationY(mHeaderView);
+		if (headerTranslationY != 0) {
+			ViewPropertyAnimator.animate(mHeaderView).cancel();
+			ViewPropertyAnimator.animate(mHeaderView).translationY(0)
+					.setDuration(200).start();
+		}
+		propagateToolbarState(true);
+	}
+
+	private void hideToolbar() {
+		float headerTranslationY = ViewHelper.getTranslationY(mHeaderView);
+		int toolbarHeight = mToolbarView.getHeight();
+		if (headerTranslationY != -toolbarHeight) {
+			ViewPropertyAnimator.animate(mHeaderView).cancel();
+			ViewPropertyAnimator.animate(mHeaderView)
+					.translationY(-toolbarHeight).setDuration(200).start();
+		}
+		propagateToolbarState(false);
+	}
+
+	/*
+	 * Drawer Initilization
+	 */
+
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+	private void setDrawerLayout() {
+		mResources = getResources();
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mDrawerList = (ListView) findViewById(R.id.drawer_listview);
+
+		mScrimInsetsFrameLayout = (ScrimInsetsFrameLayout) findViewById(R.id.drawerRootLayout);
+
+		mDrawerProfileIv = (CircleImageView) findViewById(R.id.drawerProfileIv);
+
+		mDrawerUserNameTv = (AppCompatTextView) findViewById(R.id.drawerUserNameTv);
+		mDrawerUserEmailTv = (AppCompatTextView) findViewById(R.id.drawerUserEmailTv);
+		mDrawerSyncTv = (AppCompatTextView) findViewById(R.id.drawerSyncTitleTv);
+
+		mDrawerSyncIv = (ImageView) findViewById(R.id.drawerSyncIv);
+
+		mDrawerSyncLayout = (LinearLayout) findViewById(R.id.drawerSyncLayout);
+
+		String[] mDrawerItemArray = getResources().getStringArray(
+				R.array.drawer_array);
+		int[] mDrawableResId = new int[] { R.drawable.ic_drawer_profile,
+				R.drawable.ic_drawer_settings, R.drawable.ic_drawer_help,
+				R.drawable.ic_drawer_report, R.drawable.ic_drawer_feedback,
+				R.drawable.ic_drawer_logout, R.drawable.ic_drawer_about };
+
+		mDrawerList.setAdapter(new DrawerArrayAdapter(MotherActivity.this,
+				mDrawerItemArray, mDrawableResId));
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+		drawerArrowDrawable = new DrawerArrowDrawable(mResources);
+		drawerArrowDrawable.setStrokeColor(mResources
+				.getColor(android.R.color.white));
+		mToolBar.setNavigationIcon(drawerArrowDrawable);
+
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
+				GravityCompat.START);
+		mToolBar.setNavigationOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				if (mDrawerLayout.isDrawerVisible(Gravity.START)) {
+					mDrawerLayout.closeDrawer(Gravity.START);
+				} else {
+					mDrawerLayout.openDrawer(Gravity.START);
+				}
+			}
+		});
+
+		mDrawerLayout
+				.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+					@Override
+					public void onDrawerSlide(View drawerView, float slideOffset) {
+						offset = slideOffset;
+
+						// Sometimes slideOffset ends up so close to but not
+						// quite 1 or 0.
+						if (slideOffset >= .995) {
+							flipped = true;
+							drawerArrowDrawable.setFlip(flipped);
+						} else if (slideOffset <= .005) {
+							flipped = false;
+							drawerArrowDrawable.setFlip(flipped);
+						}
+
+						try {
+							drawerArrowDrawable.setParameter(offset);
+						} catch (IllegalArgumentException e) {
+							Log.i(TAG, e.toString());
+						}
+					}
+				});
+
+		mDrawerSyncLayout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				RotateAnimation ranim = (RotateAnimation) AnimationUtils
+						.loadAnimation(getApplicationContext(),
+								R.anim.anim_rotate);
+				mDrawerSyncIv.startAnimation(ranim);
+			}
+		});
+
+		try {
+			if (AndroidUtilities.isAboveLollyPop()) {
+				mDrawerLayout.setStatusBarBackgroundColor(getResources()
+						.getColor(R.color.toolbar_background_statusbar));
+				Window window = getWindow();
+				window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+				window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+				window.setStatusBarColor(getResources().getColor(
+						android.R.color.transparent));
+			}
+		} catch (Exception e) {
+		}
+	}
+
+	/* The click listner for ListView in the navigation drawer */
+	private class DrawerItemClickListener implements
+			ListView.OnItemClickListener {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			selectItem(position);
+		}
+	}
+
+	private void selectItem(int position) {
+		Fragment fragment = null;
+		Bundle args = new Bundle();
+		Intent drawerIntent = null;
+		switch (position) {
+		case 0:
+			drawerIntent = new Intent(MotherActivity.this, EditProfileActivity.class);
+			break;
+		case 1:
+			drawerIntent = new Intent(MotherActivity.this, SettingsActivity.class);
+			break;
+		case 2:
+			drawerIntent = new Intent(MotherActivity.this, TutorialActivity.class);
+			drawerIntent.putExtra(AppConstants.INTENTCONSTANTS.HELP, true);
+			break;
+		case 3:
+			drawerIntent = new Intent(MotherActivity.this, ReportActivity.class);
+			break;
+		case 4:
+			drawerIntent = new Intent(MotherActivity.this, FeedbackAppActivity.class);
+			break;
+		case 6:
+			drawerIntent = new Intent(MotherActivity.this, AboutActivity.class);
+			break;
+		default:
+			break;
+		}
+		mDrawerLayout.closeDrawer(mScrimInsetsFrameLayout);
+		
+		if (drawerIntent != null){
+			startActivity(drawerIntent);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);	
+		}
+	}
+
+	public class DrawerArrayAdapter extends ArrayAdapter<String> {
+		private final Context context;
+		private final String[] values;
+		private final int[] drawableResId;
+
+		public DrawerArrayAdapter(Context context, String[] values,
+				int[] drawableResId) {
+			super(context, R.layout.include_layout_drawer, values);
+			this.context = context;
+			this.values = values;
+			this.drawableResId = drawableResId;
+		}
+
+		@SuppressWarnings("deprecation")
+		@SuppressLint("ViewHolder")
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			LayoutInflater inflater = (LayoutInflater) context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View rowView = inflater
+					.inflate(R.layout.item_drawer, parent, false);
+
+			LinearLayout mDrawerItemLayout = (LinearLayout) rowView
+					.findViewById(R.id.drawerItemLayout);
+
+			AppCompatTextView mDrawerItemTextView = (AppCompatTextView) rowView
+					.findViewById(R.id.drawerItemTitleTv);
+
+			ImageView mDrawerItemImageView = (ImageView) rowView
+					.findViewById(R.id.drawerItemIv);
+
+			mDrawerItemTextView.setText(values[position]);
+			mDrawerItemImageView.setImageDrawable(getResources().getDrawable(
+					drawableResId[position]));
+
+			return rowView;
+		}
+	}
+}

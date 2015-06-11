@@ -1,0 +1,329 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme"></style>
+
+    <style name="Theme.AppCompat.Translucent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+    </style>
+
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">@color/toolbar_background</item>
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/toolbar_background_statusbar</item>
+        <!-- colorAccent is used as the default value for colorControlActivated, which is used to tint widgets -->
+        <item name="colorAccent">@android:color/darker_gray</item>
+        <item name="colorControlActivated">@color/toolbar_background</item>
+        <item name="colorControlNormal">@color/toolbar_background</item>
+        <item name="colorControlHighlight">@color/toolbar_background_statusbar</item>
+        <item name="colorSwitchThumbNormal">@color/toolbar_background</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <!-- Material Dialog L -->
+    <style name="MD_Light" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="md_divider">@color/md_divider_black</item>
+        <item name="md_list_selector">@drawable/md_selector</item>
+        <item name="md_btn_stacked_selector">@drawable/md_selector</item>
+        <item name="md_btn_positive_selector">@drawable/md_btn_selector</item>
+        <item name="md_btn_neutral_selector">@drawable/md_btn_selector</item>
+        <item name="md_btn_negative_selector">@drawable/md_btn_selector</item>
+        <item name="android:windowAnimationStyle">@style/MD_WindowAnimation</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="MD_Dark" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="md_divider">@color/md_divider_white</item>
+        <item name="md_list_selector">@drawable/md_selector_dark</item>
+        <item name="md_btn_stacked_selector">@drawable/md_selector_dark</item>
+        <item name="md_btn_positive_selector">@drawable/md_btn_selector_dark</item>
+        <item name="md_btn_neutral_selector">@drawable/md_btn_selector_dark</item>
+        <item name="md_btn_negative_selector">@drawable/md_btn_selector_dark</item>
+        <item name="android:windowAnimationStyle">@style/MD_WindowAnimation</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="MD_ActionButtonStacked" parent="@style/MD_ActionButton" tools:ignore="NewApi">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingLeft">@dimen/md_button_padding_horizontal_internalexternal</item>
+        <item name="android:paddingStart">@dimen/md_button_padding_horizontal_internalexternal</item>
+        <item name="android:paddingRight">@dimen/md_button_padding_horizontal_internalexternal</item>
+        <item name="android:paddingEnd">@dimen/md_button_padding_horizontal_internalexternal</item>
+    </style>
+
+    <style name="MD_ActionButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/md_button_height</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="MD_ActionButton.Text" tools:ignore="NewApi">
+        <item name="android:textSize">@dimen/md_button_textsize</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:background">@null</item>
+        <item name="android:minWidth">@dimen/md_button_min_width</item>
+        <item name="android:paddingLeft">@dimen/md_button_textpadding_horizontal</item>
+        <item name="android:paddingRight">@dimen/md_button_textpadding_horizontal</item>
+    </style>
+
+    <style name="MD_WindowAnimation">
+        <item name="android:windowEnterAnimation">@anim/popup_enter</item>
+        <item name="android:windowExitAnimation">@anim/popup_exit</item>
+    </style>
+
+    <!-- Swipe Back Layout -->
+    <style name="SwipeBackLayout">
+        <item name="edge_size">50dip</item>
+        <item name="shadow_left">@drawable/shadow_left</item>
+        <item name="shadow_right">@drawable/shadow_right</item>
+        <item name="shadow_bottom">@drawable/shadow_bottom</item>
+    </style>
+
+    <!-- BottomSheet -->
+    <style name="BottomSheet" />
+
+    <style name="BottomSheet.Dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:textColor">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimAmount">0.3</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowAnimationStyle">@style/BottomSheet.Animation</item>
+        <item name="android:textColorPrimary">#DD000000</item>
+        <item name="android:textColorSecondary">#8A000000</item>
+        <item name="android:textColorHint">#42000000</item>
+        <item name="bs_dialogBackground">@android:color/background_light</item>
+        <item name="bs_dividerColor">@color/bs_divider_color</item>
+        <item name="bs_numColumns">@integer/bs_grid_colum</item>
+        <item name="bs_titleTextAppearance">@style/Text.Headline</item>
+        <item name="bs_listItemTitleTextAppearance">@style/Text.Title</item>
+        <item name="bs_gridItemTitleTextAppearance">@style/Text.Hint</item>
+        <item name="bs_moreText">@string/bs_more</item>
+        <item name="bs_closeDrawable">@drawable/bs_ic_clear_light</item>
+        <item name="bs_moreDrawable">@drawable/bs_ic_more_light</item>
+        <item name="bs_listStyle">@style/BottomSheet.List</item>
+        <item name="bs_collapseListIcons">true</item>
+    </style>
+
+    <style name="BottomSheet.Dialog.Dark" parent="BottomSheet.Dialog">
+        <item name="android:textColorPrimary">#DDffffff</item>
+        <item name="android:textColorSecondary">#8Affffff</item>
+        <item name="android:textColorHint">#42ffffff</item>
+        <item name="bs_dialogBackground">@android:color/background_dark</item>
+        <item name="bs_dividerColor">@color/bs_dark_divider_color</item>
+        <item name="bs_listStyle">@style/BottomSheet.List.Dark</item>
+        <item name="bs_closeDrawable">@drawable/bs_ic_clear</item>
+        <item name="bs_moreDrawable">@drawable/bs_ic_more</item>
+    </style>
+
+    <style name="Text" />
+
+    <style name="Text.Headline">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+
+    <style name="Text.Title">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-medium</item>
+    </style>
+
+    <style name="Text.Hint">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?android:textColorHint</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-medium</item>
+    </style>
+
+    <style name="Text.Subhead">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif</item>
+    </style>
+
+    <style name="BottomSheet.Title">
+        <item name="android:singleLine">true</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?bs_titleTextAppearance</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="BottomSheet.Icon">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+    </style>
+
+    <style name="BottomSheet.List">
+        <item name="android:listSelector">@drawable/bs_list_selector</item>
+        <item name="android:drawSelectorOnTop">false</item>
+        <item name="android:layoutAnimation">@anim/bs_list_layout_anim_in</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:clipToPadding">false</item>
+    </style>
+
+    <style name="BottomSheet.List.Dark">
+        <item name="android:listSelector">@drawable/bs_list_dark_selector</item>
+    </style>
+
+    <style name="BottomSheet.ListItem">
+        <item name="android:minHeight">48dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layoutAnimation">@null</item>
+    </style>
+
+    <style name="BottomSheet.ListItemImage">
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+    </style>
+
+    <style name="BottomSheet.ListItemTitle">
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:textAppearance">?bs_listItemTitleTextAppearance</item>
+    </style>
+
+    <style name="BottomSheet.ListDivider">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:minHeight">1dp</item>
+        <item name="android:background">?bs_dividerColor</item>
+        <item name="android:layout_marginTop">7dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="BottomSheet.GridItemImage">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="BottomSheet.GridItemTitle">
+        <item name="android:singleLine">true</item>
+        <item name="android:textAppearance">?bs_gridItemTitleTextAppearance</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="BottomSheet.Grid" />
+
+    <style name="BottomSheet.GridItem">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <style name="BottomSheet.Animation">
+        <item name="android:windowEnterAnimation">@anim/dock_bottom_enter</item>
+        <item name="android:windowExitAnimation">@anim/dock_bottom_exit</item>
+    </style>
+
+    <style name="BottomSheet.TopDivider">
+        <item name="android:background">?bs_dividerColor</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="AudioSeekBar" parent="android:Widget.SeekBar">
+        <item name="android:progressDrawable">@drawable/mobcast_scrubber_progress_horizontal_holo_light</item>
+        <item name="android:indeterminateDrawable">@drawable/mobcast_scrubber_progress_horizontal_holo_light</item>
+        <item name="android:minHeight">13dp</item>
+        <item name="android:maxHeight">13dp</item>
+        <item name="android:thumb">@drawable/ic_slider_button</item>
+        <item name="android:thumbOffset">16dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+
+    <!-- DiscreetSeekBar -->
+    <style name="CustomFloaterTextAppearance" parent="android:TextAppearance.Small">
+        <item name="android:textSize">9sp</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:shadowColor">#FFFF0000</item>
+        <item name="android:shadowRadius">4</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">3</item>
+    </style>
+
+    <style name="DefaultSeekBar" parent="android:Widget">
+        <item name="dsb_indicatorTextAppearance">@style/DefaultIndicatorTextAppearance</item>
+        <item name="dsb_progressColor">@color/toolbar_background</item>
+        <item name="dsb_trackColor">@color/dsb_track_color</item>
+        <item name="dsb_rippleColor">@color/dsb_ripple_color_pressed</item>
+        <item name="dsb_indicatorColor">@color/toolbar_background</item>
+        <item name="dsb_indicatorElevation">4dp</item>
+        <item name="dsb_mirrorForRtl">true</item>
+    </style>
+
+    <style name="DefaultIndicatorTextAppearance" parent="android:TextAppearance.Small">
+        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:padding">6dp</item>
+    </style>
+
+    <!-- SmoothProgressBar -->
+    <style name="SPB" parent="android:Widget.ProgressBar.Horizontal"></style>
+
+    <style name="SmoothProgressBar" parent="SPB">
+        <item name="spb_color">@color/spb_default_color</item>
+        <item name="spb_sections_count">@integer/spb_default_sections_count</item>
+        <item name="spb_speed">@string/spb_default_speed</item>
+        <item name="spb_stroke_width">@dimen/spb_default_stroke_width</item>
+        <item name="spb_stroke_separator_length">@dimen/spb_default_stroke_separator_length</item>
+        <item name="spb_reversed">@bool/spb_default_reversed</item>
+        <item name="spb_mirror_mode">@bool/spb_default_mirror_mode</item>
+        <item name="spb_interpolator">@integer/spb_default_interpolator</item>
+    </style>
+
+    <style name="PocketProgressBar" parent="SmoothProgressBar">
+        <item name="spb_stroke_separator_length">4dp</item>
+        <item name="spb_sections_count">4</item>
+        <item name="spb_speed">1</item>
+        <item name="android:interpolator">@anim/pocket_interpolator</item>
+        <item name="spb_colors">@array/pocket_bar_colors</item>
+        <item name="spb_progressiveStart_activated">true</item>
+        <item name="spb_generate_background_with_colors">false</item>
+    </style>
+
+    <style name="MobcastProgressDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowSoftInputMode">adjustPan</item>
+    </style>
+
+</resources>

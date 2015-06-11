@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_gravity="center"
+            android:background="@color/orange" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/fragmentQuizScoreQuestionNumberTextTv"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/quiz_question_number_height"
+            android:layout_gravity="bottom|center"
+            android:background="@drawable/shape_button_orange_fill"
+            android:gravity="center"
+            android:paddingBottom="4dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingTop="4dp"
+            android:text="@string/sample_quiz_header_number_text"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/quiz_question_number_text_size"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/fragmentQuizScoreQuestionTitleTv"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/quiz_question_number_height"
+        android:layout_gravity="bottom|center"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/sample_quiz_header_number_text"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/fragment_quiz_score_question_title_text_size"
+        android:textStyle="bold" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/quiz_question_number_height"
+        android:layout_gravity="bottom|center"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/sample_quiz_score_correct_answer"
+        android:textColor="@color/toolbar_background"
+        android:textSize="@dimen/fragment_quiz_score_question_correct_text_size" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/fragmentQuizScoreCorrectAnswerTv"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/quiz_question_number_height"
+        android:layout_gravity="bottom|center"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/sample_quiz_header_number_text"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/fragment_quiz_score_question_title_text_size"
+        android:textStyle="bold" />
+
+</LinearLayout>

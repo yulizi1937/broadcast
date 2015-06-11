@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fadingEdge="none"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:id="@+id/fragmentLiveStreamYouTubeFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/black" >
+
+        <com.google.android.youtube.player.YouTubePlayerView
+            android:id="@+id/fragmentLiveStreamYouTubePlayerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fadingEdge="none" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/fragment_detail_padding" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/fragmentLiveStreamYouTubeTitleTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:gravity="start|center"
+                    android:text="@string/sample_event_title"
+                    android:textColor="@color/toolbar_background"
+                    android:textSize="@dimen/event_title_textview_size"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:id="@+id/fragmentLiveStreamYouTubeByLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fragment_detail_title_by_content_margin_top"
+                    android:orientation="horizontal" >
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/fragmentLiveStreamYouTubeByTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="left|center"
+                        android:layout_marginRight="90dp"
+                        android:background="@color/item_event_by"
+                        android:gravity="left|center"
+                        android:padding="4dp"
+                        android:text="@string/sample_event_by"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/event_by_textview_size"
+                        android:textStyle="bold"
+                        tools:ignore="RtlHardcoded" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/fragmentLiveStreamYouTubeViewTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="right|center"
+                        android:background="@drawable/shape_rectange_app"
+                        android:drawableLeft="@drawable/item_view"
+                        android:gravity="right|center"
+                        android:paddingBottom="2dp"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="2dp"
+                        android:text="@string/sample_event_view"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/event_by_textview_size"
+                        tools:ignore="RtlHardcoded" />
+                </RelativeLayout>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/fragmentLiveStreamYouTubeSummaryTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/fragment_detail_title_by_content_margin_top"
+                    android:gravity="start|center"
+                    android:text="@string/sample_event_summary"
+                    android:textColor="@color/toolbar_background"
+                    android:textSize="@dimen/event_detail_event_summary_size" />
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

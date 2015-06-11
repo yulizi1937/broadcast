@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="TAG_BIRTHDAYUSERNAME" type="id"/>
+    <item name="bs_more" type="id"/>
+    <item name="calligraphy_tag_id" type="id"/>
+    <item name="mcab_toolbar" type="id"/>
+    <item name="view_offset_helper" type="id"/>
+
+</resources>

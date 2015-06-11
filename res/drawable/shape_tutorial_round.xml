@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval" >
+
+    <solid android:color="@color/tutorial" />
+
+    <size
+        android:height="@dimen/shape_tutorial_round_width"
+        android:width="@dimen/shape_tutorial_round_width" />
+
+</shape>

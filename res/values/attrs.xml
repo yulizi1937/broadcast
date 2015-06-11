@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- PagerSlidingTabStrip -->
+    <declare-styleable name="PagerSlidingTabStrip">
+        <attr name="pstsIndicatorColor" format="color" />
+        <attr name="pstsUnderlineColor" format="color" />
+        <attr name="pstsDividerColor" format="color" />
+        <attr name="pstsIndicatorHeight" format="dimension" />
+        <attr name="pstsUnderlineHeight" format="dimension" />
+        <attr name="pstsDividerPadding" format="dimension" />
+        <attr name="pstsTabPaddingLeftRight" format="dimension" />
+        <attr name="pstsScrollOffset" format="dimension" />
+        <attr name="pstsTabBackground" format="reference" />
+        <attr name="pstsShouldExpand" format="boolean" />
+        <attr name="pstsTextAllCaps" format="boolean" />
+    </declare-styleable>
+
+    <!-- Material Ripple Effect -->
+    <declare-styleable name="MaterialRippleLayout">
+        <attr name="mrl_rippleColor" format="color" localization="suggested" />
+        <attr name="mrl_rippleDimension" format="dimension" localization="suggested" />
+        <attr name="mrl_rippleOverlay" format="boolean" localization="suggested" />
+        <attr name="mrl_rippleAlpha" format="float" localization="suggested" />
+        <attr name="mrl_rippleDuration" format="integer" localization="suggested" />
+        <attr name="mrl_rippleFadeDuration" format="integer" localization="suggested" />
+        <attr name="mrl_rippleHover" format="boolean" localization="suggested" />
+        <attr name="mrl_rippleBackground" format="color" localization="suggested" />
+        <attr name="mrl_rippleDelayClick" format="boolean" localization="suggested" />
+        <attr name="mrl_ripplePersistent" format="boolean" localization="suggested" />
+        <attr name="mrl_rippleInAdapter" format="boolean" localization="suggested" />
+        <attr name="mrl_rippleRoundedCorners" format="dimension" localization="suggested" />
+    </declare-styleable>
+
+    <!-- Materialist Progress -->
+    <declare-styleable name="ProgressWheel">
+        <attr name="matProg_progressIndeterminate" format="boolean" />
+        <attr name="matProg_barColor" format="color" />
+        <attr name="matProg_rimColor" format="color" />
+        <attr name="matProg_rimWidth" format="dimension" />
+        <attr name="matProg_spinSpeed" format="float" />
+        <attr name="matProg_barSpinCycleTime" format="integer" />
+        <attr name="matProg_circleRadius" format="dimension" />
+        <attr name="matProg_fillRadius" format="boolean" />
+        <attr name="matProg_barWidth" format="dimension" />
+        <attr name="matProg_linearProgress" format="boolean" />
+    </declare-styleable>
+
+    <!-- Circular ImageView -->
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+
+    <!-- ScrimInsetsFrameLayout -->
+    <declare-styleable name="ScrimInsetsView">
+        <attr name="scrimInsetForeground" format="reference|color" />
+    </declare-styleable>
+
+    <!-- Material Dialog L -->
+    <!-- These top three attributes are not accessible to library users -->
+    <attr name="md_divider" format="color" />
+
+    <!-- Accessible global theming attributes -->
+    <attr name="md_dark_theme" format="boolean" />
+    <attr name="md_background_color" format="color" />
+    <attr name="md_icon" format="reference" />
+    <attr name="md_icon_max_size" format="dimension" />
+    <attr name="md_icon_limit_icon_to_default_size" format="boolean" />
+    <attr name="md_title_color" format="color" />
+    <attr name="md_content_color" format="color" />
+    <attr name="md_positive_color" format="color" />
+    <attr name="md_neutral_color" format="color" />
+    <attr name="md_negative_color" format="color" />
+    <attr name="md_widget_color" format="color" />
+    <attr name="md_item_color" format="color" />
+    <attr name="md_divider_color" format="color" />
+    <attr name="md_list_selector" format="reference" />
+    <attr name="md_btn_stacked_selector" format="reference" />
+    <attr name="md_btn_positive_selector" format="reference" />
+    <attr name="md_btn_neutral_selector" format="reference" />
+    <attr name="md_btn_negative_selector" format="reference" />
+    <attr name="md_title_gravity" format="enum">
+        <enum name="start" value="0" />
+        <enum name="center" value="1" />
+        <enum name="end" value="2" />
+    </attr>
+    <attr name="md_content_gravity" format="enum">
+        <enum name="start" value="0" />
+        <enum name="center" value="1" />
+        <enum name="end" value="2" />
+    </attr>
+    <attr name="md_btnstacked_gravity" format="enum">
+        <enum name="start" value="0" />
+        <enum name="center" value="1" />
+        <enum name="end" value="2" />
+    </attr>
+    <attr name="md_items_gravity" format="enum">
+        <enum name="start" value="0" />
+        <enum name="center" value="1" />
+        <enum name="end" value="2" />
+    </attr>
+    <attr name="md_buttons_gravity" format="enum">
+        <enum name="start" value="0" />
+        <enum name="center" value="1" />
+        <enum name="end" value="2" />
+    </attr>
+
+    <declare-styleable name="MDRootLayout">
+        <attr name="md_reduce_padding_no_title_no_buttons" format="boolean" />
+    </declare-styleable>
+
+    <attr name="md_medium_font" format="string" />
+    <attr name="md_regular_font" format="string" />
+
+    <!-- Swipe Back Layout -->
+    <declare-styleable name="SwipeBackLayout">
+        <attr name="edge_size" format="dimension" />
+        <attr name="edge_flag">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+            <enum name="bottom" value="2" />
+            <enum name="all" value="3" />
+        </attr>
+        <attr name="shadow_left" format="reference" />
+        <attr name="shadow_right" format="reference" />
+        <attr name="shadow_bottom" format="reference" />
+    </declare-styleable>
+
+    <attr name="SwipeBackLayoutStyle" format="reference" />
+
+    <!-- CirclePagerIndicator -->
+    <declare-styleable name="ViewPagerIndicator">
+
+        <!-- Style of the circle indicator. -->
+        <attr name="vpiCirclePageIndicatorStyle" format="reference" />
+    </declare-styleable>
+
+    <attr name="centered" format="boolean" />
+    <attr name="selectedColor" format="color" />
+    <attr name="strokeWidth" format="dimension" />
+    <attr name="unselectedColor" format="color" />
+
+    <declare-styleable name="CirclePageIndicator">
+
+        <!-- Whether or not the indicators should be centered. -->
+        <attr name="centered" />
+        <!-- Color of the filled circle that represents the current page. -->
+        <attr name="fillColor" format="color" />
+        <!-- Color of the filled circles that represents pages. -->
+        <attr name="pageColor" format="color" />
+        <!-- Orientation of the indicator. -->
+        <attr name="android:orientation" />
+        <!-- Radius of the circles. This is also the spacing between circles. -->
+        <attr name="radius" format="dimension" />
+        <!-- Whether or not the selected indicator snaps to the circles. -->
+        <attr name="snap" format="boolean" />
+        <!-- Color of the open circles. -->
+        <attr name="strokeColor" format="color" />
+        <!-- Width of the stroke used to draw the circles. -->
+        <attr name="strokeWidth" />
+        <!-- View background -->
+        <attr name="android:background" />
+    </declare-styleable>
+
+    <!-- ProgressTimerWheel -->
+    <declare-styleable name="ProgressTimerWheel">
+        <attr name="timerwheel_text" format="string" />
+        <attr name="timerwheel_textColor" format="color" />
+        <attr name="timerwheel_textSize" format="dimension" />
+        <attr name="timerwheel_barColor" format="color" />
+        <attr name="timerwheel_rimColor" format="color" />
+        <attr name="timerwheel_rimWidth" format="dimension" />
+        <attr name="timerwheel_spinSpeed" format="dimension" />
+        <attr name="timerwheel_delayMillis" format="integer" />
+        <attr name="timerwheel_circleColor" format="color" />
+        <attr name="timerwheel_radius" format="dimension" />
+        <attr name="timerwheel_barWidth" format="dimension" />
+        <attr name="timerwheel_barLength" format="dimension" />
+        <attr name="timerwheel_contourColor" format="color" />
+        <attr name="timerwheel_contourSize" format="dimension" />
+    </declare-styleable>
+
+    <!-- BottomSheet -->
+    <declare-styleable name="BottomSheet">
+        <attr name="bottomSheetStyle" format="reference" />
+        <attr name="bs_dialogBackground" format="color|reference" />
+        <attr name="bs_listStyle" format="reference" />
+        <attr name="bs_dividerColor" format="color|reference" />
+        <attr name="bs_numColumns" format="integer" />
+        <attr name="bs_titleTextAppearance" format="reference" />
+        <attr name="bs_listItemTitleTextAppearance" format="reference" />
+        <attr name="bs_gridItemTitleTextAppearance" format="reference" />
+        <attr name="bs_moreDrawable" format="reference" />
+        <attr name="bs_moreText" format="string" />
+        <attr name="bs_closeDrawable" format="reference" />
+        <attr name="bs_collapseListIcons" format="boolean" />
+    </declare-styleable>
+
+    <!-- DiscreteSeekBar specific attributes -->
+    <attr name="discreteSeekBarStyle" format="reference" />
+
+    <declare-styleable name="DiscreteSeekBar">
+        <attr name="dsb_min" format="integer|dimension" />
+        <attr name="dsb_max" format="integer|dimension" />
+        <attr name="dsb_value" format="integer|dimension" />
+        <attr name="dsb_mirrorForRtl" format="boolean" />
+        <attr name="dsb_allowTrackClickToDrag" format="boolean" />
+        <attr name="dsb_progressColor" format="color|reference" />
+        <attr name="dsb_trackColor" format="color|reference" />
+        <attr name="dsb_indicatorTextAppearance" format="reference" />
+        <attr name="dsb_indicatorColor" format="color|reference" />
+        <attr name="dsb_indicatorElevation" format="dimension" />
+        <attr name="dsb_indicatorFormatter" format="string|reference" />
+        <attr name="dsb_rippleColor" format="color|reference" />
+    </declare-styleable>
+
+    <!-- Facebook ShimmerFrameLayout -->
+    <declare-styleable name="ShimmerFrameLayout">
+        <attr name="shimmer_auto_start" format="boolean" />
+        <attr name="shimmer_base_alpha" format="float" />
+        <attr name="shimmer_duration" format="integer" />
+        <attr name="shimmer_repeat_count" format="integer" />
+        <attr name="shimmer_repeat_delay" format="integer" />
+        <attr name="shimmer_repeat_mode" format="enum">
+            <enum name="shimmer_restart" value="1" />
+            <enum name="shimmer_reverse" value="2" />
+        </attr>
+        <attr name="shimmer_angle" format="enum">
+            <enum name="shimmer_cw_0" value="0" />
+            <enum name="shimmer_cw_90" value="90" />
+            <enum name="shimmer_cw_180" value="180" />
+            <enum name="shimmer_cw_270" value="270" />
+        </attr>
+        <attr name="shimmer_dropoff" format="float" />
+        <attr name="shimmer_fixed_width" format="dimension" />
+        <attr name="shimmer_fixed_height" format="dimension" />
+        <attr name="shimmer_intensity" format="float" />
+        <attr name="shimmer_relative_width" format="float" />
+        <attr name="shimmer_relative_height" format="float" />
+        <attr name="shimmer_shape" format="enum">
+            <enum name="shimmer_linear" value="0" />
+            <enum name="shimmer_radial" value="1" />
+        </attr>
+        <attr name="shimmer_tilt" format="float" />
+    </declare-styleable>
+
+    <!-- SmoothProgressBar -->
+    <declare-styleable name="SmoothProgressBar">
+        <attr name="spbStyle" format="reference" />
+        <attr name="spb_color" format="color" />
+        <attr name="spb_stroke_width" format="dimension" />
+        <attr name="spb_stroke_separator_length" format="dimension" />
+        <attr name="spb_sections_count" format="integer" />
+        <attr name="spb_speed" format="float" />
+        <attr name="spb_progressiveStart_speed" format="float" />
+        <attr name="spb_progressiveStop_speed" format="float" />
+        <attr name="spb_interpolator" format="enum">
+            <enum name="spb_interpolator_accelerate" value="0" />
+            <enum name="spb_interpolator_linear" value="1" />
+            <enum name="spb_interpolator_acceleratedecelerate" value="2" />
+            <enum name="spb_interpolator_decelerate" value="3" />
+        </attr>
+        <attr name="spb_reversed" format="boolean" />
+        <attr name="spb_mirror_mode" format="boolean" />
+        <attr name="spb_colors" format="reference" />
+        <attr name="spb_progressiveStart_activated" format="boolean" />
+        <attr name="spb_background" format="reference" />
+        <attr name="spb_generate_background_with_colors" format="boolean" />
+        <attr name="spb_gradients" format="boolean" />
+    </declare-styleable>
+
+    <!-- Calligraphy -->
+    <attr name="fontPath" format="string" />
+
+    <!-- Material Contextual ToolBar -->
+    <attr name="mcab_title" format="string" />
+    <attr name="mcab_popup_theme" format="reference" />
+    <attr name="mcab_contentinset_start" format="dimension" />
+    <attr name="mcab_menu" format="reference" />
+    <attr name="mcab_background_color" format="color" />
+    <attr name="mcab_close_drawable" format="reference" />
+
+    <!-- Flow Layout -->
+    <declare-styleable name="FlowLayout">
+        <attr name="android:gravity" />
+    </declare-styleable>
+    <declare-styleable name="FlowLayout_Layout">
+        <attr name="android:layout_gravity" />
+    </declare-styleable>
+
+</resources>

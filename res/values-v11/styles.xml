@@ -1,0 +1,38 @@
+<resources>
+     <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme"></style>
+    
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- API 11 theme customizations can go here. -->
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">@color/toolbar_background</item>
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/toolbar_background_statusbar</item>
+        <!-- colorAccent is used as the default value for colorControlActivated, which is used to tint widgets -->
+        <item name="colorAccent">@android:color/white</item>
+        <item name="colorControlActivated">@color/toolbar_background</item>
+        <item name="colorControlNormal">@color/toolbar_background</item>
+        <item name="colorControlHighlight">@color/toolbar_background_statusbar</item>
+        <item name="colorSwitchThumbNormal">@color/toolbar_background</item>
+        <item name="windowActionBar">false</item> 
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeBackground">@color/toolbar_background</item>
+    </style>
+    
+    <style name="AudioSeekBar" parent="android:Widget.Holo.Light.SeekBar">
+      <item name="android:progressDrawable">@drawable/mobcast_scrubber_progress_horizontal_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/mobcast_scrubber_progress_horizontal_holo_light</item>
+      <item name="android:thumb">@drawable/ic_slider_button</item>
+      <item name="android:minHeight">13dp</item>
+      <item name="android:maxHeight">13dp</item>
+      <item name="android:thumbOffset">16dp</item>
+      <item name="android:paddingLeft">16dp</item>
+      <item name="android:paddingRight">16dp</item>
+  </style>
+  
+    <style name="SPB" parent="android:Widget.Holo.ProgressBar.Horizontal">
+    </style>
+
+</resources>

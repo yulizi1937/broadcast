@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:circlepageindicator="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/activityTutorialViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.application.ui.view.CirclePageIndicator
+        android:id="@+id/activityTutorialCirclePageIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="20dp"
+        android:padding="7dp"
+        circlepageindicator:centered="true"
+        circlepageindicator:fillColor="@android:color/white"
+        circlepageindicator:pageColor="@color/tutorial"
+        circlepageindicator:radius="3dp"
+        circlepageindicator:strokeColor="@color/tutorial"
+        circlepageindicator:strokeWidth="1dp" />
+
+    <ImageView
+        android:id="@+id/activityTutorialNextIv"
+        android:layout_width="@dimen/activity_tutorial_shape_round_width"
+        android:layout_height="@dimen/activity_tutorial_shape_round_width"
+        android:layout_gravity="end|center"
+        android:layout_marginEnd="@dimen/activity_tutorial_next_image_margin"
+        android:layout_marginRight="@dimen/activity_tutorial_next_image_margin"
+        android:background="@drawable/shape_tutorial_round"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_tutorial_next"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/activityTutorialPreviousIv"
+        android:layout_width="@dimen/activity_tutorial_shape_round_width"
+        android:layout_height="@dimen/activity_tutorial_shape_round_width"
+        android:layout_gravity="start|center"
+        android:layout_marginLeft="@dimen/activity_tutorial_next_image_margin"
+        android:layout_marginStart="@dimen/activity_tutorial_next_image_margin"
+        android:background="@drawable/shape_tutorial_round"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_tutorial_prev"
+        tools:ignore="ContentDescription" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/abc_action_bar_default_height_material"
+        android:layout_gravity="top"
+        android:background="@android:color/transparent"
+        app:contentInsetEnd="0dp"
+        app:contentInsetStart="0dp"
+        app:popupTheme="@style/Theme.AppCompat.Light.DarkActionBar"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
+    </android.support.v7.widget.Toolbar>
+
+</FrameLayout>

@@ -1,0 +1,356 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="tab_height">48dp</dimen>
+    <dimen name="toolbar_height">48dp</dimen>
+    <dimen name="toolbar_elevation">2dp</dimen>
+    <dimen name="toolbar_elevation_reverse">-2dp</dimen>
+    <dimen name="crouton_height">24dp</dimen>
+
+    <!-- activity_splash -->
+    <dimen name="activity_splash_appname_textsize">28sp</dimen>
+    <dimen name="activity_splash_appname_margin_bottom">28dp</dimen>
+    <dimen name="activity_splash_logo_width">120dp</dimen>
+    <dimen name="activity_splash_logo_height">120dp</dimen>
+    
+    <!-- activity_login -->
+    <dimen name="login_logo_margin_top">50dp</dimen>
+    <dimen name="login_textview_size">14sp</dimen>
+    <dimen name="login_edittext_size">18sp</dimen>
+    <dimen name="login_countrycode_size">16sp</dimen>
+    <dimen name="login_admin_size">8sp</dimen>
+    <dimen name="login_editbox_height">40dp</dimen>
+    <dimen name="login_btn_next_width">200dp</dimen>
+    <dimen name="login_btn_next_height">40dp</dimen>
+
+    <!-- activity_set_profile -->
+    <dimen name="set_profile_upload_another_size">12sp</dimen>
+    <dimen name="set_profile_skip_size">12sp</dimen>
+
+    <!-- activity_verification -->
+    <dimen name="verification_retry_size">12sp</dimen>
+    <dimen name="verfication_retry_size_btn">12sp</dimen>
+    <dimen name="verification_btn_resend_width">120dp</dimen>
+    <dimen name="verification_btn_resend_height">25dp</dimen>
+    
+    <!-- activity_edit_profile -->
+    <dimen name="edit_profile_framelayout_height">150dp</dimen>
+    <dimen name="edit_profile_framelayout_inner_height">130dp</dimen>
+    <dimen name="edit_profile_remove_margin_top">104dp</dimen>
+    <dimen name="edit_profile_circleimageview_height">96dp</dimen>
+    <dimen name="edit_profile_progresswheel_height">48dp</dimen>
+    <dimen name="edit_profile_upload_imageview_height">48dp</dimen>
+
+    <!-- item_recycler_award -->
+    <dimen name="award_winner_textview_size">14sp</dimen>
+    <dimen name="award_name_textview_size">10sp</dimen>
+    <dimen name="award_read_strip_width">4dp</dimen>
+
+    <!-- item_recycler_event -->
+    <dimen name="event_left_number_textview_size">18sp</dimen>
+    <dimen name="event_left_string_textview_size">8sp</dimen>
+    <dimen name="event_title_textview_size">16sp</dimen>
+    <dimen name="event_by_textview_size">10sp</dimen>
+    <dimen name="event_summary_textview_size">12sp</dimen>
+
+    <!-- fragment_event_details -->
+    <dimen name="event_detail_cover_layout_height">150dp</dimen>
+    <dimen name="event_detail_time_left_layout_height">64dp</dimen>
+    <dimen name="event_detail_share_width">48dp</dimen>
+    <dimen name="event_detail_cover_transparency_height">48dp</dimen>
+    <dimen name="event_detail_event_date_size">24sp</dimen>
+    <dimen name="event_detail_event_till_size">18sp</dimen>
+    <dimen name="event_detail_event_date_text_size">12sp</dimen>
+    <dimen name="event_detail_event_location_text_size">13sp</dimen>
+    <dimen name="event_detail_event_location_view_map_size">8sp</dimen>
+    <dimen name="event_detail_event_till_text_size">12sp</dimen>
+    <dimen name="event_detail_date_image_width">20dp</dimen>
+    <dimen name="event_button_size">14sp</dimen>
+    <dimen name="event_button_height">32dp</dimen>
+    <dimen name="event_detail_event_invite_text_size">8sp</dimen>
+    <dimen name="event_detail_event_invite_size">10sp</dimen>
+    <dimen name="event_detail_event_summary_size">14sp</dimen>
+    <dimen name="fragment_detail_title_by_content_margin_top">8dp</dimen>
+    <dimen name="fragment_detail_padding">8dp</dimen>
+
+    <!-- fragment_quiz -->
+    <dimen name="quiz_timer_layout_height">110dp</dimen>
+    <dimen name="quiz_timer_progress_width">56dp</dimen>
+    <dimen name="quiz_timer_progress_rim_width">6dp</dimen>
+    <dimen name="quiz_timer_progress_bar_width">7dp</dimen>
+    <dimen name="quiz_timer_second_size">12sp</dimen>
+    <dimen name="quiz_timer_second_text_size">6sp</dimen>
+    <dimen name="quiz_question_number_text_size">10sp</dimen>
+    <dimen name="quiz_question_number_height">26dp</dimen>
+    <dimen name="quiz_question_navigation_height">32dp</dimen>
+    <dimen name="quiz_question_navigation_size">14sp</dimen>
+
+    <!-- fragment_quiz_selective_radio -->
+    <dimen name="fragment_quiz_selective_quiz_title_size">18sp</dimen>
+    <dimen name="fragment_quiz_selective_quiz_option_size">13sp</dimen>
+    <dimen name="fragment_quiz_selective_quiz_option_padding">16sp</dimen>
+
+    <!-- fragment_feedback_rate_ratingbar -->
+
+
+    <!-- fragment_image -->
+    <dimen name="fragment_image_frame_height">180dp</dimen>
+    <dimen name="fragment_image_language_header_text_size">14sp</dimen>
+    <dimen name="fragment_image_language_flowlayout_padding">2dp</dimen>
+
+    <!-- fragment_audio -->
+    <dimen name="fragment_audio_seekbar_textview_size">14sp</dimen>
+    <dimen name="fragment_audio_visual_frame_height">120dp</dimen>
+
+    <!-- fragment_video -->
+    <dimen name="fragment_video_frame_height">200dp</dimen>
+    <dimen name="fragment_video_description_height">48dp</dimen>
+    <dimen name="fragment_video_description_total_length_size">22sp</dimen>
+
+    <!-- fragment_pdf -->
+    <dimen name="fragment_pdf_image_width">60dp</dimen>
+    <dimen name="fragment_pdf_image_height">90dp</dimen>
+    <dimen name="fragment_pdf_image_margin_top">30dp</dimen>
+
+    <!-- fragment_news -->
+    <dimen name="fragment_news_view_source_layout_height">30dp</dimen>
+    <dimen name="fragment_news_view_source_image_width">20dp</dimen>
+
+    <!-- fragment_about -->
+    <dimen name="fragment_about_version_text">13sp</dimen>
+    <dimen name="fragment_about_version_detail_text">9sp</dimen>
+    <dimen name="fragment_about_logo_height">90dp</dimen>
+    <dimen name="fragment_about_version_detail_text_margin_top">4dp</dimen>
+    <dimen name="fragment_about_version_layout_margin_top">24dp</dimen>
+
+    <!-- fragment_quiz_score -->
+    <dimen name="fragment_quiz_score_header_height">32dp</dimen>
+    <dimen name="fragment_quiz_score_height">48dp</dimen>
+    <dimen name="fragment_quiz_score_header_text_size">12sp</dimen>
+    <dimen name="fragment_quiz_score_text_size">18sp</dimen>
+    <dimen name="fragment_quiz_score_text_detail_size">8sp</dimen>
+    <dimen name="fragment_quiz_score_statement_text_size">12sp</dimen>
+    <dimen name="fragment_quiz_score_goofed_up_text_size">10sp</dimen>
+    <dimen name="fragment_quiz_score_goofed_up_at_text_size">7sp</dimen>
+    <dimen name="fragment_quiz_score_question_title_text_size">12sp</dimen>
+    <dimen name="fragment_quiz_score_question_correct_text_size">8sp</dimen>
+
+    <!-- fragment_report -->
+    <dimen name="fragment_report_category_text">17sp</dimen>
+    <dimen name="fragment_report_category_spinner_text">15sp</dimen>
+    <dimen name="fragment_report_category_text_margin_top">20dp</dimen>
+    <dimen name="fragment_report_category_height">180dp</dimen>
+    <dimen name="fragment_report_category_spinner_margin_top">12dp</dimen>
+    <dimen name="fragment_report_category_circleimageview_width">45dp</dimen>
+    <dimen name="fragment_report_category_edittext_margin_left">8dp</dimen>
+    <dimen name="fragment_report_category_text_layout_margin_top">30dp</dimen>
+
+    <!-- fragment_recyclerview -->
+    <dimen name="fragment_recyclerview_divider">12dp</dimen>
+    <dimen name="fragment_recyclerview_left_margin">0dp</dimen>
+    <dimen name="fragment_recyclerview_right_margin">0dp</dimen>
+
+    <!-- fragment_recyclerview_award -->
+    <dimen name="fragment_recyclerview_award_left_margin">64dp</dimen>
+    <dimen name="fragment_recyclerview_award_right_margin">64dp</dimen>
+
+    <!-- fragment_birthday_profile -->
+    <dimen name="fragment_birthday_profile_framelayout_height">270dp</dimen>
+    <dimen name="fragment_birthday_profile_name_margin_top">60dp</dimen>
+    <dimen name="fragment_birthday_profile_name_text_size">20sp</dimen>
+    <dimen name="fragment_birthday_profile_birthdate_text_size">16sp</dimen>
+    <dimen name="fragment_birthday_profile_image_width">120dp</dimen>
+    <dimen name="fragment_birthday_profile_margin_top">36dp</dimen>
+    <dimen name="fragment_birthday_profile_framelayout_material_height">180dp</dimen>
+    <dimen name="fragment_birthday_profile_department_text_size">10sp</dimen>
+    <dimen name="fragment_birthday_profile_sun_sign_layout_height">70dp</dimen>
+    <dimen name="fragment_birthday_profile_sun_sign_text_size">15sp</dimen>
+    <dimen name="fragment_birthday_profile_send_wishes_padding">3dp</dimen>
+    <dimen name="fragment_birthday_profile_send_wishes_text_size">12sp</dimen>
+
+    <!-- fragment_settings -->
+    <dimen name="fragment_settings_layout_padding_top_bottom">8dp</dimen>
+    <dimen name="fragment_settings_header_text_size">12sp</dimen>
+    <dimen name="fragment_settings_title_text_size">16sp</dimen>
+    <dimen name="fragment_settings_header_margin_top">16dp</dimen>
+    <dimen name="fragment_settings_card_margin_top">16dp</dimen>
+    <dimen name="fragment_settings_storage_text_size">10sp</dimen>
+    <dimen name="fragment_settings_relativelayout_height">60dp</dimen>
+
+    <!-- fragment_language -->
+    <dimen name="fragment_language_text_size">20sp</dimen>
+    <dimen name="fragment_language_divider_margin_left">16dp</dimen>
+    <dimen name="fragment_language_divider_margin_right">16dp</dimen>
+    
+    <!-- fragment_tutorial -->
+    <dimen name="fragment_tutorial_header_text_size">18sp</dimen>
+    <dimen name="fragment_tutorial_functionality_text_size">14sp</dimen>
+    <dimen name="fragment_tutorial_toolbar_slidepager_size">48dp</dimen>
+    <dimen name="fragment_tutorial_drawer_width">108dp</dimen>
+    <dimen name="fragment_tutorial_share_height">108dp</dimen>
+    <dimen name="activity_tutorial_shape_round_width">32dp</dimen>
+    <dimen name="shape_tutorial_round_width">16dp</dimen>
+    <dimen name="activity_tutorial_next_image_margin">16dp</dimen>
+
+    <!-- item_recycler_mobcast_text -->
+    <dimen name="item_recycler_mobcast_text_indicator_line_margin_left">32dp</dimen>
+    <dimen name="item_recycler_mobcast_text_content_linearlayout_margin_left">56dp</dimen>
+    <dimen name="item_recycler_mobcast_text_indicator_image_margin_left">16dp</dimen>
+    <dimen name="item_recycler_mobcast_text_indicator_image_width">32dp</dimen>
+    <dimen name="item_recycler_mobcast_text_indicator_image_height">32dp</dimen>
+    <dimen name="item_recycler_mobcast_text_content_linearlayout_margin_right">16dp</dimen>
+    <dimen name="item_recycler_mobcast_text_content_title_margin_top">8dp</dimen>
+    <dimen name="item_recycler_mobcast_text_indicator_image_margin_top">8dp</dimen>
+
+    <!-- item_recycler_mobcast_image -->
+    <dimen name="item_recycler_mobcast_image_view_pager_layout_height">120dp</dimen>
+    <dimen name="item_recycler_mobcast_image_view_pager_next_height">32dp</dimen>
+
+    <!-- item_recycler_mobcast_video -->
+    <dimen name="item_recycler_mobcast_video_view_layout_height">120dp</dimen>
+
+    <!-- item_recycler_mobcast_audio -->
+    <dimen name="item_recycler_mobcast_audio_view_detail_layout_height">48dp</dimen>
+    <dimen name="item_recycler_mobcast_audio_view_detail_file_type_image_layout_width">30dp</dimen>
+    <dimen name="item_recycler_mobcast_audio_view_detail_file_type_name_text_size">12sp</dimen>
+    <dimen name="item_recycler_mobcast_audio_view_detail_file_type_detail_text_size">8sp</dimen>
+
+    <!-- item_recycler_mobcast_feedback -->
+    <dimen name="item_recycler_mobcast_feedback_view_detail_layout_height">20dp</dimen>
+    <dimen name="item_recycler_mobcast_feedback_view_detail_text_size">8sp</dimen>
+    <dimen name="item_recycler_mobcast_feedback_view_detail_image_width">8dp</dimen>
+    <dimen name="item_recycler_mobcast_feedback_view_detail_image_height">8dp</dimen>
+    <dimen name="item_recycler_mobcast_feedback_view_detail_image_margin_top">6dp</dimen>
+    <dimen name="item_recycler_mobcast_feedback_view_detail_image_margin_left">4dp</dimen>
+    <dimen name="item_recycler_mobcast_feedback_view_detail_text_margin_left">14dp</dimen>
+
+    <!-- section_layout_birthday_header -->
+    <dimen name="birthday_section_header_textview_size">11sp</dimen>
+
+    <!-- dialog_birthday_message -->
+    <dimen name="dialog_birthday_message_textview_size">10sp</dimen>
+    
+    <!-- dialog_progress_message -->
+    <dimen name="dialog_progress_message_icon_width">48dp</dimen>
+    <dimen name="dialog_progress_message_padding">16dp</dimen>
+    <dimen name="dialog_progress_message_size">18sp</dimen>
+    
+    <!-- dialog_progress_normal -->
+    <dimen name="dialog_progress_normal_text_size">18sp</dimen>
+    <dimen name="dialog_progress_normal_progress_width">48dp</dimen>
+    <dimen name="dialog_progress_normal_padding">8dp</dimen>
+    <dimen name="dialog_progress_normal_text_margin_start">48dp</dimen>
+
+    <!-- toolbar_mother -->
+    <dimen name="toolbar_mother_padding">14dp</dimen>
+    <dimen name="toolbar_mother_unread_counter_text_size">11sp</dimen>
+
+    <!-- include_layout_drawer -->
+    <dimen name="drawer_item_height">50dp</dimen>
+    <dimen name="drawer_item_profile_frame_layout_height">180dp</dimen>
+    <dimen name="drawer_item_last_sync_text_size">14sp</dimen>
+    <dimen name="drawer_item_profile_image_view_margin_bottom">16dp</dimen>
+    <dimen name="drawer_item_profile_name_margin_bottom">16dp</dimen>
+    <dimen name="drawer_item_profile_email_margin_bottom">2dp</dimen>
+    <dimen name="drawer_item_profile_name_text_size">18sp</dimen>
+    <dimen name="drawer_item_profile_email_text_size">11sp</dimen>
+    <dimen name="drawer_item_image_width">24dp</dimen>
+    <dimen name="drawer_item_padding_left">16dp</dimen>
+    <dimen name="drawer_item_padding_right">16dp</dimen>
+
+    <!-- Material Dialog L -->
+    <!-- Margin around the dialog, excluding the button bar -->
+    <dimen name="md_dialog_frame_margin">24dp</dimen>
+    <!-- Total title margin bottom is 16, but we split this between content and title -->
+    <dimen name="md_title_frame_margin_bottom">12dp</dimen>
+    <!--
+         The desired padding when no title is visible,
+         This plus md_content_padding_top should equals md_dialog_frame_margin
+    -->
+    <dimen name="md_notitle_vertical_padding">16dp</dimen>
+    <dimen name="md_content_padding_top">8dp</dimen>
+    <dimen name="md_simplelistitem_padding_top">8dp</dimen>
+    <dimen name="md_button_min_width">72dp</dimen>
+    <!-- Above and below buttons, 36+6+6=48 for the height of the button frame -->
+    <dimen name="md_button_inset_vertical">6dp</dimen>
+    <dimen name="md_button_inset_horizontal">4dp</dimen>
+    <dimen name="md_button_textpadding_horizontal">1dp</dimen>
+    <dimen name="md_button_padding_horizontal">8dp</dimen>
+    <dimen name="md_button_padding_vertical">4dp</dimen>
+    <dimen name="md_button_padding_horizontal_internalexternal">32dp</dimen>
+    <!-- 16dp - 4dp (inset from background drawable) -->
+    <dimen name="md_button_padding_frame_side">12dp</dimen>
+    <dimen name="md_neutral_button_margin">12dp</dimen>
+
+    <!-- actual content padding bottom is 16dp, but we split between button bar and content -->
+    <dimen name="md_content_padding_bottom">8dp</dimen>
+    <dimen name="md_button_frame_vertical_padding">8dp</dimen>
+    <dimen name="md_button_height">48dp</dimen>
+    <dimen name="md_title_textsize">20sp</dimen>
+    <dimen name="md_content_textsize">16sp</dimen>
+    <dimen name="md_button_textsize">14sp</dimen>
+    <dimen name="md_listitem_textsize">16sp</dimen>
+    <dimen name="md_listitem_height">48dp</dimen>
+    <dimen name="md_listitem_control_margin">6dp</dimen>
+    <dimen name="md_icon_margin">16dp</dimen>
+    <dimen name="md_icon_max_size">48dp</dimen>
+    <dimen name="md_listitem_margin_left">24dp</dimen>
+    <dimen name="md_action_corner_radius">2dp</dimen>
+    <dimen name="md_divider_height">1dp</dimen>
+    <dimen name="md_simplelist_icon">40dp</dimen>
+    <dimen name="md_simplelist_icon_margin">16dp</dimen>
+
+    <!-- BottomSheet -->
+    <dimen name="bs_grid_left_padding">8dp</dimen>
+    <dimen name="bs_grid_top_padding">0dp</dimen>
+    <dimen name="bs_grid_right_padding">8dp</dimen>
+    <dimen name="bs_grid_bottom_padding">8dp</dimen>
+
+    <!-- Material Ripple Value -->
+    <item name="rippleAlpha" format="float" type="dimen">0.2</item>
+
+    <!-- Material Contextual ToolBar -->
+    <dimen name="mcab_toolbar_elevation">4dp</dimen>
+    <dimen name="mcab_default_content_inset">72dp</dimen>
+    
+    <!-- design support library -->
+    <dimen name="fab_elevation">8dp</dimen>
+    <dimen name="fab_translation_z_pressed">6dp</dimen>
+    <dimen name="fab_content_size">24dp</dimen>
+    <dimen name="fab_size_normal">56dp</dimen>
+    <dimen name="fab_size_mini">40dp</dimen>
+    <dimen name="fab_border_width">0.5dp</dimen>
+
+    <dimen name="navigation_max_width">320dp</dimen>
+    <dimen name="navigation_elevation">12dp</dimen>
+    <dimen name="navigation_icon_padding">32dp</dimen>
+    <dimen name="navigation_icon_size">24dp</dimen>
+    <dimen name="navigation_separator_vertical_padding">8dp</dimen>
+    <dimen name="navigation_padding_top_default">0dp</dimen>
+    <dimen name="navigation_padding_bottom">8dp</dimen>
+
+    <dimen name="tab_min_width">72dp</dimen>
+    <dimen name="tab_max_width">264dp</dimen>
+
+    <dimen name="snackbar_min_width">-1px</dimen>
+    <dimen name="snackbar_max_width">-1px</dimen>
+    <dimen name="snackbar_elevation">2dp</dimen>
+    <dimen name="snackbar_background_corner_radius">0dp</dimen>
+
+    <dimen name="snackbar_padding_horizontal">12dp</dimen>
+    <dimen name="snackbar_padding_vertical">14dp</dimen>
+    <dimen name="snackbar_padding_vertical_2lines">24dp</dimen>
+
+    <!-- Extra spacing between the action and message views -->
+    <dimen name="snackbar_extra_spacing_horizontal">0dp</dimen>
+    <!-- The maximum width for a Snackbar's inline action. If the view is width than this then
+         the Snackbar will change to vertical stacking -->
+    <dimen name="snackbar_action_inline_max_width">128dp</dimen>
+
+    <dimen name="snackbar_text_size">14sp</dimen>
+
+    <dimen name="appbar_elevation">4dp</dimen>
+
+</resources>

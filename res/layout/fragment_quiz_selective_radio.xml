@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/fragmentQuizSelectiveRadioTitleTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/sample_quiz_selective_radio_title"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/fragment_quiz_selective_quiz_title_size"
+            android:textStyle="bold"
+            tools:ignore="RtlHardcoded" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="16dp"
+            android:padding="1dp"
+            android:background="@drawable/shape_rectange_quiz_box" >
+
+            <RadioGroup
+                android:id="@+id/fragmentQuizSelectionRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="UselessParent" >
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/fragmentQuizSelectionRadioButton1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+                    android:text="@string/sample_quiz_selective_radio_group_a"
+                    android:textColor="@color/toolbar_background"
+                    android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/toolbar_background" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/fragmentQuizSelectionRadioButton2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+                    android:text="@string/sample_quiz_selective_radio_group_b"
+                    android:textColor="@color/toolbar_background"
+                    android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/toolbar_background" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/fragmentQuizSelectionRadioButton3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+                    android:text="@string/sample_quiz_selective_radio_group_c"
+                    android:textColor="@color/toolbar_background"
+                    android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/toolbar_background" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/fragmentQuizSelectionRadioButton4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+                    android:text="@string/sample_quiz_selective_radio_group_d"
+                    android:textColor="@color/toolbar_background"
+                    android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+            </RadioGroup>
+        </FrameLayout>
+    </LinearLayout>
+
+</ScrollView>

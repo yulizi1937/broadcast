@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RadioGroup
+        android:id="@+id/dialogSettingsBirthdayNotifyAtRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/dialogSettingsBirthdayNotifyAtRadioButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+            android:text="@string/sample_fragment_settings_dialog_birthday_notify_1"
+            android:textColor="@color/toolbar_background"
+            android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/dialogSettingsBirthdayNotifyAtRadioButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+            android:text="@string/sample_fragment_settings_dialog_birthday_notify_2"
+            android:textColor="@color/toolbar_background"
+            android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/dialogSettingsBirthdayNotifyAtRadioButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+            android:text="@string/sample_fragment_settings_dialog_birthday_notify_3"
+            android:textColor="@color/toolbar_background"
+            android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+    </RadioGroup>
+
+</LinearLayout>
