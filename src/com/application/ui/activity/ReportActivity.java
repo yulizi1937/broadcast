@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import com.application.ui.view.CircleImageView;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.FileLog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.mobcast.R;
@@ -40,24 +41,26 @@ public class ReportActivity extends SwipeBackBaseActivity {
 	private Toolbar mToolBar;
 
 	private FrameLayout mCroutonViewGroup;
-	
+
 	private LinearLayout mReportCategoryLayout;
-	
+
 	private AppCompatTextView mReportCategoryTitleTv;
 	private AppCompatTextView mReportCategorySelectedTv;
-	
+
 	private CircleImageView mReportProfileCircleImageView;
-	
+
 	private AppCompatEditText mReportEditText;
-	
+
 	private AppCompatCheckBox mReportIncludeLogsCheckBox;
-	
+
 	private AppCompatButton mReportSubmitBtn;
 
-	
 	private boolean isValidSubmit = false;
-	
-	
+
+	private Intent mIntent;
+
+	private String mSelectedOption;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -67,21 +70,13 @@ public class ReportActivity extends SwipeBackBaseActivity {
 		initUi();
 		setUiListener();
 		setAnimation();
+		getIntentData();
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-	}
-
-	@SuppressLint("NewApi")
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_event_detail, menu);
-		return true;
 	}
 
 	@Override
@@ -96,22 +91,22 @@ public class ReportActivity extends SwipeBackBaseActivity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	private void initUi() {
 		mCroutonViewGroup = (FrameLayout) findViewById(R.id.croutonViewGroup);
-		
-		mReportCategoryTitleTv =(AppCompatTextView)findViewById(R.id.fragmentReportCategoryTv);
-		mReportCategorySelectedTv =(AppCompatTextView)findViewById(R.id.fragmentReportCategorySelectedTv);
-		
-		mReportProfileCircleImageView = (CircleImageView)findViewById(R.id.fragmentReportTextProfileIv);
-		
-		mReportEditText = (AppCompatEditText)findViewById(R.id.fragmentReportTextEt);
-		
-		mReportIncludeLogsCheckBox = (AppCompatCheckBox)findViewById(R.id.fragmentReportIncludeLogsCheckBox);
-		
-		mReportSubmitBtn = (AppCompatButton)findViewById(R.id.fragmentReportSubmitBtn);
-		
-		mReportCategoryLayout = (LinearLayout)findViewById(R.id.fragmentReportCategoryLayout);
+
+		mReportCategoryTitleTv = (AppCompatTextView) findViewById(R.id.fragmentReportCategoryTv);
+		mReportCategorySelectedTv = (AppCompatTextView) findViewById(R.id.fragmentReportCategorySelectedTv);
+
+		mReportProfileCircleImageView = (CircleImageView) findViewById(R.id.fragmentReportTextProfileIv);
+
+		mReportEditText = (AppCompatEditText) findViewById(R.id.fragmentReportTextEt);
+
+		mReportIncludeLogsCheckBox = (AppCompatCheckBox) findViewById(R.id.fragmentReportIncludeLogsCheckBox);
+
+		mReportSubmitBtn = (AppCompatButton) findViewById(R.id.fragmentReportSubmitBtn);
+
+		mReportCategoryLayout = (LinearLayout) findViewById(R.id.fragmentReportCategoryLayout);
 	}
 
 	/**
@@ -121,51 +116,74 @@ public class ReportActivity extends SwipeBackBaseActivity {
 	 */
 	private void initToolBar() {
 		mToolBar = (Toolbar) findViewById(R.id.toolbarLayout);
-		mToolBar.setTitle(getResources().getString(
-				R.string.ReportActivityTitle));
+		mToolBar.setTitle(getResources()
+				.getString(R.string.ReportActivityTitle));
 		mToolBar.setNavigationIcon(R.drawable.ic_back_shadow);
 		setSupportActionBar(mToolBar);
 	}
 
-	private void setAnimation(){
-		try{
-			YoYo.with(Techniques.ZoomIn).duration(500).playOn(mReportProfileCircleImageView);
-		}catch(Exception e){
+	private void setAnimation() {
+		try {
+			YoYo.with(Techniques.ZoomIn).duration(500)
+					.playOn(mReportProfileCircleImageView);
+		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}
 	}
-	
+
+	private void getIntentData() {
+		try {
+			mIntent = getIntent();
+			mSelectedOption = mIntent
+					.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY);
+			mReportCategorySelectedTv.setText(mSelectedOption);
+			if (TextUtils.isEmpty(mSelectedOption)) {
+				mReportCategorySelectedTv.setText("Others");
+			}
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+	}
+
 	private void setUiListener() {
 		setOnClickListener();
 		setTextWatcher();
 		setMaterialRippleView();
 	}
-	
-	private void setOnClickListener(){
+
+	private void setOnClickListener() {
 		mReportCategoryLayout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				Intent mIntent = new Intent(ReportActivity.this, SimpleRecyclerItemActivity.class);
-				mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORYARRAY, getResources().getStringArray(R.array.report_category_array));
-				startActivityForResult(mIntent, AppConstants.INTENT.INTENT_CATEGORY);
+				Intent mIntent = new Intent(ReportActivity.this,
+						SimpleRecyclerItemActivity.class);
+				mIntent.putExtra(
+						AppConstants.INTENTCONSTANTS.CATEGORYARRAY,
+						getResources().getStringArray(
+								R.array.report_category_array));
+				startActivityForResult(mIntent,
+						AppConstants.INTENT.INTENT_CATEGORY);
+				AndroidUtilities.enterWindowAnimation(ReportActivity.this);
 			}
 		});
-		
+
 	}
-	
+
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		if(requestCode == AppConstants.INTENT.INTENT_CATEGORY && resultCode == Activity.RESULT_OK){
-			mReportCategorySelectedTv.setText(data.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY));
+		if (requestCode == AppConstants.INTENT.INTENT_CATEGORY
+				&& resultCode == Activity.RESULT_OK) {
+			mReportCategorySelectedTv.setText(data
+					.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY));
 		}
 	}
-	
-	private void setTextWatcher(){
+
+	private void setTextWatcher() {
 		mReportEditText.addTextChangedListener(new TextWatcher() {
-			
+
 			public void onTextChanged(CharSequence mCharsequence, int start,
 					int before, int count) {
 				// TODO Auto-generated method stub
@@ -186,25 +204,26 @@ public class ReportActivity extends SwipeBackBaseActivity {
 			}
 		});
 	}
-	
-	private void validateSubmit(CharSequence mCharsequence){
-		if(TextUtils.isEmpty(mCharsequence.toString())){
+
+	private void validateSubmit(CharSequence mCharsequence) {
+		if (TextUtils.isEmpty(mCharsequence.toString())) {
 			isValidSubmit = false;
-		}else{
+		} else {
 			isValidSubmit = true;
 		}
 		setUiOfSubmitAccordingly();
 	}
-	
+
 	@SuppressWarnings("deprecation")
-	private void setUiOfSubmitAccordingly(){
-		if(isValidSubmit){
-			mReportSubmitBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_button_pressed));
-		}else{
-			mReportSubmitBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_button_normal));
+	private void setUiOfSubmitAccordingly() {
+		if (isValidSubmit) {
+			mReportSubmitBtn.setBackgroundDrawable(getResources().getDrawable(
+					R.drawable.shape_button_pressed));
+		} else {
+			mReportSubmitBtn.setBackgroundDrawable(getResources().getDrawable(
+					R.drawable.shape_button_normal));
 		}
 	}
-	
 
 	private void setMaterialRippleView() {
 		try {

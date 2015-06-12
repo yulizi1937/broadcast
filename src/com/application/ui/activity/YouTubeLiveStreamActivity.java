@@ -5,6 +5,7 @@ package com.application.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -95,6 +96,12 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 		case android.R.id.home:
 			finish();
 			AndroidUtilities.exitWindowAnimation(YouTubeLiveStreamActivity.this);
+			return true;
+		case R.id.action_report:
+			Intent mIntent  = new Intent(YouTubeLiveStreamActivity.this, ReportActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, "Android:LiveStream");
+			startActivity(mIntent);
+			AndroidUtilities.enterWindowAnimation(YouTubeLiveStreamActivity.this);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

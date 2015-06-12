@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
@@ -27,6 +28,7 @@ import com.application.ui.view.CirclePageIndicator;
 import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
+import com.application.utils.AppConstants;
 import com.mobcast.R;
 
 /**
@@ -133,6 +135,12 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 			return true;
 		case R.id.action_share:
 			showDialog(0);
+			return true;
+		case R.id.action_report:
+			Intent mIntent  = new Intent(ImageDetailActivity.this, ReportActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, "Android:Image");
+			startActivity(mIntent);
+			AndroidUtilities.enterWindowAnimation(ImageDetailActivity.this);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

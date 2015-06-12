@@ -73,14 +73,6 @@ public class FeedbackAppActivity extends SwipeBackBaseActivity {
 		super.onResume();
 	}
 
-	@SuppressLint("NewApi")
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_event_detail, menu);
-		return true;
-	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -150,6 +142,7 @@ public class FeedbackAppActivity extends SwipeBackBaseActivity {
 				mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORYARRAY, getResources().getStringArray(
 						R.array.feedback_app_array));
 				startActivityForResult(mIntent, AppConstants.INTENT.INTENT_CATEGORY);
+				AndroidUtilities.enterWindowAnimation(FeedbackAppActivity.this);
 			}
 		});
 	}

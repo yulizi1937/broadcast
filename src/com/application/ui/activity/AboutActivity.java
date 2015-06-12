@@ -52,7 +52,7 @@ public class AboutActivity extends SwipeBackBaseActivity {
 	private LinearLayout mAboutReportLayout;
 
 	private WebView mAboutWebView;
-	
+
 	private boolean isShareOptionEnable = true;
 
 	@Override
@@ -72,24 +72,23 @@ public class AboutActivity extends SwipeBackBaseActivity {
 		super.onResume();
 	}
 
-	
 	@Override
 	protected boolean onPrepareOptionsPanel(View view, Menu menu) {
 		// TODO Auto-generated method stub
-		if(isShareOptionEnable){
+		if (isShareOptionEnable) {
 			menu.findItem(R.id.action_share).setVisible(true);
-		}else{
+		} else {
 			menu.findItem(R.id.action_share).setVisible(false);
 		}
 		return super.onPrepareOptionsPanel(view, menu);
 	}
-	
+
 	@SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_text_detail, menu);
+		inflater.inflate(R.menu.menu_about, menu);
 		return true;
 	}
 
@@ -190,15 +189,17 @@ public class AboutActivity extends SwipeBackBaseActivity {
 			}
 		});
 	}
-	
+
 	@Override
 	@Deprecated
 	protected Dialog onCreateDialog(int id, Bundle args) {
 		// TODO Auto-generated method stub
 		return getShareAction();
 	}
-	
-	protected BottomSheet getShareAction(){
-    	return getShareActions(new BottomSheet.Builder(this).grid().title("Share To "), "Hello ").limit(R.integer.bs_initial_grid_row).build();
-    }
+
+	protected BottomSheet getShareAction() {
+		return getShareActions(
+				new BottomSheet.Builder(this).grid().title("Share To "),
+				"Hello ").limit(R.integer.bs_initial_grid_row).build();
+	}
 }

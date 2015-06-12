@@ -25,6 +25,7 @@ import com.application.ui.view.BottomSheet;
 import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
+import com.application.utils.AppConstants;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.mobcast.R;
@@ -134,6 +135,12 @@ public class NewsDetailActivity extends SwipeBackBaseActivity {
 			return true;
 		case R.id.action_share:
 			showDialog(0);
+			return true;
+		case R.id.action_report:
+			Intent mIntent  = new Intent(NewsDetailActivity.this, ReportActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, "Android:News");
+			startActivity(mIntent);
+			AndroidUtilities.enterWindowAnimation(NewsDetailActivity.this);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

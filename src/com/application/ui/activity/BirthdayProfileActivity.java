@@ -62,8 +62,10 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 
 	private CircleImageView mBirthdayProfileCircleImageView;
 
-	private AppCompatButton mBirthdayProfileSendWishBtn;
-	private AppCompatButton mBirthdayProfileSendMsgBtn;
+	private ImageView mBirthdayProfileActionCallIv;
+	private ImageView mBirthdayProfileActionChatIv;
+	private ImageView mBirthdayProfileActionMsgIv;
+	private ImageView mBirthdayProfileActionEmailIv;
 
 	private AppCompatTextView mBirthdayProfileNameTv;
 	private AppCompatTextView mBirthdayProfileDateTv;
@@ -154,14 +156,16 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 
 		mBirthdayProfileCircleImageView = (CircleImageView) findViewById(R.id.fragmentBirthdayProfileImageIv);
 
-		mBirthdayProfileSendMsgBtn = (AppCompatButton) findViewById(R.id.fragmentBirthdayProfileSendSMSTv);
-		mBirthdayProfileSendWishBtn = (AppCompatButton) findViewById(R.id.fragmentBirthdayProfileSendWishesTv);
-
 		mBirthdayProfileNameTv = (AppCompatTextView) findViewById(R.id.fragmentBirthdayProfileNameTv);
 		mBirthdayProfileDateTv = (AppCompatTextView) findViewById(R.id.fragmentBirthdayProfileDateTv);
 		mBirthdayProfileSunSignTv = (AppCompatTextView) findViewById(R.id.fragmentBirthdayProfileSunSignTv);
 		mBirthdayProfileAgeTv = (AppCompatTextView) findViewById(R.id.fragmentBirthdayProfileAgeTv);
 		mBirthdayProfileDepTv = (AppCompatTextView) findViewById(R.id.fragmentBirthdayProfileDepartmentTv);
+		
+		mBirthdayProfileActionCallIv = (ImageView)findViewById(R.id.fragmentBirthdayProfileCallIv);
+		mBirthdayProfileActionChatIv = (ImageView)findViewById(R.id.fragmentBirthdayProfileChatIv);
+		mBirthdayProfileActionMsgIv = (ImageView)findViewById(R.id.fragmentBirthdayProfileMessageIv);
+		mBirthdayProfileActionEmailIv = (ImageView)findViewById(R.id.fragmentBirthdayProfileEmailIv);
 	}
 
 	/**
@@ -181,6 +185,10 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		try {
 			YoYo.with(Techniques.ZoomIn).duration(1000)
 					.playOn(mBirthdayProfileCircleImageView);
+			YoYo.with(Techniques.BounceInUp).delay(1000).duration(500).playOn(mBirthdayProfileActionChatIv);
+			YoYo.with(Techniques.BounceInUp).delay(1500).duration(500).playOn(mBirthdayProfileActionCallIv);
+			YoYo.with(Techniques.BounceInUp).delay(2000).duration(500).playOn(mBirthdayProfileActionMsgIv);
+			YoYo.with(Techniques.BounceInUp).delay(2500).duration(500).playOn(mBirthdayProfileActionEmailIv);
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}
@@ -192,26 +200,6 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 	}
 
 	private void setOnClickListener() {
-		mBirthdayProfileSendMsgBtn
-				.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						// TODO Auto-generated method stub
-						showBirthdayMessageDialog();
-					}
-				});
-
-		mBirthdayProfileSendWishBtn
-				.setOnClickListener(new View.OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						Utilities.showCrouton(BirthdayProfileActivity.this,
-								mCroutonViewGroup,
-								"You wished to Ryan Gosling!", Style.CONFIRM);
-					}
-				});
 	}
 
 	@Override
@@ -234,54 +222,5 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}
-	}
-
-	private void showBirthdayMessageDialog() {
-		MaterialDialog mMaterialDialog = new MaterialDialog.Builder(
-				BirthdayProfileActivity.this)
-				.title(getResources().getString(
-						R.string.dialog_birthday_message_title))
-				.titleColor(Utilities.getAppColor())
-				.customView(R.layout.dialog_birthday_message, true)
-				.positiveText(
-						getResources().getString(
-								R.string.dialog_birthday_message_positive))
-				.positiveColor(Utilities.getAppColor())
-				.negativeText(
-						getResources().getString(
-								R.string.dialog_birthday_message_negative))
-				.negativeColor(Utilities.getAppColor()).show();
-
-		View mView = mMaterialDialog.getCustomView();
-		AppCompatEditText mMessageEd = (AppCompatEditText) mView
-				.findViewById(R.id.dialogBirthdayMessageEd);
-		final AppCompatTextView mMessageEdCounterTv = (AppCompatTextView) mView
-				.findViewById(R.id.dialogBirthdayMessageTv);
-
-		mMessageEd.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void onTextChanged(CharSequence mCharsequence, int start,
-					int before, int count) {
-				// TODO Auto-generated method stub
-				if (mCharsequence.length() > 140) {
-					mMessageEdCounterTv.setTextColor(Color.RED);
-				} else {
-					mMessageEdCounterTv.setTextColor(Utilities.getAppColor());
-				}
-				mMessageEdCounterTv.setText(mCharsequence.length() + "/140");
-
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence mCharsequence,
-					int start, int count, int after) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void afterTextChanged(Editable mEditable) {
-				// TODO Auto-generated method stub
-			}
-		});
 	}
 }

@@ -46,7 +46,6 @@
             android:layout_marginLeft="@dimen/item_recycler_mobcast_text_indicator_image_margin_left"
             android:layout_marginStart="@dimen/item_recycler_mobcast_text_indicator_image_margin_left"
             android:layout_marginTop="@dimen/item_recycler_mobcast_text_indicator_image_margin_top"
-            android:background="@android:color/white"
             android:scaleType="centerInside"
             android:src="@drawable/ic_mobcast_image"
             tools:ignore="ContentDescription" />

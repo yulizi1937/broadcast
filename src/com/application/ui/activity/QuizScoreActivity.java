@@ -41,7 +41,8 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mQuizScoreTimeTakenTextTv;
 	private AppCompatTextView mQuizScoreTv;
 	private AppCompatTextView mQuizScoreStatementTv;
-	private AppCompatTextView mQuizScoreGoofedUpTv;
+	private AppCompatTextView mQuizScoreStatementCorrectAnswerTv;
+	private AppCompatTextView mQuizScoreCorrectAnswerTv;
 	private AppCompatTextView mQuizScoreGoofedUpAtTv;
 
 	private AppCompatTextView mQuizScoreQuestionPagerCounterTv;
@@ -105,9 +106,10 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 
 		mQuizScoreTimeTakenTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreTimeTakenTv);
 		mQuizScoreTimeTakenTextTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreTimeTakenInTv);
-		mQuizScoreTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreTv);
-		mQuizScoreStatementTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreStatementTv);
-		mQuizScoreGoofedUpTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreGoofedUpTv);
+		mQuizScoreTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreTotalScoreTv);
+		mQuizScoreStatementTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreTotalScoreTextTv);
+		mQuizScoreCorrectAnswerTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreCorrectAnswerTv);
+		mQuizScoreStatementCorrectAnswerTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreCorrectAnswerTextTv);
 		mQuizScoreGoofedUpAtTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreGoofedUpAtTv);
 
 		mQuestionScoreViewPager = (ViewPager) findViewById(R.id.fragmentQuizScoreQuestionViewPager);
@@ -132,6 +134,7 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 		setOnClickListener();
 	}
 
+	@SuppressWarnings("deprecation")
 	private void setQuizViewPager() {
 		mArrayListQuizScorePagerInfo = new ArrayList<QuizScorePagerInfo>();
 		for (int i = 0; i < 5; i++) {

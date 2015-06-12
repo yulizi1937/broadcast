@@ -5,6 +5,7 @@ package com.application.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
@@ -25,12 +26,13 @@ import android.widget.ImageView;
 
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.DiscreteSeekBar;
+import com.application.ui.view.DiscreteSeekBar.OnProgressChangeListener;
 import com.application.ui.view.LineRenderer;
 import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
 import com.application.ui.view.VisualizerView;
-import com.application.ui.view.DiscreteSeekBar.OnProgressChangeListener;
 import com.application.utils.AndroidUtilities;
+import com.application.utils.AppConstants;
 import com.application.utils.Utilities;
 import com.mobcast.R;
 
@@ -141,6 +143,12 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 			return true;
 		case R.id.action_share:
 			showDialog(0);
+			return true;
+		case R.id.action_report:
+			Intent mIntent  = new Intent(AudioDetailActivity.this, ReportActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, "Android:Audio");
+			startActivity(mIntent);
+			AndroidUtilities.enterWindowAnimation(AudioDetailActivity.this);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

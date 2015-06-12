@@ -16,6 +16,8 @@
     <string name="action_settings">Settings</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_report">Report</string>
+    <string name="action_contact">Contact Us</string>
+    <string name="action_view_web">View in Browser</string>
     <string name="action_search">Search</string>
     <string name="action_event">Event</string>
     <string name="action_award">Award</string>
@@ -175,6 +177,8 @@
     <string name="sample_quiz_score_time_taken">59</string>
     <string name="sample_quiz_score_time_taken_sec">SECONDS</string>
     <string name="sample_quiz_score">348</string>
+    <string name="sample_quiz_score_correct_answer_tv" tools:ignore="TypographyFractions">3/4</string>
+    <string name="sample_quiz_score_correct_answer_text">QUESTIONS RIGHT</string>
     <string name="sample_quiz_score_statement">YOU ARE CERTAINLY A PRO!</string>
     <string name="sample_quiz_score_goofed_up">YOU GOT 3 OUT OF 4 QUESTIONS RIGHT!</string>
     <string name="sample_quiz_score_goofed_up_at">FIND OUT WHICH ANSWER DO YOU GOOFED UP AT!</string>
@@ -233,6 +237,7 @@
     <!-- fragment_birthday_profile -->
     <string name="BirthdayProfileActivityTitle">Profile</string>
     <string name="sample_fragment_birthday_profile_name">Ryan Gosling</string>
+    <string name="sample_fragment_birthday_profile_city">MUMBAI</string>
     <string name="sample_fragment_birthday_profile_date">May 18 1995</string>
     <string name="sample_fragment_birthday_profile_department">SALES DEPARTMENT</string>
     <string name="sample_fragment_birthday_profile_sun_sign">TAURUS</string>
@@ -270,6 +275,7 @@
         <item>Android:Image</item>
         <item>Android:Interactive</item>
         <item>Android:Login</item>
+        <item>Android:LiveStream</item>
         <item>Android:News</item>
         <item>Android:OTP</item>
         <item>Android:Pdf</item>
@@ -289,7 +295,7 @@
 
     <!-- fragment_app_feedback -->
     <string name="sample_app_feedback_hint">Tell us what you think</string>
-    <string name="FeedbackAppActivityTitle">Feedback</string>
+    <string name="FeedbackAppActivityTitle">App Feedback</string>
     <string-array name="feedback_app_array">
         <item>Feature</item>
         <item>Issue</item>
@@ -455,7 +461,7 @@
         <item>Settings</item>
         <item>Help</item>
         <item>Report</item>
-        <item>Feedback</item>
+        <item>App Feedback</item>
         <item>LogOut</item>
         <item>About</item>
     </string-array>

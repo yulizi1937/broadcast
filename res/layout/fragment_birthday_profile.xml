@@ -49,10 +49,22 @@
                         android:textStyle="bold" />
 
                     <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/fragmentBirthdayProfileCityTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/sample_fragment_birthday_profile_city"
+                        android:textColor="@color/text_highlight"
+                        android:textSize="@dimen/fragment_birthday_profile_city_text_size"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/fragmentBirthdayProfileDateTv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
                         android:gravity="center"
                         android:text="@string/sample_fragment_birthday_profile_date"
                         android:textColor="@android:color/white"
@@ -159,62 +171,60 @@
             android:id="@+id/fragmentBirthdayProfileActionLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:background="@android:color/transparent"
             android:baselineAligned="false"
+            android:gravity="center"
             android:orientation="horizontal" >
 
-            <com.application.ui.view.MaterialRippleLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                ripple:mrl_rippleAlpha="@dimen/rippleAlpha"
-                ripple:mrl_rippleBackground="@android:color/transparent"
-                ripple:mrl_rippleColor="@android:color/darker_gray"
-                ripple:mrl_rippleHover="true"
-                ripple:mrl_rippleOverlay="true" >
+            <ImageView
+                android:id="@+id/fragmentBirthdayProfileChatIv"
+                android:layout_width="@dimen/fragment_birthday_profile_action_iv_width"
+                android:layout_height="72dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_chat"
+                tools:ignore="ContentDescription" />
 
-                <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/fragmentBirthdayProfileSendWishesTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@drawable/shape_button_highlight_border"
-                    android:gravity="center"
-                    android:padding="@dimen/fragment_birthday_profile_send_wishes_padding"
-                    android:text="@string/sample_fragment_birthday_profile_send_wishes"
-                    android:textColor="@color/text_highlight"
-                    android:textSize="@dimen/fragment_birthday_profile_send_wishes_text_size"
-                    android:textStyle="bold"
-                    tools:ignore="RtlHardcoded" />
-            </com.application.ui.view.MaterialRippleLayout>
+            <ImageView
+                android:id="@+id/fragmentBirthdayProfileCallIv"
+                android:layout_width="@dimen/fragment_birthday_profile_action_iv_width"
+                android:layout_height="72dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_call"
+                tools:ignore="ContentDescription" />
 
-            <com.application.ui.view.MaterialRippleLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                ripple:mrl_rippleAlpha="@dimen/rippleAlpha"
-                ripple:mrl_rippleBackground="@android:color/transparent"
-                ripple:mrl_rippleColor="@android:color/white"
-                ripple:mrl_rippleHover="true"
-                ripple:mrl_rippleOverlay="true"
-                tools:ignore="RtlHardcoded" >
+            <ImageView
+                android:id="@+id/fragmentBirthdayProfileMessageIv"
+                android:layout_width="@dimen/fragment_birthday_profile_action_iv_width"
+                android:layout_height="72dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_message"
+                tools:ignore="ContentDescription" />
 
-                <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/fragmentBirthdayProfileSendSMSTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@drawable/shape_button_highlight_fill"
-                    android:gravity="center"
-                    android:padding="@dimen/fragment_birthday_profile_send_wishes_padding"
-                    android:text="@string/sample_fragment_birthday_profile_send_sms"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/fragment_birthday_profile_send_wishes_text_size"
-                    android:textStyle="bold"
-                    tools:ignore="RtlHardcoded" />
-            </com.application.ui.view.MaterialRippleLayout>
+            <ImageView
+                android:id="@+id/fragmentBirthdayProfileEmailIv"
+                android:layout_width="@dimen/fragment_birthday_profile_action_iv_width"
+                android:layout_height="72dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_email"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
     </LinearLayout>
 

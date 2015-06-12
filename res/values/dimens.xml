@@ -47,6 +47,7 @@
     <dimen name="award_winner_textview_size">14sp</dimen>
     <dimen name="award_name_textview_size">10sp</dimen>
     <dimen name="award_read_strip_width">4dp</dimen>
+    <dimen name="award_name_congratulate_textview_size">8sp</dimen>
 
     <!-- item_recycler_event -->
     <dimen name="event_left_number_textview_size">18sp</dimen>
@@ -129,8 +130,9 @@
     <dimen name="fragment_quiz_score_header_height">32dp</dimen>
     <dimen name="fragment_quiz_score_height">48dp</dimen>
     <dimen name="fragment_quiz_score_header_text_size">12sp</dimen>
-    <dimen name="fragment_quiz_score_text_size">18sp</dimen>
-    <dimen name="fragment_quiz_score_text_detail_size">8sp</dimen>
+    <dimen name="fragment_quiz_score_text_size">20sp</dimen>
+    <dimen name="fragment_quiz_score_total_text_size">24sp</dimen>
+    <dimen name="fragment_quiz_score_text_detail_size">10sp</dimen>
     <dimen name="fragment_quiz_score_statement_text_size">12sp</dimen>
     <dimen name="fragment_quiz_score_goofed_up_text_size">10sp</dimen>
     <dimen name="fragment_quiz_score_goofed_up_at_text_size">7sp</dimen>
@@ -158,9 +160,10 @@
 
     <!-- fragment_birthday_profile -->
     <dimen name="fragment_birthday_profile_framelayout_height">270dp</dimen>
-    <dimen name="fragment_birthday_profile_name_margin_top">60dp</dimen>
+    <dimen name="fragment_birthday_profile_name_margin_top">16dp</dimen>
     <dimen name="fragment_birthday_profile_name_text_size">20sp</dimen>
-    <dimen name="fragment_birthday_profile_birthdate_text_size">16sp</dimen>
+    <dimen name="fragment_birthday_profile_city_text_size">12sp</dimen>
+    <dimen name="fragment_birthday_profile_birthdate_text_size">12sp</dimen>
     <dimen name="fragment_birthday_profile_image_width">120dp</dimen>
     <dimen name="fragment_birthday_profile_margin_top">36dp</dimen>
     <dimen name="fragment_birthday_profile_framelayout_material_height">180dp</dimen>
@@ -169,6 +172,7 @@
     <dimen name="fragment_birthday_profile_sun_sign_text_size">15sp</dimen>
     <dimen name="fragment_birthday_profile_send_wishes_padding">3dp</dimen>
     <dimen name="fragment_birthday_profile_send_wishes_text_size">12sp</dimen>
+    <dimen name="fragment_birthday_profile_action_iv_width">48dp</dimen>
 
     <!-- fragment_settings -->
     <dimen name="fragment_settings_layout_padding_top_bottom">8dp</dimen>

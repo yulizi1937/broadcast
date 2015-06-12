@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.application.ui.adapter.ImageFullScreenPagerAdapter;
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.CirclePageIndicator;
 import com.application.utils.AndroidUtilities;
+import com.application.utils.AppConstants;
 import com.mobcast.R;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
@@ -104,6 +106,12 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 		case android.R.id.home:
 			finish();
 			AndroidUtilities.exitWindowAnimation(ImageFullScreenActivity.this);
+			return true;
+		case R.id.action_report:
+			Intent mIntent  = new Intent(ImageFullScreenActivity.this, ReportActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, "Android:Image");
+			startActivity(mIntent);
+			AndroidUtilities.enterWindowAnimation(ImageFullScreenActivity.this);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

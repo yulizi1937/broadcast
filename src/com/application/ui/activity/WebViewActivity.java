@@ -71,11 +71,6 @@ public class WebViewActivity extends SwipeBackBaseActivity {
 	@Override
 	protected boolean onPrepareOptionsPanel(View view, Menu menu) {
 		// TODO Auto-generated method stub
-		if(isShareOptionEnable){
-			menu.findItem(R.id.action_share).setVisible(true);
-		}else{
-			menu.findItem(R.id.action_share).setVisible(false);
-		}
 		return super.onPrepareOptionsPanel(view, menu);
 	}
 	
@@ -84,7 +79,7 @@ public class WebViewActivity extends SwipeBackBaseActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_text_detail, menu);
+		inflater.inflate(R.menu.menu_web, menu);
 		if (AndroidUtilities.isAboveGingerBread()) {
 			MenuItem refreshItem = menu
 					.findItem(R.id.action_refresh_actionable);
@@ -120,8 +115,11 @@ public class WebViewActivity extends SwipeBackBaseActivity {
 			finish();
 			AndroidUtilities.exitWindowAnimation(WebViewActivity.this);
 			return true;
-		case R.id.action_share:
-			showDialog(0);
+		case R.id.action_report:
+			Intent mIntent  = new Intent(WebViewActivity.this, ReportActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, "Web");
+			startActivity(mIntent);
+			AndroidUtilities.enterWindowAnimation(WebViewActivity.this);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

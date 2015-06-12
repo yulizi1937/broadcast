@@ -26,6 +26,7 @@ import com.application.ui.adapter.QuizViewPagerAdapter;
 import com.application.ui.view.CirclePageIndicator;
 import com.application.ui.view.ProgressTimerWheel;
 import com.application.utils.AndroidUtilities;
+import com.application.utils.AppConstants;
 import com.mobcast.R;
 
 /**
@@ -103,6 +104,12 @@ public class QuizActivity extends SwipeBackBaseActivity {
 		case android.R.id.home:
 			finish();
 			AndroidUtilities.exitWindowAnimation(QuizActivity.this);
+			return true;
+		case R.id.action_report:
+			Intent mIntent  = new Intent(QuizActivity.this, ReportActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, "Android:Quiz");
+			startActivity(mIntent);
+			AndroidUtilities.enterWindowAnimation(QuizActivity.this);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

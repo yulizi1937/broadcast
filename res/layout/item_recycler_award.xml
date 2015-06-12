@@ -11,13 +11,14 @@
     ripple:mrl_rippleHover="true"
     ripple:mrl_rippleOverlay="true" >
 
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/itemRecyclerAwardRootLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:clickable="true"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingBottom="8dp" >
 
         <View
             android:id="@+id/itemRecyclerReadView"
@@ -29,6 +30,7 @@
             tools:ignore="RtlHardcoded" />
 
         <RelativeLayout
+            android:id="@+id/itemRecyclerAwardInfoLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
@@ -52,11 +54,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/itemRecyclerAwardIv"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="64dp"
-                android:layout_marginRight="64dp"
+                android:layout_marginRight="100dp"
                 android:orientation="vertical"
                 tools:ignore="RtlHardcoded" >
 
@@ -90,10 +92,59 @@
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="56dp"
                 android:src="@drawable/selector_award_congratulate"
                 tools:ignore="RtlHardcoded,ContentDescription" />
+
+            <ImageView
+                android:id="@+id/itemRecyclerAwardMessageIv"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/selector_birthday_message"
+                tools:ignore="RtlHardcoded,ContentDescription" />
         </RelativeLayout>
-    </FrameLayout>
+
+        <RelativeLayout
+            android:id="@+id/itemRecyclerAwardCongratulatedLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/itemRecyclerAwardInfoLayout"
+            android:layout_gravity="bottom"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="64dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="64dp"
+            android:background="@color/light_gray"
+            android:padding="4dp" >
+
+            <ImageView
+                android:id="@+id/itemRecyclerAwardCongratulatedIconIv"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_award_small"
+                tools:ignore="ContentDescription" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/itemRecyclerAwardCongratulatedTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="28dp"
+                android:layout_marginStart="28dp"
+                android:gravity="start|center"
+                android:text="@string/sample_award_name"
+                android:textColor="@color/text_highlight"
+                android:textSize="@dimen/award_name_congratulate_textview_size" />
+        </RelativeLayout>
+    </RelativeLayout>
 
 </com.application.ui.view.MaterialRippleLayout>

@@ -5,6 +5,7 @@ package com.application.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
@@ -22,6 +23,7 @@ import com.application.ui.view.BottomSheet;
 import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
+import com.application.utils.AppConstants;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.mobcast.R;
@@ -118,6 +120,12 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 			return true;
 		case R.id.action_share:
 			showDialog(0);
+			return true;
+		case R.id.action_report:
+			Intent mIntent  = new Intent(TextDetailActivity.this, ReportActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, "Android:Text");
+			startActivity(mIntent);
+			AndroidUtilities.enterWindowAnimation(TextDetailActivity.this);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

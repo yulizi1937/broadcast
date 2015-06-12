@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -25,6 +26,7 @@ import com.application.ui.adapter.FeedbackViewPagerAdapter;
 import com.application.ui.materialdialog.MaterialDialog;
 import com.application.ui.view.CirclePageIndicator;
 import com.application.utils.AndroidUtilities;
+import com.application.utils.AppConstants;
 import com.application.utils.Utilities;
 import com.mobcast.R;
 
@@ -89,6 +91,12 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 		case android.R.id.home:
 			finish();
 			AndroidUtilities.exitWindowAnimation(FeedbackActivity.this);
+			return true;
+		case R.id.action_report:
+			Intent mIntent  = new Intent(FeedbackActivity.this, ReportActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, "Android:Feedback");
+			startActivity(mIntent);
+			AndroidUtilities.enterWindowAnimation(FeedbackActivity.this);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.application.beans.Award;
 import com.application.ui.view.CircleImageView;
@@ -63,7 +64,7 @@ public class AwardRecyclerAdapter extends
 		AppCompatTextView awardNameTv;
 		CircleImageView winnerIv;
 		ImageView congratulateIv;
-		FrameLayout rootLayout;
+		RelativeLayout rootLayout;
 		View readStripView;
 
 		public ViewHolder(View view) {
@@ -79,7 +80,7 @@ public class AwardRecyclerAdapter extends
 			congratulateIv = (ImageView) view
 					.findViewById(R.id.itemRecyclerCongratulateIv);
 
-			rootLayout = (FrameLayout) view
+			rootLayout = (RelativeLayout) view
 					.findViewById(R.id.itemRecyclerAwardRootLayout);
 			
 			readStripView = (View) view.findViewById(R.id.itemRecyclerReadView);
