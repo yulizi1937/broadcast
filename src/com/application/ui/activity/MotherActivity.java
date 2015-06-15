@@ -42,8 +42,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.application.beans.MotherHeader;
+import com.application.ui.adapter.MotherPagerAdapter;
 import com.application.ui.calligraphy.CalligraphyContextWrapper;
-import com.application.ui.fragment.MotherPagerAdapter;
 import com.application.ui.view.CircleImageView;
 import com.application.ui.view.DrawerArrowDrawable;
 import com.application.ui.view.ScrimInsetsFrameLayout;
@@ -134,7 +134,7 @@ public class MotherActivity extends BaseActivity implements
 		MenuItem menuItemBirthday = menu.findItem(R.id.action_birthday);
 		menuItemBirthday.setIcon(buildCounterDrawable(1,
 				R.drawable.ic_toolbar_birthday));
-		if (AndroidUtilities.isAboveHoneyComb()) {
+		/*if (AndroidUtilities.isAboveHoneyComb()) {
 			MenuItem searchItem = menu.findItem(R.id.action_search);
 			SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 			SearchView searchView = null;
@@ -145,7 +145,7 @@ public class MotherActivity extends BaseActivity implements
 				searchView.setSearchableInfo(searchManager
 						.getSearchableInfo(getComponentName()));
 			}
-		}
+		}*/
 		return true;
 	}
 
@@ -153,6 +153,11 @@ public class MotherActivity extends BaseActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		switch (item.getItemId()) {
+		case R.id.action_search:
+			Intent mIntentSearch = new Intent(MotherActivity.this, SearchMotherActivity.class);
+			startActivity(mIntentSearch);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			return true;
 		case R.id.action_award:
 			Intent mIntent = new Intent(MotherActivity.this,
 					AwardRecyclerActivity.class);
