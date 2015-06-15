@@ -155,6 +155,17 @@ public class MotherActivity extends BaseActivity implements
 		switch (item.getItemId()) {
 		case R.id.action_search:
 			Intent mIntentSearch = new Intent(MotherActivity.this, SearchMotherActivity.class);
+			switch(mPager.getCurrentItem()){
+			case 0:
+				mIntentSearch.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.MOBCAST);
+				break;
+			case 1:
+				mIntentSearch.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.CHAT);
+				break;
+			case 2:
+				mIntentSearch.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.TRAINING);
+				break;
+			}
 			startActivity(mIntentSearch);
 			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
 			return true;

@@ -30,6 +30,7 @@ import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ObservableRecyclerView;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
+import com.application.utils.AppConstants;
 import com.application.utils.Utilities;
 import com.mobcast.R;
 
@@ -80,16 +81,6 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 		MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.menu_event, menu);
 	    if(AndroidUtilities.isAboveGingerBread()){
-	    	MenuItem searchItem = menu.findItem(R.id.action_search);
-		    SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
-		    SearchView searchView = null;
-		    if (searchItem != null) {
-		        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-		    }
-		    if (searchView != null) {
-		        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-		    }
-		    
 		    MenuItem refreshItem = menu.findItem(R.id.action_refresh_actionable);
 		    if(refreshItem!=null){
 		    	View mView = MenuItemCompat.getActionView(refreshItem);
@@ -119,6 +110,11 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 	        	finish();
 	        	AndroidUtilities.exitWindowAnimation(EventRecyclerActivity.this);
 	        	return true;
+	        case R.id.action_search:
+	        	Intent mIntent = new Intent(EventRecyclerActivity.this, SearchActivity.class);
+	        	mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.EVENTS);
+	        	startActivity(mIntent);
+	        	AndroidUtilities.enterWindowAnimation(EventRecyclerActivity.this);
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }

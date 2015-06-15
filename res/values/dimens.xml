@@ -263,6 +263,9 @@
     <dimen name="drawer_item_image_width">24dp</dimen>
     <dimen name="drawer_item_padding_left">16dp</dimen>
     <dimen name="drawer_item_padding_right">16dp</dimen>
+    
+    <!-- layout_drawer_search_mother -->
+    <dimen name="layout_drawer_search_mother_checkbox_padding">8dp</dimen>
 
     <!-- Material Dialog L -->
     <!-- Margin around the dialog, excluding the button bar -->

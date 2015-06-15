@@ -31,6 +31,7 @@ import android.widget.VideoView;
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.DiscreteSeekBar;
 import com.application.ui.view.DiscreteSeekBar.OnProgressChangeListener;
+import com.application.ui.view.ChipsLayout;
 import com.application.ui.view.FlowLayout;
 import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
@@ -421,24 +422,28 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		String[] mLanguages = new String[] { "English", "Hindi", "Marathi",
 				"Gujarati", "Bengali", "Telugu", "Kannad", "Punjabi", "Siddhi",
 				"Bhojpuri" };
-		for (int i = 0; i < 10; i++) {
+		/*for (int i = 0; i < 10; i++) {
 			AppCompatTextView mAppCompatTextView = new AppCompatTextView(this);
 			mAppCompatTextView.setText(mLanguages[i]);
 			mAppCompatTextView.setPadding(11, 2, 11, 2);
 			mAppCompatTextView.setGravity(Gravity.CENTER);
+			mAppCompatTextView.setBackgroundResource(R.drawable.shape_chips_selected);
+			mAppCompatTextView.setTextColor(Utilities.getAppColor());
 			if (i == 0) {
-				mAppCompatTextView.setTextColor(Color.WHITE);
-				mAppCompatTextView.setBackgroundResource(R.drawable.shape_chips_selected);
-				mAppCompatTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_chips_selected, 0);
-//				setMaterialRippleOnView(mAppCompatTextView);
+				mAppCompatTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_chips_download, 0);
 			}else{
-				mAppCompatTextView.setTextColor(Utilities.getAppColor());
-				mAppCompatTextView.setBackgroundResource(R.drawable.shape_chips_normal);
-				mAppCompatTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_chips_normal, 0);
-//				setMaterialRippleWithGrayOnView(mAppCompatTextView);
+				mAppCompatTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_chips_download, 0);
 			}
+			mAppCompatTextView.setCompoundDrawablePadding(0);
 			mAppCompatTextView.setLayoutParams(params);
 			mLanguageFlowLayout.addView(mAppCompatTextView);
+		}*/
+		for(int i = 0 ; i<10 ;i++){
+			ChipsLayout mChip = new ChipsLayout(this);
+			mChip.setDrawable(R.drawable.ic_chips_download);
+			mChip.setText(mLanguages[i]);
+			mChip.setLayoutParams(params);
+			mLanguageFlowLayout.addView(mChip);
 		}
 	}
 	

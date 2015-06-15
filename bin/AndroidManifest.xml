@@ -196,6 +196,9 @@
             android:name="com.application.ui.activity.SearchMotherActivity"
             android:configChanges="locale|orientation" />
         <activity
+            android:name="com.application.ui.activity.SearchActivity"
+            android:configChanges="locale|orientation" />
+        <activity
             android:name="com.application.ui.activity.YouTubeLiveFullScreenActivity"
             android:screenOrientation="landscape" />
 

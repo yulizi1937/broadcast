@@ -122,6 +122,11 @@ public class AppConstants {
 		public static final String HELP             = "help";
 		public static final String USERNAME         = "userName";
 		public static final String OTP              = "otp";
+		public static final String MOBCAST          = "mobcast";
+		public static final String CHAT             = "chat";
+		public static final String TRAINING         = "training";
+		public static final String AWARDS           = "awards";
+		public static final String EVENTS           = "events";
 	}
 	
 	public static final String deviceType = "android";
