@@ -112,7 +112,8 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 	  public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player,
 	      boolean wasRestored) {
 	    if (!wasRestored) {
-	      player.cueVideo("sw4hmqVPe0E");
+//	      player.cueVideo("sw4hmqVPe0E");
+	      player.cueVideo("bHMZOrGOhKs");
 	    }
 	  }
 

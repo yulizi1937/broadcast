@@ -345,30 +345,38 @@ public class VerificationActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				if (!TextUtils.isEmpty(mVerificationCode1.getText().toString())
-						&& !TextUtils.isEmpty(mVerificationCode2.getText()
-								.toString())
-						&& !TextUtils.isEmpty(mVerificationCode3.getText()
-								.toString())
-						&& !TextUtils.isEmpty(mVerificationCode4.getText()
-								.toString())) {
-					if (Utilities.isInternetConnected()) {
-						new AsyncVerifyTask().execute();
+				if(!BuildVars.DEBUG_DESIGN){
+					if (!TextUtils.isEmpty(mVerificationCode1.getText().toString())
+							&& !TextUtils.isEmpty(mVerificationCode2.getText()
+									.toString())
+							&& !TextUtils.isEmpty(mVerificationCode3.getText()
+									.toString())
+							&& !TextUtils.isEmpty(mVerificationCode4.getText()
+									.toString())) {
+						if (Utilities.isInternetConnected()) {
+							new AsyncVerifyTask().execute();
+						} else {
+							Utilities.showCrouton(
+									VerificationActivity.this,
+									mCroutonViewGroup,
+									getResources().getString(
+											R.string.internet_unavailable),
+									Style.ALERT);
+						}
 					} else {
 						Utilities.showCrouton(
 								VerificationActivity.this,
 								mCroutonViewGroup,
 								getResources().getString(
-										R.string.internet_unavailable),
+										R.string.validate_verfication_code_empty),
 								Style.ALERT);
 					}
-				} else {
-					Utilities.showCrouton(
-							VerificationActivity.this,
-							mCroutonViewGroup,
-							getResources().getString(
-									R.string.validate_verfication_code_empty),
-							Style.ALERT);
+				}else{
+					Intent mIntent = new Intent(VerificationActivity.this, SetProfileActivity.class);
+					mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(mIntent);
+					AndroidUtilities.enterWindowAnimation(VerificationActivity.this);
+					finish();
 				}
 			}
 		});

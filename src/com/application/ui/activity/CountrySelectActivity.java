@@ -120,6 +120,17 @@ public class CountrySelectActivity extends SwipeBackBaseActivity {
 			}
 		});
 		setTextWatcher();
+		
+		
+		mToolBarDrawer.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				finish();
+				AndroidUtilities.exitWindowAnimation(CountrySelectActivity.this);
+			}
+		});
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)

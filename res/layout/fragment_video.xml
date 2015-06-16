@@ -181,7 +181,7 @@
                             android:layout_centerVertical="true"
                             android:layout_gravity="left|center"
                             android:layout_marginRight="90dp"
-                            android:background="@color/item_event_by"
+                            android:background="@drawable/shape_by_orange_fill"
                             android:gravity="left|center"
                             android:padding="4dp"
                             android:text="@string/sample_event_by"
@@ -211,14 +211,14 @@
                     </RelativeLayout>
 
                     <LinearLayout
-                        android:id="@+id/fragmentImageDetailLanguageLayout"
+                        android:id="@+id/fragmentVideoDetailLanguageLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:visibility="gone" >
 
                         <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/fragmentImageDetailLanguageHeaderTv"
+                            android:id="@+id/fragmentVideoDetailLanguageHeaderTv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -229,7 +229,7 @@
                             android:textSize="@dimen/fragment_image_language_header_text_size" />
 
                         <com.application.ui.view.FlowLayout
-                            android:id="@+id/fragmentImageDetailLanguageFlowLayout"
+                            android:id="@+id/fragmentVideoDetailLanguageFlowLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="start|top"

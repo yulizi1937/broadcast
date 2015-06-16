@@ -18,13 +18,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.application.ui.view.BottomSheet;
+import com.application.ui.view.ChipsLayout;
+import com.application.ui.view.FlowLayout;
 import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.Style;
+import com.application.utils.Utilities;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.mobcast.R;
@@ -41,21 +46,26 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 	private ProgressWheel mToolBarMenuRefreshProgress;
 	private ImageView mToolBarMenuRefresh;
 
+	private LinearLayout mLanguageLinearLayout;
+
+	private FlowLayout mLanguageFlowLayout;
+
 	private FrameLayout mCroutonViewGroup;
-	
+
 	private AppCompatTextView mPptTitleTv;
 	private AppCompatTextView mPptByTv;
 	private AppCompatTextView mPptViewTv;
 	private AppCompatTextView mPptSummaryTextTv;
 	private AppCompatTextView mPptFileNameTv;
 	private AppCompatTextView mPptFileInfoTv;
-	
+	private AppCompatTextView mLanguageHeaderTv;
+
 	private ImageView mPptFileIv;
-	
+
 	private RelativeLayout mPptFileLayout;
-	
+
 	private boolean isShareOptionEnable = true;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -73,18 +83,17 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 		super.onResume();
 	}
 
-	
 	@Override
 	protected boolean onPrepareOptionsPanel(View view, Menu menu) {
 		// TODO Auto-generated method stub
-		if(isShareOptionEnable){
+		if (isShareOptionEnable) {
 			menu.findItem(R.id.action_share).setVisible(true);
-		}else{
+		} else {
 			menu.findItem(R.id.action_share).setVisible(false);
 		}
 		return super.onPrepareOptionsPanel(view, menu);
 	}
-	
+
 	@SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -130,8 +139,10 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 			showDialog(0);
 			return true;
 		case R.id.action_report:
-			Intent mIntent  = new Intent(PptDetailActivity.this, ReportActivity.class);
-			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, "Android:Ppt");
+			Intent mIntent = new Intent(PptDetailActivity.this,
+					ReportActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,
+					"Android:Ppt");
 			startActivity(mIntent);
 			AndroidUtilities.enterWindowAnimation(PptDetailActivity.this);
 			return true;
@@ -139,7 +150,7 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	private void toolBarRefresh() {
 		mToolBarMenuRefresh.setVisibility(View.GONE);
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
@@ -155,18 +166,22 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 
 	private void initUi() {
 		mCroutonViewGroup = (FrameLayout) findViewById(R.id.croutonViewGroup);
-		
-		mPptTitleTv = (AppCompatTextView)findViewById(R.id.fragmentPptDetailTitleTv);
-		
-		mPptByTv = (AppCompatTextView)findViewById(R.id.fragmentPptDetailByTv);
-		mPptSummaryTextTv = (AppCompatTextView)findViewById(R.id.fragmentPptDetailSummaryTv);
-		mPptViewTv = (AppCompatTextView)findViewById(R.id.fragmentPptDetailViewTv);
-		mPptFileInfoTv = (AppCompatTextView)findViewById(R.id.fragmentPptDetailFileDetailIv);
-		mPptFileNameTv = (AppCompatTextView)findViewById(R.id.fragmentPptDetailFileNameIv);
-		
-		mPptFileIv = (ImageView)findViewById(R.id.fragmentPptDetailImageIv);
-		
-		mPptFileLayout = (RelativeLayout)findViewById(R.id.fragmentPptDetailRelativeLayout);
+
+		mLanguageLinearLayout = (LinearLayout) findViewById(R.id.fragmentPptDetailLanguageLayout);
+		mLanguageFlowLayout = (FlowLayout) findViewById(R.id.fragmentPptDetailLanguageFlowLayout);
+		mLanguageHeaderTv = (AppCompatTextView) findViewById(R.id.fragmentPptDetailLanguageHeaderTv);
+
+		mPptTitleTv = (AppCompatTextView) findViewById(R.id.fragmentPptDetailTitleTv);
+
+		mPptByTv = (AppCompatTextView) findViewById(R.id.fragmentPptDetailByTv);
+		mPptSummaryTextTv = (AppCompatTextView) findViewById(R.id.fragmentPptDetailSummaryTv);
+		mPptViewTv = (AppCompatTextView) findViewById(R.id.fragmentPptDetailViewTv);
+		mPptFileInfoTv = (AppCompatTextView) findViewById(R.id.fragmentPptDetailFileDetailIv);
+		mPptFileNameTv = (AppCompatTextView) findViewById(R.id.fragmentPptDetailFileNameIv);
+
+		mPptFileIv = (ImageView) findViewById(R.id.fragmentPptDetailImageIv);
+
+		mPptFileLayout = (RelativeLayout) findViewById(R.id.fragmentPptDetailRelativeLayout);
 	}
 
 	/**
@@ -186,21 +201,53 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 		setMaterialRippleView();
 		setOnClickListener();
 		setToolBarOption();
+		setLanguageChipsLayout();
 	}
-	
-	private void setOnClickListener(){
+
+	private void setOnClickListener() {
 	}
-	
+
+	private void setLanguageChipsLayout() {
+		mLanguageLinearLayout.setVisibility(View.VISIBLE);
+		FlowLayout.LayoutParams params = new FlowLayout.LayoutParams(
+				FlowLayout.LayoutParams.WRAP_CONTENT,
+				FlowLayout.LayoutParams.WRAP_CONTENT);
+		params.setMargins(2, 2, 2, 2);
+		final String[] mLanguages = new String[] { "English", "Hindi",
+				"Marathi", "Gujarati", "Bengali", "Telugu", "Kannad",
+				"Punjabi", "Siddhi", "Bhojpuri" };
+		for (int i = 0; i < 2; i++) {
+			ChipsLayout mChip = new ChipsLayout(this);
+			mChip.setDrawable(R.drawable.ic_chips_download);
+			mChip.setText(mLanguages[i]);
+			mChip.setLayoutParams(params);
+			final int j = i;
+			mChip.getChipLayout().setOnClickListener(
+					new View.OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							// TODO Auto-generated method stub
+							Utilities.showCrouton(PptDetailActivity.this,
+									mCroutonViewGroup, mLanguages[j],
+									Style.INFO);
+						}
+					});
+			mLanguageFlowLayout.addView(mChip);
+		}
+	}
+
 	@Override
 	@Deprecated
 	protected Dialog onCreateDialog(int id, Bundle args) {
 		// TODO Auto-generated method stub
 		return getShareAction();
 	}
-	
-	protected BottomSheet getShareAction(){
-    	return getShareActions(new BottomSheet.Builder(this).grid().title("Share To "), "Hello ").limit(R.integer.bs_initial_grid_row).build();
-    }
+
+	protected BottomSheet getShareAction() {
+		return getShareActions(
+				new BottomSheet.Builder(this).grid().title("Share To "),
+				"Hello ").limit(R.integer.bs_initial_grid_row).build();
+	}
 
 	private void setMaterialRippleView() {
 		try {
@@ -208,11 +255,11 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 			Log.i(TAG, e.toString());
 		}
 	}
-	
-	private void setAnimation(){
-		try{
+
+	private void setAnimation() {
+		try {
 			YoYo.with(Techniques.ZoomIn).duration(500).playOn(mPptFileLayout);
-		}catch(Exception e){
+		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}
 	}

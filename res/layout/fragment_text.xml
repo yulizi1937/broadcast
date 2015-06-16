@@ -38,7 +38,7 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="left|center"
                 android:layout_marginRight="90dp"
-                android:background="@color/item_event_by"
+                android:background="@drawable/shape_by_orange_fill"
                 android:gravity="left|center"
                 android:padding="4dp"
                 android:text="@string/sample_event_by"

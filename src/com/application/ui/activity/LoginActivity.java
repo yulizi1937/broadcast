@@ -190,23 +190,25 @@ public class LoginActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				if (!TextUtils.isEmpty(mLoginIdEt.getText().toString())) {
-					if (Utilities.isInternetConnected()) {
-						new AsyncLoginTask().execute();
-					} else {
-						Utilities.showCrouton(
-								LoginActivity.this,
-								mCroutonViewGroup,
-								getResources().getString(
-										R.string.internet_unavailable),
-								Style.ALERT);
-					}
+				if(!BuildVars.DEBUG_DESIGN){
+					if (!TextUtils.isEmpty(mLoginIdEt.getText().toString())) {
+						if (Utilities.isInternetConnected()) {
+							new AsyncLoginTask().execute();
+						} else {
+							Utilities.showCrouton(
+									LoginActivity.this,
+									mCroutonViewGroup,
+									getResources().getString(
+											R.string.internet_unavailable),
+									Style.ALERT);
+						}
+					}	
+				}else{
+					Intent mIntent = new Intent(LoginActivity.this,
+							VerificationActivity.class);
+					startActivity(mIntent);
+					AndroidUtilities.enterWindowAnimation(LoginActivity.this);	
 				}
-				
-				/*Intent mIntent = new Intent(LoginActivity.this,
-						VerificationActivity.class);
-				startActivity(mIntent);
-				AndroidUtilities.enterWindowAnimation(LoginActivity.this);*/
 			}
 		});
 

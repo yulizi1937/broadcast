@@ -21,14 +21,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.application.ui.adapter.ImageDetailPagerAdapter;
 import com.application.ui.view.BottomSheet;
+import com.application.ui.view.ChipsLayout;
 import com.application.ui.view.CirclePageIndicator;
+import com.application.ui.view.FlowLayout;
 import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.Style;
+import com.application.utils.Utilities;
 import com.mobcast.R;
 
 /**
@@ -42,6 +47,11 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 
 	private ProgressWheel mToolBarMenuRefreshProgress;
 	private ImageView mToolBarMenuRefresh;
+	
+	private LinearLayout mLanguageLinearLayout;
+
+	private FlowLayout mLanguageFlowLayout;
+
 
 	private FrameLayout mCroutonViewGroup;
 	
@@ -49,6 +59,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mImageByTv;
 	private AppCompatTextView mImageViewTv;
 	private AppCompatTextView mImageSummaryTextTv;
+	private AppCompatTextView mLanguageHeaderTv;
 	
 	private ViewPager mImageViewPager;
 	private CirclePageIndicator mImageCirclePageIndicator;
@@ -163,6 +174,10 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 	private void initUi() {
 		mCroutonViewGroup = (FrameLayout) findViewById(R.id.croutonViewGroup);
 		
+		mLanguageLinearLayout = (LinearLayout) findViewById(R.id.fragmentImageDetailLanguageLayout);
+		mLanguageFlowLayout = (FlowLayout) findViewById(R.id.fragmentImageDetailLanguageFlowLayout);
+		mLanguageHeaderTv = (AppCompatTextView) findViewById(R.id.fragmentImageDetailLanguageHeaderTv);
+		
 		mImageTitleTv = (AppCompatTextView)findViewById(R.id.fragmentImageDetailTitleTv);
 		mImageByTv = (AppCompatTextView)findViewById(R.id.fragmentImageDetailByTv);
 		mImageSummaryTextTv = (AppCompatTextView)findViewById(R.id.fragmentImageDetailSummaryTv);
@@ -192,6 +207,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 		setMaterialRippleView();
 		setOnClickListener();
 		setToolBarOption();
+		setLanguageChipsLayout();
 	}
 	
 	private void setOnClickListener(){
@@ -207,6 +223,32 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 		mImageCirclePageIndicator.setViewPager(mImageViewPager);
 	}
 	
+	private void setLanguageChipsLayout() {
+		mLanguageLinearLayout.setVisibility(View.VISIBLE);
+		FlowLayout.LayoutParams params = new FlowLayout.LayoutParams(
+				FlowLayout.LayoutParams.WRAP_CONTENT,
+				FlowLayout.LayoutParams.WRAP_CONTENT);
+		params.setMargins(2, 2, 2, 2);
+		final String[] mLanguages = new String[] { "English", "Hindi",
+				"Marathi", "Gujarati", "Bengali", "Telugu", "Kannad",
+				"Punjabi", "Siddhi", "Bhojpuri" };
+		for (int i = 0; i < 5; i++) {
+			ChipsLayout mChip = new ChipsLayout(this);
+			mChip.setDrawable(R.drawable.ic_chips_download);
+			mChip.setText(mLanguages[i]);
+			mChip.setLayoutParams(params);
+			final int j = i;
+			mChip.getChipLayout().setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					// TODO Auto-generated method stub
+					 Utilities.showCrouton(ImageDetailActivity.this,
+					 mCroutonViewGroup, mLanguages[j], Style.INFO);
+				}
+			});
+			mLanguageFlowLayout.addView(mChip);
+		}
+	}
 	
 	@Override
 	@Deprecated

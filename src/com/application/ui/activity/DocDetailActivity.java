@@ -18,13 +18,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.application.ui.view.BottomSheet;
+import com.application.ui.view.ChipsLayout;
+import com.application.ui.view.FlowLayout;
 import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.Style;
+import com.application.utils.Utilities;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.mobcast.R;
@@ -41,21 +46,26 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 	private ProgressWheel mToolBarMenuRefreshProgress;
 	private ImageView mToolBarMenuRefresh;
 
+	private LinearLayout mLanguageLinearLayout;
+
+	private FlowLayout mLanguageFlowLayout;
+
 	private FrameLayout mCroutonViewGroup;
-	
+
 	private AppCompatTextView mDocTitleTv;
 	private AppCompatTextView mDocByTv;
 	private AppCompatTextView mDocViewTv;
 	private AppCompatTextView mDocSummaryTextTv;
 	private AppCompatTextView mDocFileNameTv;
 	private AppCompatTextView mDocFileInfoTv;
-	
+	private AppCompatTextView mLanguageHeaderTv;
+
 	private ImageView mDocFileIv;
-	
+
 	private RelativeLayout mDocFileLayout;
-	
+
 	private boolean isShareOptionEnable = true;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -72,13 +82,13 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onResume();
 	}
-	
+
 	@Override
 	protected boolean onPrepareOptionsPanel(View view, Menu menu) {
 		// TODO Auto-generated method stub
-		if(isShareOptionEnable){
+		if (isShareOptionEnable) {
 			menu.findItem(R.id.action_share).setVisible(true);
-		}else{
+		} else {
 			menu.findItem(R.id.action_share).setVisible(false);
 		}
 		return super.onPrepareOptionsPanel(view, menu);
@@ -129,8 +139,10 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 			showDialog(0);
 			return true;
 		case R.id.action_report:
-			Intent mIntent  = new Intent(DocDetailActivity.this, ReportActivity.class);
-			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, "Android:Doc");
+			Intent mIntent = new Intent(DocDetailActivity.this,
+					ReportActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,
+					"Android:Doc");
 			startActivity(mIntent);
 			AndroidUtilities.enterWindowAnimation(DocDetailActivity.this);
 			return true;
@@ -138,7 +150,7 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	private void toolBarRefresh() {
 		mToolBarMenuRefresh.setVisibility(View.GONE);
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
@@ -154,18 +166,22 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 
 	private void initUi() {
 		mCroutonViewGroup = (FrameLayout) findViewById(R.id.croutonViewGroup);
-		
-		mDocTitleTv = (AppCompatTextView)findViewById(R.id.fragmentDocDetailTitleTv);
-		
-		mDocByTv = (AppCompatTextView)findViewById(R.id.fragmentDocDetailByTv);
-		mDocSummaryTextTv = (AppCompatTextView)findViewById(R.id.fragmentDocDetailSummaryTv);
-		mDocViewTv = (AppCompatTextView)findViewById(R.id.fragmentDocDetailViewTv);
-		mDocFileInfoTv = (AppCompatTextView)findViewById(R.id.fragmentDocDetailFileDetailIv);
-		mDocFileNameTv = (AppCompatTextView)findViewById(R.id.fragmentDocDetailFileNameIv);
-		
-		mDocFileIv = (ImageView)findViewById(R.id.fragmentDocDetailImageIv);
-		
-		mDocFileLayout = (RelativeLayout)findViewById(R.id.fragmentDocDetailRelativeLayout);
+
+		mLanguageLinearLayout = (LinearLayout) findViewById(R.id.fragmentDocDetailLanguageLayout);
+		mLanguageFlowLayout = (FlowLayout) findViewById(R.id.fragmentDocDetailLanguageFlowLayout);
+		mLanguageHeaderTv = (AppCompatTextView) findViewById(R.id.fragmentDocDetailLanguageHeaderTv);
+
+		mDocTitleTv = (AppCompatTextView) findViewById(R.id.fragmentDocDetailTitleTv);
+
+		mDocByTv = (AppCompatTextView) findViewById(R.id.fragmentDocDetailByTv);
+		mDocSummaryTextTv = (AppCompatTextView) findViewById(R.id.fragmentDocDetailSummaryTv);
+		mDocViewTv = (AppCompatTextView) findViewById(R.id.fragmentDocDetailViewTv);
+		mDocFileInfoTv = (AppCompatTextView) findViewById(R.id.fragmentDocDetailFileDetailIv);
+		mDocFileNameTv = (AppCompatTextView) findViewById(R.id.fragmentDocDetailFileNameIv);
+
+		mDocFileIv = (ImageView) findViewById(R.id.fragmentDocDetailImageIv);
+
+		mDocFileLayout = (RelativeLayout) findViewById(R.id.fragmentDocDetailRelativeLayout);
 	}
 
 	/**
@@ -185,21 +201,51 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 		setMaterialRippleView();
 		setOnClickListener();
 		setToolBarOption();
+		setLanguageChipsLayout();
+	}
+
+	private void setOnClickListener() {
 	}
 	
-	private void setOnClickListener(){
+	private void setLanguageChipsLayout() {
+		mLanguageLinearLayout.setVisibility(View.VISIBLE);
+		FlowLayout.LayoutParams params = new FlowLayout.LayoutParams(
+				FlowLayout.LayoutParams.WRAP_CONTENT,
+				FlowLayout.LayoutParams.WRAP_CONTENT);
+		params.setMargins(2, 2, 2, 2);
+		final String[] mLanguages = new String[] { "English", "Hindi",
+				"Marathi", "Gujarati", "Bengali", "Telugu", "Kannad",
+				"Punjabi", "Siddhi", "Bhojpuri" };
+		for (int i = 0; i < 3; i++) {
+			ChipsLayout mChip = new ChipsLayout(this);
+			mChip.setDrawable(R.drawable.ic_chips_download);
+			mChip.setText(mLanguages[i]);
+			mChip.setLayoutParams(params);
+			final int j = i;
+			mChip.getChipLayout().setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					// TODO Auto-generated method stub
+					 Utilities.showCrouton(DocDetailActivity.this,
+					 mCroutonViewGroup, mLanguages[j], Style.INFO);
+				}
+			});
+			mLanguageFlowLayout.addView(mChip);
+		}
 	}
-	
+
 	@Override
 	@Deprecated
 	protected Dialog onCreateDialog(int id, Bundle args) {
 		// TODO Auto-generated method stub
 		return getShareAction();
 	}
-	
-	protected BottomSheet getShareAction(){
-    	return getShareActions(new BottomSheet.Builder(this).grid().title("Share To "), "Hello ").limit(R.integer.bs_initial_grid_row).build();
-    }
+
+	protected BottomSheet getShareAction() {
+		return getShareActions(
+				new BottomSheet.Builder(this).grid().title("Share To "),
+				"Hello ").limit(R.integer.bs_initial_grid_row).build();
+	}
 
 	private void setMaterialRippleView() {
 		try {
@@ -207,11 +253,11 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 			Log.i(TAG, e.toString());
 		}
 	}
-	
-	private void setAnimation(){
-		try{
+
+	private void setAnimation() {
+		try {
 			YoYo.with(Techniques.ZoomIn).duration(500).playOn(mDocFileLayout);
-		}catch(Exception e){
+		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}
 	}

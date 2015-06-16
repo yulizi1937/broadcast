@@ -23,16 +23,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.DiscreteSeekBar;
 import com.application.ui.view.DiscreteSeekBar.OnProgressChangeListener;
+import com.application.ui.view.ChipsLayout;
+import com.application.ui.view.FlowLayout;
 import com.application.ui.view.LineRenderer;
 import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
 import com.application.ui.view.VisualizerView;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.Style;
 import com.application.utils.Utilities;
 import com.mobcast.R;
 
@@ -47,6 +51,10 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 
 	private ProgressWheel mToolBarMenuRefreshProgress;
 	private ImageView mToolBarMenuRefresh;
+	
+	private LinearLayout mLanguageLinearLayout;
+
+	private FlowLayout mLanguageFlowLayout;
 
 	private FrameLayout mCroutonViewGroup;
 	
@@ -54,6 +62,7 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mAudioByTv;
 	private AppCompatTextView mAudioViewTv;
 	private AppCompatTextView mAudioSummaryTextTv;
+	private AppCompatTextView mLanguageHeaderTv;
 	
 	private AppCompatTextView mAudioControllerCurrentDurationTv;
 	
@@ -185,6 +194,10 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	private void initUi() {
 		mCroutonViewGroup = (FrameLayout) findViewById(R.id.croutonViewGroup);
 		
+		mLanguageLinearLayout = (LinearLayout) findViewById(R.id.fragmentAudioDetailLanguageLayout);
+		mLanguageFlowLayout = (FlowLayout) findViewById(R.id.fragmentAudioDetailLanguageFlowLayout);
+		mLanguageHeaderTv = (AppCompatTextView) findViewById(R.id.fragmentAudioDetailLanguageHeaderTv);
+		
 		mAudioTitleTv = (AppCompatTextView)findViewById(R.id.fragmentAudioDetailTitleTv);
 		
 		mAudioByTv = (AppCompatTextView)findViewById(R.id.fragmentAudioDetailByTv);
@@ -288,6 +301,7 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 		setMediaPlayerListener();
 		setSeekBarListener();
 		setToolbarOption();
+		setLanguageChipsLayout();
 	}
 	
 	private void setToolbarOption(){
@@ -331,6 +345,33 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 				// TODO Auto-generated method stub
 			}
 		});
+	}
+	
+	private void setLanguageChipsLayout() {
+		mLanguageLinearLayout.setVisibility(View.VISIBLE);
+		FlowLayout.LayoutParams params = new FlowLayout.LayoutParams(
+				FlowLayout.LayoutParams.WRAP_CONTENT,
+				FlowLayout.LayoutParams.WRAP_CONTENT);
+		params.setMargins(2, 2, 2, 2);
+		final String[] mLanguages = new String[] { "English", "Hindi",
+				"Marathi", "Gujarati", "Bengali", "Telugu", "Kannad",
+				"Punjabi", "Siddhi", "Bhojpuri" };
+		for (int i = 0; i < 3; i++) {
+			ChipsLayout mChip = new ChipsLayout(this);
+			mChip.setDrawable(R.drawable.ic_chips_download);
+			mChip.setText(mLanguages[i]);
+			mChip.setLayoutParams(params);
+			final int j = i;
+			mChip.getChipLayout().setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					// TODO Auto-generated method stub
+					 Utilities.showCrouton(AudioDetailActivity.this,
+					 mCroutonViewGroup, mLanguages[j], Style.INFO);
+				}
+			});
+			mLanguageFlowLayout.addView(mChip);
+		}
 	}
 	
 	private void setMediaPlayerListener(){

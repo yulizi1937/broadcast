@@ -31,6 +31,7 @@ import com.application.ui.materialdialog.MaterialDialog;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
+import com.application.utils.BuildVars;
 import com.application.utils.FileLog;
 import com.application.utils.Utilities;
 import com.mobcast.R;
@@ -87,7 +88,9 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		initUi();
 		setUiListener();
 		setAnimation();
-		setAppStorage();
+		if(!BuildVars.DEBUG_DESIGN){
+			setAppStorage();
+		}
 	}
 
 	@Override
@@ -353,4 +356,6 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			Log.i(TAG, e.toString());
 		}
 	}
+	
+	
 }

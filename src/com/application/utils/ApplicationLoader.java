@@ -80,7 +80,9 @@ public class ApplicationLoader extends Application {
 		}
 		startAnyDoNotificationService();
 		ApplicationLoader app = (ApplicationLoader) ApplicationLoader.applicationContext;
-		app.initPlayServices();
+		if(!BuildVars.DEBUG_DESIGN){
+			app.initPlayServices();
+		}
 	}
 
 	public static Context getApplication() {

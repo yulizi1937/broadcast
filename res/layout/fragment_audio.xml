@@ -98,7 +98,7 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="left|center"
                     android:layout_marginRight="90dp"
-                    android:background="@color/item_event_by"
+                    android:background="@drawable/shape_by_orange_fill"
                     android:gravity="left|center"
                     android:padding="4dp"
                     android:text="@string/sample_event_by"
@@ -126,6 +126,33 @@
                     android:textSize="@dimen/event_by_textview_size"
                     tools:ignore="RtlHardcoded" />
             </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/fragmentAudioDetailLanguageLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/fragmentAudioDetailLanguageHeaderTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/fragment_detail_title_by_content_margin_top"
+                    android:gravity="start|center"
+                    android:text="@string/fragment_image_language_header"
+                    android:textColor="@color/toolbar_background"
+                    android:textSize="@dimen/fragment_image_language_header_text_size" />
+
+                <com.application.ui.view.FlowLayout
+                    android:id="@+id/fragmentAudioDetailLanguageFlowLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|top"
+                    android:padding="@dimen/fragment_image_language_flowlayout_padding" >
+                </com.application.ui.view.FlowLayout>
+            </LinearLayout>
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/fragmentAudioDetailSummaryTv"

@@ -174,15 +174,22 @@ public class SetProfileActivity extends AppCompatActivity{
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				if (Utilities.isInternetConnected()) {
-					new AsyncUpdateProfileTask().execute();
-				} else {
-					Utilities.showCrouton(
-							SetProfileActivity.this,
-							mCroutonViewGroup,
-							getResources().getString(
-									R.string.internet_unavailable),
-							Style.ALERT);
+				if(!BuildVars.DEBUG_DESIGN){
+					if (Utilities.isInternetConnected()) {
+						new AsyncUpdateProfileTask().execute();
+					} else {
+						Utilities.showCrouton(
+								SetProfileActivity.this,
+								mCroutonViewGroup,
+								getResources().getString(
+										R.string.internet_unavailable),
+								Style.ALERT);
+					}
+				}else{
+					Intent mIntent = new Intent(SetProfileActivity.this, MotherActivity.class);
+					startActivity(mIntent);
+					AndroidUtilities.enterWindowAnimation(SetProfileActivity.this);
+					finish();
 				}
 			}
 		});
