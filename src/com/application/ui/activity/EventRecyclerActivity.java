@@ -5,6 +5,9 @@ package com.application.ui.activity;
 
 import java.util.ArrayList;
 
+import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
+
 import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
@@ -162,7 +165,13 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 	    	mList.add(obj);
 	    }
 	    mAdapter = new EventRecyclerAdapter(EventRecyclerActivity.this, mList);
-		mRecyclerView.setAdapter(mAdapter);
+	    if(AndroidUtilities.isAboveIceCreamSandWich()){
+        	AlphaInAnimationAdapter mAlphaAdapter = new AlphaInAnimationAdapter(mAdapter);
+            ScaleInAnimationAdapter mScaleInAdapter = new ScaleInAnimationAdapter(mAlphaAdapter);
+            mRecyclerView.setAdapter(mScaleInAdapter);
+        }else{
+        	mRecyclerView.setAdapter(mAdapter);
+        }
 		 mRecyclerView.addItemDecoration(
 			        new HorizontalDividerItemDecoration.Builder(this)
 			                .color(Utilities.getDividerColor())

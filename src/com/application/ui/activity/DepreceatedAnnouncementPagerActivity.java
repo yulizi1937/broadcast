@@ -5,12 +5,9 @@ package com.application.ui.activity;
 
 import java.util.HashMap;
 
-import android.content.ContentValues;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
@@ -20,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.application.beans.AnnouncementPagerHeader;
-import com.application.sqlite.DBConstant;
 import com.application.ui.fragment.ViewPagerAdapter;
 import com.application.ui.view.SlidingTabLayout;
 import com.mobcast.R;
@@ -51,24 +47,6 @@ public class DepreceatedAnnouncementPagerActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_announcement_pager);
 		initUi();
         initToolBar();
-        
-        ContentValues values = new ContentValues();
-        values.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DATE, "2015-02-19");
-        values.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DATE_FORMATTED, "19 Feb'15");
-        values.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_IS_READ, "1");
-        getContentResolver().insert(DBConstant.Announcement_Columns.CONTENT_URI, values);
-        
-        ContentValues values1 = new ContentValues();
-        values1.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DATE, "2015-02-19");
-        values1.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DATE_FORMATTED, "19 Feb'15");
-        values1.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_IS_READ, "1");
-        getContentResolver().insert(DBConstant.Announcement_Columns.CONTENT_URI, values1);
-        
-        ContentValues values2 = new ContentValues();
-        values2.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DATE, "2015-02-18");
-        values2.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DATE_FORMATTED, "18 Feb'15");
-        values2.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_IS_READ, "0");
-        getContentResolver().insert(DBConstant.Announcement_Columns.CONTENT_URI, values2);
         
         getAnnouncementPagerHeader();
         setPagerSlidingTabStrip();
@@ -123,45 +101,6 @@ public class DepreceatedAnnouncementPagerActivity extends AppCompatActivity {
 	
 	private void getAnnouncementPagerHeader(){
 		mHashMapAnnouncementPagerHeader = new HashMap<String, AnnouncementPagerHeader>();
-		
-		String projection[] = new String[] {
-				DBConstant.Announcement_Columns.COLUMN_ID,
-				DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_ID,
-				DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DATE_FORMATTED,
-				DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DATE,
-				DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_IS_READ};
-		
-		Cursor mCursor = getContentResolver().query(
-				DBConstant.Announcement_Columns.CONTENT_URI, projection, null,null,
-				DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DATE + " DESC");
-		
-		if(mCursor!=null && mCursor.getCount() > 0){
-			mCursor.moveToFirst();
-			int mColumnDate = mCursor.getColumnIndex(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DATE);
-			int mColumnDateFormatted = mCursor.getColumnIndex(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DATE_FORMATTED);
-			int mColumnRead = mCursor.getColumnIndex(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_IS_READ);
-			do {
-				AnnouncementPagerHeader obj = new AnnouncementPagerHeader();
-				obj.setmTitle(mCursor.getString(mColumnDateFormatted));
-				
-				String mDate = mCursor.getString(mColumnDate);
-				int mReadCounter = 0;
-				Cursor mReadCursor = getContentResolver().query(DBConstant.Announcement_Columns.CONTENT_URI, projection, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DATE + " =?", new String[]{mDate}, null);
-				if(mReadCursor!=null && mReadCursor.getCount() > 0){
-					mReadCursor.moveToFirst();
-					do {
-						mReadCounter+=Integer.parseInt(mReadCursor.getString(mColumnRead));
-					} while (mReadCursor.moveToNext());
-					obj.setmUnreadCount(String.valueOf(mReadCounter));
-				}else{
-					obj.setmUnreadCount("0");	
-				}
-				mReadCursor.close();
-				mHashMapAnnouncementPagerHeader.put(mDate, obj);
-			} while (mCursor.moveToNext());
-		}
-		
-		mCursor.close();
 	}
 	
 	

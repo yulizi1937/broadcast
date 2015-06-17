@@ -40,6 +40,7 @@ import com.application.ui.calligraphy.CalligraphyContextWrapper;
 import com.application.ui.view.CircleImageView;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
+import com.application.utils.AppConstants;
 import com.application.utils.FileLog;
 import com.application.utils.Utilities;
 import com.mobcast.R;
@@ -131,6 +132,12 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 		case android.R.id.home:
 			finish();
 			AndroidUtilities.exitWindowAnimation(EditProfileActivity.this);
+			return true;
+		case R.id.action_report:
+			Intent mIntent  = new Intent(EditProfileActivity.this, ReportActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, "Android:Profile");
+			startActivity(mIntent);
+			AndroidUtilities.enterWindowAnimation(EditProfileActivity.this);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

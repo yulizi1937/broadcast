@@ -103,6 +103,9 @@
             android:name="com.application.ui.activity.AwardRecyclerActivity"
             android:configChanges="locale|orientation" />
         <activity
+            android:name="com.application.ui.activity.AwardProfileActivity"
+            android:configChanges="locale|orientation" />
+        <activity
             android:name="com.application.ui.activity.BirthdayRecyclerActivity"
             android:configChanges="locale|orientation" />
         <activity

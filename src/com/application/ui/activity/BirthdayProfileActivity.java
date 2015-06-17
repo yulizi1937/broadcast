@@ -5,20 +5,11 @@ package com.application.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
-import android.media.MediaPlayer.OnPreparedListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,18 +18,11 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.application.ui.materialdialog.MaterialDialog;
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.CircleImageView;
-import com.application.ui.view.DiscreteSeekBar;
-import com.application.ui.view.LineRenderer;
-import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
-import com.application.ui.view.VisualizerView;
-import com.application.ui.view.DiscreteSeekBar.OnProgressChangeListener;
 import com.application.utils.AndroidUtilities;
-import com.application.utils.Style;
-import com.application.utils.Utilities;
+import com.application.utils.AppConstants;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.mobcast.R;
@@ -95,28 +79,7 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_event_detail, menu);
-		if (AndroidUtilities.isAboveGingerBread()) {
-			MenuItem refreshItem = menu
-					.findItem(R.id.action_refresh_actionable);
-			if (refreshItem != null) {
-				View mView = MenuItemCompat.getActionView(refreshItem);
-				MaterialRippleLayout mToolBarMenuRefreshLayout = (MaterialRippleLayout) mView
-						.findViewById(R.id.toolBarActionItemRefresh);
-				mToolBarMenuRefreshProgress = (ProgressWheel) mView
-						.findViewById(R.id.toolBarActionItemProgressWheel);
-				mToolBarMenuRefresh = (ImageView) mView
-						.findViewById(R.id.toolBarActionItemImageView);
-				mToolBarMenuRefreshLayout
-						.setOnClickListener(new View.OnClickListener() {
-							@Override
-							public void onClick(View mView) {
-								// TODO Auto-generated method stub
-								toolBarRefresh();
-							}
-						});
-			}
-		}
+		inflater.inflate(R.menu.menu_profile, menu);
 		return true;
 	}
 
@@ -130,6 +93,12 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		case android.R.id.home:
 			finish();
 			AndroidUtilities.exitWindowAnimation(BirthdayProfileActivity.this);
+			return true;
+		case R.id.action_report:
+			Intent mIntent  = new Intent(BirthdayProfileActivity.this, ReportActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, "Android:Profile");
+			startActivity(mIntent);
+			AndroidUtilities.enterWindowAnimation(BirthdayProfileActivity.this);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -161,11 +130,11 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		mBirthdayProfileSunSignTv = (AppCompatTextView) findViewById(R.id.fragmentBirthdayProfileSunSignTv);
 		mBirthdayProfileAgeTv = (AppCompatTextView) findViewById(R.id.fragmentBirthdayProfileAgeTv);
 		mBirthdayProfileDepTv = (AppCompatTextView) findViewById(R.id.fragmentBirthdayProfileDepartmentTv);
-		
-		mBirthdayProfileActionCallIv = (ImageView)findViewById(R.id.fragmentBirthdayProfileCallIv);
-		mBirthdayProfileActionChatIv = (ImageView)findViewById(R.id.fragmentBirthdayProfileChatIv);
-		mBirthdayProfileActionMsgIv = (ImageView)findViewById(R.id.fragmentBirthdayProfileMessageIv);
-		mBirthdayProfileActionEmailIv = (ImageView)findViewById(R.id.fragmentBirthdayProfileEmailIv);
+
+		mBirthdayProfileActionCallIv = (ImageView) findViewById(R.id.fragmentBirthdayProfileCallIv);
+		mBirthdayProfileActionChatIv = (ImageView) findViewById(R.id.fragmentBirthdayProfileChatIv);
+		mBirthdayProfileActionMsgIv = (ImageView) findViewById(R.id.fragmentBirthdayProfileMessageIv);
+		mBirthdayProfileActionEmailIv = (ImageView) findViewById(R.id.fragmentBirthdayProfileEmailIv);
 	}
 
 	/**
@@ -185,10 +154,14 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		try {
 			YoYo.with(Techniques.ZoomIn).duration(1000)
 					.playOn(mBirthdayProfileCircleImageView);
-			YoYo.with(Techniques.BounceInUp).delay(1000).duration(500).playOn(mBirthdayProfileActionChatIv);
-			YoYo.with(Techniques.BounceInUp).delay(1500).duration(500).playOn(mBirthdayProfileActionCallIv);
-			YoYo.with(Techniques.BounceInUp).delay(2000).duration(500).playOn(mBirthdayProfileActionMsgIv);
-			YoYo.with(Techniques.BounceInUp).delay(2500).duration(500).playOn(mBirthdayProfileActionEmailIv);
+			YoYo.with(Techniques.BounceInUp).delay(1000).duration(500)
+					.playOn(mBirthdayProfileActionChatIv);
+			YoYo.with(Techniques.BounceInUp).delay(1500).duration(500)
+					.playOn(mBirthdayProfileActionCallIv);
+			YoYo.with(Techniques.BounceInUp).delay(2000).duration(500)
+					.playOn(mBirthdayProfileActionMsgIv);
+			YoYo.with(Techniques.BounceInUp).delay(2500).duration(500)
+					.playOn(mBirthdayProfileActionEmailIv);
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}

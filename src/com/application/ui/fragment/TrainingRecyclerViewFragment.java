@@ -16,6 +16,8 @@
 
 package com.application.ui.fragment;
 
+import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -64,7 +66,13 @@ public class TrainingRecyclerViewFragment extends BaseFragment {
         View headerView = LayoutInflater.from(mParentActivity).inflate(R.layout.padding, null);
 //        setDummyDataWithHeader(mRecyclerView, headerView);
         mAdapter= new TrainingRecyclerAdapter(getActivity(), getDummyTrainingData(), headerView);
-        mRecyclerView.setAdapter(mAdapter);
+        if(AndroidUtilities.isAboveIceCreamSandWich()){
+        	AlphaInAnimationAdapter mAlphaAdapter = new AlphaInAnimationAdapter(mAdapter);
+            ScaleInAnimationAdapter mScaleInAdapter = new ScaleInAnimationAdapter(mAlphaAdapter);
+            mRecyclerView.setAdapter(mScaleInAdapter);
+        }else{
+        	mRecyclerView.setAdapter(mAdapter);
+        }
         mRecyclerView.addItemDecoration(
                 new HorizontalDividerItemDecoration.Builder(getActivity())
                         .color(Utilities.getDividerColor())

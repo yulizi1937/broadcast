@@ -7,52 +7,87 @@ import android.provider.BaseColumns;
 public class DBConstant {
 
 	public static final String DB_NAME                          = "ApplicationDB";
-	public static final String TABLE_ANNOUNCEMENT 			    = "announcement";
+	public static final String TABLE_MOBCAST 	    		    = "mobcast";
+	public static final String TABLE_CHAT      		            = "chat";
+	public static final String TABLE_TRAINING		            = "training";
 	public static final String TABLE_EVENT 			            = "event";
 	public static final String TABLE_AWARD 			            = "award";
-	public static final String TABLE_NEWS 			            = "news";
-	public static final String TABLE_TRAINING		            = "training";
-	public static final String TABLE_FEEDBACK		            = "feedback";
+	public static final String TABLE_BIRTHDAY		            = "birthday";
+	public static final String TABLE_MOBCAST_FILE 	            = "mobcastFileInfo";
+	public static final String TABLE_TRAINING_FILE	            = "trainingFileInfo";
+	public static final String TABLE_MOBCAST_FEEDBACK           = "mobcastFeedback";
+	public static final String TABLE_TRAINING_QUIZ              = "trainingQuiz";
 	
-	public static final String INDEX_ANNOUNCEMENT_ID	            = "_id_unique_announcement";
+	public static final String INDEX_MOBCAST_ID	                    = "_id_unique_mobcast";
+	public static final String INDEX_CHAT_ID		                = "_id_unique_chat";
+	public static final String INDEX_TRAINING_ID		            = "_id_unique_training";
 	public static final String INDEX_EVENT_ID		                = "_id_unique_event";
 	public static final String INDEX_AWARD_ID		                = "_id_unique_award";
-	public static final String INDEX_NEWS_ID		                = "_id_unique_news";
-	public static final String INDEX_TRAINING_ID		            = "_id_unique_training";
-	public static final String INDEX_FEEDBACK_ID		            = "_id_unique_feedback";
+	public static final String INDEX_BIRTHDAY_ID	                = "_id_unique_birthday";
+	public static final String INDEX_MOBCAST_FILE		            = "_id_unique_mobcast_file";
+	public static final String INDEX_TRAINING_FILE		            = "_id_unique_training_file";
+	public static final String INDEX_MOBCAST_FEEDBACK	            = "_id_unique_mobcast_feedback";
+	public static final String INDEX_TRAINING_QUIZ		            = "_id_unique_training_quiz";
 	
-	public static final String INDEX_ID_ORDER                      =" ASC";
+	public static final String INDEX_ID_ORDER                       = " ASC";
 	
 	
-	public static class Announcement_Columns implements BaseColumns
+	public static class Mobcast_Columns implements BaseColumns
 	{
-		public static final Uri CONTENT_URI = Uri.parse("content://"+ ApplicationDB.AUTHORITY + "/announcement");
-		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/announcement";
+		public static final Uri CONTENT_URI = Uri.parse("content://"+ ApplicationDB.AUTHORITY + "/mobcast");
+		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/mobcast";
 		
 		public static final String COLUMN_ID 								= "_id";
-		public static final String COLUMN_ANNOUNCE_ID 					    = "_announce_id";
-		public static final String COLUMN_ANNOUNCE_TITLE					= "_announce_title";
-		public static final String COLUMN_ANNOUNCE_DESC						= "_announce_desc";
-		public static final String COLUMN_ANNOUNCE_FROM						= "_announce_from";
-		public static final String COLUMN_ANNOUNCE_BY						= "_announce_by";
-		public static final String COLUMN_ANNOUNCE_FILELINK				    = "_announce_file_link";
-		public static final String COLUMN_ANNOUNCE_FILEPATH				    = "_announce_file_path";
-		public static final String COLUMN_ANNOUNCE_EXPIRY					= "_announce_expiry";
-		public static final String COLUMN_ANNOUNCE_TYPE			   			= "_announce_type";
-		public static final String COLUMN_ANNOUNCE_NAME						= "_announce_name";
-		public static final String COLUMN_ANNOUNCE_SUMMARY					= "_announce_summary";
-		public static final String COLUMN_ANNOUNCE_IS_READ                 	= "_announce_is_read";
-		public static final String COLUMN_ANNOUNCE_IS_SHARE            		= "_announce_is_share";
-		public static final String COLUMN_ANNOUNCE_IS_LIKE            		= "_announce_is_like";
-		public static final String COLUMN_ANNOUNCE_DATE      				= "_announce_date";
-		public static final String COLUMN_ANNOUNCE_DATE_FORMATTED			= "_announce_date_formatted";
-		public static final String COLUMN_ANNOUNCE_TIME 				    = "_announce_time";
-		public static final String COLUMN_ANNOUNCE_SEEN_NO 				    = "_announce_seen_no";
-		public static final String COLUMN_ANNOUNCE_READ_NO 				    = "_announce_read_no";
-		public static final String COLUMN_ANNOUNCE_SHARE_NO 				= "_announce_share_no";
-		public static final String COLUMN_ANNOUNCE_FILE_APPEND 				= "_announce_file_append";
-		public static final String COLUMN_ANNOUNCE_IS_SHARING 				= "_announce_sharing";	
+		public static final String COLUMN_MOBCAST_ID 					    = "_mobcast_id";
+		public static final String COLUMN_MOBCAST_TITLE					    = "_mobcast_title";
+		public static final String COLUMN_MOBCAST_DESC						= "_mobcast_desc";
+		public static final String COLUMN_MOBCAST_BY						= "_mobcast_by";
+		public static final String COLUMN_MOBCAST_VIEWCOUNT				    = "_mobcast_view_count";
+		public static final String COLUMN_MOBCAST_DATE  				    = "_mobcast_date";
+		public static final String COLUMN_MOBCAST_TIME 					    = "_mobcast_time";
+		public static final String COLUMN_MOBCAST_TYPE			   			= "_mobcast_type";
+		public static final String COLUMN_MOBCAST_DATE_FORMATTED			= "_mobcast_date_formatted";
+		public static final String COLUMN_MOBCAST_TIME_FORMATTED		    = "_mobcast_time_formatted";
+		public static final String COLUMN_MOBCAST_IS_READ                 	= "_mobcast_is_read";
+		public static final String COLUMN_MOBCAST_IS_SHARE            		= "_mobcast_is_share";
+		public static final String COLUMN_MOBCAST_IS_LIKE            		= "_mobcast_is_like";
+		public static final String COLUMN_MOBCAST_IS_SHARING 				= "_mobcast_is_sharing";
+		public static final String COLUMN_MOBCAST_LIKE_NO 				    = "_mobcast_seen_no";
+		public static final String COLUMN_MOBCAST_READ_NO 				    = "_mobcast_read_no";
+		public static final String COLUMN_MOBCAST_SHARE_NO 	     			= "_mobcast_share_no";
+		public static final String COLUMN_MOBCAST_LINK       				= "_mobcast_link";
+		public static final String COLUMN_MOBCAST_EXPIRY_DATE 				= "_mobcast_expiry_date";
+		public static final String COLUMN_MOBCAST_EXPIRY_TIME 				= "_mobcast_expiry_time";
+		public static final String COLUMN_MOBCAST_FILE_ID 				    = "_mobcast_file_id";
+	}
+	
+	public static class Training_Columns implements BaseColumns
+	{
+		public static final Uri CONTENT_URI = Uri.parse("content://"+ ApplicationDB.AUTHORITY + "/training");
+		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/training";
 		
+		public static final String COLUMN_ID 								= "_id";
+		public static final String COLUMN_TRAINING_ID 					    = "_training_id";
+		public static final String COLUMN_TRAINING_TITLE					= "_training_title";
+		public static final String COLUMN_TRAINING_DESC						= "_training_desc";
+		public static final String COLUMN_TRAINING_BY						= "_training_by";
+		public static final String COLUMN_TRAINING_VIEWCOUNT				= "_training_view_count";
+		public static final String COLUMN_TRAINING_DATE  				    = "_training_date";
+		public static final String COLUMN_TRAINING_TIME 					= "_training_time";
+		public static final String COLUMN_TRAINING_TYPE			   			= "_training_type";
+		public static final String COLUMN_TRAINING_DATE_FORMATTED			= "_training_date_formatted";
+		public static final String COLUMN_TRAINING_TIME_FORMATTED		    = "_training_time_formatted";
+		public static final String COLUMN_TRAINING_IS_READ                 	= "_training_is_read";
+		public static final String COLUMN_TRAINING_IS_SHARE            		= "_training_is_share";
+		public static final String COLUMN_TRAINING_IS_LIKE            		= "_training_is_like";
+		public static final String COLUMN_TRAINING_IS_SHARING 				= "_training_is_sharing";
+		public static final String COLUMN_TRAINING_LIKE_NO 				    = "_training_seen_no";
+		public static final String COLUMN_TRAINING_READ_NO 				    = "_training_read_no";
+		public static final String COLUMN_TRAINING_SHARE_NO 	     		= "_training_share_no";
+		public static final String COLUMN_TRAINING_LINK       				= "_training_link";
+		public static final String COLUMN_TRAINING_EXPIRY_DATE 				= "_training_expiry_date";
+		public static final String COLUMN_TRAINING_EXPIRY_TIME 				= "_training_expiry_time";
+		public static final String COLUMN_TRAINING_FILE_ID 				    = "_training_file_id";
 	}
 	
 	
@@ -63,8 +98,8 @@ public class DBConstant {
 		
 		public static final String COLUMN_ID 								= "_id";
 		public static final String COLUMN_EVENT_ID 					        = "_event_id";
-		public static final String COLUMN_EVENT_NAME 					    = "_event_name";
 		public static final String COLUMN_EVENT_TITLE 					    = "_event_title";
+		public static final String COLUMN_EVENT_BY 					    = "_event_by";
 		public static final String COLUMN_EVENT_DESC 					    = "_event_desc";
 		public static final String COLUMN_EVENT_VENUE 					    = "_event_venue";
 		public static final String COLUMN_EVENT_START_TIME				    = "_event_start_time";
@@ -73,23 +108,24 @@ public class DBConstant {
 		public static final String COLUMN_EVENT_END_DATE				    = "_event_end_date";
 		public static final String COLUMN_EVENT_DURATION				    = "_event_duration";
 		public static final String COLUMN_EVENT_LANDMARK				    = "_event_land_mark";
-		public static final String COLUMN_EVENT_EXPIRY				        = "_event_expiry";
 		public static final String COLUMN_EVENT_FILE_LINK				    = "_event_file_link";
 		public static final String COLUMN_EVENT_FILE_PATH				    = "_event_file_path";
 		public static final String COLUMN_EVENT_FILE_APPEND				    = "_event_file_append";
-		public static final String COLUMN_EVENT_SUMMARY				        = "_event_summary";
-		public static final String COLUMN_EVENT_JOIN				        = "_event_join";
+		public static final String COLUMN_EVENT_IS_JOIN				        = "_event_is_join";
 		public static final String COLUMN_EVENT_IS_CALENDAR				    = "_event_is_calendar";
+		public static final String COLUMN_EVENT_IS_SHARING		        	= "_event_sharing";
+		public static final String COLUMN_EVENT_IS_READ				        = "_event_is_read";
 		public static final String COLUMN_EVENT_MAP				            = "_event_map";
 		public static final String COLUMN_EVENT_INVITED_NO				    = "_event_invited_no";
 		public static final String COLUMN_EVENT_GOING_NO				    = "_event_going_no";
 		public static final String COLUMN_EVENT_DECLINE_NO				    = "_event_decline_no";
 		public static final String COLUMN_EVENT_MAYBE_NO				    = "_event_maybe_no";
-		public static final String COLUMN_EVENT_IS_READ				        = "_event_is_read";
 		public static final String COLUMN_EVENT_START_DATE_FORMATTED	    = "_event_start_date_formatted";
 		public static final String COLUMN_EVENT_END_DATE_FORMATTED	        = "_event_end_date_formatted";
 		public static final String COLUMN_EVENT_RECEIVED_DATE        	    = "_event_received_date";
-		public static final String COLUMN_EVENT_IS_SHARING		        	= "_event_sharing";
+		public static final String COLUMN_EVENT_RECEIVED_TIME        	    = "_event_received_time";
+		public static final String COLUMN_EVENT_EXPIRY_DATE				    = "_event_expiry_date";
+		public static final String COLUMN_EVENT_EXPIRY_TIME				    = "_event_expiry_time";
 	}
 	
 	public static class Award_Columns implements BaseColumns
@@ -99,124 +135,147 @@ public class DBConstant {
 		
 		public static final String COLUMN_ID 								= "_id";
 		public static final String COLUMN_AWARD_ID 					        = "_award_id";
-		public static final String COLUMN_AWARD_RECEIVED_DATE		        = "_award_received_date";
-		public static final String COLUMN_AWARD_DATE 					    = "_award_date";
-		public static final String COLUMN_AWARD_TITLE 					    = "_award_title";
-		public static final String COLUMN_AWARD_DESC 					    = "_award_desc";
+		public static final String COLUMN_AWARD_NAME 				        = "_award_name";
+		public static final String COLUMN_AWARD_RECOGNITION 		        = "_award_recognition";
+		public static final String COLUMN_AWARD_CONGRATULATE_NO		        = "_award_congratulate_no";
+		public static final String COLUMN_AWARD_CITY        		        = "_award_city";
+		public static final String COLUMN_AWARD_DEPARTMENT        		    = "_award_department";
 		public static final String COLUMN_AWARD_FILE_LINK			        = "_award_file_link";
 		public static final String COLUMN_AWARD_FILE_PATH			        = "_award_file_path";
 		public static final String COLUMN_AWARD_FILE_APPEND			        = "_award_file_append";
 		public static final String COLUMN_AWARD_IS_SHARE 					= "_award_is_share";
 		public static final String COLUMN_AWARD_IS_CONGRATULATE		        = "_award_is_congratulate";
-		public static final String COLUMN_AWARD_BY 					        = "_award_by";
-		public static final String COLUMN_AWARD_READ_NO				        = "_award_read_no";
-		public static final String COLUMN_AWARD_CONGRATULATE_NO		        = "_award_congratulate_no";
+		public static final String COLUMN_AWARD_IS_READ 		     		= "_award_is_read";
+		public static final String COLUMN_AWARD_IS_SHARING     				= "_award_sharing";
+		public static final String COLUMN_AWARD_IS_LIKE     				= "_award_is_like";
+		public static final String COLUMN_AWARD_IS_MESSAGE     				= "_award_is_message";
+		public static final String COLUMN_AWARD_DATE 					    = "_award_date";
+		public static final String COLUMN_AWARD_TIME  					    = "_award_time";
 		public static final String COLUMN_AWARD_DATE_FORMATTED		        = "_award_date_formatted";
 		public static final String COLUMN_AWARD_RECEIVED_DATE_FORMATTED     = "_award_received_date_formatted";
-		public static final String COLUMN_AWARD_NAME 				        = "_award_name";
-		public static final String COLUMN_AWARD_RECEIVER_EMAIL 				= "_award_receiver_email";
+		public static final String COLUMN_AWARD_RECEIVER_TIME_FORMATTED		= "_award_receiver_time_formatted";
 		public static final String COLUMN_AWARD_RECEIVER_MOBILE 			= "_award_receiver_mobile";
-		public static final String COLUMN_AWARD_IS_LIKE     				= "_award_is_like";
-		public static final String COLUMN_AWARD_LIKE_NO 			    	= "_award_like_no";
-		public static final String COLUMN_AWARD_RECEIVER_NAME 				= "_award_receiver_name";
-		public static final String COLUMN_AWARD_IS_READ 		     		= "_award_is_read";
-		public static final String COLUMN_AWARD_EXPIRY         				= "_award_expiry";
-		public static final String COLUMN_AWARD_IS_SHARING     				= "_award_sharing";
+		public static final String COLUMN_AWARD_EXPIRY_DATE         	    = "_award_expiry_date";
+		public static final String COLUMN_AWARD_EXPIRY_TIME     		    = "_award_expiry_time";
+		
 	}
 	
-	public static class News_Columns implements BaseColumns
+	public static class Birthday_Columns implements BaseColumns
 	{
-		public static final Uri CONTENT_URI = Uri.parse("content://"+ ApplicationDB.AUTHORITY + "/news");
-		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/news";
+		public static final Uri CONTENT_URI = Uri.parse("content://"+ ApplicationDB.AUTHORITY + "/birthday");
+		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/birthday";
 		
 		public static final String COLUMN_ID 								= "_id";
-		public static final String COLUMN_NEWS_ID 					        = "_news_id";
-		public static final String COLUMN_NEWS_DATE 				        = "_news_date";
-		public static final String COLUMN_NEWS_TITLE 				        = "_news_title";
-		public static final String COLUMN_NEWS_NAME 				        = "_news_name";
-		public static final String COLUMN_NEWS_DESC 				        = "_news_desc";
-		public static final String COLUMN_NEWS_SUMMARY 				        = "_news_summary";
-		public static final String COLUMN_NEWS_SOURCE 				        = "_news_source";
-		public static final String COLUMN_NEWS_TYPE 				        = "_news_type";
-		public static final String COLUMN_NEWS_FILE_LINK			        = "_news_file_link";
-		public static final String COLUMN_NEWS_FILE_PATH			        = "_news_file_path";
-		public static final String COLUMN_NEWS_FILE_APPEND			        = "_news_file_append";
-		public static final String COLUMN_NEWS_IS_READ 				        = "_news_is_read";
-		public static final String COLUMN_NEWS_IS_LIKE 				        = "_news_is_like";
-		public static final String COLUMN_NEWS_IS_SHARE 			        = "_news_is_share";
-		public static final String COLUMN_NEWS_LIKE_NO 				        = "_news_like_no";
-		public static final String COLUMN_NEWS_READ_NO 				        = "_news_read_no";
-		public static final String COLUMN_NEWS_BY 					        = "_news_by";
-		public static final String COLUMN_NEWS_FROM 				        = "_news_from";
-		public static final String COLUMN_NEWS_IS_SHARING 			        = "_news_sharing";
-		public static final String COLUMN_NEWS_EXPIRY 				        = "_news_expiry";
-		public static final String COLUMN_NEWS_DATE_FORMATTED		        = "_news_date_formatted";
+		public static final String COLUMN_BIRTHDAY_ID 					    = "_birthday_id";
+		public static final String COLUMN_BIRTHDAY_NAME 				    = "_birthday_name";
+		public static final String COLUMN_BIRTHDAY_DEPARTMENT        		= "_birthday_department";
+		public static final String COLUMN_BIRTHDAY_IS_SHARE 				= "_birthday_is_share";
+		public static final String COLUMN_BIRTHDAY_IS_WISHED		        = "_birthday_is_congratulate";
+		public static final String COLUMN_BIRTHDAY_IS_READ 		     		= "_birthday_is_read";
+		public static final String COLUMN_BIRTHDAY_IS_SHARING     			= "_birthday_sharing";
+		public static final String COLUMN_BIRTHDAY_IS_LIKE     				= "_birthday_is_like";
+		public static final String COLUMN_BIRTHDAY_IS_MESSAGE     			= "_birthday_is_message";
+		public static final String COLUMN_BIRTHDAY_AGE 		                = "_birthday_recognition";
+		public static final String COLUMN_BIRTHDAY_SUN_SIGN		            = "_birthday_congratulate_no";
+		public static final String COLUMN_BIRTHDAY_CITY        		        = "_birthday_city";
+		public static final String COLUMN_BIRTHDAY_FILE_LINK			    = "_birthday_file_link";
+		public static final String COLUMN_BIRTHDAY_FILE_PATH			    = "_birthday_file_path";
+		public static final String COLUMN_BIRTHDAY_FILE_APPEND			    = "_birthday_file_append";
+		public static final String COLUMN_BIRTHDAY_DOB  					= "_birthday_dob";
+		public static final String COLUMN_BIRTHDAY_DATE 					= "_birthday_date";
+		public static final String COLUMN_BIRTHDAY_DAY  					= "_birthday_day";
+		public static final String COLUMN_BIRTHDAY_DATE_FORMATTED		    = "_birthday_date_formatted";
+		public static final String COLUMN_BIRTHDAY_RECEIVED_DATE_FORMATTED  = "_birthday_received_date_formatted";
+		public static final String COLUMN_BIRTHDAY_RECEIVER_TIME_FORMATTED	= "_birthday_receiver_time_formatted";
+		public static final String COLUMN_BIRTHDAY_RECEIVER_MOBILE 			= "_birthday_receiver_mobile";
+		public static final String COLUMN_BIRTHDAY_EXPIRY_DATE         	    = "_birthday_expiry_date";
+		public static final String COLUMN_BIRTHDAY_EXPIRY_TIME     		    = "_birthday_expiry_time";
 		
 	}
 	
-	public static class Training_Columns implements BaseColumns
+	public static class Mobcast_File_Columns implements BaseColumns
 	{
-		public static final Uri CONTENT_URI = Uri.parse("content://"+ ApplicationDB.AUTHORITY + "/training");
-		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/training";
+		public static final Uri CONTENT_URI = Uri.parse("content://"+ ApplicationDB.AUTHORITY + "/mobcastFileInfo");
+		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/mobcastFileInfo";
 		
-		public static final String COLUMN_ID 								    = "_id";
-		public static final String COLUMN_TRAINING_ID 					        = "_training_id";
-		public static final String COLUMN_TRAINING_DATE 				        = "_training_date";
-		public static final String COLUMN_TRAINING_TITLE 				        = "_training_title";
-		public static final String COLUMN_TRAINING_NAME 				        = "_training_name";
-		public static final String COLUMN_TRAINING_DESC 				        = "_training_desc";
-		public static final String COLUMN_TRAINING_SUMMARY 				        = "_training_summary";
-		public static final String COLUMN_TRAINING_SOURCE 				        = "_training_source";
-		public static final String COLUMN_TRAINING_TYPE 				        = "_training_type";
-		public static final String COLUMN_TRAINING_FILE_LINK			        = "_training_file_link";
-		public static final String COLUMN_TRAINING_FILE_PATH			        = "_training_file_path";
-		public static final String COLUMN_TRAINING_FILE_APPEND			        = "_training_file_append";
-		public static final String COLUMN_TRAINING_IS_READ 				        = "_training_is_read";
-		public static final String COLUMN_TRAINING_IS_LIKE 				        = "_training_is_like";
-		public static final String COLUMN_TRAINING_IS_SHARE 			        = "_training_is_share";
-		public static final String COLUMN_TRAINING_LIKE_NO 				        = "_training_like_no";
-		public static final String COLUMN_TRAINING_READ_NO 				        = "_training_read_no";
-		public static final String COLUMN_TRAINING_BY 					        = "_training_by";
-		public static final String COLUMN_TRAINING_FROM 				        = "_training_from";
-		public static final String COLUMN_TRAINING_IS_SHARING 			        = "_training_sharing";
-		public static final String COLUMN_TRAINING_EXPIRY 				        = "_training_expiry";
-		public static final String COLUMN_TRAINING_DATE_FORMATTED		        = "_training_date_formatted";
+		public static final String COLUMN_ID 								= "_id";
+		public static final String COLUMN_MOBCAST_FILE_ID 				    = "_mobcast_file_id";
+		public static final String COLUMN_MOBCAST_FILE_LINK 			 	= "_mobcast_file_link";
+		public static final String COLUMN_MOBCAST_FILE_LANG 				= "_mobcast_file_lang";
+		public static final String COLUMN_MOBCAST_FILE_SIZE 				= "_mobcast_file_size";
+		public static final String COLUMN_MOBCAST_FILE_PATH 				= "_mobcast_file_path";
+		public static final String COLUMN_MOBCAST_FILE_DURATION 			= "_mobcast_file_duration";
+		public static final String COLUMN_MOBCAST_FILE_PAGES 				= "_mobcast_file_pages";
+		public static final String COLUMN_MOBCAST_FILE_READ_DURATION 		= "_mobcast_file_read_duration";
+		public static final String COLUMN_MOBCAST_FILE_IS_DEFAULT 			= "_mobcast_file_is_default";
+		public static final String COLUMN_MOBCAST_LIVE_STREAM 				= "_mobcast_live_stream";
+		public static final String COLUMN_MOBCAST_LIVE_STREAM_YOUTUBE 		= "_mobcast_live_stream_youtube";
+		public static final String COLUMN_MOBCAST_FILE_APPEND 				= "_mobcast_file_append";
 		
 	}
 	
-	public static class Feedback_Columns implements BaseColumns
+	public static class Training_File_Columns implements BaseColumns
 	{
-		public static final Uri CONTENT_URI = Uri.parse("content://"+ ApplicationDB.AUTHORITY + "/feedback");
-		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/feedback";
+		public static final Uri CONTENT_URI = Uri.parse("content://"+ ApplicationDB.AUTHORITY + "/trainingFileInfo");
+		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/trainingFileInfo";
 		
-		public static final String COLUMN_ID 								    = "_id";
-		public static final String COLUMN_FEEDBACK_ID 					        = "_feedback_id";
-		public static final String COLUMN_FEEDBACK_DATE 					    = "_feedback_date";
-		public static final String COLUMN_FEEDBACK_TITLE 					    = "_feedback_title";
-		public static final String COLUMN_FEEDBACK_NAME 					    = "_feedback_name";
-		public static final String COLUMN_FEEDBACK_DESC 					    = "_feedback_desc";
-		public static final String COLUMN_FEEDBACK_SUMMARY 					    = "_feedback_summary";
-		public static final String COLUMN_FEEDBACK_IS_READ 					    = "_feedback_is_read";
-		public static final String COLUMN_FEEDBACK_IS_LIKE 					    = "_feedback_is_like";
-		public static final String COLUMN_FEEDBACK_IS_SHARE 					= "_feedback_is_share";
-		public static final String COLUMN_FEEDBACK_READ_NO 					    = "_feedback_read_no";
-		public static final String COLUMN_FEEDBACK_LIKE_NO 					    = "_feedback_like_no";
-		public static final String COLUMN_FEEDBACK_ATTEMPT_NO 					= "_feedback_attempted_no";
-		public static final String COLUMN_FEEDBACK_BY 					        = "_feedback_by";
-		public static final String COLUMN_FEEDBACK_FROM 					    = "_feedback_from";
-		public static final String COLUMN_FEEDBACK_EXPIRY 					    = "_feedback_expiry";
-		public static final String COLUMN_FEEDBACK_DATE_FORMATTED 				= "_feedback_date_formatted";
-		public static final String COLUMN_FEEDBACK_QUESTION 					= "_feedback_question";
-		public static final String COLUMN_FEEDBACK_QUESTION_TYPE 				= "_feedback_question_type";
-		public static final String COLUMN_FEEDBACK_OPTION1 					    = "_feedback_option_1";
-		public static final String COLUMN_FEEDBACK_OPTION2 					    = "_feedback_option_2";
-		public static final String COLUMN_FEEDBACK_OPTION3 					    = "_feedback_option_3";
-		public static final String COLUMN_FEEDBACK_OPTION4 					    = "_feedback_option_4";
-		public static final String COLUMN_FEEDBACK_CORRECT_OPTION 				= "_feedback_correct_option";
-		public static final String COLUMN_FEEDBACK_TIME_LIMIT 					= "_feedback_time_limit";
-		public static final String COLUMN_FEEDBACK_SCORE 					    = "_feedback_score";
-		public static final String COLUMN_FEEDBACK_IS_ATTEMPTED 				= "_feedback_is_attempted";
-		public static final String COLUMN_FEEDBACK_RANKING 					    = "_feedback_ranking";
+		public static final String COLUMN_ID 								= "_id";
+		public static final String COLUMN_TRAINING_FILE_ID 				    = "_training_file_id";
+		public static final String COLUMN_TRAINING_FILE_LINK 			 	= "_training_file_link";
+		public static final String COLUMN_TRAINING_FILE_LANG 				= "_training_file_lang";
+		public static final String COLUMN_TRAINING_FILE_SIZE 				= "_training_file_size";
+		public static final String COLUMN_TRAINING_FILE_PATH 				= "_training_file_path";
+		public static final String COLUMN_TRAINING_FILE_DURATION 			= "_training_file_duration";
+		public static final String COLUMN_TRAINING_FILE_PAGES 				= "_training_file_pages";
+		public static final String COLUMN_TRAINING_FILE_READ_DURATION 		= "_training_file_read_duration";
+		public static final String COLUMN_TRAINING_FILE_IS_DEFAULT 			= "_training_file_is_default";
+		public static final String COLUMN_TRAINING_LIVE_STREAM 				= "_training_live_stream";
+		public static final String COLUMN_TRAINING_LIVE_STREAM_YOUTUBE 		= "_training_live_stream_youtube";
+		public static final String COLUMN_TRAINING_FILE_APPEND 				= "_training_file_append";
+		
 	}
+	
+	public static class Mobcast_Feedback_Columns implements BaseColumns
+	{
+		public static final Uri CONTENT_URI = Uri.parse("content://"+ ApplicationDB.AUTHORITY + "/mobcastFeedback");
+		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/mobcastFeedback";
+		
+		public static final String COLUMN_ID 								= "_id";
+		public static final String COLUMN_MOBCAST_FEEDBACK_ID 				= "_mobcast_feedback_id";
+		public static final String COLUMN_MOBCAST_FEEDBACK_QID 			 	= "_mobcast_feedback_qid";
+		public static final String COLUMN_MOBCAST_FEEDBACK_QUESTION		    = "_mobcast_feedback_question";
+		public static final String COLUMN_MOBCAST_FEEDBACK_OPTION_1 	    = "_mobcast_feedback_option_1";
+		public static final String COLUMN_MOBCAST_FEEDBACK_OPTION_2 	    = "_mobcast_feedback_option_2";
+		public static final String COLUMN_MOBCAST_FEEDBACK_OPTION_3 	    = "_mobcast_feedback_option_3";
+		public static final String COLUMN_MOBCAST_FEEDBACK_OPTION_4 	    = "_mobcast_feedback_option_4";
+		public static final String COLUMN_MOBCAST_FEEDBACK_OPTION_5 	    = "_mobcast_feedback_option_5";
+		public static final String COLUMN_MOBCAST_FEEDBACK_OPTION_6 	    = "_mobcast_feedback_option_6";
+		public static final String COLUMN_MOBCAST_FEEDBACK_OPTION_7 	    = "_mobcast_feedback_option_7";
+		
+	}
+	
+	
+	public static class Training_Quiz_Columns implements BaseColumns
+	{
+		public static final Uri CONTENT_URI = Uri.parse("content://"+ ApplicationDB.AUTHORITY + "/trainingQuiz");
+		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/trainingQuiz";
+		
+		public static final String COLUMN_ID 							= "_id";
+		public static final String COLUMN_TRAINING_QUIZ_ID 				= "_training_quiz_id";
+		public static final String COLUMN_TRAINING_QUIZ_QID 			= "_training_quiz_qid";
+		public static final String COLUMN_TRAINING_QUIZ_QUESTION 		= "_training_quiz_question";
+		public static final String COLUMN_TRAINING_QUIZ_OPTION_1 	    = "_training_quiz_option_1";
+		public static final String COLUMN_TRAINING_QUIZ_OPTION_2 	    = "_training_quiz_option_2";
+		public static final String COLUMN_TRAINING_QUIZ_OPTION_3 	    = "_training_quiz_option_3";
+		public static final String COLUMN_TRAINING_QUIZ_OPTION_4 	    = "_training_quiz_option_4";
+		public static final String COLUMN_TRAINING_QUIZ_OPTION_5 	    = "_training_quiz_option_5";
+		public static final String COLUMN_TRAINING_QUIZ_OPTION_6 	    = "_training_quiz_option_6";
+		public static final String COLUMN_TRAINING_QUIZ_OPTION_7 	    = "_training_quiz_option_7";
+		public static final String COLUMN_TRAINING_QUIZ_CORRECT_OPTION  = "_training_correct_option";
+		public static final String COLUMN_TRAINING_QUIZ_DURATION 	    = "_training_quiz_duration";
+		public static final String COLUMN_TRAINING_QUIZ_QUESTION_POINTS = "_training_quiz_question_points";
+		
+	}
+	
 	
 }

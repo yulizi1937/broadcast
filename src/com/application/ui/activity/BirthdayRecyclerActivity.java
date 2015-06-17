@@ -10,6 +10,9 @@ package com.application.ui.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
+
 import android.annotation.TargetApi;
 import android.app.SearchManager;
 import android.content.Context;
@@ -205,8 +208,13 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
                   SimpleSectionedRecyclerViewAdapter(this,R.layout.section_layout_birthday_heading,R.id.sectionBirthdayHeader,mAdapter);
         mSectionedAdapter.setSections(sections.toArray(dummy));
         
-	    
-		mRecyclerView.setAdapter(mSectionedAdapter);
+        if(AndroidUtilities.isAboveIceCreamSandWich()){
+        	AlphaInAnimationAdapter mAlphaAdapter = new AlphaInAnimationAdapter(mSectionedAdapter);
+            ScaleInAnimationAdapter mScaleInAdapter = new ScaleInAnimationAdapter(mAlphaAdapter);
+            mRecyclerView.setAdapter(mScaleInAdapter);
+        }else{
+        	mRecyclerView.setAdapter(mSectionedAdapter);
+        }
 		mRecyclerView.addItemDecoration(
 		        new HorizontalDividerItemDecoration.Builder(this)
 		                .color(Utilities.getDividerColor())

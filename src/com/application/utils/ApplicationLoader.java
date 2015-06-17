@@ -19,12 +19,14 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 
 import com.application.crashreporting.ExceptionHandler;
+import com.application.sqlite.DBConstant;
 import com.application.ui.calligraphy.CalligraphyConfig;
 import com.application.ui.service.AnyDoNotificationService;
 import com.google.android.gms.common.ConnectionResult;
@@ -83,6 +85,12 @@ public class ApplicationLoader extends Application {
 		if(!BuildVars.DEBUG_DESIGN){
 			app.initPlayServices();
 		}
+		
+		if(BuildVars.DEBUG_STETHO){
+//			initStetho(applicationLoader);
+		}
+		
+		initDB();
 	}
 
 	public static Context getApplication() {
@@ -121,6 +129,28 @@ public class ApplicationLoader extends Application {
 				AnyDoNotificationService.class);
 		getApplication().startService(service);
 	}
+	
+	/*
+	 * CREATE DB
+	 */
+	
+	public static void initDB(){
+		Cursor mCursor = applicationContext.getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, null, null, null);
+		mCursor.close();
+		Utilities.devSendDBInMail(applicationContext);
+	}
+	
+	/*
+	 * STETHO DEBUG BRIDGE
+	 */
+	
+	/*public static void initStetho(Context applicationContext){
+		Stetho.initialize(
+		        Stetho.newInitializerBuilder(applicationContext)
+		            .enableDumpapp(Stetho.defaultDumperPluginsProvider(applicationContext))
+		            .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(applicationContext))
+		            .build());
+	}*/
 
 	/*
 	 * GCM API

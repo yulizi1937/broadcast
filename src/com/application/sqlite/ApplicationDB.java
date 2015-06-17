@@ -24,19 +24,27 @@ public class ApplicationDB extends ContentProvider{
 	private static final UriMatcher sUriMatcher;
 	private static final String TAG = ApplicationDB.class.getSimpleName();
 	
-	private static final int ANNOUNCEMENT = 1;
-	private static final int EVENT        = 2;
-	private static final int AWARD        = 3;
-	private static final int NEWS         = 4;
-	private static final int TRAINING     = 5;
-	private static final int FEEDBACK     = 6;
+	private static final int MOBCAST           = 1;
+	private static final int CHAT              = 2;
+	private static final int TRAINING          = 3;
+	private static final int EVENTS            = 4;
+	private static final int AWARDS            = 5;
+	private static final int BIRTHDAY          = 6;
+	private static final int MOBCAST_FILE      = 7;
+	private static final int TRAINING_FILE     = 8;
+	private static final int MOBCAST_FEEDBACK  = 9;
+	private static final int TRAINING_QUIZ     = 10;
 	
-	private static HashMap<String, String> announcementProjectionMap;
+	private static HashMap<String, String> mobcastProjectionMap;
+	private static HashMap<String, String> chatProjectionMap;
+	private static HashMap<String, String> trainingProjectionMap;
 	private static HashMap<String, String> eventProjectionMap;
 	private static HashMap<String, String> awardProjectionMap;
-	private static HashMap<String, String> newsProjectionMap;
-	private static HashMap<String, String> trainingProjectionMap;
-	private static HashMap<String, String> feedbackProjectionMap;
+	private static HashMap<String, String> birthdayProjectionMap;
+	private static HashMap<String, String> mobcastFileProjectionMap;
+	private static HashMap<String, String> trainingFileProjectionMap;
+	private static HashMap<String, String> mobcastFeedbackProjectionMap;
+	private static HashMap<String, String> trainingQuizProjectionMap;
 	
 	private static class OpenHelper extends SQLiteOpenHelper {
 
@@ -47,39 +55,73 @@ public class ApplicationDB extends ContentProvider{
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			
-			//announcement
-			StringBuilder strBuilderAnnouncement = new StringBuilder();
-			strBuilderAnnouncement.append("CREATE TABLE ");
-			strBuilderAnnouncement.append(DBConstant.TABLE_ANNOUNCEMENT);
-			strBuilderAnnouncement.append('(');
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
-			/*INTEGER(20) PRIMARY KEY NOT NULL DEFAULT (STRFTIME('%s',CURRENT_TIMESTAMP)),*/
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_ID +" TEXT UNIQUE," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_TITLE +" TEXT ," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DESC +" TEXT ," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_FROM +" TEXT ," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_FILELINK +" TEXT ," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_FILEPATH +" TEXT ," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_FILE_APPEND +" TEXT ," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_EXPIRY +" TEXT ," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_TYPE +" TEXT ," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_NAME +" TEXT ," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_SUMMARY +" TEXT ," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_IS_READ +" NUMBER DEFAULT 0," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_IS_SHARE +" NUMBER DEFAULT 0," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_IS_LIKE +" NUMBER DEFAULT 0," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_SHARE_NO +" TEXT ," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_READ_NO +" TEXT ," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_SEEN_NO +" TEXT ," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DATE +" TEXT ," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DATE_FORMATTED +" TEXT ," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_IS_SHARING +" NUMBER DEFAULT 0," );
-			strBuilderAnnouncement.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_TIME +" TEXT" );
-			strBuilderAnnouncement.append(')');
-			db.execSQL(strBuilderAnnouncement.toString());
+			//mobcast
+			StringBuilder strBuilderMobcast = new StringBuilder();
+			strBuilderMobcast.append("CREATE TABLE ");
+			strBuilderMobcast.append(DBConstant.TABLE_MOBCAST);
+			strBuilderMobcast.append('(');
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID +" TEXT UNIQUE," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE +" TEXT ," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_BY +" TEXT ," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DESC +" TEXT ," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT +" TEXT ," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE +" TEXT ," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME +" TEXT ," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TYPE +" TEXT ," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE_FORMATTED +" TEXT ," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME_FORMATTED +" TEXT ," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ +" NUMBER DEFAULT 0," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARING +" NUMBER DEFAULT 0," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARE +" NUMBER DEFAULT 0," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE +" NUMBER DEFAULT 0," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_READ_NO +" TEXT ," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_SHARE_NO +" TEXT ," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO +" TEXT ," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LINK +" TEXT ," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_FILE_ID +" TEXT ," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_EXPIRY_DATE +" TEXT ," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_EXPIRY_TIME +" TEXT" );
+			strBuilderMobcast.append(')');
+			db.execSQL(strBuilderMobcast.toString());
 			if (BuildVars.DEBUG) {
-				Log.i(TAG, strBuilderAnnouncement.toString());
+				Log.i(TAG, strBuilderMobcast.toString());
 			}
+			
+			
+			//training
+			StringBuilder strBuilderTraining = new StringBuilder();
+			strBuilderTraining.append("CREATE TABLE ");
+			strBuilderTraining.append(DBConstant.TABLE_TRAINING);
+			strBuilderTraining.append('(');
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_ID +" TEXT UNIQUE," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE +" TEXT ," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_BY +" TEXT ," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_DESC +" TEXT ," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT +" TEXT ," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_DATE +" TEXT ," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_TIME +" TEXT ," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_TYPE +" TEXT ," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_DATE_FORMATTED +" TEXT ," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_TIME_FORMATTED +" TEXT ," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ +" NUMBER DEFAULT 0," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARING +" NUMBER DEFAULT 0," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARE +" NUMBER DEFAULT 0," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE +" NUMBER DEFAULT 0," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_READ_NO +" TEXT ," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_SHARE_NO +" TEXT ," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO +" TEXT ," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_LINK +" TEXT ," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_FILE_ID +" TEXT ," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_EXPIRY_DATE +" TEXT ," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_EXPIRY_TIME +" TEXT" );
+			strBuilderTraining.append(')');
+			db.execSQL(strBuilderTraining.toString());
+			if (BuildVars.DEBUG) {
+				Log.i(TAG, strBuilderTraining.toString());
+			}
+
 		
 		//event
 		StringBuilder strBuilderEvent = new StringBuilder();
@@ -87,35 +129,35 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderEvent.append(DBConstant.TABLE_EVENT);
 		strBuilderEvent.append('(');
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
-		/*INTEGER(20) PRIMARY KEY NOT NULL DEFAULT (STRFTIME('%s',CURRENT_TIMESTAMP)),*/
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_ID +" TEXT UNIQUE," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_NAME +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_TITLE +" TEXT ," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_DESC +" TEXT ," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_VENUE +" TEXT ," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_START_TIME +" TEXT ," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_END_TIME +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_BY +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_START_DATE +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_END_DATE +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_START_TIME +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_END_TIME +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_DURATION +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_LANDMARK +" TEXT ," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_EXPIRY +" TEXT ," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_FILE_LINK +" TEXT ," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_FILE_PATH +" TEXT ," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_FILE_APPEND +" TEXT ," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_SUMMARY +" TEXT ," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_JOIN +" NUMBER DEFAULT 0," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_IS_CALENDAR +" NUMBER DEFAULT 0," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_MAP +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_VENUE +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_DESC +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_INVITED_NO +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_GOING_NO +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_DECLINE_NO +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_MAYBE_NO +" TEXT ," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_IS_READ +" NUMBER DEFAULT 1," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_START_DATE_FORMATTED +" TEXT ," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_END_DATE_FORMATTED +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN +" NUMBER DEFAULT 0," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_IS_READ +" NUMBER DEFAULT 0," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_IS_SHARING +" NUMBER DEFAULT 0," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_DATE +" TEXT" );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_IS_CALENDAR +" NUMBER DEFAULT 0," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_MAP +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_FILE_LINK +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_FILE_PATH +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_FILE_APPEND +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_DATE +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_TIME +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_EXPIRY_DATE +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_EXPIRY_TIME +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_START_DATE_FORMATTED +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_END_DATE_FORMATTED +" TEXT" );
 		strBuilderEvent.append(')');
 		db.execSQL(strBuilderEvent.toString());
 		if (BuildVars.DEBUG) {
@@ -128,202 +170,176 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderAward.append(DBConstant.TABLE_AWARD);
 		strBuilderAward.append('(');
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
-		/*INTEGER(20) PRIMARY KEY NOT NULL DEFAULT (STRFTIME('%s',CURRENT_TIMESTAMP)),*/
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_ID +" TEXT UNIQUE," );
-		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE +" TEXT ," );
-		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_DATE +" TEXT ," );
-		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_TITLE +" TEXT ," );
-		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_DESC +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_NAME +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_RECOGNITION +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_CONGRATULATE_NO +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_CITY +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_DEPARTMENT +" TEXT ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_FILE_LINK +" TEXT ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_FILE_PATH +" TEXT ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_FILE_APPEND +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_IS_LIKE +" NUMBER DEFAULT 0," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_IS_READ +" NUMBER DEFAULT 0," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_IS_SHARE +" NUMBER DEFAULT 0," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_IS_CONGRATULATE +" NUMBER DEFAULT 0," );
-		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_BY +" TEXT ," );
-		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_READ_NO +" TEXT ," );
-		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_CONGRATULATE_NO +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_IS_SHARING +" NUMBER DEFAULT 0," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_IS_MESSAGE +" NUMBER DEFAULT 0," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_DATE +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_TIME +" TEXT ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_DATE_FORMATTED +" TEXT ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE_FORMATTED +" TEXT ," );
-		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_NAME +" TEXT ," );
-		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_EMAIL +" NUMBER DEFAULT 0," );
-		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_MOBILE +" NUMBER DEFAULT 0," );
-		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_IS_LIKE +" NUMBER DEFAULT 0," );
-		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_IS_READ +" NUMBER DEFAULT 1," );
-		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_LIKE_NO +" TEXT ," );
-		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_IS_SHARING +" NUMBER DEFAULT 0," );
-		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_NAME +" TEXT" );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_MOBILE +" NUMBER DEFAULT 0" );
 		strBuilderAward.append(')');
 		db.execSQL(strBuilderAward.toString());
 		if (BuildVars.DEBUG) {
 			Log.i(TAG, strBuilderAward.toString());
 		}
 		
-		//news
-		StringBuilder strBuilderNews = new StringBuilder();
-		strBuilderNews.append("CREATE TABLE ");
-		strBuilderNews.append(DBConstant.TABLE_NEWS);
-		strBuilderNews.append('(');
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
-		/*INTEGER(20) PRIMARY KEY NOT NULL DEFAULT (STRFTIME('%s',CURRENT_TIMESTAMP)),*/
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_ID +" TEXT UNIQUE," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_DATE +" TEXT ," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_TITLE +" TEXT ," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_NAME +" TEXT ," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_DESC +" TEXT ," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_SUMMARY +" TEXT ," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_SOURCE +" TEXT ," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_TYPE +" TEXT ," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_FILE_LINK +" TEXT ," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_FILE_PATH +" TEXT ," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_FILE_APPEND +" TEXT ," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_IS_READ +" NUMBER DEFAULT 1," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_IS_LIKE +" NUMBER DEFAULT 0," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_IS_SHARE +" NUMBER DEFAULT 0," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_LIKE_NO +" TEXT ," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_READ_NO +" TEXT ," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_BY +" TEXT ," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_FROM +" TEXT ," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_EXPIRY +" TEXT ," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_IS_SHARING +" NUMBER DEFAULT 0," );
-		strBuilderNews.append(DBConstant.News_Columns.COLUMN_NEWS_DATE_FORMATTED +" TEXT" );
-		strBuilderNews.append(')');
-		db.execSQL(strBuilderNews.toString());
+		
+		//birthday
+		StringBuilder strBuilderBirthday = new StringBuilder();
+		strBuilderBirthday.append("CREATE TABLE ");
+		strBuilderBirthday.append(DBConstant.TABLE_BIRTHDAY);
+		strBuilderBirthday.append('(');
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID +" TEXT UNIQUE," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_NAME +" TEXT ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DEPARTMENT +" TEXT ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_LIKE +" NUMBER DEFAULT 0," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_MESSAGE +" NUMBER DEFAULT 0," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_READ +" NUMBER DEFAULT 0," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_SHARE +" NUMBER DEFAULT 0," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_SHARING +" NUMBER DEFAULT 0," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_WISHED +" NUMBER DEFAULT 0," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_AGE +" TEXT ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_SUN_SIGN +" TEXT ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_CITY +" TEXT ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DATE +" TEXT ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DATE_FORMATTED +" TEXT ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DAY +" TEXT ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DOB +" TEXT ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_FILE_LINK +" TEXT ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_FILE_PATH +" TEXT ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_FILE_APPEND +" TEXT" );
+		strBuilderBirthday.append(')');
+		db.execSQL(strBuilderBirthday.toString());
 		if (BuildVars.DEBUG) {
-			Log.i(TAG, strBuilderNews.toString());
+			Log.i(TAG, strBuilderBirthday.toString());
 		}
 		
-		//training
-		StringBuilder strBuilderTraining = new StringBuilder();
-		strBuilderTraining.append("CREATE TABLE ");
-		strBuilderTraining.append(DBConstant.TABLE_TRAINING);
-		strBuilderTraining.append('(');
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
-		/*INTEGER(20) PRIMARY KEY NOT NULL DEFAULT (STRFTIME('%s',CURRENT_TIMESTAMP)),*/
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_ID +" TEXT UNIQUE," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_DATE +" TEXT ," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE +" TEXT ," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_NAME +" TEXT ," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_DESC +" TEXT ," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_SUMMARY +" TEXT ," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_SOURCE +" TEXT ," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_TYPE +" TEXT ," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_FILE_LINK +" TEXT ," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_FILE_PATH +" TEXT ," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_FILE_APPEND +" TEXT ," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ +" NUMBER DEFAULT 1," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE +" NUMBER DEFAULT 0," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARE +" NUMBER DEFAULT 0," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO +" TEXT ," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_READ_NO +" TEXT ," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_BY +" TEXT ," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_FROM +" TEXT ," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_EXPIRY +" TEXT ," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARING +" NUMBER DEFAULT 0," );
-		strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_DATE_FORMATTED +" TEXT" );
-		strBuilderTraining.append(')');
-		db.execSQL(strBuilderTraining.toString());
+		//mobcastfile
+		StringBuilder strBuilderMobcastFile = new StringBuilder();
+		strBuilderMobcastFile.append("CREATE TABLE ");
+		strBuilderMobcastFile.append(DBConstant.TABLE_MOBCAST_FILE);
+		strBuilderMobcastFile.append('(');
+		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
+		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_ID +" TEXT UNIQUE," );
+		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LINK +" TEXT ," );
+		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG +" TEXT ," );
+		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH +" TEXT ," );
+		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_SIZE +" TEXT ," );
+		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_DURATION +" TEXT ," );
+		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PAGES +" TEXT ," );
+		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_READ_DURATION +" TEXT ," );
+		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_IS_DEFAULT +" NUMBER DEFAULT 0," );
+		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_LIVE_STREAM +" TEXT ," );
+		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_LIVE_STREAM_YOUTUBE +" TEXT ," );
+		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_APPEND +" TEXT" );
+		strBuilderMobcastFile.append(')');
+		db.execSQL(strBuilderMobcastFile.toString());
 		if (BuildVars.DEBUG) {
-			Log.i(TAG, strBuilderTraining.toString());
+			Log.i(TAG, strBuilderMobcastFile.toString());
 		}
 		
-		//feedback
-		StringBuilder strBuilderFeedback = new StringBuilder();
-		strBuilderFeedback.append("CREATE TABLE ");
-		strBuilderFeedback.append(DBConstant.TABLE_FEEDBACK);
-		strBuilderFeedback.append('(');
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
-		/*INTEGER(20) PRIMARY KEY NOT NULL DEFAULT (STRFTIME('%s',CURRENT_TIMESTAMP)),*/
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_ID +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_DATE +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_TITLE +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_NAME +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_DESC +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_SUMMARY +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_IS_READ +" NUMBER DEFAULT 1," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_IS_LIKE +" NUMBER DEFAULT 0," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_IS_SHARE +" NUMBER DEFAULT 0," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_LIKE_NO +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_READ_NO +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_ATTEMPT_NO +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_BY +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_FROM +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_EXPIRY +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_DATE_FORMATTED +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_QUESTION +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_QUESTION_TYPE +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_OPTION1 +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_OPTION2 +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_OPTION3 +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_OPTION4 +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_CORRECT_OPTION +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_TIME_LIMIT +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_SCORE +" TEXT ," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_IS_ATTEMPTED +" NUMBER DEFAULT 0," );
-		strBuilderFeedback.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_RANKING +" TEXT" );
-		strBuilderFeedback.append(')');
-		db.execSQL(strBuilderFeedback.toString());
+		
+		//trainingfile
+		StringBuilder strBuilderTrainingFile = new StringBuilder();
+		strBuilderTrainingFile.append("CREATE TABLE ");
+		strBuilderTrainingFile.append(DBConstant.TABLE_TRAINING_FILE);
+		strBuilderTrainingFile.append('(');
+		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
+		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_ID +" TEXT UNIQUE," );
+		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LINK +" TEXT ," );
+		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LANG +" TEXT ," );
+		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PATH +" TEXT ," );
+		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_SIZE +" TEXT ," );
+		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_DURATION +" TEXT ," );
+		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PAGES +" TEXT ," );
+		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_READ_DURATION +" TEXT ," );
+		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_IS_DEFAULT +" NUMBER DEFAULT 0," );
+		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_LIVE_STREAM +" TEXT ," );
+		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_LIVE_STREAM_YOUTUBE +" TEXT ," );
+		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_APPEND +" TEXT" );
+		strBuilderTrainingFile.append(')');
+		db.execSQL(strBuilderTrainingFile.toString());
 		if (BuildVars.DEBUG) {
-			Log.i(TAG, strBuilderFeedback.toString());
+				Log.i(TAG, strBuilderTrainingFile.toString());
+		}
+		
+		//mobcastfeedback
+		StringBuilder strBuilderMobcastFeedback = new StringBuilder();
+		strBuilderMobcastFeedback.append("CREATE TABLE ");
+		strBuilderMobcastFeedback.append(DBConstant.TABLE_MOBCAST_FEEDBACK);
+		strBuilderMobcastFeedback.append('(');
+		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
+		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_QID +" TEXT UNIQUE," );
+		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ID +" TEXT ," );
+		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_QUESTION +" TEXT ," );
+		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_1 +" TEXT ," );
+		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_2 +" TEXT ," );
+		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_3 +" TEXT ," );
+		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_4 +" TEXT ," );
+		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_5 +" TEXT ," );
+		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_6 +" TEXT ," );
+		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_7 +" TEXT" );
+		strBuilderMobcastFeedback.append(')');
+		db.execSQL(strBuilderMobcastFeedback.toString());
+		if (BuildVars.DEBUG) {
+			Log.i(TAG, strBuilderMobcastFeedback.toString());
+		}
+		
+		//trainingquiz
+		StringBuilder strBuilderTrainingQuiz = new StringBuilder();
+		strBuilderTrainingQuiz.append("CREATE TABLE ");
+		strBuilderTrainingQuiz.append(DBConstant.TABLE_TRAINING_QUIZ);
+		strBuilderTrainingQuiz.append('(');
+		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
+		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QID +" TEXT UNIQUE," );
+		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ID +" TEXT ," );
+		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION +" TEXT ," );
+		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_1 +" TEXT ," );
+		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_2 +" TEXT ," );
+		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_3 +" TEXT ," );
+		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_4 +" TEXT ," );
+		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_5 +" TEXT ," );
+		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_6 +" TEXT ," );
+		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_7 +" TEXT ," );
+		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_CORRECT_OPTION +" TEXT ," );
+		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_DURATION +" TEXT ," );
+		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION_POINTS +" TEXT" );
+		strBuilderTrainingQuiz.append(')');
+		db.execSQL(strBuilderTrainingQuiz.toString());
+		if (BuildVars.DEBUG) {
+			Log.i(TAG, strBuilderTrainingQuiz.toString());
 		}
 		
 		/*
 		 * CREATE INDEX : FOR FAST RETREIVING 
 		 */
 		
-		StringBuilder strBuilderAnnouncementIndex = new StringBuilder();
-		strBuilderAnnouncementIndex.append("CREATE UNIQUE INDEX ");
-		strBuilderAnnouncementIndex.append(DBConstant.INDEX_ANNOUNCEMENT_ID);
-		strBuilderAnnouncementIndex.append(" ON ");
-		strBuilderAnnouncementIndex.append(DBConstant.TABLE_ANNOUNCEMENT +" ");
-		strBuilderAnnouncementIndex.append('(');
-		strBuilderAnnouncementIndex.append(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_ID  );
-		strBuilderAnnouncementIndex.append(DBConstant.INDEX_ID_ORDER);
-		strBuilderAnnouncementIndex.append(')');
-		db.execSQL(strBuilderAnnouncementIndex.toString());
+		StringBuilder strBuilderMobcastIndex = new StringBuilder();
+		strBuilderMobcastIndex.append("CREATE UNIQUE INDEX ");
+		strBuilderMobcastIndex.append(DBConstant.INDEX_MOBCAST_ID);
+		strBuilderMobcastIndex.append(" ON ");
+		strBuilderMobcastIndex.append(DBConstant.TABLE_MOBCAST +" ");
+		strBuilderMobcastIndex.append('(');
+		strBuilderMobcastIndex.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID  );
+		strBuilderMobcastIndex.append(DBConstant.INDEX_ID_ORDER);
+		strBuilderMobcastIndex.append(')');
+		db.execSQL(strBuilderMobcastIndex.toString());
 		if (BuildVars.DEBUG) {
-			Log.i(TAG, strBuilderAnnouncementIndex.toString());
-		}
-		
-		StringBuilder strBuilderEventIndex = new StringBuilder();
-		strBuilderEventIndex.append("CREATE UNIQUE INDEX ");
-		strBuilderEventIndex.append(DBConstant.INDEX_EVENT_ID);
-		strBuilderEventIndex.append(" ON ");
-		strBuilderEventIndex.append(DBConstant.TABLE_EVENT +" ");
-		strBuilderEventIndex.append('(');
-		strBuilderEventIndex.append(DBConstant.Event_Columns.COLUMN_EVENT_ID  );
-		strBuilderEventIndex.append(DBConstant.INDEX_ID_ORDER);
-		strBuilderEventIndex.append(')');
-		db.execSQL(strBuilderEventIndex.toString());
-		if (BuildVars.DEBUG) {
-			Log.i(TAG, strBuilderEventIndex.toString());
-		}
-		
-		StringBuilder strBuilderNewsIndex = new StringBuilder();
-		strBuilderNewsIndex.append("CREATE UNIQUE INDEX ");
-		strBuilderNewsIndex.append(DBConstant.INDEX_NEWS_ID);
-		strBuilderNewsIndex.append(" ON ");
-		strBuilderNewsIndex.append(DBConstant.TABLE_NEWS +" ");
-		strBuilderNewsIndex.append('(');
-		strBuilderNewsIndex.append(DBConstant.News_Columns.COLUMN_NEWS_ID  );
-		strBuilderNewsIndex.append(DBConstant.INDEX_ID_ORDER);
-		strBuilderNewsIndex.append(')');
-		db.execSQL(strBuilderNewsIndex.toString());
-		if (BuildVars.DEBUG) {
-			Log.i(TAG, strBuilderNewsIndex.toString());
-		}
-		
-		StringBuilder strBuilderAwardIndex = new StringBuilder();
-		strBuilderAwardIndex.append("CREATE UNIQUE INDEX ");
-		strBuilderAwardIndex.append(DBConstant.INDEX_AWARD_ID);
-		strBuilderAwardIndex.append(" ON ");
-		strBuilderAwardIndex.append(DBConstant.TABLE_AWARD +" ");
-		strBuilderAwardIndex.append('(');
-		strBuilderAwardIndex.append(DBConstant.Award_Columns.COLUMN_AWARD_ID  );
-		strBuilderAwardIndex.append(DBConstant.INDEX_ID_ORDER);
-		strBuilderAwardIndex.append(')');
-		db.execSQL(strBuilderAwardIndex.toString());
-		if (BuildVars.DEBUG) {
-			Log.i(TAG, strBuilderAwardIndex.toString());
+			Log.i(TAG, strBuilderMobcastIndex.toString());
 		}
 		
 		StringBuilder strBuilderTrainingIndex = new StringBuilder();
@@ -340,37 +356,128 @@ public class ApplicationDB extends ContentProvider{
 			Log.i(TAG, strBuilderTrainingIndex.toString());
 		}
 		
-		StringBuilder strBuilderFeedbackIndex = new StringBuilder();
-		strBuilderFeedbackIndex.append("CREATE UNIQUE INDEX ");
-		strBuilderFeedbackIndex.append(DBConstant.INDEX_FEEDBACK_ID);
-		strBuilderFeedbackIndex.append(" ON ");
-		strBuilderFeedbackIndex.append(DBConstant.TABLE_FEEDBACK +" ");
-		strBuilderFeedbackIndex.append('(');
-		strBuilderFeedbackIndex.append(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_ID  );
-		strBuilderFeedbackIndex.append(DBConstant.INDEX_ID_ORDER);
-		strBuilderFeedbackIndex.append(')');
-		db.execSQL(strBuilderFeedbackIndex.toString());
+		StringBuilder strBuilderEventIndex = new StringBuilder();
+		strBuilderEventIndex.append("CREATE UNIQUE INDEX ");
+		strBuilderEventIndex.append(DBConstant.INDEX_EVENT_ID);
+		strBuilderEventIndex.append(" ON ");
+		strBuilderEventIndex.append(DBConstant.TABLE_EVENT +" ");
+		strBuilderEventIndex.append('(');
+		strBuilderEventIndex.append(DBConstant.Event_Columns.COLUMN_EVENT_ID  );
+		strBuilderEventIndex.append(DBConstant.INDEX_ID_ORDER);
+		strBuilderEventIndex.append(')');
+		db.execSQL(strBuilderEventIndex.toString());
 		if (BuildVars.DEBUG) {
-			Log.i(TAG, strBuilderFeedbackIndex.toString());
+			Log.i(TAG, strBuilderEventIndex.toString());
+		}
+		
+		StringBuilder strBuilderAwardIndex = new StringBuilder();
+		strBuilderAwardIndex.append("CREATE UNIQUE INDEX ");
+		strBuilderAwardIndex.append(DBConstant.INDEX_AWARD_ID);
+		strBuilderAwardIndex.append(" ON ");
+		strBuilderAwardIndex.append(DBConstant.TABLE_AWARD +" ");
+		strBuilderAwardIndex.append('(');
+		strBuilderAwardIndex.append(DBConstant.Award_Columns.COLUMN_AWARD_ID  );
+		strBuilderAwardIndex.append(DBConstant.INDEX_ID_ORDER);
+		strBuilderAwardIndex.append(')');
+		db.execSQL(strBuilderAwardIndex.toString());
+		if (BuildVars.DEBUG) {
+			Log.i(TAG, strBuilderAwardIndex.toString());
+		}
+		
+		StringBuilder strBuilderBirthdayIndex = new StringBuilder();
+		strBuilderBirthdayIndex.append("CREATE UNIQUE INDEX ");
+		strBuilderBirthdayIndex.append(DBConstant.INDEX_BIRTHDAY_ID);
+		strBuilderBirthdayIndex.append(" ON ");
+		strBuilderBirthdayIndex.append(DBConstant.TABLE_BIRTHDAY +" ");
+		strBuilderBirthdayIndex.append('(');
+		strBuilderBirthdayIndex.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID  );
+		strBuilderBirthdayIndex.append(DBConstant.INDEX_ID_ORDER);
+		strBuilderBirthdayIndex.append(')');
+		db.execSQL(strBuilderBirthdayIndex.toString());
+		if (BuildVars.DEBUG) {
+			Log.i(TAG, strBuilderBirthdayIndex.toString());
+		}
+		
+		StringBuilder strBuilderMobcastFileIndex = new StringBuilder();
+		strBuilderMobcastFileIndex.append("CREATE UNIQUE INDEX ");
+		strBuilderMobcastFileIndex.append(DBConstant.INDEX_MOBCAST_FILE);
+		strBuilderMobcastFileIndex.append(" ON ");
+		strBuilderMobcastFileIndex.append(DBConstant.TABLE_MOBCAST_FILE +" ");
+		strBuilderMobcastFileIndex.append('(');
+		strBuilderMobcastFileIndex.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_ID  );
+		strBuilderMobcastFileIndex.append(DBConstant.INDEX_ID_ORDER);
+		strBuilderMobcastFileIndex.append(')');
+		db.execSQL(strBuilderMobcastFileIndex.toString());
+		if (BuildVars.DEBUG) {
+			Log.i(TAG, strBuilderMobcastFileIndex.toString());
+		}
+		
+		StringBuilder strBuilderTrainingFileIndex = new StringBuilder();
+		strBuilderTrainingFileIndex.append("CREATE UNIQUE INDEX ");
+		strBuilderTrainingFileIndex.append(DBConstant.INDEX_TRAINING_FILE);
+		strBuilderTrainingFileIndex.append(" ON ");
+		strBuilderTrainingFileIndex.append(DBConstant.TABLE_TRAINING_FILE +" ");
+		strBuilderTrainingFileIndex.append('(');
+		strBuilderTrainingFileIndex.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_ID  );
+		strBuilderTrainingFileIndex.append(DBConstant.INDEX_ID_ORDER);
+		strBuilderTrainingFileIndex.append(')');
+		db.execSQL(strBuilderTrainingFileIndex.toString());
+		if (BuildVars.DEBUG) {
+			Log.i(TAG, strBuilderTrainingFileIndex.toString());
+		}
+		
+		StringBuilder strBuilderMobcastFeedbackIndex = new StringBuilder();
+		strBuilderMobcastFeedbackIndex.append("CREATE UNIQUE INDEX ");
+		strBuilderMobcastFeedbackIndex.append(DBConstant.INDEX_MOBCAST_FEEDBACK);
+		strBuilderMobcastFeedbackIndex.append(" ON ");
+		strBuilderMobcastFeedbackIndex.append(DBConstant.TABLE_MOBCAST_FEEDBACK +" ");
+		strBuilderMobcastFeedbackIndex.append('(');
+		strBuilderMobcastFeedbackIndex.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ID  );
+		strBuilderMobcastFeedbackIndex.append(DBConstant.INDEX_ID_ORDER);
+		strBuilderMobcastFeedbackIndex.append(')');
+		db.execSQL(strBuilderMobcastFeedbackIndex.toString());
+		if (BuildVars.DEBUG) {
+			Log.i(TAG, strBuilderMobcastFeedbackIndex.toString());
+		}
+		
+		StringBuilder strBuilderTrainingQuizIndex = new StringBuilder();
+		strBuilderTrainingQuizIndex.append("CREATE UNIQUE INDEX ");
+		strBuilderTrainingQuizIndex.append(DBConstant.INDEX_TRAINING_QUIZ);
+		strBuilderTrainingQuizIndex.append(" ON ");
+		strBuilderTrainingQuizIndex.append(DBConstant.TABLE_TRAINING_QUIZ +" ");
+		strBuilderTrainingQuizIndex.append('(');
+		strBuilderTrainingQuizIndex.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ID  );
+		strBuilderTrainingQuizIndex.append(DBConstant.INDEX_ID_ORDER);
+		strBuilderTrainingQuizIndex.append(')');
+		db.execSQL(strBuilderTrainingQuizIndex.toString());
+		if (BuildVars.DEBUG) {
+			Log.i(TAG, strBuilderTrainingQuizIndex.toString());
 		}
 	}
 
 		
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			db.execSQL("DROP TABLE IF EXISTS " + DBConstant.TABLE_ANNOUNCEMENT);
+			db.execSQL("DROP TABLE IF EXISTS " + DBConstant.TABLE_MOBCAST);
+			db.execSQL("DROP TABLE IF EXISTS " + DBConstant.TABLE_CHAT);
+			db.execSQL("DROP TABLE IF EXISTS " + DBConstant.TABLE_TRAINING);
 			db.execSQL("DROP TABLE IF EXISTS " + DBConstant.TABLE_EVENT);
 			db.execSQL("DROP TABLE IF EXISTS " + DBConstant.TABLE_AWARD);
-			db.execSQL("DROP TABLE IF EXISTS " + DBConstant.TABLE_NEWS);
-			db.execSQL("DROP TABLE IF EXISTS " + DBConstant.TABLE_TRAINING);
-			db.execSQL("DROP TABLE IF EXISTS " + DBConstant.TABLE_FEEDBACK);
+			db.execSQL("DROP TABLE IF EXISTS " + DBConstant.TABLE_BIRTHDAY);
+			db.execSQL("DROP TABLE IF EXISTS " + DBConstant.TABLE_MOBCAST_FILE);
+			db.execSQL("DROP TABLE IF EXISTS " + DBConstant.TABLE_TRAINING_FILE);
+			db.execSQL("DROP TABLE IF EXISTS " + DBConstant.TABLE_MOBCAST_FEEDBACK);
+			db.execSQL("DROP TABLE IF EXISTS " + DBConstant.TABLE_TRAINING_QUIZ);
 			
-			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_ANNOUNCEMENT_ID);
+			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_MOBCAST_ID);
+			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_TRAINING_ID);
 			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_EVENT_ID);
 			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_AWARD_ID);
-			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_NEWS_ID);
-			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_TRAINING_ID);
-			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_FEEDBACK_ID);
+			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_BIRTHDAY_ID);
+			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_MOBCAST_FILE);
+			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_TRAINING_FILE);
+			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_MOBCAST_FEEDBACK);
+			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_TRAINING_QUIZ);
 			
 			onCreate(db);
 		}
@@ -378,7 +485,7 @@ public class ApplicationDB extends ContentProvider{
 
 	/* VERSION      DATABASE_VERSION      MODIFIED            BY
 	 * ----------------------------------------------------------------
-	 * V 0.0.1             1              31/03/15        VIKALP PATEL
+	 * V 0.0.1             1              16/05/15        VIKALP PATEL
 	 * -----------------------------------------------------------------
 	 */
 	private static final int DATABASE_VERSION = 1;
@@ -392,23 +499,35 @@ public class ApplicationDB extends ContentProvider{
 		SQLiteDatabase db = openHelper.getWritableDatabase();
 		int count;
 		switch (sUriMatcher.match(uri)) {
-		case ANNOUNCEMENT:
-			count = db.delete(DBConstant.TABLE_ANNOUNCEMENT, where, whereArgs);
+		case MOBCAST:
+			count = db.delete(DBConstant.TABLE_MOBCAST, where, whereArgs);
 			break;
-		case EVENT:
-			count = db.delete(DBConstant.TABLE_EVENT, where, whereArgs);
-			break;
-		case AWARD:
-			count = db.delete(DBConstant.TABLE_AWARD, where, whereArgs);
-			break;
-		case NEWS:
-			count = db.delete(DBConstant.TABLE_NEWS, where, whereArgs);
+		case CHAT:
+			count = db.delete(DBConstant.TABLE_CHAT, where, whereArgs);
 			break;
 		case TRAINING:
 			count = db.delete(DBConstant.TABLE_TRAINING, where, whereArgs);
 			break;
-		case FEEDBACK:
-			count = db.delete(DBConstant.TABLE_FEEDBACK, where, whereArgs);
+		case EVENTS:
+			count = db.delete(DBConstant.TABLE_EVENT, where, whereArgs);
+			break;
+		case AWARDS:
+			count = db.delete(DBConstant.TABLE_AWARD, where, whereArgs);
+			break;
+		case BIRTHDAY:
+			count = db.delete(DBConstant.TABLE_BIRTHDAY, where, whereArgs);
+			break;
+		case MOBCAST_FILE:
+			count = db.delete(DBConstant.TABLE_MOBCAST_FILE, where, whereArgs);
+			break;
+		case TRAINING_FILE:
+			count = db.delete(DBConstant.TABLE_TRAINING_FILE, where, whereArgs);
+			break;
+		case MOBCAST_FEEDBACK:
+			count = db.delete(DBConstant.TABLE_TRAINING_FILE, where, whereArgs);
+			break;
+		case TRAINING_QUIZ:
+			count = db.delete(DBConstant.TABLE_TRAINING_FILE, where, whereArgs);
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI " + uri);
@@ -422,18 +541,24 @@ public class ApplicationDB extends ContentProvider{
 	public String getType(Uri uri) {
 		// TODO Auto-generated method stub
 		switch (sUriMatcher.match(uri)) {
-		case ANNOUNCEMENT:
-			return DBConstant.Announcement_Columns.CONTENT_TYPE;
-		case EVENT:
-			return DBConstant.Event_Columns.CONTENT_TYPE;
-		case AWARD:
-			return DBConstant.Award_Columns.CONTENT_TYPE;
-		case NEWS:
-			return DBConstant.News_Columns.CONTENT_TYPE;
+		case MOBCAST:
+			return DBConstant.Mobcast_Columns.CONTENT_TYPE;
 		case TRAINING:
 			return DBConstant.Training_Columns.CONTENT_TYPE;
-		case FEEDBACK:
-			return DBConstant.Feedback_Columns.CONTENT_TYPE;
+		case EVENTS:
+			return DBConstant.Event_Columns.CONTENT_TYPE;
+		case AWARDS:
+			return DBConstant.Award_Columns.CONTENT_TYPE;
+		case BIRTHDAY:
+			return DBConstant.Birthday_Columns.CONTENT_TYPE;
+		case MOBCAST_FILE:
+			return DBConstant.Mobcast_File_Columns.CONTENT_TYPE;
+		case TRAINING_FILE:
+			return DBConstant.Training_File_Columns.CONTENT_TYPE;
+		case MOBCAST_FEEDBACK:
+			return DBConstant.Mobcast_Feedback_Columns.CONTENT_TYPE;
+		case TRAINING_QUIZ:
+			return DBConstant.Training_Quiz_Columns.CONTENT_TYPE;
 		default:
 			throw new IllegalArgumentException("Unknown URI " + uri);
 		}
@@ -443,9 +568,11 @@ public class ApplicationDB extends ContentProvider{
 	@Override
 	public Uri insert(Uri uri, ContentValues initialValues) {
 		// TODO Auto-generated method stub
-		if (sUriMatcher.match(uri) != ANNOUNCEMENT && sUriMatcher.match(uri)!= EVENT
-				&& sUriMatcher.match(uri)!=AWARD && sUriMatcher.match(uri)!= NEWS
-				&& sUriMatcher.match(uri)!= TRAINING && sUriMatcher.match(uri)!= FEEDBACK)
+		if (sUriMatcher.match(uri) != MOBCAST && sUriMatcher.match(uri)!= EVENTS
+				&& sUriMatcher.match(uri)!= CHAT && sUriMatcher.match(uri)!= TRAINING
+				&& sUriMatcher.match(uri)!=AWARDS && sUriMatcher.match(uri)!= BIRTHDAY
+				&& sUriMatcher.match(uri)!= TRAINING_FILE && sUriMatcher.match(uri)!= MOBCAST_FILE
+				&& sUriMatcher.match(uri)!= MOBCAST_FEEDBACK && sUriMatcher.match(uri)!= TRAINING_QUIZ)
 		{ 
 			throw new IllegalArgumentException("Unknown URI " + uri); 
 		}
@@ -463,38 +590,11 @@ public class ApplicationDB extends ContentProvider{
 		
 		switch (sUriMatcher.match(uri)) 
 		{
-			case ANNOUNCEMENT:
-				 rowId = db.insertWithOnConflict(DBConstant.TABLE_ANNOUNCEMENT, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+			case MOBCAST:
+				 rowId = db.insertWithOnConflict(DBConstant.TABLE_MOBCAST, null, values, SQLiteDatabase.CONFLICT_REPLACE);
 				if (rowId > 0) 
 				{
-					Uri noteUri = ContentUris.withAppendedId(DBConstant.Announcement_Columns.CONTENT_URI, rowId);
-					getContext().getContentResolver().notifyChange(noteUri, null);
-					return noteUri;
-				}
-				break;
-			case EVENT:
-				 rowId = db.insertWithOnConflict(DBConstant.TABLE_EVENT, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-				if (rowId > 0) 
-				{
-					Uri noteUri = ContentUris.withAppendedId(DBConstant.Event_Columns.CONTENT_URI, rowId);
-					getContext().getContentResolver().notifyChange(noteUri, null);
-					return noteUri;
-				}
-				break;
-			case AWARD:
-				 rowId = db.insertWithOnConflict(DBConstant.TABLE_AWARD, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-				if (rowId > 0) 
-				{
-					Uri noteUri = ContentUris.withAppendedId(DBConstant.Award_Columns.CONTENT_URI, rowId);
-					getContext().getContentResolver().notifyChange(noteUri, null);
-					return noteUri;
-				}
-				break;
-			case NEWS:
-				 rowId = db.insertWithOnConflict(DBConstant.TABLE_NEWS, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-				if (rowId > 0) 
-				{
-					Uri noteUri = ContentUris.withAppendedId(DBConstant.News_Columns.CONTENT_URI, rowId);
+					Uri noteUri = ContentUris.withAppendedId(DBConstant.Mobcast_Columns.CONTENT_URI, rowId);
 					getContext().getContentResolver().notifyChange(noteUri, null);
 					return noteUri;
 				}
@@ -508,11 +608,65 @@ public class ApplicationDB extends ContentProvider{
 					return noteUri;
 				}
 				break;
-			case FEEDBACK:
-				 rowId = db.insertWithOnConflict(DBConstant.TABLE_FEEDBACK, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+			case EVENTS:
+				 rowId = db.insertWithOnConflict(DBConstant.TABLE_EVENT, null, values, SQLiteDatabase.CONFLICT_REPLACE);
 				if (rowId > 0) 
 				{
-					Uri noteUri = ContentUris.withAppendedId(DBConstant.Feedback_Columns.CONTENT_URI, rowId);
+					Uri noteUri = ContentUris.withAppendedId(DBConstant.Event_Columns.CONTENT_URI, rowId);
+					getContext().getContentResolver().notifyChange(noteUri, null);
+					return noteUri;
+				}
+				break;
+			case AWARDS:
+				 rowId = db.insertWithOnConflict(DBConstant.TABLE_AWARD, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+				if (rowId > 0) 
+				{
+					Uri noteUri = ContentUris.withAppendedId(DBConstant.Award_Columns.CONTENT_URI, rowId);
+					getContext().getContentResolver().notifyChange(noteUri, null);
+					return noteUri;
+				}
+				break;
+			case BIRTHDAY:
+				 rowId = db.insertWithOnConflict(DBConstant.TABLE_BIRTHDAY, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+				if (rowId > 0) 
+				{
+					Uri noteUri = ContentUris.withAppendedId(DBConstant.Birthday_Columns.CONTENT_URI, rowId);
+					getContext().getContentResolver().notifyChange(noteUri, null);
+					return noteUri;
+				}
+				break;
+			case MOBCAST_FILE:
+				 rowId = db.insertWithOnConflict(DBConstant.TABLE_MOBCAST_FILE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+				if (rowId > 0) 
+				{
+					Uri noteUri = ContentUris.withAppendedId(DBConstant.Mobcast_File_Columns.CONTENT_URI, rowId);
+					getContext().getContentResolver().notifyChange(noteUri, null);
+					return noteUri;
+				}
+				break;
+			case TRAINING_FILE:
+				 rowId = db.insertWithOnConflict(DBConstant.TABLE_TRAINING_FILE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+				if (rowId > 0) 
+				{
+					Uri noteUri = ContentUris.withAppendedId(DBConstant.Training_File_Columns.CONTENT_URI, rowId);
+					getContext().getContentResolver().notifyChange(noteUri, null);
+					return noteUri;
+				}
+				break;
+			case MOBCAST_FEEDBACK:
+				 rowId = db.insertWithOnConflict(DBConstant.TABLE_MOBCAST_FEEDBACK, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+				if (rowId > 0) 
+				{
+					Uri noteUri = ContentUris.withAppendedId(DBConstant.Mobcast_Feedback_Columns.CONTENT_URI, rowId);
+					getContext().getContentResolver().notifyChange(noteUri, null);
+					return noteUri;
+				}
+				break;
+			case TRAINING_QUIZ:
+				 rowId = db.insertWithOnConflict(DBConstant.TABLE_TRAINING_QUIZ, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+				if (rowId > 0) 
+				{
+					Uri noteUri = ContentUris.withAppendedId(DBConstant.Training_Quiz_Columns.CONTENT_URI, rowId);
 					getContext().getContentResolver().notifyChange(noteUri, null);
 					return noteUri;
 				}
@@ -539,29 +693,41 @@ public class ApplicationDB extends ContentProvider{
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		SQLiteDatabase db = openHelper.getWritableDatabase();
 		switch (sUriMatcher.match(uri)) {
-		case ANNOUNCEMENT:
-			qb.setTables(DBConstant.TABLE_ANNOUNCEMENT);
-			qb.setProjectionMap(announcementProjectionMap);
-			break;
-		case EVENT:
-			qb.setTables(DBConstant.TABLE_EVENT);
-			qb.setProjectionMap(eventProjectionMap);
-			break;
-		case AWARD:
-			qb.setTables(DBConstant.TABLE_AWARD);
-			qb.setProjectionMap(awardProjectionMap);
-			break;
-		case NEWS:
-			qb.setTables(DBConstant.TABLE_NEWS);
-			qb.setProjectionMap(newsProjectionMap);
+		case MOBCAST:
+			qb.setTables(DBConstant.TABLE_MOBCAST);
+			qb.setProjectionMap(mobcastProjectionMap);
 			break;
 		case TRAINING:
 			qb.setTables(DBConstant.TABLE_TRAINING);
 			qb.setProjectionMap(trainingProjectionMap);
 			break;
-		case FEEDBACK:
-			qb.setTables(DBConstant.TABLE_FEEDBACK);
-			qb.setProjectionMap(feedbackProjectionMap);
+		case EVENTS:
+			qb.setTables(DBConstant.TABLE_EVENT);
+			qb.setProjectionMap(eventProjectionMap);
+			break;
+		case AWARDS:
+			qb.setTables(DBConstant.TABLE_AWARD);
+			qb.setProjectionMap(awardProjectionMap);
+			break;
+		case BIRTHDAY:
+			qb.setTables(DBConstant.TABLE_BIRTHDAY);
+			qb.setProjectionMap(birthdayProjectionMap);
+			break;
+		case MOBCAST_FILE:
+			qb.setTables(DBConstant.TABLE_MOBCAST_FILE);
+			qb.setProjectionMap(mobcastFileProjectionMap);
+			break;
+		case TRAINING_FILE:
+			qb.setTables(DBConstant.TABLE_TRAINING_FILE);
+			qb.setProjectionMap(trainingFileProjectionMap);
+			break;
+		case MOBCAST_FEEDBACK:
+			qb.setTables(DBConstant.TABLE_MOBCAST_FEEDBACK);
+			qb.setProjectionMap(mobcastFeedbackProjectionMap);
+			break;
+		case TRAINING_QUIZ:
+			qb.setTables(DBConstant.TABLE_TRAINING_QUIZ);
+			qb.setProjectionMap(trainingQuizProjectionMap);
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI " + uri);
@@ -579,23 +745,32 @@ public class ApplicationDB extends ContentProvider{
 		SQLiteDatabase db = openHelper.getWritableDatabase();
 		int count = -1;
 		switch (sUriMatcher.match(uri)) {
-		case ANNOUNCEMENT:
-			count = db.update(DBConstant.TABLE_ANNOUNCEMENT, values, where, whereArgs);
-			break;
-		case EVENT:
-			count = db.update(DBConstant.TABLE_EVENT, values, where, whereArgs);
-			break;
-		case AWARD:
-			count = db.update(DBConstant.TABLE_AWARD, values, where, whereArgs);
-			break;
-		case NEWS:
-			count = db.update(DBConstant.TABLE_NEWS, values, where, whereArgs);
+		case MOBCAST:
+			count = db.update(DBConstant.TABLE_MOBCAST, values, where, whereArgs);
 			break;
 		case TRAINING:
 			count = db.update(DBConstant.TABLE_TRAINING, values, where, whereArgs);
 			break;
-		case FEEDBACK:
-			count = db.update(DBConstant.TABLE_FEEDBACK, values, where, whereArgs);
+		case EVENTS:
+			count = db.update(DBConstant.TABLE_EVENT, values, where, whereArgs);
+			break;
+		case AWARDS:
+			count = db.update(DBConstant.TABLE_AWARD, values, where, whereArgs);
+			break;
+		case BIRTHDAY:
+			count = db.update(DBConstant.TABLE_BIRTHDAY, values, where, whereArgs);
+			break;
+		case MOBCAST_FILE:
+			count = db.update(DBConstant.TABLE_MOBCAST_FILE, values, where, whereArgs);
+			break;
+		case TRAINING_FILE:
+			count = db.update(DBConstant.TABLE_TRAINING_FILE, values, where, whereArgs);
+			break;
+		case MOBCAST_FEEDBACK:
+			count = db.update(DBConstant.TABLE_MOBCAST_FEEDBACK, values, where, whereArgs);
+			break;
+		case TRAINING_QUIZ:
+			count = db.update(DBConstant.TABLE_TRAINING_QUIZ, values, where, whereArgs);
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI " + uri);
@@ -606,44 +781,72 @@ public class ApplicationDB extends ContentProvider{
 	
 	static {
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_ANNOUNCEMENT, ANNOUNCEMENT);
-		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_EVENT, EVENT);
-		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_AWARD, AWARD);
-		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_NEWS, NEWS);
+		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_MOBCAST, MOBCAST);
 		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_TRAINING, TRAINING);
-		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_FEEDBACK, FEEDBACK);
+		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_EVENT, EVENTS);
+		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_AWARD, AWARDS);
+		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_BIRTHDAY, BIRTHDAY);
+		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_MOBCAST_FILE, MOBCAST_FILE);
+		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_TRAINING_FILE, TRAINING_FILE);
+		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_MOBCAST_FEEDBACK, MOBCAST_FEEDBACK);
+		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_TRAINING_QUIZ, TRAINING_QUIZ);
 
 		
-		announcementProjectionMap = new HashMap<String, String>();
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ID, DBConstant.Announcement_Columns.COLUMN_ID);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_ID, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_ID);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_TITLE, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_TITLE);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DESC, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DESC);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_FROM, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_FROM);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_FILELINK, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_FILELINK);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_EXPIRY, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_EXPIRY);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_TYPE, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_TYPE);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_NAME, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_NAME);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_SUMMARY, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_SUMMARY);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_IS_READ, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_IS_READ);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_IS_SHARE, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_IS_SHARE);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_IS_LIKE, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_IS_LIKE);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_SHARE_NO, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_SHARE_NO);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_READ_NO, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_READ_NO);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_SEEN_NO, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_SEEN_NO);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DATE, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DATE);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DATE_FORMATTED, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_DATE_FORMATTED);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_TIME, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_TIME);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_FILEPATH, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_FILEPATH);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_FILE_APPEND, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_FILE_APPEND);
-		announcementProjectionMap.put(DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_IS_SHARING, DBConstant.Announcement_Columns.COLUMN_ANNOUNCE_IS_SHARING);
+		mobcastProjectionMap = new HashMap<String, String>();
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_ID, DBConstant.Mobcast_Columns.COLUMN_ID);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_BY, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_BY);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DESC, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DESC);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE_FORMATTED, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE_FORMATTED);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME_FORMATTED, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME_FORMATTED);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TYPE, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TYPE);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARE, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARE);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARING, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARING);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_READ_NO, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_READ_NO);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_SHARE_NO, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_SHARE_NO);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LINK, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LINK);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_EXPIRY_DATE, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_EXPIRY_DATE);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_EXPIRY_TIME, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_EXPIRY_TIME);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_FILE_ID, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_FILE_ID);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT);
+		
+		trainingProjectionMap = new HashMap<String, String>();
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_ID, DBConstant.Training_Columns.COLUMN_ID);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_ID, DBConstant.Training_Columns.COLUMN_TRAINING_ID);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE, DBConstant.Training_Columns.COLUMN_TRAINING_TITLE);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_BY, DBConstant.Training_Columns.COLUMN_TRAINING_BY);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_DESC, DBConstant.Training_Columns.COLUMN_TRAINING_DESC);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_DATE, DBConstant.Training_Columns.COLUMN_TRAINING_DATE);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_DATE_FORMATTED, DBConstant.Training_Columns.COLUMN_TRAINING_DATE_FORMATTED);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_TIME, DBConstant.Training_Columns.COLUMN_TRAINING_TIME);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_TIME_FORMATTED, DBConstant.Training_Columns.COLUMN_TRAINING_TIME_FORMATTED);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_TYPE, DBConstant.Training_Columns.COLUMN_TRAINING_TYPE);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE, DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARE, DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARE);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARING, DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARING);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_READ_NO, DBConstant.Training_Columns.COLUMN_TRAINING_READ_NO);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_SHARE_NO, DBConstant.Training_Columns.COLUMN_TRAINING_SHARE_NO);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_LINK, DBConstant.Training_Columns.COLUMN_TRAINING_LINK);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_EXPIRY_DATE, DBConstant.Training_Columns.COLUMN_TRAINING_EXPIRY_DATE);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_EXPIRY_TIME, DBConstant.Training_Columns.COLUMN_TRAINING_EXPIRY_TIME);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_FILE_ID, DBConstant.Training_Columns.COLUMN_TRAINING_FILE_ID);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT, DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT);
+		
 		
 		eventProjectionMap = new HashMap<String, String>();
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_ID, DBConstant.Event_Columns.COLUMN_ID);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_ID, DBConstant.Event_Columns.COLUMN_EVENT_ID);
-		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_NAME, DBConstant.Event_Columns.COLUMN_EVENT_NAME);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_TITLE, DBConstant.Event_Columns.COLUMN_EVENT_TITLE);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_DESC, DBConstant.Event_Columns.COLUMN_EVENT_DESC);
+		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_BY, DBConstant.Event_Columns.COLUMN_EVENT_BY);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_VENUE, DBConstant.Event_Columns.COLUMN_EVENT_VENUE);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_START_TIME, DBConstant.Event_Columns.COLUMN_EVENT_START_TIME);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_END_TIME, DBConstant.Event_Columns.COLUMN_EVENT_END_TIME);
@@ -651,128 +854,127 @@ public class ApplicationDB extends ContentProvider{
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_END_DATE, DBConstant.Event_Columns.COLUMN_EVENT_END_DATE);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_DURATION, DBConstant.Event_Columns.COLUMN_EVENT_DURATION);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_LANDMARK, DBConstant.Event_Columns.COLUMN_EVENT_LANDMARK);
-		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_EXPIRY, DBConstant.Event_Columns.COLUMN_EVENT_EXPIRY);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_FILE_LINK, DBConstant.Event_Columns.COLUMN_EVENT_FILE_LINK);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_FILE_PATH, DBConstant.Event_Columns.COLUMN_EVENT_FILE_PATH);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_FILE_APPEND, DBConstant.Event_Columns.COLUMN_EVENT_FILE_APPEND);
-		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_SUMMARY, DBConstant.Event_Columns.COLUMN_EVENT_SUMMARY);
-		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_JOIN, DBConstant.Event_Columns.COLUMN_EVENT_JOIN);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_CALENDAR, DBConstant.Event_Columns.COLUMN_EVENT_IS_CALENDAR);
+		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN, DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN);
+		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_READ, DBConstant.Event_Columns.COLUMN_EVENT_IS_READ);
+		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_SHARING, DBConstant.Event_Columns.COLUMN_EVENT_IS_SHARING);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_MAP, DBConstant.Event_Columns.COLUMN_EVENT_MAP);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_INVITED_NO, DBConstant.Event_Columns.COLUMN_EVENT_INVITED_NO);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_GOING_NO, DBConstant.Event_Columns.COLUMN_EVENT_GOING_NO);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_DECLINE_NO, DBConstant.Event_Columns.COLUMN_EVENT_DECLINE_NO);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_MAYBE_NO, DBConstant.Event_Columns.COLUMN_EVENT_MAYBE_NO);
-		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_READ, DBConstant.Event_Columns.COLUMN_EVENT_IS_READ);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_START_DATE_FORMATTED, DBConstant.Event_Columns.COLUMN_EVENT_START_DATE_FORMATTED);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_END_DATE_FORMATTED, DBConstant.Event_Columns.COLUMN_EVENT_END_DATE_FORMATTED);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_DATE, DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_DATE);
-		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_SHARING, DBConstant.Event_Columns.COLUMN_EVENT_IS_SHARING);
+		
 		
 		awardProjectionMap = new HashMap<String, String>();
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_ID, DBConstant.Award_Columns.COLUMN_ID);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_ID, DBConstant.Award_Columns.COLUMN_AWARD_ID);
-		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE, DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE);
-		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_DATE, DBConstant.Award_Columns.COLUMN_AWARD_DATE);
-		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_TITLE, DBConstant.Award_Columns.COLUMN_AWARD_TITLE);
-		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_DESC, DBConstant.Award_Columns.COLUMN_AWARD_DESC);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_NAME, DBConstant.Award_Columns.COLUMN_AWARD_NAME);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_RECOGNITION, DBConstant.Award_Columns.COLUMN_AWARD_RECOGNITION);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_CONGRATULATE_NO, DBConstant.Award_Columns.COLUMN_AWARD_CONGRATULATE_NO);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_CITY, DBConstant.Award_Columns.COLUMN_AWARD_CITY);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_DEPARTMENT, DBConstant.Award_Columns.COLUMN_AWARD_DEPARTMENT);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_FILE_LINK, DBConstant.Award_Columns.COLUMN_AWARD_FILE_LINK);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_FILE_PATH, DBConstant.Award_Columns.COLUMN_AWARD_FILE_PATH);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_FILE_APPEND, DBConstant.Award_Columns.COLUMN_AWARD_FILE_APPEND);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_IS_SHARE, DBConstant.Award_Columns.COLUMN_AWARD_IS_SHARE);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_IS_CONGRATULATE, DBConstant.Award_Columns.COLUMN_AWARD_IS_CONGRATULATE);
-		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_BY, DBConstant.Award_Columns.COLUMN_AWARD_BY);
-		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_READ_NO, DBConstant.Award_Columns.COLUMN_AWARD_READ_NO);
-		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_CONGRATULATE_NO, DBConstant.Award_Columns.COLUMN_AWARD_CONGRATULATE_NO);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_IS_LIKE, DBConstant.Award_Columns.COLUMN_AWARD_IS_LIKE);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_IS_READ, DBConstant.Award_Columns.COLUMN_AWARD_IS_READ);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_IS_SHARING, DBConstant.Award_Columns.COLUMN_AWARD_IS_SHARING);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_DATE, DBConstant.Award_Columns.COLUMN_AWARD_DATE);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_DATE_FORMATTED, DBConstant.Award_Columns.COLUMN_AWARD_DATE_FORMATTED);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE_FORMATTED, DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE_FORMATTED);
-		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_NAME, DBConstant.Award_Columns.COLUMN_AWARD_NAME);
-		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_EMAIL, DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_EMAIL);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_MOBILE, DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_MOBILE);
-		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_IS_LIKE, DBConstant.Award_Columns.COLUMN_AWARD_IS_LIKE);
-		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_LIKE_NO, DBConstant.Award_Columns.COLUMN_AWARD_LIKE_NO);
-		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_NAME, DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_NAME);
-		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_IS_READ, DBConstant.Award_Columns.COLUMN_AWARD_IS_READ);
-		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY, DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY);
-		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_IS_SHARING, DBConstant.Award_Columns.COLUMN_AWARD_IS_SHARING);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_DATE, DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_DATE);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_TIME, DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_TIME);
 		
-		newsProjectionMap = new HashMap<String, String>();
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_ID, DBConstant.News_Columns.COLUMN_ID);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_ID, DBConstant.News_Columns.COLUMN_NEWS_ID);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_DATE, DBConstant.News_Columns.COLUMN_NEWS_DATE);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_TITLE, DBConstant.News_Columns.COLUMN_NEWS_TITLE);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_NAME, DBConstant.News_Columns.COLUMN_NEWS_NAME);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_DESC, DBConstant.News_Columns.COLUMN_NEWS_DESC);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_SUMMARY, DBConstant.News_Columns.COLUMN_NEWS_SUMMARY);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_SOURCE, DBConstant.News_Columns.COLUMN_NEWS_SOURCE);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_TYPE, DBConstant.News_Columns.COLUMN_NEWS_TYPE);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_FILE_LINK, DBConstant.News_Columns.COLUMN_NEWS_FILE_LINK);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_FILE_PATH, DBConstant.News_Columns.COLUMN_NEWS_FILE_PATH);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_FILE_APPEND, DBConstant.News_Columns.COLUMN_NEWS_FILE_APPEND);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_IS_READ, DBConstant.News_Columns.COLUMN_NEWS_IS_READ);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_IS_LIKE, DBConstant.News_Columns.COLUMN_NEWS_IS_LIKE);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_IS_SHARE, DBConstant.News_Columns.COLUMN_NEWS_IS_SHARE);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_LIKE_NO, DBConstant.News_Columns.COLUMN_NEWS_LIKE_NO);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_READ_NO, DBConstant.News_Columns.COLUMN_NEWS_READ_NO);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_BY, DBConstant.News_Columns.COLUMN_NEWS_BY);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_FROM, DBConstant.News_Columns.COLUMN_NEWS_FROM);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_EXPIRY, DBConstant.News_Columns.COLUMN_NEWS_EXPIRY);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_IS_SHARING, DBConstant.News_Columns.COLUMN_NEWS_IS_SHARING);
-		newsProjectionMap.put(DBConstant.News_Columns.COLUMN_NEWS_DATE_FORMATTED, DBConstant.News_Columns.COLUMN_NEWS_DATE_FORMATTED);
 		
-		trainingProjectionMap = new HashMap<String, String>();
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_ID, DBConstant.Training_Columns.COLUMN_ID);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_ID, DBConstant.Training_Columns.COLUMN_TRAINING_ID);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_DATE, DBConstant.Training_Columns.COLUMN_TRAINING_DATE);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE, DBConstant.Training_Columns.COLUMN_TRAINING_TITLE);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_NAME, DBConstant.Training_Columns.COLUMN_TRAINING_NAME);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_DESC, DBConstant.Training_Columns.COLUMN_TRAINING_DESC);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_SUMMARY, DBConstant.Training_Columns.COLUMN_TRAINING_SUMMARY);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_SOURCE, DBConstant.Training_Columns.COLUMN_TRAINING_SOURCE);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_TYPE, DBConstant.Training_Columns.COLUMN_TRAINING_TYPE);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_FILE_LINK, DBConstant.Training_Columns.COLUMN_TRAINING_FILE_LINK);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_FILE_PATH, DBConstant.Training_Columns.COLUMN_TRAINING_FILE_PATH);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_FILE_APPEND, DBConstant.Training_Columns.COLUMN_TRAINING_FILE_APPEND);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE, DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARE, DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARE);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_READ_NO, DBConstant.Training_Columns.COLUMN_TRAINING_READ_NO);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_BY, DBConstant.Training_Columns.COLUMN_TRAINING_BY);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_FROM, DBConstant.Training_Columns.COLUMN_TRAINING_FROM);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_EXPIRY, DBConstant.Training_Columns.COLUMN_TRAINING_EXPIRY);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARING, DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARING);
-		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_DATE_FORMATTED, DBConstant.Training_Columns.COLUMN_TRAINING_DATE_FORMATTED);
+		birthdayProjectionMap = new HashMap<String, String>();
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_ID, DBConstant.Birthday_Columns.COLUMN_ID);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_NAME, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_NAME);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DEPARTMENT, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DEPARTMENT);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_LIKE, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_LIKE);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_MESSAGE, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_MESSAGE);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_READ, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_READ);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_SHARE, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_SHARE);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_SHARING, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_SHARING);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_WISHED, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_WISHED);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_AGE, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_AGE);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_SUN_SIGN, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_SUN_SIGN);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_CITY, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_CITY);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DOB, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DOB);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DATE, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DATE);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DATE_FORMATTED, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DATE_FORMATTED);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DAY, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DAY);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_FILE_APPEND, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_FILE_APPEND);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_FILE_LINK, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_FILE_LINK);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_FILE_PATH, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_FILE_PATH);
+
 		
-		feedbackProjectionMap = new HashMap<String, String>();
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_ID, DBConstant.Feedback_Columns.COLUMN_ID);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_ID, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_ID);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_DATE, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_DATE);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_TITLE, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_TITLE);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_NAME, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_NAME);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_DESC, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_DESC);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_SUMMARY, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_SUMMARY);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_IS_READ, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_IS_READ);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_IS_LIKE, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_IS_LIKE);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_IS_SHARE, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_IS_SHARE);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_READ_NO, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_READ_NO);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_LIKE_NO, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_LIKE_NO);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_ATTEMPT_NO, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_ATTEMPT_NO);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_BY, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_BY);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_FROM, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_FROM);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_EXPIRY, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_EXPIRY);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_DATE_FORMATTED, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_DATE_FORMATTED);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_QUESTION, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_QUESTION);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_QUESTION_TYPE, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_QUESTION_TYPE);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_OPTION1, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_OPTION1);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_OPTION2, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_OPTION2);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_OPTION3, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_OPTION3);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_OPTION4, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_OPTION4);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_CORRECT_OPTION, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_CORRECT_OPTION);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_TIME_LIMIT, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_TIME_LIMIT);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_SCORE, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_SCORE);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_IS_ATTEMPTED, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_IS_ATTEMPTED);
-		feedbackProjectionMap.put(DBConstant.Feedback_Columns.COLUMN_FEEDBACK_RANKING, DBConstant.Feedback_Columns.COLUMN_FEEDBACK_RANKING);
+		mobcastFileProjectionMap = new HashMap<String, String>();
+		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_ID, DBConstant.Mobcast_File_Columns.COLUMN_ID);
+		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_ID, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_ID);
+		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LINK, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LINK);
+		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG);
+		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH);
+		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_SIZE, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_SIZE);
+		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_DURATION, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_DURATION);
+		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PAGES, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PAGES);
+		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_READ_DURATION, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_READ_DURATION);
+		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_IS_DEFAULT, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_IS_DEFAULT);
+		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_APPEND, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_APPEND);
+		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_LIVE_STREAM, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_LIVE_STREAM);
+		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_LIVE_STREAM_YOUTUBE, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_LIVE_STREAM_YOUTUBE);
 		
+		
+		trainingFileProjectionMap = new HashMap<String, String>();
+		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_ID, DBConstant.Training_File_Columns.COLUMN_ID);
+		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_ID, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_ID);
+		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LINK, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LINK);
+		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LANG, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LANG);
+		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PATH, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PATH);
+		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_SIZE, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_SIZE);
+		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_DURATION, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_DURATION);
+		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PAGES, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PAGES);
+		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_READ_DURATION, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_READ_DURATION);
+		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_IS_DEFAULT, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_IS_DEFAULT);
+		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_APPEND, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_APPEND);
+		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_LIVE_STREAM, DBConstant.Training_File_Columns.COLUMN_TRAINING_LIVE_STREAM);
+		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_LIVE_STREAM_YOUTUBE, DBConstant.Training_File_Columns.COLUMN_TRAINING_LIVE_STREAM_YOUTUBE);
+
+		mobcastFeedbackProjectionMap = new HashMap<String, String>();
+		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_ID, DBConstant.Mobcast_Feedback_Columns.COLUMN_ID);
+		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ID, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ID);
+		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_QUESTION, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_QUESTION);
+		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_QID, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_QID);
+		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_1, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_1);
+		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_2, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_2);
+		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_3, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_3);
+		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_4, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_4);
+		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_5, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_5);
+		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_6, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_6);
+		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_7, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_7);
+		
+		trainingQuizProjectionMap = new HashMap<String, String>();
+		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_ID, DBConstant.Training_Quiz_Columns.COLUMN_ID);
+		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ID, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ID);
+		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION);
+		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QID, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QID);
+		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_1, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_1);
+		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_2, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_2);
+		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_3, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_3);
+		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_4, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_4);
+		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_5, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_5);
+		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_6, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_6);
+		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_7, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_7);
+		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_DURATION, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_DURATION);
+		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION_POINTS, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION_POINTS);
 		}
 }
