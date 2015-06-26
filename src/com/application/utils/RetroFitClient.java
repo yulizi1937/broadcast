@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import android.util.Log;
 
+import com.facebook.stetho.okhttp.StethoInterceptor;
 import com.mobcast.R;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -27,9 +28,9 @@ public class RetroFitClient {
 			String json, String TAG) {
 		try {
 			long startMilliSeconds = System.currentTimeMillis();
-			/*if(BuildVars.DEBUG_STETHO){
+			if(BuildVars.DEBUG_STETHO){
 				okHttpClient.networkInterceptors().add(new StethoInterceptor());
-			}*/
+			}
 			okHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
 			okHttpClient.setReadTimeout(30, TimeUnit.SECONDS);
 			RequestBody body = RequestBody.create(

@@ -84,7 +84,7 @@
                     android:textSize="@dimen/award_name_textview_size" />
             </LinearLayout>
 
-            <ImageView
+            <com.application.ui.view.DontPressWithParentImageView
                 android:id="@+id/itemRecyclerBirthdayWishIv"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -94,7 +94,7 @@
                 android:src="@drawable/selector_birthday_wish"
                 tools:ignore="RtlHardcoded,ContentDescription" />
 
-            <ImageView
+            <com.application.ui.view.DontPressWithParentImageView
                 android:id="@+id/itemRecyclerBirthdayMessageIv"
                 android:layout_width="40dp"
                 android:layout_height="40dp"

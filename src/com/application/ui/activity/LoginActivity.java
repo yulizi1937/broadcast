@@ -434,6 +434,7 @@ public class LoginActivity extends AppCompatActivity {
 			// TODO Auto-generated method stub
 			super.onPreExecute();
 			mProgressDialog = new MobcastProgressDialog(LoginActivity.this);
+			mProgressDialog.setMessage(ApplicationLoader.getApplication().getResources().getString(R.string.loadingLogin));
 			mProgressDialog.show();
 		}
 

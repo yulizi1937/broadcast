@@ -148,7 +148,7 @@ public class WebViewActivity extends SwipeBackBaseActivity {
 	private void initWebViewClient(){
 		mWebView.setWebChromeClient(new MyWebViewChromeClient());
 		mWebView.setWebViewClient(new MyWebViewClient());
-    	mWebView.loadUrl("http://www.facebook.com");
+    	mWebView.loadUrl("http://money.livemint.com/news/sector/news/hdfc-bank-wins-best-private-banking-services-for-super-affluent-clients--360049.aspx");
     	setToolBarOption();
 	}
 

@@ -43,6 +43,7 @@
     <string name="action_help_mobcast">About Mobcast</string>
     <string name="action_help_video">How to use?</string>
     <string name="action_help_faq">FAQ</string>
+    <string name="action_add_cal">Add to calendar</string>
 
     <!-- Time -->
     <string name="Yesterday">yesterday</string>
@@ -123,20 +124,24 @@
     <string name="activity_edit_profile_answer">Your answer to your Favourite Question</string>
 
     <!-- item_recycler_award -->
-    <string name="sample_winner_name">RYAN GOSLING</string>
-    <string name="sample_award_name">AWARD FOR BEST SALES OF THE WEEK</string>
+    <string name="sample_winner_name">MR. BHAVESH ZAVERI</string>
+<!--     <string name="sample_award_name">AWARD FOR BEST SALES OF THE WEEK</string> -->
+    <string name="sample_award_name">FE India\'s Best Banks Awards </string>
+    <string name="sample_winner_designation">Country Head-Operations, HDFC bank</string>
 
     <!-- item_recycler_birthday -->
     <string name="sample_birthday_name">RYAN GOSLING</string>
     <string name="sample_birthday_department">SALES</string>
 
     <!-- item_recycler_event -->
-    <string name="sample_event_title">SUNDAY - 8TH MARCH 15  WOMEN DAYS SPECIAL</string>
-    <string name="sample_event_by">BY:TECHNOLOGY TEAM TECHNOLOGY TEAM TECHNOLOGY TEAM - SEPTEMBER 31 2029</string>
+<!--     <string name="sample_event_title">SUNDAY - 8TH MARCH 15  WOMEN DAYS SPECIAL</string> -->
+    <string name="sample_event_title">Announcing launch of Chillr</string>
+    <string name="sample_event_by">BY:TECHNOLOGY TEAM - FEBRUARY 27 2015</string>
     <string name="sample_event_view">1,00,000,000</string>
     <string name="sample_event_left_number">3655</string>
     <string name="sample_event_left_string">DAYS LEFT</string>
-    <string name="sample_event_summary">Lorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more\nLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more\nLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more</string>
+<!--     <string name="sample_event_summary">Lorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more\nLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more\nLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more</string> -->
+    <string name="sample_event_summary">Content: Officials said with Chillr, HDFC Bank customers can transfer money to any person in India, once they download the app and register. The app is widely accessible as it works on Android and iOS operating syatems and will soon be launched for Windows phones as well.</string>
 
     <!-- layout_mother -->
     <string name="layout_mother_mobcast">MOBCAST</string>
@@ -156,13 +161,14 @@
     <string name="layout_drawer_search_mother_search_livestream">Live Stream</string>
 
     <!-- fragment_event_detail -->
-    <string name="sample_event_date">31</string>
-    <string name="sample_event_month">September</string>
+    <string name="sample_event_date">17</string>
+    <string name="sample_event_month">March</string>
     <string name="sample_event_day">Wednesday</string>
     <string name="sample_event_hours">99</string>
-    <string name="sample_event_till">10:15PM-13:30PM</string>
+    <string name="sample_event_till">10:00AM-12:30PM</string>
     <string name="sample_event_hours_text">Hours</string>
-    <string name="sample_event_location_text">Conference Room, Head Office, Bandra, Mumbai, Maharastra, India</string>
+<!--     <string name="sample_event_location_text">Conference Room, Head Office, Bandra, Mumbai, Maharastra, India</string> -->
+    <string name="sample_event_location_text">Bengaluru</string>
     <string name="sample_event_view_map"><![CDATA[<u>]]>View Map<![CDATA[</u>]]></string>
     <string name="fragment_event_detail_button_join">JOIN</string>
     <string name="fragment_event_detail_button_decline">DECLINE</string>
@@ -249,8 +255,8 @@
     <string name="BirthdayProfileActivityTitle">Profile</string>
     <string name="sample_fragment_birthday_profile_name">Ryan Gosling</string>
     <string name="sample_fragment_birthday_profile_city">MUMBAI</string>
-    <string name="sample_fragment_birthday_profile_date">May 18 1995</string>
-    <string name="sample_fragment_birthday_profile_department">SALES DEPARTMENT</string>
+    <string name="sample_fragment_birthday_profile_date">JAN 30 2015</string>
+    <string name="sample_fragment_birthday_profile_department">Country Head - Operations</string>
     <string name="sample_fragment_birthday_profile_sun_sign">TAURUS</string>
     <string name="sample_fragment_birthday_profile_age">29 YRS</string>
     <string name="sample_fragment_birthday_profile_send_wishes">SEND WISHES</string>
@@ -391,41 +397,53 @@
     <string name="sample_item_recycler_event_detail_is_going">Accepted</string>
 
     <!-- item_recycler_mobcast_text -->
-    <string name="sample_item_recycler_mobcast_text_title">ALIQUAM AC ENIM IN NIBH ULLAMCORPER AUCTOR AC A DOLOR</string>
-    <string name="sample_item_recycler_mobcast_text_by">BY: HR TEAM - A YEAR AGO</string>
-    <string name="sample_item_recycler_mobcast_text_view_count">21000</string>
-    <string name="sample_item_recycler_mobcast_text_summary">Proin ac risus eu metus confimentim viverra. Donce ut neque sed elit tincidunt condimentum. Read More</string>
+<!--     <string name="sample_item_recycler_mobcast_text_title">ALIQUAM AC ENIM IN NIBH ULLAMCORPER AUCTOR AC A DOLOR</string> -->
+    <string name="sample_item_recycler_mobcast_text_title">HDFC Bank wins Best Private Banking Services for Super affluent clients for 5 years in a row at Euromoney Awards</string>
+    <string name="sample_item_recycler_mobcast_text_by">BY: HR TEAM - February 13, 2015</string>
+    <string name="sample_item_recycler_mobcast_text_view_count">21K+</string>
+<!--     <string name="sample_item_recycler_mobcast_text_summary">Proin ac risus eu metus confimentim viverra. Donce ut neque sed elit tincidunt condimentum. Read More</string> -->
+        <string name="sample_item_recycler_mobcast_text_summary">HDFC Bank has once again been recognized for excellence in India in the 2015 Euromoney Private Banking and Wealth Management Survey. HDFC Bank was adjudged as having the Best Private Banking Services in India for a fifth consecutive year in the Net-worth-specific services category for Super affluent clients (US$ 1 million to US$ 5 million). HDFC Bank also ranked first in the Asset Management category of the survey.</string>
 
     <!-- item_recycler_mobcast_image -->
-    <string name="sample_item_recycler_mobcast_image_title">SUSPENDISSE CONVALLIS SED ORCI A ELEMENTUM</string>
+<!--     <string name="sample_item_recycler_mobcast_image_title">SUSPENDISSE CONVALLIS SED ORCI A ELEMENTUM</string> -->
+    <string name="sample_item_recycler_mobcast_image_title">HDFC Bank launches rural Financial Literacy Initiative in Sawantwadi</string>
     <string name="sample_item_recycler_mobcast_image_by">BY: MARKETING - 3 SEC AGO</string>
     <string name="sample_item_recycler_mobcast_image_view_count">1200</string>
+    <string name="sample_item_recycler_mobcast_image_detail">HDFC Bank Ltd today launched its rural Financial Literacy Initiative in Sawantwadi in the Sindhudhurg district of Maharashtra, under the aegis of the Reserve Bank of India (RBI). This initiative complements HDFC Bank’s efforts to support inclusive growth and take formal banking services to the remote corners of India. The Financial Literacy programme in Sawantwadi is the first of a series of such camps that HDFC Bank plans to hold. The bank will roll out financial literacy camps in 4 branches in the Sindhudhurg district, reaching out to just over 85 villages in the region. The camps will enable both adults and school children to attain a conceptual understanding of financial products and services.</string>
 
     <!-- item_recycler_mobcast_video -->
-    <string name="sample_item_recycler_mobcast_video_title">PRAESENT SED LEO IN SEM VENENATI</string>
+<!--     <string name="sample_item_recycler_mobcast_video_title">PRAESENT SED LEO IN SEM VENENATI</string> -->
+    <string name="sample_item_recycler_mobcast_video_title">HDFC Bank Commercial </string>
+    <string name="sample_item_recycler_mobcast_video_desc">We are Everywhere You Go </string>
     <string name="sample_item_recycler_mobcast_video_by">BY: DIRECTORS - 2 HOURS AGO</string>
     <string name="sample_item_recycler_mobcast_video_view_count">300</string>
 
     <!-- item_recycler_mobcast_audio -->
-    <string name="sample_item_recycler_mobcast_audio_title">SUSPENDISSE DIFNISSIM MAGNA EU VEHICULA CONVALLIS MASSA DUI FERMENTUM TORTOR NON VENENTIS DOLOR ELIT IN PURUS</string>
+<!--     <string name="sample_item_recycler_mobcast_audio_title">SUSPENDISSE DIFNISSIM MAGNA EU VEHICULA CONVALLIS MASSA DUI FERMENTUM TORTOR NON VENENTIS DOLOR ELIT IN PURUS</string> -->
+    <string name="sample_item_recycler_mobcast_audio_title">Aditya Puri Of HDFC Bank Says Growth Will Pick Up This Fiscal</string>
     <string name="sample_item_recycler_mobcast_audio_by">BY: TECHNOLOGY TEAM - YESTERDAY</string>
     <string name="sample_item_recycler_mobcast_audio_view_count">290</string>
-    <string name="sample_item_recycler_mobcast_audio_summary">Lorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec, condimentum magna. Read More</string>
-    <string name="sample_item_recycler_mobcast_audio_file_name">MANI_AU.MP3</string>
+<!--     <string name="sample_item_recycler_mobcast_audio_summary">Lorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec, condimentum magna. Read More</string> -->
+    <string name="sample_item_recycler_mobcast_audio_summary">The worst is behind us says HDFC Bank\'s Aditya Puri! He says the Government is working on unclogging many projects. Here he is speaking exclusively to ET NOW about Modi magic.</string>
+    <string name="sample_item_recycler_mobcast_audio_file_name">ADITYA_PURI.MP3</string>
     <string name="sample_item_recycler_mobcast_audio_file_info">3:48</string>
 
     <!-- item_recycler_mobcast_pdf -->
-    <string name="sample_item_recycler_mobcast_pdf_title">DONEC TEMPOR SED MASSA TEMPOR MAXIMUS PORTA IN SCELERISQUE NON FEUGIAT LEO INTERDUM VITA</string>
+<!--     <string name="sample_item_recycler_mobcast_pdf_title">DONEC TEMPOR SED MASSA TEMPOR MAXIMUS PORTA IN SCELERISQUE NON FEUGIAT LEO INTERDUM VITA</string> -->
+    <string name="sample_item_recycler_mobcast_pdf_title">HDFC Bank has been named the Strongest Bank in India in the Asian Banker 500 (AB 500)</string>
+    <string name="sample_item_recycler_mobcast_pdf_desc">HDFC Bank has been named the Strongest Bank in India in the Asian Banker 500 (AB 500) Strongest Bank by Balance Sheet Ranking 2014. The announcement was made at a recognition ceremony held in conjunction with SWIFT’s SIBOS convention at the Boston Convention and Exhibition Centre from 29 September to 2 October 2014 in Boston, USA.The AB 500 ranking is the most comprehensive annual evaluation that captures the quality and sustainability of the balance sheets of banks in the region. It tracks the relative financial strengths of banks in response to their respective market conditions, based on a common scorecard.</string>
     <string name="sample_item_recycler_mobcast_pdf_by">BY: TECHNOLOGY TEAM - YESTERDAY</string>
     <string name="sample_item_recycler_mobcast_pdf_view_count">290</string>
-    <string name="sample_item_recycler_mobcast_pdf_file_name">MANI_CV.PDF</string>
+    <string name="sample_item_recycler_mobcast_pdf_file_name">HDFC_BANK.PDF</string>
     <string name="sample_item_recycler_mobcast_pdf_file_info">12 PAGES</string>
 
     <!-- item_recycler_mobcast_doc -->
-    <string name="sample_item_recycler_mobcast_doc_title">PELLENTESQUE VEHICULA DAPIBUS</string>
+<!--     <string name="sample_item_recycler_mobcast_doc_title">PELLENTESQUE VEHICULA DAPIBUS</string> -->
+    <string name="sample_item_recycler_mobcast_doc_title">HDFC Bank named Best Bank (New Private Sector) at FE Awards</string>
+    <string name="sample_item_recycler_mobcast_doc_desc" tools:ignore="TypographyDashes">HDFC Bank bagged three awards at the FE Best Bank Awards for the year 2012-13. Our Bank was adjudged the Best Bank in the New Private sector category and also named winner in the Efficiency category as well as the Profitability category. HDFC Bank won the highest number of awards in the various categories this year.We are more optimistic now than ever before about the future,” said our MD Mr.AdityaPuri, on receiving news of the announcement.The newspaper held a ceremony to present these awards on January 30, 2015 in Mumbai at The Taj Hotel. On behalf of the bank, our Deputy Managing Director, Mr.PareshSukthankar received the award for Best Bank in the New Private Sector Category.</string>
     <string name="sample_item_recycler_mobcast_doc_by">BY: HR TEAM - NOVEMEBER 21 2014</string>
     <string name="sample_item_recycler_mobcast_doc_view_count">290</string>
-    <string name="sample_item_recycler_mobcast_doc_file_name">ANNUAL_REPORT.DOC</string>
+    <string name="sample_item_recycler_mobcast_doc_file_name">FE_BEST.DOC</string>
     <string name="sample_item_recycler_mobcast_doc_file_info">21 PAGES</string>
 
     <!-- item_recycler_mobcast_xls -->
@@ -437,7 +455,7 @@
 
     <!-- item_recycler_mobcast_ppt -->
     <string name="sample_item_recycler_mobcast_ppt_title">QUISQUE TINCIDUNT LIBERO SEM ID LACINIA ODIO FERMENTUM SIT AMET</string>
-    <string name="sample_item_recycler_mobcast_ppt_by">BY: HR TEAM - A YEAR AGO</string>
+    <string name="sample_item_recycler_mobcast_ppt_by">BY: TECHNOLOGY TEAM TECHNOLOGY TEAM   - A YEAR AGO</string>
     <string name="sample_item_recycler_mobcast_ppt_view_count">210</string>
     <string name="sample_item_recycler_mobcast_ppt_file_name">PAYSCALE.PPT</string>
     <string name="sample_item_recycler_mobcast_ppt_file_info">04 SLIDES</string>
@@ -455,7 +473,18 @@
 
     <!-- item_reycler_mobcast_news -->
     <string name="sample_item_recycler_mobcast_news_link">http://www.google.com/</string>
+    
+    <!-- item_recycler_training_image -->
+    <string name="sample_item_recycler_training_image_title">Indian Business Icons 2015: Aditya Puri, Managing Director, HDFC Bank</string>
+    <string name="sample_item_recycler_training_image_desc">As We Celebrate 15 Years Of Leadership, We Introduce A Special Initiative - Indian Business Icons 2015. The Endeavour Is To Form A Distinct League Of The Most Powerful Business Icons That The People Of The Country Think Have Had A Monumental Impact, Not Only On Their Lives, But Also On The Indian Economy. An Eminent Jury Has Shortlisted 30 Icons Who They Feel Have Impacted The Indian Economy In The Past 15 Years. These Names Are Now Thrown Open To Public Voting. The Icon We are Focussing On Today Is A Stalwart From The Financial Sector, Managing Director Of HDFC Bank Aditya Puri</string>
+    
+    <!-- item_recycler_training_text -->
+    <string name="sample_item_recycler_training_text_title">Essence of banking is in taking calculated risk, says HDFC Bank CEO Aditya Puri</string>
+    <string name="sample_item_recycler_training_text_desc">HDFC Bank is morphing into a full-scale digital bank and is also exploring opportunities in the semi-urban and rural areas, says MD and CEO Aditya Puri. Edited excerpts of an interview with Business Today </string>
 
+    <!-- item_recycler_training_audio -->
+    <string name="sample_item_recycler_training_audio_title">HDFC Bank’s Aditya Puri To ET NOW</string>
+    
     <!-- section_layout_birthday_header -->
     <string name="sample_section_layout_birthday_header">APRIL 22,WEDNESDAY</string>
 
@@ -496,5 +525,10 @@
 
     <!-- design support library -->
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+
+    <!-- loadingMessages -->
+    <string name="loadingLogin">Signing In...</string>
+    <string name="loadingVerify">Verifying...</string>
+    <string name="loadingUpdate">Updating...</string>
 
 </resources>

@@ -47,7 +47,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:src="@drawable/ic_sample_picture"
+                android:src="@drawable/award_"
                 circleimageview:border_color="@android:color/white"
                 circleimageview:border_width="2dp"
                 tools:ignore="RtlHardcoded,ContentDescription" />
@@ -81,12 +81,12 @@
                     android:layout_gravity="top|center"
                     android:layout_weight="1"
                     android:gravity="left|center"
-                    android:text="@string/sample_award_name"
+                    android:text="@string/sample_winner_designation"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/award_name_textview_size" />
             </LinearLayout>
 
-            <ImageView
+            <com.application.ui.view.DontPressWithParentImageView
                 android:id="@+id/itemRecyclerCongratulateIv"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -96,7 +96,7 @@
                 android:src="@drawable/selector_award_congratulate"
                 tools:ignore="RtlHardcoded,ContentDescription" />
 
-            <ImageView
+            <com.application.ui.view.DontPressWithParentImageView
                 android:id="@+id/itemRecyclerAwardMessageIv"
                 android:layout_width="40dp"
                 android:layout_height="40dp"

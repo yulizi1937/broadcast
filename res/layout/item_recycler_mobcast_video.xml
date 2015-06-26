@@ -48,7 +48,7 @@
             android:layout_marginTop="@dimen/item_recycler_mobcast_text_indicator_image_margin_top"
             android:background="@android:color/white"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_mobcast_video"
+            android:src="@drawable/ic_mobcast_video_normal"
             tools:ignore="ContentDescription" />
 
         <LinearLayout
@@ -76,43 +76,72 @@
             <RelativeLayout
                 android:id="@+id/itemRecyclerMobcastVideoByLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/event_by_layout_size"
                 android:layout_marginTop="@dimen/item_recycler_mobcast_text_content_title_margin_top"
                 android:orientation="horizontal" >
 
-                <android.support.v7.widget.AppCompatTextView
+               <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/itemRecyclerMobcastVideoByTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="left|center"
-                    android:layout_marginRight="90dp"
+                    android:layout_marginRight="@dimen/event_by_textview_margin_right"
                     android:background="@drawable/shape_by_orange_fill"
                     android:gravity="left|center"
                     android:padding="4dp"
-                    android:text="@string/sample_item_recycler_mobcast_video_by"
+                    android:singleLine="true"
+                    android:text="@string/sample_item_recycler_mobcast_text_by"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/event_by_textview_size"
                     android:textStyle="bold" />
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/itemRecyclerMobcastVideoViewCountTv"
+                    android:id="@+id/itemRecyclerMobcastVideoLikeCountTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="right|center"
                     android:background="@drawable/shape_rectange_app"
-                    android:drawableLeft="@drawable/item_view"
+                    android:drawableLeft="@drawable/bitmap_item_like"
                     android:gravity="right|center"
-                    android:paddingBottom="2dp"
-                    android:paddingLeft="2dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="2dp"
-                    android:text="@string/sample_item_recycler_mobcast_video_view_count"
+                    android:paddingRight="4dp"
+                    android:text="@string/sample_item_recycler_mobcast_text_view_count"
                     android:textColor="@color/toolbar_background"
-                    android:textSize="@dimen/event_by_textview_size" />
+                    android:textSize="@dimen/event_view_textview_size"
+                    tools:ignore="RtlSymmetry" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/itemRecyclerMobcastVideoViewCountTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_toLeftOf="@id/itemRecyclerMobcastVideoLikeCountTv"
+                    android:background="@drawable/shape_rectange_app"
+                    android:drawableLeft="@drawable/bitmap_item_view"
+                    android:gravity="center"
+                    android:paddingRight="4dp"
+                    android:text="@string/sample_item_recycler_mobcast_text_view_count"
+                    android:textColor="@color/toolbar_background"
+                    android:textSize="@dimen/event_view_textview_size"
+                    tools:ignore="RtlSymmetry" />
+
+                <ImageView
+                    android:id="@+id/itemRecyclerMobcastVideoLinkTv"
+                    android:layout_width="@dimen/event_link_width"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_toLeftOf="@id/itemRecyclerMobcastVideoViewCountTv"
+                    android:background="@drawable/shape_rectange_app"
+                    android:gravity="center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_link"
+                    android:visibility="visible"
+                    tools:ignore="ContentDescription" />
             </RelativeLayout>
 
             <FrameLayout
@@ -126,7 +155,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/sample_picture_event_cover"
+                    android:src="@drawable/hdfc_bank_house"
                     tools:ignore="ContentDescription" />
 
                 <ImageView
@@ -135,7 +164,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:scaleType="centerInside"
-                    android:src="@drawable/playvideo"
+                    android:src="@drawable/ic_play_video"
                     tools:ignore="ContentDescription" />
 
                 <android.support.v7.widget.AppCompatTextView

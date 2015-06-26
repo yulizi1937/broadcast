@@ -24,7 +24,8 @@ public class AppConstants {
 		//Content Type
 		public static final MediaType API_CONTENTTYPE = MediaType.parse("application/json; charset=utf-8");
 		// API V2
-		public static final String API_HOST        = "http://192.168.0.119";
+		public static final String API_HOST        = "http://54.165.41.77";
+//		public static final String API_HOST        = "http://192.168.0.119";
 		public static final String API_CLIENT      = "";
 		public static final String API_VERSION     = "/v2";
 		public static final String API_FOLDER      ="/api/";

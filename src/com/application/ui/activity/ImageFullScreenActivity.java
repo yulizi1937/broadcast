@@ -54,7 +54,8 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 	private ArrayList<String> mArrayListString;
 
 	private SystemBarTintManager mTintManager;
-	
+
+	private boolean isTraining = false; //HDFC
 	private boolean isShareOptionEnable = false;
 
 	@Override
@@ -126,8 +127,16 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 
 		mImageViewPager = (ViewPager) findViewById(R.id.fragmentImageFullScreenViewPager);
 		mImageCirclePageIndicator = (CirclePageIndicator) findViewById(R.id.fragmentImageFullScreenCirclePageIndicator);
+		
+		initUiWithDataForWastingTime();//HDFC
 	}
 
+	private void initUiWithDataForWastingTime(){
+		if(getIntent().getBooleanExtra(AppConstants.INTENTCONSTANTS.TRAINING, false)){
+			isTraining = true;
+		}
+	}
+	
 	/**
 	 * <b>Description: </b></br>Initialize ToolBar</br></br>
 	 * 
@@ -158,7 +167,7 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 			mArrayListString.add("1");
 		}
 		mAdapter = new ImageFullScreenPagerAdapter(getSupportFragmentManager(),
-				mArrayListString);
+				mArrayListString, isTraining);
 		mImageViewPager.setAdapter(mAdapter);
 		mImageCirclePageIndicator.setViewPager(mImageViewPager);
 	}

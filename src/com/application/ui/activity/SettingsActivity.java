@@ -104,7 +104,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_event_detail, menu);
+		inflater.inflate(R.menu.menu_profile, menu);
 		return true;
 	}
 

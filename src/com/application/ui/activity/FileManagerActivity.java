@@ -136,7 +136,7 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_event_detail, menu);
+		inflater.inflate(R.menu.menu_file_storage, menu);
 		if (AndroidUtilities.isAboveGingerBread()) {
 			MenuItem refreshItem = menu
 					.findItem(R.id.action_refresh_actionable);
@@ -588,10 +588,10 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 
 		try {
 			File telegramPath = new File(
-					Environment.getExternalStorageDirectory(), "Telegram");
+					Environment.getExternalStorageDirectory(), ".con/.mobcast");
 			if (telegramPath.exists()) {
 				fs = new ListItem();
-				fs.title = "Telegram";
+				fs.title = "Mobcast";
 				fs.subtitle = telegramPath.toString();
 				fs.icon = R.drawable.ic_directory;
 				fs.file = telegramPath;

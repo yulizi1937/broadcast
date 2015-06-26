@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -72,6 +73,10 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	private ImageView mVideoCoverIv;
 	private ImageView mVideoFullScreenIv;
 
+	private AppCompatTextView mVideoNewsLinkTv;
+
+	private LinearLayout mVideoNewsLinkLayout;
+	
 	private AppCompatTextView mVideoMediaControllerTotalDurationTv;
 	private AppCompatTextView mVideoMediaControllerCurrentDurationTv;
 	private DiscreteSeekBar mVideoMediaControllerDiscreteSeekBar;
@@ -98,6 +103,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		setContentView(R.layout.activity_video_detail);
 		initToolBar();
 		initUi();
+		initUiWithData();
 		initAnimation();
 		initVideoPlayer();
 		setUiListener();
@@ -220,6 +226,14 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		mVideoMediaControllerDiscreteSeekBar = (DiscreteSeekBar) findViewById(R.id.fragmentVideoDetailMediaControllerSeekBar);
 
 		mVideoMediaControllerFrameLayout = (FrameLayout) findViewById(R.id.fragmentVideoDetailMediaControllerLayout);
+		
+		mVideoNewsLinkTv = (AppCompatTextView)findViewById(R.id.fragmentVideoDetailLinkTv);
+		
+		mVideoNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentVideoDetailViewSourceLayout);
+	}
+
+	private void initUiWithData(){
+		mVideoNewsLinkTv.setText(Html.fromHtml(getResources().getString(R.string.sample_news_detail_link)));
 	}
 
 	@Override

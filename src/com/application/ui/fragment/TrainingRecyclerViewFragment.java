@@ -41,6 +41,7 @@ import com.application.ui.adapter.TrainingRecyclerAdapter.OnItemClickListener;
 import com.application.ui.view.HorizontalDividerItemDecoration;
 import com.application.ui.view.ObservableRecyclerView;
 import com.application.utils.AndroidUtilities;
+import com.application.utils.AppConstants;
 import com.application.utils.ObservableScrollViewCallbacks;
 import com.application.utils.ScrollUtils;
 import com.application.utils.Utilities;
@@ -121,6 +122,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment {
 					break;
 				case R.id.itemRecyclerTrainingImageRootLayout:
 					Intent mIntentImage = new Intent(mParentActivity, ImageDetailActivity.class);
+					mIntentImage.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.TRAINING);
 					startActivity(mIntentImage);
 					AndroidUtilities.enterWindowAnimation(mParentActivity);
 					break;
@@ -131,11 +133,13 @@ public class TrainingRecyclerViewFragment extends BaseFragment {
 					break;
 				case R.id.itemRecyclerTrainingAudioRootLayout:
 					Intent mIntentAudio = new Intent(mParentActivity, AudioDetailActivity.class);
+					mIntentAudio.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.TRAINING);
 					startActivity(mIntentAudio);
 					AndroidUtilities.enterWindowAnimation(mParentActivity);
 					break;
 				case R.id.itemRecyclerTrainingTextRootLayout:
 					Intent mIntentText = new Intent(mParentActivity, TextDetailActivity.class);
+					mIntentText.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.TRAINING);
 					startActivity(mIntentText);
 					AndroidUtilities.enterWindowAnimation(mParentActivity);
 					break;

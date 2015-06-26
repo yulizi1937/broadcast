@@ -18,12 +18,14 @@ import com.application.ui.fragment.ImageViewFullScreenFragment;
  */
 public class ImageFullScreenPagerAdapter extends FragmentStatePagerAdapter{
 	private ArrayList<String> mArrayListString;
+	private boolean isTraining; //HDFC
 	/**
 	 * @param fm
 	 */
-	public ImageFullScreenPagerAdapter(FragmentManager fm, ArrayList<String> mArrayListString) {
+	public ImageFullScreenPagerAdapter(FragmentManager fm, ArrayList<String> mArrayListString, boolean isTraining) {//HDFC
 		super(fm);
 		this.mArrayListString = mArrayListString;
+		this.isTraining = isTraining;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -33,7 +35,7 @@ public class ImageFullScreenPagerAdapter extends FragmentStatePagerAdapter{
 	@Override
 	public Fragment getItem(int position) {
 		// TODO Auto-generated method stub
-			return ImageViewFullScreenFragment.newInstance();	
+			return ImageViewFullScreenFragment.newInstance(isTraining);//HDFC	
 	}
 
 	/* (non-Javadoc)

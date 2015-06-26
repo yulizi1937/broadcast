@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -60,6 +61,10 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mXlsFileInfoTv;
 	private AppCompatTextView mLanguageHeaderTv;
 	
+	private AppCompatTextView mXlsNewsLinkTv;
+
+	private LinearLayout mXlsNewsLinkLayout;
+	
 	private ImageView mXlsFileIv;
 	
 	private RelativeLayout mXlsFileLayout;
@@ -73,6 +78,7 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 		setContentView(R.layout.activity_xls_detail);
 		initToolBar();
 		initUi();
+		initUiWithData();
 		setUiListener();
 		setAnimation();
 	}
@@ -180,8 +186,15 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 		mXlsFileIv = (ImageView)findViewById(R.id.fragmentXlsDetailImageIv);
 		
 		mXlsFileLayout = (RelativeLayout)findViewById(R.id.fragmentXlsDetailRelativeLayout);
+		
+		mXlsNewsLinkTv = (AppCompatTextView)findViewById(R.id.fragmentXlsDetailLinkTv);
+		
+		mXlsNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentXlsDetailViewSourceLayout);
 	}
 
+	private void initUiWithData(){
+		mXlsNewsLinkTv.setText(Html.fromHtml(getResources().getString(R.string.sample_news_detail_link)));
+	}
 	/**
 	 * <b>Description: </b></br>Initialize ToolBar</br></br>
 	 * 

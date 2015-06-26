@@ -199,8 +199,9 @@ public class SetProfileActivity extends AppCompatActivity{
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent mIntent = new Intent(SetProfileActivity.this, TutorialActivity.class);
+				Intent mIntent = new Intent(SetProfileActivity.this, FacebookConcealActivity.class);
 				startActivity(mIntent);
+				AndroidUtilities.enterWindowAnimation(SetProfileActivity.this);
 			}
 		});
 	}
@@ -492,6 +493,7 @@ public class SetProfileActivity extends AppCompatActivity{
 			// TODO Auto-generated method stub
 			super.onPreExecute();
 			mProgressDialog = new MobcastProgressDialog(SetProfileActivity.this);
+			mProgressDialog.setMessage(ApplicationLoader.getApplication().getResources().getString(R.string.loadingUpdate));
 			mProgressDialog.show();
 		}
 

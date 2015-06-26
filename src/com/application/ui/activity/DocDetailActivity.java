@@ -3,14 +3,23 @@
  */
 package com.application.ui.activity;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -61,6 +70,10 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mLanguageHeaderTv;
 
 	private ImageView mDocFileIv;
+	
+	private AppCompatTextView mDocNewsLinkTv;
+
+	private LinearLayout mDocNewsLinkLayout;
 
 	private RelativeLayout mDocFileLayout;
 
@@ -73,6 +86,7 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 		setContentView(R.layout.activity_doc_detail);
 		initToolBar();
 		initUi();
+		initUiWithData();
 		setUiListener();
 		setAnimation();
 	}
@@ -182,6 +196,14 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 		mDocFileIv = (ImageView) findViewById(R.id.fragmentDocDetailImageIv);
 
 		mDocFileLayout = (RelativeLayout) findViewById(R.id.fragmentDocDetailRelativeLayout);
+		
+		mDocNewsLinkTv = (AppCompatTextView)findViewById(R.id.fragmentDocDetailLinkTv);
+		
+		mDocNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentDocDetailViewSourceLayout);
+	}
+	
+	private void initUiWithData(){
+		mDocNewsLinkTv.setText(Html.fromHtml(getResources().getString(R.string.sample_news_detail_link)));
 	}
 
 	/**
@@ -205,6 +227,55 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 	}
 
 	private void setOnClickListener() {
+		mDocFileLayout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+//				copyPdfFromAssets();
+			}
+		});
+	}
+	
+	private void copyFile(InputStream in, OutputStream out) throws IOException {
+		byte[] buffer = new byte[1024];
+		int read;
+		while ((read = in.read(buffer)) != -1) {
+			out.write(buffer, 0, read);
+		}
+	}
+
+	private void copyPdfFromAssets() {// HDFC
+		try {
+			AssetManager assetManager = getAssets();
+
+			InputStream in = null;
+			OutputStream out = null;
+			File file = new File(getFilesDir(), "fe.docx");
+			try {
+				in = assetManager.open("fe.docx");
+				out = openFileOutput(file.getName(),
+						Context.MODE_WORLD_READABLE);
+
+				copyFile(in, out);
+				in.close();
+				in = null;
+				out.flush();
+				out.close();
+				out = null;
+			} catch (Exception e) {
+				Log.e("tag", e.getMessage());
+			}
+
+			Intent intent = new Intent(Intent.ACTION_VIEW);
+			intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+			intent.setAction(Intent.ACTION_VIEW);
+			intent.setDataAndType(
+					Uri.parse("file://" + getFilesDir()
+							+ "/fe.docx"), "application/msword");
+
+			startActivity(intent);
+		} catch (Exception e) {
+		}
 	}
 	
 	private void setLanguageChipsLayout() {

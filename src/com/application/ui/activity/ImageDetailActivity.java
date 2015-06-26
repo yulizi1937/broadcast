@@ -14,6 +14,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -65,6 +66,10 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 	private CirclePageIndicator mImageCirclePageIndicator;
 	
 	
+	private AppCompatTextView mImageNewsLinkTv;
+
+	private LinearLayout mImageNewsLinkLayout;
+	
 	private ImageView mImageNextIv;
 	private ImageView mImagePrevIv;
 	private ImageView mShareIv;
@@ -73,7 +78,8 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 	
 	private ArrayList<String> mArrayListString;
 	
-	private boolean isShareOptionEnable = false;
+	private boolean isTraining = false;//HDFC
+	private boolean isShareOptionEnable = true;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +88,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 		setContentView(R.layout.activity_image_detail);
 		initToolBar();
 		initUi();
+		initUiWithData();
 		setUiListener();
 		setImageViewPager();
 	}
@@ -188,8 +195,25 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 		
 		mImageViewPager = (ViewPager)findViewById(R.id.fragmentImageDetailViewPager);
 		mImageCirclePageIndicator = (CirclePageIndicator)findViewById(R.id.fragmentImageDetailCirclePageIndicator);
+		
+		mImageNewsLinkTv = (AppCompatTextView)findViewById(R.id.fragmentImageDetailLinkTv);
+		
+		mImageNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentImageDetailViewSourceLayout);
 	}
 
+	private void initUiWithData(){
+		mImageNewsLinkTv.setText(Html.fromHtml(getResources().getString(R.string.sample_news_detail_link)));
+		initUiWithDataForWastingTime();//HDFC
+	}
+	
+	private void initUiWithDataForWastingTime(){//HDFC
+		if(getIntent().getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY).equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+			isTraining = true;
+			mImageTitleTv.setText(getResources().getString(R.string.sample_item_recycler_training_image_title));
+			mImageSummaryTextTv.setText(getResources().getString(R.string.sample_item_recycler_training_image_desc));
+		}
+	}
+	
 	/**
 	 * <b>Description: </b></br>Initialize ToolBar</br></br>
 	 * 
@@ -218,7 +242,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 		for(int i=0;i<3;i++){
 			mArrayListString.add("1");
 		}
-		mAdapter = new ImageDetailPagerAdapter(getSupportFragmentManager(), mArrayListString);
+		mAdapter = new ImageDetailPagerAdapter(getSupportFragmentManager(), mArrayListString, isTraining);
 		mImageViewPager.setAdapter(mAdapter);
 		mImageCirclePageIndicator.setViewPager(mImageViewPager);
 	}

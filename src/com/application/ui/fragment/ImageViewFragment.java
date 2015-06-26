@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import com.application.ui.activity.ImageFullScreenActivity;
 import com.application.utils.AndroidUtilities;
+import com.application.utils.AppConstants;
 import com.mobcast.R;
 
 /**
@@ -24,9 +25,11 @@ public class ImageViewFragment extends Fragment {
 	private static final String TAG = ImageViewFragment.class.getSimpleName();
 	
 	private ImageView mImageView;
+	private boolean isTraining = false;//HDFC
 	
-	public static ImageViewFragment newInstance() {
+	public static ImageViewFragment newInstance(boolean isTraining) {//HDFC
 		ImageViewFragment fragment = new ImageViewFragment();
+		fragment.isTraining = isTraining;
         return fragment;
     }
 	
@@ -46,10 +49,18 @@ public class ImageViewFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onResume();
 		setUiListener();
+		initUiWithDataForWastingTime();//HDFC
 	}
 	
 	private void setUiListener(){
 		setOnClickListener();
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void initUiWithDataForWastingTime(){//HDFC
+		if(isTraining){
+			mImageView.setImageDrawable(getResources().getDrawable(R.drawable.adityapuri));
+		}
 	}
 	
 	private void setOnClickListener(){
@@ -58,6 +69,7 @@ public class ImageViewFragment extends Fragment {
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
 				Intent mIntent = new Intent(getActivity(), ImageFullScreenActivity.class);
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.TRAINING, isTraining);//HDFC
 				startActivity(mIntent);
 				AndroidUtilities.enterWindowAnimation(getActivity());
 			}

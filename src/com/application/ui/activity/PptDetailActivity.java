@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -60,6 +61,10 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mPptFileInfoTv;
 	private AppCompatTextView mLanguageHeaderTv;
 
+	private AppCompatTextView mPptNewsLinkTv;
+
+	private LinearLayout mPptNewsLinkLayout;
+
 	private ImageView mPptFileIv;
 
 	private RelativeLayout mPptFileLayout;
@@ -73,6 +78,7 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 		setContentView(R.layout.activity_ppt_detail);
 		initToolBar();
 		initUi();
+		initUiWithData();
 		setUiListener();
 		setAnimation();
 	}
@@ -182,6 +188,14 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 		mPptFileIv = (ImageView) findViewById(R.id.fragmentPptDetailImageIv);
 
 		mPptFileLayout = (RelativeLayout) findViewById(R.id.fragmentPptDetailRelativeLayout);
+		
+		mPptNewsLinkTv = (AppCompatTextView)findViewById(R.id.fragmentPptDetailLinkTv);
+		
+		mPptNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentPptDetailViewSourceLayout);
+	}
+
+	private void initUiWithData(){
+		mPptNewsLinkTv.setText(Html.fromHtml(getResources().getString(R.string.sample_news_detail_link)));
 	}
 
 	/**

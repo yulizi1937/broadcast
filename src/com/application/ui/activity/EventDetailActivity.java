@@ -188,7 +188,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 		mEventSummaryTitleTv = (AppCompatTextView) findViewById(R.id.fragmentEventDetailAboutEventTv);
 		mEventSummaryTextTv = (AppCompatTextView) findViewById(R.id.fragmentEventDetailSummaryTv);
 
-		mEventAttendDeclineBtn = (AppCompatButton) findViewById(R.id.fragmentEventDetailJoinBtn);
+		mEventAttendJoinBtn = (AppCompatButton) findViewById(R.id.fragmentEventDetailJoinBtn);
 		mEventAttendDeclineBtn = (AppCompatButton) findViewById(R.id.fragmentEventDetailDeclineBtn);
 
 		mEventShareIv = (ImageView) findViewById(R.id.fragmentEventDetailEventShareIv);

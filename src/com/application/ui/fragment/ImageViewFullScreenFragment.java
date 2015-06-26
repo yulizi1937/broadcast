@@ -29,9 +29,11 @@ public class ImageViewFullScreenFragment extends Fragment {
 			.getSimpleName();
 
 	private TouchImageView mTouchImageView;
+	private boolean isTraining = false;//HDFC
 
-	public static ImageViewFullScreenFragment newInstance() {
+	public static ImageViewFullScreenFragment newInstance(boolean isTraining) {//HDFC
 		ImageViewFullScreenFragment fragment = new ImageViewFullScreenFragment();
+		fragment.isTraining = isTraining;//HDFC
 		return fragment;
 	}
 
@@ -52,9 +54,15 @@ public class ImageViewFullScreenFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onResume();
 		setUiListener();
+		initUiWithDataForWastingTime();//HDFC
 	}
 
 	private void setUiListener() {
 	}
 
+	private void initUiWithDataForWastingTime(){//HDFC
+		if(isTraining){
+			mTouchImageView.setImageDrawable(getResources().getDrawable(R.drawable.adityapuri));
+		}
+	}
 }

@@ -30,6 +30,7 @@ public class RoundedBackgroundSpan extends ReplacementSpan {
 				x + MeasureText(paint, text, start, end), bottom);
 		paint.setColor(Color.parseColor("#FF0000"));//background color
 		canvas.drawRoundRect(rect, 3, 3, paint);
+//		canvas.drawCircle(rect.right, rect.left, 7, paint);
 		paint.setColor(Color.parseColor("#FFFFFF"));//text color
 		canvas.drawText(text, start, end, x, y, paint);
 	}

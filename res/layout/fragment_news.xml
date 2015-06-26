@@ -84,6 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/fragment_news_view_source_layout_height"
                 android:clickable="true"
+                android:visibility="visible"
                 android:gravity="start|center"
                 android:orientation="horizontal" >
 
@@ -92,7 +93,7 @@
                     android:layout_width="@dimen/fragment_news_view_source_image_width"
                     android:layout_height="match_parent"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_item_feedback_points"
+                    android:src="@drawable/ic_source_link"
                     tools:ignore="ContentDescription" />
 
                 <android.support.v7.widget.AppCompatTextView

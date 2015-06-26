@@ -3,14 +3,23 @@
  */
 package com.application.ui.activity;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +29,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.ChipsLayout;
@@ -45,13 +55,13 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 
 	private ProgressWheel mToolBarMenuRefreshProgress;
 	private ImageView mToolBarMenuRefresh;
-	
+
 	private LinearLayout mLanguageLinearLayout;
 
 	private FlowLayout mLanguageFlowLayout;
 
 	private FrameLayout mCroutonViewGroup;
-	
+
 	private AppCompatTextView mPdfTitleTv;
 	private AppCompatTextView mPdfByTv;
 	private AppCompatTextView mPdfViewTv;
@@ -59,13 +69,17 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mPdfFileNameTv;
 	private AppCompatTextView mPdfFileInfoTv;
 	private AppCompatTextView mLanguageHeaderTv;
-	
+
 	private ImageView mPdfFileIv;
-	
+
+	private AppCompatTextView mPdfNewsLinkTv;
+
+	private LinearLayout mPdfNewsLinkLayout;
+
 	private RelativeLayout mPdfFileLayout;
-	
+
 	private boolean isShareOptionEnable = false;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -73,6 +87,7 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 		setContentView(R.layout.activity_pdf_detail);
 		initToolBar();
 		initUi();
+		initUiWithData();
 		setUiListener();
 		setAnimation();
 	}
@@ -82,13 +97,13 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onResume();
 	}
-	
+
 	@Override
 	protected boolean onPrepareOptionsPanel(View view, Menu menu) {
 		// TODO Auto-generated method stub
-		if(isShareOptionEnable){
+		if (isShareOptionEnable) {
 			menu.findItem(R.id.action_share).setVisible(true);
-		}else{
+		} else {
 			menu.findItem(R.id.action_share).setVisible(false);
 		}
 		return super.onPrepareOptionsPanel(view, menu);
@@ -139,8 +154,10 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 			showDialog(0);
 			return true;
 		case R.id.action_report:
-			Intent mIntent  = new Intent(PdfDetailActivity.this, ReportActivity.class);
-			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, "Android:Pdf");
+			Intent mIntent = new Intent(PdfDetailActivity.this,
+					ReportActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,
+					"Android:Pdf");
 			startActivity(mIntent);
 			AndroidUtilities.enterWindowAnimation(PdfDetailActivity.this);
 			return true;
@@ -148,7 +165,7 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	private void toolBarRefresh() {
 		mToolBarMenuRefresh.setVisibility(View.GONE);
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
@@ -164,22 +181,31 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 
 	private void initUi() {
 		mCroutonViewGroup = (FrameLayout) findViewById(R.id.croutonViewGroup);
-		
+
 		mLanguageLinearLayout = (LinearLayout) findViewById(R.id.fragmentPdfDetailLanguageLayout);
 		mLanguageFlowLayout = (FlowLayout) findViewById(R.id.fragmentPdfDetailLanguageFlowLayout);
 		mLanguageHeaderTv = (AppCompatTextView) findViewById(R.id.fragmentPdfDetailLanguageHeaderTv);
-		
-		mPdfTitleTv = (AppCompatTextView)findViewById(R.id.fragmentPdfDetailTitleTv);
-		
-		mPdfByTv = (AppCompatTextView)findViewById(R.id.fragmentPdfDetailByTv);
-		mPdfSummaryTextTv = (AppCompatTextView)findViewById(R.id.fragmentPdfDetailSummaryTv);
-		mPdfViewTv = (AppCompatTextView)findViewById(R.id.fragmentPdfDetailViewTv);
-		mPdfFileInfoTv = (AppCompatTextView)findViewById(R.id.fragmentPdfDetailFileDetailIv);
-		mPdfFileNameTv = (AppCompatTextView)findViewById(R.id.fragmentPdfDetailFileNameIv);
-		
-		mPdfFileIv = (ImageView)findViewById(R.id.fragmentPdfDetailImageIv);
-		
-		mPdfFileLayout = (RelativeLayout)findViewById(R.id.fragmentPdfDetailRelativeLayout);
+
+		mPdfTitleTv = (AppCompatTextView) findViewById(R.id.fragmentPdfDetailTitleTv);
+
+		mPdfByTv = (AppCompatTextView) findViewById(R.id.fragmentPdfDetailByTv);
+		mPdfSummaryTextTv = (AppCompatTextView) findViewById(R.id.fragmentPdfDetailSummaryTv);
+		mPdfViewTv = (AppCompatTextView) findViewById(R.id.fragmentPdfDetailViewTv);
+		mPdfFileInfoTv = (AppCompatTextView) findViewById(R.id.fragmentPdfDetailFileDetailIv);
+		mPdfFileNameTv = (AppCompatTextView) findViewById(R.id.fragmentPdfDetailFileNameIv);
+
+		mPdfFileIv = (ImageView) findViewById(R.id.fragmentPdfDetailImageIv);
+
+		mPdfFileLayout = (RelativeLayout) findViewById(R.id.fragmentPdfDetailRelativeLayout);
+
+		mPdfNewsLinkTv = (AppCompatTextView) findViewById(R.id.fragmentPdfDetailLinkTv);
+
+		mPdfNewsLinkLayout = (LinearLayout) findViewById(R.id.fragmentPdfDetailViewSourceLayout);
+	}
+
+	private void initUiWithData() {
+		mPdfNewsLinkTv.setText(Html.fromHtml(getResources().getString(
+				R.string.sample_news_detail_link)));
 	}
 
 	/**
@@ -201,10 +227,59 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 		setToolBarOption();
 		setLanguageChipsLayout();
 	}
-	
-	private void setOnClickListener(){
+
+	private void setOnClickListener() {
+		mPdfFileLayout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+//				copyPdfFromAssets();// HDFC
+			}
+		});
 	}
 	
+	private void copyFile(InputStream in, OutputStream out) throws IOException {
+		byte[] buffer = new byte[1024];
+		int read;
+		while ((read = in.read(buffer)) != -1) {
+			out.write(buffer, 0, read);
+		}
+	}
+
+	private void copyPdfFromAssets() {// HDFC
+		try {
+			AssetManager assetManager = getAssets();
+
+			InputStream in = null;
+			OutputStream out = null;
+			File file = new File(getFilesDir(), "hdfc_bank.pdf");
+			try {
+				in = assetManager.open("hdfc_bank.pdf");
+				out = openFileOutput(file.getName(),
+						Context.MODE_WORLD_READABLE);
+
+				copyFile(in, out);
+				in.close();
+				in = null;
+				out.flush();
+				out.close();
+				out = null;
+			} catch (Exception e) {
+				Log.e("tag", e.getMessage());
+			}
+
+			Intent intent = new Intent(Intent.ACTION_VIEW);
+			intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+			intent.setAction(Intent.ACTION_VIEW);
+			intent.setDataAndType(
+					Uri.parse("file://" + getFilesDir()
+							+ "/hdfc_bank.pdf"), "application/pdf");
+
+			startActivity(intent);
+		} catch (Exception e) {
+		}
+	}
+
 	private void setLanguageChipsLayout() {
 		mLanguageLinearLayout.setVisibility(View.VISIBLE);
 		FlowLayout.LayoutParams params = new FlowLayout.LayoutParams(
@@ -220,28 +295,32 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 			mChip.setText(mLanguages[i]);
 			mChip.setLayoutParams(params);
 			final int j = i;
-			mChip.getChipLayout().setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					// TODO Auto-generated method stub
-					 Utilities.showCrouton(PdfDetailActivity.this,
-					 mCroutonViewGroup, mLanguages[j], Style.INFO);
-				}
-			});
+			mChip.getChipLayout().setOnClickListener(
+					new View.OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							// TODO Auto-generated method stub
+							Utilities.showCrouton(PdfDetailActivity.this,
+									mCroutonViewGroup, mLanguages[j],
+									Style.INFO);
+						}
+					});
 			mLanguageFlowLayout.addView(mChip);
 		}
 	}
-	
+
 	@Override
 	@Deprecated
 	protected Dialog onCreateDialog(int id, Bundle args) {
 		// TODO Auto-generated method stub
 		return getShareAction();
 	}
-	
-	protected BottomSheet getShareAction(){
-    	return getShareActions(new BottomSheet.Builder(this).grid().title("Share To "), "Hello ").limit(R.integer.bs_initial_grid_row).build();
-    }
+
+	protected BottomSheet getShareAction() {
+		return getShareActions(
+				new BottomSheet.Builder(this).grid().title("Share To "),
+				"Hello ").limit(R.integer.bs_initial_grid_row).build();
+	}
 
 	private void setMaterialRippleView() {
 		try {
@@ -249,11 +328,11 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 			Log.i(TAG, e.toString());
 		}
 	}
-	
-	private void setAnimation(){
-		try{
+
+	private void setAnimation() {
+		try {
 			YoYo.with(Techniques.ZoomIn).duration(500).playOn(mPdfFileLayout);
-		}catch(Exception e){
+		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}
 	}

@@ -47,7 +47,7 @@
             android:layout_marginTop="@dimen/item_recycler_mobcast_text_indicator_image_margin_top"
             android:background="@android:color/white"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_mobcast_quiz"
+            android:src="@drawable/ic_event_normal"
             tools:ignore="ContentDescription" />
 
         <LinearLayout
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|center"
                 android:gravity="left|center"
-                android:text="@string/sample_item_recycler_mobcast_feedback_title"
+                android:text="@string/sample_event_title"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/event_title_textview_size"
                 android:textStyle="bold" />
@@ -75,53 +75,68 @@
             <RelativeLayout
                 android:id="@+id/itemRecyclerEventByLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/event_by_layout_size"
                 android:layout_marginTop="@dimen/item_recycler_mobcast_text_content_title_margin_top"
                 android:orientation="horizontal" >
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/itemRecyclerEventByTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="left|center"
-                    android:layout_marginRight="90dp"
+                    android:layout_marginRight="@dimen/event_by_textview_margin_right"
                     android:background="@drawable/shape_by_orange_fill"
                     android:gravity="left|center"
                     android:padding="4dp"
-                    android:text="@string/sample_item_recycler_mobcast_feedback_by"
+                    android:singleLine="true"
+                    android:text="@string/sample_item_recycler_mobcast_text_by"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/event_by_textview_size"
                     android:textStyle="bold" />
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/itemRecyclerEventViewCountTv"
+                    android:id="@+id/itemRecyclerEventLikeCountTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="right|center"
                     android:background="@drawable/shape_rectange_app"
-                    android:drawableLeft="@drawable/item_view"
+                    android:drawableLeft="@drawable/bitmap_item_like"
                     android:gravity="right|center"
-                    android:paddingBottom="2dp"
-                    android:paddingLeft="2dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="2dp"
-                    android:text="@string/sample_item_recycler_mobcast_doc_view_count"
+                    android:paddingRight="4dp"
+                    android:text="@string/sample_item_recycler_mobcast_text_view_count"
                     android:textColor="@color/toolbar_background"
-                    android:textSize="@dimen/event_by_textview_size" />
+                    android:textSize="@dimen/event_view_textview_size"
+                    tools:ignore="RtlSymmetry" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/itemRecyclerEventViewCountTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_toLeftOf="@id/itemRecyclerEventLikeCountTv"
+                    android:background="@drawable/shape_rectange_app"
+                    android:drawableLeft="@drawable/item_view"
+                    android:gravity="center"
+                    android:paddingRight="4dp"
+                    android:text="@string/sample_item_recycler_mobcast_text_view_count"
+                    android:textColor="@color/toolbar_background"
+                    android:textSize="@dimen/event_view_textview_size"
+                    tools:ignore="RtlSymmetry" />
             </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/itemRecyclerEventDetailLayout"
                 android:layout_width="match_parent"
-                android:baselineAligned="false"
                 android:layout_height="@dimen/item_recycler_mobcast_feedback_view_detail_layout_height"
                 android:layout_gravity="left|center"
                 android:layout_marginTop="8dp"
                 android:background="@color/item_recycler_mobcast_feedback_detail_background_color"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 tools:ignore="UselessParent" >
 
@@ -138,7 +153,7 @@
                         android:layout_height="@dimen/item_recycler_mobcast_feedback_view_detail_image_height"
                         android:layout_marginLeft="@dimen/item_recycler_mobcast_feedback_view_detail_image_margin_left"
                         android:layout_marginTop="@dimen/item_recycler_mobcast_feedback_view_detail_image_margin_top"
-                        android:background="@drawable/ic_item_feedback_question"
+                        android:background="@drawable/ic_item_feedback_timer"
                         android:scaleType="centerInside"
                         tools:ignore="ContentDescription" />
 
@@ -168,7 +183,7 @@
                         android:layout_height="@dimen/item_recycler_mobcast_feedback_view_detail_image_height"
                         android:layout_marginLeft="@dimen/item_recycler_mobcast_feedback_view_detail_image_margin_left"
                         android:layout_marginTop="@dimen/item_recycler_mobcast_feedback_view_detail_image_margin_top"
-                        android:background="@drawable/ic_item_feedback_timer"
+                        android:background="@drawable/ic_event_people"
                         android:scaleType="centerInside"
                         tools:ignore="ContentDescription" />
 
@@ -198,7 +213,7 @@
                         android:layout_height="@dimen/item_recycler_mobcast_feedback_view_detail_image_height"
                         android:layout_marginLeft="@dimen/item_recycler_mobcast_feedback_view_detail_image_margin_left"
                         android:layout_marginTop="@dimen/item_recycler_mobcast_feedback_view_detail_image_margin_top"
-                        android:background="@drawable/ic_item_feedback_attempted"
+                        android:background="@drawable/ic_event_accepted"
                         android:scaleType="centerInside"
                         tools:ignore="ContentDescription" />
 
@@ -210,11 +225,10 @@
                         android:layout_marginLeft="@dimen/item_recycler_mobcast_feedback_view_detail_text_margin_left"
                         android:gravity="left|center"
                         android:text="@string/sample_item_recycler_event_detail_is_going"
-                        android:textColor="@color/text_highlight"
+                        android:textColor="@color/green"
                         android:textSize="@dimen/item_recycler_mobcast_feedback_view_detail_text_size"
                         android:textStyle="bold" />
                 </RelativeLayout>
-                
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>

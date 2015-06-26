@@ -12,8 +12,9 @@
     <color name="transparency_event_cover">#1A000000</color>
     <color name="text_highlight">#00AFF0</color>
     <color name="orange">#FE9915</color>
+    <color name="green">#26A95D</color>
     
-    <color name="background_unread">#F1F5F8</color>
+    <color name="background_unread">#DDE7EE</color>
     
     <color name="tutorial">#1F000000</color>
     

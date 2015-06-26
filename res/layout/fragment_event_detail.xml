@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:fadingEdge="none"
-    android:scrollbars="none"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:scrollbars="none" >
 
     <LinearLayout
         android:id="@+id/fragmentEventDetailRootLayout"
@@ -67,6 +67,7 @@
                 android:layout_gravity="bottom|start"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_event_share"
+                android:visibility="gone"
                 tools:ignore="ContentDescription" />
 
             <ImageView
@@ -74,15 +75,20 @@
                 android:layout_width="@dimen/event_detail_share_width"
                 android:layout_height="@dimen/event_detail_share_width"
                 android:layout_gravity="bottom|end"
+                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_event_add_cal"
-                tools:ignore="ContentDescription" />
+                android:visibility="gone"
+                tools:ignore="ContentDescription,RtlCompat,RtlHardcoded" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/event_detail_cover_transparency_height"
                 android:layout_gravity="bottom"
-                android:background="@color/transparency_event_cover" />
+                android:background="@color/transparency_event_cover"
+                android:visibility="gone" />
         </FrameLayout>
 
         <LinearLayout
@@ -98,10 +104,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:gravity="start|center"
-                android:textStyle="bold"
                 android:text="@string/sample_event_title"
                 android:textColor="@color/toolbar_background"
-                android:textSize="@dimen/event_title_textview_size" />
+                android:textSize="@dimen/event_title_textview_size"
+                android:textStyle="bold" />
 
             <RelativeLayout
                 android:id="@+id/fragmentEventDetailByLayout"
@@ -113,38 +119,51 @@
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/fragmentEventDetailByTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="left|center"
-                    android:layout_marginRight="90dp"
-                    android:background="@color/item_event_by"
+                    android:layout_marginRight="@dimen/event_by_textview_margin_right"
+                    android:background="@drawable/shape_by_orange_fill"
                     android:gravity="left|center"
                     android:padding="4dp"
-                    android:text="@string/sample_event_by"
+                    android:text="@string/sample_item_recycler_mobcast_ppt_by"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/event_by_textview_size"
                     android:textStyle="bold"
                     tools:ignore="RtlHardcoded" />
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/fragmentEventDetailViewTv"
+                    android:id="@+id/fragmentEventDetailLikeTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="right|center"
                     android:background="@drawable/shape_rectange_app"
-                    android:drawableLeft="@drawable/item_view"
+                    android:drawableLeft="@drawable/bitmap_item_like"
                     android:gravity="right|center"
-                    android:paddingBottom="2dp"
-                    android:paddingLeft="2dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="2dp"
-                    android:text="@string/sample_event_view"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/event_by_textview_size"
-                    tools:ignore="RtlHardcoded" />
+                    android:paddingRight="4dp"
+                    android:text="@string/sample_item_recycler_mobcast_text_view_count"
+                    android:textColor="@color/toolbar_background"
+                    android:textSize="@dimen/event_view_textview_size"
+                    tools:ignore="RtlSymmetry,RtlHardcoded" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/fragmentEventDetailViewTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_toLeftOf="@id/fragmentEventDetailLikeTv"
+                    android:background="@drawable/shape_rectange_app"
+                    android:drawableLeft="@drawable/item_view"
+                    android:gravity="center"
+                    android:paddingRight="4dp"
+                    android:text="@string/sample_item_recycler_mobcast_text_view_count"
+                    android:textColor="@color/toolbar_background"
+                    android:textSize="@dimen/event_view_textview_size"
+                    tools:ignore="RtlSymmetry,RtlHardcoded" />
             </RelativeLayout>
 
             <LinearLayout
@@ -181,8 +200,8 @@
                         android:gravity="center"
                         android:text="@string/sample_event_date"
                         android:textColor="@color/text_highlight"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/event_detail_event_date_size" />
+                        android:textSize="@dimen/event_detail_event_date_size"
+                        android:textStyle="bold" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/fragmentEventDetailEventDateTextTv"
@@ -274,8 +293,8 @@
                         android:gravity="center"
                         android:text="@string/sample_event_hours"
                         android:textColor="@color/text_highlight"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/event_detail_event_date_size" />
+                        android:textSize="@dimen/event_detail_event_date_size"
+                        android:textStyle="bold" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/fragmentEventDetailEventHoursTextTv"
@@ -332,6 +351,8 @@
                 android:id="@+id/fragmentEventDetailEventActionLayout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/event_button_height"
+                android:layout_marginTop="8dp"
+                android:clickable="false"
                 android:orientation="horizontal" >
 
                 <android.support.v7.widget.AppCompatButton
@@ -342,6 +363,7 @@
                     android:layout_margin="4dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_button_orange_fill"
+                    android:clickable="true"
                     android:gravity="center"
                     android:padding="2dp"
                     android:text="@string/fragment_event_detail_button_join"
@@ -357,6 +379,7 @@
                     android:layout_margin="4dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_button_orange_border"
+                    android:clickable="true"
                     android:gravity="center"
                     android:padding="2dp"
                     android:text="@string/fragment_event_detail_button_decline"
@@ -445,19 +468,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="start|center"
                 android:layout_marginTop="8dp"
+                android:gravity="start|center"
                 android:text="@string/fragment_event_detail_about"
                 android:textColor="@color/toolbar_background"
                 android:textSize="@dimen/event_detail_event_invite_size" />
-            
+
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/fragmentEventDetailSummaryTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="start|center"
                 android:layout_marginTop="8dp"
+                android:gravity="start|center"
                 android:text="@string/sample_event_summary"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/event_detail_event_summary_size" />

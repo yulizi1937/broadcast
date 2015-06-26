@@ -137,12 +137,16 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     	}
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 		if (viewHolder instanceof TextViewHolder) {
 //			setAnimation(((TextViewHolder)
 //					viewHolder).mMobcastTextMaterialRootLayout);
 		} else if (viewHolder instanceof ImageViewHolder) {
+			((ImageViewHolder)viewHolder).mMobcastImageRootLayout.setBackgroundColor(mContext.getResources().getColor(R.color.background_unread));
+			((ImageViewHolder)viewHolder).mMobcastImageTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
+			((ImageViewHolder)viewHolder).mMobcastImageIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_image_focus));
 		} else if (viewHolder instanceof VideoViewHolder) {
 		} else if (viewHolder instanceof AudioViewHolder) {
 		} else if (viewHolder instanceof PdfViewHolder) {
@@ -239,8 +243,6 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastImageByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastImageByTv);
             mMobcastImageViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastImageViewCountTv);
             
-            mMobcastImageRootLayout.setBackgroundColor(mContext.getResources().getColor(R.color.background_unread));
-            mMobcastImageTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
             mMobcastImageReadView.setVisibility(View.VISIBLE);
             
             mMobcastImageRootLayout.setOnClickListener(this);

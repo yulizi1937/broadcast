@@ -47,7 +47,7 @@
             android:layout_marginTop="@dimen/item_recycler_mobcast_text_indicator_image_margin_top"
             android:background="@android:color/white"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_mobcast_feedback"
+            android:src="@drawable/ic_mobcast_feedback_normal"
             tools:ignore="ContentDescription" />
 
         <LinearLayout

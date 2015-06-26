@@ -118,7 +118,7 @@
                     android:layout_weight="1"
                     android:padding="7dp"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_birthday_message_focus_"
+                    android:src="@drawable/ic_male"
                     tools:ignore="RtlHardcoded,ContentDescription,NestedWeights" />
 
                 <android.support.v7.widget.AppCompatTextView
@@ -151,7 +151,7 @@
                     android:layout_weight="1"
                     android:padding="7dp"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_birthday_message_focus_"
+                    android:src="@drawable/ic_birthday_highlighted"
                     tools:ignore="RtlHardcoded,ContentDescription,NestedWeights" />
 
                 <android.support.v7.widget.AppCompatTextView
@@ -173,6 +173,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:baselineAligned="false"
+            android:clickable="false"
             android:gravity="center"
             android:orientation="horizontal" >
 
@@ -183,8 +184,9 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="16dp"
+                android:clickable="true"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_chat"
+                android:src="@drawable/selector_chat"
                 tools:ignore="ContentDescription" />
 
             <ImageView
@@ -196,8 +198,9 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:clickable="true"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_call"
+                android:src="@drawable/selector_call"
                 tools:ignore="ContentDescription" />
 
             <ImageView
@@ -209,8 +212,9 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:clickable="true"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_message"
+                android:src="@drawable/selector_message"
                 tools:ignore="ContentDescription" />
 
             <ImageView
@@ -222,8 +226,9 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:clickable="true"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_email"
+                android:src="@drawable/selector_email"
                 tools:ignore="ContentDescription" />
         </LinearLayout>
     </LinearLayout>

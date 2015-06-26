@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|center"
                 android:gravity="left|center"
-                android:text="@string/sample_item_recycler_mobcast_text_title"
+                android:text="@string/sample_item_recycler_training_text_title"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/event_title_textview_size"
                 android:textStyle="bold" />
@@ -75,43 +75,72 @@
             <RelativeLayout
                 android:id="@+id/itemRecyclerTrainingTextByLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/event_by_layout_size"
                 android:layout_marginTop="@dimen/item_recycler_mobcast_text_content_title_margin_top"
                 android:orientation="horizontal" >
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/itemRecyclerTrainingTextByTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="left|center"
-                    android:layout_marginRight="90dp"
+                    android:layout_marginRight="@dimen/event_by_textview_margin_right"
                     android:background="@drawable/shape_by_orange_fill"
                     android:gravity="left|center"
                     android:padding="4dp"
+                    android:singleLine="true"
                     android:text="@string/sample_item_recycler_mobcast_text_by"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/event_by_textview_size"
                     android:textStyle="bold" />
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/itemRecyclerTrainingTextViewCountTv"
+                    android:id="@+id/itemRecyclerTrainingTextLikeCountTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="right|center"
                     android:background="@drawable/shape_rectange_app"
-                    android:drawableLeft="@drawable/item_view"
+                    android:drawableLeft="@drawable/bitmap_item_like"
                     android:gravity="right|center"
-                    android:paddingBottom="2dp"
-                    android:paddingLeft="2dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="2dp"
+                    android:paddingRight="4dp"
                     android:text="@string/sample_item_recycler_mobcast_text_view_count"
                     android:textColor="@color/toolbar_background"
-                    android:textSize="@dimen/event_by_textview_size" />
+                    android:textSize="@dimen/event_view_textview_size"
+                    tools:ignore="RtlSymmetry" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/itemRecyclerTrainingTextViewCountTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_toLeftOf="@id/itemRecyclerTrainingTextLikeCountTv"
+                    android:background="@drawable/shape_rectange_app"
+                    android:drawableLeft="@drawable/bitmap_item_view"
+                    android:gravity="center"
+                    android:paddingRight="4dp"
+                    android:text="@string/sample_item_recycler_mobcast_text_view_count"
+                    android:textColor="@color/toolbar_background"
+                    android:textSize="@dimen/event_view_textview_size"
+                    tools:ignore="RtlSymmetry" />
+
+                <ImageView
+                    android:id="@+id/itemRecyclerTrainingTextLinkTv"
+                    android:layout_width="@dimen/event_link_width"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_toLeftOf="@id/itemRecyclerTrainingTextViewCountTv"
+                    android:background="@drawable/shape_rectange_app"
+                    android:gravity="center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_link"
+                    android:visibility="visible"
+                    tools:ignore="ContentDescription" />
             </RelativeLayout>
 
             <android.support.v7.widget.AppCompatTextView
@@ -122,7 +151,7 @@
                 android:layout_marginTop="@dimen/item_recycler_mobcast_text_content_title_margin_top"
                 android:gravity="left|center"
                 android:maxLines="2"
-                android:text="@string/sample_item_recycler_mobcast_text_summary"
+                android:text="@string/sample_item_recycler_training_text_desc"
                 android:textColor="@color/toolbar_background"
                 android:textSize="@dimen/event_summary_textview_size" />
         </LinearLayout>

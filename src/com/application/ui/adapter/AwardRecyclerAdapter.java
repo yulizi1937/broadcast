@@ -64,6 +64,7 @@ public class AwardRecyclerAdapter extends
 		AppCompatTextView awardNameTv;
 		CircleImageView winnerIv;
 		ImageView congratulateIv;
+		ImageView messageIv;
 		RelativeLayout rootLayout;
 		View readStripView;
 
@@ -80,12 +81,15 @@ public class AwardRecyclerAdapter extends
 			congratulateIv = (ImageView) view
 					.findViewById(R.id.itemRecyclerCongratulateIv);
 
+			messageIv = (ImageView)view.findViewById(R.id.itemRecyclerAwardMessageIv);
+			
 			rootLayout = (RelativeLayout) view
 					.findViewById(R.id.itemRecyclerAwardRootLayout);
 			
 			readStripView = (View) view.findViewById(R.id.itemRecyclerReadView);
 			
 			congratulateIv.setOnClickListener(this);
+			messageIv.setOnClickListener(this);
 			rootLayout.setOnClickListener(this);
 			readStripView.setOnClickListener(this);
 		}

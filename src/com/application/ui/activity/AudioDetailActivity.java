@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,9 +27,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.application.ui.view.BottomSheet;
+import com.application.ui.view.ChipsLayout;
 import com.application.ui.view.DiscreteSeekBar;
 import com.application.ui.view.DiscreteSeekBar.OnProgressChangeListener;
-import com.application.ui.view.ChipsLayout;
 import com.application.ui.view.FlowLayout;
 import com.application.ui.view.LineRenderer;
 import com.application.ui.view.MaterialRippleLayout;
@@ -71,6 +72,10 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	private ImageView mShareIv;
 	private ImageView mPlayIv;
 	
+	private AppCompatTextView mAudioNewsLinkTv;
+
+	private LinearLayout mAudioNewsLinkLayout;
+	
 	private DiscreteSeekBar mDiscreteSeekBar;
 	int mProgress = 0;
 	int mTotalDuration = 0;
@@ -88,6 +93,7 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 		setContentView(R.layout.activity_audio_detail);
 		initToolBar();
 		initUi();
+		initUiWithData();
 		initMediaPlayer();
 		setUiListener();
 	}
@@ -210,11 +216,26 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 		mVisualizerView = (VisualizerView)findViewById(R.id.fragmentAudioDetailVisualizerView);
 		
 		mDiscreteSeekBar = (DiscreteSeekBar)findViewById(R.id.fragmentAudioDetailSeekBar);
+		
+		mAudioNewsLinkTv = (AppCompatTextView)findViewById(R.id.fragmentAudioDetailLinkTv);
+		
+		mAudioNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentAudioDetailViewSourceLayout);
 	}
 
+	private void initUiWithData(){
+		mAudioNewsLinkTv.setText(Html.fromHtml(getResources().getString(R.string.sample_news_detail_link)));
+	}
+	
 	  private void initMediaPlayer()
 	  {
-	    mPlayer = MediaPlayer.create(this, R.raw.test);
+	    //mPlayer = MediaPlayer.create(this, R.raw.test);
+		  if(getIntent().getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY).equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+			  mPlayer = MediaPlayer.create(this, R.raw.test);//HDFC
+			  mAudioTitleTv.setText(getResources().getString(R.string.sample_item_recycler_training_audio_title));
+		  }else{
+			  mPlayer = MediaPlayer.create(this, R.raw.test);//HDFC
+		  }
+	    
 	    mPlayer.setLooping(false);
 	    mPlayer.start();
 	    mPlayer.setOnPreparedListener(new OnPreparedListener() {
@@ -223,7 +244,7 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 			public void onPrepared(MediaPlayer mp) {
 				// TODO Auto-generated method stub
 				mTotalDuration = mPlayer.getDuration();
-				mPlayIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause));
+				mPlayIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause_audio));
 				mDiscreteSeekBar.setMin(0);
 				mDiscreteSeekBar.setMax(mTotalDuration);
 				mDiscreteSeekBar.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
@@ -387,7 +408,7 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	}
 
 	private void resetMediaPlayer(){
-		mPlayIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_play));
+		mPlayIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_play_audio));
 		mProgress = 0;
 		mDiscreteSeekBar.setProgress(0);
 	}

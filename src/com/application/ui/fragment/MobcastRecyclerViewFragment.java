@@ -42,6 +42,7 @@ import com.application.ui.adapter.MobcastRecyclerAdapter.OnItemClickListener;
 import com.application.ui.view.HorizontalDividerItemDecoration;
 import com.application.ui.view.ObservableRecyclerView;
 import com.application.utils.AndroidUtilities;
+import com.application.utils.AppConstants;
 import com.application.utils.ObservableScrollViewCallbacks;
 import com.application.utils.ScrollUtils;
 import com.application.utils.Utilities;
@@ -122,6 +123,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment {
 					break;
 				case R.id.itemRecyclerMobcastImageRootLayout:
 					Intent mIntentImage = new Intent(mParentActivity, ImageDetailActivity.class);
+					mIntentImage.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.MOBCAST);
 					startActivity(mIntentImage);
 					AndroidUtilities.enterWindowAnimation(mParentActivity);
 					break;
@@ -132,11 +134,13 @@ public class MobcastRecyclerViewFragment extends BaseFragment {
 					break;
 				case R.id.itemRecyclerMobcastAudioRootLayout:
 					Intent mIntentAudio = new Intent(mParentActivity, AudioDetailActivity.class);
+					mIntentAudio.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.MOBCAST);
 					startActivity(mIntentAudio);
 					AndroidUtilities.enterWindowAnimation(mParentActivity);
 					break;
 				case R.id.itemRecyclerMobcastTextRootLayout:
 					Intent mIntentText = new Intent(mParentActivity, TextDetailActivity.class);
+					mIntentText.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.MOBCAST);
 					startActivity(mIntentText);
 					AndroidUtilities.enterWindowAnimation(mParentActivity);
 					break;

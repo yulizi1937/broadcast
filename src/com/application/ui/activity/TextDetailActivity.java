@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.MaterialRippleLayout;
@@ -41,14 +43,18 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 	private ImageView mToolBarMenuRefresh;
 
 	private FrameLayout mCroutonViewGroup;
-	
+
 	private AppCompatTextView mTextTitleTv;
 	private AppCompatTextView mTextByTv;
 	private AppCompatTextView mTextViewTv;
 	private AppCompatTextView mTextSummaryTextTv;
-	
+
+	private AppCompatTextView mTextNewsLinkTv;
+
+	private LinearLayout mTextNewsLinkLayout;
+
 	private boolean isShareOptionEnable = true;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -56,6 +62,7 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 		setContentView(R.layout.activity_text_detail);
 		initToolBar();
 		initUi();
+		initUiWithData();
 		setUiListener();
 		setAnimation();
 	}
@@ -69,14 +76,14 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 	@Override
 	protected boolean onPrepareOptionsPanel(View view, Menu menu) {
 		// TODO Auto-generated method stub
-		if(isShareOptionEnable){
+		if (isShareOptionEnable) {
 			menu.findItem(R.id.action_share).setVisible(true);
-		}else{
+		} else {
 			menu.findItem(R.id.action_share).setVisible(false);
 		}
 		return super.onPrepareOptionsPanel(view, menu);
 	}
-	
+
 	@SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -122,8 +129,10 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 			showDialog(0);
 			return true;
 		case R.id.action_report:
-			Intent mIntent  = new Intent(TextDetailActivity.this, ReportActivity.class);
-			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, "Android:Text");
+			Intent mIntent = new Intent(TextDetailActivity.this,
+					ReportActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,
+					"Android:Text");
 			startActivity(mIntent);
 			AndroidUtilities.enterWindowAnimation(TextDetailActivity.this);
 			return true;
@@ -131,7 +140,7 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	private void toolBarRefresh() {
 		mToolBarMenuRefresh.setVisibility(View.GONE);
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
@@ -147,14 +156,27 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 
 	private void initUi() {
 		mCroutonViewGroup = (FrameLayout) findViewById(R.id.croutonViewGroup);
+
+		mTextTitleTv = (AppCompatTextView) findViewById(R.id.fragmentTextDetailTitleTv);
+
+		mTextByTv = (AppCompatTextView) findViewById(R.id.fragmentTextDetailByTv);
+		mTextSummaryTextTv = (AppCompatTextView) findViewById(R.id.fragmentTextDetailSummaryTv);
+		mTextViewTv = (AppCompatTextView) findViewById(R.id.fragmentTextDetailViewTv);
 		
-		mTextTitleTv = (AppCompatTextView)findViewById(R.id.fragmentTextDetailTitleTv);
+		mTextNewsLinkTv = (AppCompatTextView)findViewById(R.id.fragmentTextDetailLinkTv);
 		
-		mTextByTv = (AppCompatTextView)findViewById(R.id.fragmentTextDetailByTv);
-		mTextSummaryTextTv = (AppCompatTextView)findViewById(R.id.fragmentTextDetailSummaryTv);
-		mTextViewTv = (AppCompatTextView)findViewById(R.id.fragmentTextDetailViewTv);
+		mTextNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentTextDetailViewSourceLayout);
+	}
+	
+	private void initUiWithData(){
+		mTextNewsLinkTv.setText(Html.fromHtml(getResources().getString(R.string.sample_news_detail_link)));
+		initUiWithDataForWastingTime();
 	}
 
+	private void initUiWithDataForWastingTime(){//HDFC
+		mTextTitleTv.setText(getResources().getString(R.string.sample_item_recycler_training_text_title));
+		mTextSummaryTextTv.setText(getResources().getString(R.string.sample_item_recycler_training_text_desc));
+	}
 	/**
 	 * <b>Description: </b></br>Initialize ToolBar</br></br>
 	 * 
@@ -168,33 +190,43 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 		setSupportActionBar(mToolBar);
 	}
 
-	private void setAnimation(){
-		try{
+	private void setAnimation() {
+		try {
 			YoYo.with(Techniques.ZoomIn).duration(500).playOn(mTextTitleTv);
-		}catch(Exception e){
+		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}
 	}
-	
+
 	private void setUiListener() {
 		setMaterialRippleView();
 		setOnClickListener();
 		setToolBarOption();
 	}
-	
-	private void setOnClickListener(){
+
+	private void setOnClickListener() {
+		mTextNewsLinkLayout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				Intent mIntentWebView = new Intent(TextDetailActivity.this, WebViewActivity.class);
+				startActivity(mIntentWebView);
+			}
+		});
 	}
-	
+
 	@Override
 	@Deprecated
 	protected Dialog onCreateDialog(int id, Bundle args) {
 		// TODO Auto-generated method stub
 		return getShareAction();
 	}
-	
-	protected BottomSheet getShareAction(){
-    	return getShareActions(new BottomSheet.Builder(this).grid().title("Share To "), "Hello ").limit(R.integer.bs_initial_grid_row).build();
-    }
+
+	protected BottomSheet getShareAction() {
+		return getShareActions(
+				new BottomSheet.Builder(this).grid().title("Share To "),
+				"Hello ").limit(R.integer.bs_initial_grid_row).build();
+	}
 
 	private void setMaterialRippleView() {
 		try {

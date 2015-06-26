@@ -5,9 +5,8 @@ package com.application.ui.view;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatDialog;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,7 +23,11 @@ import com.mobcast.R;
  */
 public class MobcastProgressDialog extends AppCompatDialog{
 	private ImageView mImageView;
+	
+	private AppCompatTextView mTextView;
+	
 	private Animation mAnimationRotate;
+	
 
 	public MobcastProgressDialog(Context mContext) {
 		super(mContext, R.style.MobcastProgressDialog);
@@ -37,6 +40,7 @@ public class MobcastProgressDialog extends AppCompatDialog{
 		setOnCancelListener(null);
 		View mView = LayoutInflater.from(mContext).inflate(R.layout.dialog_progress_word, null);
 		mImageView = (ImageView)mView.findViewById(R.id.dialogProgressWordIv);
+		mTextView = (AppCompatTextView)mView.findViewById(R.id.dialogProgressWordTv);
 		LinearLayout.LayoutParams mRootLayoutParams = new LinearLayout.LayoutParams(
 				-1, -2);
 		addContentView(mView, mRootLayoutParams);
@@ -56,5 +60,9 @@ public class MobcastProgressDialog extends AppCompatDialog{
 			}
 		});
 		super.show();
+	}
+	
+	public void setMessage(String mMessage){
+		mTextView.setText(mMessage);
 	}
 }

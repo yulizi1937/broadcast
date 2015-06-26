@@ -519,6 +519,7 @@ public class VerificationActivity extends AppCompatActivity {
 			// TODO Auto-generated method stub
 			super.onPreExecute();
 			mProgressDialog = new MobcastProgressDialog(VerificationActivity.this);
+			mProgressDialog.setMessage(ApplicationLoader.getApplication().getResources().getString(R.string.loadingVerify));
 			mProgressDialog.show();
 		}
 

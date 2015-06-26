@@ -3,6 +3,7 @@
  */
 package com.application.ui.activity;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 
@@ -128,8 +128,17 @@ public class FacebookConcealActivity extends AppCompatActivity {
 			outputStream = crypto.getCipherOutputStream(fileStream, entity);
 			mPlainFile = new File(Environment.getExternalStorageDirectory()
 					.getPath() + "/download/IntroProtection3.mp4");
-			outputStream.write(FileUtils.readFileToByteArray(mPlainFile));
+//			outputStream.write(FileUtils.readFileToByteArray(mPlainFile));
+			// Read into a byte array.
+			int read;
+			byte[] buffer = new byte[1024];
+			BufferedInputStream  bis = new BufferedInputStream(new FileInputStream(mPlainFile));
+			while ((read = bis.read(buffer)) != -1) {
+			   outputStream.write(buffer, 0, read);
+			}
+//			
 			outputStream.close();
+			bis.close();
 			mEncryptEnd = String.valueOf(System.currentTimeMillis());
 			mAppCompatDialog.dismiss();
 			mEncryptionTv
@@ -201,12 +210,13 @@ public class FacebookConcealActivity extends AppCompatActivity {
 			mDecryptedFile = new File(Environment.getExternalStorageDirectory()
 					.getPath() + "/download/Decrypted.mp4");
 			OutputStream outputStream = new FileOutputStream (mDecryptedFile);
-			//out.writeTo(outputStream); Facebook OutputStream
+			out.writeTo(outputStream); //Facebook OutputStream
 			
-			IOUtils.copy(inputStream, outputStream);// IO Commons Way
+//			IOUtils.copy(inputStream, outputStream);// IO Commons Way
 
 			inputStream.close();
 			outputStream.close();
+			out.close();
 			
 			mDecryptEnd = String.valueOf(System.currentTimeMillis());
 			mAppCompatDialog.dismiss();

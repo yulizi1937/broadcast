@@ -54,22 +54,26 @@
     <dimen name="event_left_string_textview_size">8sp</dimen>
     <dimen name="event_title_textview_size">16sp</dimen>
     <dimen name="event_by_textview_size">10sp</dimen>
+    <dimen name="event_view_textview_size">10sp</dimen>
     <dimen name="event_summary_textview_size">12sp</dimen>
+    <dimen name="event_by_layout_size">24dp</dimen>
+    <dimen name="event_by_textview_margin_right">120dp</dimen>
+    <dimen name="event_link_width">20dp</dimen>
 
     <!-- fragment_event_details -->
     <dimen name="event_detail_cover_layout_height">150dp</dimen>
     <dimen name="event_detail_time_left_layout_height">64dp</dimen>
-    <dimen name="event_detail_share_width">48dp</dimen>
-    <dimen name="event_detail_cover_transparency_height">48dp</dimen>
+    <dimen name="event_detail_share_width">30dp</dimen>
+    <dimen name="event_detail_cover_transparency_height">40dp</dimen>
     <dimen name="event_detail_event_date_size">24sp</dimen>
     <dimen name="event_detail_event_till_size">18sp</dimen>
     <dimen name="event_detail_event_date_text_size">12sp</dimen>
     <dimen name="event_detail_event_location_text_size">13sp</dimen>
     <dimen name="event_detail_event_location_view_map_size">8sp</dimen>
     <dimen name="event_detail_event_till_text_size">12sp</dimen>
-    <dimen name="event_detail_date_image_width">20dp</dimen>
+    <dimen name="event_detail_date_image_width">28dp</dimen>
     <dimen name="event_button_size">14sp</dimen>
-    <dimen name="event_button_height">32dp</dimen>
+    <dimen name="event_button_height">36dp</dimen>
     <dimen name="event_detail_event_invite_text_size">8sp</dimen>
     <dimen name="event_detail_event_invite_size">10sp</dimen>
     <dimen name="event_detail_event_summary_size">14sp</dimen>
@@ -100,6 +104,7 @@
     <dimen name="fragment_image_frame_height">180dp</dimen>
     <dimen name="fragment_image_language_header_text_size">14sp</dimen>
     <dimen name="fragment_image_language_flowlayout_padding">2dp</dimen>
+    <dimen name="fragment_image_next_width">32dp</dimen>
 
     <!-- fragment_audio -->
     <dimen name="fragment_audio_seekbar_textview_size">14sp</dimen>
@@ -197,6 +202,8 @@
     <dimen name="activity_tutorial_shape_round_width">32dp</dimen>
     <dimen name="shape_tutorial_round_width">16dp</dimen>
     <dimen name="activity_tutorial_next_image_margin">16dp</dimen>
+    <dimen name="fragment_tutorial_phone_padding_top_bottom">24dp</dimen>
+    <dimen name="fragment_tutorial_phone_padding_left_right">12dp</dimen>
 
     <!-- item_recycler_mobcast_text -->
     <dimen name="item_recycler_mobcast_text_indicator_line_margin_left">32dp</dimen>

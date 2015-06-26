@@ -56,38 +56,51 @@
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/fragmentLiveStreamYouTubeByTv"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_gravity="left|center"
-                        android:layout_marginRight="90dp"
-                        android:background="@color/item_event_by"
+                        android:layout_marginRight="@dimen/event_by_textview_margin_right"
+                        android:background="@drawable/shape_by_orange_fill"
                         android:gravity="left|center"
                         android:padding="4dp"
-                        android:text="@string/sample_event_by"
+                        android:text="@string/sample_item_recycler_mobcast_ppt_by"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/event_by_textview_size"
                         android:textStyle="bold"
                         tools:ignore="RtlHardcoded" />
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/fragmentLiveStreamYouTubeViewTv"
+                        android:id="@+id/fragmentLiveStreamYouTubeLikeTv"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_gravity="right|center"
                         android:background="@drawable/shape_rectange_app"
-                        android:drawableLeft="@drawable/item_view"
+                        android:drawableLeft="@drawable/bitmap_item_like"
                         android:gravity="right|center"
-                        android:paddingBottom="2dp"
-                        android:paddingLeft="2dp"
-                        android:paddingRight="8dp"
-                        android:paddingTop="2dp"
-                        android:text="@string/sample_event_view"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/event_by_textview_size"
-                        tools:ignore="RtlHardcoded" />
+                        android:paddingRight="4dp"
+                        android:text="@string/sample_item_recycler_mobcast_text_view_count"
+                        android:textColor="@color/toolbar_background"
+                        android:textSize="@dimen/event_view_textview_size"
+                        tools:ignore="RtlSymmetry,RtlHardcoded" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/fragmentLiveStreamYouTubeViewTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_toLeftOf="@id/fragmentLiveStreamYouTubeLikeTv"
+                        android:background="@drawable/shape_rectange_app"
+                        android:drawableLeft="@drawable/item_view"
+                        android:gravity="center"
+                        android:paddingRight="4dp"
+                        android:text="@string/sample_item_recycler_mobcast_text_view_count"
+                        android:textColor="@color/toolbar_background"
+                        android:textSize="@dimen/event_view_textview_size"
+                        tools:ignore="RtlSymmetry,RtlHardcoded" />
                 </RelativeLayout>
 
                 <android.support.v7.widget.AppCompatTextView
