@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/login_logo_margin_top"
                 android:contentDescription="@string/desc_activity_login_logo"
-                android:scaleType="center"
+                android:scaleType="centerInside"
                 android:src="@drawable/login_logo" />
 
             <LinearLayout

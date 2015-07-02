@@ -56,6 +56,7 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mPptTitleTv;
 	private AppCompatTextView mPptByTv;
 	private AppCompatTextView mPptViewTv;
+	private AppCompatTextView mPptLikeTv;
 	private AppCompatTextView mPptSummaryTextTv;
 	private AppCompatTextView mPptFileNameTv;
 	private AppCompatTextView mPptFileInfoTv;
@@ -182,6 +183,7 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 		mPptByTv = (AppCompatTextView) findViewById(R.id.fragmentPptDetailByTv);
 		mPptSummaryTextTv = (AppCompatTextView) findViewById(R.id.fragmentPptDetailSummaryTv);
 		mPptViewTv = (AppCompatTextView) findViewById(R.id.fragmentPptDetailViewTv);
+		mPptLikeTv = (AppCompatTextView) findViewById(R.id.fragmentPptDetailLikeTv);
 		mPptFileInfoTv = (AppCompatTextView) findViewById(R.id.fragmentPptDetailFileDetailIv);
 		mPptFileNameTv = (AppCompatTextView) findViewById(R.id.fragmentPptDetailFileNameIv);
 
@@ -192,6 +194,9 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 		mPptNewsLinkTv = (AppCompatTextView)findViewById(R.id.fragmentPptDetailLinkTv);
 		
 		mPptNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentPptDetailViewSourceLayout);
+		
+		mPptViewTv.setVisibility(View.GONE);
+		mPptLikeTv.setVisibility(View.GONE);
 	}
 
 	private void initUiWithData(){

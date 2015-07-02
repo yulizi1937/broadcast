@@ -54,7 +54,7 @@ import com.mobcast.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
 	private static final String TAG = BaseActivity.class.getSimpleName();
-	private static final int NUM_OF_ITEMS = 1000;
+	private static final int NUM_OF_ITEMS = 20;
 	private static final int NUM_OF_ITEMS_FEW = 3;
 	
 	@Override

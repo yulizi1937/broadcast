@@ -59,6 +59,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mImageTitleTv;
 	private AppCompatTextView mImageByTv;
 	private AppCompatTextView mImageViewTv;
+	private AppCompatTextView mImageLikeTv;
 	private AppCompatTextView mImageSummaryTextTv;
 	private AppCompatTextView mLanguageHeaderTv;
 	
@@ -189,6 +190,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 		mImageByTv = (AppCompatTextView)findViewById(R.id.fragmentImageDetailByTv);
 		mImageSummaryTextTv = (AppCompatTextView)findViewById(R.id.fragmentImageDetailSummaryTv);
 		mImageViewTv = (AppCompatTextView)findViewById(R.id.fragmentImageDetailViewTv);
+		mImageLikeTv = (AppCompatTextView)findViewById(R.id.fragmentImageDetailLikeTv);
 		
 		mImageNextIv = (ImageView)findViewById(R.id.fragmentImageDetailNextIv);
 		mImagePrevIv = (ImageView)findViewById(R.id.fragmentImageDetailPreviousIv);
@@ -199,6 +201,9 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 		mImageNewsLinkTv = (AppCompatTextView)findViewById(R.id.fragmentImageDetailLinkTv);
 		
 		mImageNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentImageDetailViewSourceLayout);
+		
+		mImageViewTv.setVisibility(View.GONE);
+		mImageLikeTv.setVisibility(View.GONE);
 	}
 
 	private void initUiWithData(){

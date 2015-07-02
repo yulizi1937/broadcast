@@ -4,11 +4,13 @@
 package com.application.utils;
 
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 
+import android.app.Activity;
 import android.util.Log;
 
 import com.facebook.stetho.okhttp.StethoInterceptor;
@@ -84,5 +86,55 @@ public class RetroFitClient {
 			return JSONRequestBuilder.getErrorMessageFromApi(ApplicationLoader.getApplication().getResources().getString(R.string.api_unknown_error)).toString();
 		}
 		return null;
+	}
+	
+	public static boolean downloadFileWith(OkHttpClient okHttpClient, String url,
+			String filePath, boolean isEncrypt, String TAG) {
+		try {
+			long startMilliSeconds = System.currentTimeMillis();
+			Request request = new Request.Builder().url(url).build();
+			Response mResponseObj = okHttpClient.newCall(request).execute();
+			if (mResponseObj.isSuccessful()) {
+				InputStream is = mResponseObj.body().byteStream();
+				if (is != null) {
+					FileOutputStream fos = null;
+					try {
+						fos = new FileOutputStream(filePath);
+						byte data[] = new byte[1024];
+						int bufferLength = 0;
+						while ((bufferLength = is.read(data)) > 0) {
+							fos.write(data, 0, bufferLength);
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					} finally {
+						try {
+							fos.flush();
+							fos.close();
+							is.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+
+					if (BuildVars.DEBUG_API) {
+						Log.i(TAG, url);
+						long timeTaken = (System.currentTimeMillis()-startMilliSeconds);
+						Log.i(TAG, timeTaken + " millisec");
+					}
+					return true;
+				}
+			}else{
+				return false;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			FileLog.e(TAG, e.toString());
+			return false;
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+			return false;
+		}
+		return false;
 	}
 }

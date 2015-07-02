@@ -234,11 +234,15 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderMobcastFile.append(DBConstant.TABLE_MOBCAST_FILE);
 		strBuilderMobcastFile.append('(');
 		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
+		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID +" TEXT ," );
 		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_ID +" TEXT UNIQUE," );
 		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LINK +" TEXT ," );
 		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG +" TEXT ," );
 		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH +" TEXT ," );
 		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_SIZE +" TEXT ," );
+		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_LINK +" TEXT ," );
+		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_PATH +" TEXT ," );
+		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_NAME +" TEXT ," );
 		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_DURATION +" TEXT ," );
 		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PAGES +" TEXT ," );
 		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_READ_DURATION +" TEXT ," );
@@ -259,10 +263,14 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderTrainingFile.append(DBConstant.TABLE_TRAINING_FILE);
 		strBuilderTrainingFile.append('(');
 		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
+		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_ID +" TEXT ," );
 		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_ID +" TEXT UNIQUE," );
 		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LINK +" TEXT ," );
 		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LANG +" TEXT ," );
 		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PATH +" TEXT ," );
+		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_THUMBNAIL_LINK +" TEXT ," );
+		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_THUMBNAIL_PATH +" TEXT ," );
+		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_NAME +" TEXT ," );
 		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_SIZE +" TEXT ," );
 		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_DURATION +" TEXT ," );
 		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PAGES +" TEXT ," );
@@ -920,10 +928,14 @@ public class ApplicationDB extends ContentProvider{
 		
 		mobcastFileProjectionMap = new HashMap<String, String>();
 		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_ID, DBConstant.Mobcast_File_Columns.COLUMN_ID);
+		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID);
 		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_ID, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_ID);
 		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LINK, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LINK);
 		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG);
 		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH);
+		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_LINK, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_LINK);
+		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_PATH, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_PATH);
+		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_NAME, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_NAME);
 		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_SIZE, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_SIZE);
 		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_DURATION, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_DURATION);
 		mobcastFileProjectionMap.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PAGES, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PAGES);
@@ -936,10 +948,14 @@ public class ApplicationDB extends ContentProvider{
 		
 		trainingFileProjectionMap = new HashMap<String, String>();
 		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_ID, DBConstant.Training_File_Columns.COLUMN_ID);
+		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_ID, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID);
 		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_ID, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_ID);
 		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LINK, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LINK);
 		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LANG, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LANG);
 		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PATH, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PATH);
+		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_THUMBNAIL_LINK, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_THUMBNAIL_LINK);
+		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_THUMBNAIL_PATH, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_THUMBNAIL_PATH);
+		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_NAME, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_NAME);
 		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_SIZE, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_SIZE);
 		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_DURATION, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_DURATION);
 		trainingFileProjectionMap.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PAGES, DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PAGES);

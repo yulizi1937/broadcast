@@ -781,6 +781,61 @@ public class Utilities {
 		return str.toString();
 	}
 	
+	public static String getFilePath(int mType, boolean mIsThumbnail, String mFileName){
+		createDirectories();
+		if(!mIsThumbnail){
+			switch(mType){
+			case AppConstants.TYPE.IMAGE:
+				return AppConstants.FOLDER.IMAGE_FOLDER + mFileName;
+			case AppConstants.TYPE.AUDIO:
+				return AppConstants.FOLDER.AUDIO_FOLDER + mFileName;
+			case AppConstants.TYPE.VIDEO:
+				return AppConstants.FOLDER.VIDEO_FOLDER + mFileName;
+			default:
+				return AppConstants.FOLDER.DOCUMENT_FOLDER+ mFileName;
+			}
+		}else{
+			return AppConstants.FOLDER.THUMBNAIL_FOLDER + mFileName;
+		}
+	}
+	
+	public static void createDirectories(){
+		File mFileImageDirectory = new File(AppConstants.FOLDER.IMAGE_FOLDER);
+		File mFileVideoDirectory = new File(AppConstants.FOLDER.VIDEO_FOLDER);
+		File mFileAudioDirectory = new File(AppConstants.FOLDER.AUDIO_FOLDER);
+		File mFileDocumentDirectory = new File(AppConstants.FOLDER.DOCUMENT_FOLDER);
+		File mFileThumbnailDirectory = new File(AppConstants.FOLDER.THUMBNAIL_FOLDER);
+		File mFileLogDirectory = new File(AppConstants.FOLDER.LOG_FOLDER);
+		
+		mFileImageDirectory.mkdirs();
+		mFileVideoDirectory.mkdirs();
+		mFileAudioDirectory.mkdirs();
+		mFileDocumentDirectory.mkdirs();
+		mFileThumbnailDirectory.mkdirs();
+		mFileLogDirectory.mkdirs();
+	}
+	
+	@SuppressLint("DefaultLocale") 
+	public static int getMediaType(String mType){
+		if(mType.toLowerCase().equalsIgnoreCase("image")){
+			return AppConstants.TYPE.IMAGE;
+		}else if(mType.toLowerCase().equalsIgnoreCase("audio")){
+			return AppConstants.TYPE.AUDIO;
+		}else if(mType.toLowerCase().equalsIgnoreCase("video")){
+			return AppConstants.TYPE.VIDEO;
+		}else if(mType.toLowerCase().equalsIgnoreCase("pdf")){
+			return AppConstants.TYPE.PDF;
+		}else if(mType.toLowerCase().equalsIgnoreCase("doc")){
+			return AppConstants.TYPE.DOC;
+		}else if(mType.toLowerCase().equalsIgnoreCase("ppt")){
+			return AppConstants.TYPE.PPT;
+		}else if(mType.toLowerCase().equalsIgnoreCase("xls")){
+			return AppConstants.TYPE.XLS;
+		}else{
+			return AppConstants.TYPE.OTHER;	
+		}
+	}
+	
 	public static String getEncodedImageToByteArray(Bitmap mBitmap){
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
 		mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -813,6 +868,7 @@ public class Utilities {
 	         ) + "" + c[0]) 
 	        : formatCount(String.valueOf(d), 1));
 	}
+	
 
 	@SuppressWarnings("resource")
 	public static void devSendDBInMail(Context c) {

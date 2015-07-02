@@ -56,6 +56,7 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mXlsTitleTv;
 	private AppCompatTextView mXlsByTv;
 	private AppCompatTextView mXlsViewTv;
+	private AppCompatTextView mXlsLikeTv;
 	private AppCompatTextView mXlsSummaryTextTv;
 	private AppCompatTextView mXlsFileNameTv;
 	private AppCompatTextView mXlsFileInfoTv;
@@ -180,6 +181,7 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 		mXlsByTv = (AppCompatTextView)findViewById(R.id.fragmentXlsDetailByTv);
 		mXlsSummaryTextTv = (AppCompatTextView)findViewById(R.id.fragmentXlsDetailSummaryTv);
 		mXlsViewTv = (AppCompatTextView)findViewById(R.id.fragmentXlsDetailViewTv);
+		mXlsLikeTv = (AppCompatTextView)findViewById(R.id.fragmentXlsDetailLikeTv);
 		mXlsFileInfoTv = (AppCompatTextView)findViewById(R.id.fragmentXlsDetailFileDetailIv);
 		mXlsFileNameTv = (AppCompatTextView)findViewById(R.id.fragmentXlsDetailFileNameIv);
 		
@@ -190,6 +192,9 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 		mXlsNewsLinkTv = (AppCompatTextView)findViewById(R.id.fragmentXlsDetailLinkTv);
 		
 		mXlsNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentXlsDetailViewSourceLayout);
+		
+		mXlsLikeTv.setVisibility(View.GONE);
+		mXlsViewTv.setVisibility(View.GONE);
 	}
 
 	private void initUiWithData(){

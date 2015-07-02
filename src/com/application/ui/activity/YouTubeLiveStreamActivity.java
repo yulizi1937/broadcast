@@ -175,6 +175,8 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 		
 		youTubeView = (YouTubePlayerView) findViewById(R.id.fragmentLiveStreamYouTubePlayerView);
 	    youTubeView.initialize(AppConstants.YOUTUBE.API_KEY, this);
+	    
+	    mVideoViewTv.setVisibility(View.GONE);
 	}
 
 	@Override

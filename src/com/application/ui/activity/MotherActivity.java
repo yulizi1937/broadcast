@@ -50,6 +50,7 @@ import com.application.ui.view.ScrimInsetsFrameLayout;
 import com.application.ui.view.SlidingTabLayout;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.ApplicationLoader;
 import com.application.utils.FileLog;
 import com.application.utils.ObservableScrollViewCallbacks;
 import com.application.utils.ScrollState;
@@ -128,7 +129,7 @@ public class MotherActivity extends BaseActivity implements
 				R.drawable.ic_toolbar_event));
 
 		MenuItem menuItemAward = menu.findItem(R.id.action_award);
-		menuItemAward.setIcon(buildCounterDrawable(1,
+		menuItemAward.setIcon(buildCounterDrawable(0,
 				R.drawable.ic_toolbar_award));
 
 		MenuItem menuItemBirthday = menu.findItem(R.id.action_birthday);
@@ -399,19 +400,19 @@ public class MotherActivity extends BaseActivity implements
 		MotherHeader obj1 = new MotherHeader();
 		obj1.setmIsUnread(true);
 		obj1.setmTitle(getResources().getString(R.string.layout_mother_mobcast));
-		obj1.setmUnreadCount("99");
+		obj1.setmUnreadCount("2");
 		mArrayListMotherHeader.add(obj1);
 
-		MotherHeader obj2 = new MotherHeader();
+/*		MotherHeader obj2 = new MotherHeader();
 		obj2.setmIsUnread(false);
 		obj2.setmTitle(getResources().getString(R.string.layout_mother_chat));
 		obj2.setmUnreadCount("0");
 		mArrayListMotherHeader.add(obj2);
-
+*/
 		MotherHeader obj3 = new MotherHeader();
 		obj3.setmIsUnread(true);
 		obj3.setmTitle(getResources().getString(R.string.layout_mother_training));
-		obj3.setmUnreadCount("90");
+		obj3.setmUnreadCount("4");
 		mArrayListMotherHeader.add(obj3);
 
 		return mArrayListMotherHeader;
@@ -716,6 +717,10 @@ public class MotherActivity extends BaseActivity implements
 			break;
 		case 4:
 			drawerIntent = new Intent(MotherActivity.this, FeedbackAppActivity.class);
+			break;
+		case 5:
+			ApplicationLoader.getPreferences().clearPreferences();
+			System.exit(0);
 			break;
 		case 6:
 			drawerIntent = new Intent(MotherActivity.this, AboutActivity.class);

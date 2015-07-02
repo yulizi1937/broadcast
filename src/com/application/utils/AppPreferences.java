@@ -14,6 +14,10 @@ public class AppPreferences {
 		sharedPreferences = context.getSharedPreferences("Cache",
 				Context.MODE_PRIVATE);
 	}
+	
+	public SharedPreferences getAppPreferences(){
+		return sharedPreferences;
+	}
 
 	/*
 	 * PREFERENCES : API DETAILS
@@ -281,5 +285,23 @@ public class AppPreferences {
 		String mBirthdayNotifyAt= sharedPreferences.getString("birthdayNotifyAt",
 				"9:00 am");
 		return mBirthdayNotifyAt;
+	}
+	public void setChatSound(boolean mChatSound) {
+		editor = sharedPreferences.edit();
+		editor.putBoolean("mChatSound", mChatSound);
+		editor.commit();
+	}
+
+	public boolean getChatSound() {
+		boolean mChatSound= sharedPreferences.getBoolean("mChatSound",
+				false);
+		return mChatSound;
+	}
+	
+	public void clearPreferences() {
+		SharedPreferences preferences = ApplicationLoader.getPreferences().getAppPreferences();
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.clear();
+		editor.commit();
 	}
 }

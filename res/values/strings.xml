@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="app_name">mobcast</string>
+    <string name="app_name">HDFC Mobcast</string>
     <string name="toolbar_background">#254E7A</string>
     <string name="LanguageName">English</string>
     <string name="LanguageNameInEnglish">English</string>
@@ -102,9 +102,9 @@
     <!-- activity_set_login -->
     <string name="textview_upload_another">Upload Another</string>
     <string name="textview_upload_remove">Remove</string>
-    <string name="hint_email_id">abc@xyz.com</string>
-    <string name="hint_name">Carving Dezin</string>
-    <string name="hint_employee_id">3130894</string>
+    <string name="hint_email_id">Email id</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_employee_id">Employee id</string>
     <string name="textview_skip">Skip</string>
     <string name="SetProfileActivityTitle">Set Your Profile</string>
 
@@ -527,8 +527,19 @@
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
 
     <!-- loadingMessages -->
-    <string name="loadingLogin">Signing In...</string>
-    <string name="loadingVerify">Verifying...</string>
-    <string name="loadingUpdate">Updating...</string>
+    <string name="loadingLogin" tools:ignore="TypographyEllipsis">Signing In...</string>
+    <string name="loadingVerify" tools:ignore="TypographyEllipsis">Verifying...</string>
+    <string name="loadingUpdate" tools:ignore="TypographyEllipsis">Updating...</string>
+    
+    <!-- emptyMessages -->
+    <string name="emptyTitle">Welcome to Mobcast!</string>
+    <string name="emptyMessage">When you\'ll receive mobcast, they will show up here.</string>
+    <string name="emptyRefresh">REFRESH</string>
+    
+    <string name="emptyTrainingTitle">Welcome to Training!</string>
+    <string name="emptyTrainingMessage">When you\'ll receive training, they will show up here.</string>
+    
+    <string name="emptyChatTitle">Welcome to Chat!</string>
+    <string name="emptyChatMessage">When you\'ll receive chat, they will show up here.</string>
 
 </resources>

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -33,63 +34,81 @@ import com.application.beans.Training;
 import com.application.ui.activity.BaseActivity;
 import com.application.ui.adapter.SimpleHeaderRecyclerAdapter;
 import com.application.ui.adapter.SimpleRecyclerAdapter;
+import com.application.ui.view.MaterialRippleLayout;
 import com.mobcast.R;
 
 public abstract class BaseFragment extends Fragment {
-    public static ArrayList<String> getDummyData() {
-        return BaseActivity.getDummyData();
-    }
-    
-    public static ArrayList<Mobcast> getDummyMobcastData(){
-    	return BaseActivity.getDummyMobcastData();
-    }
-    
-    public static ArrayList<Training> getDummyTrainingData(){
-    	return BaseActivity.getDummyTrainingData();
-    }
-    
+	public static ArrayList<String> getDummyData() {
+		return BaseActivity.getDummyData();
+	}
 
-    protected int getActionBarSize() {
-        Activity activity = getActivity();
-        if (activity == null) {
-            return 0;
-        }
-        TypedValue typedValue = new TypedValue();
-        int[] textSizeAttr = new int[]{R.attr.actionBarSize};
-        int indexOfAttrTextSize = 0;
-        TypedArray a = activity.obtainStyledAttributes(typedValue.data, textSizeAttr);
-        int actionBarSize = a.getDimensionPixelSize(indexOfAttrTextSize, -1);
-        a.recycle();
-        return actionBarSize;
-    }
+	public static ArrayList<Mobcast> getDummyMobcastData() {
+		return BaseActivity.getDummyMobcastData();
+	}
 
-    protected int getScreenHeight() {
-        Activity activity = getActivity();
-        if (activity == null) {
-            return 0;
-        }
-        return activity.findViewById(android.R.id.content).getHeight();
-    }
+	public static ArrayList<Training> getDummyTrainingData() {
+		return BaseActivity.getDummyTrainingData();
+	}
 
-    protected void setDummyData(ListView listView) {
-        listView.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, getDummyData()));
-    }
+	protected int getActionBarSize() {
+		Activity activity = getActivity();
+		if (activity == null) {
+			return 0;
+		}
+		TypedValue typedValue = new TypedValue();
+		int[] textSizeAttr = new int[] { R.attr.actionBarSize };
+		int indexOfAttrTextSize = 0;
+		TypedArray a = activity.obtainStyledAttributes(typedValue.data,
+				textSizeAttr);
+		int actionBarSize = a.getDimensionPixelSize(indexOfAttrTextSize, -1);
+		a.recycle();
+		return actionBarSize;
+	}
 
-    protected void setDummyDataWithHeader(ListView listView, View headerView) {
-        listView.addHeaderView(headerView);
-        setDummyData(listView);
-    }
+	protected int getScreenHeight() {
+		Activity activity = getActivity();
+		if (activity == null) {
+			return 0;
+		}
+		return activity.findViewById(android.R.id.content).getHeight();
+	}
 
-    protected void setDummyData(GridView gridView) {
-        gridView.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, getDummyData()));
-    }
+	protected void setDummyData(ListView listView) {
+		listView.setAdapter(new ArrayAdapter<String>(getActivity(),
+				android.R.layout.simple_list_item_1, getDummyData()));
+	}
 
-    protected void setDummyData(RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleRecyclerAdapter(getActivity(), getDummyData()));
-    }
+	protected void setDummyDataWithHeader(ListView listView, View headerView) {
+		listView.addHeaderView(headerView);
+		setDummyData(listView);
+	}
 
-    protected void setDummyDataWithHeader(RecyclerView recyclerView, View headerView) {
-        recyclerView.setAdapter(new SimpleHeaderRecyclerAdapter(getActivity(), getDummyData(), headerView));
-    }
-    
+	protected void setDummyData(GridView gridView) {
+		gridView.setAdapter(new ArrayAdapter<String>(getActivity(),
+				android.R.layout.simple_list_item_1, getDummyData()));
+	}
+
+	protected void setDummyData(RecyclerView recyclerView) {
+		recyclerView.setAdapter(new SimpleRecyclerAdapter(getActivity(),
+				getDummyData()));
+	}
+
+	protected void setDummyDataWithHeader(RecyclerView recyclerView,
+			View headerView) {
+		recyclerView.setAdapter(new SimpleHeaderRecyclerAdapter(getActivity(),
+				getDummyData(), headerView));
+	}
+
+	protected void setMaterialRippleWithGrayOnView(View mView) {
+		MaterialRippleLayout.on(mView).rippleColor(Color.parseColor("#aaaaaa"))
+				.rippleAlpha(0.2f).rippleHover(true).rippleOverlay(true)
+				.rippleBackground(Color.parseColor("#00000000")).create();
+	}
+
+	protected void setMaterialRippleOnView(View mView) {
+		MaterialRippleLayout.on(mView).rippleColor(Color.parseColor("#ffffff"))
+				.rippleAlpha(0.2f).rippleHover(true).rippleOverlay(true)
+				.rippleBackground(Color.parseColor("#00000000")).create();
+	}
+
 }

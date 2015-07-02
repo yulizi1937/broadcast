@@ -29,6 +29,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.application.beans.Training;
+import com.application.ui.adapter.MobcastRecyclerAdapter.TextViewHolder;
 import com.application.ui.view.FlexibleDividerDecoration;
 import com.application.utils.AppConstants;
 import com.mobcast.R;
@@ -135,15 +136,41 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 			// ((TextViewHolder)
 			// viewHolder).textView.setText(mArrayListTraining.get(position -
 			// 1).getmTitle());
+			((TextViewHolder)viewHolder).mTrainingTextViewCountTv.setVisibility(View.GONE);
+			((TextViewHolder)viewHolder).mTrainingTextLikeCountTv.setVisibility(View.GONE);
+			((TextViewHolder)viewHolder).mTrainingTextLinkTv.setVisibility(View.GONE);
 		} else if (viewHolder instanceof ImageViewHolder) {
+			((ImageViewHolder)viewHolder).mTrainingImageViewCountTv.setVisibility(View.GONE);
+			((ImageViewHolder)viewHolder).mTrainingImageLikeCountTv.setVisibility(View.GONE);
+			((ImageViewHolder)viewHolder).mTrainingImageLinkTv.setVisibility(View.GONE);
 		} else if (viewHolder instanceof VideoViewHolder) {
+			((VideoViewHolder)viewHolder).mTrainingVideoViewCountTv.setVisibility(View.GONE);
+			((VideoViewHolder)viewHolder).mTrainingVideoLikeCountTv.setVisibility(View.GONE);
+			((VideoViewHolder)viewHolder).mTrainingVideoLinkTv.setVisibility(View.GONE);
 		} else if (viewHolder instanceof AudioViewHolder) {
+			((AudioViewHolder)viewHolder).mTrainingAudioViewCountTv.setVisibility(View.GONE);
+			((AudioViewHolder)viewHolder).mTrainingAudioLikeCountTv.setVisibility(View.GONE);
+			((AudioViewHolder)viewHolder).mTrainingAudioLinkTv.setVisibility(View.GONE);
 		} else if (viewHolder instanceof PdfViewHolder) {
+			((PdfViewHolder)viewHolder).mTrainingPdfViewCountTv.setVisibility(View.GONE);
+			((PdfViewHolder)viewHolder).mTrainingPdfLikeCountTv.setVisibility(View.GONE);
+			((PdfViewHolder)viewHolder).mTrainingPdfLinkTv.setVisibility(View.GONE);
 		} else if (viewHolder instanceof DocViewHolder) {
+			((DocViewHolder)viewHolder).mTrainingDocViewCountTv.setVisibility(View.GONE);
+			((DocViewHolder)viewHolder).mTrainingDocLikeCountTv.setVisibility(View.GONE);
+			((DocViewHolder)viewHolder).mTrainingDocLinkTv.setVisibility(View.GONE);
 		} else if (viewHolder instanceof PptViewHolder) {
+			((PptViewHolder)viewHolder).mTrainingPptViewCountTv.setVisibility(View.GONE);
+			((PptViewHolder)viewHolder).mTrainingPptLikeCountTv.setVisibility(View.GONE);
+			((PptViewHolder)viewHolder).mTrainingPptLinkTv.setVisibility(View.GONE);
 		} else if (viewHolder instanceof XlsViewHolder) {
+			((XlsViewHolder)viewHolder).mTrainingXlsViewCountTv.setVisibility(View.GONE);
+			((XlsViewHolder)viewHolder).mTrainingXlsLikeCountTv.setVisibility(View.GONE);
+			((XlsViewHolder)viewHolder).mTrainingXlsLinkTv.setVisibility(View.GONE);
 		} else if (viewHolder instanceof QuizViewHolder) {
+			((QuizViewHolder)viewHolder).mTrainingQuizViewCountTv.setVisibility(View.GONE);
 		} else if (viewHolder instanceof InteractiveViewHolder) {
+			((InteractiveViewHolder)viewHolder).mTrainingInteractiveViewCountTv.setVisibility(View.GONE);
 		}
     }
     
@@ -172,6 +199,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         AppCompatTextView mTrainingTextTitleTv;
         AppCompatTextView mTrainingTextByTv;
         AppCompatTextView mTrainingTextViewCountTv;
+        AppCompatTextView mTrainingTextLikeCountTv;
+        ImageView mTrainingTextLinkTv;
         AppCompatTextView mTrainingTextSummaryTv;
         
         public TextViewHolder(View view) {
@@ -185,6 +214,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTrainingTextTitleTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingTextTitleTv);
             mTrainingTextByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingTextByTv);
             mTrainingTextViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingTextViewCountTv);
+            mTrainingTextLikeCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingTextLikeCountTv);
+            mTrainingTextLinkTv = (ImageView) view.findViewById(R.id.itemRecyclerTrainingTextLinkTv);
             mTrainingTextSummaryTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingTextSummaryTv);
             
             mTrainingTextRootLayout.setOnClickListener(this);
@@ -212,6 +243,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         AppCompatTextView mTrainingImageTitleTv;
         AppCompatTextView mTrainingImageByTv;
         AppCompatTextView mTrainingImageViewCountTv;
+        AppCompatTextView mTrainingImageLikeCountTv;
+        ImageView mTrainingImageLinkTv;
         
         
         public ImageViewHolder(View view) {
@@ -229,6 +262,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTrainingImageTitleTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingImageTitleTv);
             mTrainingImageByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingImageByTv);
             mTrainingImageViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingImageViewCountTv);
+            mTrainingImageLikeCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingImageLikeCountTv);
+            mTrainingImageLinkTv = (ImageView) view.findViewById(R.id.itemRecyclerTrainingImageLinkTv);
             
             mTrainingImageRootLayout.setOnClickListener(this);
             
@@ -252,6 +287,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         AppCompatTextView mTrainingVideoTitleTv;
         AppCompatTextView mTrainingVideoByTv;
         AppCompatTextView mTrainingVideoViewCountTv;
+        AppCompatTextView mTrainingVideoLikeCountTv;
+        ImageView mTrainingVideoLinkTv;
         AppCompatTextView mTrainingVideoViewDurationTv;
         
         
@@ -269,6 +306,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTrainingVideoTitleTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingVideoTitleTv);
             mTrainingVideoByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingVideoByTv);
             mTrainingVideoViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingVideoViewCountTv);
+            mTrainingVideoLikeCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingVideoLikeCountTv);
+            mTrainingVideoLinkTv = (ImageView) view.findViewById(R.id.itemRecyclerTrainingVideoLinkTv);
             mTrainingVideoViewDurationTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingVideoDurationTv);
             
             mTrainingVideoRootLayout.setOnClickListener(this);
@@ -291,6 +330,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         AppCompatTextView mTrainingAudioTitleTv;
         AppCompatTextView mTrainingAudioByTv;
         AppCompatTextView mTrainingAudioViewCountTv;
+        AppCompatTextView mTrainingAudioLikeCountTv;
+        ImageView mTrainingAudioLinkTv;
         AppCompatTextView mTrainingAudioViewDurationTv;
         AppCompatTextView mTrainingAudioViewFileNameTv;
         AppCompatTextView mTrainingAudioSummaryTv;
@@ -308,6 +349,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTrainingAudioTitleTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingAudioTitleTv);
             mTrainingAudioByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingAudioByTv);
             mTrainingAudioViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingAudioViewCountTv);
+            mTrainingAudioLikeCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingAudioLikeCountTv);
+            mTrainingAudioLinkTv = (ImageView) view.findViewById(R.id.itemRecyclerTrainingAudioLinkTv);
             mTrainingAudioViewDurationTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingAudioDetailFileInfoDetailTv);
             mTrainingAudioViewFileNameTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingAudioDetailFileInfoNameTv);
             mTrainingAudioSummaryTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingAudioSummaryTv);
@@ -331,6 +374,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         AppCompatTextView mTrainingPdfTitleTv;
         AppCompatTextView mTrainingPdfByTv;
         AppCompatTextView mTrainingPdfViewCountTv;
+        AppCompatTextView mTrainingPdfLikeCountTv;
+        ImageView mTrainingPdfLinkTv;
         AppCompatTextView mTrainingPdfViewFileMetaTv;
         AppCompatTextView mTrainingPdfViewFileNameTv;
         
@@ -347,6 +392,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTrainingPdfTitleTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingPdfTitleTv);
             mTrainingPdfByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingPdfByTv);
             mTrainingPdfViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingPdfViewCountTv);
+            mTrainingPdfLikeCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingPdfLikeCountTv);
+            mTrainingPdfLinkTv = (ImageView) view.findViewById(R.id.itemRecyclerTrainingPdfLinkTv);
             mTrainingPdfViewFileMetaTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingPdfDetailFileInfoDetailTv);
             mTrainingPdfViewFileNameTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingPdfDetailFileInfoNameTv);
             
@@ -369,6 +416,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         AppCompatTextView mTrainingDocTitleTv;
         AppCompatTextView mTrainingDocByTv;
         AppCompatTextView mTrainingDocViewCountTv;
+        AppCompatTextView mTrainingDocLikeCountTv;
+        ImageView mTrainingDocLinkTv;
         AppCompatTextView mTrainingDocViewFileMetaTv;
         AppCompatTextView mTrainingDocViewFileNameTv;
         
@@ -385,6 +434,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTrainingDocTitleTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingDocTitleTv);
             mTrainingDocByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingDocByTv);
             mTrainingDocViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingDocViewCountTv);
+            mTrainingDocLikeCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingDocLikeCountTv);
+            mTrainingDocLinkTv = (ImageView) view.findViewById(R.id.itemRecyclerTrainingDocLinkTv);
             mTrainingDocViewFileMetaTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingDocDetailFileInfoDetailTv);
             mTrainingDocViewFileNameTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingDocDetailFileInfoNameTv);
             
@@ -408,6 +459,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         AppCompatTextView mTrainingPptTitleTv;
         AppCompatTextView mTrainingPptByTv;
         AppCompatTextView mTrainingPptViewCountTv;
+        AppCompatTextView mTrainingPptLikeCountTv;
+        ImageView mTrainingPptLinkTv;
         AppCompatTextView mTrainingPptViewFileMetaTv;
         AppCompatTextView mTrainingPptViewFileNameTv;
         
@@ -424,6 +477,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTrainingPptTitleTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingPptTitleTv);
             mTrainingPptByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingPptByTv);
             mTrainingPptViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingPptViewCountTv);
+            mTrainingPptLikeCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingPptLikeCountTv);
+            mTrainingPptLinkTv = (ImageView) view.findViewById(R.id.itemRecyclerTrainingPptLinkTv);
             mTrainingPptViewFileMetaTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingPptDetailFileInfoDetailTv);
             mTrainingPptViewFileNameTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingPptDetailFileInfoNameTv);
             
@@ -446,6 +501,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         AppCompatTextView mTrainingXlsTitleTv;
         AppCompatTextView mTrainingXlsByTv;
         AppCompatTextView mTrainingXlsViewCountTv;
+        AppCompatTextView mTrainingXlsLikeCountTv;
+        ImageView mTrainingXlsLinkTv;
         AppCompatTextView mTrainingXlsViewFileMetaTv;
         AppCompatTextView mTrainingXlsViewFileNameTv;
         
@@ -462,6 +519,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTrainingXlsTitleTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingXlsTitleTv);
             mTrainingXlsByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingXlsByTv);
             mTrainingXlsViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingXlsViewCountTv);
+            mTrainingXlsLikeCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingXlsLikeCountTv);
+            mTrainingXlsLinkTv = (ImageView) view.findViewById(R.id.itemRecyclerTrainingXlsLinkTv);
             mTrainingXlsViewFileMetaTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingXlsDetailFileInfoDetailTv);
             mTrainingXlsViewFileNameTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingXlsDetailFileInfoNameTv);
             

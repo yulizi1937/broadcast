@@ -199,6 +199,7 @@ public class DBConstant {
 		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/mobcastFileInfo";
 		
 		public static final String COLUMN_ID 								= "_id";
+		public static final String COLUMN_MOBCAST_ID 						= "_mobcast_id";
 		public static final String COLUMN_MOBCAST_FILE_ID 				    = "_mobcast_file_id";
 		public static final String COLUMN_MOBCAST_FILE_LINK 			 	= "_mobcast_file_link";
 		public static final String COLUMN_MOBCAST_FILE_LANG 				= "_mobcast_file_lang";
@@ -207,6 +208,9 @@ public class DBConstant {
 		public static final String COLUMN_MOBCAST_FILE_DURATION 			= "_mobcast_file_duration";
 		public static final String COLUMN_MOBCAST_FILE_PAGES 				= "_mobcast_file_pages";
 		public static final String COLUMN_MOBCAST_FILE_READ_DURATION 		= "_mobcast_file_read_duration";
+		public static final String COLUMN_MOBCAST_FILE_NAME         		= "_mobcast_file_name";
+		public static final String COLUMN_MOBCAST_FILE_THUMBNAIL_LINK 		= "_mobcast_file_thumbnail_link";
+		public static final String COLUMN_MOBCAST_FILE_THUMBNAIL_PATH 		= "_mobcast_file_thumbnail_path";
 		public static final String COLUMN_MOBCAST_FILE_IS_DEFAULT 			= "_mobcast_file_is_default";
 		public static final String COLUMN_MOBCAST_LIVE_STREAM 				= "_mobcast_live_stream";
 		public static final String COLUMN_MOBCAST_LIVE_STREAM_YOUTUBE 		= "_mobcast_live_stream_youtube";
@@ -220,6 +224,7 @@ public class DBConstant {
 		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/trainingFileInfo";
 		
 		public static final String COLUMN_ID 								= "_id";
+		public static final String COLUMN_TRAINING_ID 						= "_training_id";
 		public static final String COLUMN_TRAINING_FILE_ID 				    = "_training_file_id";
 		public static final String COLUMN_TRAINING_FILE_LINK 			 	= "_training_file_link";
 		public static final String COLUMN_TRAINING_FILE_LANG 				= "_training_file_lang";
@@ -227,6 +232,9 @@ public class DBConstant {
 		public static final String COLUMN_TRAINING_FILE_PATH 				= "_training_file_path";
 		public static final String COLUMN_TRAINING_FILE_DURATION 			= "_training_file_duration";
 		public static final String COLUMN_TRAINING_FILE_PAGES 				= "_training_file_pages";
+		public static final String COLUMN_TRAINING_FILE_NAME         		= "_training_file_name";
+		public static final String COLUMN_TRAINING_FILE_THUMBNAIL_LINK 		= "_training_file_thumbnail_link";
+		public static final String COLUMN_TRAINING_FILE_THUMBNAIL_PATH 		= "_training_file_thumbnail_path";
 		public static final String COLUMN_TRAINING_FILE_READ_DURATION 		= "_training_file_read_duration";
 		public static final String COLUMN_TRAINING_FILE_IS_DEFAULT 			= "_training_file_is_default";
 		public static final String COLUMN_TRAINING_LIVE_STREAM 				= "_training_live_stream";

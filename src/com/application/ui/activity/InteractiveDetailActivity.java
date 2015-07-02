@@ -173,6 +173,8 @@ public class InteractiveDetailActivity extends SwipeBackBaseActivity {
 		
 		mInteractiveLinkLayout = (LinearLayout)findViewById(R.id.fragmentInteractiveDetailViewSourceLayout);
 		
+		mInteractiveViewTv.setVisibility(View.GONE);
+		
 	}
 	
 	private void initUiWithData(){

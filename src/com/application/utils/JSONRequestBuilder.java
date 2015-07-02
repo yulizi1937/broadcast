@@ -7,7 +7,7 @@ import org.json.JSONObject;
 public class JSONRequestBuilder {
 	private static final String TAG = JSONRequestBuilder.class.getSimpleName();
 
-	public static JSONObject getPostLoginData(String mUserName) {
+	public static JSONObject getPostLoginData(String mUserName, String mCountryCode) {
 		JSONObject stringBuffer = new JSONObject();
 		try {
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, mUserName);
@@ -20,12 +20,26 @@ public class JSONRequestBuilder {
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.deviceIsTablet, false);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.deviceSize, Utilities.checkDisplaySize());
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.deviceType, AppConstants.deviceType);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.countryCode, mCountryCode);
 		} catch (Exception e) {
 			FileLog.e(TAG, e.toString());
 		}
 		return stringBuffer;
 	}
 	
+	
+	public static JSONObject getPostFetchPushData(String mCategory, String mId) {
+		JSONObject stringBuffer = new JSONObject();
+		try {
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, mCategory);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER._id, mId);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		return stringBuffer;
+	}
 	
 	public static JSONObject getPostVerifyData(String mUserName, String mOtp) {
 		JSONObject stringBuffer = new JSONObject();
@@ -77,7 +91,10 @@ public class JSONRequestBuilder {
 			mJSONObjUser.put(AppConstants.API_KEY_PARAMETER.name, mName);
 			mJSONObjUser.put(AppConstants.API_KEY_PARAMETER.emailAddress, mEmailAddress);
 			mJSONObjUser.put(AppConstants.API_KEY_PARAMETER.employeeId, mEmployeeId);
-			mJSONObjUser.put(AppConstants.API_KEY_PARAMETER.profileImage, Utilities.getEncodedFileToByteArray(new File(mProfilePath).getAbsolutePath()));
+			try{
+				mJSONObjUser.put(AppConstants.API_KEY_PARAMETER.profileImage, Utilities.getEncodedFileToByteArray(new File(mProfilePath).getAbsolutePath()));
+			}catch(Exception e){
+			}
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.user, mJSONObjUser);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
 		} catch (Exception e) {

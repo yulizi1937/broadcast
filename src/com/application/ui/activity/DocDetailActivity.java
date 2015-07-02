@@ -64,6 +64,7 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mDocTitleTv;
 	private AppCompatTextView mDocByTv;
 	private AppCompatTextView mDocViewTv;
+	private AppCompatTextView mDocLikeTv;
 	private AppCompatTextView mDocSummaryTextTv;
 	private AppCompatTextView mDocFileNameTv;
 	private AppCompatTextView mDocFileInfoTv;
@@ -190,6 +191,7 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 		mDocByTv = (AppCompatTextView) findViewById(R.id.fragmentDocDetailByTv);
 		mDocSummaryTextTv = (AppCompatTextView) findViewById(R.id.fragmentDocDetailSummaryTv);
 		mDocViewTv = (AppCompatTextView) findViewById(R.id.fragmentDocDetailViewTv);
+		mDocLikeTv = (AppCompatTextView) findViewById(R.id.fragmentDocDetailLikeTv);
 		mDocFileInfoTv = (AppCompatTextView) findViewById(R.id.fragmentDocDetailFileDetailIv);
 		mDocFileNameTv = (AppCompatTextView) findViewById(R.id.fragmentDocDetailFileNameIv);
 
@@ -200,6 +202,9 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 		mDocNewsLinkTv = (AppCompatTextView)findViewById(R.id.fragmentDocDetailLinkTv);
 		
 		mDocNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentDocDetailViewSourceLayout);
+		
+		mDocLikeTv.setVisibility(View.GONE);
+		mDocViewTv.setVisibility(View.GONE);
 	}
 	
 	private void initUiWithData(){

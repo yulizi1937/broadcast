@@ -39,15 +39,20 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="com.mobcast.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <permission
+        android:name="com.mobcast.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
 
     <application
         android:name="com.application.utils.ApplicationLoader"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:debuggable="true"
+        android:icon="@drawable/ic_hdfc_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:debuggable="true"
         android:theme="@style/AppTheme"
         tools:ignore="UnusedAttribute,HardcodedDebugMode" >
 
@@ -217,6 +222,11 @@
                 <category android:name="com.mobcast" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name="com.application.ui.service.GCMIntentNotificationService"
+            android:exported="false"
+            android:label="@string/app_name" />
         <!-- Any.DO Notification Activity -->
         <activity
             android:name="com.application.ui.activity.AnyDoNotificationActivity"

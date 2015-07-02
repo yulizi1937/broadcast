@@ -3,8 +3,6 @@
  */
 package com.application.beans;
 
-import java.util.ArrayList;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -13,36 +11,41 @@ import android.os.Parcelable;
  * 
  */
 public class MobcastFileInfo implements Parcelable {
-	private ArrayList<String> mFilePath;
 	private String mDuration;
 	private String mPages;
 	private String mQuestions;
-	private ArrayList<String> mFileLanguages;
+	private String mFileLanguages;
 	private String mSelectedLanguage;
+	private String mFilePath;
+	private String mFileLink;
+	private String mThumbnailLink;
+	private String mThumbnailPath;
+	private String mFileName;
+	private String mFileSize;
+	private String mFileIsDefault;
 
 	public MobcastFileInfo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public MobcastFileInfo(ArrayList<String> mFilePath, String mDuration,
-			String mPages, String mQuestions, ArrayList<String> mFileLanguages,
-			String mSelectedLanguage) {
+	public MobcastFileInfo(String mDuration, String mPages, String mQuestions,
+			String mFileLanguages, String mSelectedLanguage, String mFilePath,
+			String mFileLink, String mThumbnailLink, String mThumbnailPath,
+			String mFileName, String mFileSize, String mFileIsDefault) {
 		super();
-		this.mFilePath = mFilePath;
 		this.mDuration = mDuration;
 		this.mPages = mPages;
 		this.mQuestions = mQuestions;
 		this.mFileLanguages = mFileLanguages;
 		this.mSelectedLanguage = mSelectedLanguage;
-	}
-
-	public ArrayList<String> getmFilePath() {
-		return mFilePath;
-	}
-
-	public void setmFilePath(ArrayList<String> mFilePath) {
 		this.mFilePath = mFilePath;
+		this.mFileLink = mFileLink;
+		this.mThumbnailLink = mThumbnailLink;
+		this.mThumbnailPath = mThumbnailPath;
+		this.mFileName = mFileName;
+		this.mFileSize = mFileSize;
+		this.mFileIsDefault = mFileIsDefault;
 	}
 
 	public String getmDuration() {
@@ -69,11 +72,11 @@ public class MobcastFileInfo implements Parcelable {
 		this.mQuestions = mQuestions;
 	}
 
-	public ArrayList<String> getmFileLanguages() {
+	public String getmFileLanguages() {
 		return mFileLanguages;
 	}
 
-	public void setmFileLanguages(ArrayList<String> mFileLanguages) {
+	public void setmFileLanguages(String mFileLanguages) {
 		this.mFileLanguages = mFileLanguages;
 	}
 
@@ -85,23 +88,75 @@ public class MobcastFileInfo implements Parcelable {
 		this.mSelectedLanguage = mSelectedLanguage;
 	}
 
+	public String getmFilePath() {
+		return mFilePath;
+	}
+
+	public void setmFilePath(String mFilePath) {
+		this.mFilePath = mFilePath;
+	}
+
+	public String getmFileLink() {
+		return mFileLink;
+	}
+
+	public void setmFileLink(String mFileLink) {
+		this.mFileLink = mFileLink;
+	}
+
+	public String getmThumbnailLink() {
+		return mThumbnailLink;
+	}
+
+	public void setmThumbnailLink(String mThumbnailLink) {
+		this.mThumbnailLink = mThumbnailLink;
+	}
+
+	public String getmThumbnailPath() {
+		return mThumbnailPath;
+	}
+
+	public void setmThumbnailPath(String mThumbnailPath) {
+		this.mThumbnailPath = mThumbnailPath;
+	}
+
+	public String getmFileName() {
+		return mFileName;
+	}
+
+	public void setmFileName(String mFileName) {
+		this.mFileName = mFileName;
+	}
+
+	public String getmFileSize() {
+		return mFileSize;
+	}
+
+	public void setmFileSize(String mFileSize) {
+		this.mFileSize = mFileSize;
+	}
+
+	public String getmFileIsDefault() {
+		return mFileIsDefault;
+	}
+
+	public void setmFileIsDefault(String mFileIsDefault) {
+		this.mFileIsDefault = mFileIsDefault;
+	}
+
 	protected MobcastFileInfo(Parcel in) {
-		if (in.readByte() == 0x01) {
-			mFilePath = new ArrayList<String>();
-			in.readList(mFilePath, String.class.getClassLoader());
-		} else {
-			mFilePath = null;
-		}
 		mDuration = in.readString();
 		mPages = in.readString();
 		mQuestions = in.readString();
-		if (in.readByte() == 0x01) {
-			mFileLanguages = new ArrayList<String>();
-			in.readList(mFileLanguages, String.class.getClassLoader());
-		} else {
-			mFileLanguages = null;
-		}
+		mFileLanguages = in.readString();
 		mSelectedLanguage = in.readString();
+		mFilePath = in.readString();
+		mFileLink = in.readString();
+		mThumbnailLink = in.readString();
+		mThumbnailPath = in.readString();
+		mFileName = in.readString();
+		mFileSize = in.readString();
+		mFileIsDefault = in.readString();
 	}
 
 	@Override
@@ -111,22 +166,18 @@ public class MobcastFileInfo implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		if (mFilePath == null) {
-			dest.writeByte((byte) (0x00));
-		} else {
-			dest.writeByte((byte) (0x01));
-			dest.writeList(mFilePath);
-		}
 		dest.writeString(mDuration);
 		dest.writeString(mPages);
 		dest.writeString(mQuestions);
-		if (mFileLanguages == null) {
-			dest.writeByte((byte) (0x00));
-		} else {
-			dest.writeByte((byte) (0x01));
-			dest.writeList(mFileLanguages);
-		}
+		dest.writeString(mFileLanguages);
 		dest.writeString(mSelectedLanguage);
+		dest.writeString(mFilePath);
+		dest.writeString(mFileLink);
+		dest.writeString(mThumbnailLink);
+		dest.writeString(mThumbnailPath);
+		dest.writeString(mFileName);
+		dest.writeString(mFileSize);
+		dest.writeString(mFileIsDefault);
 	}
 
 	@SuppressWarnings("unused")

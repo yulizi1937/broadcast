@@ -50,6 +50,8 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mTextSummaryTextTv;
 
 	private AppCompatTextView mTextNewsLinkTv;
+	
+	private AppCompatTextView mTextLikeTv;
 
 	private LinearLayout mTextNewsLinkLayout;
 
@@ -162,10 +164,14 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 		mTextByTv = (AppCompatTextView) findViewById(R.id.fragmentTextDetailByTv);
 		mTextSummaryTextTv = (AppCompatTextView) findViewById(R.id.fragmentTextDetailSummaryTv);
 		mTextViewTv = (AppCompatTextView) findViewById(R.id.fragmentTextDetailViewTv);
+		mTextLikeTv = (AppCompatTextView) findViewById(R.id.fragmentTextDetailLikeTv);
 		
 		mTextNewsLinkTv = (AppCompatTextView)findViewById(R.id.fragmentTextDetailLinkTv);
 		
 		mTextNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentTextDetailViewSourceLayout);
+		
+		mTextViewTv.setVisibility(View.GONE);
+		mTextLikeTv.setVisibility(View.GONE);
 	}
 	
 	private void initUiWithData(){

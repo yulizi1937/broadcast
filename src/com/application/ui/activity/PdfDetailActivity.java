@@ -65,6 +65,7 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mPdfTitleTv;
 	private AppCompatTextView mPdfByTv;
 	private AppCompatTextView mPdfViewTv;
+	private AppCompatTextView mPdfLikeTv;
 	private AppCompatTextView mPdfSummaryTextTv;
 	private AppCompatTextView mPdfFileNameTv;
 	private AppCompatTextView mPdfFileInfoTv;
@@ -191,6 +192,7 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 		mPdfByTv = (AppCompatTextView) findViewById(R.id.fragmentPdfDetailByTv);
 		mPdfSummaryTextTv = (AppCompatTextView) findViewById(R.id.fragmentPdfDetailSummaryTv);
 		mPdfViewTv = (AppCompatTextView) findViewById(R.id.fragmentPdfDetailViewTv);
+		mPdfLikeTv = (AppCompatTextView) findViewById(R.id.fragmentPdfDetailLikeTv);
 		mPdfFileInfoTv = (AppCompatTextView) findViewById(R.id.fragmentPdfDetailFileDetailIv);
 		mPdfFileNameTv = (AppCompatTextView) findViewById(R.id.fragmentPdfDetailFileNameIv);
 
@@ -201,6 +203,9 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 		mPdfNewsLinkTv = (AppCompatTextView) findViewById(R.id.fragmentPdfDetailLinkTv);
 
 		mPdfNewsLinkLayout = (LinearLayout) findViewById(R.id.fragmentPdfDetailViewSourceLayout);
+		
+		mPdfViewTv.setVisibility(View.GONE);
+		mPdfLikeTv.setVisibility(View.GONE);
 	}
 
 	private void initUiWithData() {

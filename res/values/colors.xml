@@ -4,7 +4,9 @@
     <!-- #254E7A -->
     <color name="background_tab_pressed">#6633B5E5</color>
     <color name="toolbar_background">#ff254E7A</color>
-    <color name="toolbar_background_statusbar">#ff2B5E93</color>
+    <color name="toolbar_background_statusbar">#ff193655</color>
+    
+<!--     #ff193655 #ff2B5E93-->
     <color name="slidingtablayout_text_default">#ff92a6bc</color>
     <color name="background_application">#FFFFFFFF</color>
     <color name="unread_highlight">#00AFF0</color>
@@ -27,6 +29,7 @@
     
     <color name="divider_color">#d8d8d8</color>
     <color name="light_gray">#FBFBFB</color>
+    <color name="gray_empty_bg">#EDEDED</color>
     
 
     <!-- activity_login -->

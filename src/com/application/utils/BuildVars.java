@@ -18,7 +18,8 @@ public class BuildVars {
 	public static final boolean DEBUG_OKHTTP = true;
 	public static final boolean DEBUG_STETHO = true;
 	public static final boolean DEBUG_API = true;
-	public static final boolean DEBUG_DESIGN = true;
+	public static final boolean DEBUG_DESIGN = false;
+	public static final boolean DEBUG_OTP = true;
 	
 	/*
 	 * Network Preferences

@@ -400,7 +400,7 @@ public class LoginActivity extends AppCompatActivity {
 	private String apiCheckUserExists() {
 		try {
 			JSONObject jsonObj = JSONRequestBuilder.getPostLoginData(mLoginIdEt
-					.getText().toString());
+					.getText().toString(), mCountryCodeTv.getText().toString());
 			if(BuildVars.USE_OKHTTP){
 				return RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_LOGIN, jsonObj.toString(), TAG);	
 			}else{
@@ -419,8 +419,18 @@ public class LoginActivity extends AppCompatActivity {
 		Intent mIntent = new Intent(LoginActivity.this,
 				VerificationActivity.class);
 		mIntent.putExtra(AppConstants.INTENTCONSTANTS.USERNAME, mLoginIdEt.getText().toString());
+		mIntent.putExtra(AppConstants.INTENTCONSTANTS.OTP, parseDataFromOTP(mResponseFromApi));
 		startActivity(mIntent);
 		AndroidUtilities.enterWindowAnimation(LoginActivity.this);
+	}
+	
+	private String parseDataFromOTP(String mResponseFromApi){
+		try{
+			JSONObject mJSONObj = new JSONObject(mResponseFromApi);
+			return mJSONObj.getString("otp");
+		}catch(Exception e){
+			return "Sorry!";
+		}
 	}
 
 	public class AsyncLoginTask extends AsyncTask<Void, Void, Void> {

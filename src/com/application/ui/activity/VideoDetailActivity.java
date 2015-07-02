@@ -3,9 +3,12 @@
  */
 package com.application.ui.activity;
 
+import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,11 +16,13 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.TextureView;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -27,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.VideoView;
 
+import com.application.sqlite.DBConstant;
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.ChipsLayout;
 import com.application.ui.view.DiscreteSeekBar;
@@ -36,6 +42,7 @@ import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.FileLog;
 import com.application.utils.Style;
 import com.application.utils.Utilities;
 import com.mobcast.R;
@@ -61,6 +68,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mVideoTitleTv;
 	private AppCompatTextView mVideoByTv;
 	private AppCompatTextView mVideoViewTv;
+	private AppCompatTextView mVideoLikeTv;
 	private AppCompatTextView mVideoSummaryTextTv;
 	private AppCompatTextView mVideoDescTotalTv;
 	private AppCompatTextView mLanguageHeaderTv;
@@ -95,6 +103,28 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	private Thread mSeekBarThread;
 
 	private boolean isShareOptionEnable = true;
+	
+	private Intent mIntent;
+	private String mId;
+	private String mCategory;
+	private String mContentTitle;
+	private String mContentDesc;
+	private String mContentLikeCount;
+	private String mContentViewCount;
+	private String mContentBy;
+	private String mContentLink;
+	private String mContentFileLink;
+	private String mContentFilePath;
+	private String mContentLanguage;
+	private String mContentDate;
+	private String mContentTime;
+	private boolean mContentIsSharing;
+	private boolean mContentIsLike;
+	
+	private ArrayList<String> mContentLanguageList = new ArrayList<>();
+	private ArrayList<String> mContentFileLinkList = new ArrayList<>();
+	private ArrayList<String> mContentFilePathList = new ArrayList<>();
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +133,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		setContentView(R.layout.activity_video_detail);
 		initToolBar();
 		initUi();
+		getIntentData();
 		initUiWithData();
 		initAnimation();
 		initVideoPlayer();
@@ -208,6 +239,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		mVideoByTv = (AppCompatTextView) findViewById(R.id.fragmentVideoDetailByTv);
 		mVideoSummaryTextTv = (AppCompatTextView) findViewById(R.id.fragmentVideoDetailSummaryTv);
 		mVideoViewTv = (AppCompatTextView) findViewById(R.id.fragmentVideoDetailViewTv);
+		mVideoLikeTv = (AppCompatTextView) findViewById(R.id.fragmentVideoDetailLikeTv);
 		mVideoDescTotalTv = (AppCompatTextView) findViewById(R.id.fragmentVideoDetailDescTotalTextView);
 
 		mVideoDescFrameLayout = (FrameLayout) findViewById(R.id.fragmentVideoDetailDescLayout);
@@ -230,10 +262,84 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		mVideoNewsLinkTv = (AppCompatTextView)findViewById(R.id.fragmentVideoDetailLinkTv);
 		
 		mVideoNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentVideoDetailViewSourceLayout);
+		
+		mVideoViewTv.setVisibility(View.GONE);
+		mVideoLikeTv.setVisibility(View.GONE);
 	}
 
+	private void getIntentData(){
+		mIntent = getIntent();
+		Cursor mCursor = null;
+		mId = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.ID);
+		mCategory = mIntent.getStringArrayExtra(AppConstants.INTENTCONSTANTS.CATEGORY).toString();
+		if(!TextUtils.isEmpty(mId) && !TextUtils.isEmpty(mCategory)){
+			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+				mCursor = getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "?=", new String[]{mId}, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + " DESC");
+				getDataFromDBForMobcast(mCursor);
+			}else{
+				mCursor = getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, null, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "?=", new String[]{mId}, DBConstant.Training_Columns.COLUMN_TRAINING_ID + " DESC");
+			}
+			if(mCursor!=null){
+				mCursor.close();
+			}
+		}
+	}
+	
 	private void initUiWithData(){
 		mVideoNewsLinkTv.setText(Html.fromHtml(getResources().getString(R.string.sample_news_detail_link)));
+	}
+	
+	private void getDataFromDBForMobcast(Cursor mCursor){
+		if(mCursor!=null && mCursor.getCount() > 0){
+			mCursor.moveToFirst();
+			mContentTitle = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE));
+			mContentDesc = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DESC));
+			mContentIsLike = Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE)));
+			mContentIsSharing =  Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE)));
+			mContentLikeCount = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO));
+			mContentViewCount = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT));
+			mContentLink = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LINK));
+			mContentBy = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_BY));
+			mContentDate = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE));
+			mContentTime = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME));
+			
+			Cursor mCursorFile = getContentResolver().query(DBConstant.Mobcast_File_Columns.CONTENT_URI, null, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID+"?=", new String[]{mId}, DBConstant.Mobcast_File_Columns.COLUMN_ID + " ASC");
+			if(mCursorFile!=null && mCursorFile.getCount() > 0){
+				mCursorFile.moveToFirst();
+				do {
+					mContentFileLinkList.add(mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LINK)));
+					mContentFilePathList.add(mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH)));
+					mContentLanguageList.add(mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG)));
+					if(Boolean.parseBoolean(mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_IS_DEFAULT)))){
+						mContentFilePath = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH));
+						mContentFileLink = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LINK));
+						mContentLanguage = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG));
+					}
+				} while (mCursorFile.moveToNext());
+				
+			}
+			if(mCursorFile!=null)
+				mCursorFile.close();
+			
+			setIntentDataToUi();
+		}
+	}
+	
+	private void setIntentDataToUi(){
+		try{
+			mVideoTitleTv.setText(mContentTitle);
+			mVideoSummaryTextTv.setText(mContentDesc);
+			if(!TextUtils.isEmpty(mContentLikeCount)){
+				mVideoLikeTv.setText(mContentLikeCount);	
+			}
+			
+			if(!TextUtils.isEmpty(mContentViewCount)){
+				mVideoViewTv.setText(mContentViewCount);
+			}
+			
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 
 	@Override

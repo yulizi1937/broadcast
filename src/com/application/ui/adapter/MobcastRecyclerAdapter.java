@@ -30,11 +30,7 @@ import android.widget.ImageView;
 
 import com.application.beans.Mobcast;
 import com.application.ui.view.FlexibleDividerDecoration;
-import com.application.ui.view.MaterialRippleLayout;
-import com.application.ui.view.MaterialRippleLayout.RippleBuilder;
 import com.application.utils.AppConstants;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.mobcast.R;
 
 public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements FlexibleDividerDecoration.VisibilityProvider{
@@ -143,17 +139,42 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 		if (viewHolder instanceof TextViewHolder) {
 //			setAnimation(((TextViewHolder)
 //					viewHolder).mMobcastTextMaterialRootLayout);
+			((TextViewHolder)viewHolder).mMobcastTextViewCountTv.setVisibility(View.GONE);
+			((TextViewHolder)viewHolder).mMobcastTextLikeCountTv.setVisibility(View.GONE);
+			((TextViewHolder)viewHolder).mMobcastTextLinkTv.setVisibility(View.GONE);
 		} else if (viewHolder instanceof ImageViewHolder) {
 			((ImageViewHolder)viewHolder).mMobcastImageRootLayout.setBackgroundColor(mContext.getResources().getColor(R.color.background_unread));
 			((ImageViewHolder)viewHolder).mMobcastImageTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
 			((ImageViewHolder)viewHolder).mMobcastImageIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_image_focus));
+			((ImageViewHolder)viewHolder).mMobcastImageViewCountTv.setVisibility(View.GONE);
+			((ImageViewHolder)viewHolder).mMobcastImageLikeCountTv.setVisibility(View.GONE);
+			((ImageViewHolder)viewHolder).mMobcastImageLinkTv.setVisibility(View.GONE);
 		} else if (viewHolder instanceof VideoViewHolder) {
+			((VideoViewHolder)viewHolder).mMobcastVideoViewCountTv.setVisibility(View.GONE);
+			((VideoViewHolder)viewHolder).mMobcastVideoLikeCountTv.setVisibility(View.GONE);
+			((VideoViewHolder)viewHolder).mMobcastVideoLinkTv.setVisibility(View.GONE);
 		} else if (viewHolder instanceof AudioViewHolder) {
+			((AudioViewHolder)viewHolder).mMobcastAudioViewCountTv.setVisibility(View.GONE);
+			((AudioViewHolder)viewHolder).mMobcastAudioLikeCountTv.setVisibility(View.GONE);
+			((AudioViewHolder)viewHolder).mMobcastAudioLinkTv.setVisibility(View.GONE);
 		} else if (viewHolder instanceof PdfViewHolder) {
+			((PdfViewHolder)viewHolder).mMobcastPdfViewCountTv.setVisibility(View.GONE);
+			((PdfViewHolder)viewHolder).mMobcastPdfLikeCountTv.setVisibility(View.GONE);
+			((PdfViewHolder)viewHolder).mMobcastPdfLinkTv.setVisibility(View.GONE);
 		} else if (viewHolder instanceof DocViewHolder) {
+			((DocViewHolder)viewHolder).mMobcastDocViewCountTv.setVisibility(View.GONE);
+			((DocViewHolder)viewHolder).mMobcastDocLikeCountTv.setVisibility(View.GONE);
+			((DocViewHolder)viewHolder).mMobcastDocLinkTv.setVisibility(View.GONE);
 		} else if (viewHolder instanceof PptViewHolder) {
+			((PptViewHolder)viewHolder).mMobcastPptViewCountTv.setVisibility(View.GONE);
+			((PptViewHolder)viewHolder).mMobcastPptLikeCountTv.setVisibility(View.GONE);
+			((PptViewHolder)viewHolder).mMobcastPptLinkTv.setVisibility(View.GONE);
 		} else if (viewHolder instanceof XlsViewHolder) {
+			((XlsViewHolder)viewHolder).mMobcastXlsViewCountTv.setVisibility(View.GONE);
+			((XlsViewHolder)viewHolder).mMobcastXlsLikeCountTv.setVisibility(View.GONE);
+			((XlsViewHolder)viewHolder).mMobcastXlsLinkTv.setVisibility(View.GONE);
 		} else if (viewHolder instanceof FeedbackViewHolder) {
+			((FeedbackViewHolder)viewHolder).mMobcastFeedbackViewCountTv.setVisibility(View.GONE);
 		} else if (viewHolder instanceof NewsViewHolder) {
 		}
     }
@@ -183,6 +204,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         AppCompatTextView mMobcastTextTitleTv;
         AppCompatTextView mMobcastTextByTv;
         AppCompatTextView mMobcastTextViewCountTv;
+        AppCompatTextView mMobcastTextLikeCountTv;
+        ImageView mMobcastTextLinkTv;
         AppCompatTextView mMobcastTextSummaryTv;
         
         public TextViewHolder(View view) {
@@ -196,6 +219,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastTextTitleTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastTextTitleTv);
             mMobcastTextByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastTextByTv);
             mMobcastTextViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastTextViewCountTv);
+            mMobcastTextLikeCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastTextLikeCountTv);
+            mMobcastTextLinkTv = (ImageView) view.findViewById(R.id.itemRecyclerMobcastTextLinkTv);
             mMobcastTextSummaryTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastTextSummaryTv);
             
             mMobcastTextReadView.setVisibility(View.INVISIBLE);
@@ -225,6 +250,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         AppCompatTextView mMobcastImageTitleTv;
         AppCompatTextView mMobcastImageByTv;
         AppCompatTextView mMobcastImageViewCountTv;
+        AppCompatTextView mMobcastImageLikeCountTv;
+        ImageView mMobcastImageLinkTv;
         
         
         public ImageViewHolder(View view) {
@@ -242,6 +269,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastImageTitleTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastImageTitleTv);
             mMobcastImageByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastImageByTv);
             mMobcastImageViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastImageViewCountTv);
+            mMobcastImageLikeCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastImageLikeCountTv);
+            mMobcastImageLinkTv = (ImageView) view.findViewById(R.id.itemRecyclerMobcastImageLinkTv);
             
             mMobcastImageReadView.setVisibility(View.VISIBLE);
             
@@ -267,6 +296,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         AppCompatTextView mMobcastVideoTitleTv;
         AppCompatTextView mMobcastVideoByTv;
         AppCompatTextView mMobcastVideoViewCountTv;
+        AppCompatTextView mMobcastVideoLikeCountTv;
+        ImageView mMobcastVideoLinkTv;
         AppCompatTextView mMobcastVideoViewDurationTv;
         
         
@@ -284,6 +315,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastVideoTitleTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastVideoTitleTv);
             mMobcastVideoByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastVideoByTv);
             mMobcastVideoViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastVideoViewCountTv);
+            mMobcastVideoLikeCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastVideoLikeCountTv);
+            mMobcastVideoLinkTv = (ImageView) view.findViewById(R.id.itemRecyclerMobcastVideoLinkTv);
             mMobcastVideoViewDurationTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastVideoDurationTv);
             
             mMobcastVideoReadView.setVisibility(View.INVISIBLE);
@@ -308,6 +341,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         AppCompatTextView mMobcastAudioTitleTv;
         AppCompatTextView mMobcastAudioByTv;
         AppCompatTextView mMobcastAudioViewCountTv;
+        AppCompatTextView mMobcastAudioLikeCountTv;
+        ImageView mMobcastAudioLinkTv;
         AppCompatTextView mMobcastAudioViewDurationTv;
         AppCompatTextView mMobcastAudioViewFileNameTv;
         AppCompatTextView mMobcastAudioSummaryTv;
@@ -325,6 +360,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastAudioTitleTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastAudioTitleTv);
             mMobcastAudioByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastAudioByTv);
             mMobcastAudioViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastAudioViewCountTv);
+            mMobcastAudioLikeCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastAudioLikeCountTv);
+            mMobcastAudioLinkTv = (ImageView) view.findViewById(R.id.itemRecyclerMobcastAudioLinkTv);
             mMobcastAudioViewDurationTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastAudioDetailFileInfoDetailTv);
             mMobcastAudioViewFileNameTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastAudioDetailFileInfoNameTv);
             mMobcastAudioSummaryTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastAudioSummaryTv);
@@ -350,6 +387,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         AppCompatTextView mMobcastPdfTitleTv;
         AppCompatTextView mMobcastPdfByTv;
         AppCompatTextView mMobcastPdfViewCountTv;
+        AppCompatTextView mMobcastPdfLikeCountTv;
+        ImageView mMobcastPdfLinkTv;
         AppCompatTextView mMobcastPdfViewFileMetaTv;
         AppCompatTextView mMobcastPdfViewFileNameTv;
         
@@ -366,6 +405,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastPdfTitleTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastPdfTitleTv);
             mMobcastPdfByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastPdfByTv);
             mMobcastPdfViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastPdfViewCountTv);
+            mMobcastPdfLikeCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastPdfLikeCountTv);
+            mMobcastPdfLinkTv = (ImageView) view.findViewById(R.id.itemRecyclerMobcastPdfLinkTv);
             mMobcastPdfViewFileMetaTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastPdfDetailFileInfoDetailTv);
             mMobcastPdfViewFileNameTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastPdfDetailFileInfoNameTv);
             
@@ -390,6 +431,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         AppCompatTextView mMobcastDocTitleTv;
         AppCompatTextView mMobcastDocByTv;
         AppCompatTextView mMobcastDocViewCountTv;
+        AppCompatTextView mMobcastDocLikeCountTv;
+        ImageView mMobcastDocLinkTv;
         AppCompatTextView mMobcastDocViewFileMetaTv;
         AppCompatTextView mMobcastDocViewFileNameTv;
         
@@ -406,6 +449,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastDocTitleTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastDocTitleTv);
             mMobcastDocByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastDocByTv);
             mMobcastDocViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastDocViewCountTv);
+            mMobcastDocLikeCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastDocLikeCountTv);
+            mMobcastDocLinkTv = (ImageView) view.findViewById(R.id.itemRecyclerMobcastDocLinkTv);
             mMobcastDocViewFileMetaTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastDocDetailFileInfoDetailTv);
             mMobcastDocViewFileNameTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastDocDetailFileInfoNameTv);
             
@@ -431,6 +476,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         AppCompatTextView mMobcastPptTitleTv;
         AppCompatTextView mMobcastPptByTv;
         AppCompatTextView mMobcastPptViewCountTv;
+        AppCompatTextView mMobcastPptLikeCountTv;
+        ImageView mMobcastPptLinkTv;
         AppCompatTextView mMobcastPptViewFileMetaTv;
         AppCompatTextView mMobcastPptViewFileNameTv;
         
@@ -447,6 +494,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastPptTitleTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastPptTitleTv);
             mMobcastPptByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastPptByTv);
             mMobcastPptViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastPptViewCountTv);
+            mMobcastPptLikeCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastPptLikeCountTv);
+            mMobcastPptLinkTv = (ImageView) view.findViewById(R.id.itemRecyclerMobcastPptLinkTv);
             mMobcastPptViewFileMetaTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastPptDetailFileInfoDetailTv);
             mMobcastPptViewFileNameTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastPptDetailFileInfoNameTv);
             
@@ -471,6 +520,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         AppCompatTextView mMobcastXlsTitleTv;
         AppCompatTextView mMobcastXlsByTv;
         AppCompatTextView mMobcastXlsViewCountTv;
+        AppCompatTextView mMobcastXlsLikeCountTv;
+        ImageView mMobcastXlsLinkTv;
         AppCompatTextView mMobcastXlsViewFileMetaTv;
         AppCompatTextView mMobcastXlsViewFileNameTv;
         
@@ -487,6 +538,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastXlsTitleTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastXlsTitleTv);
             mMobcastXlsByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastXlsByTv);
             mMobcastXlsViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastXlsViewCountTv);
+            mMobcastXlsLikeCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastXlsLikeCountTv);
+            mMobcastXlsLinkTv = (ImageView) view.findViewById(R.id.itemRecyclerMobcastXlsLinkTv);
             mMobcastXlsViewFileMetaTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastXlsDetailFileInfoDetailTv);
             mMobcastXlsViewFileNameTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastXlsDetailFileInfoNameTv);
             

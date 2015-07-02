@@ -45,6 +45,7 @@ import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
 import com.application.utils.Utilities;
+import com.facebook.stetho.common.Util;
 import com.mobcast.R;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -167,6 +168,9 @@ public class VerificationActivity extends AppCompatActivity {
 		try{
 			mOTP = getIntent().getStringExtra(AppConstants.INTENTCONSTANTS.OTP);
 			mUserName = getIntent().getStringExtra(AppConstants.INTENTCONSTANTS.USERNAME);
+			if(BuildVars.DEBUG_OTP){
+//				Utilities.showCrouton(VerificationActivity.this	, mCroutonViewGroup, mOTP, Style.INFO);
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 			finish();

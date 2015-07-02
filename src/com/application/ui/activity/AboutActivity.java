@@ -75,10 +75,14 @@ public class AboutActivity extends SwipeBackBaseActivity {
 	@Override
 	protected boolean onPrepareOptionsPanel(View view, Menu menu) {
 		// TODO Auto-generated method stub
-		if (isShareOptionEnable) {
-			menu.findItem(R.id.action_share).setVisible(true);
-		} else {
-			menu.findItem(R.id.action_share).setVisible(false);
+		try{
+			if (isShareOptionEnable) {
+				menu.findItem(R.id.action_share).setVisible(true);
+			} else {
+				menu.findItem(R.id.action_share).setVisible(false);
+			}
+		}catch(Exception e){
+			
 		}
 		return super.onPrepareOptionsPanel(view, menu);
 	}
