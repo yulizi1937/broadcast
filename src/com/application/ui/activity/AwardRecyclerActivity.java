@@ -116,7 +116,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		case R.id.action_search:
 			Intent mIntent = new Intent(AwardRecyclerActivity.this,
 					SearchActivity.class);
-			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.AWARDS);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.AWARD);
 			startActivity(mIntent);
 			AndroidUtilities.enterWindowAnimation(AwardRecyclerActivity.this);
 		default:

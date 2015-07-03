@@ -19,6 +19,7 @@ package com.application.ui.fragment;
 import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ import com.application.ui.activity.AudioDetailActivity;
 import com.application.ui.activity.DocDetailActivity;
 import com.application.ui.activity.ImageDetailActivity;
 import com.application.ui.activity.InteractiveDetailActivity;
+import com.application.ui.activity.MotherActivity;
 import com.application.ui.activity.PdfDetailActivity;
 import com.application.ui.activity.PptDetailActivity;
 import com.application.ui.activity.QuizActivity;
@@ -56,11 +58,13 @@ import com.application.utils.ScrollUtils;
 import com.application.utils.Utilities;
 import com.mobcast.R;
 
-public class TrainingRecyclerViewFragment extends BaseFragment {
+public class TrainingRecyclerViewFragment extends BaseFragment implements IFragmentCommunicator{
 	private static final String TAG = TrainingRecyclerViewFragment.class
 			.getSimpleName();
 	public static final String ARG_INITIAL_POSITION = "ARG_INITIAL_POSITION";
 
+	private IActivityCommunicator mActivityCommunicator;
+	
 	private Activity mParentActivity;
 
 	private FrameLayout mEmptyFrameLayout;
@@ -77,6 +81,15 @@ public class TrainingRecyclerViewFragment extends BaseFragment {
 	private ObservableRecyclerView mRecyclerView;
 	private TrainingRecyclerAdapter mAdapter;
 
+	private Context mContext;
+	 @Override
+    public void onAttach(Activity activity){
+      super.onAttach(activity);
+      mContext = getActivity();
+      mActivityCommunicator =(IActivityCommunicator)mContext;
+      ((MotherActivity)mContext).mFragmentCommunicator = this;
+    }
+	 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -124,8 +137,13 @@ public class TrainingRecyclerViewFragment extends BaseFragment {
 				R.string.emptyTrainingTitle));
 		mEmptyMessageTextView.setText(getResources().getString(
 				R.string.emptyTrainingMessage));
-		mSwipeRefreshLayout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.MAGENTA);
-		mSwipeRefreshLayout.setProgressViewOffset(false, 60, 100);
+		mSwipeRefreshLayout.setColorSchemeColors(
+				Color.parseColor(AppConstants.COLOR.MOBCAST_RED),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_YELLOW),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_PURPLE),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_GREEN),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_BLUE));
+		mSwipeRefreshLayout.setProgressViewOffset(false, 75, 120);
 	}
 
 	private void setMaterialRippleView() {
@@ -278,5 +296,14 @@ public class TrainingRecyclerViewFragment extends BaseFragment {
 
 			}
 		});
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.application.ui.fragment.IFragmentCommunicator#passDataToFragment(int, java.lang.String)
+	 */
+	@Override
+	public void passDataToFragment(int mId, String mCategory) {
+		// TODO Auto-generated method stub
+		
 	}
 }

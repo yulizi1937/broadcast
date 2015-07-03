@@ -75,6 +75,7 @@ public class ApplicationDB extends ContentProvider{
 			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARING +" NUMBER DEFAULT 0," );
 			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARE +" NUMBER DEFAULT 0," );
 			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE +" NUMBER DEFAULT 0," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_DOWNLOADABLE +" NUMBER DEFAULT 1," );
 			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_READ_NO +" TEXT ," );
 			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_SHARE_NO +" TEXT ," );
 			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO +" TEXT ," );
@@ -109,6 +110,7 @@ public class ApplicationDB extends ContentProvider{
 			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARING +" NUMBER DEFAULT 0," );
 			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARE +" NUMBER DEFAULT 0," );
 			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE +" NUMBER DEFAULT 0," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_IS_DOWNLOADABLE +" NUMBER DEFAULT 1," );
 			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_READ_NO +" TEXT ," );
 			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_SHARE_NO +" TEXT ," );
 			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO +" TEXT ," );
@@ -815,6 +817,7 @@ public class ApplicationDB extends ContentProvider{
 		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ);
 		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARE, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARE);
 		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARING, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARING);
+		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_DOWNLOADABLE, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_DOWNLOADABLE);
 		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_READ_NO, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_READ_NO);
 		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_SHARE_NO, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_SHARE_NO);
 		mobcastProjectionMap.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO);
@@ -839,6 +842,7 @@ public class ApplicationDB extends ContentProvider{
 		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ);
 		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARE, DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARE);
 		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARING, DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARING);
+		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_DOWNLOADABLE, DBConstant.Training_Columns.COLUMN_TRAINING_IS_DOWNLOADABLE);
 		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_READ_NO, DBConstant.Training_Columns.COLUMN_TRAINING_READ_NO);
 		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_SHARE_NO, DBConstant.Training_Columns.COLUMN_TRAINING_SHARE_NO);
 		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO);

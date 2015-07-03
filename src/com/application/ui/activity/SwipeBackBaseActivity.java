@@ -3,6 +3,8 @@
  */
 package com.application.ui.activity;
 
+import java.io.File;
+
 import android.os.Bundle;
 import android.view.View;
 
@@ -62,6 +64,18 @@ public class SwipeBackBaseActivity extends BaseActivity implements SwipeBackActi
         // TODO Auto-generated method stub
         super.onBackPressed();
         AndroidUtilities.exitWindowAnimation(SwipeBackBaseActivity.this);
+    }
+    
+    protected boolean checkIfFileExists(String mFilePath){
+    	try{
+    		if(new File(mFilePath).exists()){
+    			return true;	
+    		}else{
+    			return false;	
+    		}
+    	}catch(Exception e){
+    		return false;	
+    	}
     }
 }
 

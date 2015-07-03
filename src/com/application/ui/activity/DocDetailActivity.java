@@ -236,7 +236,7 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-//				copyPdfFromAssets();
+				copyPdfFromAssets();
 			}
 		});
 	}

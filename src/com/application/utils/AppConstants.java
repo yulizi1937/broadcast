@@ -62,6 +62,11 @@ public class AppConstants {
 		public static final String countryCode             = "countryCode";
 		public static final String category                = "category";
 		public static final String _id                     = "id";
+		public static final String lastMobcastId           = "lastMobcastId";
+		public static final String lastTrainingId          = "lastTrainingId";
+		public static final String lastEventId             = "lastEventId";
+		public static final String lastAwardId             = "lastAwardId";
+		public static final String lastBirthdayId          = "lastBirthdayId";
 		public static final String mobcast                 = "mobcast";
 		public static final String training                = "training";
 		public static final String chat                    = "chat";
@@ -71,6 +76,7 @@ public class AppConstants {
 		public static final String mobcastId               = "mobcastId";
 		public static final String mobcastTitle            = "mobcastTitle";
 		public static final String mobcastBy               = "mobcastBy";
+		public static final String mobcastDescription      = "mobcastDescription";
 		public static final String mobcastViewCount        = "mobcastViewCount";
 		public static final String mobcastLikeCount        = "mobcastLikeCount";
 		public static final String mobcastDate             = "mobcastDate";
@@ -183,8 +189,8 @@ public class AppConstants {
 		public static final String MOBCAST          = "mobcast";
 		public static final String CHAT             = "chat";
 		public static final String TRAINING         = "training";
-		public static final String AWARDS           = "awards";
-		public static final String EVENTS           = "events";
+		public static final String AWARD            = "award";
+		public static final String EVENT            = "event";
 		public static final String OBJECT           = "object";
 		public static final String ID               = "id";
 	}
@@ -197,6 +203,14 @@ public class AppConstants {
 		public static final String PAGES      = "pages";
 		public static final String FILEPATH   = "filePath";
 		public static final String THUMBPATH  = "ThumbnailPath";
+	}
+	
+	public interface COLOR{
+		public static final String MOBCAST_RED     = "#FD3F1F";
+		public static final String MOBCAST_YELLOW  = "#FFCD00";
+		public static final String MOBCAST_PURPLE  = "#8F46AD";
+		public static final String MOBCAST_GREEN   = "#02B86B";
+		public static final String MOBCAST_BLUE    = "#008CED";
 	}
 	
 	public static final String deviceType = "android";

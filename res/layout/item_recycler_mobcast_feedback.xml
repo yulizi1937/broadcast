@@ -109,6 +109,7 @@
                     android:paddingLeft="2dp"
                     android:paddingRight="8dp"
                     android:paddingTop="2dp"
+                    android:visibility="gone"
                     android:text="@string/sample_item_recycler_mobcast_doc_view_count"
                     android:textColor="@color/toolbar_background"
                     android:textSize="@dimen/event_by_textview_size" />

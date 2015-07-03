@@ -52,6 +52,7 @@ public class DBConstant {
 		public static final String COLUMN_MOBCAST_IS_SHARE            		= "_mobcast_is_share";
 		public static final String COLUMN_MOBCAST_IS_LIKE            		= "_mobcast_is_like";
 		public static final String COLUMN_MOBCAST_IS_SHARING 				= "_mobcast_is_sharing";
+		public static final String COLUMN_MOBCAST_IS_DOWNLOADABLE 		    = "_mobcast_is_downloadable";
 		public static final String COLUMN_MOBCAST_LIKE_NO 				    = "_mobcast_seen_no";
 		public static final String COLUMN_MOBCAST_READ_NO 				    = "_mobcast_read_no";
 		public static final String COLUMN_MOBCAST_SHARE_NO 	     			= "_mobcast_share_no";
@@ -81,6 +82,7 @@ public class DBConstant {
 		public static final String COLUMN_TRAINING_IS_SHARE            		= "_training_is_share";
 		public static final String COLUMN_TRAINING_IS_LIKE            		= "_training_is_like";
 		public static final String COLUMN_TRAINING_IS_SHARING 				= "_training_is_sharing";
+		public static final String COLUMN_TRAINING_IS_DOWNLOADABLE   		= "_training_is_downloadable";
 		public static final String COLUMN_TRAINING_LIKE_NO 				    = "_training_seen_no";
 		public static final String COLUMN_TRAINING_READ_NO 				    = "_training_read_no";
 		public static final String COLUMN_TRAINING_SHARE_NO 	     		= "_training_share_no";

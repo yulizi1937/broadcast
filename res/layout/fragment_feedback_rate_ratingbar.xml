@@ -18,7 +18,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="@string/sample_quiz_selective_radio_title"
+            android:text="@string/sample_feedback_rating_title"
             android:textColor="@android:color/black"
             android:textSize="@dimen/fragment_quiz_selective_quiz_title_size"
             android:textStyle="bold"
@@ -32,7 +32,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/shape_rectange_quiz_box"
-            android:padding="1dp" >
+            android:padding="@dimen/fragment_quiz_selective_quiz_option_padding" >
 
             <android.support.v7.widget.AppCompatRatingBar
                 android:id="@+id/fragmentFeedbackRateRatingBar"
@@ -40,8 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:numStars="@integer/fragment_feedback_ratingbar_stars_count"
-                android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
-                android:stepSize="0.1" />
+                android:stepSize="1" />
         </FrameLayout>
     </LinearLayout>
 

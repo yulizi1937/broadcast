@@ -102,7 +102,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 	public static ArrayList<Mobcast> getDummyMobcastData(int num) {
 		ArrayList<Mobcast> items = new ArrayList<Mobcast>();
-		for (int i = 1; i <= num; i++) {
+		/*for (int i = 1; i <= num; i++) {
 			Mobcast Obj = new Mobcast();
 			if (i % 3 == 0) {
 				Obj.setmFileType(AppConstants.MOBCAST.VIDEO);
@@ -124,6 +124,30 @@ public abstract class BaseActivity extends AppCompatActivity {
 				Obj.setmFileType(AppConstants.MOBCAST.TEXT);
 			}
 			items.add(Obj);
+		}*/
+		
+		for (int i = 0; i <= 15; i++) {
+			Mobcast Obj = new Mobcast();
+			if (i == 0 || i == 8) {
+				Obj.setmFileType(AppConstants.MOBCAST.TEXT);
+			} else if (i == 1 || i == 9) {
+				Obj.setmFileType(AppConstants.MOBCAST.VIDEO);
+			} else if (i == 2 || i == 10) {
+				Obj.setmFileType(AppConstants.MOBCAST.IMAGE);
+			} else if (i == 3 || i == 11) {
+				Obj.setmFileType(AppConstants.MOBCAST.AUDIO);
+			} else if (i == 4 || i == 12) {
+				Obj.setmFileType(AppConstants.MOBCAST.PDF);
+			} else if (i == 5 || i == 13) {
+				Obj.setmFileType(AppConstants.MOBCAST.DOC);
+			} else if (i == 6 || i == 14) {
+				Obj.setmFileType(AppConstants.MOBCAST.XLS);
+			} else if (i == 7 || i == 15) {
+				Obj.setmFileType(AppConstants.MOBCAST.FEEDBACK);
+			} else {
+				Obj.setmFileType(AppConstants.MOBCAST.TEXT);
+			}
+			items.add(Obj);
 		}
 		return items;
 	}
@@ -134,7 +158,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 	public static ArrayList<Training> getDummyTrainingData(int num) {
 		ArrayList<Training> items = new ArrayList<Training>();
-		for (int i = 1; i <= num; i++) {
+/*		for (int i = 1; i <= num; i++) {
 			Training Obj = new Training();
 			if (i % 3 == 0) {
 				Obj.setmFileType(AppConstants.TRAINING.VIDEO);
@@ -152,6 +176,30 @@ public abstract class BaseActivity extends AppCompatActivity {
 				Obj.setmFileType(AppConstants.TRAINING.QUIZ);
 			} else if (i % 23 == 0) {
 				Obj.setmFileType(AppConstants.TRAINING.INTERACTIVE);
+			} else {
+				Obj.setmFileType(AppConstants.TRAINING.TEXT);
+			}
+			items.add(Obj);
+		}*/
+		
+		for (int i = 0; i <= 15; i++) {
+			Training Obj = new Training();
+			if (i == 0 || i == 8) {
+				Obj.setmFileType(AppConstants.TRAINING.TEXT);
+			} else if (i == 1 || i == 9) {
+				Obj.setmFileType(AppConstants.TRAINING.VIDEO);
+			} else if (i == 2 || i == 10) {
+				Obj.setmFileType(AppConstants.TRAINING.IMAGE);
+			} else if (i == 3 || i == 11) {
+				Obj.setmFileType(AppConstants.TRAINING.AUDIO);
+			} else if (i == 4 || i == 12) {
+				Obj.setmFileType(AppConstants.TRAINING.PDF);
+			} else if (i == 5 || i == 13) {
+				Obj.setmFileType(AppConstants.TRAINING.DOC);
+			} else if (i == 6 || i == 14) {
+				Obj.setmFileType(AppConstants.TRAINING.XLS);
+			} else if (i == 7 || i == 15) {
+				Obj.setmFileType(AppConstants.TRAINING.QUIZ);
 			} else {
 				Obj.setmFileType(AppConstants.TRAINING.TEXT);
 			}

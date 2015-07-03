@@ -18,7 +18,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="@string/sample_quiz_selective_radio_title"
+            android:text="@string/sample_feedback_multiple_title"
             android:textColor="@android:color/black"
             android:textSize="@dimen/fragment_quiz_selective_quiz_title_size"
             android:textStyle="bold"
@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:checked="false"
                     android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
-                    android:text="@string/sample_quiz_selective_radio_group_a"
+                    android:text="@string/sample_quiz_multiple_check_group_a"
                     android:textColor="@color/toolbar_background"
                     android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
 
@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:checked="false"
                     android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
-                    android:text="@string/sample_quiz_selective_radio_group_b"
+                    android:text="@string/sample_quiz_multiple_check_group_b"
                     android:textColor="@color/toolbar_background"
                     android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
 
@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:checked="false"
                     android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
-                    android:text="@string/sample_quiz_selective_radio_group_c"
+                    android:text="@string/sample_quiz_multiple_check_group_c"
                     android:textColor="@color/toolbar_background"
                     android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
 
@@ -91,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:checked="false"
                     android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
-                    android:text="@string/sample_quiz_selective_radio_group_d"
+                    android:text="@string/sample_quiz_multiple_check_group_d"
                     android:textColor="@color/toolbar_background"
                     android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
             </RadioGroup>

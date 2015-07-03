@@ -25,9 +25,12 @@ import java.security.MessageDigest;
 import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.spec.RSAPublicKeySpec;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -817,7 +820,9 @@ public class Utilities {
 	
 	@SuppressLint("DefaultLocale") 
 	public static int getMediaType(String mType){
-		if(mType.toLowerCase().equalsIgnoreCase("image")){
+		if(mType.toLowerCase().equalsIgnoreCase("text")){
+			return AppConstants.TYPE.TEXT;
+		}else if(mType.toLowerCase().equalsIgnoreCase("image")){
 			return AppConstants.TYPE.IMAGE;
 		}else if(mType.toLowerCase().equalsIgnoreCase("audio")){
 			return AppConstants.TYPE.AUDIO;
@@ -867,6 +872,152 @@ public class Utilities {
 	         (int) d * 10 / 10 : d + "" // (int) d * 10 / 10 drops the decimal
 	         ) + "" + c[0]) 
 	        : formatCount(String.valueOf(d), 1));
+	}
+	
+	public static boolean isToEncryptFile(int mIntType) {
+		switch (mIntType) {
+		case AppConstants.TYPE.PDF:
+			return false;
+		case AppConstants.TYPE.XLS:
+			return false;
+		case AppConstants.TYPE.DOC:
+			return false;
+		case AppConstants.TYPE.PPT:
+			return false;
+		case AppConstants.TYPE.OTHER:
+			return false;
+		default:
+			return true;
+		}
+	}
+	
+	public static void fbConcealEncryptFile(String TAG,File mPlainFile){
+		try{
+			FBConcealCrypto mCryptography = new FBConcealCrypto(mPlainFile);
+			mCryptography.startEncryption();
+			mCryptography = null;
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	public static String fbConcealDecryptFile(String TAG, File mEncryptedFile) {
+		try{
+			String mDecryptedPath = null;
+			FBConcealCrypto mCryptography = new FBConcealCrypto(mEncryptedFile);
+			mCryptography.startDecryption();
+			mCryptography = null;
+			return mDecryptedPath;
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+			return null;
+		}
+	}
+	
+	public static String formatBy(String mBy, String mDate, String mTime){
+		try{
+			StringBuilder strBuilder = new StringBuilder();
+			strBuilder.append(ApplicationLoader.getApplication().getResources().getString(R.string.content_by));
+			strBuilder.append(" " + mBy + " - ");
+			strBuilder.append(getByDateTime(mDate, mTime));
+			return strBuilder.toString();
+		}catch(Exception e){
+			return "By : " +mBy;
+		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	@SuppressLint("SimpleDateFormat") 
+	public static String getByDateTime(String mDate, String mTime) {
+		try {
+			SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat dateFormatterWithYear = new SimpleDateFormat("MMM dd yyyy");
+			SimpleDateFormat dateFormatterWithOutYear = new SimpleDateFormat("MMM dd");
+			Date todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
+			Date contentDate = dateFormatter.parse(mDate);
+
+			SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss");
+			Date todayTime = timeFormatter.parse(timeFormatter.format(new Date()));
+			Date contentTime = timeFormatter.parse(mTime);
+
+			if (todayDate.getYear() == contentDate.getYear()) {
+				Calendar currentCalendar = Calendar.getInstance();
+				currentCalendar.setTime(todayDate);
+				Calendar targetCalendar = Calendar.getInstance();
+				targetCalendar.setTime(contentDate);
+
+				int currentWeek = currentCalendar.get(Calendar.DAY_OF_YEAR);
+				int targetWeek = targetCalendar.get(Calendar.DAY_OF_YEAR);
+				int numberOfDays = Math.abs(currentWeek - targetWeek);
+
+				if (todayDate.getMonth() == contentDate.getMonth()) {
+					if (todayDate.getDate() == contentDate.getDate()) {
+						int todayHours = todayTime.getHours();
+						int contentHours = contentTime.getHours();
+						int todayMinutes = todayTime.getMinutes();
+						int contentMinutes = contentTime.getMinutes();
+						if (todayHours == contentHours
+								|| (Math.abs(todayHours - contentHours) == 1 && todayMinutes < contentMinutes)) {
+							int todaySeconds = todayTime.getSeconds();
+							int contentSeconds = contentTime.getSeconds();
+
+							if (todayMinutes == contentMinutes
+									|| (Math.abs((todayMinutes - contentMinutes)) == 1 && todaySeconds < contentSeconds)) {
+								if (todaySeconds >= contentSeconds)
+									return todaySeconds - contentSeconds
+											+ " secs ago";
+								else
+									return todaySeconds + 60 - contentSeconds
+											+ " secs ago";
+							} else {
+								if (todayMinutes >= contentMinutes)
+									return todayMinutes - contentMinutes
+											+ " mins ago";
+								else
+									return todayMinutes + 60 - contentMinutes
+											+ " mins ago";
+							}
+						} else {
+							if (Math.abs(todayHours - contentHours) != 1)
+								return Math.abs(todayHours - contentHours)
+										+ " hours ago";
+							else
+								return "1 hour ago";
+						}
+					} else if (numberOfDays < 7) // check if same week
+					{
+						if (numberOfDays == 1)
+							return "Yesterday";
+
+						String dayOfWeek = new SimpleDateFormat("EEEE",
+								Locale.ENGLISH).format(contentDate);
+						return dayOfWeek;
+					} else {
+						return dateFormatterWithOutYear.format(contentDate);
+					}
+				} else {
+					if (numberOfDays < 7) // check if same week if different
+											// month
+					{
+						if (numberOfDays == 1)
+							return "Yesterday";
+
+						String dayOfWeek = new SimpleDateFormat("EEEE",
+								Locale.ENGLISH).format(contentDate);
+						return dayOfWeek;
+					}
+					return dateFormatterWithOutYear.format(contentDate);
+				}
+			} else {
+				return dateFormatterWithYear.format(contentDate);
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception ex) {
+			FileLog.e(TAG, ex.toString());
+		}
+		return null;
 	}
 	
 

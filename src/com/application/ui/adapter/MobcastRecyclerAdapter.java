@@ -69,6 +69,11 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             return mArrayListMobcast.size() + 1;
         }
     }
+    
+    public void addMobcastObjList(ArrayList<Mobcast> mArrayListMobcast){
+    	this.mArrayListMobcast = mArrayListMobcast;
+    	notifyDataSetChanged();
+    }
 
     @Override
     public int getItemViewType(int position) {

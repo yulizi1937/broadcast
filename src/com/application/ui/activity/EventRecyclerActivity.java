@@ -115,7 +115,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 	        	return true;
 	        case R.id.action_search:
 	        	Intent mIntent = new Intent(EventRecyclerActivity.this, SearchActivity.class);
-	        	mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.EVENTS);
+	        	mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.EVENT);
 	        	startActivity(mIntent);
 	        	AndroidUtilities.enterWindowAnimation(EventRecyclerActivity.this);
 	        default:

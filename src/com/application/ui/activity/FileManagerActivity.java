@@ -47,6 +47,7 @@ import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
 import com.application.ui.view.SharedDocumentCell;
 import com.application.utils.AndroidUtilities;
+import com.application.utils.AppConstants;
 import com.application.utils.FileLog;
 import com.application.utils.LocaleController;
 import com.application.utils.Utilities;
@@ -515,7 +516,7 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 		String extStorage = Environment.getExternalStorageDirectory()
 				.getAbsolutePath();
 		ListItem ext = new ListItem();
-		if (Build.VERSION.SDK_INT < 9
+		/*if (Build.VERSION.SDK_INT < 9
 				|| Environment.isExternalStorageRemovable()) {
 			ext.title = LocaleController.getString("SdCard", R.string.SdCard);
 		} else {
@@ -577,18 +578,18 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 			}
 		} catch (Exception e) {
 			FileLog.e("tmessages", e);
-		}
+		}*/
 		ListItem fs = new ListItem();
-		fs.title = "/";
+		/*fs.title = "/";
 		fs.subtitle = LocaleController.getString("SystemRoot",
 				R.string.SystemRoot);
 		fs.icon = R.drawable.ic_directory;
 		fs.file = new File("/");
-		items.add(fs);
+		items.add(fs);*/
 
 		try {
 			File telegramPath = new File(
-					Environment.getExternalStorageDirectory(), ".con/.mobcast");
+					Environment.getExternalStorageDirectory(), AppConstants.FOLDER.BUILD_FOLDER);
 			if (telegramPath.exists()) {
 				fs = new ListItem();
 				fs.title = "Mobcast";

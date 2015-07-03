@@ -137,15 +137,17 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 
 	private void setFeedbackViewPager() {
 		mArrayListFeedbackPagerInfo = new ArrayList<FeedbackPagerInfo>();
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < 5; i++) {
 			FeedbackPagerInfo Obj = new FeedbackPagerInfo();
 			Obj.setmFeedbackId("1");
-			if (i % 2 == 0) {
-				Obj.setmFeedbackType("selective");
-			} else if (i % 3 == 0) {
-				Obj.setmFeedbackType("multiple");
-			} else if (i % 5 == 0) {
+			if (i == 0) {
 				Obj.setmFeedbackType("subjective");
+			} else if (i == 1) {
+				Obj.setmFeedbackType("selective");
+			} else if (i == 2) {
+				Obj.setmFeedbackType("multiple");
+			} else if (i == 3) {
+				Obj.setmFeedbackType("selective");
 			} else {
 				Obj.setmFeedbackType("rating");
 			}

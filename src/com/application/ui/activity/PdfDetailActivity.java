@@ -238,7 +238,7 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-//				copyPdfFromAssets();// HDFC
+				copyPdfFromAssets();// HDFC
 			}
 		});
 	}

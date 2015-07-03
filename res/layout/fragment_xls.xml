@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:gravity="start|center"
-                android:text="@string/sample_event_title"
+                android:text="@string/sample_item_recycler_mobcast_xls_title"
                 android:textColor="@color/toolbar_background"
                 android:textSize="@dimen/event_title_textview_size"
                 android:textStyle="bold" />
@@ -214,7 +214,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/fragment_detail_title_by_content_margin_top"
                 android:gravity="start|center"
-                android:text="@string/sample_event_summary"
+                android:text="@string/sample_item_recycler_mobcast_xls_desc"
                 android:textColor="@color/toolbar_background"
                 android:textSize="@dimen/event_detail_event_summary_size" />
         </LinearLayout>

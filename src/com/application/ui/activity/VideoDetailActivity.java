@@ -3,6 +3,7 @@
  */
 package com.application.ui.activity;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
@@ -10,6 +11,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
@@ -22,7 +25,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.TextureView;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -115,6 +117,8 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	private String mContentLink;
 	private String mContentFileLink;
 	private String mContentFilePath;
+	private String mContentFileThumbLink;
+	private String mContentFileThumbPath;
 	private String mContentLanguage;
 	private String mContentDate;
 	private String mContentTime;
@@ -136,7 +140,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		getIntentData();
 		initUiWithData();
 		initAnimation();
-		initVideoPlayer();
+//		initVideoPlayer();
 		setUiListener();
 	}
 
@@ -269,19 +273,27 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 
 	private void getIntentData(){
 		mIntent = getIntent();
-		Cursor mCursor = null;
-		mId = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.ID);
-		mCategory = mIntent.getStringArrayExtra(AppConstants.INTENTCONSTANTS.CATEGORY).toString();
-		if(!TextUtils.isEmpty(mId) && !TextUtils.isEmpty(mCategory)){
-			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
-				mCursor = getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "?=", new String[]{mId}, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + " DESC");
-				getDataFromDBForMobcast(mCursor);
+		try{
+			if(mIntent!=null){
+				Cursor mCursor = null;
+				mId = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.ID);
+				mCategory = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY).toString();
+				if(!TextUtils.isEmpty(mId) && !TextUtils.isEmpty(mCategory)){
+					if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+						mCursor = getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId}, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + " DESC");
+						getDataFromDBForMobcast(mCursor);
+					}else{
+						mCursor = getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, null, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId}, DBConstant.Training_Columns.COLUMN_TRAINING_ID + " DESC");
+					}
+					if(mCursor!=null){
+						mCursor.close();
+					}
+				}
 			}else{
-				mCursor = getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, null, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "?=", new String[]{mId}, DBConstant.Training_Columns.COLUMN_TRAINING_ID + " DESC");
+				initVideoPlayer("dummy");
 			}
-			if(mCursor!=null){
-				mCursor.close();
-			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 	
@@ -303,7 +315,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 			mContentDate = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE));
 			mContentTime = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME));
 			
-			Cursor mCursorFile = getContentResolver().query(DBConstant.Mobcast_File_Columns.CONTENT_URI, null, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID+"?=", new String[]{mId}, DBConstant.Mobcast_File_Columns.COLUMN_ID + " ASC");
+			Cursor mCursorFile = getContentResolver().query(DBConstant.Mobcast_File_Columns.CONTENT_URI, null, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID+"=?", new String[]{mId}, DBConstant.Mobcast_File_Columns.COLUMN_ID + " ASC");
 			if(mCursorFile!=null && mCursorFile.getCount() > 0){
 				mCursorFile.moveToFirst();
 				do {
@@ -314,6 +326,8 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 						mContentFilePath = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH));
 						mContentFileLink = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LINK));
 						mContentLanguage = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG));
+						mContentFileThumbLink = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_LINK));
+						mContentFileThumbPath = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_PATH));
 					}
 				} while (mCursorFile.moveToNext());
 				
@@ -337,6 +351,28 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 				mVideoViewTv.setText(mContentViewCount);
 			}
 			
+			mVideoByTv.setText(Utilities.formatBy(mContentBy, mContentDate, mContentTime));
+			
+			if(TextUtils.isEmpty(mContentLink)){
+				mVideoNewsLinkLayout.setVisibility(View.GONE);
+			}
+			
+			if(mContentLanguageList!=null && mContentLanguageList.size() > 1){
+				setLanguageChipsLayout(mContentLanguageList);
+			}else{
+				mLanguageLinearLayout.setVisibility(View.GONE);
+			}
+			
+			if(checkIfFileExists(mContentFilePath)){
+				mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
+				if(!TextUtils.isEmpty(mContentFilePath)){
+					initVideoPlayer(mContentFilePath);	
+				}
+			}
+			
+			if(checkIfFileExists(mContentFileThumbPath)){
+				mVideoCoverIv.setImageURI(Uri.parse(mContentFileThumbPath));
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -354,9 +390,10 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		super.onDestroy();
 	}
 
-	private void initVideoPlayer() {
-		mVideoView.setVideoPath("android.resource://" + getPackageName()
-				+ "/raw/hdfcconverted");
+	private void initVideoPlayer(String mVideoPath) {
+//			mVideoView.setVideoPath("android.resource://" + getPackageName()
+//			+ "/raw/hdfcconverted");
+		mVideoView.setVideoPath(mVideoPath);
 		mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 			@Override
 			public void onPrepared(MediaPlayer mp) {
@@ -386,6 +423,17 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 							}
 
 						});
+				
+				mVideoView.setOnCompletionListener(new OnCompletionListener() {
+					@Override
+					public void onCompletion(MediaPlayer mediaPlayer) {
+						// TODO Auto-generated method stub
+						mVideoDescFrameLayout.setVisibility(View.VISIBLE);
+						mVideoCoverIv.setVisibility(View.VISIBLE);
+						mVideoPlayIv.setVisibility(View.VISIBLE);
+					}
+				});
+				
 				runOnSeekBarThread();
 			}
 		});
@@ -490,7 +538,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		setOnClickListener();
 		setOnTouchListener();
 		setSeekBarListener();
-		setLanguageChipsLayout();
+//		setLanguageChipsLayout();
 	}
 
 	private void setOnClickListener() {
@@ -540,19 +588,20 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		});
 	}
 
-	private void setLanguageChipsLayout() {
+	private void setLanguageChipsLayout(final ArrayList<String> mContentLanguageList) {
 		mLanguageLinearLayout.setVisibility(View.VISIBLE);
 		FlowLayout.LayoutParams params = new FlowLayout.LayoutParams(
 				FlowLayout.LayoutParams.WRAP_CONTENT,
 				FlowLayout.LayoutParams.WRAP_CONTENT);
 		params.setMargins(2, 2, 2, 2);
-		final String[] mLanguages = new String[] { "English", "Hindi",
+		/*final String[] mLanguages = new String[] { "English", "Hindi",
 				"Marathi", "Gujarati", "Bengali", "Telugu", "Kannad",
-				"Punjabi", "Siddhi", "Bhojpuri" };
+				"Punjabi", "Siddhi", "Bhojpuri" };*/
 		for (int i = 0; i < 3; i++) {
 			ChipsLayout mChip = new ChipsLayout(this);
 			mChip.setDrawable(R.drawable.ic_chips_download);
-			mChip.setText(mLanguages[i]);
+//			mChip.setText(mLanguages[i]);
+			mChip.setText(mContentLanguageList.get(i));
 			mChip.setLayoutParams(params);
 			final int j = i;
 			mChip.getChipLayout().setOnClickListener(new View.OnClickListener() {
@@ -560,7 +609,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 				public void onClick(View view) {
 					// TODO Auto-generated method stub
 					 Utilities.showCrouton(VideoDetailActivity.this,
-					 mCroutonViewGroup, mLanguages[j], Style.INFO);
+					 mCroutonViewGroup, mContentLanguageList.get(j).toString(), Style.INFO);
 				}
 			});
 			mLanguageFlowLayout.addView(mChip);

@@ -286,6 +286,19 @@ public class AppPreferences {
 				"9:00 am");
 		return mBirthdayNotifyAt;
 	}
+	
+	public void setDownloadAndNotify(boolean mDownloadAndNotify) {
+		editor = sharedPreferences.edit();
+		editor.putBoolean("mDownloadAndNotify", mDownloadAndNotify);
+		editor.commit();
+	}
+
+	public boolean getDownloadAndNotify() {
+		boolean mDownloadAndNotify= sharedPreferences.getBoolean("mDownloadAndNotify",
+				true);
+		return mDownloadAndNotify;
+	}
+	
 	public void setChatSound(boolean mChatSound) {
 		editor = sharedPreferences.edit();
 		editor.putBoolean("mChatSound", mChatSound);
@@ -297,6 +310,69 @@ public class AppPreferences {
 				false);
 		return mChatSound;
 	}
+
+	/*
+	 * Last id : Mobcast, Training, Event, Award & Birthday
+	 */
+
+	public void setLastIdMobcast(String mLastIdMobcast) {
+		editor = sharedPreferences.edit();
+		editor.putString("mLastIdMobcast", mLastIdMobcast);
+		editor.commit();
+	}
+
+	public String getLastIdMobcast() {
+		String mLastIdMobcast= sharedPreferences.getString("mLastIdMobcast","0");
+		return mLastIdMobcast;
+	}
+	
+	public void setLastIdTraining(String mLastIdTraining) {
+		editor = sharedPreferences.edit();
+		editor.putString("mLastIdTraining", mLastIdTraining);
+		editor.commit();
+	}
+
+	public String getLastIdTraining() {
+		String mLastIdTraining= sharedPreferences.getString("mLastIdTraining","0");
+		return mLastIdTraining;
+	}
+	
+	public void setLastIdEvent(String mLastIdEvent) {
+		editor = sharedPreferences.edit();
+		editor.putString("mLastIdEvent", mLastIdEvent);
+		editor.commit();
+	}
+
+	public String getLastIdEvent() {
+		String mLastIdEvent= sharedPreferences.getString("mLastIdEvent","0");
+		return mLastIdEvent;
+	}
+	
+	public void setLastIdAward(String mLastIdAward) {
+		editor = sharedPreferences.edit();
+		editor.putString("mLastIdAward", mLastIdAward);
+		editor.commit();
+	}
+
+	public String getLastIdAward() {
+		String mLastIdAward= sharedPreferences.getString("mLastIdAward","0");
+		return mLastIdAward;
+	}
+	
+	public void setLastIdBirthday(String mLastIdBirthday) {
+		editor = sharedPreferences.edit();
+		editor.putString("mLastIdBirthday", mLastIdBirthday);
+		editor.commit();
+	}
+
+	public String getLastIdBirthday() {
+		String mLastIdBirthday= sharedPreferences.getString("mLastIdBirthday","0");
+		return mLastIdBirthday;
+	}
+	
+	/*
+	 * clear Preferences
+	 */
 	
 	public void clearPreferences() {
 		SharedPreferences preferences = ApplicationLoader.getPreferences().getAppPreferences();
@@ -304,4 +380,6 @@ public class AppPreferences {
 		editor.clear();
 		editor.commit();
 	}
+	
+	
 }

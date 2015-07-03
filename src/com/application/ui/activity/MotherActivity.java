@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.SearchManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -19,7 +21,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -42,8 +43,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.application.beans.MotherHeader;
+import com.application.sqlite.DBConstant;
 import com.application.ui.adapter.MotherPagerAdapter;
 import com.application.ui.calligraphy.CalligraphyContextWrapper;
+import com.application.ui.fragment.IActivityCommunicator;
+import com.application.ui.fragment.IFragmentCommunicator;
 import com.application.ui.view.CircleImageView;
 import com.application.ui.view.DrawerArrowDrawable;
 import com.application.ui.view.ScrimInsetsFrameLayout;
@@ -52,6 +56,7 @@ import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.FileLog;
+import com.application.utils.NotificationsController;
 import com.application.utils.ObservableScrollViewCallbacks;
 import com.application.utils.ScrollState;
 import com.application.utils.ScrollUtils;
@@ -66,7 +71,7 @@ import com.nineoldandroids.view.ViewPropertyAnimator;
  * 
  */
 public class MotherActivity extends BaseActivity implements
-		ObservableScrollViewCallbacks {
+		ObservableScrollViewCallbacks,IActivityCommunicator {
 	/*
 	 * Drawer
 	 */
@@ -102,6 +107,8 @@ public class MotherActivity extends BaseActivity implements
 	private MotherPagerAdapter mPagerAdapter;
 
 	private ArrayList<MotherHeader> mArrayListMotherHeader;
+	
+	public IFragmentCommunicator mFragmentCommunicator;
 
 	private static final String TAG = MotherActivity.class.getSimpleName();
 
@@ -116,6 +123,24 @@ public class MotherActivity extends BaseActivity implements
 		propagateToolbarState(toolbarIsShown());
 		setDrawerLayout();
 	}
+	
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		unregisterReceiver(mBroadCastReceiver);
+	}
+
+
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		registerReceiver(mBroadCastReceiver, new IntentFilter(NotificationsController.BROADCAST_ACTION));
+	}
+
 
 	@SuppressLint("NewApi")
 	@Override
@@ -354,6 +379,45 @@ public class MotherActivity extends BaseActivity implements
 				});
 	}
 
+	private BroadcastReceiver mBroadCastReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent mIntent) {
+				String mCategory = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY);
+			if (mCategory
+					.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)
+					|| mCategory
+							.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)) {
+					notifySlidingTabLayoutChange();
+				notifyFragmentWithIdAndCategory(
+						mIntent.getIntExtra(AppConstants.INTENTCONSTANTS.ID, -1),
+						mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY));
+				}
+			try {
+			} catch (Exception e) {
+				Log.i(TAG, e.toString());
+			}
+		}
+	};
+	
+	private void notifySlidingTabLayoutChange(){
+		
+		mArrayListMotherHeader.get(0).setmIsUnread(getUnreadOfMobcast() > 0 ? true : false);
+		mArrayListMotherHeader.get(2).setmIsUnread(getUnreadOfTraining() > 0 ? true : false);
+		
+		mArrayListMotherHeader.get(0).setmUnreadCount(String.valueOf(getUnreadOfMobcast()));
+		mArrayListMotherHeader.get(2).setmUnreadCount(String.valueOf(getUnreadOfTraining()));
+		
+		mPagerAdapter.notifyDataSetChanged(mArrayListMotherHeader);
+		
+		mSlidingTabLayout.notifyDataSetChanged(mPager);
+	}
+	
+	private void notifyFragmentWithIdAndCategory(int mId, String mCategory){
+		if (mId != -1) {
+			mFragmentCommunicator.passDataToFragment(mId, mCategory);
+		}
+	}
+	
 	@SuppressLint("InflateParams")
 	private Drawable buildCounterDrawable(int count, int backgroundImageId) {
 		LayoutInflater inflater = LayoutInflater.from(this);
@@ -398,24 +462,56 @@ public class MotherActivity extends BaseActivity implements
 		mArrayListMotherHeader = new ArrayList<MotherHeader>();
 
 		MotherHeader obj1 = new MotherHeader();
-		obj1.setmIsUnread(true);
+		int mUnreadCountMobcast = getUnreadOfMobcast();
+		if(mUnreadCountMobcast > 0){
+			obj1.setmIsUnread(true);
+		}else{
+			obj1.setmIsUnread(false);
+		}
 		obj1.setmTitle(getResources().getString(R.string.layout_mother_mobcast));
-		obj1.setmUnreadCount("2");
+		obj1.setmUnreadCount(String.valueOf(mUnreadCountMobcast));
 		mArrayListMotherHeader.add(obj1);
 
-/*		MotherHeader obj2 = new MotherHeader();
+		MotherHeader obj2 = new MotherHeader();
 		obj2.setmIsUnread(false);
 		obj2.setmTitle(getResources().getString(R.string.layout_mother_chat));
 		obj2.setmUnreadCount("0");
 		mArrayListMotherHeader.add(obj2);
-*/
+
 		MotherHeader obj3 = new MotherHeader();
-		obj3.setmIsUnread(true);
+		int mUnreadCountTraining = getUnreadOfTraining();
+		if(mUnreadCountTraining > 0){
+			obj3.setmIsUnread(true);
+		}else{
+			obj3.setmIsUnread(false);	
+		}
 		obj3.setmTitle(getResources().getString(R.string.layout_mother_training));
-		obj3.setmUnreadCount("4");
+		obj3.setmUnreadCount(String.valueOf(mUnreadCountTraining));
 		mArrayListMotherHeader.add(obj3);
 
 		return mArrayListMotherHeader;
+	}
+	
+	private int getUnreadOfMobcast(){
+		Cursor mCursor = getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ + "=?", new String[]{"false"}, null);
+		if(mCursor!=null && mCursor.getCount() > 0){
+			return mCursor.getCount();
+		}
+		if(mCursor!=null){
+			mCursor.close();
+		}
+		return 0;
+	}
+	
+	private int getUnreadOfTraining(){
+		Cursor mCursor = getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, null, DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ + "=?", new String[]{"false"}, null);
+		if(mCursor!=null && mCursor.getCount() > 0){
+			return mCursor.getCount();
+		}
+		if(mCursor!=null){
+			mCursor.close();
+		}
+		return 0;
 	}
 
 	@Override
@@ -585,7 +681,14 @@ public class MotherActivity extends BaseActivity implements
 		}
 		propagateToolbarState(false);
 	}
-
+	
+	/*
+	 * Activity-Fragment : Communicator
+	 */
+	@Override
+	public void passDataToActivity(int mId,String mCategory) {
+		// TODO Auto-generated method stub
+	}
 	/*
 	 * Drawer Initilization
 	 */

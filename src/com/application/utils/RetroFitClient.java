@@ -4,13 +4,13 @@
 package com.application.utils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 
-import android.app.Activity;
 import android.util.Log;
 
 import com.facebook.stetho.okhttp.StethoInterceptor;
@@ -89,7 +89,7 @@ public class RetroFitClient {
 	}
 	
 	public static boolean downloadFileWith(OkHttpClient okHttpClient, String url,
-			String filePath, boolean isEncrypt, String TAG) {
+			String filePath, boolean isThumbnail, boolean isEncrypt,String TAG) {
 		try {
 			long startMilliSeconds = System.currentTimeMillis();
 			Request request = new Request.Builder().url(url).build();
@@ -112,6 +112,9 @@ public class RetroFitClient {
 							fos.flush();
 							fos.close();
 							is.close();
+							if(isEncrypt){
+								Utilities.fbConcealEncryptFile(TAG, new File(filePath));
+							}
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -137,4 +140,5 @@ public class RetroFitClient {
 		}
 		return false;
 	}
+	
 }

@@ -26,14 +26,16 @@ public class FeedbackSelectiveRadioFragment extends Fragment {
 	private RadioGroup mFeedbackRadioGroup;
 	
 	private AppCompatTextView mFeedbackTitleTv;
+	private int mPosition;
 	
 	private AppCompatRadioButton mFeedbackOptionARadioButton;
 	private AppCompatRadioButton mFeedbackOptionBRadioButton;
 	private AppCompatRadioButton mFeedbackOptionCRadioButton;
 	private AppCompatRadioButton mFeedbackOptionDRadioButton;
 	
-	public static FeedbackSelectiveRadioFragment newInstance() {
+	public static FeedbackSelectiveRadioFragment newInstance(int mPosition) {
 		FeedbackSelectiveRadioFragment fragment = new FeedbackSelectiveRadioFragment();
+		fragment.mPosition = mPosition;
         return fragment;
     }
 	
@@ -61,10 +63,21 @@ public class FeedbackSelectiveRadioFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onResume();
 		setUiListener();
+		setUiWithData();
 	}
 	
 	private void setUiListener(){
 		setRadioGroupListener();
+	}
+	
+	private void setUiWithData(){
+		if(mPosition == 3){
+			mFeedbackTitleTv.setText(getResources().getString(R.string.sample_feedback_selective_title));
+			mFeedbackOptionARadioButton.setText(getResources().getString(R.string.sample_quiz_selective_radio_group_aa));
+			mFeedbackOptionBRadioButton.setText(getResources().getString(R.string.sample_quiz_selective_radio_group_ab));
+			mFeedbackOptionCRadioButton.setText(getResources().getString(R.string.sample_quiz_selective_radio_group_ac));
+			mFeedbackOptionDRadioButton.setText(getResources().getString(R.string.sample_quiz_selective_radio_group_ad));
+		}
 	}
 	
 	private void setRadioGroupListener(){
