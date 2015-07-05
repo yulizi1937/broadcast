@@ -454,8 +454,19 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 				mSwipeRefreshLayout.setRefreshing(true);
 				mCursor.moveToFirst();
 				addMobcastObjectListFromDBToBeans(mCursor, false);
-				mAdapter.addMobcastObjList(mArrayListMobcast);
-				mSwipeRefreshLayout.setRefreshing(false);
+				AndroidUtilities.runOnUIThread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						if(mAdapter!=null){
+							mAdapter.addMobcastObjList(mArrayListMobcast);
+						}else{
+							mAdapter = new MobcastRecyclerAdapter(mContext, mArrayListMobcast, headerView);
+						}
+						mSwipeRefreshLayout.setRefreshing(false);
+					}
+				}, 1000);
+				
 			}
 			
 			if(mCursor!=null)

@@ -477,7 +477,8 @@ public class BottomSheet extends Dialog implements DialogInterface {
         }
     }
 
-    @SuppressLint("NewApi") private void showFullItems() {
+    @SuppressLint("NewApi") 
+    private void showFullItems() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Transition changeBounds = new ChangeBounds();
             changeBounds.setDuration(300);

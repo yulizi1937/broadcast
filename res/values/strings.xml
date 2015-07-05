@@ -85,6 +85,10 @@
     <!-- activity_facebook_conceal -->
     <string name="button_encrypt">Encrypt</string>
     <string name="button_decrypt">Decrypt</string>
+    <string name="close">Close</string>
+    <string name="view">View</string>
+    <string name="new_notifications">New</string>
+    <string name="notification_title">Notification</string>
 
     <!-- activity_country_select -->
     <string name="CountrySelectActivityTitle">Choose Country</string>

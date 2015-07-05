@@ -38,13 +38,13 @@ public class AnyDoNotificationService extends IntentService {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				/*Intent intent = new Intent();
+				Intent intent = new Intent();
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				ComponentName cn = new ComponentName(ApplicationLoader
 						.getApplication(), AnyDoNotificationActivity.class);
 				intent.setComponent(cn);
-				startActivity(intent);*/
+				startActivity(intent);
 			}
-		}, 20000);
+		}, 6000);
 	}
 }

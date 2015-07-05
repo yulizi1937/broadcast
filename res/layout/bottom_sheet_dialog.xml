@@ -1,50 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <com.application.ui.view.ClosableSlidingLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content" >
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:background="?bs_dialogBackground"
-        tools:ignore="Overdraw"
-        android:layout_gravity="bottom">
+        android:orientation="vertical"
+        tools:ignore="Overdraw" >
 
-        <View
-            style="@style/BottomSheet.TopDivider" />
+        <View style="@style/BottomSheet.TopDivider" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
-            tools:ignore="UseCompoundDrawables">
-            
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables" >
+
             <ImageView
                 android:id="@+id/bottom_sheet_title_image"
+                style="@style/BottomSheet.Icon"
                 android:visibility="gone"
-                tools:ignore="ContentDescription"
-                style="@style/BottomSheet.Icon" />
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/bottom_sheet_title"
-                android:visibility="gone"
-                style="@style/BottomSheet.Title" />
-            
+                style="@style/BottomSheet.Title"
+                android:visibility="gone" />
         </LinearLayout>
 
         <com.application.ui.view.PinnedSectionGridView
+            android:id="@+id/bottom_sheet_gridview"
+            style="?bs_listStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/bottom_sheet_gridview"
-            android:numColumns="?bs_numColumns"
             android:fadingEdge="none"
-            style="?bs_listStyle"
+            android:numColumns="?bs_numColumns"
             tools:listitem="@layout/bs_grid_entry" />
-
     </LinearLayout>
 
 </com.application.ui.view.ClosableSlidingLayout>

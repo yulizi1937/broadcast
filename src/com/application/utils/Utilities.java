@@ -905,7 +905,7 @@ public class Utilities {
 		try{
 			String mDecryptedPath = null;
 			FBConcealCrypto mCryptography = new FBConcealCrypto(mEncryptedFile);
-			mCryptography.startDecryption();
+			mDecryptedPath = mCryptography.startDecryption();
 			mCryptography = null;
 			return mDecryptedPath;
 		}catch(Exception e){
