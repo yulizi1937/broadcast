@@ -20,11 +20,19 @@ import java.util.ArrayList;
 
 import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
@@ -34,6 +42,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,14 +65,23 @@ import com.application.ui.activity.XlsDetailActivity;
 import com.application.ui.adapter.MobcastRecyclerAdapter;
 import com.application.ui.adapter.MobcastRecyclerAdapter.OnItemClickListener;
 import com.application.ui.view.HorizontalDividerItemDecoration;
+import com.application.ui.view.MobcastProgressDialog;
 import com.application.ui.view.ObservableRecyclerView;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.ApplicationLoader;
+import com.application.utils.BuildVars;
 import com.application.utils.FileLog;
+import com.application.utils.JSONRequestBuilder;
 import com.application.utils.ObservableScrollViewCallbacks;
+import com.application.utils.RestClient;
+import com.application.utils.RetroFitClient;
 import com.application.utils.ScrollUtils;
 import com.application.utils.Utilities;
+import com.facebook.network.connectionclass.ConnectionClassManager;
+import com.facebook.network.connectionclass.ConnectionQuality;
 import com.mobcast.R;
+import com.squareup.okhttp.OkHttpClient;
 
 public class MobcastRecyclerViewFragment extends BaseFragment implements IFragmentCommunicator{
 	private static final String TAG = MobcastRecyclerViewFragment.class
@@ -89,7 +107,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	private MobcastRecyclerAdapter mAdapter;
 	
 	private ArrayList<Mobcast> mArrayListMobcast;
-
+	
 	private Context mContext;
 	 @Override
      public void onAttach(Activity activity){
@@ -128,6 +146,8 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		mRecyclerView
 		.setLayoutManager(new LinearLayoutManager(mParentActivity));
 		
+		ApplicationLoader.getPreferences().setViewIdMobcast("-1");
+		
 		checkDataInAdapter();
 
 		setSwipeRefreshLayoutCustomisation();
@@ -138,6 +158,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		checkReadFromDBAndUpdateToObj();
 		setUiListener();
 	}
 
@@ -146,6 +167,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		setRecyclerScrollListener();
 		setSwipeRefreshListener();
 		setMaterialRippleView();
+		setClickListener();
 	}
 
 	private void setMaterialRippleView() {
@@ -154,6 +176,16 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		} catch (Exception e) {
 			FileLog.e(TAG, e.toString());
 		}
+	}
+	
+	private void setClickListener(){
+		mEmptyRefreshBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				refreshFeedFromApi(true);
+			}
+		});
 	}
 
 	private void setSwipeRefreshLayoutCustomisation() {
@@ -212,14 +244,24 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		mEmptyFrameLayout.setVisibility(View.VISIBLE);
 	}
 
+	@SuppressLint("NewApi") 
 	private void setSwipeRefreshListener() {
 		mSwipeRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
 			@Override
 			public void onRefresh() {
 				// TODO Auto-generated method stub
-
+				refreshFeedFromApi(true);
 			}
 		});
+	}
+	
+	@SuppressLint("NewApi") 
+	private void refreshFeedFromApi(boolean isRefreshFeed){
+		if(AndroidUtilities.isAboveIceCreamSandWich()){
+			new AsyncRefreshTask(isRefreshFeed).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+		}else{
+			new AsyncRefreshTask(isRefreshFeed).execute();
+		}
 	}
 	
 	private void addMobcastObjectListFromDBToBeans(Cursor mCursor, boolean isFromBroadCastReceiver){
@@ -230,7 +272,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		int mIntMobcastDate = mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE);
 		int mIntMobcastTime = mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME);
 		int mIntMobcastLikeCount = mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO);
-		int mIntMobcastViewCount = mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_READ_NO);
+		int mIntMobcastViewCount = mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT);
 		int mIntMobcastLink = mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LINK);
 		int mIntMobcastIsLike = mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE);
 		int mIntMobcastIsRead = mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ);
@@ -397,10 +439,10 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 						AndroidUtilities.enterWindowAnimation(mParentActivity);
 						break;
 					case R.id.itemRecyclerMobcastTextRootLayout:
-						Intent mIntentText = new Intent(mParentActivity,
-								TextDetailActivity.class);
-						mIntentText.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,
-								AppConstants.INTENTCONSTANTS.MOBCAST);
+						Intent mIntentText = new Intent(mParentActivity,TextDetailActivity.class);
+						mIntentText.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.MOBCAST);
+						mIntentText.putExtra(AppConstants.INTENTCONSTANTS.ID, mArrayListMobcast.get(position).getmId());
+						saveViewPosition(position);
 						startActivity(mIntentText);
 						AndroidUtilities.enterWindowAnimation(mParentActivity);
 						break;
@@ -440,6 +482,30 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 			});
 		}
 	}
+	
+	private void saveViewPosition(int position){
+		ApplicationLoader.getPreferences().setViewIdMobcast(String.valueOf(position));
+	}
+	
+	private void checkReadFromDBAndUpdateToObj(){
+		final int position = Integer.parseInt(ApplicationLoader.getPreferences().getViewIdMobcast());
+		if(position!= -1){
+			if(mArrayListMobcast!=null && mArrayListMobcast.size() > 0){
+				Cursor mCursor = getActivity().getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, new String[]{DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ}, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mArrayListMobcast.get(position).getmId()}, null);
+				
+				if(mCursor!=null && mCursor.getCount() >0){
+					mCursor.moveToFirst();
+					if(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ)))){
+						mArrayListMobcast.get(position).setRead(true);
+						mRecyclerView.getAdapter().notifyDataSetChanged();
+					}
+				}
+				
+				if(mCursor!=null)
+					mCursor.close();
+			}
+		}
+	}
 
 	/* (non-Javadoc)
 	 * @see com.application.ui.fragment.IFragmentCommunicator#passDataToFragment(int, java.lang.String)
@@ -460,10 +526,17 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 						// TODO Auto-generated method stub
 						if(mAdapter!=null){
 							mAdapter.addMobcastObjList(mArrayListMobcast);
+							mRecyclerView.getAdapter().notifyDataSetChanged();
 						}else{
-							mAdapter = new MobcastRecyclerAdapter(mContext, mArrayListMobcast, headerView);
+							setRecyclerAdapter();
+							setRecyclerAdapterListener();
 						}
 						mSwipeRefreshLayout.setRefreshing(false);
+						
+						if(mRecyclerView.getVisibility() == View.GONE){
+							mEmptyFrameLayout.setVisibility(View.GONE);
+							mRecyclerView.setVisibility(View.VISIBLE);
+						}
 					}
 				}, 1000);
 				
@@ -471,6 +544,190 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 			
 			if(mCursor!=null)
 				mCursor.close();
+		}
+	}
+	
+	/*
+	 * AsyncTask To Refresh
+	 */
+	
+	public String apiRefreshFeedMobcast(){
+		try {
+			JSONObject jsonObj = JSONRequestBuilder.getPostFetchFeedMobcast();
+			if(BuildVars.USE_OKHTTP){
+				return RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_FETCH_FEED_MOBCAST, jsonObj.toString(), TAG);	
+			}else{
+				return RestClient.postJSON(AppConstants.API.API_FETCH_FEED_MOBCAST, jsonObj, TAG);	
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			FileLog.e(TAG, e.toString());
+		}
+		return null;
+	}
+	
+	public String apiRefreshFeedAction(){
+		try {
+			JSONObject jsonObj = JSONRequestBuilder.getPostFetchFeedAction(AppConstants.INTENTCONSTANTS.MOBCAST);
+			if(BuildVars.USE_OKHTTP){
+				return RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_FETCH_FEED_ACTION, jsonObj.toString(), TAG);	
+			}else{
+				return RestClient.postJSON(AppConstants.API.API_FETCH_FEED_ACTION, jsonObj, TAG);	
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			FileLog.e(TAG, e.toString());
+		}
+		return null;
+	}
+	
+	public void parseDataFromApi(String mResponseFromApi){
+		try{
+			if (Utilities.isSuccessFromApi(mResponseFromApi)) {
+				JSONObject mJSONObj = new JSONObject(mResponseFromApi);
+				JSONArray mJSONMobMainArrObj = mJSONObj.getJSONArray(AppConstants.API_KEY_PARAMETER.mobcast);
+				
+				for (int i = 0; i < mJSONMobMainArrObj.length(); i++) {
+					JSONObject mJSONMobObj = mJSONMobMainArrObj.getJSONObject(i);
+					
+					String mMobcastId = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastId);
+					String mType = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastType);
+					String mDate = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastDate);
+					String mTime = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastTime);
+					String mExpiryDate = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastExpiryDate);
+					String mExpiryTime = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastExpiryTime);
+					ContentValues values = new ContentValues();
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID, mMobcastId);
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastTitle));
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_BY, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastBy));
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DESC, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastDescription));
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastViewCount));
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastLikeCount));
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE, mDate);
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME, mTime);
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE_FORMATTED, Utilities.getMilliSecond(mDate, mTime));
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TYPE, mType);
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastIsRead));
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastIsLiked));
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARING, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastIsSharing));
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastIsDownloadable));
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LINK, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastLink));
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_EXPIRY_DATE, mExpiryDate);
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_EXPIRY_TIME, mExpiryTime);
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME_FORMATTED, Utilities.getMilliSecond(mExpiryDate, mExpiryTime));
+					
+					Uri isInsertUri = getActivity().getContentResolver().insert(DBConstant.Mobcast_Columns.CONTENT_URI, values);
+					boolean isInsertedInDB = Utilities.checkWhetherInsertedOrNot(TAG,isInsertUri);
+					
+					if(isInsertedInDB){
+						ApplicationLoader.getPreferences().setLastIdMobcast(mMobcastId);
+					}
+					final int mIntType = Utilities.getMediaType(mType);
+					
+					JSONArray mJSONArrMobFileObj = mJSONMobObj.getJSONArray(AppConstants.API_KEY_PARAMETER.mobcastFileInfo);
+					
+					for (int j = 0; j < mJSONArrMobFileObj.length(); j++) {
+						JSONObject mJSONFileInfoObj = mJSONArrMobFileObj.getJSONObject(j);
+						ContentValues valuesFileInfo = new ContentValues();
+						final String mThumbnailLink = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastThumbnail);
+						String mFileLink = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFileLink);
+						final String mFileName = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFileName);
+						String mIsDefault = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastisDefault);
+						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID, mMobcastId);
+						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LINK, mFileLink);
+						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH, Utilities.getFilePath(mIntType, false, mFileName));
+						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFileLang));
+						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_SIZE, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFileSize));
+						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_DURATION, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFileDuration));
+						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PAGES, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFilePages));
+						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_IS_DEFAULT, mIsDefault);
+						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_LIVE_STREAM, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastLiveStream));
+						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_LIVE_STREAM_YOUTUBE, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastLiveStreamYouTube));
+						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_READ_DURATION, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastReadDuration));
+						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_NAME, mFileName);
+						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_LINK, mThumbnailLink);
+						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_PATH, Utilities.getFilePath(mIntType, true, mFileName));
+						
+						getActivity().getContentResolver().insert(DBConstant.Mobcast_File_Columns.CONTENT_URI, valuesFileInfo);
+						
+						if(!TextUtils.isEmpty(mThumbnailLink)){
+							ConnectionQuality mConnectionQuality = ConnectionClassManager.getInstance().getCurrentBandwidthQuality();
+							if(mConnectionQuality.compareTo(ConnectionQuality.EXCELLENT) == 1){
+								Utilities.downloadQueue.postRunnable(new Runnable() {
+									@Override
+									public void run() {
+										// TODO Auto-generated method stub
+										Utilities.downloadFile(mIntType, true,false, mThumbnailLink, mFileName);//thumbnail, isEncrypt		
+									}
+								});
+							}
+						}
+					}
+				}
+				
+				passDataToFragment(0, "mobcast");
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	public class AsyncRefreshTask extends AsyncTask<Void, Void, Void> {
+		private String mResponseFromApi;
+		private boolean isSuccess = true;
+		private String mErrorMessage = "";
+		private MobcastProgressDialog mProgressDialog;
+		private boolean isRefreshFeed = true;
+
+		public AsyncRefreshTask(boolean isRefreshFeed){
+			this.isRefreshFeed = isRefreshFeed;
+		}
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			if (mArrayListMobcast == null) {
+				mProgressDialog = new MobcastProgressDialog(getActivity());
+				mProgressDialog.setMessage(ApplicationLoader.getApplication().getResources().getString(R.string.loadingRefresh));
+				mProgressDialog.show();
+			}
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			try{
+				mResponseFromApi = isRefreshFeed ? apiRefreshFeedMobcast() : apiRefreshFeedAction();
+				isSuccess = Utilities.isSuccessFromApi(mResponseFromApi);
+			}catch(Exception e){
+				FileLog.e(TAG, e.toString());
+				if(mProgressDialog!=null){
+					mProgressDialog.dismiss();
+				}
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			
+			if(mProgressDialog!=null){
+				mProgressDialog.dismiss();
+			}
+			
+			if(mSwipeRefreshLayout.isRefreshing()){
+				mSwipeRefreshLayout.setRefreshing(false);
+			}
+			if (isSuccess) {
+				parseDataFromApi(mResponseFromApi);
+			} else {
+				mErrorMessage = Utilities
+						.getErrorMessageFromApi(mResponseFromApi);
+				/*Utilities.showCrouton(getActivity(), mCroutonViewGroup,
+						mErrorMessage, Style.ALERT);*/
+			}
 		}
 	}
 }

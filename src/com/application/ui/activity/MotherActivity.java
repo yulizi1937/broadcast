@@ -72,6 +72,8 @@ import com.nineoldandroids.view.ViewPropertyAnimator;
  */
 public class MotherActivity extends BaseActivity implements
 		ObservableScrollViewCallbacks,IActivityCommunicator {
+	
+	public  static final String SLIDINGTABACTION = "com.application.ui.activity.MotherActivity";
 	/*
 	 * Drawer
 	 */
@@ -139,6 +141,7 @@ public class MotherActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		super.onResume();
 		registerReceiver(mBroadCastReceiver, new IntentFilter(NotificationsController.BROADCAST_ACTION));
+		notifySlidingTabLayoutChange();
 	}
 
 
@@ -686,7 +689,7 @@ public class MotherActivity extends BaseActivity implements
 	 * Activity-Fragment : Communicator
 	 */
 	@Override
-	public void passDataToActivity(int mId,String mCategory) {
+	public void passDataToActivity(int mId, String mCategory) {
 		// TODO Auto-generated method stub
 	}
 	/*

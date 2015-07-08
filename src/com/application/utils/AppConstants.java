@@ -36,6 +36,9 @@ public class AppConstants {
 		public static final String API_VERIFY               = API_URL + "verifyUser";
 		public static final String API_UPDATE_USER          = API_URL + "updateUser";
 		public static final String API_FETCH_PUSH_DATA      = API_URL + "fetchPushData";
+		public static final String API_FETCH_FEED_MOBCAST   = API_URL + "fetchFeedMobcast";
+		public static final String API_FETCH_FEED_ACTION    = API_URL + "fetchFeedAction";
+		public static final String API_UPDATE_REPORT        = API_URL + "updateUserReport";
 	}
 	
 	public interface API_KEY_PARAMETER{
@@ -61,6 +64,8 @@ public class AppConstants {
 		public static final String employeeId              = "employeeId";
 		public static final String countryCode             = "countryCode";
 		public static final String category                = "category";
+		public static final String action                  = "action";
+		public static final String duration                = "duration";
 		public static final String _id                     = "id";
 		public static final String lastMobcastId           = "lastMobcastId";
 		public static final String lastTrainingId          = "lastTrainingId";
@@ -116,6 +121,16 @@ public class AppConstants {
 	
 	public interface YOUTUBE{
 		public static final String API_KEY = "AIzaSyCK0tovRWYY_Iy42H-MfUntueLq-nZRNlg";
+	}
+	
+	public interface REPORT{
+		public static final String READ = "read";
+		public static final String VIEW = "view";
+		public static final String PUSH = "push";
+		public static final String SYNC = "sync";
+		public static final String PLAY = "play";
+		public static final String SHARE= "share";
+		public static final String ANYDO= "anydo";
 	}
 
 	public interface FOLDER{
@@ -193,6 +208,7 @@ public class AppConstants {
 		public static final String EVENT            = "event";
 		public static final String OBJECT           = "object";
 		public static final String ID               = "id";
+		public static final String TYPE             = "type";
 	}
 	
 	public interface NOTIFICATION{

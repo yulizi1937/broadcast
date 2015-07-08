@@ -1,8 +1,14 @@
 package com.application.utils;
 
 import java.io.File;
+import java.util.ArrayList;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
+
+import android.database.Cursor;
+
+import com.application.sqlite.DBConstant;
 
 public class JSONRequestBuilder {
 	private static final String TAG = JSONRequestBuilder.class.getSimpleName();
@@ -125,6 +131,56 @@ public class JSONRequestBuilder {
 		}
 		return stringBuffer;
 	}
+	
+	public static JSONObject getPostFetchFeedAction(String mCategory) {
+		JSONObject stringBuffer = new JSONObject();
+		try {
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, AppConstants.INTENTCONSTANTS.MOBCAST);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
+			Cursor mCursor = null;
+			int mIntColumnMobcastId = -1;
+			if (mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)) {
+				mCursor = ApplicationLoader.getApplication().getApplicationContext().getContentResolver().query(DBConstant.
+						Mobcast_Columns.CONTENT_URI	, new String[]{DBConstant.Mobcast_Columns.COLUMN_ID, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID}, null, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + " ASC");
+				mIntColumnMobcastId = mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID);
+			}
+			
+			if(mCursor!=null && mCursor.getCount() > 0){
+				mCursor.moveToFirst();
+				
+				ArrayList<String> mArrayListId = new ArrayList<>();
+				do {
+					mArrayListId.add(mCursor.getString(mIntColumnMobcastId));
+				} while (mCursor.moveToNext());
+				
+				String mMessageIdString= StringUtils.join(mArrayListId.toArray(),",");
+				stringBuffer.put(AppConstants.API_KEY_PARAMETER._id, mMessageIdString);
+			}
+			
+			if(mCursor!=null)
+				mCursor.close();
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		return stringBuffer;
+	}
+	
+	public static JSONObject getPostUpdateReport(String mId , String mCategory, String mActivity, String mDuration){
+		JSONObject stringBuffer = new JSONObject();
+		try {
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER._id, mId);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, mCategory);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.action, mActivity);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.duration, mDuration);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		return stringBuffer;
+	}
+	
 	public static JSONObject getErrorMessageFromStatusCode(String mResponseCode, String mResponseMessage){
 		JSONObject stringBuffer = new JSONObject();
 		try {

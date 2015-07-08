@@ -9,6 +9,7 @@ import android.content.Intent;
 
 import com.application.ui.activity.AnyDoNotificationActivity;
 import com.application.utils.AndroidUtilities;
+import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 
 /**
@@ -33,18 +34,23 @@ public class AnyDoNotificationService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent mIntent) {
 		// TODO Auto-generated method stub
+		
+		final int mId = mIntent.getIntExtra(AppConstants.INTENTCONSTANTS.ID, -1);
+		final String mCategory = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY);
+		final int mType = mIntent.getIntExtra(AppConstants.INTENTCONSTANTS.TYPE, -1);
 		AndroidUtilities.runOnUIThread(new Runnable() {
-
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent();
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				ComponentName cn = new ComponentName(ApplicationLoader
-						.getApplication(), AnyDoNotificationActivity.class);
+				ComponentName cn = new ComponentName(ApplicationLoader.getApplication(), AnyDoNotificationActivity.class);
+				intent.putExtra(AppConstants.INTENTCONSTANTS.ID, mId);
+				intent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, mCategory);
+				intent.putExtra(AppConstants.INTENTCONSTANTS.TYPE, mType);
 				intent.setComponent(cn);
 				startActivity(intent);
 			}
-		}, 6000);
+		}, 1000);
 	}
 }

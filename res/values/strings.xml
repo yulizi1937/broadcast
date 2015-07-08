@@ -556,6 +556,7 @@
 
     <!-- loadingMessages -->
     <string name="loadingLogin" tools:ignore="TypographyEllipsis">Signing In...</string>
+    <string name="loadingRefresh" tools:ignore="TypographyEllipsis">Refreshing...</string>
     <string name="loadingVerify" tools:ignore="TypographyEllipsis">Verifying...</string>
     <string name="loadingUpdate" tools:ignore="TypographyEllipsis">Updating...</string>
 

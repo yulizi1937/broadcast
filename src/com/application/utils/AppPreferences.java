@@ -299,6 +299,18 @@ public class AppPreferences {
 		return mDownloadAndNotify;
 	}
 	
+	public void setAnyDoNotification(boolean isAnyDoNotification) {
+		editor = sharedPreferences.edit();
+		editor.putBoolean("isAnyDoNotification", isAnyDoNotification);
+		editor.commit();
+	}
+
+	public boolean isAnyDoNotification() {
+		boolean isAnyDoNotification= sharedPreferences.getBoolean("isAnyDoNotification",
+				true);
+		return isAnyDoNotification;
+	}
+	
 	public void setChatSound(boolean mChatSound) {
 		editor = sharedPreferences.edit();
 		editor.putBoolean("mChatSound", mChatSound);
@@ -310,6 +322,22 @@ public class AppPreferences {
 				false);
 		return mChatSound;
 	}
+	
+	/*
+	 * 
+	 */
+
+	public void setViewIdMobcast(String mLastIdMobcast) {
+		editor = sharedPreferences.edit();
+		editor.putString("setViewIdMobcast", mLastIdMobcast);
+		editor.commit();
+	}
+
+	public String getViewIdMobcast() {
+		String mViewIdMobcast= sharedPreferences.getString("setViewIdMobcast","-1");
+		return mViewIdMobcast;
+	}
+	
 
 	/*
 	 * Last id : Mobcast, Training, Event, Award & Birthday

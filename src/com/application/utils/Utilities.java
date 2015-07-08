@@ -73,6 +73,7 @@ import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
@@ -83,6 +84,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.mobcast.R;
+import com.squareup.okhttp.OkHttpClient;
 
 public class Utilities {
 	private static final String TAG = Utilities.class.getSimpleName();
@@ -100,6 +102,8 @@ public class Utilities {
     public static volatile DispatchQueue globalQueue = new DispatchQueue("globalQueue");
     public static volatile DispatchQueue searchQueue = new DispatchQueue("searchQueue");
     public static volatile DispatchQueue photoBookQueue = new DispatchQueue("photoBookQueue");
+    public static volatile DispatchQueue downloadQueue = new DispatchQueue("downloadQueue");
+    public static volatile DispatchQueue reportQueue = new DispatchQueue("reportQueue");
 
     final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
@@ -862,6 +866,23 @@ public class Utilities {
 		return strFile;
 	}
 	
+	@SuppressLint("SimpleDateFormat") 
+	public static long getMilliSecond(String mDate, String mTime) {
+		try {
+			SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date contentTime;
+			contentTime = dateFormatter.parse(mDate + " " + mTime);
+			Calendar mCal = Calendar.getInstance();
+			mCal.setTime(contentTime);
+			return mCal.getTimeInMillis();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Calendar.getInstance().getTimeInMillis();
+		}
+
+	}
+	
 	public static String formatCount(String mCount, int interation) {
 		double n  = Double.parseDouble(mCount);
 		char[] c = new char[]{'K', 'M', 'B', 'T'};
@@ -1020,6 +1041,27 @@ public class Utilities {
 		return null;
 	}
 	
+	public static boolean downloadFile(int mType, boolean mIsThumbnail,boolean mIsEncrypt,String mUrl, String mFileName){
+		File mFile = new File(Utilities.getFilePath(mType, mIsThumbnail, mFileName));
+		
+		return RetroFitClient.downloadFileWith(new OkHttpClient(), mUrl, mFile.getAbsolutePath(), mIsThumbnail, mIsEncrypt,TAG);
+	}
+	
+	public static boolean checkWhetherInsertedOrNot(String TAG, Uri mUri) {
+		try{
+			if(String.valueOf(ContentUris.parseId(mUri)).matches("\\d+")){
+				FileLog.e(TAG, "Inserted Successfully!");
+				return true;
+			}
+			return false;
+		}catch(NumberFormatException ex){
+			FileLog.e(TAG, ex.toString());
+			return false;
+		}catch(UnsupportedOperationException en){
+			FileLog.e(TAG, en.toString());
+			return false;
+		}
+	}
 
 	@SuppressWarnings("resource")
 	public static void devSendDBInMail(Context c) {

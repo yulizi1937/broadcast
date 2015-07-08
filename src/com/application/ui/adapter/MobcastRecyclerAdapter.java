@@ -22,6 +22,10 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.AdapterDataObserver;
+import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +35,7 @@ import android.widget.ImageView;
 import com.application.beans.Mobcast;
 import com.application.ui.view.FlexibleDividerDecoration;
 import com.application.utils.AppConstants;
+import com.application.utils.FileLog;
 import com.mobcast.R;
 
 public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements FlexibleDividerDecoration.VisibilityProvider{
@@ -60,8 +65,9 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.mArrayListMobcast = mArrayListMobcast;
         mHeaderView = headerView;
     }
-
-    @Override
+    
+    
+	@Override
     public int getItemCount() {
         if (mHeaderView == null) {
             return mArrayListMobcast.size();
@@ -70,8 +76,13 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
     
-    public void addMobcastObjList(ArrayList<Mobcast> mArrayListMobcast){
-    	this.mArrayListMobcast = mArrayListMobcast;
+    public void addMobcastObjList(ArrayList<Mobcast> mListMobcast){
+    	mArrayListMobcast = mListMobcast;
+    	notifyDataSetChanged();
+    }
+    
+    public void updateMobcastObj(int position, ArrayList<Mobcast> mListMobcast){
+    	mArrayListMobcast = mListMobcast;
     	notifyDataSetChanged();
     }
 
@@ -142,11 +153,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 	@Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 		if (viewHolder instanceof TextViewHolder) {
-//			setAnimation(((TextViewHolder)
-//					viewHolder).mMobcastTextMaterialRootLayout);
-			((TextViewHolder)viewHolder).mMobcastTextViewCountTv.setVisibility(View.GONE);
-			((TextViewHolder)viewHolder).mMobcastTextLikeCountTv.setVisibility(View.GONE);
-			((TextViewHolder)viewHolder).mMobcastTextLinkTv.setVisibility(View.GONE);
+			processTextViewHolder(viewHolder, position);
 		} else if (viewHolder instanceof ImageViewHolder) {
 			((ImageViewHolder)viewHolder).mMobcastImageRootLayout.setBackgroundColor(mContext.getResources().getColor(R.color.background_unread));
 			((ImageViewHolder)viewHolder).mMobcastImageTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
@@ -645,5 +652,37 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 	            return true;
 	        }
 	        return false;
+	}
+	
+	
+	@SuppressWarnings("deprecation")
+	private void processTextViewHolder(RecyclerView.ViewHolder viewHolder, int position){
+		try{
+			Mobcast mObj = mArrayListMobcast.get(position);
+			((TextViewHolder)viewHolder).mMobcastTextTitleTv.setText(mObj.getmTitle());
+			((TextViewHolder)viewHolder).mMobcastTextByTv.setText(mObj.getmBy());
+			((TextViewHolder)viewHolder).mMobcastTextViewCountTv.setText(mObj.getmViewCount());
+			((TextViewHolder)viewHolder).mMobcastTextLikeCountTv.setText(mObj.getmLikeCount());
+			((TextViewHolder)viewHolder).mMobcastTextSummaryTv.setText(mObj.getmDescription());
+			if(!mObj.isRead()){
+				((TextViewHolder)viewHolder).mMobcastTextIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_text_focused));
+				((TextViewHolder)viewHolder).mMobcastTextIndicatorIv.setBackgroundColor(mContext.getResources().getColor(R.color.unread_background));
+				((TextViewHolder)viewHolder).mMobcastTextTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
+				((TextViewHolder)viewHolder).mMobcastTextReadView.setVisibility(View.VISIBLE);
+				((TextViewHolder)viewHolder).mMobcastTextRootLayout.setBackgroundResource(R.color.unread_background);
+			}else{
+				((TextViewHolder)viewHolder).mMobcastTextIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_text_normal));
+				((TextViewHolder)viewHolder).mMobcastTextIndicatorIv.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
+				((TextViewHolder)viewHolder).mMobcastTextTitleTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
+				((TextViewHolder)viewHolder).mMobcastTextReadView.setVisibility(View.GONE);
+				((TextViewHolder)viewHolder).mMobcastTextRootLayout.setBackgroundResource(R.color.white);
+			}
+			
+			if(TextUtils.isEmpty(mObj.getmLink())){
+				((TextViewHolder)viewHolder).mMobcastTextLinkTv.setVisibility(View.GONE);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 }

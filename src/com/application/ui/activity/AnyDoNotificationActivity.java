@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -18,6 +19,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -28,13 +30,17 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.application.sqlite.DBConstant;
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.BottomSheetAnyDo;
 import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.RoundedBackgroundSpan;
+import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.FileLog;
 import com.application.utils.NotificationHandle;
+import com.application.utils.UserReport;
+import com.application.utils.Utilities;
 import com.mobcast.R;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
@@ -58,15 +64,16 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 	private int mType;
 	private String mCategory;
 	private int mLayoutId;
+	private Intent mIntent;
+	
+	private View mContentLayout;
 	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_anydo_notification);
-		setUpAnyDoNotificationWithBottomSheet();
-		setSystemBarTint(0);
-		setUiListener();
+		getIntentData();
 	}
 
 	private void setUpAnyDoNotificationWithBottomSheet() {
@@ -78,6 +85,28 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
 		finish();
+	}
+	
+	private void getIntentData(){
+		mIntent = getIntent();
+		mId = mIntent.getIntExtra(AppConstants.INTENTCONSTANTS.ID, -1);
+		mCategory = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY);
+		mType = mIntent.getIntExtra(AppConstants.INTENTCONSTANTS.TYPE, -1);
+		mLayoutId = getLayoutFromType(mType);
+		setUpAnyDoNotificationWithBottomSheet();
+		processAnyDoNotification();
+		setSystemBarTint(0);
+		setUiListener();
+		updateReportToApi();
+	}
+	
+	private int getLayoutFromType(int mType) {
+		switch (mType) {
+		case AppConstants.TYPE.TEXT:
+			return R.layout.item_recycler_mobcast_text;
+		default:
+			return R.layout.item_recycler_mobcast_text;
+		}
 	}
 
 	@SuppressWarnings("deprecation")
@@ -120,8 +149,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 			}
 			return mBottomSheet;
 		}else{
-			mBottomSheetAnyDo = new BottomSheetAnyDo.Builder(this, 1,
-					"mobcast", R.layout.item_recycler_mobcast_text)
+			mBottomSheetAnyDo = new BottomSheetAnyDo.Builder(this, mId,
+					mCategory, mLayoutId)
 			.icon(getRoundedBitmap(R.drawable.ic_launcher))
 			.title("Notifications")
 			.sheet(R.menu.menu_anydo).limit(R.integer.anydo_limit)
@@ -144,6 +173,10 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 	private void setUiListener(){
 		setOnClickListener();
 		setMaterialRippleView();
+	}
+	
+	private void updateReportToApi(){
+		UserReport.updateUserReportApi(String.valueOf(mId), mCategory, AppConstants.REPORT.ANYDO, "");
 	}
 	
 	private void setMaterialRippleView(){
@@ -242,5 +275,35 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}
+	}
+	
+	private void processAnyDoNotification(){
+		mContentLayout = mBottomSheetAnyDo.getContentView();
+		switch(mType){
+		case AppConstants.TYPE.TEXT:
+			processNotificationText();
+			break;
+		}
+	}
+	
+	private void processNotificationText(){
+		AppCompatTextView mTitleTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastTextTitleTv);
+		AppCompatTextView mByTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastTextByTv);
+		AppCompatTextView mSummaryTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastTextSummaryTv);
+		mContentLayout.findViewById(R.id.itemRecyclerMobcastTextLikeCountTv).setVisibility(View.GONE);
+		mContentLayout.findViewById(R.id.itemRecyclerMobcastTextViewCountTv).setVisibility(View.GONE);
+		mContentLayout.findViewById(R.id.itemRecyclerMobcastTextLinkTv).setVisibility(View.GONE);
+		mContentLayout.findViewById(R.id.itemRecyclerMobcastTextReadView).setVisibility(View.GONE);
+		
+		Cursor mCursor = getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{String.valueOf(mId)}, null);
+		if(mCursor!=null && mCursor.getCount() > 0){
+			mCursor.moveToFirst();
+			mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE)));
+			mSummaryTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DESC)));
+			mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME))));
+		}
+		
+		if(mCursor!=null)
+			mCursor.close();
 	}
 }

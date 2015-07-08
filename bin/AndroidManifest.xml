@@ -231,7 +231,9 @@
         <!-- Any.DO Notification Activity -->
         <activity
             android:name="com.application.ui.activity.AnyDoNotificationActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="standard"
+            android:excludeFromRecents="true"
+            android:finishOnTaskLaunch="true"
             android:noHistory="true"
             android:theme="@style/Theme.AppCompat.Translucent" />
 

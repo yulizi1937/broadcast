@@ -81,7 +81,7 @@ public class ApplicationLoader extends Application {
 		} else {
 			initCalligraphy();
 		}
-		startAnyDoNotificationService();
+//		startAnyDoNotificationService();
 		ApplicationLoader app = (ApplicationLoader) ApplicationLoader.applicationContext;
 		if(!BuildVars.DEBUG_DESIGN){
 			app.initPlayServices();
