@@ -9,8 +9,10 @@
     <string name="LanguageCode">en</string>
     <string name="speak_now">Speak now</string>
     <string name="internet_unavailable">Please check your internet connection!</string>
+    <string name="feedback_incomplete">Please fill the feedback properly!</string>
     <string name="api_connection_timeout">Server not responding!</string>
     <string name="api_unknown_error">Please try again in few minutes!</string>
+    <string name="share_advertisement">Share via Mobcast Application \n visit us at : www.mobcast.in</string>
 
     <!-- OverFlow : Action -->
     <string name="action_settings">Settings</string>
@@ -71,7 +73,6 @@
     <string name="formatterDay12H">h:mm a</string>
     <string name="formatDateAtTime">%1$s at %2$s</string>
 
-    
     <!-- string formatters -->
     <string name="content_by">By : </string>
     <!-- activity_login -->
@@ -80,6 +81,7 @@
     <string name="textview_login_administration">Contact your administration if you cannot login</string>
     <string name="hint_login_id">98201</string>
     <string name="button_next">NEXT</string>
+    <string name="button_cancel" tools:ignore="ButtonCase">CANCEL</string>
     <string name="LoginActivityTitle">Your Phone Number</string>
 
     <!-- activity_facebook_conceal -->
@@ -132,10 +134,12 @@
     <string name="activity_edit_profile_answer">Your answer to your Favourite Question</string>
 
     <!-- item_recycler_award -->
-    <string name="sample_winner_name">MR. BHAVESH ZAVERI</string>
+    <!-- <string name="sample_winner_name">MR. BHAVESH ZAVERI</string> -->
+    <string name="sample_winner_name">MAGAZINE 2015</string>
     <!-- <string name="sample_award_name">AWARD FOR BEST SALES OF THE WEEK</string> -->
-    <string name="sample_award_name">FE India\'s Best Banks Awards </string>
-    <string name="sample_winner_designation">Country Head-Operations, HDFC bank</string>
+    <string name="sample_award_name">BEST COMPANIES FOR LEADERS AWARD</string>
+    <!-- <string name="sample_winner_designation">Country Head-Operations, HDFC bank</string> -->
+    <string name="sample_winner_designation">CEO</string>
 
     <!-- item_recycler_birthday -->
     <string name="sample_birthday_name">RYAN GOSLING</string>
@@ -143,13 +147,15 @@
 
     <!-- item_recycler_event -->
     <!-- <string name="sample_event_title">SUNDAY - 8TH MARCH 15  WOMEN DAYS SPECIAL</string> -->
-    <string name="sample_event_title">Announcing launch of Chillr</string>
+    <!-- <string name="sample_event_title">Announcing launch of Chillr</string> -->
+    <string name="sample_event_title">Nielsen’s Consumer 360 </string>
     <string name="sample_event_by">BY:TECHNOLOGY TEAM - FEBRUARY 27 2015</string>
     <string name="sample_event_view">1,00,000,000</string>
-    <string name="sample_event_left_number">3655</string>
+    <string name="sample_event_left_number">43</string>
     <string name="sample_event_left_string">DAYS LEFT</string>
     <!-- <string name="sample_event_summary">Lorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more\nLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more\nLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more</string> -->
-    <string name="sample_event_summary">Content: Officials said with Chillr, HDFC Bank customers can transfer money to any person in India, once they download the app and register. The app is widely accessible as it works on Android and iOS operating syatems and will soon be launched for Windows phones as well.</string>
+    <!-- <string name="sample_event_summary">Content: Officials said with Chillr, HDFC Bank customers can transfer money to any person in India, once they download the app and register. The app is widely accessible as it works on Android and iOS operating syatems and will soon be launched for Windows phones as well.</string> -->
+    <string name="sample_event_summary">Nielsen’s Consumer 360 is a global events series that brings you innovative thought leaders and industry experts who share exclusive insights to help you develop business solutions fueled with punch and ingenuity. Learn to drive successful outcomes from well-respected trailblazers who will share their cutting edge strategies and results. Explore uncommon ideas across the consumer spectrum to help you harness the power of people today and then delve into industry-specific discussions focused on your needs.</string>
 
     <!-- layout_mother -->
     <string name="layout_mother_mobcast">MOBCAST</string>
@@ -170,17 +176,18 @@
 
     <!-- fragment_event_detail -->
     <string name="sample_event_date">17</string>
-    <string name="sample_event_month">March</string>
+    <string name="sample_event_month">AUGUST</string>
     <string name="sample_event_day">Wednesday</string>
     <string name="sample_event_hours">99</string>
-    <string name="sample_event_till">10:00AM-12:30PM</string>
+    <string name="sample_event_till">8:30AM-12:30PM</string>
     <string name="sample_event_hours_text">Hours</string>
     <!-- <string name="sample_event_location_text">Conference Room, Head Office, Bandra, Mumbai, Maharastra, India</string> -->
     <string name="sample_event_location_text">Bengaluru</string>
     <string name="sample_event_view_map"><![CDATA[<u>]]>View Map<![CDATA[</u>]]></string>
     <string name="fragment_event_detail_button_join">JOIN</string>
     <string name="fragment_event_detail_button_decline">DECLINE</string>
-    <string name="sample_event_attend_count">1,00,000</string>
+    <string name="sample_event_attend_count">800</string>
+    <string name="sample_event_attend_going_count">624</string>
     <string name="fragment_event_detail_invite">Invited</string>
     <string name="fragment_event_detail_going">Going</string>
     <string name="fragment_event_detail_about">ABOUT THE EVENT</string>
@@ -210,33 +217,33 @@
     <string name="sample_quiz_score_correct_answer">CORRECT ANSWER IS:</string>
 
     <!-- fragment_quiz_selective_radio -->
-    <string name="sample_quiz_selective_radio_title">INDICATOR OF MUNLIER LC KIDS?</string>
-    <string name="sample_quiz_selective_radio_group_a">INTERMITTENT RHYNTIS MONOTHERAPY IN MILDAR</string>
-    <string name="sample_quiz_selective_radio_group_b">PROPHYLATIC THERAPY IN SAR</string>
-    <string name="sample_quiz_selective_radio_group_c">IN ASTHAMA COEXECUTING AR</string>
-    <string name="sample_quiz_selective_radio_group_d">ALL OF THE ABOVE</string>
+    <!-- <string name="sample_quiz_selective_radio_title">INDICATOR OF MUNLIER LC KIDS?</string> -->
+    <string name="sample_quiz_selective_radio_title">Practical Category Management Workshop helps</string>
+    <string name="sample_quiz_selective_radio_group_a">To develop stronger retailer/ supplier partnerships</string>
+    <string name="sample_quiz_selective_radio_group_b">To identify category growth opportunities</string>
+    <string name="sample_quiz_selective_radio_group_c">Both retailers and suppliers to achieve a win-win business relationship</string>
+    <string name="sample_quiz_selective_radio_group_d">All of the above</string>
 
     <!-- fragment_feedback_subjective -->
     <string name="hint_feedback_subjective_message_edittext">Write Answer</string>
     <string name="sample_feedback_multiple_title">How many branches of HDFC are there in Mumbai district?</string>
     <string name="sample_feedback_subjective_title">What is Chillr app? </string>
-    <string name="sample_feedback_selective_title">In which year did HDFC Bank acquire Centurion Bank of Punjab?</string> 
-    <string name="sample_feedback_multiple_title_a">Services provided by HDFC Bank are: </string>
+    <string name="sample_feedback_selective_title">In which year did HDFC Bank acquire Centurion Bank of Punjab?</string>
+    <string name="sample_feedback_multiple_title_a">When was the last Nielsen’s Consumer 360 held?</string>
     <string name="sample_feedback_rating_title">Rate your bank</string>
-	<string name="sample_quiz_multiple_check_group_a">158</string>
-	<string name="sample_quiz_multiple_check_group_b">159</string>
-	<string name="sample_quiz_multiple_check_group_c">160</string>
-	<string name="sample_quiz_multiple_check_group_d">None of the above</string>
-	<string name="sample_quiz_multiple_check_group_aa">Forex Card</string>
-	<string name="sample_quiz_multiple_check_group_ab">Life Insurance</string>
-	<string name="sample_quiz_multiple_check_group_ac">Demat Account</string>
-	<string name="sample_quiz_multiple_check_group_ad">All of the above</string>
-	<string name="sample_quiz_selective_radio_group_aa">2006</string>
-	<string name="sample_quiz_selective_radio_group_ab">2007</string>
-	<string name="sample_quiz_selective_radio_group_ac">2008</string>
-	<string name="sample_quiz_selective_radio_group_ad">2010</string>
-	
-	
+    <string name="sample_quiz_multiple_check_group_a">158</string>
+    <string name="sample_quiz_multiple_check_group_b">159</string>
+    <string name="sample_quiz_multiple_check_group_c">160</string>
+    <string name="sample_quiz_multiple_check_group_d">None of the above</string>
+    <string name="sample_quiz_multiple_check_group_aa">Forex Card</string>
+    <string name="sample_quiz_multiple_check_group_ab">Life Insurance</string>
+    <string name="sample_quiz_multiple_check_group_ac">Demat Account</string>
+    <string name="sample_quiz_multiple_check_group_ad">All of the above</string>
+    <string name="sample_quiz_selective_radio_group_aa">17.04.15</string>
+    <string name="sample_quiz_selective_radio_group_ab">17.02.15</string>
+    <string name="sample_quiz_selective_radio_group_ac">17.04.14</string>
+    <string name="sample_quiz_selective_radio_group_ad">17.02.14</string>
+
     <!-- fragment_feedback -->
     <string name="FeedbackActivityTitle">Feedback</string>
     <string name="fragment_feedback_thank_you_header">Thank you for your valuable feedback!</string>
@@ -248,6 +255,7 @@
     <!-- fragment_audio -->
     <string name="AudioDetailActivityTitle">Audio</string>
     <string name="sample_audio_detail_seekbar">3:48</string>
+    <string name="sample_live_detail_seekbar">LIVE</string>
 
     <!-- fragment_video -->
     <string name="VideoDetailActivityTitle">Video</string>
@@ -419,7 +427,7 @@
 
     <!-- item_recycler_event -->
     <string name="sample_item_recycler_event_detail_days_left">5 Days Left</string>
-    <string name="sample_item_recycler_event_detail_attendance">400 Going</string>
+    <string name="sample_item_recycler_event_detail_attendance">624 Going</string>
     <string name="sample_item_recycler_event_detail_is_going">Accepted</string>
 
     <!-- item_recycler_mobcast_text -->
@@ -439,8 +447,11 @@
 
     <!-- item_recycler_mobcast_video -->
     <!-- <string name="sample_item_recycler_mobcast_video_title">PRAESENT SED LEO IN SEM VENENATI</string> -->
-    <string name="sample_item_recycler_mobcast_video_title">HDFC Bank Commercial </string>
-    <string name="sample_item_recycler_mobcast_video_desc">We are Everywhere You Go </string>
+    <!-- <string name="sample_item_recycler_mobcast_video_title">HDFC Bank Commercial </string> -->
+    <string name="sample_item_recycler_mobcast_video_title">Nielsen Picks A Pack Of ‘Preferred Platform Partners,’ Pushes Toward ‘Total Audience’ (AdExchanger) </string>
+    <!-- <string name="sample_item_recycler_mobcast_video_desc">We are Everywhere You Go </string> -->
+    <string name="sample_item_recycler_mobcast_video_desc">Nielsen has a new program designed to give advertisers and agencies a clearer lens into the digital audience activation process, the company announced Wednesday at its Consumer 360 conference in Washington, DC.
+The inaugural set of “Preferred Platform Partners” includes BrightRoll, DoubleClick, FreeWheel, Moat, RocketFuel, TubeMogul, Tremor Video, Viant and Videology. Other ad tech platforms can apply, but must meet certain requirements for tagging, reporting and server connections.</string>
     <string name="sample_item_recycler_mobcast_video_by">BY: DIRECTORS - 2 HOURS AGO</string>
     <string name="sample_item_recycler_mobcast_video_view_count">300</string>
 
@@ -456,11 +467,13 @@
 
     <!-- item_recycler_mobcast_pdf -->
     <!-- <string name="sample_item_recycler_mobcast_pdf_title">DONEC TEMPOR SED MASSA TEMPOR MAXIMUS PORTA IN SCELERISQUE NON FEUGIAT LEO INTERDUM VITA</string> -->
-    <string name="sample_item_recycler_mobcast_pdf_title">HDFC Bank has been named the Strongest Bank in India in the Asian Banker 500 (AB 500)</string>
-    <string name="sample_item_recycler_mobcast_pdf_desc">HDFC Bank has been named the Strongest Bank in India in the Asian Banker 500 (AB 500) Strongest Bank by Balance Sheet Ranking 2014. The announcement was made at a recognition ceremony held in conjunction with SWIFT’s SIBOS convention at the Boston Convention and Exhibition Centre from 29 September to 2 October 2014 in Boston, USA.The AB 500 ranking is the most comprehensive annual evaluation that captures the quality and sustainability of the balance sheets of banks in the region. It tracks the relative financial strengths of banks in response to their respective market conditions, based on a common scorecard.</string>
+    <!-- <string name="sample_item_recycler_mobcast_pdf_title">HDFC Bank has been named the Strongest Bank in India in the Asian Banker 500 (AB 500)</string> -->
+    <string name="sample_item_recycler_mobcast_pdf_title">Global Health and Wellness Survey – Nielsen </string>
+    <!-- <string name="sample_item_recycler_mobcast_pdf_desc">HDFC Bank has been named the Strongest Bank in India in the Asian Banker 500 (AB 500) Strongest Bank by Balance Sheet Ranking 2014. The announcement was made at a recognition ceremony held in conjunction with SWIFT’s SIBOS convention at the Boston Convention and Exhibition Centre from 29 September to 2 October 2014 in Boston, USA.The AB 500 ranking is the most comprehensive annual evaluation that captures the quality and sustainability of the balance sheets of banks in the region. It tracks the relative financial strengths of banks in response to their respective market conditions, based on a common scorecard.</string> -->
+    <string name="sample_item_recycler_mobcast_pdf_desc">WE ARE. WHAT WE EAT. HEALTHY EATING TRENDS AROUND. THE WORLD.</string>
     <string name="sample_item_recycler_mobcast_pdf_by">BY: TECHNOLOGY TEAM - YESTERDAY</string>
     <string name="sample_item_recycler_mobcast_pdf_view_count">290</string>
-    <string name="sample_item_recycler_mobcast_pdf_file_name">HDFC_BANK.PDF</string>
+    <string name="sample_item_recycler_mobcast_pdf_file_name">NIELSEN.PDF</string>
     <string name="sample_item_recycler_mobcast_pdf_file_info">12 PAGES</string>
 
     <!-- item_recycler_mobcast_doc -->
@@ -473,7 +486,7 @@
     <string name="sample_item_recycler_mobcast_doc_file_info">21 PAGES</string>
 
     <!-- item_recycler_mobcast_xls -->
-<!--     <string name="sample_item_recycler_mobcast_xls_title">QUISQUE TINCIDUNT LIBERO SEM ID LACINIA ODIO FERMENTUM SIT AMET</string> -->
+    <!-- <string name="sample_item_recycler_mobcast_xls_title">QUISQUE TINCIDUNT LIBERO SEM ID LACINIA ODIO FERMENTUM SIT AMET</string> -->
     <string name="sample_item_recycler_mobcast_xls_title">HDFC Bank branch list</string>
     <string name="sample_item_recycler_mobcast_xls_desc">HDFC Bank – CMS Branch List</string>
     <string name="sample_item_recycler_mobcast_xls_by">BY: HR TEAM - A YEAR AGO</string>
@@ -489,10 +502,12 @@
     <string name="sample_item_recycler_mobcast_ppt_file_info">04 SLIDES</string>
 
     <!-- item_recycler_mobcast_feedback -->
-    <string name="sample_item_recycler_mobcast_feedback_title">HDFC Bank Quiz</string>
+    <!-- <string name="sample_item_recycler_mobcast_feedback_title">HDFC Bank Quiz</string> -->
+    <string name="sample_item_recycler_mobcast_feedback_title">Nielsen Quiz</string>
     <string name="sample_item_recycler_mobcast_feedback_by">BY: HR TEAM - A YEAR AGO</string>
     <string name="sample_item_recycler_mobcast_feedback_count">1.5K</string>
-    <string name="sample_item_recycler_mobcast_feedback_question">5 Questions</string>
+    <string name="sample_item_recycler_mobcast_feedback_question">2 Questions</string>
+    <string name="item_recycler_mobcast_feedback_question">Questions</string>
 
     <!-- item_recylcer_training_quiz -->
     <string name="sample_item_recycler_training_question_time">03 mins</string>
@@ -503,12 +518,17 @@
     <string name="sample_item_recycler_mobcast_news_link">http://www.google.com/</string>
 
     <!-- item_recycler_training_image -->
-    <string name="sample_item_recycler_training_image_title">Indian Business Icons 2015: Aditya Puri, Managing Director, HDFC Bank</string>
-    <string name="sample_item_recycler_training_image_desc">As We Celebrate 15 Years Of Leadership, We Introduce A Special Initiative - Indian Business Icons 2015. The Endeavour Is To Form A Distinct League Of The Most Powerful Business Icons That The People Of The Country Think Have Had A Monumental Impact, Not Only On Their Lives, But Also On The Indian Economy. An Eminent Jury Has Shortlisted 30 Icons Who They Feel Have Impacted The Indian Economy In The Past 15 Years. These Names Are Now Thrown Open To Public Voting. The Icon We are Focussing On Today Is A Stalwart From The Financial Sector, Managing Director Of HDFC Bank Aditya Puri</string>
+    <!-- <string name="sample_item_recycler_training_image_title">Indian Business Icons 2015: Aditya Puri, Managing Director, HDFC Bank</string> -->
+    <string name="sample_item_recycler_training_image_title">NIELSEN LEAVES ITS MARK AT THE 2015 CANNES LIONS FESTIVAL</string>
+    <string name="sample_item_recycler_training_image_desc">Amidst a sea of the world’s brightest creatives, marketers, technologists and media specialists at this year’s Cannes Lions Festival (June 21-27), we left our mark as Campaigners of Creativity—this year’s theme. We shared insights and innovative thought leadership to drive change in the media and technology industries. And for the first year, we became an official sponsor, which helped us make an even bigger splash on this global stage.
+Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic of “Unlocking the Power of Music in Advertising.” With more than 150 delegates in attendance, her presentation focused on understanding the impact of music to help drive growth for brands.</string>
 
     <!-- item_recycler_training_text -->
-    <string name="sample_item_recycler_training_text_title">Essence of banking is in taking calculated risk, says HDFC Bank CEO Aditya Puri</string>
-    <string name="sample_item_recycler_training_text_desc">HDFC Bank is morphing into a full-scale digital bank and is also exploring opportunities in the semi-urban and rural areas, says MD and CEO Aditya Puri. Edited excerpts of an interview with Business Today </string>
+    <!-- <string name="sample_item_recycler_training_text_title">Essence of banking is in taking calculated risk, says HDFC Bank CEO Aditya Puri</string> -->
+    <string name="sample_item_recycler_training_text_title">Nielsen, the TV Industry’s Favorite Scapegoat, Is Fighting Back (CMO Today - WSJ)</string>
+    <!-- <string name="sample_item_recycler_training_text_desc">HDFC Bank is morphing into a full-scale digital bank and is also exploring opportunities in the semi-urban and rural areas, says MD and CEO Aditya Puri. Edited excerpts of an interview with Business Today </string> -->
+    <string name="sample_item_recycler_training_text_desc">A favorite gripe among media executives is that Nielsen has failed to keep up with tectonic shifts in how viewers watch television. Now the ratings measurement giant is striking back at those critics.
+“Sometimes they are using us as a scapegoat,” Nielsen Chief Executive Mitch Barns said in an interview. “When ratings are down, you’d hate it to be because your programming maybe fell a little bit behind. You’d much rather have it be because maybe somebody isn’t doing everything that you think they ought to do.”</string>
 
     <!-- item_recycler_training_audio -->
     <string name="sample_item_recycler_training_audio_title">HDFC Bank’s Aditya Puri To ET NOW</string>
@@ -559,6 +579,7 @@
     <string name="loadingRefresh" tools:ignore="TypographyEllipsis">Refreshing...</string>
     <string name="loadingVerify" tools:ignore="TypographyEllipsis">Verifying...</string>
     <string name="loadingUpdate" tools:ignore="TypographyEllipsis">Updating...</string>
+    <string name="loadingSubmit" tools:ignore="TypographyEllipsis">Submitting...</string>
 
     <!-- emptyMessages -->
     <string name="emptyTitle">Welcome to Mobcast!</string>

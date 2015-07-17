@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|center"
                 android:gravity="left|center"
-                android:maxLines="2"
+                android:maxLines="@integer/max_lines"
                 android:text="@string/sample_item_recycler_mobcast_text_title"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/event_title_textview_size"

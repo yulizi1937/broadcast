@@ -68,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|center"
                 android:gravity="left|center"
+                android:maxLines="@integer/max_lines"
                 android:text="@string/sample_item_recycler_training_image_title"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/event_title_textview_size"
@@ -172,7 +173,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/adityapuri"
+                    android:src="@drawable/ic_launcher"
                     tools:ignore="ContentDescription" >
                 </ImageView>
             </FrameLayout>

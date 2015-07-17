@@ -2,6 +2,7 @@
 <com.application.ui.view.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:circlepageindicator="http://schemas.android.com/apk/res-auto"
+    xmlns:progresswheel="http://schemas.android.com/apk/res-auto"
     xmlns:ripple="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -67,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|center"
                 android:gravity="left|center"
+                android:maxLines="@integer/max_lines"
                 android:text="@string/sample_item_recycler_mobcast_image_title"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/event_title_textview_size"
@@ -137,9 +139,9 @@
                     android:layout_toLeftOf="@id/itemRecyclerMobcastImageViewCountTv"
                     android:background="@drawable/shape_rectange_app"
                     android:gravity="center"
-                    android:visibility="visible"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_link"
+                    android:visibility="visible"
                     tools:ignore="ContentDescription" />
             </RelativeLayout>
 
@@ -150,29 +152,22 @@
                 android:layout_marginTop="@dimen/item_recycler_mobcast_text_content_title_margin_top" >
 
                 <ImageView
-                    android:id="@+id/itemRecyclerMobcastImageViewPagerNextIv"
-                    android:layout_width="@dimen/item_recycler_mobcast_image_view_pager_next_height"
-                    android:layout_height="@dimen/item_recycler_mobcast_image_view_pager_next_height"
-                    android:layout_gravity="left|center"
-                    android:layout_marginLeft="16dp"
-                    tools:ignore="ContentDescription" />
-
-                <ImageView
-                    android:id="@+id/itemRecyclerMobcastImageViewPagerPreviousIv"
-                    android:layout_width="@dimen/item_recycler_mobcast_image_view_pager_next_height"
-                    android:layout_height="@dimen/item_recycler_mobcast_image_view_pager_next_height"
-                    android:layout_gravity="left|center"
-                    android:layout_marginLeft="16dp"
-                    tools:ignore="ContentDescription" />
-
-                <ImageView
                     android:id="@+id/itemRecyclerMobcastImageMainImageIv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/bank_logo"
-                    tools:ignore="ContentDescription" >
-                </ImageView>
+                    android:src="@drawable/ic_launcher"
+                    tools:ignore="ContentDescription" />
+
+                <com.application.ui.view.ProgressWheel
+                    android:id="@+id/itemRecyclerMobcastImageLoadingProgress"
+                    android:layout_width="@dimen/item_recycler_mobcast_video_progress_width"
+                    android:layout_height="@dimen/item_recycler_mobcast_video_progress_width"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    progresswheel:matProg_barColor="@color/toolbar_background"
+                    progresswheel:matProg_barWidth="2dp"
+                    progresswheel:matProg_progressIndeterminate="true" />
             </FrameLayout>
         </LinearLayout>
     </FrameLayout>

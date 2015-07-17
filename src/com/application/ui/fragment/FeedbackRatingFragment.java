@@ -3,17 +3,26 @@
  */
 package com.application.ui.fragment;
 
+import java.util.ArrayList;
+
+import org.apache.commons.lang3.StringUtils;
+
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 
+import com.application.beans.FeedbackPagerInfo;
+import com.application.sqlite.DBConstant;
 import com.application.utils.Utilities;
 import com.mobcast.R;
 
@@ -28,8 +37,15 @@ public class FeedbackRatingFragment extends Fragment {
 	
 	private AppCompatRatingBar mFeedbackRatingBar;
 	
-	public static FeedbackRatingFragment newInstance() {
+	private int mPosition;
+	private FeedbackPagerInfo mFeedbackPagerInfo;
+	
+	private String mContentTitle;
+	
+	public static FeedbackRatingFragment newInstance(int mPosition, FeedbackPagerInfo mFeedbackPagerInfo) {
 		FeedbackRatingFragment fragment = new FeedbackRatingFragment();
+		fragment.mPosition = mPosition;
+		fragment.mFeedbackPagerInfo = mFeedbackPagerInfo;
         return fragment;
     }
 	
@@ -52,6 +68,24 @@ public class FeedbackRatingFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onResume();
 		setUiListener();
+		getFeedbackFromDB();
+	}
+	
+	private void getFeedbackFromDB(){
+		Cursor mCursor = getActivity().getContentResolver().query(DBConstant.Mobcast_Feedback_Columns.CONTENT_URI, null, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ID + "=?" + " AND " + DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_QID + "=?", new String[]{mFeedbackPagerInfo.getmFeedbackId(), mFeedbackPagerInfo.getmFeedbackQId()}, null);
+		if(mCursor!=null && mCursor.getCount() > 0){
+			mCursor.moveToFirst();
+			mContentTitle = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_QUESTION));
+		}
+		
+		if(mCursor!=null)
+			mCursor.close();
+		
+		setUiWithData();
+	}
+	
+	private void setUiWithData(){
+		mFeedbackTitleTv.setText(mContentTitle);
 	}
 	
 	private void setUiListener(){
@@ -79,5 +113,17 @@ public class FeedbackRatingFragment extends Fragment {
 		}else{
 			mRatingBar.setBackgroundColor(getResources().getColor(android.R.color.white));
 		}
+		saveValueInDB();
+	}
+	
+	private void saveValueInDB(){
+		String mOptionSelected= String.valueOf((int)mFeedbackRatingBar.getRating());
+		ContentValues values = new ContentValues();
+		if(mOptionSelected.equalsIgnoreCase("0")){
+			values.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ANSWER, "");		
+		}else{
+			values.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ANSWER, mOptionSelected);
+		}
+		getActivity().getContentResolver().update(DBConstant.Mobcast_Feedback_Columns.CONTENT_URI, values, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ID + "=?" + " AND " + DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_QID + "=?", new String[]{mFeedbackPagerInfo.getmFeedbackId(), mFeedbackPagerInfo.getmFeedbackQId()});
 	}
 }

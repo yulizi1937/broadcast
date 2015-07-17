@@ -187,6 +187,7 @@ public class SetProfileActivity extends AppCompatActivity{
 					}
 				}else{
 					Intent mIntent = new Intent(SetProfileActivity.this, MotherActivity.class);
+					mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 					startActivity(mIntent);
 					AndroidUtilities.enterWindowAnimation(SetProfileActivity.this);
 					finish();

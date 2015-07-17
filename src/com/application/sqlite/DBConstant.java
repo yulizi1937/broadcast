@@ -252,8 +252,10 @@ public class DBConstant {
 		
 		public static final String COLUMN_ID 								= "_id";
 		public static final String COLUMN_MOBCAST_FEEDBACK_ID 				= "_mobcast_feedback_id";
-		public static final String COLUMN_MOBCAST_FEEDBACK_QID 			 	= "_mobcast_feedback_qid";
+		public static final String COLUMN_MOBCAST_FEEDBACK_QID 			 	= "_mobcast_feedback_queid";
 		public static final String COLUMN_MOBCAST_FEEDBACK_QUESTION		    = "_mobcast_feedback_question";
+		public static final String COLUMN_MOBCAST_FEEDBACK_TYPE  		    = "_mobcast_feedback_type";
+		public static final String COLUMN_MOBCAST_FEEDBACK_ANSWER		    = "_mobcast_feedback_answer";
 		public static final String COLUMN_MOBCAST_FEEDBACK_OPTION_1 	    = "_mobcast_feedback_option_1";
 		public static final String COLUMN_MOBCAST_FEEDBACK_OPTION_2 	    = "_mobcast_feedback_option_2";
 		public static final String COLUMN_MOBCAST_FEEDBACK_OPTION_3 	    = "_mobcast_feedback_option_3";
@@ -272,8 +274,10 @@ public class DBConstant {
 		
 		public static final String COLUMN_ID 							= "_id";
 		public static final String COLUMN_TRAINING_QUIZ_ID 				= "_training_quiz_id";
-		public static final String COLUMN_TRAINING_QUIZ_QID 			= "_training_quiz_qid";
+		public static final String COLUMN_TRAINING_QUIZ_QID 			= "_training_quiz_queid";
 		public static final String COLUMN_TRAINING_QUIZ_QUESTION 		= "_training_quiz_question";
+		public static final String COLUMN_TRAINING_QUIZ_TYPE    		= "_training_quiz_type";
+		public static final String COLUMN_TRAINING_QUIZ_ANSWER  		= "_training_quiz_answer";
 		public static final String COLUMN_TRAINING_QUIZ_OPTION_1 	    = "_training_quiz_option_1";
 		public static final String COLUMN_TRAINING_QUIZ_OPTION_2 	    = "_training_quiz_option_2";
 		public static final String COLUMN_TRAINING_QUIZ_OPTION_3 	    = "_training_quiz_option_3";

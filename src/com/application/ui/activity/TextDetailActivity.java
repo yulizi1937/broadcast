@@ -8,9 +8,12 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -30,6 +33,8 @@ import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.FetchActionAsyncTask;
+import com.application.utils.FetchActionAsyncTask.OnPostExecuteTaskListener;
 import com.application.utils.FileLog;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
@@ -59,6 +64,8 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mTextNewsLinkTv;
 	
 	private AppCompatTextView mTextLikeTv;
+	
+	private SwipeRefreshLayout mSwipeRefreshLayout;
 
 	private LinearLayout mTextNewsLinkLayout;
 
@@ -90,6 +97,7 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 		initUiWithData();
 		setUiListener();
 		setAnimation();
+		setSwipeRefreshLayoutCustomisation();
 	}
 
 	@Override
@@ -101,10 +109,14 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 	@Override
 	protected boolean onPrepareOptionsPanel(View view, Menu menu) {
 		// TODO Auto-generated method stub
-		if (isShareOptionEnable) {
-			menu.findItem(R.id.action_share).setVisible(true);
-		} else {
-			menu.findItem(R.id.action_share).setVisible(false);
+		try{
+			if (isShareOptionEnable) {
+				menu.findItem(R.id.action_share).setVisible(true);
+			} else {
+				menu.findItem(R.id.action_share).setVisible(false);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 		return super.onPrepareOptionsPanel(view, menu);
 	}
@@ -169,18 +181,13 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 	private void toolBarRefresh() {
 		mToolBarMenuRefresh.setVisibility(View.GONE);
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				mToolBarMenuRefresh.setVisibility(View.VISIBLE);
-				mToolBarMenuRefreshProgress.setVisibility(View.GONE);
-			}
-		}, 5000);
+		refreshFeedActionFromApi();
 	}
 
 	private void initUi() {
 		mCroutonViewGroup = (FrameLayout) findViewById(R.id.croutonViewGroup);
+		
+		mSwipeRefreshLayout  = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
 
 		mTextTitleTv = (AppCompatTextView) findViewById(R.id.fragmentTextDetailTitleTv);
 
@@ -193,8 +200,6 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 		
 		mTextNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentTextDetailViewSourceLayout);
 		
-		mTextViewTv.setVisibility(View.GONE);
-		mTextLikeTv.setVisibility(View.GONE);
 	}
 	
 	private void getIntentData(){
@@ -227,7 +232,7 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 			mContentTitle = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE));
 			mContentDesc = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DESC));
 			mContentIsLike = Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE)));
-			mContentIsSharing =  Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE)));
+			mContentIsSharing =  Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARING)));
 			mContentLikeCount = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO));
 			mContentViewCount = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT));
 			mContentLink = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LINK));
@@ -235,7 +240,7 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 			mContentDate = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE));
 			mContentTime = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME));
 			mContentIsRead = Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ)));
-			
+			isShareOptionEnable = mContentIsSharing;
 			setIntentDataToUi();
 		}
 	}
@@ -258,7 +263,13 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 				mTextNewsLinkLayout.setVisibility(View.GONE);
 			}
 			
+			if(mContentIsLike){
+				mTextLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
+				mTextLikeTv.setTextColor(getResources().getColor(R.color.red));
+			}
+			
 			updateReadInDb();
+			supportInvalidateOptionsMenu();
 			if(!mContentIsRead){
 				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.READ, "");
 			}
@@ -280,13 +291,8 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 	
 	private void initUiWithData(){
 		mTextNewsLinkTv.setText(Html.fromHtml(getResources().getString(R.string.sample_news_detail_link)));
-//		initUiWithDataForWastingTime();
 	}
-
-	private void initUiWithDataForWastingTime(){//HDFC
-		mTextTitleTv.setText(getResources().getString(R.string.sample_item_recycler_training_text_title));
-		mTextSummaryTextTv.setText(getResources().getString(R.string.sample_item_recycler_training_text_desc));
-	}
+	
 	/**
 	 * <b>Description: </b></br>Initialize ToolBar</br></br>
 	 * 
@@ -312,6 +318,7 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 		setMaterialRippleView();
 		setOnClickListener();
 		setToolBarOption();
+		setSwipeRefreshListener();
 	}
 
 	private void setOnClickListener() {
@@ -320,9 +327,87 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
 				Intent mIntentWebView = new Intent(TextDetailActivity.this, WebViewActivity.class);
+				mIntentWebView.putExtra(AppConstants.INTENTCONSTANTS.ACTIVITYTITLE, AppConstants.INTENTCONSTANTS.OPEN);
+				mIntentWebView.putExtra(AppConstants.INTENTCONSTANTS.LINK, mContentLink);
 				startActivity(mIntentWebView);
+				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LINK, "");
 			}
 		});
+		
+		mTextLikeTv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				try{
+					if(!mContentIsLike){
+						if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+							ContentValues values = new ContentValues();
+							values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE, "true");
+							values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, String.valueOf(Integer.parseInt(mContentLikeCount)+1));
+							getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, values, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+						}
+						mTextLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
+						mTextLikeTv.setText(String.valueOf(Integer.parseInt(mContentLikeCount)+1));
+						mTextLikeTv.setTextColor(getResources().getColor(R.color.red));
+						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LIKE, "");
+					}
+				}catch(Exception e){
+					FileLog.e(TAG, e.toString());
+				}
+				
+			}
+		});
+	}
+	
+	@SuppressLint("NewApi") 
+	private void setSwipeRefreshListener() {
+		mSwipeRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				// TODO Auto-generated method stub
+				toolBarRefresh();
+			}
+		});
+	}
+	
+	private void refreshFeedActionFromApi(){
+		if(Utilities.isInternetConnected()){
+			if(!mSwipeRefreshLayout.isRefreshing()){
+				mSwipeRefreshLayout.setRefreshing(true);
+			}
+			FetchActionAsyncTask mFetchActionAsyncTask = new FetchActionAsyncTask(TextDetailActivity.this, mId, mCategory, TAG);
+			mFetchActionAsyncTask.execute();
+			mFetchActionAsyncTask.setOnPostExecuteListener(new OnPostExecuteTaskListener() {
+				@Override
+				public void onPostExecute(String mViewCount, String mLikeCount) {
+					// TODO Auto-generated method stub
+					updateFeedActionToDBAndUi(mViewCount, mLikeCount);
+					mSwipeRefreshLayout.setRefreshing(false);
+					mToolBarMenuRefresh.setVisibility(View.VISIBLE);
+					mToolBarMenuRefreshProgress.setVisibility(View.GONE);
+				}
+			});
+		}
+	}
+	
+	private void updateFeedActionToDBAndUi(String mViewCount, String mLikeCount){
+		if(mViewCount!=null){
+			ContentValues mValues = new ContentValues();
+			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+				mValues.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_READ_NO, mViewCount);
+				getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, mValues, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+			}
+			mTextViewTv.setText(mViewCount);
+		}
+		
+		if(mLikeCount!=null){
+			ContentValues mValues = new ContentValues();
+			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+				mValues.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, mViewCount);
+				getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, mValues, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+			}
+			mTextLikeTv.setText(mLikeCount);
+		}
 	}
 
 	@Override
@@ -333,9 +418,10 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 	}
 
 	protected BottomSheet getShareAction() {
+		String mShareContent = mContentTitle + "\n\n" + mContentDesc + "\n\n\n"+ getResources().getString(R.string.share_advertisement); 
 		return getShareActions(
 				new BottomSheet.Builder(this).grid().title("Share To "),
-				"Hello ").limit(R.integer.bs_initial_grid_row).build();
+				mShareContent).limit(R.integer.bs_initial_grid_row).build();
 	}
 
 	private void setMaterialRippleView() {
@@ -343,5 +429,14 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}
+	}
+	
+	private void setSwipeRefreshLayoutCustomisation() {
+		mSwipeRefreshLayout.setColorSchemeColors(
+				Color.parseColor(AppConstants.COLOR.MOBCAST_RED),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_YELLOW),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_PURPLE),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_GREEN),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_BLUE));
 	}
 }

@@ -49,7 +49,6 @@ import com.application.ui.adapter.TrainingRecyclerAdapter;
 import com.application.ui.adapter.TrainingRecyclerAdapter.OnItemClickListener;
 import com.application.ui.view.HorizontalDividerItemDecoration;
 import com.application.ui.view.ObservableRecyclerView;
-import com.application.ui.view.ObservableScrollView;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.FileLog;
@@ -86,7 +85,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
     public void onAttach(Activity activity){
       super.onAttach(activity);
       mContext = getActivity();
-      mActivityCommunicator =(IActivityCommunicator)mContext;
+      mActivityCommunicator =(IActivityCommunicator)mContext; //NIELSEN
       ((MotherActivity)mContext).mFragmentCommunicator = this;
     }
 	 

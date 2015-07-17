@@ -4,10 +4,12 @@ import java.io.File;
 import java.util.ArrayList;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.database.Cursor;
 
+import com.application.beans.MobcastFeedbackSubmit;
 import com.application.sqlite.DBConstant;
 
 public class JSONRequestBuilder {
@@ -27,6 +29,31 @@ public class JSONRequestBuilder {
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.deviceSize, Utilities.checkDisplaySize());
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.deviceType, AppConstants.deviceType);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.countryCode, mCountryCode);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		return stringBuffer;
+	}
+	
+	public static JSONObject getPostFeedbackSubmitData(ArrayList<MobcastFeedbackSubmit> mList) {
+		JSONObject stringBuffer = new JSONObject();
+		try {
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, AppConstants.API_KEY_PARAMETER.mobcast);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.subcategory, AppConstants.API_KEY_PARAMETER.feedback);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.mobcastFeedbackId, mList.get(0).getMobcastFeedbackId());
+			JSONArray  mJSONFeedbackInfoArray = new JSONArray();
+			for(int i = 0 ; i< mList.size();i++){
+				JSONObject mJSONFeedbackInfoObj = new JSONObject();
+				mJSONFeedbackInfoObj.put(AppConstants.API_KEY_PARAMETER.mobcastFeedbackId, mList.get(i).getMobcastFeedbackId());
+				mJSONFeedbackInfoObj.put(AppConstants.API_KEY_PARAMETER.mobcastFeedbackQueId, mList.get(i).getMobcastFeedbackQueId());
+				mJSONFeedbackInfoObj.put(AppConstants.API_KEY_PARAMETER.mobcastFeedbackQueType, mList.get(i).getMobcastFeedbackQueType());
+				mJSONFeedbackInfoObj.put(AppConstants.API_KEY_PARAMETER.mobcastFeedbackAnswer, mList.get(i).getMobcastFeedbackAnswer());
+				mJSONFeedbackInfoArray.put(mJSONFeedbackInfoObj);
+			}
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.mobcastFeedbackInfo, mJSONFeedbackInfoArray);
+			
 		} catch (Exception e) {
 			FileLog.e(TAG, e.toString());
 		}
@@ -124,6 +151,19 @@ public class JSONRequestBuilder {
 		try {
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, AppConstants.INTENTCONSTANTS.AWARD);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.lastBirthdayId, ApplicationLoader.getPreferences().getLastIdBirthday());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		return stringBuffer;
+	}
+	
+	public static JSONObject getPostFetchFeedActionForId(String mCategory, String mId) {
+		JSONObject stringBuffer = new JSONObject();
+		try {
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, mCategory);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER._id, mId);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
 		} catch (Exception e) {

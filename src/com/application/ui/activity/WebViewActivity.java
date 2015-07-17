@@ -50,6 +50,8 @@ public class WebViewActivity extends SwipeBackBaseActivity {
 	
 	private boolean isShareOptionEnable = true;
 	
+	private String mUrl;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -57,8 +59,8 @@ public class WebViewActivity extends SwipeBackBaseActivity {
 		setContentView(R.layout.activity_webview);
 		initToolBar();
 		initUi();
+		getIntentData();
 		initWebViewClient();
-//		getIntentData();
 	}
 
 	@Override
@@ -148,7 +150,7 @@ public class WebViewActivity extends SwipeBackBaseActivity {
 	private void initWebViewClient(){
 		mWebView.setWebChromeClient(new MyWebViewChromeClient());
 		mWebView.setWebViewClient(new MyWebViewClient());
-    	mWebView.loadUrl("http://money.livemint.com/news/sector/news/hdfc-bank-wins-best-private-banking-services-for-super-affluent-clients--360049.aspx");
+    	mWebView.loadUrl(mUrl);
     	setToolBarOption();
 	}
 
@@ -170,6 +172,8 @@ public class WebViewActivity extends SwipeBackBaseActivity {
 		if(mIntent!=null){
 			if(mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.ACTIVITYTITLE).equalsIgnoreCase("help")){
 				mToolBar.setTitle(getResources().getString(R.string.textview_help));	
+			}else if(mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.ACTIVITYTITLE).equalsIgnoreCase(AppConstants.INTENTCONSTANTS.OPEN)){
+				mUrl = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.LINK);
 			}
 		}
 	}

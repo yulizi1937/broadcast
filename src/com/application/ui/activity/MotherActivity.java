@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -61,6 +62,7 @@ import com.application.utils.ObservableScrollViewCallbacks;
 import com.application.utils.ScrollState;
 import com.application.utils.ScrollUtils;
 import com.application.utils.Scrollable;
+import com.application.utils.Utilities;
 import com.mobcast.R;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
@@ -125,7 +127,6 @@ public class MotherActivity extends BaseActivity implements
 		propagateToolbarState(toolbarIsShown());
 		setDrawerLayout();
 	}
-	
 
 	@Override
 	protected void onPause() {
@@ -141,7 +142,7 @@ public class MotherActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		super.onResume();
 		registerReceiver(mBroadCastReceiver, new IntentFilter(NotificationsController.BROADCAST_ACTION));
-		notifySlidingTabLayoutChange();
+		notifySlidingTabLayoutChange();//NIELSEN
 	}
 
 
@@ -216,100 +217,10 @@ public class MotherActivity extends BaseActivity implements
 			startActivity(mIntentEvent);
 			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
 			return true;
-		case R.id.action_quiz:
-			Intent mIntentQuiz = new Intent(MotherActivity.this,
-					QuizActivity.class);
-			startActivity(mIntentQuiz);
-			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
-			return true;
-		case R.id.action_feedback:
-			Intent mIntentFeedback = new Intent(MotherActivity.this,
-					FeedbackActivity.class);
-			startActivity(mIntentFeedback);
-			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
-			return true;
-		case R.id.action_image:
-			Intent mIntentImage = new Intent(MotherActivity.this,
-					ImageDetailActivity.class);
-			startActivity(mIntentImage);
-			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
-			return true;
-		case R.id.action_audio:
-			Intent mIntentAudio = new Intent(MotherActivity.this,
-					AudioDetailActivity.class);
-			startActivity(mIntentAudio);
-			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
-			return true;
-		case R.id.action_video:
-			Intent mIntentVideo = new Intent(MotherActivity.this,
-					VideoDetailActivity.class);
-			startActivity(mIntentVideo);
-			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
-			return true;
-		case R.id.action_text:
-			Intent mIntentText = new Intent(MotherActivity.this,
-					TextDetailActivity.class);
-			startActivity(mIntentText);
-			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
-			return true;
-		case R.id.action_pdf:
-			Intent mIntentPdf = new Intent(MotherActivity.this,
-					PdfDetailActivity.class);
-			startActivity(mIntentPdf);
-			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
-			return true;
-		case R.id.action_doc:
-			Intent mIntentDoc = new Intent(MotherActivity.this,
-					DocDetailActivity.class);
-			startActivity(mIntentDoc);
-			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
-			return true;
-		case R.id.action_xls:
-			Intent mIntentXls = new Intent(MotherActivity.this,
-					XlsDetailActivity.class);
-			startActivity(mIntentXls);
-			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
-			return true;
-		case R.id.action_ppt:
-			Intent mIntentPpt = new Intent(MotherActivity.this,
-					PptDetailActivity.class);
-			startActivity(mIntentPpt);
-			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
-			return true;
-		case R.id.action_news:
-			Intent mIntentNews = new Intent(MotherActivity.this,
-					NewsDetailActivity.class);
-			startActivity(mIntentNews);
-			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
-			return true;
-		case R.id.action_interactive:
-			Intent mIntentInteractive = new Intent(MotherActivity.this,
-					InteractiveDetailActivity.class);
-			startActivity(mIntentInteractive);
-			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
-			return true;
-		case R.id.action_about:
-			Intent mIntentAbout = new Intent(MotherActivity.this,
-					AboutActivity.class);
-			startActivity(mIntentAbout);
-			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
-			return true;
 		case R.id.action_report:
 			Intent mIntentReport = new Intent(MotherActivity.this,
 					ReportActivity.class);
 			startActivity(mIntentReport);
-			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
-			return true;
-		case R.id.action_app_feedback:
-			Intent mIntentAppFeedback = new Intent(MotherActivity.this,
-					FeedbackAppActivity.class);
-			startActivity(mIntentAppFeedback);
-			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
-			return true;
-		case R.id.action_livestream_youtube:
-			Intent mIntentLiveStreamYouTube = new Intent(MotherActivity.this,
-					YouTubeLiveStreamActivity.class);
-			startActivity(mIntentLiveStreamYouTube);
 			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
 			return true;
 		default:
@@ -405,10 +316,10 @@ public class MotherActivity extends BaseActivity implements
 	private void notifySlidingTabLayoutChange(){
 		
 		mArrayListMotherHeader.get(0).setmIsUnread(getUnreadOfMobcast() > 0 ? true : false);
-		mArrayListMotherHeader.get(2).setmIsUnread(getUnreadOfTraining() > 0 ? true : false);
+		mArrayListMotherHeader.get(1).setmIsUnread(getUnreadOfTraining() > 0 ? true : false);
 		
 		mArrayListMotherHeader.get(0).setmUnreadCount(String.valueOf(getUnreadOfMobcast()));
-		mArrayListMotherHeader.get(2).setmUnreadCount(String.valueOf(getUnreadOfTraining()));
+		mArrayListMotherHeader.get(1).setmUnreadCount(String.valueOf(getUnreadOfTraining()));
 		
 		mPagerAdapter.notifyDataSetChanged(mArrayListMotherHeader);
 		
@@ -475,11 +386,11 @@ public class MotherActivity extends BaseActivity implements
 		obj1.setmUnreadCount(String.valueOf(mUnreadCountMobcast));
 		mArrayListMotherHeader.add(obj1);
 
-		MotherHeader obj2 = new MotherHeader();
-		obj2.setmIsUnread(false);
-		obj2.setmTitle(getResources().getString(R.string.layout_mother_chat));
-		obj2.setmUnreadCount("0");
-		mArrayListMotherHeader.add(obj2);
+//		MotherHeader obj2 = new MotherHeader();
+//		obj2.setmIsUnread(false);
+//		obj2.setmTitle(getResources().getString(R.string.layout_mother_chat));
+//		obj2.setmUnreadCount("0");
+//		mArrayListMotherHeader.add(obj2);
 
 		MotherHeader obj3 = new MotherHeader();
 		int mUnreadCountTraining = getUnreadOfTraining();
@@ -503,7 +414,8 @@ public class MotherActivity extends BaseActivity implements
 		if(mCursor!=null){
 			mCursor.close();
 		}
-		return 0;
+		return 0;//NIELSEN
+		
 	}
 	
 	private int getUnreadOfTraining(){

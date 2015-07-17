@@ -34,115 +34,11 @@
         android:orderInCategory="100"
         android:title="@string/action_refresh"
         app:showAsAction="never"/>
-    
-    <item
-        android:id="@+id/action_quiz"
-        android:icon="@drawable/ic_toolbar_search"
-        android:orderInCategory="100"
-        android:title="@string/action_quiz"
-        app:showAsAction="never"/>
-    
-    <item
-        android:id="@+id/action_feedback"
-        android:icon="@drawable/ic_toolbar_search"
-        android:orderInCategory="100"
-        android:title="@string/action_feedback"
-        app:showAsAction="never"/>
-    
-    <item
-        android:id="@+id/action_image"
-        android:icon="@drawable/ic_toolbar_search"
-        android:orderInCategory="100"
-        android:title="@string/action_image"
-        app:showAsAction="never"/>
-    
-    <item
-        android:id="@+id/action_audio"
-        android:icon="@drawable/ic_toolbar_search"
-        android:orderInCategory="100"
-        android:title="@string/action_audio"
-        app:showAsAction="never"/>
-    
-    <item
-        android:id="@+id/action_video"
-        android:icon="@drawable/ic_toolbar_search"
-        android:orderInCategory="100"
-        android:title="@string/action_video"
-        app:showAsAction="never"/>
-    
-    <item
-        android:id="@+id/action_text"
-        android:icon="@drawable/ic_toolbar_search"
-        android:orderInCategory="100"
-        android:title="@string/action_text"
-        app:showAsAction="never"/>
-    
-    <item
-        android:id="@+id/action_pdf"
-        android:icon="@drawable/ic_toolbar_search"
-        android:orderInCategory="100"
-        android:title="@string/action_pdf"
-        app:showAsAction="never"/>
-    
-    <item
-        android:id="@+id/action_doc"
-        android:icon="@drawable/ic_toolbar_search"
-        android:orderInCategory="100"
-        android:title="@string/action_doc"
-        app:showAsAction="never"/>
-    
-    <item
-        android:id="@+id/action_xls"
-        android:icon="@drawable/ic_toolbar_search"
-        android:orderInCategory="100"
-        android:title="@string/action_xls"
-        app:showAsAction="never"/>
-    
-    <item
-        android:id="@+id/action_ppt"
-        android:icon="@drawable/ic_toolbar_search"
-        android:orderInCategory="100"
-        android:title="@string/action_ppt"
-        app:showAsAction="never"/>
-    
-    <item
-        android:id="@+id/action_news"
-        android:icon="@drawable/ic_toolbar_search"
-        android:orderInCategory="100"
-        android:title="@string/action_news"
-        app:showAsAction="never"/>
-    
-    <item
-        android:id="@+id/action_interactive"
-        android:icon="@drawable/ic_toolbar_search"
-        android:orderInCategory="100"
-        android:title="@string/action_interactive"
-        app:showAsAction="never"/>
-    
-    <item
-        android:id="@+id/action_about"
-        android:icon="@drawable/ic_toolbar_search"
-        android:orderInCategory="100"
-        android:title="@string/action_about"
-        app:showAsAction="never"/>
-    
     <item
         android:id="@+id/action_report"
         android:icon="@drawable/ic_toolbar_search"
         android:orderInCategory="100"
         android:title="@string/action_report"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/action_app_feedback"
-        android:icon="@drawable/ic_toolbar_search"
-        android:orderInCategory="100"
-        android:title="@string/action_app_feedback"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/action_livestream_youtube"
-        android:icon="@drawable/ic_toolbar_search"
-        android:orderInCategory="100"
-        android:title="@string/action_livestream_youtube"
         app:showAsAction="never"/>
 
 </menu>

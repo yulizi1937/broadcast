@@ -62,6 +62,7 @@ import com.application.ui.activity.PptDetailActivity;
 import com.application.ui.activity.TextDetailActivity;
 import com.application.ui.activity.VideoDetailActivity;
 import com.application.ui.activity.XlsDetailActivity;
+import com.application.ui.activity.YouTubeLiveStreamActivity;
 import com.application.ui.adapter.MobcastRecyclerAdapter;
 import com.application.ui.adapter.MobcastRecyclerAdapter.OnItemClickListener;
 import com.application.ui.view.HorizontalDividerItemDecoration;
@@ -81,6 +82,7 @@ import com.application.utils.Utilities;
 import com.facebook.network.connectionclass.ConnectionClassManager;
 import com.facebook.network.connectionclass.ConnectionQuality;
 import com.mobcast.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.okhttp.OkHttpClient;
 
 public class MobcastRecyclerViewFragment extends BaseFragment implements IFragmentCommunicator{
@@ -109,11 +111,12 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	private ArrayList<Mobcast> mArrayListMobcast;
 	
 	private Context mContext;
+	
 	 @Override
      public void onAttach(Activity activity){
        super.onAttach(activity);
        mContext = getActivity();
-       mActivityCommunicator =(IActivityCommunicator)mContext;
+       mActivityCommunicator =(IActivityCommunicator)mContext;//NIELSEN
        ((MotherActivity)mContext).mFragmentCommunicator = this;
      }
 	 
@@ -149,6 +152,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		ApplicationLoader.getPreferences().setViewIdMobcast("-1");
 		
 		checkDataInAdapter();
+//		setRecyclerAdapter();
 
 		setSwipeRefreshLayoutCustomisation();
 		return view;
@@ -224,7 +228,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	private void checkDataInAdapter() {
 		Cursor mCursor = getActivity().getContentResolver().query(
 				DBConstant.Mobcast_Columns.CONTENT_URI, null, null, null,
-				DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + " DESC");
+				DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE_FORMATTED + " DESC");
 		if (mCursor != null && mCursor.getCount() > 0) {
 			addMobcastObjectListFromDBToBeans(mCursor, false);
 			if (mArrayListMobcast.size() > 0) {
@@ -321,33 +325,52 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 			Obj.setmExpiryDate(mCursor.getString(mIntMobcastExpiryDate));
 			Obj.setmExpiryTime(mCursor.getString(mIntMobcastExpiryTime));
 			Obj.setmFileType(mCursor.getString(mIntMobcastType));
-			
-			Cursor mCursorFileInfo = getActivity().getContentResolver().query(DBConstant.Mobcast_File_Columns.CONTENT_URI, null, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mMobcastId}, DBConstant.Mobcast_File_Columns.COLUMN_ID + " ASC");
-			
-			if(mCursorFileInfo!=null && mCursorFileInfo.getCount() > 0){
-				mCursorFileInfo.moveToFirst();
-				ArrayList<MobcastFileInfo> mMobcastFileInfoList = new ArrayList<MobcastFileInfo>();
-				do{
-					MobcastFileInfo fileObj = new MobcastFileInfo();
-					fileObj.setmDuration(mCursorFileInfo.getString(mIntMobcastFileInfoDuration));
-					fileObj.setmFileIsDefault(mCursorFileInfo.getString(mIntMobcastFileInfoIsDefault));
-					fileObj.setmFileLanguages(mCursorFileInfo.getString(mIntMobcastFileInfoLang));
-					fileObj.setmFileLink(mCursorFileInfo.getString(mIntMobcastFileInfoLink));
-					fileObj.setmFileName(mCursorFileInfo.getString(mIntMobcastFileInfoName));
-					fileObj.setmFilePath(mCursorFileInfo.getString(mIntMobcastFileInfoPath));
-					fileObj.setmFileSize(mCursorFileInfo.getString(mIntMobcastFileInfoSize));
-					fileObj.setmPages(mCursorFileInfo.getString(mIntMobcastFileInfoPage));
-					fileObj.setmThumbnailLink(mCursorFileInfo.getString(mIntMobcastFileInfoThumbLink));
-					fileObj.setmThumbnailPath(mCursorFileInfo.getString(mIntMobcastFileInfoThumbPath));
-					
-					mMobcastFileInfoList.add(fileObj);
-				}while(mCursorFileInfo.moveToNext());
+
+			if(Utilities.getMediaType(mCursor.getString(mIntMobcastType)) != AppConstants.TYPE.FEEDBACK){
+				Cursor mCursorFileInfo = getActivity().getContentResolver().query(DBConstant.Mobcast_File_Columns.CONTENT_URI, null, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mMobcastId}, DBConstant.Mobcast_File_Columns.COLUMN_ID + " ASC");
 				
-				Obj.setmFileInfo(mMobcastFileInfoList);
+				if(mCursorFileInfo!=null && mCursorFileInfo.getCount() > 0){
+					mCursorFileInfo.moveToFirst();
+					ArrayList<MobcastFileInfo> mMobcastFileInfoList = new ArrayList<MobcastFileInfo>();
+					do{
+						MobcastFileInfo fileObj = new MobcastFileInfo();
+						fileObj.setmDuration(mCursorFileInfo.getString(mIntMobcastFileInfoDuration));
+						fileObj.setmFileIsDefault(mCursorFileInfo.getString(mIntMobcastFileInfoIsDefault));
+						fileObj.setmFileLanguages(mCursorFileInfo.getString(mIntMobcastFileInfoLang));
+						fileObj.setmFileLink(mCursorFileInfo.getString(mIntMobcastFileInfoLink));
+						fileObj.setmFileName(mCursorFileInfo.getString(mIntMobcastFileInfoName));
+						fileObj.setmFilePath(mCursorFileInfo.getString(mIntMobcastFileInfoPath));
+						fileObj.setmFileSize(mCursorFileInfo.getString(mIntMobcastFileInfoSize));
+						fileObj.setmPages(mCursorFileInfo.getString(mIntMobcastFileInfoPage));
+						fileObj.setmThumbnailLink(mCursorFileInfo.getString(mIntMobcastFileInfoThumbLink));
+						fileObj.setmThumbnailPath(mCursorFileInfo.getString(mIntMobcastFileInfoThumbPath));
+						
+						mMobcastFileInfoList.add(fileObj);
+					}while(mCursorFileInfo.moveToNext());
+					
+					Obj.setmFileInfo(mMobcastFileInfoList);
+				}
+				
+				if(mCursorFileInfo!=null){
+					mCursorFileInfo.close();
+				}
+			}else if(Utilities.getMediaType(mCursor.getString(mIntMobcastType)) == AppConstants.TYPE.FEEDBACK){
+				Cursor mCursorFeedbackInfo = getActivity().getContentResolver().query(DBConstant.Mobcast_Feedback_Columns.CONTENT_URI, null, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ID + "=?", new String[]{mMobcastId}, DBConstant.Mobcast_Feedback_Columns.COLUMN_ID + " ASC");
+				
+				if(mCursorFeedbackInfo!=null && mCursorFeedbackInfo.getCount() > 0){
+					mCursorFeedbackInfo.moveToFirst();
+					ArrayList<MobcastFileInfo> mMobcastFeedbackInfoList = new ArrayList<>();
+					MobcastFileInfo feedbackObj = new MobcastFileInfo();
+					feedbackObj.setmPages(mCursorFeedbackInfo.getCount() + " " + getResources().getString(R.string.item_recycler_mobcast_feedback_question));
+					mMobcastFeedbackInfoList.add(feedbackObj);
+					Obj.setmFileInfo(mMobcastFeedbackInfoList);
+				}
+				
+				if(mCursorFeedbackInfo!=null){
+					mCursorFeedbackInfo.close();
+				}
 			}
-			if(mCursorFileInfo!=null){
-				mCursorFileInfo.close();
-			}
+			
 			
 			if(!isFromBroadCastReceiver){
 				mArrayListMobcast.add(Obj);	
@@ -359,8 +382,9 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	}
 
 	private void setRecyclerAdapter() {
+//		mArrayListMobcast = getDummyMobcastData();
 //		mAdapter = new MobcastRecyclerAdapter(getActivity(),
-//				getDummyMobcastData(), headerView);
+//				mArrayListMobcast, headerView);
 		
 		mAdapter = new MobcastRecyclerAdapter(getActivity(),
 				mArrayListMobcast, headerView);
@@ -407,34 +431,47 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 				@Override
 				public void onItemClick(View view, int position) {
 					// TODO Auto-generated method stub
+					position-=1;
 					switch (view.getId()) {
 					case R.id.itemRecyclerMobcastVideoRootLayout:
 						Intent mIntentVideo = new Intent(mParentActivity,
 								VideoDetailActivity.class);
+						mIntentVideo.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.MOBCAST);
+						mIntentVideo.putExtra(AppConstants.INTENTCONSTANTS.ID, mArrayListMobcast.get(position).getmId());
+						saveViewPosition(position);
 						startActivity(mIntentVideo);
 						AndroidUtilities.enterWindowAnimation(mParentActivity);
 						break;
+					case R.id.itemRecyclerMobcastLiveRootLayout:
+						Intent mIntentLive = new Intent(mParentActivity,
+								YouTubeLiveStreamActivity.class);
+						mIntentLive.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.MOBCAST);
+						mIntentLive.putExtra(AppConstants.INTENTCONSTANTS.ID, mArrayListMobcast.get(position).getmId());
+						saveViewPosition(position);
+						startActivity(mIntentLive);
+						AndroidUtilities.enterWindowAnimation(mParentActivity);
+						break;
 					case R.id.itemRecyclerMobcastImageRootLayout:
-						Intent mIntentImage = new Intent(mParentActivity,
-								ImageDetailActivity.class);
-						mIntentImage.putExtra(
-								AppConstants.INTENTCONSTANTS.CATEGORY,
-								AppConstants.INTENTCONSTANTS.MOBCAST);
+						Intent mIntentImage = new Intent(mParentActivity,ImageDetailActivity.class);
+						mIntentImage.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.MOBCAST);
+						mIntentImage.putExtra(AppConstants.INTENTCONSTANTS.ID, mArrayListMobcast.get(position).getmId());
+						saveViewPosition(position);
 						startActivity(mIntentImage);
 						AndroidUtilities.enterWindowAnimation(mParentActivity);
 						break;
 					case R.id.itemRecyclerMobcastFeedbackRootLayout:
-						Intent mIntentFeedback = new Intent(mParentActivity,
-								FeedbackActivity.class);
+						Intent mIntentFeedback = new Intent(mParentActivity,FeedbackActivity.class);
+						mIntentFeedback.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.MOBCAST);
+						mIntentFeedback.putExtra(AppConstants.INTENTCONSTANTS.ID, mArrayListMobcast.get(position).getmId());
+						saveViewPosition(position);
 						startActivity(mIntentFeedback);
 						AndroidUtilities.enterWindowAnimation(mParentActivity);
 						break;
 					case R.id.itemRecyclerMobcastAudioRootLayout:
-						Intent mIntentAudio = new Intent(mParentActivity,
-								AudioDetailActivity.class);
-						mIntentAudio.putExtra(
-								AppConstants.INTENTCONSTANTS.CATEGORY,
-								AppConstants.INTENTCONSTANTS.MOBCAST);
+						Intent mIntentAudio = new Intent(mParentActivity,AudioDetailActivity.class);
+						mIntentAudio.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.MOBCAST);
+						mIntentAudio.putExtra(AppConstants.INTENTCONSTANTS.ID, mArrayListMobcast.get(position).getmId());
+						saveViewPosition(position);
 						startActivity(mIntentAudio);
 						AndroidUtilities.enterWindowAnimation(mParentActivity);
 						break;
@@ -447,33 +484,34 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 						AndroidUtilities.enterWindowAnimation(mParentActivity);
 						break;
 					case R.id.itemRecyclerMobcastPdfRootLayout:
-						Intent mIntentPdf = new Intent(mParentActivity,
-								PdfDetailActivity.class);
+						Intent mIntentPdf = new Intent(mParentActivity,PdfDetailActivity.class);
+						mIntentPdf.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.MOBCAST);
+						mIntentPdf.putExtra(AppConstants.INTENTCONSTANTS.ID, mArrayListMobcast.get(position).getmId());
+						saveViewPosition(position);
 						startActivity(mIntentPdf);
 						AndroidUtilities.enterWindowAnimation(mParentActivity);
 						break;
 					case R.id.itemRecyclerMobcastXlsRootLayout:
-						Intent mIntentXls = new Intent(mParentActivity,
-								XlsDetailActivity.class);
+						Intent mIntentXls = new Intent(mParentActivity,XlsDetailActivity.class);
+						mIntentXls.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.MOBCAST);
+						mIntentXls.putExtra(AppConstants.INTENTCONSTANTS.ID, mArrayListMobcast.get(position).getmId());
+						saveViewPosition(position);
 						startActivity(mIntentXls);
 						AndroidUtilities.enterWindowAnimation(mParentActivity);
 						break;
 					case R.id.itemRecyclerMobcastDocRootLayout:
-						Intent mIntentDoc = new Intent(mParentActivity,
-								DocDetailActivity.class);
+						Intent mIntentDoc = new Intent(mParentActivity,DocDetailActivity.class);
+						mIntentDoc.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.MOBCAST);
+						mIntentDoc.putExtra(AppConstants.INTENTCONSTANTS.ID, mArrayListMobcast.get(position).getmId());
 						startActivity(mIntentDoc);
 						AndroidUtilities.enterWindowAnimation(mParentActivity);
 						break;
 					case R.id.itemRecyclerMobcastPptRootLayout:
-						Intent mIntentPpt = new Intent(mParentActivity,
-								PptDetailActivity.class);
+						Intent mIntentPpt = new Intent(mParentActivity,PptDetailActivity.class);
+						mIntentPpt.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.MOBCAST);
+						mIntentPpt.putExtra(AppConstants.INTENTCONSTANTS.ID, mArrayListMobcast.get(position).getmId());
+						saveViewPosition(position);
 						startActivity(mIntentPpt);
-						AndroidUtilities.enterWindowAnimation(mParentActivity);
-						break;
-					case R.id.itemRecyclerMobcastNewsRootLayout:
-						Intent mIntentNews = new Intent(mParentActivity,
-								NewsDetailActivity.class);
-						startActivity(mIntentNews);
 						AndroidUtilities.enterWindowAnimation(mParentActivity);
 						break;
 					}
@@ -488,15 +526,25 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	}
 	
 	private void checkReadFromDBAndUpdateToObj(){
-		final int position = Integer.parseInt(ApplicationLoader.getPreferences().getViewIdMobcast());
-		if(position!= -1){
+		int position = Integer.parseInt(ApplicationLoader.getPreferences().getViewIdMobcast());
+//		position-=1;
+		if (position >= 0 && position < mArrayListMobcast.size()) {
 			if(mArrayListMobcast!=null && mArrayListMobcast.size() > 0){
-				Cursor mCursor = getActivity().getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, new String[]{DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ}, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mArrayListMobcast.get(position).getmId()}, null);
+				Cursor mCursor = getActivity().getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, new String[]{DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO}, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mArrayListMobcast.get(position).getmId()}, null);
 				
 				if(mCursor!=null && mCursor.getCount() >0){
 					mCursor.moveToFirst();
+					boolean isToNotify = false;
 					if(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ)))){
 						mArrayListMobcast.get(position).setRead(true);
+						isToNotify = true;
+					}
+					if(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE)))){
+						mArrayListMobcast.get(position).setLike(true);
+						mArrayListMobcast.get(position).setmLikeCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO)));
+						isToNotify = true;
+					}
+					if(isToNotify){
 						mRecyclerView.getAdapter().notifyDataSetChanged();
 					}
 				}
@@ -610,7 +658,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastIsRead));
 					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastIsLiked));
 					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARING, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastIsSharing));
-					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastIsDownloadable));
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_DOWNLOADABLE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastIsDownloadable));
 					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LINK, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.mobcastLink));
 					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_EXPIRY_DATE, mExpiryDate);
 					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_EXPIRY_TIME, mExpiryTime);
@@ -624,43 +672,69 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 					}
 					final int mIntType = Utilities.getMediaType(mType);
 					
-					JSONArray mJSONArrMobFileObj = mJSONMobObj.getJSONArray(AppConstants.API_KEY_PARAMETER.mobcastFileInfo);
-					
-					for (int j = 0; j < mJSONArrMobFileObj.length(); j++) {
-						JSONObject mJSONFileInfoObj = mJSONArrMobFileObj.getJSONObject(j);
-						ContentValues valuesFileInfo = new ContentValues();
-						final String mThumbnailLink = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastThumbnail);
-						String mFileLink = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFileLink);
-						final String mFileName = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFileName);
-						String mIsDefault = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastisDefault);
-						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID, mMobcastId);
-						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LINK, mFileLink);
-						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH, Utilities.getFilePath(mIntType, false, mFileName));
-						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFileLang));
-						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_SIZE, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFileSize));
-						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_DURATION, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFileDuration));
-						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PAGES, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFilePages));
-						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_IS_DEFAULT, mIsDefault);
-						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_LIVE_STREAM, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastLiveStream));
-						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_LIVE_STREAM_YOUTUBE, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastLiveStreamYouTube));
-						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_READ_DURATION, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastReadDuration));
-						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_NAME, mFileName);
-						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_LINK, mThumbnailLink);
-						valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_PATH, Utilities.getFilePath(mIntType, true, mFileName));
+					if(mIntType != AppConstants.TYPE.FEEDBACK){
+						JSONArray mJSONArrMobFileObj = mJSONMobObj.getJSONArray(AppConstants.API_KEY_PARAMETER.mobcastFileInfo);
 						
-						getActivity().getContentResolver().insert(DBConstant.Mobcast_File_Columns.CONTENT_URI, valuesFileInfo);
+						for (int j = 0; j < mJSONArrMobFileObj.length(); j++) {
+							JSONObject mJSONFileInfoObj = mJSONArrMobFileObj.getJSONObject(j);
+							ContentValues valuesFileInfo = new ContentValues();
+							final String mThumbnailLink = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastThumbnail);
+							String mFileLink = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFileLink);
+							final String mFileName = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFileName);
+							String mIsDefault = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastisDefault);
+							final String mThumbnailName = Utilities.getFilePath(mIntType, true, Utilities.getFileName(mThumbnailLink));
+							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID, mMobcastId);
+							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LINK, mFileLink);
+							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH, Utilities.getFilePath(mIntType, false, mFileName));
+							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFileLang));
+							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_SIZE, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFileSize));
+							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_DURATION, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFileDuration));
+							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PAGES, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFilePages));
+							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_IS_DEFAULT, mIsDefault);
+							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_LIVE_STREAM, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastLiveStream));
+							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_LIVE_STREAM_YOUTUBE, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastLiveStreamYouTube));
+							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_READ_DURATION, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastReadDuration));
+							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_NAME, mFileName);
+							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_LINK, mThumbnailLink);
+							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_PATH, mThumbnailName);
+							
+							getActivity().getContentResolver().insert(DBConstant.Mobcast_File_Columns.CONTENT_URI, valuesFileInfo);
+							
+							/*if(!TextUtils.isEmpty(mThumbnailLink)){
+								ConnectionQuality mConnectionQuality = ConnectionClassManager.getInstance().getCurrentBandwidthQuality();
+								if(mConnectionQuality.compareTo(ConnectionQuality.EXCELLENT) == 1){
+									Utilities.downloadQueue.postRunnable(new Runnable() {
+										@Override
+										public void run() {
+											// TODO Auto-generated method stub
+											Utilities.downloadFile(mIntType, true,false, mThumbnailLink, Utilities.getFileName(mThumbnailName));//thumbnail, isEncrypt		
+										}
+									});
+								}
+							}*/
+						}
+					}else if(mIntType == AppConstants.TYPE.FEEDBACK){
+						JSONArray mJSONArrMobFeedObj = mJSONMobObj.getJSONArray(AppConstants.API_KEY_PARAMETER.mobcastFeedbackInfo);
 						
-						if(!TextUtils.isEmpty(mThumbnailLink)){
-							ConnectionQuality mConnectionQuality = ConnectionClassManager.getInstance().getCurrentBandwidthQuality();
-							if(mConnectionQuality.compareTo(ConnectionQuality.EXCELLENT) == 1){
-								Utilities.downloadQueue.postRunnable(new Runnable() {
-									@Override
-									public void run() {
-										// TODO Auto-generated method stub
-										Utilities.downloadFile(mIntType, true,false, mThumbnailLink, mFileName);//thumbnail, isEncrypt		
-									}
-								});
-							}
+						for (int k = 0; k < mJSONArrMobFeedObj.length(); k++) {
+								JSONObject mJSONFeedbackObj = mJSONArrMobFeedObj.getJSONObject(k);
+								ContentValues valuesFeedbackInfo = new ContentValues();
+								String mFeedbackId = mJSONFeedbackObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFeedbackId);
+								String mFeedbackQid = mJSONFeedbackObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFeedbackQueId);
+								valuesFeedbackInfo.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ID, mFeedbackId);
+								valuesFeedbackInfo.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_QID, mFeedbackQid);
+								valuesFeedbackInfo.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_TYPE, mJSONFeedbackObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFeedbackQueType));
+								valuesFeedbackInfo.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_QUESTION, mJSONFeedbackObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFeedbackQueTitle));
+								valuesFeedbackInfo.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_1, mJSONFeedbackObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFeedbackOption1));
+								valuesFeedbackInfo.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_2, mJSONFeedbackObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFeedbackOption2));
+								valuesFeedbackInfo.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_3, mJSONFeedbackObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFeedbackOption3));
+								valuesFeedbackInfo.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_4, mJSONFeedbackObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFeedbackOption4));
+								valuesFeedbackInfo.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_5, mJSONFeedbackObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFeedbackOption5));
+								valuesFeedbackInfo.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_6, mJSONFeedbackObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFeedbackOption6));
+								valuesFeedbackInfo.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_7, mJSONFeedbackObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFeedbackOption7));
+								
+								Uri isInsertFeedbackInfoUri = getActivity().getContentResolver().insert(DBConstant.Mobcast_Feedback_Columns.CONTENT_URI, valuesFeedbackInfo);
+								Utilities.checkWhetherInsertedOrNot(TAG,isInsertFeedbackInfoUri);
 						}
 					}
 				}

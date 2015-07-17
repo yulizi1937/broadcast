@@ -20,6 +20,7 @@ import android.widget.ImageView;
 
 import com.application.beans.Birthday;
 import com.application.ui.view.CircleImageView;
+import com.application.utils.ApplicationLoader;
 import com.mobcast.R;
 
 public class BirthdayRecyclerAdapter extends
@@ -50,7 +51,12 @@ public class BirthdayRecyclerAdapter extends
 	public void onBindViewHolder(ViewHolder viewHolder, int position) {
 		viewHolder.birthdayDepartmentTv.setText(mArrayListBirthday.get(position)
 				.getmBirthdayUserDep());
+		viewHolder.birthdayNameTv.setText(mArrayListBirthday.get(position).getmBirthdayUserName());
 		viewHolder.sendMessageIv.setTag(R.id.TAG_BIRTHDAYUSERNAME, "ABC");
+		if(position == 0){
+		}else if(position == 1){
+		}else {
+		}
 	}
 
 	@Override

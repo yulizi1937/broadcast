@@ -11,6 +11,8 @@ package com.application.utils;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.http.entity.mime.MinimalField;
+
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
@@ -34,6 +36,9 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.mobcast.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.utils.L;
 
 @SuppressLint("NewApi")
 public class ApplicationLoader extends Application {
@@ -54,6 +59,8 @@ public class ApplicationLoader extends Application {
 
 	public static SharedPreferences sharedPreferences;
 	public static AppPreferences preferences;
+	
+	public static ImageLoader mImageLoader;
 
 	public static void postInitApplication() {
 	}
@@ -91,6 +98,8 @@ public class ApplicationLoader extends Application {
 			initStetho(applicationLoader);
 		}
 		
+		initImageLoader();
+		
 	}
 
 	public static Context getApplication() {
@@ -109,11 +118,11 @@ public class ApplicationLoader extends Application {
 	public static AppPreferences getPreferences() {
 		return preferences;
 	}
-
+	
 	public static SharedPreferences getSharedPreferences() {
 		return sharedPreferences;
 	}
-
+	
 	public static synchronized ApplicationLoader getInstance() {
 		return applicationLoader;
 	}
@@ -122,6 +131,20 @@ public class ApplicationLoader extends Application {
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
 				.setDefaultFontPath("fonts/RobotoCondensedRegular.ttf")
 				.setFontAttrId(R.attr.fontPath).build());
+	}
+	
+	@SuppressWarnings("deprecation")
+	public static void initImageLoader(){
+		mImageLoader = ImageLoader.getInstance();
+		mImageLoader.init(ImageLoaderConfiguration.createDefault(ApplicationLoader.getApplication()));
+		L.disableLogging();
+	}
+	
+	public static ImageLoader getUILImageLoader(){
+		if(mImageLoader==null){
+			initImageLoader();
+		}
+		return mImageLoader;
 	}
 
 	public static void startAnyDoNotificationService() {

@@ -3,6 +3,11 @@
  */
 package com.application.ui.activity;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+import org.apache.http.entity.mime.MinimalField;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
@@ -18,6 +23,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.application.beans.Birthday;
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.CircleImageView;
 import com.application.ui.view.ProgressWheel;
@@ -56,6 +62,9 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mBirthdayProfileSunSignTv;
 	private AppCompatTextView mBirthdayProfileAgeTv;
 	private AppCompatTextView mBirthdayProfileDepTv;
+	
+	private Intent mIntent;
+	private ArrayList<Birthday> mArrayListBirthday;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +73,7 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		setContentView(R.layout.activity_birthday_profile);
 		initToolBar();
 		initUi();
+		getIntentData();
 		setUiListener();
 		setAnimation();
 	}
@@ -135,6 +145,32 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		mBirthdayProfileActionChatIv = (ImageView) findViewById(R.id.fragmentBirthdayProfileChatIv);
 		mBirthdayProfileActionMsgIv = (ImageView) findViewById(R.id.fragmentBirthdayProfileMessageIv);
 		mBirthdayProfileActionEmailIv = (ImageView) findViewById(R.id.fragmentBirthdayProfileEmailIv);
+	}
+	
+	private void getIntentData(){
+		mIntent = getIntent();
+		mArrayListBirthday = mIntent.getParcelableArrayListExtra(AppConstants.INTENTCONSTANTS.CATEGORY);
+		int position = mIntent.getIntExtra(AppConstants.INTENTCONSTANTS.ID, 0);
+		if (position < 2) {
+			position = 0;
+		} else if (position < 4) {
+			position = 1;
+		} else {
+			position = 2;
+		}
+		Birthday Obj = mArrayListBirthday.get(position);
+		mBirthdayProfileNameTv.setText(Obj.getmBirthdayUserName());
+		mBirthdayProfileDepTv.setText(Obj.getmBirthdayUserDep());
+		if(Obj.getmBirthdayUserName().equalsIgnoreCase("Ashwin Roy")){
+			mBirthdayProfileAgeTv.setText("28");
+			mBirthdayProfileDateTv.setText("28 August");
+		}else if(Obj.getmBirthdayUserName().equalsIgnoreCase("Vikalp Patel")){
+			mBirthdayProfileAgeTv.setText("24");
+			mBirthdayProfileDateTv.setText("08 October");
+		}else {
+			mBirthdayProfileAgeTv.setText("26");
+			mBirthdayProfileDateTv.setText("10 December");
+		}
 	}
 
 	/**

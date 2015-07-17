@@ -17,14 +17,12 @@ import com.application.ui.fragment.ImageViewFragment;
  */
 public class ImageDetailPagerAdapter extends FragmentStatePagerAdapter{
 	private ArrayList<String> mArrayListString;
-	private boolean isTraining;//HDFC
 	/**
 	 * @param fm
 	 */
-	public ImageDetailPagerAdapter(FragmentManager fm, ArrayList<String> mArrayListString, boolean isTraining) {//HDFC
+	public ImageDetailPagerAdapter(FragmentManager fm, ArrayList<String> mArrayListString) {
 		super(fm);
 		this.mArrayListString = mArrayListString;
-		this.isTraining = isTraining;//HDFC
 		// TODO Auto-generated constructor stub
 	}
 
@@ -34,7 +32,7 @@ public class ImageDetailPagerAdapter extends FragmentStatePagerAdapter{
 	@Override
 	public Fragment getItem(int position) {
 		// TODO Auto-generated method stub
-			return ImageViewFragment.newInstance(isTraining);//DFC	
+			return ImageViewFragment.newInstance(position,mArrayListString);	
 	}
 
 	/* (non-Javadoc)

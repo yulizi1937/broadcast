@@ -47,7 +47,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:src="@drawable/award_"
+                android:src="@drawable/ic_launcher"
                 circleimageview:border_color="@android:color/white"
                 circleimageview:border_width="2dp"
                 tools:ignore="RtlHardcoded,ContentDescription" />

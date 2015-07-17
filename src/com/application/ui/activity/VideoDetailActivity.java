@@ -8,14 +8,18 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -34,6 +38,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.VideoView;
 
+import com.application.beans.Mobcast;
 import com.application.sqlite.DBConstant;
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.ChipsLayout;
@@ -44,6 +49,11 @@ import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.DownloadAsyncTask;
+import com.application.utils.FetchActionAsyncTask;
+import com.application.utils.UserReport;
+import com.application.utils.DownloadAsyncTask.OnPostExecuteListener;
+import com.application.utils.FetchActionAsyncTask.OnPostExecuteTaskListener;
 import com.application.utils.FileLog;
 import com.application.utils.Style;
 import com.application.utils.Utilities;
@@ -60,6 +70,8 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 
 	private ProgressWheel mToolBarMenuRefreshProgress;
 	private ImageView mToolBarMenuRefresh;
+	
+	private SwipeRefreshLayout mSwipeRefreshLayout;
 
 	private LinearLayout mLanguageLinearLayout;
 
@@ -124,10 +136,13 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	private String mContentTime;
 	private boolean mContentIsSharing;
 	private boolean mContentIsLike;
+	private String mContentFileSize;
+	private boolean mContentIsRead;
 	
 	private ArrayList<String> mContentLanguageList = new ArrayList<>();
 	private ArrayList<String> mContentFileLinkList = new ArrayList<>();
 	private ArrayList<String> mContentFilePathList = new ArrayList<>();
+	private ArrayList<String> mContentFileSizeList = new ArrayList<>();
 	
 
 	@Override
@@ -140,8 +155,8 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		getIntentData();
 		initUiWithData();
 		initAnimation();
-//		initVideoPlayer();
 		setUiListener();
+		setSwipeRefreshLayoutCustomisation();
 	}
 
 	@Override
@@ -153,11 +168,15 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	@Override
 	protected boolean onPrepareOptionsPanel(View view, Menu menu) {
 		// TODO Auto-generated method stub
-		/*
-		 * if(isShareOptionEnable){
-		 * menu.findItem(R.id.action_share).setVisible(true); }else{
-		 * menu.findItem(R.id.action_share).setVisible(false); }
-		 */
+		try{
+			if (isShareOptionEnable) {
+				menu.findItem(R.id.action_share).setVisible(true);
+			} else {
+				menu.findItem(R.id.action_share).setVisible(false);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 		return super.onPrepareOptionsPanel(view, menu);
 	}
 
@@ -221,19 +240,22 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	private void toolBarRefresh() {
 		mToolBarMenuRefresh.setVisibility(View.GONE);
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
-		new Handler().postDelayed(new Runnable() {
+		refreshFeedActionFromApi();
+		/*new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				mToolBarMenuRefresh.setVisibility(View.VISIBLE);
 				mToolBarMenuRefreshProgress.setVisibility(View.GONE);
 			}
-		}, 5000);
+		}, 5000);*/
 	}
 
 	private void initUi() {
 		mCroutonViewGroup = (FrameLayout) findViewById(R.id.croutonViewGroup);
 
+		mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
+		
 		mLanguageLinearLayout = (LinearLayout) findViewById(R.id.fragmentVideoDetailLanguageLayout);
 		mLanguageFlowLayout = (FlowLayout) findViewById(R.id.fragmentVideoDetailLanguageFlowLayout);
 		mLanguageHeaderTv = (AppCompatTextView) findViewById(R.id.fragmentVideoDetailLanguageHeaderTv);
@@ -267,8 +289,6 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		
 		mVideoNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentVideoDetailViewSourceLayout);
 		
-		mVideoViewTv.setVisibility(View.GONE);
-		mVideoLikeTv.setVisibility(View.GONE);
 	}
 
 	private void getIntentData(){
@@ -288,9 +308,10 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 					if(mCursor!=null){
 						mCursor.close();
 					}
+				}else{
+					finish();
+					AndroidUtilities.exitWindowAnimation(VideoDetailActivity.this);
 				}
-			}else{
-				initVideoPlayer("dummy");
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
@@ -307,13 +328,14 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 			mContentTitle = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE));
 			mContentDesc = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DESC));
 			mContentIsLike = Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE)));
-			mContentIsSharing =  Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE)));
+			mContentIsSharing =  Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARING)));
 			mContentLikeCount = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO));
 			mContentViewCount = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT));
 			mContentLink = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LINK));
 			mContentBy = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_BY));
 			mContentDate = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE));
 			mContentTime = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME));
+			mContentIsRead = Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ)));
 			
 			Cursor mCursorFile = getContentResolver().query(DBConstant.Mobcast_File_Columns.CONTENT_URI, null, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID+"=?", new String[]{mId}, DBConstant.Mobcast_File_Columns.COLUMN_ID + " ASC");
 			if(mCursorFile!=null && mCursorFile.getCount() > 0){
@@ -322,10 +344,12 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 					mContentFileLinkList.add(mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LINK)));
 					mContentFilePathList.add(mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH)));
 					mContentLanguageList.add(mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG)));
+					mContentFileSizeList.add(mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_SIZE)));
 					if(Boolean.parseBoolean(mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_IS_DEFAULT)))){
 						mContentFilePath = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH));
 						mContentFileLink = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LINK));
 						mContentLanguage = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG));
+						mContentFileSize = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_SIZE));
 						mContentFileThumbLink = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_LINK));
 						mContentFileThumbPath = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_PATH));
 					}
@@ -334,7 +358,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 			}
 			if(mCursorFile!=null)
 				mCursorFile.close();
-			
+			isShareOptionEnable = mContentIsSharing;
 			setIntentDataToUi();
 		}
 	}
@@ -357,6 +381,11 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 				mVideoNewsLinkLayout.setVisibility(View.GONE);
 			}
 			
+			if(mContentIsLike){
+				mVideoLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
+				mVideoLikeTv.setTextColor(getResources().getColor(R.color.red));
+			}
+			
 			if(mContentLanguageList!=null && mContentLanguageList.size() > 1){
 				setLanguageChipsLayout(mContentLanguageList);
 			}else{
@@ -368,16 +397,35 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 				if(!TextUtils.isEmpty(mContentFilePath)){
 					initVideoPlayer(mContentFilePath);	
 				}
+			}else{
+				downloadFileInBackground();
 			}
 			
 			if(checkIfFileExists(mContentFileThumbPath)){
 				mVideoCoverIv.setImageURI(Uri.parse(mContentFileThumbPath));
+			}
+			
+			updateReadInDb();
+			supportInvalidateOptionsMenu();
+			if(!mContentIsRead){
+				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.READ, "");
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
 	}
 
+	private void updateReadInDb(){
+		ContentValues values = new ContentValues();
+		if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+			values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ, "true");
+			getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, values, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});	
+		}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+			values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, "true");
+			getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
+		}
+	}
+	
 	@Override
 	protected void onPause() {
 		cleanUp();
@@ -391,9 +439,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	}
 
 	private void initVideoPlayer(String mVideoPath) {
-//			mVideoView.setVideoPath("android.resource://" + getPackageName()
-//			+ "/raw/hdfcconverted");
-		mVideoView.setVideoPath(mVideoPath);
+		mVideoView.setVideoPath(mVideoPath);		
 		mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 			@Override
 			public void onPrepared(MediaPlayer mp) {
@@ -538,7 +584,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		setOnClickListener();
 		setOnTouchListener();
 		setSeekBarListener();
-//		setLanguageChipsLayout();
+		setSwipeRefreshListener();
 	}
 
 	private void setOnClickListener() {
@@ -575,6 +621,42 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 				startActivity(mIntentVideoFullScreen);
 			}
 		});
+		
+		mVideoNewsLinkLayout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				Intent mIntentWebView = new Intent(VideoDetailActivity.this, WebViewActivity.class);
+				mIntentWebView.putExtra(AppConstants.INTENTCONSTANTS.ACTIVITYTITLE, AppConstants.INTENTCONSTANTS.OPEN);
+				mIntentWebView.putExtra(AppConstants.INTENTCONSTANTS.LINK, mContentLink);
+				startActivity(mIntentWebView);
+				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LINK, "");
+			}
+		});
+		
+		mVideoLikeTv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				try{
+					if(!mContentIsLike){
+						if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+							ContentValues values = new ContentValues();
+							values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE, "true");
+							values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, String.valueOf(Integer.parseInt(mContentLikeCount)+1));
+							getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, values, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+						}
+						mVideoLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
+						mVideoLikeTv.setText(String.valueOf(Integer.parseInt(mContentLikeCount)+1));
+						mVideoLikeTv.setTextColor(getResources().getColor(R.color.red));
+						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LIKE, "");
+					}
+				}catch(Exception e){
+					FileLog.e(TAG, e.toString());
+				}
+				
+			}
+		});
 	}
 
 	private void setOnTouchListener() {
@@ -587,6 +669,57 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 			}
 		});
 	}
+	
+	@SuppressLint("NewApi") 
+	private void setSwipeRefreshListener() {
+		mSwipeRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				// TODO Auto-generated method stub
+				toolBarRefresh();
+			}
+		});
+	}
+	
+	private void refreshFeedActionFromApi(){
+		if(Utilities.isInternetConnected()){
+			if(!mSwipeRefreshLayout.isRefreshing()){
+				mSwipeRefreshLayout.setRefreshing(true);
+			}
+			FetchActionAsyncTask mFetchActionAsyncTask = new FetchActionAsyncTask(VideoDetailActivity.this, mId, mCategory, TAG);
+			mFetchActionAsyncTask.execute();
+			mFetchActionAsyncTask.setOnPostExecuteListener(new OnPostExecuteTaskListener() {
+				@Override
+				public void onPostExecute(String mViewCount, String mLikeCount) {
+					// TODO Auto-generated method stub
+					updateFeedActionToDBAndUi(mViewCount, mLikeCount);
+					mSwipeRefreshLayout.setRefreshing(false);
+					mToolBarMenuRefresh.setVisibility(View.VISIBLE);
+					mToolBarMenuRefreshProgress.setVisibility(View.GONE);
+				}
+			});
+		}
+	}
+	
+	private void updateFeedActionToDBAndUi(String mViewCount, String mLikeCount){
+		if(mViewCount!=null){
+			ContentValues mValues = new ContentValues();
+			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+				mValues.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_READ_NO, mViewCount);
+				getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, mValues, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+			}
+			mVideoViewTv.setText(mViewCount);
+		}
+		
+		if(mLikeCount!=null){
+			ContentValues mValues = new ContentValues();
+			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+				mValues.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, mViewCount);
+				getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, mValues, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+			}
+			mVideoLikeTv.setText(mLikeCount);
+		}
+	}
 
 	private void setLanguageChipsLayout(final ArrayList<String> mContentLanguageList) {
 		mLanguageLinearLayout.setVisibility(View.VISIBLE);
@@ -594,13 +727,13 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 				FlowLayout.LayoutParams.WRAP_CONTENT,
 				FlowLayout.LayoutParams.WRAP_CONTENT);
 		params.setMargins(2, 2, 2, 2);
-		/*final String[] mLanguages = new String[] { "English", "Hindi",
-				"Marathi", "Gujarati", "Bengali", "Telugu", "Kannad",
-				"Punjabi", "Siddhi", "Bhojpuri" };*/
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < mContentLanguageList.size(); i++) {
 			ChipsLayout mChip = new ChipsLayout(this);
-			mChip.setDrawable(R.drawable.ic_chips_download);
-//			mChip.setText(mLanguages[i]);
+			if(mContentLanguageList.get(i).equalsIgnoreCase(mContentLanguage)){
+				mChip.setDrawable(R.drawable.ic_language_done);				
+			}else{
+				mChip.setDrawable(R.drawable.ic_chips_download);
+			}
 			mChip.setText(mContentLanguageList.get(i));
 			mChip.setLayoutParams(params);
 			final int j = i;
@@ -608,8 +741,12 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 				@Override
 				public void onClick(View view) {
 					// TODO Auto-generated method stub
-					 Utilities.showCrouton(VideoDetailActivity.this,
-					 mCroutonViewGroup, mContentLanguageList.get(j).toString(), Style.INFO);
+					if(!mContentLanguageList.get(j).equalsIgnoreCase(mContentLanguage)){
+						mContentLanguage = mContentLanguageList.get(j);
+						updateVariablesForDiffLanguage(j);
+						mVideoView.pause();
+						downloadFileInBackgroundForDiffLanguage();
+					}		 
 				}
 			});
 			mLanguageFlowLayout.addView(mChip);
@@ -663,6 +800,119 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 					}
 				});
 	}
+	
+	private void downloadFileInBackground(){
+		if(Utilities.isInternetConnected()){
+			DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
+					VideoDetailActivity.this, false, true,
+					mContentFileLink, mContentFilePath,
+					AppConstants.TYPE.VIDEO, Long.parseLong(mContentFileSize), TAG);
+			mDownloadAsyncTask.execute();
+			mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
+				@Override
+				public void onPostExecute(boolean isDownloaded) {
+					// TODO Auto-generated method stub
+					if(isDownloaded){
+						mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
+						if(!TextUtils.isEmpty(mContentFilePath)){
+							initVideoPlayer(mContentFilePath);
+							Utilities.downloadQueue.postRunnable(new Runnable() {
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									Utilities.downloadFile(AppConstants.TYPE.VIDEO, true, false, mContentFileThumbLink, Utilities.getFileName(mContentFileThumbLink));
+								}
+							});
+						}	
+					}
+				}
+			});
+		}else{
+			Utilities.showCrouton(VideoDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.internet_unavailable), Style.ALERT);
+		}
+	}
+	
+	private void updateVariablesForDiffLanguage(int mPosition){
+		mContentFileLink = mContentFileLinkList.get(mPosition);
+		mContentFilePath = mContentFilePathList.get(mPosition);
+		mContentFileSize = mContentFileSizeList.get(mPosition);
+	}
+	
+	private void updateLanguageChip(){
+		try{
+			AndroidUtilities.runOnUIThread(new Runnable() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					int mPosition = -1;
+					for (int i = 0; i < mContentLanguageList.size(); i++) {
+						if (mContentLanguage.equalsIgnoreCase(mContentLanguageList.get(i))) {
+							mPosition = i;
+							break;
+						}
+						
+					}
+					if(mPosition!= -1){
+						for(int i = 0; i< mContentLanguageList.size() ;i++){
+							ChipsLayout mChip = (ChipsLayout)mLanguageFlowLayout.getChildAt(i);
+							mChip.setDrawable(R.drawable.ic_chips_download);
+						}
+						ChipsLayout mChip = (ChipsLayout)mLanguageFlowLayout.getChildAt(mPosition);
+						mChip.setDrawable(R.drawable.ic_language_done);
+					}
+				}
+			});
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void downloadFileInBackgroundForDiffLanguage(){
+		if(Utilities.isInternetConnected()){
+			DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
+					VideoDetailActivity.this, false, true,
+					mContentFileLink, mContentFilePath,
+					AppConstants.TYPE.VIDEO, Long.parseLong(mContentFileSize), TAG);
+			mDownloadAsyncTask.execute();
+			mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
+				@Override
+				public void onPostExecute(boolean isDownloaded) {
+					// TODO Auto-generated method stub
+					if(isDownloaded){
+						mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
+						if(!TextUtils.isEmpty(mContentFilePath)){
+							initVideoPlayer(mContentFilePath);
+							updateDBWithDiffLanguageAsDefault();
+							updateLanguageChip();
+							Utilities.downloadQueue.postRunnable(new Runnable() {
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									Utilities.downloadFile(AppConstants.TYPE.VIDEO, true, false, mContentFileThumbLink, Utilities.getFileName(mContentFileThumbLink));
+								}
+							});
+						}	
+					}
+				}
+			});
+		}else{
+			Utilities.showCrouton(VideoDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.internet_unavailable), Style.ALERT);
+		}
+	}
+	
+	private void updateDBWithDiffLanguageAsDefault(){
+		if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+			ContentValues values = new ContentValues();
+			values.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_IS_DEFAULT, "false");
+			getContentResolver().update(DBConstant.Mobcast_File_Columns.CONTENT_URI, values, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+			
+			ContentValues mNewValues = new ContentValues();
+			mNewValues.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_IS_DEFAULT, "true");
+			getContentResolver().update(DBConstant.Mobcast_File_Columns.CONTENT_URI, mNewValues, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID + "=?" +"  AND "+ DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG + "=?", new String[]{mId, mContentLanguage});
+		}else{
+			
+		}
+	}
 
 	private void playVideo() {
 		mVideoDescFrameLayout.setVisibility(View.GONE);
@@ -685,9 +935,10 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	}
 
 	protected BottomSheet getShareAction() {
+		String mShareContent = mContentTitle + "\n\n" + mContentDesc + "\n\n\n"+ getResources().getString(R.string.share_advertisement);
 		return getShareActions(
 				new BottomSheet.Builder(this).grid().title("Share To "),
-				"Hello ").limit(R.integer.bs_initial_grid_row).build();
+				mShareContent).limit(R.integer.bs_initial_grid_row).build();
 	}
 
 	private void setMaterialRippleView() {
@@ -695,5 +946,14 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}
+	}
+	
+	private void setSwipeRefreshLayoutCustomisation() {
+		mSwipeRefreshLayout.setColorSchemeColors(
+				Color.parseColor(AppConstants.COLOR.MOBCAST_RED),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_YELLOW),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_PURPLE),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_GREEN),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_BLUE));
 	}
 }

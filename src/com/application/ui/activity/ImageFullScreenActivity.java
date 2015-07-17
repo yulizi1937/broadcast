@@ -3,7 +3,8 @@
  */
 package com.application.ui.activity;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -51,12 +52,15 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 
 	private ImageFullScreenPagerAdapter mAdapter;
 
-	private ArrayList<String> mArrayListString;
+	private List<String> mArrayListString;
 
 	private SystemBarTintManager mTintManager;
 
-	private boolean isTraining = false; //HDFC
 	private boolean isShareOptionEnable = false;
+	
+	private Intent mIntent;
+	private int mPosition;
+	private String mContentFilePath[];
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +71,7 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 		initToolBar();
 		initUi();
 		setUiListener();
-		setImageViewPager();
+		getIntentData();
 	}
 
 	@Override
@@ -118,6 +122,7 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
 
 	private void initUi() {
 		mCroutonViewGroup = (FrameLayout) findViewById(R.id.croutonViewGroup);
@@ -127,13 +132,14 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 
 		mImageViewPager = (ViewPager) findViewById(R.id.fragmentImageFullScreenViewPager);
 		mImageCirclePageIndicator = (CirclePageIndicator) findViewById(R.id.fragmentImageFullScreenCirclePageIndicator);
-		
-		initUiWithDataForWastingTime();//HDFC
 	}
 
-	private void initUiWithDataForWastingTime(){
-		if(getIntent().getBooleanExtra(AppConstants.INTENTCONSTANTS.TRAINING, false)){
-			isTraining = true;
+	private void getIntentData(){
+		mIntent = getIntent();
+		mPosition = mIntent.getIntExtra(AppConstants.INTENTCONSTANTS.POSITION, 0);
+		mContentFilePath = mIntent.getStringArrayExtra(AppConstants.INTENTCONSTANTS.OBJECT);
+		if(mContentFilePath!=null){
+			setImageViewPager();
 		}
 	}
 	
@@ -162,12 +168,9 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 	}
 
 	private void setImageViewPager() {
-		mArrayListString = new ArrayList<String>();
-		for (int i = 0; i < 3; i++) {
-			mArrayListString.add("1");
-		}
+		mArrayListString = Arrays.asList(mContentFilePath);
 		mAdapter = new ImageFullScreenPagerAdapter(getSupportFragmentManager(),
-				mArrayListString, isTraining);
+				mArrayListString, mPosition);
 		mImageViewPager.setAdapter(mAdapter);
 		mImageCirclePageIndicator.setViewPager(mImageViewPager);
 	}

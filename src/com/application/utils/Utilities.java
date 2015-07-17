@@ -788,6 +788,11 @@ public class Utilities {
 		return str.toString();
 	}
 	
+	public static String getFileName(String mFilePath){
+		return mFilePath.substring(mFilePath.lastIndexOf("/") + 1,
+				mFilePath.length());
+	}
+	
 	public static String getFilePath(int mType, boolean mIsThumbnail, String mFileName){
 		createDirectories();
 		if(!mIsThumbnail){
@@ -840,6 +845,10 @@ public class Utilities {
 			return AppConstants.TYPE.PPT;
 		}else if(mType.toLowerCase().equalsIgnoreCase("xls")){
 			return AppConstants.TYPE.XLS;
+		}else if(mType.toLowerCase().equalsIgnoreCase("livestreamyoutube")){
+			return AppConstants.TYPE.STREAM;
+		}else if(mType.toLowerCase().equalsIgnoreCase("feedback")){
+			return AppConstants.TYPE.FEEDBACK;
 		}else{
 			return AppConstants.TYPE.OTHER;	
 		}
@@ -1060,6 +1069,38 @@ public class Utilities {
 		}catch(UnsupportedOperationException en){
 			FileLog.e(TAG, en.toString());
 			return false;
+		}
+	}
+	
+	public static boolean checkIfFileExists(String mFilePath){
+    	try{
+    		if(new File(mFilePath).exists()){
+    			return true;	
+    		}else{
+    			return false;	
+    		}
+    	}catch(Exception e){
+    		return false;	
+    	}
+    }
+	
+	public static void writeBitmapToSDCard(Bitmap mBitmap, String mPath){
+		try{
+			createDirectories();
+			File file = new File (mPath);
+			if (file.exists()){
+				file.delete(); 
+			}
+			try {
+			       FileOutputStream out = new FileOutputStream(file);
+			       mBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+			       out.flush();
+			       out.close();
+			} catch (Exception e) {
+			       e.printStackTrace();
+			}
+		}catch(Exception e){
+			Log.i(TAG, e.toString());
 		}
 	}
 

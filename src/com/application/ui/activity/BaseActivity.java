@@ -31,7 +31,6 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
 import android.widget.AbsListView;
@@ -126,7 +125,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 			items.add(Obj);
 		}*/
 		
-		for (int i = 0; i <= 15; i++) {
+		/*for (int i = 0; i <= 15; i++) {
 			Mobcast Obj = new Mobcast();
 			if (i == 0 || i == 8) {
 				Obj.setmFileType(AppConstants.MOBCAST.TEXT);
@@ -147,6 +146,74 @@ public abstract class BaseActivity extends AppCompatActivity {
 			} else {
 				Obj.setmFileType(AppConstants.MOBCAST.TEXT);
 			}
+			items.add(Obj);
+		}*/
+		
+		for (int i = 0; i <= 8; i++) {
+			Mobcast Obj = new Mobcast();
+			if (i == 0) {
+				Obj.setmBy("By : Consumer 360");
+				Obj.setmTitle("Welcome address - Piyush Mathur, President, Nielsen India Region.");
+				Obj.setRead(true);
+				Obj.setmExpiryDate("a");
+				Obj.setmFileType(AppConstants.MOBCAST.IMAGE);
+			} else if (i == 1) {
+				Obj.setmBy("By : Thought Leadership");
+				Obj.setmTitle("Hinterlands Become FMCG's Trump Card : Nielsen Featured Insights ");
+				Obj.setRead(false);
+				Obj.setmExpiryTime("8 Pages");
+				Obj.setmTime("a");
+				Obj.setmExpiryDate("Trump Card.pdf");
+				Obj.setmFileType(AppConstants.MOBCAST.PDF);
+			} else if (i == 2) {
+				Obj.setmBy("By : Press Releases");
+				Obj.setmTitle("CCI Q1 2015");
+				Obj.setRead(false);
+				Obj.setmExpiryDate("CCI Q1 2015 - Press Release.docx");
+				Obj.setmExpiryTime("3 Pages");
+				Obj.setmTime("a");
+				Obj.setmFileType(AppConstants.MOBCAST.DOC);
+			} else if (i == 3) {
+				Obj.setmBy("By : Event Video");
+				Obj.setmTitle("MASTER PROMO VIDEO");
+				Obj.setRead(false);
+				Obj.setmFileType(AppConstants.MOBCAST.VIDEO);
+			} else if (i == 4) {
+				Obj.setmBy("By : Consumer 360");
+				Obj.setmTitle("Keynote Address - Harish Manwani, Non-Executive Chairman, Hindustan Unilever Ltd.");
+				Obj.setRead(true);
+				Obj.setmExpiryDate("b");
+				Obj.setmFileType(AppConstants.MOBCAST.IMAGE);
+			} else if (i == 5) {
+				Obj.setmBy("By : Consumer 360");
+				Obj.setmTitle("Dharavi Rocks.");
+				Obj.setRead(false);
+				Obj.setmExpiryDate("c");
+				Obj.setmFileType(AppConstants.MOBCAST.IMAGE);
+			} else if (i == 6) {
+				Obj.setmBy("By : Thought Leadership");
+				Obj.setmTitle("Super Consumers - Racing to the Top : Nielsen Featured Insights ");
+				Obj.setRead(true);
+				Obj.setmExpiryTime("12 Pages");
+				Obj.setmTime("b");
+				Obj.setmExpiryDate("Racing to the Top.pdf");
+				Obj.setmFileType(AppConstants.MOBCAST.PDF);
+			} else if (i == 7) {
+				Obj.setmBy("By : Press Releases");
+				Obj.setmTitle("FMCG is the most preferred sector for campus placements, for the fourth year, followed by E-Commerce. HUL is the top recruiter, followed by P&G and Google.");
+				Obj.setRead(false);
+				Obj.setmExpiryDate("Bschool24thFeb.docx");
+				Obj.setmExpiryTime("5 Pages");
+				Obj.setmTime("b");
+				Obj.setmFileType(AppConstants.MOBCAST.DOC);
+			} else {
+				Obj.setmBy("By : Press Releases");
+				Obj.setmTitle("PCM Workshop & Consumer 360");
+				Obj.setmFileType(AppConstants.MOBCAST.FEEDBACK);
+				Obj.setRead(false);
+			}
+			Obj.setmLikeCount("12K+");
+			Obj.setmViewCount("10K+");
 			items.add(Obj);
 		}
 		return items;
@@ -194,10 +261,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 				Obj.setmFileType(AppConstants.TRAINING.AUDIO);
 			} else if (i == 4 || i == 12) {
 				Obj.setmFileType(AppConstants.TRAINING.PDF);
-			} else if (i == 5 || i == 13) {
-				Obj.setmFileType(AppConstants.TRAINING.DOC);
-			} else if (i == 6 || i == 14) {
-				Obj.setmFileType(AppConstants.TRAINING.XLS);
 			} else if (i == 7 || i == 15) {
 				Obj.setmFileType(AppConstants.TRAINING.QUIZ);
 			} else {

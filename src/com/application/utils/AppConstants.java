@@ -39,6 +39,7 @@ public class AppConstants {
 		public static final String API_FETCH_FEED_MOBCAST   = API_URL + "fetchFeedMobcast";
 		public static final String API_FETCH_FEED_ACTION    = API_URL + "fetchFeedAction";
 		public static final String API_UPDATE_REPORT        = API_URL + "updateUserReport";
+		public static final String API_SUBMIT_FEEDBACK      = API_URL + "submitUserFeedback";
 	}
 	
 	public interface API_KEY_PARAMETER{
@@ -64,6 +65,7 @@ public class AppConstants {
 		public static final String employeeId              = "employeeId";
 		public static final String countryCode             = "countryCode";
 		public static final String category                = "category";
+		public static final String subcategory             = "subcategory";
 		public static final String action                  = "action";
 		public static final String duration                = "duration";
 		public static final String _id                     = "id";
@@ -78,6 +80,8 @@ public class AppConstants {
 		public static final String award                   = "award";
 		public static final String event                   = "event";
 		public static final String birthday                = "birthday";
+		public static final String feedback                = "feedback";
+		public static final String quiz                    = "quiz";
 		public static final String mobcastId               = "mobcastId";
 		public static final String mobcastTitle            = "mobcastTitle";
 		public static final String mobcastBy               = "mobcastBy";
@@ -106,6 +110,19 @@ public class AppConstants {
 		public static final String mobcastReadDuration         = "mobcastReadDuration";
 		public static final String mobcastFileName        	   = "mobcastFileName";
 		public static final String mobcastThumbnail        	   = "mobcastThumbnail";
+		public static final String mobcastFeedbackInfo         = "mobcastFeedbackInfo";
+		public static final String mobcastFeedbackId           = "mobcastFeedbackId";
+		public static final String mobcastFeedbackQueId        = "mobcastFeedbackQueId";
+		public static final String mobcastFeedbackQueType      = "mobcastFeedbackQueType";
+		public static final String mobcastFeedbackAnswer       = "mobcastFeedbackAnswer";
+		public static final String mobcastFeedbackQueTitle     = "mobcastFeedbackQueTitle";
+		public static final String mobcastFeedbackOption1      = "mobcastFeedbackOption1";
+		public static final String mobcastFeedbackOption2      = "mobcastFeedbackOption2";
+		public static final String mobcastFeedbackOption3      = "mobcastFeedbackOption3";
+		public static final String mobcastFeedbackOption4      = "mobcastFeedbackOption4";
+		public static final String mobcastFeedbackOption5      = "mobcastFeedbackOption5";
+		public static final String mobcastFeedbackOption6      = "mobcastFeedbackOption6";
+		public static final String mobcastFeedbackOption7      = "mobcastFeedbackOption7";
 		
 	}
 	
@@ -131,6 +148,8 @@ public class AppConstants {
 		public static final String PLAY = "play";
 		public static final String SHARE= "share";
 		public static final String ANYDO= "anydo";
+		public static final String LINK = "link";
+		public static final String LIKE = "like";
 	}
 
 	public interface FOLDER{
@@ -156,6 +175,7 @@ public class AppConstants {
 		public static final String PPT      = "ppt";//8
 		public static final String XLS      = "xls";//9
 		public static final String FEEDBACK = "feedback";//10
+		public static final String STREAM   = "livestreamyoutube";//11
 	}
 	
 	public interface TYPE{
@@ -207,8 +227,11 @@ public class AppConstants {
 		public static final String AWARD            = "award";
 		public static final String EVENT            = "event";
 		public static final String OBJECT           = "object";
+		public static final String POSITION         = "position";
 		public static final String ID               = "id";
 		public static final String TYPE             = "type";
+		public static final String LINK             = "link";
+		public static final String OPEN             = "open";
 	}
 	
 	public interface NOTIFICATION{

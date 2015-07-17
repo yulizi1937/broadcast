@@ -3,21 +3,18 @@
  */
 package com.application.ui.fragment;
 
-import android.graphics.Matrix;
-import android.graphics.PointF;
+import java.util.List;
+
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.FloatMath;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 
 import com.application.ui.view.TouchImageView;
+import com.application.utils.FileLog;
 import com.mobcast.R;
 
 /**
@@ -29,11 +26,13 @@ public class ImageViewFullScreenFragment extends Fragment {
 			.getSimpleName();
 
 	private TouchImageView mTouchImageView;
-	private boolean isTraining = false;//HDFC
+	private int mPosition;
+	private List<String> mContentFilePath;
 
-	public static ImageViewFullScreenFragment newInstance(boolean isTraining) {//HDFC
+	public static ImageViewFullScreenFragment newInstance(int mPosition, List<String> mContentFilePath) {//HDFC
 		ImageViewFullScreenFragment fragment = new ImageViewFullScreenFragment();
-		fragment.isTraining = isTraining;//HDFC
+		fragment.mContentFilePath = mContentFilePath;
+		fragment.mPosition = mPosition;
 		return fragment;
 	}
 
@@ -54,15 +53,18 @@ public class ImageViewFullScreenFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onResume();
 		setUiListener();
-		initUiWithDataForWastingTime();//HDFC
+		setUiWithIntentData();
 	}
 
 	private void setUiListener() {
 	}
-
-	private void initUiWithDataForWastingTime(){//HDFC
-		if(isTraining){
-			mTouchImageView.setImageDrawable(getResources().getDrawable(R.drawable.adityapuri));
+	
+	private void setUiWithIntentData(){
+		try{
+			mTouchImageView.setImageURI(Uri.parse(mContentFilePath.get(mPosition)));
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
+	
 }

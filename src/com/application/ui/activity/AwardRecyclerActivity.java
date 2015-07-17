@@ -160,7 +160,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 				AwardRecyclerActivity.this);
 		mRecyclerView.setLayoutManager(layoutManager);
 		ArrayList<Award> mList = new ArrayList<Award>();
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 5; i++) {
 			Award obj = new Award();
 			obj.setmAwardName("AWARD FOR BEST SALES OF THE WEEK "
 					+ String.valueOf(i));

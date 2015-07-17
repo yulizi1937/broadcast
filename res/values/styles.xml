@@ -325,5 +325,22 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowSoftInputMode">adjustPan</item>
     </style>
+    
+    <!-- Number ProgressBar -->
+    <style name="NumberProgressBar_Grace_Yellow">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+
+        <item name="number_progress_max">100</item>
+        <item name="number_progress_current">0</item>
+
+        <item name="number_progress_unreached_color">#CCCCCC</item>
+        <item name="number_progress_reached_color">@color/toolbar_background</item>
+        <item name="number_progress_text_size">14sp</item>
+        <item name="number_progress_text_color">@color/toolbar_background</item>
+
+        <item name="number_progress_reached_bar_height">3.5dp</item>
+        <item name="number_progress_unreached_bar_height">1.75dp</item>
+    </style>
 
 </resources>

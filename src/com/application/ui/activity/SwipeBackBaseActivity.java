@@ -66,7 +66,7 @@ public class SwipeBackBaseActivity extends BaseActivity implements SwipeBackActi
         AndroidUtilities.exitWindowAnimation(SwipeBackBaseActivity.this);
     }
     
-    protected boolean checkIfFileExists(String mFilePath){
+    public boolean checkIfFileExists(String mFilePath){
     	try{
     		if(new File(mFilePath).exists()){
     			return true;	

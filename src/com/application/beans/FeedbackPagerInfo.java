@@ -13,16 +13,19 @@ import android.os.Parcelable;
 public class FeedbackPagerInfo implements Parcelable {
 	private String mFeedbackId;
 	private String mFeedbackType;
+	private String mFeedbackQId;
 
 	public FeedbackPagerInfo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public FeedbackPagerInfo(String mFeedbackId, String mFeedbackType) {
+	public FeedbackPagerInfo(String mFeedbackId, String mFeedbackType,
+			String mFeedbackQId) {
 		super();
 		this.mFeedbackId = mFeedbackId;
 		this.mFeedbackType = mFeedbackType;
+		this.mFeedbackQId = mFeedbackQId;
 	}
 
 	public String getmFeedbackId() {
@@ -41,9 +44,17 @@ public class FeedbackPagerInfo implements Parcelable {
 		this.mFeedbackType = mFeedbackType;
 	}
 
+	public String getmFeedbackQId() {
+		return mFeedbackQId;
+	}
+
+	public void setmFeedbackQId(String mFeedbackQId) {
+		this.mFeedbackQId = mFeedbackQId;
+	}
+
 	protected FeedbackPagerInfo(Parcel in) {
 		mFeedbackId = in.readString();
-		mFeedbackType = in.readString();
+		mFeedbackQId = in.readString();
 	}
 
 	@Override
@@ -54,7 +65,7 @@ public class FeedbackPagerInfo implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(mFeedbackId);
-		dest.writeString(mFeedbackType);
+		dest.writeString(mFeedbackQId);
 	}
 
 	@SuppressWarnings("unused")

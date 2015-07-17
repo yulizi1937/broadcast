@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
-                android:src="@drawable/sample_picture_event_cover"
+                android:src="@drawable/ic_launcher"
                 tools:ignore="ContentDescription" />
 
             <LinearLayout
@@ -446,7 +446,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="start|center"
-                        android:text="@string/sample_event_attend_count"
+                        android:text="@string/sample_event_attend_going_count"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/event_detail_event_invite_size"
                         android:textStyle="bold" />

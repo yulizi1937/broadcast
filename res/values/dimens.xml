@@ -222,6 +222,7 @@
 
     <!-- item_recycler_mobcast_video -->
     <dimen name="item_recycler_mobcast_video_view_layout_height">120dp</dimen>
+    <dimen name="item_recycler_mobcast_video_progress_width">32dp</dimen>
 
     <!-- item_recycler_mobcast_audio -->
     <dimen name="item_recycler_mobcast_audio_view_detail_layout_height">48dp</dimen>
@@ -249,11 +250,26 @@
     <dimen name="dialog_progress_message_padding">16dp</dimen>
     <dimen name="dialog_progress_message_size">18sp</dimen>
     
+    <!-- dialog_progress_download -->
+    <dimen name="dialog_progress_download_icon_width">48dp</dimen>
+    <dimen name="dialog_progress_download_icon_height">64dp</dimen>
+    <dimen name="dialog_progress_download_padding">8dp</dimen>
+    <dimen name="dialog_progress_download_filename_size">13sp</dimen>
+    <dimen name="dialog_progress_download_progress_size">12sp</dimen>
+    <dimen name="dialog_progress_download_progressbar_padding">8dp</dimen>
+    <dimen name="dialog_progress_download_cancel_width">80dp</dimen>
+    <dimen name="dialog_progress_download_cancel_height">36dp</dimen>
+    <dimen name="dialog_progress_download_cancel_margin_top">32dp</dimen>
+    <dimen name="dialog_progress_download_cancel_text_size">14sp</dimen>
+    
     <!-- dialog_progress_normal -->
     <dimen name="dialog_progress_normal_text_size">18sp</dimen>
     <dimen name="dialog_progress_normal_progress_width">48dp</dimen>
     <dimen name="dialog_progress_normal_padding">8dp</dimen>
     <dimen name="dialog_progress_normal_text_margin_start">48dp</dimen>
+    
+    <!-- bottom_sheet_anydo -->
+    <dimen name="dialog_bottomsheet_anydo_content_height">180dp</dimen>
 
     <!-- toolbar_mother -->
     <dimen name="toolbar_mother_padding">14dp</dimen>

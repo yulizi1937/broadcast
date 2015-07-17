@@ -48,6 +48,7 @@ import com.application.ui.view.ObservableRecyclerView;
 import com.application.ui.view.ProgressWheel;
 import com.application.ui.view.SimpleSectionedRecyclerViewAdapter;
 import com.application.utils.AndroidUtilities;
+import com.application.utils.AppConstants;
 import com.application.utils.Style;
 import com.application.utils.Utilities;
 import com.mobcast.R;
@@ -77,6 +78,7 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 	
 	private BirthdayRecyclerAdapter mAdapter;
 	
+	private ArrayList<Birthday> mList;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -183,10 +185,19 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 	private void setRecycleAdapter(){
 		LinearLayoutManager layoutManager = new LinearLayoutManager(BirthdayRecyclerActivity.this);
 	    mRecyclerView.setLayoutManager(layoutManager);
-	    ArrayList<Birthday> mList= new ArrayList<Birthday>();
-		for (int i = 0; i < 30; i++) {
+	    mList = new ArrayList<Birthday>();
+		for (int i = 0; i < 3; i++) {
 	    	Birthday obj = new Birthday();
-	    	obj.setmBirthdayUserDep("SALES "+String.valueOf(i));
+	    	if(i==0){
+	    		obj.setmBirthdayUserDep("Sales");
+		    	obj.setmBirthdayUserName("Ashwin Roy");
+	    	}else if(i == 1){
+	    		obj.setmBirthdayUserDep("Technology");
+		    	obj.setmBirthdayUserName("Vikalp Patel");
+	    	}else {
+	    		obj.setmBirthdayUserDep("HR");
+		    	obj.setmBirthdayUserName("Vandana Pandey");
+	    	}
 	    	mList.add(obj);
 	    }
 		mAdapter = new BirthdayRecyclerAdapter(BirthdayRecyclerActivity.this, mList);
@@ -196,11 +207,9 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
                 new ArrayList<SimpleSectionedRecyclerViewAdapter.Section>();
 
         //Sections
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0,"April 22 2015, WEDNESDAY"));
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(5,"April 26 2015, FRIDAY"));
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(12,"April 28 2015, MONDAY"));
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(14,"April 29 2015, THURSDAY"));
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(20,"April 31 2015, SUNDAY"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0,"August 22 2015, WEDNESDAY"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(1,"October 26 2015, FRIDAY"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(2,"December 28 2015, MONDAY"));
 
         //Add your adapter to the sectionAdapter
         SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
@@ -240,6 +249,8 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 					break;
 				default:
 					Intent mIntent = new Intent(BirthdayRecyclerActivity.this, BirthdayProfileActivity.class);
+					mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, mList);
+					mIntent.putExtra(AppConstants.INTENTCONSTANTS.ID, position);
 					startActivity(mIntent);
 					AndroidUtilities.enterWindowAnimation(BirthdayRecyclerActivity.this);
 					break;

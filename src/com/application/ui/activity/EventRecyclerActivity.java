@@ -159,9 +159,9 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 		LinearLayoutManager layoutManager = new LinearLayoutManager(EventRecyclerActivity.this);
 	    mRecyclerView.setLayoutManager(layoutManager);
 	    ArrayList<Event> mList= new ArrayList<Event>();
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 1; i++) {
 	    	Event obj = new Event();
-	    	obj.setmEventTitle("SUNDAY 8TH MARCH '15 WOMEN'S DAY SPECIAL "+String.valueOf(i));
+//	    	obj.setmEventTitle("SUNDAY 8TH MARCH '15 WOMEN'S DAY SPECIAL "+String.valueOf(i));
 	    	mList.add(obj);
 	    }
 	    mAdapter = new EventRecyclerAdapter(EventRecyclerActivity.this, mList);

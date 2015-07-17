@@ -39,13 +39,13 @@ public class FeedbackViewPagerAdapter extends FragmentStatePagerAdapter{
 	public Fragment getItem(int position) {
 		// TODO Auto-generated method stub
 		if(mArrayListFeedbackPagerInfo.get(position).getmFeedbackType().equalsIgnoreCase("selective")){
-			return FeedbackSelectiveRadioFragment.newInstance(position);	
+			return FeedbackSelectiveRadioFragment.newInstance(position, mArrayListFeedbackPagerInfo.get(position));	
 		}else if(mArrayListFeedbackPagerInfo.get(position).getmFeedbackType().equalsIgnoreCase("multiple")){
-			return FeedbackMultipleCheckFragment.newInstance();
+			return FeedbackMultipleCheckFragment.newInstance(position, mArrayListFeedbackPagerInfo.get(position));
 		}else if(mArrayListFeedbackPagerInfo.get(position).getmFeedbackType().equalsIgnoreCase("rating")){
-			return FeedbackRatingFragment.newInstance();
+			return FeedbackRatingFragment.newInstance(position, mArrayListFeedbackPagerInfo.get(position));
 		}else{
-			return FeedbackSubjectiveFragment.newInstance();
+			return FeedbackSubjectiveFragment.newInstance(position, mArrayListFeedbackPagerInfo.get(position));
 		}
 	}
 

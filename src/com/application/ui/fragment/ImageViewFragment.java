@@ -3,7 +3,10 @@
  */
 package com.application.ui.fragment;
 
+import java.util.ArrayList;
+
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +18,7 @@ import android.widget.ImageView;
 import com.application.ui.activity.ImageFullScreenActivity;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.FileLog;
 import com.mobcast.R;
 
 /**
@@ -25,11 +29,13 @@ public class ImageViewFragment extends Fragment {
 	private static final String TAG = ImageViewFragment.class.getSimpleName();
 	
 	private ImageView mImageView;
-	private boolean isTraining = false;//HDFC
+	private ArrayList<String> mContentFilePath;
+	private int mPosition;
 	
-	public static ImageViewFragment newInstance(boolean isTraining) {//HDFC
+	public static ImageViewFragment newInstance(int mPosition, ArrayList<String> mContentFilePath) {
 		ImageViewFragment fragment = new ImageViewFragment();
-		fragment.isTraining = isTraining;
+		fragment.mContentFilePath = mContentFilePath;
+		fragment.mPosition = mPosition;
         return fragment;
     }
 	
@@ -49,19 +55,21 @@ public class ImageViewFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onResume();
 		setUiListener();
-		initUiWithDataForWastingTime();//HDFC
+		setIntentDataToUi();
 	}
 	
 	private void setUiListener(){
 		setOnClickListener();
 	}
 	
-	@SuppressWarnings("deprecation")
-	private void initUiWithDataForWastingTime(){//HDFC
-		if(isTraining){
-			mImageView.setImageDrawable(getResources().getDrawable(R.drawable.adityapuri));
+	private void setIntentDataToUi() {
+		try {
+			mImageView.setImageURI(Uri.parse(mContentFilePath.get(mPosition)));
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
 		}
 	}
+	
 	
 	private void setOnClickListener(){
 		mImageView.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +77,14 @@ public class ImageViewFragment extends Fragment {
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
 				Intent mIntent = new Intent(getActivity(), ImageFullScreenActivity.class);
-				mIntent.putExtra(AppConstants.INTENTCONSTANTS.TRAINING, isTraining);//HDFC
+				String mArray[] = new String[mContentFilePath.size()];
+				
+				for(int i =0 ;i < mContentFilePath.size() ;i++){
+					mArray[i] = mContentFilePath.get(i);
+				}
+				
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.OBJECT, mArray);
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.POSITION, mPosition);
 				startActivity(mIntent);
 				AndroidUtilities.enterWindowAnimation(getActivity());
 			}

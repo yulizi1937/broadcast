@@ -193,10 +193,10 @@ public class QuizActivity extends SwipeBackBaseActivity {
 
 	private void setQuizViewPager() {
 		mArrayListQuizPagerInfo = new ArrayList<QuizPagerInfo>();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 2; i++) {
 			QuizPagerInfo Obj = new QuizPagerInfo();
 			Obj.setmQuizId("1");
-			if (i % 2 == 0) {
+			if (i == 0) {
 				Obj.setmQuizType("selective");
 			} else {
 				Obj.setmQuizType("multiple");

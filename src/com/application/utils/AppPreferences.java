@@ -409,5 +409,4 @@ public class AppPreferences {
 		editor.commit();
 	}
 	
-	
 }
