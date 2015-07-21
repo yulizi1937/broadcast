@@ -3,13 +3,10 @@
  */
 package com.application.ui.activity;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -17,6 +14,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +23,7 @@ import android.os.Handler;
 import android.os.StatFs;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -41,6 +40,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.application.sqlite.DBConstant;
 import com.application.ui.adapter.BaseFragmentAdapter;
 import com.application.ui.materialdialog.MaterialDialog;
 import com.application.ui.view.MaterialRippleLayout;
@@ -48,6 +48,7 @@ import com.application.ui.view.ProgressWheel;
 import com.application.ui.view.SharedDocumentCell;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.ApplicationLoader;
 import com.application.utils.FileLog;
 import com.application.utils.LocaleController;
 import com.application.utils.Utilities;
@@ -657,7 +658,19 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 				public boolean onActionItemClicked(android.view.ActionMode mode,
 						MenuItem item) {
 					// TODO Auto-generated method stub
-					return false;
+					switch(item.getItemId()){
+					case R.id.action_delete:
+						showConfirmationMaterialDialog();
+						break;
+					case R.id.action_info:
+						for(int i = 0 ; i < listAdapter.getCount() ;i++){
+							if(listAdapter.getSelectedIds().get(i)){
+								showInfo(currentDir + "/"+ items.get(i).title);
+							}
+						}
+						break;
+					}
+					return true;
 				}
 			};
 		}
@@ -789,5 +802,94 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 			return convertView;
 		}
 
+	}
+	
+	private void deleteFiles(){
+		try{
+			for(int i = 0 ; i < listAdapter.getCount() ;i++){
+				if(listAdapter.getSelectedIds().get(i)){
+					new File(currentDir + "/"+ items.get(i).title).delete();
+				}
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void showInfo(String mPath){
+		String mTitle = null;
+		String mDesc = null;
+		String mId = null;
+		Cursor mCursorMobcastFile = getContentResolver().query(DBConstant.Mobcast_File_Columns.CONTENT_URI, null, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH + "=?", new String[]{mPath}, null);
+		
+		if(mCursorMobcastFile!=null && mCursorMobcastFile.getCount() > 0){
+			mCursorMobcastFile.moveToFirst();
+			mId = mCursorMobcastFile.getString(mCursorMobcastFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID));
+			
+			Cursor mCursorMobcast = getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId}, null);
+			if(mCursorMobcast!=null && mCursorMobcast.getCount() > 0){
+				mCursorMobcast.moveToFirst();
+				mTitle = mCursorMobcast.getString(mCursorMobcast.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE));
+				mDesc = mCursorMobcast.getString(mCursorMobcast.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DESC));
+				
+				if(!TextUtils.isEmpty(mTitle) && !TextUtils.isEmpty(mDesc)){
+					showMaterialDialog(mTitle, mDesc);
+				}
+			}
+			
+			if(mCursorMobcast!=null){
+				mCursorMobcast.close();
+			}
+		}
+		
+		if(mCursorMobcastFile!=null){
+			mCursorMobcastFile.close();
+		}
+	}
+	
+	private void showMaterialDialog(String mTitle, String mDesc){
+		MaterialDialog mMaterialDialog = new MaterialDialog.Builder(FileManagerActivity.this)
+        .title(mTitle)
+        .content(mDesc)
+        .titleColor(Utilities.getAppColor())
+        .positiveText(getResources().getString(R.string.sample_fragment_settings_dialog_language_positive))
+        .positiveColor(Utilities.getAppColor())
+        .callback(new MaterialDialog.ButtonCallback() {
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB) @Override
+            public void onPositive(MaterialDialog dialog) {
+            	dialog.dismiss();
+            	listAdapter.clearSelectedId();
+            	mActionMode.invalidate();
+            }
+        })
+        .show();
+	}
+	
+	private void showConfirmationMaterialDialog(){
+		MaterialDialog mMaterialDialog = new MaterialDialog.Builder(FileManagerActivity.this)
+        .title(getResources().getString(R.string.file_delete_message))
+        .titleColor(Utilities.getAppColor())
+        .positiveText(getResources().getString(R.string.sample_fragment_settings_dialog_language_positive))
+        .positiveColor(Utilities.getAppColor())
+        .negativeText(getResources().getString(R.string.sample_fragment_settings_dialog_language_negative))
+        .negativeColor(Utilities.getAppColor())
+        .callback(new MaterialDialog.ButtonCallback() {
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB) @Override
+            public void onPositive(MaterialDialog dialog) {
+            	deleteFiles();
+            	listAdapter.clearSelectedId();
+            	mActionMode.invalidate();
+//            	Intent mIntent = new Intent(Intent.ACTION_MEDIA_REMOVED);
+//				sendBroadcast(mIntent);
+            	dialog.dismiss();
+            }
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB) @Override
+            public void onNegative(MaterialDialog dialog) {
+            	listAdapter.clearSelectedId();
+            	mActionMode.invalidate();
+            	dialog.dismiss();
+            }
+        })
+        .show();
 	}
 }

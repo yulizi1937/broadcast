@@ -1,22 +1,8 @@
-/*
- * Copyright 2014 Soichiro Kashima
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.application.ui.fragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
@@ -42,7 +28,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +42,6 @@ import com.application.ui.activity.DocDetailActivity;
 import com.application.ui.activity.FeedbackActivity;
 import com.application.ui.activity.ImageDetailActivity;
 import com.application.ui.activity.MotherActivity;
-import com.application.ui.activity.NewsDetailActivity;
 import com.application.ui.activity.PdfDetailActivity;
 import com.application.ui.activity.PptDetailActivity;
 import com.application.ui.activity.TextDetailActivity;
@@ -79,10 +64,7 @@ import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.ScrollUtils;
 import com.application.utils.Utilities;
-import com.facebook.network.connectionclass.ConnectionClassManager;
-import com.facebook.network.connectionclass.ConnectionQuality;
 import com.mobcast.R;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.okhttp.OkHttpClient;
 
 public class MobcastRecyclerViewFragment extends BaseFragment implements IFragmentCommunicator{
@@ -102,7 +84,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	private AppCompatTextView mEmptyMessageTextView;
 
 	private SwipeRefreshLayout mSwipeRefreshLayout;
-
+	
 	private AppCompatButton mEmptyRefreshBtn;
 
 	private ObservableRecyclerView mRecyclerView;
@@ -112,6 +94,11 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	
 	private Context mContext;
 	
+	private LinearLayoutManager mLinearLayoutManager;
+	
+    private boolean mLoadMore = false; 
+    int mFirstVisibleItem, mVisibleItemCount, mTotalItemCount;
+ 
 	 @Override
      public void onAttach(Activity activity){
        super.onAttach(activity);
@@ -135,8 +122,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		mSwipeRefreshLayout = (SwipeRefreshLayout) view
 				.findViewById(R.id.swipeRefreshLayout);
 
-		mEmptyFrameLayout = (FrameLayout) view
-				.findViewById(R.id.fragmentMobcastEmptyLayout);
+		mEmptyFrameLayout = (FrameLayout) view.findViewById(R.id.fragmentMobcastEmptyLayout);
 
 		mEmptyTitleTextView = (AppCompatTextView) view
 				.findViewById(R.id.layoutEmptyTitleTv);
@@ -146,8 +132,9 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		mEmptyRefreshBtn = (AppCompatButton) view
 				.findViewById(R.id.layoutEmptyRefreshBtn);
 
+		mLinearLayoutManager = new LinearLayoutManager(mParentActivity);
 		mRecyclerView
-		.setLayoutManager(new LinearLayoutManager(mParentActivity));
+		.setLayoutManager(mLinearLayoutManager);
 		
 		ApplicationLoader.getPreferences().setViewIdMobcast("-1");
 		
@@ -187,7 +174,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				refreshFeedFromApi(true);
+				refreshFeedFromApi(true, true, AppConstants.BULK);
 			}
 		});
 	}
@@ -216,10 +203,21 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 					mSwipeRefreshLayout.setEnabled(topRowVerticalPosition >= 0);
 				}
 
+				
 				@Override
 				public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 					// TODO Auto-generated method stub
 					super.onScrolled(recyclerView, dx, dy);
+			        mVisibleItemCount = mLinearLayoutManager.getChildCount();
+			        mTotalItemCount = mLinearLayoutManager.getItemCount();
+			        mFirstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
+			 
+			        if (!mLoadMore) {
+						if (mVisibleItemCount + mFirstVisibleItem >= mTotalItemCount) {
+			            	mLoadMore = true;
+				            refreshFeedFromApi(true, false, AppConstants.BULK);
+			            }
+			        }
 				}
 			});
 		}
@@ -230,7 +228,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 				DBConstant.Mobcast_Columns.CONTENT_URI, null, null, null,
 				DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE_FORMATTED + " DESC");
 		if (mCursor != null && mCursor.getCount() > 0) {
-			addMobcastObjectListFromDBToBeans(mCursor, false);
+			addMobcastObjectListFromDBToBeans(mCursor, false, false);
 			if (mArrayListMobcast.size() > 0) {
 				setRecyclerAdapter();
 			}
@@ -254,21 +252,40 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 			@Override
 			public void onRefresh() {
 				// TODO Auto-generated method stub
-				refreshFeedFromApi(true);
+				refreshFeedFromApi(true, true, 0);
 			}
 		});
 	}
 	
 	@SuppressLint("NewApi") 
-	private void refreshFeedFromApi(boolean isRefreshFeed){
-		if(AndroidUtilities.isAboveIceCreamSandWich()){
-			new AsyncRefreshTask(isRefreshFeed).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
-		}else{
-			new AsyncRefreshTask(isRefreshFeed).execute();
+	private void refreshFeedFromApi(boolean isRefreshFeed, boolean sortByAsc, int limit){//sortByAsc:true-> new data //sortByAsc:false->Old Data
+		if(Utilities.isInternetConnected()){
+			if(AndroidUtilities.isAboveIceCreamSandWich()){
+				new AsyncRefreshTask(isRefreshFeed,sortByAsc,limit).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+			}else{
+				new AsyncRefreshTask(isRefreshFeed,sortByAsc,limit).execute();
+			}
 		}
 	}
 	
-	private void addMobcastObjectListFromDBToBeans(Cursor mCursor, boolean isFromBroadCastReceiver){
+	public class MobcastSort implements Comparator<Mobcast>{
+	    @Override
+	    public int compare(Mobcast Obj1, Mobcast Obj2) {
+	        try{
+	        	if(Integer.parseInt(Obj1.getmId()) < Integer.parseInt(Obj2.getmId())){
+		            return 1;
+		        } else {
+		            return -1;
+		        }
+	        }catch(Exception e){
+	        	FileLog.e(TAG, e.toString());
+	        	return -1;
+	        }
+	    }
+	}
+	
+	
+	private void addMobcastObjectListFromDBToBeans(Cursor mCursor, boolean isFromBroadCastReceiver, boolean isToAddOldData){
 		int mIntMobcastId = mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID);
 		int mIntMobcastTitle = mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE);
 		int mIntMobcastBy = mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_BY);
@@ -302,7 +319,13 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 			mCursorFile.close();
 		}
 		
-		mArrayListMobcast = new ArrayList<Mobcast>();
+		if(!isToAddOldData){
+			mArrayListMobcast = new ArrayList<Mobcast>();
+		}else{
+			if(mArrayListMobcast==null){
+				mArrayListMobcast = new ArrayList<Mobcast>();	
+			}
+		}
 		mCursor.moveToFirst();
 		do {
 			Mobcast  Obj = new Mobcast();
@@ -326,7 +349,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 			Obj.setmExpiryTime(mCursor.getString(mIntMobcastExpiryTime));
 			Obj.setmFileType(mCursor.getString(mIntMobcastType));
 
-			if(Utilities.getMediaType(mCursor.getString(mIntMobcastType)) != AppConstants.TYPE.FEEDBACK){
+			if(Utilities.getMediaType(mCursor.getString(mIntMobcastType)) != AppConstants.TYPE.FEEDBACK && Utilities.getMediaType(mCursor.getString(mIntMobcastType)) != AppConstants.TYPE.TEXT){
 				Cursor mCursorFileInfo = getActivity().getContentResolver().query(DBConstant.Mobcast_File_Columns.CONTENT_URI, null, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mMobcastId}, DBConstant.Mobcast_File_Columns.COLUMN_ID + " ASC");
 				
 				if(mCursorFileInfo!=null && mCursorFileInfo.getCount() > 0){
@@ -378,7 +401,8 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 				mArrayListMobcast.add(0,Obj);
 			}
 		} while (mCursor.moveToNext());
-		
+	
+		Collections.sort(mArrayListMobcast, new MobcastSort());
 	}
 
 	private void setRecyclerAdapter() {
@@ -560,38 +584,50 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	 */
 	@Override
 	public void passDataToFragment(int mId, String mCategory) {
-		// TODO Auto-generated method stub
-		if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
-			Cursor mCursor = mContext.getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, null, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + " DESC");
-			if(mCursor!=null && mCursor.getCount() > 0){
-				mSwipeRefreshLayout.setEnabled(true);
-				mSwipeRefreshLayout.setRefreshing(true);
-				mCursor.moveToFirst();
-				addMobcastObjectListFromDBToBeans(mCursor, false);
-				AndroidUtilities.runOnUIThread(new Runnable() {
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						if(mAdapter!=null){
-							mAdapter.addMobcastObjList(mArrayListMobcast);
-							mRecyclerView.getAdapter().notifyDataSetChanged();
-						}else{
-							setRecyclerAdapter();
-							setRecyclerAdapterListener();
+		try{
+			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+				Cursor mCursor = null;
+				boolean isToAddOldData = false;
+				if(mId == -786){
+					mCursor = mContext.getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "<?", new String[]{mArrayListMobcast.get(mArrayListMobcast.size()-1).getmId()}, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + " DESC");
+					isToAddOldData = true;
+				}else{
+					mCursor = mContext.getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, null, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + " DESC");
+				}
+				if(mCursor!=null && mCursor.getCount() > 0){
+					mSwipeRefreshLayout.setEnabled(true);
+					mSwipeRefreshLayout.setRefreshing(true);
+					mCursor.moveToFirst();
+					addMobcastObjectListFromDBToBeans(mCursor, false, isToAddOldData);
+					AndroidUtilities.runOnUIThread(new Runnable() {
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							if(mAdapter!=null){
+								mAdapter.addMobcastObjList(mArrayListMobcast);
+								mRecyclerView.getAdapter().notifyDataSetChanged();
+							}else{
+								setRecyclerAdapter();
+								setUiListener();
+							}
+							mSwipeRefreshLayout.setRefreshing(false);
+							
+							mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.MOBCAST);
+							
+							if(mRecyclerView.getVisibility() == View.GONE){
+								mEmptyFrameLayout.setVisibility(View.GONE);
+								mRecyclerView.setVisibility(View.VISIBLE);
+							}
 						}
-						mSwipeRefreshLayout.setRefreshing(false);
-						
-						if(mRecyclerView.getVisibility() == View.GONE){
-							mEmptyFrameLayout.setVisibility(View.GONE);
-							mRecyclerView.setVisibility(View.VISIBLE);
-						}
-					}
-				}, 1000);
+					}, 1000);
+					
+				}
 				
-			}
-			
-			if(mCursor!=null)
-				mCursor.close();
+				if(mCursor!=null)
+					mCursor.close();
+			}			
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 	
@@ -599,9 +635,14 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	 * AsyncTask To Refresh
 	 */
 	
-	public String apiRefreshFeedMobcast(){
+	public String apiRefreshFeedMobcast(boolean sortByAsc, int limit){
 		try {
-			JSONObject jsonObj = JSONRequestBuilder.getPostFetchFeedMobcast();
+			JSONObject jsonObj =null;
+			 if(sortByAsc){
+				jsonObj = JSONRequestBuilder.getPostFetchFeedMobcast(sortByAsc,limit, mArrayListMobcast != null ? mArrayListMobcast.get(0).getmId() : String.valueOf("0"));
+			 }else{
+				 jsonObj= JSONRequestBuilder.getPostFetchFeedMobcast(sortByAsc,limit, mArrayListMobcast.get(mArrayListMobcast.size()-2).getmId());
+			 }
 			if(BuildVars.USE_OKHTTP){
 				return RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_FETCH_FEED_MOBCAST, jsonObj.toString(), TAG);	
 			}else{
@@ -629,7 +670,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		return null;
 	}
 	
-	public void parseDataFromApi(String mResponseFromApi){
+	public void parseDataFromApi(String mResponseFromApi, boolean isToAddOldData){
 		try{
 			if (Utilities.isSuccessFromApi(mResponseFromApi)) {
 				JSONObject mJSONObj = new JSONObject(mResponseFromApi);
@@ -667,12 +708,12 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 					Uri isInsertUri = getActivity().getContentResolver().insert(DBConstant.Mobcast_Columns.CONTENT_URI, values);
 					boolean isInsertedInDB = Utilities.checkWhetherInsertedOrNot(TAG,isInsertUri);
 					
-					if(isInsertedInDB){
+					/*if(isInsertedInDB && !isToAddOldData){
 						ApplicationLoader.getPreferences().setLastIdMobcast(mMobcastId);
-					}
+					}*/
 					final int mIntType = Utilities.getMediaType(mType);
 					
-					if(mIntType != AppConstants.TYPE.FEEDBACK){
+					if (mIntType != AppConstants.TYPE.FEEDBACK && mIntType != AppConstants.TYPE.TEXT) {
 						JSONArray mJSONArrMobFileObj = mJSONMobObj.getJSONArray(AppConstants.API_KEY_PARAMETER.mobcastFileInfo);
 						
 						for (int j = 0; j < mJSONArrMobFileObj.length(); j++) {
@@ -685,6 +726,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 							final String mThumbnailName = Utilities.getFilePath(mIntType, true, Utilities.getFileName(mThumbnailLink));
 							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID, mMobcastId);
 							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LINK, mFileLink);
+							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_ID, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFileId));
 							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH, Utilities.getFilePath(mIntType, false, mFileName));
 							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFileLang));
 							valuesFileInfo.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_SIZE, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFileSize));
@@ -700,18 +742,6 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 							
 							getActivity().getContentResolver().insert(DBConstant.Mobcast_File_Columns.CONTENT_URI, valuesFileInfo);
 							
-							/*if(!TextUtils.isEmpty(mThumbnailLink)){
-								ConnectionQuality mConnectionQuality = ConnectionClassManager.getInstance().getCurrentBandwidthQuality();
-								if(mConnectionQuality.compareTo(ConnectionQuality.EXCELLENT) == 1){
-									Utilities.downloadQueue.postRunnable(new Runnable() {
-										@Override
-										public void run() {
-											// TODO Auto-generated method stub
-											Utilities.downloadFile(mIntType, true,false, mThumbnailLink, Utilities.getFileName(mThumbnailName));//thumbnail, isEncrypt		
-										}
-									});
-								}
-							}*/
 						}
 					}else if(mIntType == AppConstants.TYPE.FEEDBACK){
 						JSONArray mJSONArrMobFeedObj = mJSONMobObj.getJSONArray(AppConstants.API_KEY_PARAMETER.mobcastFeedbackInfo);
@@ -734,12 +764,18 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 								valuesFeedbackInfo.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_7, mJSONFeedbackObj.getString(AppConstants.API_KEY_PARAMETER.mobcastFeedbackOption7));
 								
 								Uri isInsertFeedbackInfoUri = getActivity().getContentResolver().insert(DBConstant.Mobcast_Feedback_Columns.CONTENT_URI, valuesFeedbackInfo);
-								Utilities.checkWhetherInsertedOrNot(TAG,isInsertFeedbackInfoUri);
+								if(BuildVars.DEBUG){
+									Utilities.checkWhetherInsertedOrNot(TAG,isInsertFeedbackInfoUri);
+								}
 						}
 					}
 				}
 				
-				passDataToFragment(0, "mobcast");
+				if(isToAddOldData){
+					passDataToFragment(-786, AppConstants.INTENTCONSTANTS.MOBCAST);					
+				}else{
+					passDataToFragment(0, AppConstants.INTENTCONSTANTS.MOBCAST);	
+				}
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
@@ -752,9 +788,13 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		private String mErrorMessage = "";
 		private MobcastProgressDialog mProgressDialog;
 		private boolean isRefreshFeed = true;
+		private boolean sortByAsc =false;
+		private int limit;
 
-		public AsyncRefreshTask(boolean isRefreshFeed){
+		public AsyncRefreshTask(boolean isRefreshFeed, boolean sortByAsc,int limit){
 			this.isRefreshFeed = isRefreshFeed;
+			this.sortByAsc = sortByAsc;
+			this.limit = limit;
 		}
 		@Override
 		protected void onPreExecute() {
@@ -765,13 +805,20 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 				mProgressDialog.setMessage(ApplicationLoader.getApplication().getResources().getString(R.string.loadingRefresh));
 				mProgressDialog.show();
 			}
+			
+			if(!sortByAsc){
+				Mobcast Obj = new Mobcast();
+				Obj.setmFileType(AppConstants.MOBCAST.FOOTER);
+				mArrayListMobcast.add(Obj);
+				mRecyclerView.getAdapter().notifyDataSetChanged();
+			}
 		}
 
 		@Override
 		protected Void doInBackground(Void... params) {
 			// TODO Auto-generated method stub
 			try{
-				mResponseFromApi = isRefreshFeed ? apiRefreshFeedMobcast() : apiRefreshFeedAction();
+				mResponseFromApi = isRefreshFeed ? apiRefreshFeedMobcast(sortByAsc,limit) : apiRefreshFeedAction();
 				isSuccess = Utilities.isSuccessFromApi(mResponseFromApi);
 			}catch(Exception e){
 				FileLog.e(TAG, e.toString());
@@ -787,20 +834,22 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			
+			if(!sortByAsc){
+				mLoadMore = false;
+				mArrayListMobcast.remove(mArrayListMobcast.size()-1);
+				mRecyclerView.getAdapter().notifyDataSetChanged();
+			}
+			
+			if (isSuccess) {
+				parseDataFromApi(mResponseFromApi, !sortByAsc);
+			}
+
 			if(mProgressDialog!=null){
 				mProgressDialog.dismiss();
 			}
 			
 			if(mSwipeRefreshLayout.isRefreshing()){
 				mSwipeRefreshLayout.setRefreshing(false);
-			}
-			if (isSuccess) {
-				parseDataFromApi(mResponseFromApi);
-			} else {
-				mErrorMessage = Utilities
-						.getErrorMessageFromApi(mResponseFromApi);
-				/*Utilities.showCrouton(getActivity(), mCroutonViewGroup,
-						mErrorMessage, Style.ALERT);*/
 			}
 		}
 	}

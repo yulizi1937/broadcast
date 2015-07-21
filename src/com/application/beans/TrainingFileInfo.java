@@ -3,8 +3,6 @@
  */
 package com.application.beans;
 
-import java.util.ArrayList;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -13,67 +11,48 @@ import android.os.Parcelable;
  * 
  */
 public class TrainingFileInfo implements Parcelable {
-	private ArrayList<String> mFilePath;
-	private String mDuration;
-	private String mPages;
-	private String mQuestions;
 	private String mTimeTaken;
 	private String mAttempts;
 	private String mScore;
-	private ArrayList<String> mFileLanguages;
+	private String mDuration;
+	private String mPages;
+	private String mQuestions;
+	private String mFileLanguages;
 	private String mSelectedLanguage;
+	private String mFilePath;
+	private String mFileLink;
+	private String mThumbnailLink;
+	private String mThumbnailPath;
+	private String mFileName;
+	private String mFileSize;
+	private String mFileIsDefault;
 
 	public TrainingFileInfo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public TrainingFileInfo(ArrayList<String> mFilePath, String mDuration,
-			String mPages, String mQuestions, String mTimeTaken,
-			String mAttempts, String mScore, ArrayList<String> mFileLanguages,
-			String mSelectedLanguage) {
+	public TrainingFileInfo(String mTimeTaken, String mAttempts, String mScore,
+			String mDuration, String mPages, String mQuestions,
+			String mFileLanguages, String mSelectedLanguage, String mFilePath,
+			String mFileLink, String mThumbnailLink, String mThumbnailPath,
+			String mFileName, String mFileSize, String mFileIsDefault) {
 		super();
-		this.mFilePath = mFilePath;
-		this.mDuration = mDuration;
-		this.mPages = mPages;
-		this.mQuestions = mQuestions;
 		this.mTimeTaken = mTimeTaken;
 		this.mAttempts = mAttempts;
 		this.mScore = mScore;
+		this.mDuration = mDuration;
+		this.mPages = mPages;
+		this.mQuestions = mQuestions;
 		this.mFileLanguages = mFileLanguages;
 		this.mSelectedLanguage = mSelectedLanguage;
-	}
-
-	public ArrayList<String> getmFilePath() {
-		return mFilePath;
-	}
-
-	public void setmFilePath(ArrayList<String> mFilePath) {
 		this.mFilePath = mFilePath;
-	}
-
-	public String getmDuration() {
-		return mDuration;
-	}
-
-	public void setmDuration(String mDuration) {
-		this.mDuration = mDuration;
-	}
-
-	public String getmPages() {
-		return mPages;
-	}
-
-	public void setmPages(String mPages) {
-		this.mPages = mPages;
-	}
-
-	public String getmQuestions() {
-		return mQuestions;
-	}
-
-	public void setmQuestions(String mQuestions) {
-		this.mQuestions = mQuestions;
+		this.mFileLink = mFileLink;
+		this.mThumbnailLink = mThumbnailLink;
+		this.mThumbnailPath = mThumbnailPath;
+		this.mFileName = mFileName;
+		this.mFileSize = mFileSize;
+		this.mFileIsDefault = mFileIsDefault;
 	}
 
 	public String getmTimeTaken() {
@@ -100,11 +79,35 @@ public class TrainingFileInfo implements Parcelable {
 		this.mScore = mScore;
 	}
 
-	public ArrayList<String> getmFileLanguages() {
+	public String getmDuration() {
+		return mDuration;
+	}
+
+	public void setmDuration(String mDuration) {
+		this.mDuration = mDuration;
+	}
+
+	public String getmPages() {
+		return mPages;
+	}
+
+	public void setmPages(String mPages) {
+		this.mPages = mPages;
+	}
+
+	public String getmQuestions() {
+		return mQuestions;
+	}
+
+	public void setmQuestions(String mQuestions) {
+		this.mQuestions = mQuestions;
+	}
+
+	public String getmFileLanguages() {
 		return mFileLanguages;
 	}
 
-	public void setmFileLanguages(ArrayList<String> mFileLanguages) {
+	public void setmFileLanguages(String mFileLanguages) {
 		this.mFileLanguages = mFileLanguages;
 	}
 
@@ -116,26 +119,78 @@ public class TrainingFileInfo implements Parcelable {
 		this.mSelectedLanguage = mSelectedLanguage;
 	}
 
+	public String getmFilePath() {
+		return mFilePath;
+	}
+
+	public void setmFilePath(String mFilePath) {
+		this.mFilePath = mFilePath;
+	}
+
+	public String getmFileLink() {
+		return mFileLink;
+	}
+
+	public void setmFileLink(String mFileLink) {
+		this.mFileLink = mFileLink;
+	}
+
+	public String getmThumbnailLink() {
+		return mThumbnailLink;
+	}
+
+	public void setmThumbnailLink(String mThumbnailLink) {
+		this.mThumbnailLink = mThumbnailLink;
+	}
+
+	public String getmThumbnailPath() {
+		return mThumbnailPath;
+	}
+
+	public void setmThumbnailPath(String mThumbnailPath) {
+		this.mThumbnailPath = mThumbnailPath;
+	}
+
+	public String getmFileName() {
+		return mFileName;
+	}
+
+	public void setmFileName(String mFileName) {
+		this.mFileName = mFileName;
+	}
+
+	public String getmFileSize() {
+		return mFileSize;
+	}
+
+	public void setmFileSize(String mFileSize) {
+		this.mFileSize = mFileSize;
+	}
+
+	public String getmFileIsDefault() {
+		return mFileIsDefault;
+	}
+
+	public void setmFileIsDefault(String mFileIsDefault) {
+		this.mFileIsDefault = mFileIsDefault;
+	}
+
 	protected TrainingFileInfo(Parcel in) {
-		if (in.readByte() == 0x01) {
-			mFilePath = new ArrayList<String>();
-			in.readList(mFilePath, String.class.getClassLoader());
-		} else {
-			mFilePath = null;
-		}
-		mDuration = in.readString();
-		mPages = in.readString();
-		mQuestions = in.readString();
 		mTimeTaken = in.readString();
 		mAttempts = in.readString();
 		mScore = in.readString();
-		if (in.readByte() == 0x01) {
-			mFileLanguages = new ArrayList<String>();
-			in.readList(mFileLanguages, String.class.getClassLoader());
-		} else {
-			mFileLanguages = null;
-		}
+		mDuration = in.readString();
+		mPages = in.readString();
+		mQuestions = in.readString();
+		mFileLanguages = in.readString();
 		mSelectedLanguage = in.readString();
+		mFilePath = in.readString();
+		mFileLink = in.readString();
+		mThumbnailLink = in.readString();
+		mThumbnailPath = in.readString();
+		mFileName = in.readString();
+		mFileSize = in.readString();
+		mFileIsDefault = in.readString();
 	}
 
 	@Override
@@ -145,25 +200,21 @@ public class TrainingFileInfo implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		if (mFilePath == null) {
-			dest.writeByte((byte) (0x00));
-		} else {
-			dest.writeByte((byte) (0x01));
-			dest.writeList(mFilePath);
-		}
-		dest.writeString(mDuration);
-		dest.writeString(mPages);
-		dest.writeString(mQuestions);
 		dest.writeString(mTimeTaken);
 		dest.writeString(mAttempts);
 		dest.writeString(mScore);
-		if (mFileLanguages == null) {
-			dest.writeByte((byte) (0x00));
-		} else {
-			dest.writeByte((byte) (0x01));
-			dest.writeList(mFileLanguages);
-		}
+		dest.writeString(mDuration);
+		dest.writeString(mPages);
+		dest.writeString(mQuestions);
+		dest.writeString(mFileLanguages);
 		dest.writeString(mSelectedLanguage);
+		dest.writeString(mFilePath);
+		dest.writeString(mFileLink);
+		dest.writeString(mThumbnailLink);
+		dest.writeString(mThumbnailPath);
+		dest.writeString(mFileName);
+		dest.writeString(mFileSize);
+		dest.writeString(mFileIsDefault);
 	}
 
 	@SuppressWarnings("unused")

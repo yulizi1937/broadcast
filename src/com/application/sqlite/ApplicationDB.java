@@ -61,7 +61,7 @@ public class ApplicationDB extends ContentProvider{
 			strBuilderMobcast.append(DBConstant.TABLE_MOBCAST);
 			strBuilderMobcast.append('(');
 			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
-			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID +" TEXT UNIQUE," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID +" INTEGER UNIQUE," );
 			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE +" TEXT ," );
 			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_BY +" TEXT ," );
 			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DESC +" TEXT ," );
@@ -96,7 +96,7 @@ public class ApplicationDB extends ContentProvider{
 			strBuilderTraining.append(DBConstant.TABLE_TRAINING);
 			strBuilderTraining.append('(');
 			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
-			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_ID +" TEXT UNIQUE," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_ID +" INTEGER UNIQUE," );
 			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE +" TEXT ," );
 			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_BY +" TEXT ," );
 			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_DESC +" TEXT ," );
@@ -131,7 +131,7 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderEvent.append(DBConstant.TABLE_EVENT);
 		strBuilderEvent.append('(');
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_ID +" TEXT UNIQUE," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_ID +" INTEGER UNIQUE," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_TITLE +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_BY +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_START_DATE +" TEXT ," );
@@ -172,7 +172,7 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderAward.append(DBConstant.TABLE_AWARD);
 		strBuilderAward.append('(');
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
-		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_ID +" TEXT UNIQUE," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_ID +" INTEGER UNIQUE," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_NAME +" TEXT ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_RECOGNITION +" TEXT ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_CONGRATULATE_NO +" TEXT ," );
@@ -205,7 +205,7 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderBirthday.append(DBConstant.TABLE_BIRTHDAY);
 		strBuilderBirthday.append('(');
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
-		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID +" TEXT UNIQUE," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID +" INTEGER UNIQUE," );
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_NAME +" TEXT ," );
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DEPARTMENT +" TEXT ," );
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_LIKE +" NUMBER DEFAULT 0," );
@@ -236,7 +236,7 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderMobcastFile.append(DBConstant.TABLE_MOBCAST_FILE);
 		strBuilderMobcastFile.append('(');
 		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
-		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID +" TEXT ," );
+		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID +" INTEGER ," );
 		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_ID +" TEXT UNIQUE," );
 		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LINK +" TEXT ," );
 		strBuilderMobcastFile.append(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG +" TEXT ," );
@@ -265,7 +265,7 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderTrainingFile.append(DBConstant.TABLE_TRAINING_FILE);
 		strBuilderTrainingFile.append('(');
 		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
-		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_ID +" TEXT ," );
+		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_ID +" INTEGER ," );
 		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_ID +" TEXT UNIQUE," );
 		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LINK +" TEXT ," );
 		strBuilderTrainingFile.append(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LANG +" TEXT ," );
@@ -294,7 +294,7 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderMobcastFeedback.append('(');
 		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
 		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_QID +" TEXT UNIQUE," );
-		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ID +" TEXT ," );
+		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ID +" INTEGER ," );
 		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_QUESTION +" TEXT ," );
 		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_TYPE +" TEXT ," );
 		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ANSWER +" TEXT ," );
@@ -318,7 +318,7 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderTrainingQuiz.append('(');
 		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
 		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QID +" TEXT UNIQUE," );
-		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ID +" TEXT ," );
+		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ID +" INTEGER ," );
 		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION +" TEXT ," );
 		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_TYPE +" TEXT ," );
 		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ANSWER +" TEXT ," );

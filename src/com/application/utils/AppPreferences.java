@@ -198,14 +198,25 @@ public class AppPreferences {
 		return flag;
 	}
 	
-	public void setUserProfileImage(String str) {
+	public void setUserProfileImagePath(String str) {
 		editor = sharedPreferences.edit();
-		editor.putString("userProfileImage", str);
+		editor.putString("userProfileImagePath", str);
 		editor.commit();
 	}
 
-	public String getUserProfileImage() {
-		String flag = sharedPreferences.getString("userProfileImage", null);
+	public String getUserProfileImagePath() {
+		String flag = sharedPreferences.getString("userProfileImagePath", null);
+		return flag;
+	}
+	
+	public void setUserProfileImageLink(String str) {
+		editor = sharedPreferences.edit();
+		editor.putString("userProfileImageLink", str);
+		editor.commit();
+	}
+
+	public String getUserProfileImageLink() {
+		String flag = sharedPreferences.getString("userProfileImageLink", null);
 		return flag;
 	}
 	
@@ -335,6 +346,17 @@ public class AppPreferences {
 
 	public String getViewIdMobcast() {
 		String mViewIdMobcast= sharedPreferences.getString("setViewIdMobcast","-1");
+		return mViewIdMobcast;
+	}
+	
+	public void setViewIdTraining(String mLastIdMobcast) {
+		editor = sharedPreferences.edit();
+		editor.putString("setViewIdTraining", mLastIdMobcast);
+		editor.commit();
+	}
+
+	public String getViewIdTraining() {
+		String mViewIdMobcast= sharedPreferences.getString("setViewIdTraining","-1");
 		return mViewIdMobcast;
 	}
 	

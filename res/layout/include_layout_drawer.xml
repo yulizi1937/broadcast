@@ -68,6 +68,16 @@
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/drawer_item_profile_email_text_size"
                     tools:ignore="RtlHardcoded" />
+                
+                <ImageView
+                    android:id="@+id/drawerProfileCoverIv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    tools:ignore="ContentDescription" />
+
             </FrameLayout>
         </com.application.ui.view.MaterialRippleLayout>
 

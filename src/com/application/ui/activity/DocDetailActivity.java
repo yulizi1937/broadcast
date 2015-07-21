@@ -267,31 +267,20 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 						getDataFromDBForMobcast(mCursor);
 					}else{
 						mCursor = getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, null, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId}, DBConstant.Training_Columns.COLUMN_TRAINING_ID + " DESC");
+						getDataFromDBForTraining(mCursor);
 					}
 					if(mCursor!=null){
 						mCursor.close();
 					}
-				}else if(getIntent().getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY).equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){//NIELSEN
-					ArrayList<Mobcast> mList = getIntent().getParcelableArrayListExtra(AppConstants.INTENTCONSTANTS.OBJECT);
-					int position = getIntent().getIntExtra(AppConstants.INTENTCONSTANTS.POSITION, 0); 
-					Mobcast Obj = mList.get(position);
-					mDocByTv.setText(Obj.getmBy());
-					mDocTitleTv.setText(Obj.getmTitle());
-					mDocNewsLinkLayout.setVisibility(View.GONE);
-					mDocSummaryTextTv.setText("");
-					mDocFileNameTv.setText(Obj.getmExpiryDate());
-					mDocFileInfoTv.setText(Obj.getmExpiryTime());
-					if(Obj.getmTime().equalsIgnoreCase("a")){
-						mContentFilePath = "a.docx";
-					}else{
-						mContentFilePath = "b.docx";
-					}
+				}else{
+					finish();
+					AndroidUtilities.exitWindowAnimation(DocDetailActivity.this);
 				}
-			}else{
-//				initVideoPlayer("dummy");
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
+			finish();
+			AndroidUtilities.exitWindowAnimation(DocDetailActivity.this);
 		}
 	}
 	
@@ -328,6 +317,50 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 						mContentFileThumbPath = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_PATH));
 						mContentFileName = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_NAME));
 						mContentFileMeta = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PAGES));
+					}
+				} while (mCursorFile.moveToNext());
+				
+			}
+			if(mCursorFile!=null)
+				mCursorFile.close();
+			isShareOptionEnable = mContentIsSharing;
+			setIntentDataToUi();
+		}
+	}
+	
+	private void getDataFromDBForTraining(Cursor mCursor){
+		if(mCursor!=null && mCursor.getCount() > 0){
+			mCursor.moveToFirst();
+			mContentTitle = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE));
+			mContentDesc = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DESC));
+			mContentIsLike = Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE)));
+			mContentIsSharing =  Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARING)));
+			mContentLikeCount = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO));
+			mContentViewCount = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT));
+			mContentLink = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LINK));
+			mContentBy = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_BY));
+			mContentDate = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DATE));
+			mContentTime = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TIME));
+			mContentIsRead = Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ)));
+			Log.i(TAG, mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TYPE)));
+			
+			Cursor mCursorFile = getContentResolver().query(DBConstant.Training_File_Columns.CONTENT_URI, null, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID+"=?", new String[]{mId}, DBConstant.Training_File_Columns.COLUMN_ID + " ASC");
+			if(mCursorFile!=null && mCursorFile.getCount() > 0){
+				mCursorFile.moveToFirst();
+				do {
+					mContentFileLinkList.add(mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LINK)));
+					mContentFilePathList.add(mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PATH)));
+					mContentLanguageList.add(mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LANG)));
+					mContentFileSizeList.add(mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_SIZE)));
+					if(Boolean.parseBoolean(mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_IS_DEFAULT)))){
+						mContentFilePath = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PATH));
+						mContentFileLink = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LINK));
+						mContentLanguage = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LANG));
+						mContentFileSize = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_SIZE));
+						mContentFileThumbLink = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_THUMBNAIL_LINK));
+						mContentFileThumbPath = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_THUMBNAIL_PATH));
+						mContentFileName = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_NAME));
+						mContentFileMeta = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PAGES));
 					}
 				} while (mCursorFile.moveToNext());
 				
@@ -458,6 +491,7 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.OPEN, "");
 				openDocFromApps();
 			}
 		});

@@ -35,7 +35,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.application.ui.activity.VerificationActivity.AsyncVerifyTask;
 import com.application.ui.calligraphy.CalligraphyContextWrapper;
 import com.application.ui.view.CircleImageView;
 import com.application.ui.view.MaterialRippleLayout;
@@ -52,6 +51,8 @@ import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
 import com.application.utils.Utilities;
 import com.mobcast.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.squareup.okhttp.OkHttpClient;
 
 /**
@@ -91,6 +92,8 @@ public class SetProfileActivity extends AppCompatActivity{
 
 	private String mPicturePath;
 	
+	private ImageLoader mImageLoader;
+	
 	private boolean isValidName = false;
 	private boolean isValidEmail = false;
 	private boolean isValidEmployeeId = false;
@@ -104,6 +107,7 @@ public class SetProfileActivity extends AppCompatActivity{
 		initUi();
 		initToolBar();
 		setUiListener();
+		setDataFromPreferences();
 	}
 	
 	@Override
@@ -161,6 +165,15 @@ public class SetProfileActivity extends AppCompatActivity{
 		setClickListener();
 	}
 	
+	private void setDataFromPreferences(){
+		mNameEv.setText(ApplicationLoader.getPreferences().getUserDisplayName());
+		mEmailEv.setText(ApplicationLoader.getPreferences().getUserEmailAddress());
+		mEmployeeIdEv.setText(ApplicationLoader.getPreferences().getUserEmployeeId());
+		
+		mImageLoader = ApplicationLoader.getUILImageLoader();
+		mImageLoader.displayImage(ApplicationLoader.getPreferences().getUserProfileImageLink(), mProfileCirleIv);
+	}
+	
 	private void setClickListener(){
 		mUploadAnotherIv.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -176,7 +189,9 @@ public class SetProfileActivity extends AppCompatActivity{
 				// TODO Auto-generated method stub
 				if(!BuildVars.DEBUG_DESIGN){
 					if (Utilities.isInternetConnected()) {
-						new AsyncUpdateProfileTask().execute();
+						if(isValidName && isValidEmail){
+							new AsyncUpdateProfileTask().execute();
+						}
 					} else {
 						Utilities.showCrouton(
 								SetProfileActivity.this,
@@ -187,7 +202,7 @@ public class SetProfileActivity extends AppCompatActivity{
 					}
 				}else{
 					Intent mIntent = new Intent(SetProfileActivity.this, MotherActivity.class);
-					mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+					mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 					startActivity(mIntent);
 					AndroidUtilities.enterWindowAnimation(SetProfileActivity.this);
 					finish();
@@ -200,9 +215,11 @@ public class SetProfileActivity extends AppCompatActivity{
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent mIntent = new Intent(SetProfileActivity.this, FacebookConcealActivity.class);
+				Intent mIntent = new Intent(SetProfileActivity.this, MotherActivity.class);
+				mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 				startActivity(mIntent);
 				AndroidUtilities.enterWindowAnimation(SetProfileActivity.this);
+				finish();
 			}
 		});
 	}
@@ -324,7 +341,7 @@ public class SetProfileActivity extends AppCompatActivity{
 	
 	private void validateName(CharSequence mCharsequence){
 		if (!TextUtils.isEmpty(mCharsequence.toString())) {
-			Pattern p = Pattern.compile("[A-Za-z]+");
+			Pattern p = Pattern.compile("^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}");
 			Matcher matcher = p.matcher(mCharsequence.toString());
 			if (matcher.matches()) {
 				isValidName =  true;
@@ -459,11 +476,11 @@ public class SetProfileActivity extends AppCompatActivity{
 			String emailAddress = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.emailAddress);
 			String employeeId =  mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.employeeId);
 			if(!TextUtils.isEmpty(mProfileImage)){
-				ApplicationLoader.getPreferences().setUserProfileImage(mProfileImage);
+				ApplicationLoader.getPreferences().setUserProfileImageLink(mProfileImage);
 			}
 			
 			if(!TextUtils.isEmpty(name)){
-				ApplicationLoader.getPreferences().setName(name);
+				ApplicationLoader.getPreferences().setUserDisplayName(name);
 			}
 			
 			if(!TextUtils.isEmpty(emailAddress)){
@@ -475,6 +492,7 @@ public class SetProfileActivity extends AppCompatActivity{
 			}
 			
 			Intent mIntent = new Intent(SetProfileActivity.this, MotherActivity.class);
+			mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(mIntent);
 			AndroidUtilities.enterWindowAnimation(SetProfileActivity.this);
 			finish();

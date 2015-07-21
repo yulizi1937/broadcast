@@ -6,7 +6,6 @@ package com.application.ui.activity;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.accounts.Account;
@@ -39,10 +38,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.application.ui.calligraphy.CalligraphyContextWrapper;
-import com.application.ui.materialdialog.MaterialDialog;
 import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.MobcastProgressDialog;
-import com.application.ui.view.ProgressMaterialDialogWord;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
@@ -88,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
 	private boolean isValidLoginId = false;
 
 	private String userId;
-	private String countryCodeValue;
+	private String countryCodeValue = "IN";
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -193,7 +190,9 @@ public class LoginActivity extends AppCompatActivity {
 				if(!BuildVars.DEBUG_DESIGN){
 					if (!TextUtils.isEmpty(mLoginIdEt.getText().toString())) {
 						if (Utilities.isInternetConnected()) {
-							new AsyncLoginTask().execute();
+							if(isValidLoginId){
+								new AsyncLoginTask().execute();
+							}
 						} else {
 							Utilities.showCrouton(
 									LoginActivity.this,
@@ -204,10 +203,10 @@ public class LoginActivity extends AppCompatActivity {
 						}
 					}	
 				}else{
-					Intent mIntent = new Intent(LoginActivity.this,
+					/*Intent mIntent = new Intent(LoginActivity.this,
 							VerificationActivity.class);
 					startActivity(mIntent);
-					AndroidUtilities.enterWindowAnimation(LoginActivity.this);	
+					AndroidUtilities.enterWindowAnimation(LoginActivity.this);	*/
 				}
 			}
 		});
@@ -263,6 +262,7 @@ public class LoginActivity extends AppCompatActivity {
 				} catch (NumberParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					countryCodeValue = "IN";
 					isValidLoginId = false;
 				}
 
@@ -399,12 +399,16 @@ public class LoginActivity extends AppCompatActivity {
 
 	private String apiCheckUserExists() {
 		try {
-			JSONObject jsonObj = JSONRequestBuilder.getPostLoginData(mLoginIdEt
-					.getText().toString(), mCountryCodeTv.getText().toString());
-			if(BuildVars.USE_OKHTTP){
-				return RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_LOGIN, jsonObj.toString(), TAG);	
+			if(!TextUtils.isEmpty(ApplicationLoader.getPreferences().getRegId())){
+				JSONObject jsonObj = JSONRequestBuilder.getPostLoginData(mLoginIdEt
+						.getText().toString(), mCountryCodeTv.getText().toString());
+				if(BuildVars.USE_OKHTTP){
+					return RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_LOGIN, jsonObj.toString(), TAG);	
+				}else{
+					return RestClient.postJSON(AppConstants.API.API_LOGIN, jsonObj, TAG);	
+				}	
 			}else{
-				return RestClient.postJSON(AppConstants.API.API_LOGIN, jsonObj, TAG);	
+				finish();
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

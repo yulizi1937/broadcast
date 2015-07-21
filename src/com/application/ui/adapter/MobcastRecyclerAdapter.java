@@ -58,6 +58,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private static final int VIEW_TYPE_XLS        = 9;
     private static final int VIEW_TYPE_FEEDBACK   = 10;
     private static final int VIEW_TYPE_STREAM     = 11;
+    private static final int VIEW_TYPE_FOOTER     = 12;
 
     private LayoutInflater mInflater;
     private ArrayList<Mobcast> mArrayListMobcast;
@@ -126,6 +127,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     		return VIEW_TYPE_FEEDBACK;
     	}else if(mArrayListMobcast.get(position).getmFileType().equalsIgnoreCase(AppConstants.MOBCAST.STREAM)){
     		return VIEW_TYPE_STREAM;
+    	}else if(mArrayListMobcast.get(position).getmFileType().equalsIgnoreCase(AppConstants.MOBCAST.FOOTER)){
+    		return VIEW_TYPE_FOOTER;
     	}{
     		return VIEW_TYPE_XLS;
     	}
@@ -156,6 +159,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     		return  new NewsViewHolder(mInflater.inflate(R.layout.item_recycler_mobcast_news, parent, false));
     	case VIEW_TYPE_STREAM:
     		return  new YoutubeLiveStreamViewHolder(mInflater.inflate(R.layout.item_recycler_mobcast_livestream, parent, false));
+    	case VIEW_TYPE_FOOTER:
+    		return  new FooterViewHolder(mInflater.inflate(R.layout.layout_footerview, parent, false));
     	default:
     		return new HeaderViewHolder(mHeaderView);
     	}
@@ -163,7 +168,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
 	@Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-		position-=1;//NIELSEN
+		position-=1;
 		if (viewHolder instanceof TextViewHolder) {
 			processTextViewHolder(viewHolder, position);
 		} else if (viewHolder instanceof ImageViewHolder) {
@@ -184,6 +189,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			processFeedbackViewHolder(viewHolder, position);
 		} else if (viewHolder instanceof YoutubeLiveStreamViewHolder) {
 			processLiveStreamViewHolder(viewHolder, position);
+		}else if (viewHolder instanceof FooterViewHolder) {
 		}else if (viewHolder instanceof NewsViewHolder) {
 		}
     }
@@ -654,6 +660,15 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 		}
     }
     
+	public class FooterViewHolder extends RecyclerView.ViewHolder {
+		ProgressWheel mFooterProgressWheel;
+
+		public FooterViewHolder(View view) {
+			super(view);
+			mFooterProgressWheel = (ProgressWheel)view.findViewById(R.id.itemFooterProgressWheel);
+		}
+	}
+    
     public class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     	FrameLayout mMobcastNewsRootLayout;
     	
@@ -977,45 +992,6 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			FileLog.e(TAG, e.toString());
 		}
 	}
-	
-	@SuppressWarnings("deprecation")
-	private void AprocessPdfViewHolder(RecyclerView.ViewHolder viewHolder, int position){
-		try{
-			Mobcast mObj = mArrayListMobcast.get(position);
-			((PdfViewHolder)viewHolder).mMobcastPdfTitleTv.setText(mObj.getmTitle());
-			((PdfViewHolder)viewHolder).mMobcastPdfByTv.setText(mObj.getmBy());
-			((PdfViewHolder)viewHolder).mMobcastPdfViewCountTv.setText(mObj.getmViewCount());
-			((PdfViewHolder)viewHolder).mMobcastPdfLikeCountTv.setText(mObj.getmLikeCount());
-			if(!mObj.isRead()){
-				((PdfViewHolder)viewHolder).mMobcastPdfIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_pdf_focused));
-				((PdfViewHolder)viewHolder).mMobcastPdfIndicatorIv.setBackgroundColor(mContext.getResources().getColor(R.color.unread_background));
-				((PdfViewHolder)viewHolder).mMobcastPdfTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
-				((PdfViewHolder)viewHolder).mMobcastPdfReadView.setVisibility(View.VISIBLE);
-				((PdfViewHolder)viewHolder).mMobcastPdfRootLayout.setBackgroundResource(R.color.unread_background);
-			}else{
-				((PdfViewHolder)viewHolder).mMobcastPdfIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_pdf_normal));
-				((PdfViewHolder)viewHolder).mMobcastPdfIndicatorIv.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
-				((PdfViewHolder)viewHolder).mMobcastPdfTitleTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
-				((PdfViewHolder)viewHolder).mMobcastPdfReadView.setVisibility(View.GONE);
-				((PdfViewHolder)viewHolder).mMobcastPdfRootLayout.setBackgroundResource(R.color.white);
-			}
-			
-			if(TextUtils.isEmpty(mObj.getmLink())){
-				((PdfViewHolder)viewHolder).mMobcastPdfLinkTv.setVisibility(View.GONE);
-			}
-			
-			((PdfViewHolder)viewHolder).mMobcastPdfViewFileNameTv.setText(mObj.getmFileInfo().get(0).getmFileName());
-			((PdfViewHolder)viewHolder).mMobcastPdfViewFileMetaTv.setText(mObj.getmFileInfo().get(0).getmPages());
-
-//			((PdfViewHolder)viewHolder).mMobcastPdfViewFileNameTv.setText(mObj.getmExpiryDate()); //NIELSEN
-//			((PdfViewHolder)viewHolder).mMobcastPdfViewFileMetaTv.setText(mObj.getmExpiryTime());
-
-			
-		}catch(Exception e){
-			FileLog.e(TAG, e.toString());
-		}
-	}
-	
 	
 	@SuppressWarnings("deprecation")
 	private void processPdfViewHolder(RecyclerView.ViewHolder viewHolder, int position){

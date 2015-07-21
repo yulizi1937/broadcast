@@ -43,6 +43,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentUris;
@@ -54,6 +55,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -66,6 +68,10 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.Settings.Secure;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DimenRes;
@@ -73,7 +79,6 @@ import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
@@ -83,6 +88,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.application.sqlite.DBConstant;
 import com.mobcast.R;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -803,6 +809,8 @@ public class Utilities {
 				return AppConstants.FOLDER.AUDIO_FOLDER + mFileName;
 			case AppConstants.TYPE.VIDEO:
 				return AppConstants.FOLDER.VIDEO_FOLDER + mFileName;
+			case AppConstants.TYPE.PROFILE:
+				return AppConstants.FOLDER.PROFILE_FOLDER + mFileName;
 			default:
 				return AppConstants.FOLDER.DOCUMENT_FOLDER+ mFileName;
 			}
@@ -817,13 +825,16 @@ public class Utilities {
 		File mFileAudioDirectory = new File(AppConstants.FOLDER.AUDIO_FOLDER);
 		File mFileDocumentDirectory = new File(AppConstants.FOLDER.DOCUMENT_FOLDER);
 		File mFileThumbnailDirectory = new File(AppConstants.FOLDER.THUMBNAIL_FOLDER);
+		File mFileProfileDirectory = new File(AppConstants.FOLDER.PROFILE_FOLDER);
 		File mFileLogDirectory = new File(AppConstants.FOLDER.LOG_FOLDER);
+		
 		
 		mFileImageDirectory.mkdirs();
 		mFileVideoDirectory.mkdirs();
 		mFileAudioDirectory.mkdirs();
 		mFileDocumentDirectory.mkdirs();
 		mFileThumbnailDirectory.mkdirs();
+		mFileProfileDirectory.mkdirs();
 		mFileLogDirectory.mkdirs();
 	}
 	
@@ -1103,6 +1114,79 @@ public class Utilities {
 			Log.i(TAG, e.toString());
 		}
 	}
+	
+	@SuppressLint("NewApi") 
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB) 
+	public static Bitmap blurBitmap(Bitmap bitmap) {
+
+		Bitmap outBitmap = Bitmap.createBitmap(bitmap.getWidth(),
+				bitmap.getHeight(), Config.ARGB_8888);
+
+		RenderScript rs = RenderScript.create(ApplicationLoader.getApplication().getApplicationContext());
+
+		ScriptIntrinsicBlur blurScript = ScriptIntrinsicBlur.create(rs,Element.U8_4(rs));
+
+		Allocation allIn = Allocation.createFromBitmap(rs, bitmap);
+		Allocation allOut = Allocation.createFromBitmap(rs, outBitmap);
+
+		blurScript.setRadius(25.f);
+
+		blurScript.setInput(allIn);
+		blurScript.forEach(allOut);
+
+		allOut.copyTo(outBitmap);
+
+		bitmap.recycle();
+
+		rs.destroy();
+
+		return outBitmap;
+
+	}
+	
+	public static void deleteAppFolder(File fileOrDirectory) {
+	    try{
+//	    	if (fileOrDirectory.isDirectory()){
+			if (!fileOrDirectory.isFile()) {
+				for (File child : fileOrDirectory.listFiles()) {
+					deleteAppFolder(child);
+				}
+			} else {
+				fileOrDirectory.delete();
+			}	
+	    }catch(Exception e){
+	    	FileLog.e(TAG, e.toString());
+	    }
+	}
+	
+	public static void dropDatabase() {
+		try{
+			String currentDBPath = "/data/data/"
+					+ ApplicationLoader.getApplication().getPackageName()
+					+ "/databases/ApplicationDB";
+			new File(currentDBPath).delete();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	public static void deleteTables(){
+		try{
+			Context mContext= ApplicationLoader.getApplication().getApplicationContext();
+			mContext.getContentResolver().delete(DBConstant.Mobcast_Columns.CONTENT_URI, null, null);
+			mContext.getContentResolver().delete(DBConstant.Training_Columns.CONTENT_URI, null, null);
+			mContext.getContentResolver().delete(DBConstant.Award_Columns.CONTENT_URI, null, null);
+			mContext.getContentResolver().delete(DBConstant.Event_Columns.CONTENT_URI, null, null);
+			mContext.getContentResolver().delete(DBConstant.Birthday_Columns.CONTENT_URI, null, null);
+			mContext.getContentResolver().delete(DBConstant.Mobcast_File_Columns.CONTENT_URI, null, null);
+			mContext.getContentResolver().delete(DBConstant.Training_File_Columns.CONTENT_URI, null, null);
+			mContext.getContentResolver().delete(DBConstant.Mobcast_Feedback_Columns.CONTENT_URI, null, null);
+			mContext.getContentResolver().delete(DBConstant.Training_Quiz_Columns.CONTENT_URI, null, null);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+
 
 	@SuppressWarnings("resource")
 	public static void devSendDBInMail(Context c) {

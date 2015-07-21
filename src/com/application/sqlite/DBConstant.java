@@ -101,7 +101,7 @@ public class DBConstant {
 		public static final String COLUMN_ID 								= "_id";
 		public static final String COLUMN_EVENT_ID 					        = "_event_id";
 		public static final String COLUMN_EVENT_TITLE 					    = "_event_title";
-		public static final String COLUMN_EVENT_BY 					    = "_event_by";
+		public static final String COLUMN_EVENT_BY 					        = "_event_by";
 		public static final String COLUMN_EVENT_DESC 					    = "_event_desc";
 		public static final String COLUMN_EVENT_VENUE 					    = "_event_venue";
 		public static final String COLUMN_EVENT_START_TIME				    = "_event_start_time";

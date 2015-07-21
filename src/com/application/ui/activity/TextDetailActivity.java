@@ -215,14 +215,20 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 						getDataFromDBForMobcast(mCursor);
 					}else{
 						mCursor = getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, null, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId}, DBConstant.Training_Columns.COLUMN_TRAINING_ID + " DESC");
+						getDataFromDBForTraining(mCursor);
 					}
 					if(mCursor!=null){
 						mCursor.close();
 					}
+				}else{
+					finish();
+					AndroidUtilities.exitWindowAnimation(TextDetailActivity.this);
 				}
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
+			finish();
+			AndroidUtilities.exitWindowAnimation(TextDetailActivity.this);
 		}
 	}
 	
@@ -240,6 +246,25 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 			mContentDate = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE));
 			mContentTime = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME));
 			mContentIsRead = Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ)));
+			isShareOptionEnable = mContentIsSharing;
+			setIntentDataToUi();
+		}
+	}
+	
+	private void getDataFromDBForTraining(Cursor mCursor){
+		if(mCursor!=null && mCursor.getCount() > 0){
+			mCursor.moveToFirst();
+			mContentTitle = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE));
+			mContentDesc = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DESC));
+			mContentIsLike = Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE)));
+			mContentIsSharing =  Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARING)));
+			mContentLikeCount = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO));
+			mContentViewCount = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT));
+			mContentLink = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LINK));
+			mContentBy = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_BY));
+			mContentDate = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DATE));
+			mContentTime = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TIME));
+			mContentIsRead = Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ)));
 			isShareOptionEnable = mContentIsSharing;
 			setIntentDataToUi();
 		}

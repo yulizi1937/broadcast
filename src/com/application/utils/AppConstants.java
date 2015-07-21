@@ -37,6 +37,7 @@ public class AppConstants {
 		public static final String API_UPDATE_USER          = API_URL + "updateUser";
 		public static final String API_FETCH_PUSH_DATA      = API_URL + "fetchPushData";
 		public static final String API_FETCH_FEED_MOBCAST   = API_URL + "fetchFeedMobcast";
+		public static final String API_FETCH_FEED_TRAINING  = API_URL + "fetchFeedTraining";
 		public static final String API_FETCH_FEED_ACTION    = API_URL + "fetchFeedAction";
 		public static final String API_UPDATE_REPORT        = API_URL + "updateUserReport";
 		public static final String API_SUBMIT_FEEDBACK      = API_URL + "submitUserFeedback";
@@ -58,6 +59,8 @@ public class AppConstants {
 		public static final String apiKey                  = "apiKey";
 		public static final String errorMessage            = "errorMessage";
 		public static final String accessToken             = "accessToken";
+		public static final String sortByAsc               = "sortByAsc";
+		public static final String limit                   = "limit";
 		public static final String name                    = "name";
 		public static final String user                    = "user";
 		public static final String emailAddress            = "emailAddress";
@@ -99,6 +102,7 @@ public class AppConstants {
 		public static final String mobcastExpiryDate       = "mobcastExpiryDate";
 		public static final String mobcastExpiryTime     	   = "mobcastExpiryTime";
 		public static final String mobcastFileInfo        	   = "mobcastFileInfo";
+		public static final String mobcastFileId        	   = "mobcastFileId";
 		public static final String mobcastFileLink        	   = "mobcastFileLink";
 		public static final String mobcastFileLang        	   = "mobcastFileLang";
 		public static final String mobcastFileSize        	   = "mobcastFileSize";
@@ -123,6 +127,50 @@ public class AppConstants {
 		public static final String mobcastFeedbackOption5      = "mobcastFeedbackOption5";
 		public static final String mobcastFeedbackOption6      = "mobcastFeedbackOption6";
 		public static final String mobcastFeedbackOption7      = "mobcastFeedbackOption7";
+		public static final String trainingId               = "trainingId";
+		public static final String trainingTitle            = "trainingTitle";
+		public static final String trainingBy               = "trainingBy";
+		public static final String trainingDescription      = "trainingDescription";
+		public static final String trainingViewCount        = "trainingViewCount";
+		public static final String trainingLikeCount        = "trainingLikeCount";
+		public static final String trainingDate             = "trainingDate";
+		public static final String trainingTime        	    = "trainingTime";
+		public static final String trainingType        	    = "trainingType";
+		public static final String trainingIsRead           = "trainingIsRead";
+		public static final String trainingIsLiked          = "trainingIsLiked";
+		public static final String trainingIsSharing        = "trainingIsSharing";
+		public static final String trainingIsDownloadable   = "trainingIsDownloadable";
+		public static final String trainingLink             = "trainingLink";
+		public static final String trainingExpiryDate       = "trainingExpiryDate";
+		public static final String trainingExpiryTime     	   = "trainingExpiryTime";
+		public static final String trainingFileInfo        	   = "trainingFileInfo";
+		public static final String trainingFileId        	   = "trainingFileId";
+		public static final String trainingFileLink        	   = "trainingFileLink";
+		public static final String trainingFileLang        	   = "trainingFileLang";
+		public static final String trainingFileSize        	   = "trainingFileSize";
+		public static final String trainingFileDuration        = "trainingFileDuration";
+		public static final String trainingFilePages           = "trainingFilePages";
+		public static final String trainingisDefault        	= "trainingIsDefault";
+		public static final String trainingLiveStream           = "trainingLiveStream";
+		public static final String trainingLiveStreamYouTube    = "trainingLiveStreamYouTube";
+		public static final String trainingReadDuration         = "trainingReadDuration";
+		public static final String trainingFileName        	    = "trainingFileName";
+		public static final String trainingThumbnail        	= "trainingThumbnail";
+		public static final String trainingQuizInfo         = "trainingQuizInfo";
+		public static final String trainingQuizId           = "trainingQuizId";
+		public static final String trainingQuizQueId        = "trainingQuizQueId";
+		public static final String trainingQuizQueType      = "trainingQuizQueType";
+		public static final String trainingQuizAnswer       = "trainingQuizAnswer";
+		public static final String trainingQuizPoints       = "trainingQuizPoints";
+		public static final String trainingQuizDuration     = "trainingQuizDuration";
+		public static final String trainingQuizQueTitle     = "trainingQuizQueTitle";
+		public static final String trainingQuizOption1      = "trainingQuizOption1";
+		public static final String trainingQuizOption2      = "trainingQuizOption2";
+		public static final String trainingQuizOption3      = "trainingQuizOption3";
+		public static final String trainingQuizOption4      = "trainingQuizOption4";
+		public static final String trainingQuizOption5      = "trainingQuizOption5";
+		public static final String trainingQuizOption6      = "trainingQuizOption6";
+		public static final String trainingQuizOption7      = "trainingQuizOption7";
 		
 	}
 	
@@ -150,17 +198,19 @@ public class AppConstants {
 		public static final String ANYDO= "anydo";
 		public static final String LINK = "link";
 		public static final String LIKE = "like";
+		public static final String OPEN = "open";
 	}
 
 	public interface FOLDER{
 		public static final String ROOT_FOLDER = "/.con/.mobcast";
-		public static final String BUILD_FOLDER = ROOT_FOLDER + "/.mobcastvanilla";
-		public static final String LOG_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "/logs/" ;
-		public static final String IMAGE_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "/image/" ;
-		public static final String AUDIO_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "/audio/" ;
-		public static final String VIDEO_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "/video/" ;
-		public static final String DOCUMENT_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "/document/" ;
-		public static final String THUMBNAIL_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "/thumbnail/" ;
+		public static final String BUILD_FOLDER = ROOT_FOLDER + "/.mobcastvanilla/";
+		public static final String LOG_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "logs/" ;
+		public static final String IMAGE_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "image/" ;
+		public static final String AUDIO_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "audio/" ;
+		public static final String VIDEO_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "video/" ;
+		public static final String DOCUMENT_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "document/" ;
+		public static final String THUMBNAIL_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "thumbnail/" ;
+		public static final String PROFILE_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "profile/" ;
 	}
 	
 	public interface MOBCAST{
@@ -176,6 +226,7 @@ public class AppConstants {
 		public static final String XLS      = "xls";//9
 		public static final String FEEDBACK = "feedback";//10
 		public static final String STREAM   = "livestreamyoutube";//11
+		public static final String FOOTER   = "footer";//12
 	}
 	
 	public interface TYPE{
@@ -191,6 +242,7 @@ public class AppConstants {
 		public static final int STREAM    = 9;
 		public static final int FEEDBACK  = 10;
 		public static final int QUIZ      = 11;
+		public static final int PROFILE   = 12;
 	}
 	
 	public interface TRAINING{
@@ -205,6 +257,7 @@ public class AppConstants {
 		public static final String PPT             = "ppt";//8
 		public static final String XLS             = "xls";//9
 		public static final String QUIZ            = "quiz";//10
+		public static final String STREAM          = "stream";//11
 	}
 	
 	public interface INTENT{
@@ -258,5 +311,6 @@ public class AppConstants {
 	public static final String BLUE = "#01AFD2";
 	
 	public static final int NOTIFICATION_ID = 434;
+	public static final int BULK = 25;
 
 }

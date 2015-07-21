@@ -481,7 +481,7 @@ public class VerificationActivity extends AppCompatActivity {
 			String mProfileImage = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.profileImage);
 			
 			if(!TextUtils.isEmpty(name)){
-				ApplicationLoader.getPreferences().setName(name);
+				ApplicationLoader.getPreferences().setUserDisplayName(name);
 			}
 			
 			if(!TextUtils.isEmpty(emailAddress)){
@@ -493,11 +493,11 @@ public class VerificationActivity extends AppCompatActivity {
 			}
 			
 			if(!TextUtils.isEmpty(mProfileImage)){
-				ApplicationLoader.getPreferences().setUserProfileImage(mProfileImage);
+				ApplicationLoader.getPreferences().setUserProfileImageLink(mProfileImage);
 			}
 			
 			Intent mIntent = new Intent(VerificationActivity.this, SetProfileActivity.class);
-			mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(mIntent);
 			AndroidUtilities.enterWindowAnimation(VerificationActivity.this);
 			finish();

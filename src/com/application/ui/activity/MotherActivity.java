@@ -1,11 +1,11 @@
 package com.application.ui.activity;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -14,6 +14,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -49,8 +52,10 @@ import com.application.ui.adapter.MotherPagerAdapter;
 import com.application.ui.calligraphy.CalligraphyContextWrapper;
 import com.application.ui.fragment.IActivityCommunicator;
 import com.application.ui.fragment.IFragmentCommunicator;
+import com.application.ui.materialdialog.MaterialDialog;
 import com.application.ui.view.CircleImageView;
 import com.application.ui.view.DrawerArrowDrawable;
+import com.application.ui.view.MobcastProgressDialog;
 import com.application.ui.view.ScrimInsetsFrameLayout;
 import com.application.ui.view.SlidingTabLayout;
 import com.application.utils.AndroidUtilities;
@@ -66,6 +71,9 @@ import com.application.utils.Utilities;
 import com.mobcast.R;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 /**
  * 
@@ -84,6 +92,7 @@ public class MotherActivity extends BaseActivity implements
 	private ListView mDrawerList;
 
 	private CircleImageView mDrawerProfileIv;
+	private ImageView mDrawerProfileCoverIv;
 	private AppCompatTextView mDrawerUserNameTv;
 	private AppCompatTextView mDrawerUserEmailTv;
 	private AppCompatTextView mDrawerSyncTv;
@@ -113,6 +122,8 @@ public class MotherActivity extends BaseActivity implements
 	private ArrayList<MotherHeader> mArrayListMotherHeader;
 	
 	public IFragmentCommunicator mFragmentCommunicator;
+	
+	private ImageLoader mImageLoader;
 
 	private static final String TAG = MotherActivity.class.getSimpleName();
 
@@ -142,7 +153,7 @@ public class MotherActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		super.onResume();
 		registerReceiver(mBroadCastReceiver, new IntentFilter(NotificationsController.BROADCAST_ACTION));
-		notifySlidingTabLayoutChange();//NIELSEN
+		notifySlidingTabLayoutChange();
 	}
 
 
@@ -603,6 +614,74 @@ public class MotherActivity extends BaseActivity implements
 	@Override
 	public void passDataToActivity(int mId, String mCategory) {
 		// TODO Auto-generated method stub
+		notifySlidingTabLayoutChange();
+	}
+	
+	private void logOutFromApp(){
+		new AsyncTask<Void, Void, Void>() {
+			private MobcastProgressDialog mProgressDialog;
+			@Override
+			protected void onPreExecute() {
+				// TODO Auto-generated method stub
+				super.onPreExecute();
+				mProgressDialog = new MobcastProgressDialog(MotherActivity.this);
+				mProgressDialog.setMessage(getResources().getString(R.string.logging_out));
+				mProgressDialog.setCancelable(false);
+				mProgressDialog.show();
+			}
+
+			@Override
+			protected Void doInBackground(Void... params) {
+				// TODO Auto-generated method stub
+				ApplicationLoader.getPreferences().clearPreferences();
+				Utilities.deleteTables();
+				Utilities.deleteAppFolder(new File(AppConstants.FOLDER.BUILD_FOLDER));
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+				FileLog.e(TAG, e.toString());
+				}
+				return null;
+			}
+			
+			@Override
+			protected void onPostExecute(Void result) {
+				// TODO Auto-generated method stub
+				super.onPostExecute(result);
+				if(mProgressDialog!=null){
+					mProgressDialog.dismiss();
+				}
+				
+				MotherActivity.this.finish();
+			}
+		}.execute();
+//		Utilities.dropDatabase();
+//		System.exit(0);
+	}
+	
+	private void showLogOutConfirmationMaterialDialog(){
+		MaterialDialog mMaterialDialog = new MaterialDialog.Builder(MotherActivity.this)
+        .title(getResources().getString(R.string.logout_title_message))
+        .titleColor(Utilities.getAppColor())
+        .content(getResources().getString(R.string.logout_content_message))
+        .contentColor(Utilities.getAppColor())
+        .positiveText(getResources().getString(R.string.sample_fragment_settings_dialog_language_positive))
+        .positiveColor(Utilities.getAppColor())
+        .negativeText(getResources().getString(R.string.sample_fragment_settings_dialog_language_negative))
+        .negativeColor(Utilities.getAppColor())
+        .callback(new MaterialDialog.ButtonCallback() {
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB) @Override
+            public void onPositive(MaterialDialog dialog) {
+            	logOutFromApp();
+            	dialog.dismiss();
+            }
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB) @Override
+            public void onNegative(MaterialDialog dialog) {
+            	dialog.dismiss();
+            }
+        })
+        .show();
 	}
 	/*
 	 * Drawer Initilization
@@ -617,6 +696,7 @@ public class MotherActivity extends BaseActivity implements
 		mScrimInsetsFrameLayout = (ScrimInsetsFrameLayout) findViewById(R.id.drawerRootLayout);
 
 		mDrawerProfileIv = (CircleImageView) findViewById(R.id.drawerProfileIv);
+		mDrawerProfileCoverIv = (ImageView) findViewById(R.id.drawerProfileCoverIv);
 
 		mDrawerUserNameTv = (AppCompatTextView) findViewById(R.id.drawerUserNameTv);
 		mDrawerUserEmailTv = (AppCompatTextView) findViewById(R.id.drawerUserEmailTv);
@@ -625,7 +705,7 @@ public class MotherActivity extends BaseActivity implements
 		mDrawerSyncIv = (ImageView) findViewById(R.id.drawerSyncIv);
 
 		mDrawerSyncLayout = (LinearLayout) findViewById(R.id.drawerSyncLayout);
-
+		
 		String[] mDrawerItemArray = getResources().getStringArray(
 				R.array.drawer_array);
 		int[] mDrawableResId = new int[] { R.drawable.ic_drawer_profile,
@@ -636,6 +716,8 @@ public class MotherActivity extends BaseActivity implements
 		mDrawerList.setAdapter(new DrawerArrayAdapter(MotherActivity.this,
 				mDrawerItemArray, mDrawableResId));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+		
+		setDrawerProfileInfo(mDrawerUserNameTv, mDrawerUserEmailTv, mDrawerProfileIv, mDrawerProfileCoverIv);
 
 		drawerArrowDrawable = new DrawerArrowDrawable(mResources);
 		drawerArrowDrawable.setStrokeColor(mResources
@@ -737,8 +819,7 @@ public class MotherActivity extends BaseActivity implements
 			drawerIntent = new Intent(MotherActivity.this, FeedbackAppActivity.class);
 			break;
 		case 5:
-			ApplicationLoader.getPreferences().clearPreferences();
-			System.exit(0);
+			showLogOutConfirmationMaterialDialog();
 			break;
 		case 6:
 			drawerIntent = new Intent(MotherActivity.this, AboutActivity.class);
@@ -790,6 +871,60 @@ public class MotherActivity extends BaseActivity implements
 					drawableResId[position]));
 
 			return rowView;
+		}
+	}
+	
+	private void setDrawerProfileInfo(AppCompatTextView mNameTextView, AppCompatTextView mEmailTextView, CircleImageView mCircleImageView, final ImageView mImageView){
+		try{
+			if(!TextUtils.isEmpty(ApplicationLoader.getPreferences().getUserDisplayName())){
+				mNameTextView.setText(ApplicationLoader.getPreferences().getUserDisplayName());
+			}
+			
+			if(!TextUtils.isEmpty(ApplicationLoader.getPreferences().getUserEmailAddress())){
+				mEmailTextView.setText(ApplicationLoader.getPreferences().getUserEmailAddress());
+			}
+			
+			final String mProfileImagePath = Utilities.getFilePath(AppConstants.TYPE.PROFILE, false, Utilities.getFileName(ApplicationLoader.getPreferences().getUserProfileImageLink()));
+			if(!TextUtils.isEmpty(ApplicationLoader.getPreferences().getUserProfileImageLink())){
+				ApplicationLoader.getPreferences().setUserProfileImagePath(mProfileImagePath);
+				if(Utilities.checkIfFileExists(mProfileImagePath)){
+					mCircleImageView.setImageURI(Uri.parse(mProfileImagePath));
+					/*BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+					Bitmap bitmap = BitmapFactory.decodeFile(mProfileImagePath,bmOptions);
+					bitmap = Bitmap.createScaledBitmap(bitmap,Utilities.dpToPx(240, getResources()), Utilities.dpToPx(240, getResources()), true);
+					mImageView.setImageBitmap(Utilities.blurBitmap(bitmap));*/
+				}else{
+					mImageLoader = ApplicationLoader.getUILImageLoader();
+					mImageLoader.displayImage(ApplicationLoader.getPreferences().getUserProfileImageLink(), mCircleImageView, new ImageLoadingListener() {
+						@Override
+						public void onLoadingStarted(String arg0, View arg1) {
+							// TODO Auto-generated method stub
+						}
+						
+						@Override
+						public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+							// TODO Auto-generated method stub
+						}
+						
+						@Override
+						public void onLoadingComplete(String arg0, View arg1, Bitmap mBitmap) {
+							// TODO Auto-generated method stub
+							Utilities.writeBitmapToSDCard(mBitmap, mProfileImagePath);
+							/*BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+							Bitmap bitmap = BitmapFactory.decodeFile(mProfileImagePath,bmOptions);
+							bitmap = Bitmap.createScaledBitmap(bitmap,Utilities.dpToPx(240, getResources()), Utilities.dpToPx(240, getResources()), true);
+							mImageView.setImageBitmap(Utilities.blurBitmap(bitmap));*/
+						}
+						
+						@Override
+						public void onLoadingCancelled(String arg0, View arg1) {
+							// TODO Auto-generated method stub
+						}
+					});
+				}
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 }

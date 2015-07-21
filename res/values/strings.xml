@@ -13,6 +13,10 @@
     <string name="api_connection_timeout">Server not responding!</string>
     <string name="api_unknown_error">Please try again in few minutes!</string>
     <string name="share_advertisement">Share via Mobcast Application \n visit us at : www.mobcast.in</string>
+    <string name="file_delete_message">Are you sure want to delete these files?</string>
+    <string name="logout_title_message">Are you sure want to Log Out?</string>
+    <string name="logout_content_message">Logging out will delete all your content from the app and files too.</string>
+    <string name="logging_out" tools:ignore="TypographyEllipsis">Logging Out...</string>
 
     <!-- OverFlow : Action -->
     <string name="action_settings">Settings</string>

@@ -94,26 +94,30 @@ public class JSONRequestBuilder {
 		return stringBuffer;
 	}
 	
-	public static JSONObject getPostFetchFeedMobcast() {
+	public static JSONObject getPostFetchFeedMobcast(boolean sortByAsc, int limit, String mLastMobcastId) {
 		JSONObject stringBuffer = new JSONObject();
 		try {
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, AppConstants.INTENTCONSTANTS.MOBCAST);
-			stringBuffer.put(AppConstants.API_KEY_PARAMETER.lastMobcastId, ApplicationLoader.getPreferences().getLastIdMobcast());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.lastMobcastId, mLastMobcastId);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.sortByAsc, sortByAsc);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.limit, limit);
 		} catch (Exception e) {
 			FileLog.e(TAG, e.toString());
 		}
 		return stringBuffer;
 	}
 	
-	public static JSONObject getPostFetchFeedTraining() {
+	public static JSONObject getPostFetchFeedTraining(boolean sortByAsc, int limit, String mLastTrainingId) {
 		JSONObject stringBuffer = new JSONObject();
 		try {
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, AppConstants.INTENTCONSTANTS.TRAINING);
-			stringBuffer.put(AppConstants.API_KEY_PARAMETER.lastTrainingId, ApplicationLoader.getPreferences().getLastIdTraining());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.lastTrainingId, mLastTrainingId);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.sortByAsc, sortByAsc);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.limit, limit);
 		} catch (Exception e) {
 			FileLog.e(TAG, e.toString());
 		}
