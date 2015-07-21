@@ -820,6 +820,7 @@ public class Utilities {
 	}
 	
 	public static void createDirectories(){
+		File mFileBuildDirectory = new File(AppConstants.FOLDER.BUILD_FOLDER);
 		File mFileImageDirectory = new File(AppConstants.FOLDER.IMAGE_FOLDER);
 		File mFileVideoDirectory = new File(AppConstants.FOLDER.VIDEO_FOLDER);
 		File mFileAudioDirectory = new File(AppConstants.FOLDER.AUDIO_FOLDER);
@@ -828,7 +829,7 @@ public class Utilities {
 		File mFileProfileDirectory = new File(AppConstants.FOLDER.PROFILE_FOLDER);
 		File mFileLogDirectory = new File(AppConstants.FOLDER.LOG_FOLDER);
 		
-		
+		mFileBuildDirectory.mkdirs();
 		mFileImageDirectory.mkdirs();
 		mFileVideoDirectory.mkdirs();
 		mFileAudioDirectory.mkdirs();
@@ -1182,6 +1183,16 @@ public class Utilities {
 			mContext.getContentResolver().delete(DBConstant.Training_File_Columns.CONTENT_URI, null, null);
 			mContext.getContentResolver().delete(DBConstant.Mobcast_Feedback_Columns.CONTENT_URI, null, null);
 			mContext.getContentResolver().delete(DBConstant.Training_Quiz_Columns.CONTENT_URI, null, null);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	public static void checkLogOut(){
+		try{
+			Context mContext= ApplicationLoader.getApplication().getApplicationContext();
+			Log.i(TAG, ApplicationLoader.getPreferences().getAccessToken()!=null?ApplicationLoader.getPreferences().getAccessToken():"null");
+			Log.i(TAG, String.valueOf(mContext.getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, null, null, null).getCount()));
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

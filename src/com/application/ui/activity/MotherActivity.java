@@ -636,6 +636,7 @@ public class MotherActivity extends BaseActivity implements
 				ApplicationLoader.getPreferences().clearPreferences();
 				Utilities.deleteTables();
 				Utilities.deleteAppFolder(new File(AppConstants.FOLDER.BUILD_FOLDER));
+//				Utilities.checkLogOut();
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {

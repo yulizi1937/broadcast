@@ -203,14 +203,14 @@ public class AppConstants {
 
 	public interface FOLDER{
 		public static final String ROOT_FOLDER = "/.con/.mobcast";
-		public static final String BUILD_FOLDER = ROOT_FOLDER + "/.mobcastvanilla/";
-		public static final String LOG_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "logs/" ;
-		public static final String IMAGE_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "image/" ;
-		public static final String AUDIO_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "audio/" ;
-		public static final String VIDEO_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "video/" ;
-		public static final String DOCUMENT_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "document/" ;
-		public static final String THUMBNAIL_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "thumbnail/" ;
-		public static final String PROFILE_FOLDER = Environment.getExternalStorageDirectory().getPath() + BUILD_FOLDER + "profile/" ;
+		public static final String BUILD_FOLDER = Environment.getExternalStorageDirectory().getPath() + ROOT_FOLDER + "/.mobcastvanilla/";
+		public static final String LOG_FOLDER = BUILD_FOLDER + "logs/" ;
+		public static final String IMAGE_FOLDER = BUILD_FOLDER + "image/" ;
+		public static final String AUDIO_FOLDER = BUILD_FOLDER + "audio/" ;
+		public static final String VIDEO_FOLDER = BUILD_FOLDER + "video/" ;
+		public static final String DOCUMENT_FOLDER = BUILD_FOLDER + "document/" ;
+		public static final String THUMBNAIL_FOLDER = BUILD_FOLDER + "thumbnail/" ;
+		public static final String PROFILE_FOLDER = BUILD_FOLDER + "profile/" ;
 	}
 	
 	public interface MOBCAST{

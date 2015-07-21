@@ -203,10 +203,10 @@ public class LoginActivity extends AppCompatActivity {
 						}
 					}	
 				}else{
-					/*Intent mIntent = new Intent(LoginActivity.this,
+					Intent mIntent = new Intent(LoginActivity.this,
 							VerificationActivity.class);
 					startActivity(mIntent);
-					AndroidUtilities.enterWindowAnimation(LoginActivity.this);	*/
+					AndroidUtilities.enterWindowAnimation(LoginActivity.this);	
 				}
 			}
 		});
@@ -418,14 +418,20 @@ public class LoginActivity extends AppCompatActivity {
 	}
 
 	private void parseDataFromApi(String mResponseFromApi) {
-		ApplicationLoader.getPreferences().setUserName(
-				mLoginIdEt.getText().toString());
-		Intent mIntent = new Intent(LoginActivity.this,
-				VerificationActivity.class);
-		mIntent.putExtra(AppConstants.INTENTCONSTANTS.USERNAME, mLoginIdEt.getText().toString());
-		mIntent.putExtra(AppConstants.INTENTCONSTANTS.OTP, parseDataFromOTP(mResponseFromApi));
-		startActivity(mIntent);
-		AndroidUtilities.enterWindowAnimation(LoginActivity.this);
+		try{
+			if(!TextUtils.isEmpty(mResponseFromApi)){
+				ApplicationLoader.getPreferences().setUserName(
+						mLoginIdEt.getText().toString());
+				Intent mIntent = new Intent(LoginActivity.this,
+						VerificationActivity.class);
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.USERNAME, mLoginIdEt.getText().toString());
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.OTP, parseDataFromOTP(mResponseFromApi));
+				startActivity(mIntent);
+				AndroidUtilities.enterWindowAnimation(LoginActivity.this);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	private String parseDataFromOTP(String mResponseFromApi){
