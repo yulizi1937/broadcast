@@ -146,18 +146,24 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_GOING_NO +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_DECLINE_NO +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_MAYBE_NO +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_READ_NO +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN +" NUMBER DEFAULT 0," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_IS_READ +" NUMBER DEFAULT 0," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_IS_SHARING +" NUMBER DEFAULT 0," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_IS_CALENDAR +" NUMBER DEFAULT 0," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_IS_LIKE +" NUMBER DEFAULT 0," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_MAP +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_FILE_LINK +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_FILE_PATH +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_FILE_APPEND +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_FILE_SIZE +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_DATE +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_TIME +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_DATE_FORMATTED +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_EXPIRY_DATE +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_EXPIRY_TIME +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_EXPIRY_DATE_FORMATTED +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_START_DATE_FORMATTED +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_END_DATE_FORMATTED +" TEXT" );
 		strBuilderEvent.append(')');
@@ -180,6 +186,14 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_DEPARTMENT +" TEXT ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_FILE_LINK +" TEXT ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_FILE_PATH +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_FILE_SIZE +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_THUMBNAIL_LINK +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_THUMBNAIL_PATH +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_DESCRIPTION +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_EMAIL +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_READ_NO +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_LIKE_NO +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE +" TEXT ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_FILE_APPEND +" TEXT ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_IS_LIKE +" NUMBER DEFAULT 0," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_IS_READ +" NUMBER DEFAULT 0," );
@@ -191,6 +205,9 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_TIME +" TEXT ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_DATE_FORMATTED +" TEXT ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE_FORMATTED +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_DATE_FORMATTED +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_TIME +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_DATE +" TEXT ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_MOBILE +" NUMBER DEFAULT 0" );
 		strBuilderAward.append(')');
 		db.execSQL(strBuilderAward.toString());
@@ -873,18 +890,25 @@ public class ApplicationDB extends ContentProvider{
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_FILE_LINK, DBConstant.Event_Columns.COLUMN_EVENT_FILE_LINK);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_FILE_PATH, DBConstant.Event_Columns.COLUMN_EVENT_FILE_PATH);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_FILE_APPEND, DBConstant.Event_Columns.COLUMN_EVENT_FILE_APPEND);
+		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_FILE_SIZE, DBConstant.Event_Columns.COLUMN_EVENT_FILE_SIZE);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_CALENDAR, DBConstant.Event_Columns.COLUMN_EVENT_IS_CALENDAR);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN, DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_READ, DBConstant.Event_Columns.COLUMN_EVENT_IS_READ);
+		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_LIKE, DBConstant.Event_Columns.COLUMN_EVENT_IS_LIKE);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_SHARING, DBConstant.Event_Columns.COLUMN_EVENT_IS_SHARING);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_MAP, DBConstant.Event_Columns.COLUMN_EVENT_MAP);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_INVITED_NO, DBConstant.Event_Columns.COLUMN_EVENT_INVITED_NO);
+		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_READ_NO, DBConstant.Event_Columns.COLUMN_EVENT_READ_NO);
+		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO, DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_GOING_NO, DBConstant.Event_Columns.COLUMN_EVENT_GOING_NO);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_DECLINE_NO, DBConstant.Event_Columns.COLUMN_EVENT_DECLINE_NO);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_MAYBE_NO, DBConstant.Event_Columns.COLUMN_EVENT_MAYBE_NO);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_START_DATE_FORMATTED, DBConstant.Event_Columns.COLUMN_EVENT_START_DATE_FORMATTED);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_END_DATE_FORMATTED, DBConstant.Event_Columns.COLUMN_EVENT_END_DATE_FORMATTED);
 		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_DATE, DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_DATE);
+		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_TIME, DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_TIME);
+		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_DATE_FORMATTED, DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_DATE_FORMATTED);
+		eventProjectionMap.put(DBConstant.Event_Columns.COLUMN_EVENT_EXPIRY_DATE_FORMATTED, DBConstant.Event_Columns.COLUMN_EVENT_EXPIRY_DATE_FORMATTED);
 		
 		
 		awardProjectionMap = new HashMap<String, String>();
@@ -897,6 +921,15 @@ public class ApplicationDB extends ContentProvider{
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_DEPARTMENT, DBConstant.Award_Columns.COLUMN_AWARD_DEPARTMENT);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_FILE_LINK, DBConstant.Award_Columns.COLUMN_AWARD_FILE_LINK);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_FILE_PATH, DBConstant.Award_Columns.COLUMN_AWARD_FILE_PATH);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_FILE_SIZE, DBConstant.Award_Columns.COLUMN_AWARD_FILE_SIZE);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_THUMBNAIL_LINK, DBConstant.Award_Columns.COLUMN_AWARD_THUMBNAIL_LINK);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_THUMBNAIL_PATH, DBConstant.Award_Columns.COLUMN_AWARD_THUMBNAIL_PATH);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_DESCRIPTION, DBConstant.Award_Columns.COLUMN_AWARD_DESCRIPTION);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_EMAIL, DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_EMAIL);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_READ_NO, DBConstant.Award_Columns.COLUMN_AWARD_READ_NO);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_LIKE_NO, DBConstant.Award_Columns.COLUMN_AWARD_LIKE_NO);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE, DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_DATE_FORMATTED, DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_DATE_FORMATTED);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_FILE_APPEND, DBConstant.Award_Columns.COLUMN_AWARD_FILE_APPEND);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_IS_SHARE, DBConstant.Award_Columns.COLUMN_AWARD_IS_SHARE);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_IS_CONGRATULATE, DBConstant.Award_Columns.COLUMN_AWARD_IS_CONGRATULATE);
@@ -904,6 +937,7 @@ public class ApplicationDB extends ContentProvider{
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_IS_READ, DBConstant.Award_Columns.COLUMN_AWARD_IS_READ);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_IS_SHARING, DBConstant.Award_Columns.COLUMN_AWARD_IS_SHARING);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_DATE, DBConstant.Award_Columns.COLUMN_AWARD_DATE);
+		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_TIME, DBConstant.Award_Columns.COLUMN_AWARD_TIME);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_DATE_FORMATTED, DBConstant.Award_Columns.COLUMN_AWARD_DATE_FORMATTED);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE_FORMATTED, DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE_FORMATTED);
 		awardProjectionMap.put(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_MOBILE, DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_MOBILE);
@@ -1003,6 +1037,7 @@ public class ApplicationDB extends ContentProvider{
 		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_6, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_6);
 		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_7, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_7);
 		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_DURATION, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_DURATION);
+		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_CORRECT_OPTION, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_CORRECT_OPTION);
 		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION_POINTS, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION_POINTS);
 		}
 }

@@ -6,7 +6,6 @@ package com.application.receiver;
 import java.util.Iterator;
 import java.util.Set;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;

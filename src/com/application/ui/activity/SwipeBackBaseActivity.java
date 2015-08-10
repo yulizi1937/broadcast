@@ -6,6 +6,7 @@ package com.application.ui.activity;
 import java.io.File;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.application.ui.view.SwipeBackActivityBase;
@@ -68,10 +69,14 @@ public class SwipeBackBaseActivity extends BaseActivity implements SwipeBackActi
     
     public boolean checkIfFileExists(String mFilePath){
     	try{
-    		if(new File(mFilePath).exists()){
-    			return true;	
+    		if(!TextUtils.isEmpty(mFilePath)){
+    			if(new File(mFilePath).exists()){
+        			return true;	
+        		}else{
+        			return false;	
+        		}
     		}else{
-    			return false;	
+    			return false;
     		}
     	}catch(Exception e){
     		return false;	

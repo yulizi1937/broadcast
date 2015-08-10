@@ -35,9 +35,9 @@ public class QuizViewPagerAdapter extends FragmentStatePagerAdapter{
 	public Fragment getItem(int position) {
 		// TODO Auto-generated method stub
 		if(mArrayListQuizPagerInfo.get(position).getmQuizType().equalsIgnoreCase("selective")){
-			return QuizSelectiveRadioFragment.newInstance();	
+			return QuizSelectiveRadioFragment.newInstance(position, mArrayListQuizPagerInfo.get(position));	
 		}else{
-			return QuizMultipleCheckFragment.newInstance();
+			return QuizMultipleCheckFragment.newInstance(position, mArrayListQuizPagerInfo.get(position));
 		}
 	}
 

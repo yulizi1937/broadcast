@@ -73,7 +73,8 @@
                 android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
                 android:text="@string/sample_quiz_selective_radio_group_c"
                 android:textColor="@color/toolbar_background"
-                android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+                android:textSize="@dimen/fragment_quiz_selective_quiz_option_size"
+                android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"
@@ -88,7 +89,56 @@
                 android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
                 android:text="@string/sample_quiz_selective_radio_group_d"
                 android:textColor="@color/toolbar_background"
-                android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+                android:textSize="@dimen/fragment_quiz_selective_quiz_option_size"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/toolbar_background" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/fragmentQuizMultipleCheckBox5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+                android:text="@string/sample_quiz_selective_radio_group_d"
+                android:textColor="@color/toolbar_background"
+                android:textSize="@dimen/fragment_quiz_selective_quiz_option_size"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/toolbar_background" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/fragmentQuizMultipleCheckBox6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+                android:text="@string/sample_quiz_selective_radio_group_d"
+                android:textColor="@color/toolbar_background"
+                android:textSize="@dimen/fragment_quiz_selective_quiz_option_size"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/toolbar_background" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/fragmentQuizMultipleCheckBox7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+                android:text="@string/sample_quiz_selective_radio_group_d"
+                android:textColor="@color/toolbar_background"
+                android:textSize="@dimen/fragment_quiz_selective_quiz_option_size"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 

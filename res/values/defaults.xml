@@ -41,5 +41,8 @@
     
     <!-- BottomSheet : Any.Do Notification -->
     <integer name="anydo_limit">5</integer>
+    
+    <!-- PanningView -->
+    <bool name="portrait">true</bool>
 
 </resources>

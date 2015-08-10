@@ -5,22 +5,27 @@ package com.application.ui.activity;
 
 import java.io.File;
 
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -28,13 +33,19 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 
 import com.application.ui.materialdialog.MaterialDialog;
+import com.application.ui.view.MobcastProgressDialog;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.BuildVars;
 import com.application.utils.FileLog;
+import com.application.utils.JSONRequestBuilder;
+import com.application.utils.RestClient;
+import com.application.utils.RetroFitClient;
+import com.application.utils.Style;
 import com.application.utils.Utilities;
 import com.mobcast.R;
+import com.squareup.okhttp.OkHttpClient;
 
 /**
  * @author Vikalp Patel(VikalpPatelCE)
@@ -56,6 +67,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mNotificationBirthdayTimeSelectedTv;
 	private AppCompatTextView mNotificationBirthdayMuteTv;
 	private AppCompatTextView mNotificationDownloadAndNotifyTv;
+	private AppCompatTextView mNotificationAnyDoTv;
 	private AppCompatTextView mAboutTv;
 	private AppCompatTextView mAboutBuildVersionTv;
 	private AppCompatTextView mFileStorageTv;
@@ -66,6 +78,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 
 	private AppCompatCheckBox mNotificationBirthdayMuteCheckBox;
 	private AppCompatCheckBox mNotificationDownloadAndNotifyCheckBox;
+	private AppCompatCheckBox mNotificationAnyDoCheckBox;
 
 	private LinearLayout mGeneralLangugageLayout;
 	private LinearLayout mNotificationBirthdayTimeLayout;
@@ -73,11 +86,21 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	
 	private RelativeLayout mNotificationBirthdayMuteLayout;
 	private RelativeLayout mNotificationDownloadAndNotifyLayout;
+	private RelativeLayout mNotificationAnyDoLayout;
 	private RelativeLayout mAboutLayout;
 	private RelativeLayout mAboutBuildVersionLayout;
 	private RelativeLayout mFileStorageLayout;
 	
+	private String mCategory = "settings";
+	private String mSubCategory;
+	private String mDescription;
 	
+	private boolean isAppLanguage = false;
+	private boolean isBirthdayTime = false;
+	private boolean isBirthdayMute = false;
+	private boolean isCustomNotification = false;
+	private boolean isDownloadAndNotify = false;
+			
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +156,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		mNotificationBirthdayTimeSelectedTv = (AppCompatTextView) findViewById(R.id.fragmentSettingsNotificationBirthdayTimeSelectedTv);
 		mNotificationBirthdayMuteTv = (AppCompatTextView) findViewById(R.id.fragmentSettingsNotificationBirthdayMuteTv);
 		mNotificationDownloadAndNotifyTv = (AppCompatTextView) findViewById(R.id.fragmentSettingsNotificationBirthdayDownloadAndNotifyTv);
+		mNotificationAnyDoTv = (AppCompatTextView) findViewById(R.id.fragmentSettingsNotificationAnyDoTv);
 		mAboutTv = (AppCompatTextView) findViewById(R.id.fragmentSettingsNotificationAboutTv);
 		mAboutBuildVersionTv = (AppCompatTextView) findViewById(R.id.fragmentAboutBuildVersionTv);
 		mFileStorageTv = (AppCompatTextView) findViewById(R.id.fragmentAboutFileStorageTv);
@@ -142,6 +166,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 
 		mNotificationBirthdayMuteCheckBox = (AppCompatCheckBox) findViewById(R.id.fragmentSettingsNotificationBirthdayMuteCheckTextView);
 		mNotificationDownloadAndNotifyCheckBox = (AppCompatCheckBox) findViewById(R.id.fragmentSettingsNotificationDownloadAndNotifyCheckTextView);
+		mNotificationAnyDoCheckBox = (AppCompatCheckBox) findViewById(R.id.fragmentSettingsNotificationAnyDoCheckTextView);
 
 		mGeneralLangugageLayout = (LinearLayout) findViewById(R.id.fragmentSettingsGeneralLanguageLayout);
 		mNotificationBirthdayTimeLayout = (LinearLayout) findViewById(R.id.fragmentSettingsNotificationBirthdayTimeLayout);
@@ -149,6 +174,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		
 		mNotificationBirthdayMuteLayout = (RelativeLayout) findViewById(R.id.fragmentSettingsNotificationBirthdayMuteLayout);
 		mNotificationDownloadAndNotifyLayout = (RelativeLayout) findViewById(R.id.fragmentSettingsNotificationDownloadAndNotifyLayout);
+		mNotificationAnyDoLayout = (RelativeLayout) findViewById(R.id.fragmentSettingsNotificationAnyDoNotificationLayout);
 		mAboutLayout = (RelativeLayout) findViewById(R.id.fragmentSettingsNotificationAboutLayout);
 		mAboutBuildVersionLayout = (RelativeLayout) findViewById(R.id.fragmentAboutBuildVersionLayout);
 		mFileStorageLayout = (RelativeLayout)findViewById(R.id.fragmentAboutFileStorageLayout);
@@ -176,25 +202,13 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		}
 	}
 	
-	private void setAppStorage(){
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB) private void setAppStorage(){
 		try{
-			float mFloatAppStorage = AndroidUtilities.getPercentageOfFileSizeFromFreeMemory(AndroidUtilities.getFolderSize(new File(
-					Environment.getExternalStorageDirectory(), "Download").getAbsolutePath()));
-			LinearLayout.LayoutParams  params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, mFloatAppStorage);
-			mFileStorageAppTv.setLayoutParams(params);
-			
-			if(mFloatAppStorage >= 90.0f){
-				mFileStorageAppTv.setBackgroundColor(Color.RED);
+			if (AndroidUtilities.isAboveIceCreamSandWich()) {
+				new AsyncStorageTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+			} else {
+				new AsyncStorageTask().execute();
 			}
-			
-			LinearLayout.LayoutParams  paramsDevice = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 100 - mFloatAppStorage);
-			mFileStorageDeviceTv.setLayoutParams(paramsDevice);
-			
-			mFileStorageAppTv.setText(Utilities.formatFileSize(AndroidUtilities.getFolderSize(new File(
-					Environment.getExternalStorageDirectory(), "Download").getAbsolutePath())));
-			
-			mFileStorageDeviceTv.setText(Utilities.formatFileSize(AndroidUtilities.getFolderSize(
-					Environment.getExternalStorageDirectory().getAbsolutePath())));
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -203,11 +217,24 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	private void setDataFromPreferences(){
 		mGeneralLanguageSelectedTv.setText(ApplicationLoader.getPreferences().getAppLanguage());
 		mNotificationBirthdayTimeSelectedTv.setText(ApplicationLoader.getPreferences().getBirthdayNotifyAt());
+		
+		if(ApplicationLoader.getPreferences().isAnyDoNotification()){
+			mNotificationAnyDoCheckBox.setChecked(true);
+		}else{
+			mNotificationAnyDoCheckBox.setChecked(false);
+		}
+		
+		if(ApplicationLoader.getPreferences().getDownloadAndNotify()){
+			mNotificationDownloadAndNotifyCheckBox.setChecked(true);
+		}else{
+			mNotificationDownloadAndNotifyCheckBox.setChecked(false);
+		}
 	}
 
 	private void setUiListener() {
 		setMaterialRippleView();
 		setOnClickListener();
+		setCheckBoxListener();
 	}
 
 	private void setOnClickListener() {
@@ -248,6 +275,15 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 					}
 				});
 		
+		mNotificationAnyDoLayout.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mNotificationAnyDoCheckBox.performClick();
+			}
+		});
+		
 		mAboutLayout
 		.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -268,6 +304,56 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 				AndroidUtilities.enterWindowAnimation(SettingsActivity.this);
 			}
 		});
+	}
+	
+	private void setCheckBoxListener(){
+		mNotificationBirthdayMuteCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+		       @Override
+		       public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+		    	   if(isChecked){
+		    		   mDescription = "on";
+		    	   }else{
+		    		   mDescription = "off";
+		    	   }
+		    	   mSubCategory = "birthdayMute";
+		    	   ApplicationLoader.getPreferences().setBirthdayNotificationMute(isChecked);
+		    	   isBirthdayMute = true;
+		    	   updateAppSettingsToApi();
+		       }
+		   }
+		);  
+		
+		mNotificationAnyDoCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+		       @Override
+		       public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+		    	   if(isChecked){
+		    		   mDescription = "on";
+		    	   }else{
+		    		   mDescription = "off";
+		    	   }
+		    	   mSubCategory = "anyDo";
+		    	   ApplicationLoader.getPreferences().setAnyDoNotification(isChecked);
+		    	   isCustomNotification = true;
+		    	   updateAppSettingsToApi();
+		       }
+		   }
+		);
+		
+		mNotificationDownloadAndNotifyCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+		       @Override
+		       public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+		    	   if(isChecked){
+		    		   mDescription = "on";
+		    	   }else{
+		    		   mDescription = "off";
+		    	   }
+		    	   mSubCategory = "downloadAndNotify";
+		    	   ApplicationLoader.getPreferences().setDownloadAndNotify(isChecked);
+		    	   isDownloadAndNotify = true;
+		    	   updateAppSettingsToApi();
+		       }
+		   }
+		);  
 	}
 	
 	@Override
@@ -323,14 +409,19 @@ public class SettingsActivity extends SwipeBackBaseActivity {
             	ApplicationLoader.getPreferences().setAppLanguage(values[0]);
     			ApplicationLoader.getPreferences().setAppLanguageCode(values[1]);
             	setDataFromPreferences();
+     		    mSubCategory = "language";
+     		    mDescription = values[1];
+     		    isAppLanguage = true;
+     		    updateAppSettingsToApi();
+     		    
 //            	startActivity(mIntent);
-            	Utilities.stageQueue.postRunnable(new Runnable() {
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						System.exit(0);
-					}
-				});
+//            	Utilities.stageQueue.postRunnable(new Runnable() {
+//					@Override
+//					public void run() {
+//						// TODO Auto-generated method stub
+//						System.exit(0);
+//					}
+//				});
 //            	finish();
             }
 
@@ -354,6 +445,170 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			setMaterialRippleWithGrayOnView(mFileStorageLayout);
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
+		}
+	}
+
+	public class AsyncStorageTask extends AsyncTask<Void, Void, Void> {
+		private float mFloatAppStorage = 0.0f;
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			try{
+				mFloatAppStorage = AndroidUtilities.getPercentageOfFileSizeFromFreeMemory(AndroidUtilities.getFolderSize(new File(
+						Environment.getExternalStorageDirectory(), AppConstants.FOLDER.ROOT_FOLDER).getAbsolutePath()));
+			}catch(Exception e){
+				FileLog.e(TAG, e.toString());
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			LinearLayout.LayoutParams  params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, mFloatAppStorage);
+			mFileStorageAppTv.setLayoutParams(params);
+			
+			if(mFloatAppStorage >= 90.0f){
+				mFileStorageAppTv.setBackgroundColor(Color.RED);
+			}
+			
+			LinearLayout.LayoutParams  paramsDevice = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 100 - mFloatAppStorage);
+			mFileStorageDeviceTv.setLayoutParams(paramsDevice);
+			
+			mFileStorageAppTv.setText(Utilities.formatFileSize(AndroidUtilities.getFolderSize(new File(
+					Environment.getExternalStorageDirectory(), "Download").getAbsolutePath())));
+			
+			mFileStorageDeviceTv.setText(Utilities.formatFileSize(AndroidUtilities.getFolderSize(
+					Environment.getExternalStorageDirectory().getAbsolutePath())));
+		}
+	}
+	
+	
+	/**
+	 * API : Submit App Settings To API
+	 */
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB) private void updateAppSettingsToApi(){
+		if (Utilities.isInternetConnected()) {
+				if(!TextUtils.isEmpty(mCategory) && !TextUtils.isEmpty(mSubCategory) && !TextUtils.isEmpty(mDescription)){
+					if (AndroidUtilities.isAboveIceCreamSandWich()) {
+						new AsyncSettingsTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+					} else {
+						new AsyncSettingsTask().execute();
+					}
+				}
+		} else {
+			Utilities.showCrouton(SettingsActivity.this,mCroutonViewGroup,getResources().getString(R.string.internet_unavailable),Style.ALERT);
+		}
+	}
+	
+	private String apiUpdateUserAppSettings() {
+		try {
+				JSONObject jsonObj = JSONRequestBuilder.getPostAppSettingsData(mCategory, mSubCategory, mDescription);
+				if(BuildVars.USE_OKHTTP){
+					return RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_APP_SETTINGS, jsonObj.toString(), TAG);	
+				}else{
+					return RestClient.postJSON(AppConstants.API.API_APP_SETTINGS, jsonObj, TAG);	
+				}	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			FileLog.e(TAG, e.toString());
+		}
+		return null;
+	}
+
+	private void parseDataFromApi(String mResponseFromApi) {
+		try{
+			if(!TextUtils.isEmpty(mResponseFromApi)){
+				if(Utilities.isSuccessFromApi(mResponseFromApi)){
+					Utilities.showCrouton(SettingsActivity.this, mCroutonViewGroup, Utilities.getSuccessMessageFromApi(mResponseFromApi), Style.CONFIRM);
+					if(isAppLanguage){
+						isAppLanguage = false;
+						Utilities.stageQueue.postRunnable(new Runnable() {
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								System.exit(0);
+							}
+						});
+					}else if(isBirthdayMute){
+						if(ApplicationLoader.getPreferences().isBirthdayNotificationMute()){
+							mNotificationBirthdayMuteCheckBox.setChecked(true);
+						}else{
+							mNotificationBirthdayMuteCheckBox.setChecked(false);
+						}
+						isBirthdayMute = false;
+					}else if(isBirthdayTime){
+						isBirthdayTime = false;
+					}else if(isCustomNotification){
+						if(ApplicationLoader.getPreferences().isAnyDoNotification()){
+							mNotificationAnyDoCheckBox.setChecked(true);
+						}else{
+							mNotificationAnyDoCheckBox.setChecked(false);
+						}
+						isCustomNotification = false;
+					}else if(isDownloadAndNotify){
+						if(ApplicationLoader.getPreferences().getDownloadAndNotify()){
+							mNotificationDownloadAndNotifyCheckBox.setChecked(true);
+						}else{
+							mNotificationDownloadAndNotifyCheckBox.setChecked(false);
+						}
+						isDownloadAndNotify = false;
+					}
+				}
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+
+	public class AsyncSettingsTask extends AsyncTask<Void, Void, Void> {
+		private String mResponseFromApi;
+		private boolean isSuccess = true;
+		private String mErrorMessage = "";
+		private MobcastProgressDialog mProgressDialog;
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			mProgressDialog = new MobcastProgressDialog(SettingsActivity.this);
+			mProgressDialog.setMessage(ApplicationLoader.getApplication().getResources().getString(R.string.loadingUpdate));
+			mProgressDialog.show();
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			try{
+				mResponseFromApi = apiUpdateUserAppSettings();
+				isSuccess = Utilities.isSuccessFromApi(mResponseFromApi);
+			}catch(Exception e){
+				FileLog.e(TAG, e.toString());
+				if(mProgressDialog!=null){
+					mProgressDialog.dismiss();
+				}
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			
+			if(mProgressDialog!=null){
+				mProgressDialog.dismiss();
+			}
+			if (isSuccess) {
+				parseDataFromApi(mResponseFromApi);
+			} else {
+				mErrorMessage = Utilities
+						.getErrorMessageFromApi(mResponseFromApi);
+				Utilities.showCrouton(SettingsActivity.this, mCroutonViewGroup,
+						mErrorMessage, Style.ALERT);
+			}
 		}
 	}
 	

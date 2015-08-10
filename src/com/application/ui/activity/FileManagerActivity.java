@@ -590,7 +590,7 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 
 		try {
 			File telegramPath = new File(
-					Environment.getExternalStorageDirectory(), AppConstants.FOLDER.BUILD_FOLDER);
+					Environment.getExternalStorageDirectory(), AppConstants.FOLDER.BUILD_FOLDER_FILE_MANAGER);
 			if (telegramPath.exists()) {
 				fs = new ListItem();
 				fs.title = "Mobcast";

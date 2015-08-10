@@ -3,6 +3,9 @@ package com.application.ui.activity;
 import java.io.File;
 import java.util.ArrayList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
@@ -45,6 +48,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.application.beans.MotherHeader;
 import com.application.sqlite.DBConstant;
@@ -53,6 +57,7 @@ import com.application.ui.calligraphy.CalligraphyContextWrapper;
 import com.application.ui.fragment.IActivityCommunicator;
 import com.application.ui.fragment.IFragmentCommunicator;
 import com.application.ui.materialdialog.MaterialDialog;
+import com.application.ui.service.SyncService;
 import com.application.ui.view.CircleImageView;
 import com.application.ui.view.DrawerArrowDrawable;
 import com.application.ui.view.MobcastProgressDialog;
@@ -61,12 +66,19 @@ import com.application.ui.view.SlidingTabLayout;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
+import com.application.utils.BuildVars;
+import com.application.utils.CheckVersionUpdateAsyncTask;
+import com.application.utils.CheckVersionUpdateAsyncTask.OnPostExecuteListener;
 import com.application.utils.FileLog;
+import com.application.utils.JSONRequestBuilder;
 import com.application.utils.NotificationsController;
 import com.application.utils.ObservableScrollViewCallbacks;
+import com.application.utils.RestClient;
+import com.application.utils.RetroFitClient;
 import com.application.utils.ScrollState;
 import com.application.utils.ScrollUtils;
 import com.application.utils.Scrollable;
+import com.application.utils.Style;
 import com.application.utils.Utilities;
 import com.mobcast.R;
 import com.nineoldandroids.view.ViewHelper;
@@ -74,15 +86,15 @@ import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.squareup.okhttp.OkHttpClient;
 
 /**
  * 
  * @author Vikalp Patel(VikalpPatelCE)
  * 
  */
-public class MotherActivity extends BaseActivity implements
-		ObservableScrollViewCallbacks,IActivityCommunicator {
-	
+@SuppressLint("InlinedApi") 
+public class MotherActivity extends BaseActivity implements ObservableScrollViewCallbacks,IActivityCommunicator {
 	public  static final String SLIDINGTABACTION = "com.application.ui.activity.MotherActivity";
 	/*
 	 * Drawer
@@ -105,6 +117,7 @@ public class MotherActivity extends BaseActivity implements
 	private float offset;
 	private boolean flipped;
 	private Resources mResources;
+	private RotateAnimation animSyncDrawer;
 
 	private Toolbar mToolBar;
 	private View mHeaderView;
@@ -137,6 +150,7 @@ public class MotherActivity extends BaseActivity implements
 		setUiListener();
 		propagateToolbarState(toolbarIsShown());
 		setDrawerLayout();
+		apiCheckVersionUpdate();
 	}
 
 	@Override
@@ -144,6 +158,7 @@ public class MotherActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		super.onPause();
 		unregisterReceiver(mBroadCastReceiver);
+		unregisterReceiver(mSyncBroadCastReceiver);
 	}
 
 
@@ -153,7 +168,9 @@ public class MotherActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		super.onResume();
 		registerReceiver(mBroadCastReceiver, new IntentFilter(NotificationsController.BROADCAST_ACTION));
+		registerReceiver(mSyncBroadCastReceiver, new IntentFilter(SyncService.BROADCAST_ACTION));
 		notifySlidingTabLayoutChange();
+		supportInvalidateOptionsMenu();
 	}
 
 
@@ -165,11 +182,11 @@ public class MotherActivity extends BaseActivity implements
 		inflater.inflate(R.menu.menu_mother, menu);
 
 		MenuItem menuItemEvent = menu.findItem(R.id.action_event);
-		menuItemEvent.setIcon(buildCounterDrawable(1,
+		menuItemEvent.setIcon(buildCounterDrawable(getUnreadOfEvent(),
 				R.drawable.ic_toolbar_event));
 
 		MenuItem menuItemAward = menu.findItem(R.id.action_award);
-		menuItemAward.setIcon(buildCounterDrawable(0,
+		menuItemAward.setIcon(buildCounterDrawable(getUnreadOfAward(),
 				R.drawable.ic_toolbar_award));
 
 		MenuItem menuItemBirthday = menu.findItem(R.id.action_birthday);
@@ -195,7 +212,7 @@ public class MotherActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		switch (item.getItemId()) {
 		case R.id.action_search:
-			Intent mIntentSearch = new Intent(MotherActivity.this, SearchMotherActivity.class);
+			/*Intent mIntentSearch = new Intent(MotherActivity.this, SearchMotherActivity.class);
 			switch(mPager.getCurrentItem()){
 			case 0:
 				mIntentSearch.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.MOBCAST);
@@ -208,7 +225,7 @@ public class MotherActivity extends BaseActivity implements
 				break;
 			}
 			startActivity(mIntentSearch);
-			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);*/
 			return true;
 		case R.id.action_award:
 			Intent mIntent = new Intent(MotherActivity.this,
@@ -324,6 +341,21 @@ public class MotherActivity extends BaseActivity implements
 		}
 	};
 	
+	private BroadcastReceiver mSyncBroadCastReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent mIntent) {
+			try{
+				mDrawerSyncLayout.setEnabled(true);
+				mDrawerSyncLayout.setClickable(true);
+				mDrawerSyncIv.clearAnimation();
+				mDrawerSyncTv.setText(ApplicationLoader.getPreferences().getLastSyncTimeStampMessage());
+				onResume();
+			}catch(Exception e){
+				FileLog.e(TAG, e.toString());
+			}
+		}
+	};
+	
 	private void notifySlidingTabLayoutChange(){
 		
 		mArrayListMotherHeader.get(0).setmIsUnread(getUnreadOfMobcast() > 0 ? true : false);
@@ -425,12 +457,34 @@ public class MotherActivity extends BaseActivity implements
 		if(mCursor!=null){
 			mCursor.close();
 		}
-		return 0;//NIELSEN
+		return 0;
 		
 	}
 	
 	private int getUnreadOfTraining(){
 		Cursor mCursor = getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, null, DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ + "=?", new String[]{"false"}, null);
+		if(mCursor!=null && mCursor.getCount() > 0){
+			return mCursor.getCount();
+		}
+		if(mCursor!=null){
+			mCursor.close();
+		}
+		return 0;
+	}
+	
+	private int getUnreadOfEvent(){
+		Cursor mCursor = getContentResolver().query(DBConstant.Event_Columns.CONTENT_URI, null, DBConstant.Event_Columns.COLUMN_EVENT_IS_READ + "=?", new String[]{"false"}, null);
+		if(mCursor!=null && mCursor.getCount() > 0){
+			return mCursor.getCount();
+		}
+		if(mCursor!=null){
+			mCursor.close();
+		}
+		return 0;
+	}
+	
+	private int getUnreadOfAward(){
+		Cursor mCursor = getContentResolver().query(DBConstant.Award_Columns.CONTENT_URI, null, DBConstant.Award_Columns.COLUMN_AWARD_IS_READ + "=?", new String[]{"false"}, null);
 		if(mCursor!=null && mCursor.getCount() > 0){
 			return mCursor.getCount();
 		}
@@ -617,48 +671,85 @@ public class MotherActivity extends BaseActivity implements
 		notifySlidingTabLayoutChange();
 	}
 	
+	
+	/**
+	 * Log Out
+	 */
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB) 
 	private void logOutFromApp(){
-		new AsyncTask<Void, Void, Void>() {
-			private MobcastProgressDialog mProgressDialog;
-			@Override
-			protected void onPreExecute() {
-				// TODO Auto-generated method stub
-				super.onPreExecute();
-				mProgressDialog = new MobcastProgressDialog(MotherActivity.this);
-				mProgressDialog.setMessage(getResources().getString(R.string.logging_out));
-				mProgressDialog.setCancelable(false);
-				mProgressDialog.show();
+		if(Utilities.isInternetConnected()){
+			if (AndroidUtilities.isAboveHoneyComb()) {
+				new AsyncLogOutTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+			} else {
+				new AsyncLogOutTask().execute();
 			}
+		}else{
+			Utilities.showCrouton(MotherActivity.this, mCroutonViewGroup, getResources().getString(R.string.internet_unavailable), Style.ALERT);
+		}
+	}
+	
+	public class AsyncLogOutTask extends AsyncTask<Void, Void, Void>{
+		private MobcastProgressDialog mProgressDialog;
+		private String mResponseFromApi;
+		private boolean isSuccess;
+		private String mErrorMessage;
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			mProgressDialog = new MobcastProgressDialog(MotherActivity.this);
+			mProgressDialog.setMessage(getResources().getString(R.string.logging_out));
+			mProgressDialog.setCancelable(false);
+			mProgressDialog.show();
+		}
 
-			@Override
-			protected Void doInBackground(Void... params) {
-				// TODO Auto-generated method stub
-				ApplicationLoader.getPreferences().clearPreferences();
-				Utilities.deleteTables();
-				Utilities.deleteAppFolder(new File(AppConstants.FOLDER.BUILD_FOLDER));
-//				Utilities.checkLogOut();
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			try{
+				mResponseFromApi = apiUserAppLogOut();
+				isSuccess = Utilities.isSuccessFromApi(mResponseFromApi);
+				if(isSuccess){
+					ApplicationLoader.getPreferences().clearPreferences();
+					Utilities.deleteTables();
+					Utilities.deleteAppFolder(new File(AppConstants.FOLDER.BUILD_FOLDER));
+					ApplicationLoader.cancelSyncServiceAlarm();
+				}else{
+					mErrorMessage = Utilities.getErrorMessageFromApi(mResponseFromApi);
+				}
+			}catch(Exception e){
 				FileLog.e(TAG, e.toString());
-				}
-				return null;
 			}
-			
-			@Override
-			protected void onPostExecute(Void result) {
-				// TODO Auto-generated method stub
-				super.onPostExecute(result);
-				if(mProgressDialog!=null){
-					mProgressDialog.dismiss();
-				}
-				
-				MotherActivity.this.finish();
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			if(mProgressDialog!=null){
+				mProgressDialog.dismiss();
 			}
-		}.execute();
-//		Utilities.dropDatabase();
-//		System.exit(0);
+			if(isSuccess){
+				Toast.makeText(MotherActivity.this, Utilities.getSuccessMessageFromApi(mResponseFromApi), Toast.LENGTH_SHORT).show();
+				MotherActivity.this.finish();	
+			}
+		}
+	}
+	
+	private String apiUserAppLogOut() {
+		try {
+				JSONObject jsonObj = JSONRequestBuilder.getPostAppLogOutData();
+				if(BuildVars.USE_OKHTTP){
+					return RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_LOGOUT_USER, jsonObj.toString(), TAG);	
+				}else{
+					return RestClient.postJSON(AppConstants.API.API_LOGOUT_USER, jsonObj, TAG);	
+				}	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			FileLog.e(TAG, e.toString());
+		}
+		return null;
 	}
 	
 	private void showLogOutConfirmationMaterialDialog(){
@@ -684,6 +775,73 @@ public class MotherActivity extends BaseActivity implements
         })
         .show();
 	}
+	
+	/**
+	 * Check Version Update
+	 */
+	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB) 
+	private void apiCheckVersionUpdate(){
+		try{
+			if(Utilities.isInternetConnected()){
+				CheckVersionUpdateAsyncTask mCheckVersionUpdateAsyncTask = new CheckVersionUpdateAsyncTask();
+				if (AndroidUtilities.isAboveHoneyComb()) {
+					mCheckVersionUpdateAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+				} else {
+					mCheckVersionUpdateAsyncTask.execute();
+				}
+				mCheckVersionUpdateAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
+					@Override
+					public void onPostExecute(String mResponseFromApi) {
+						// TODO Auto-generated method stub
+						if(Utilities.isSuccessFromApi(mResponseFromApi)){
+							try {
+								JSONObject mJSONObj = new JSONObject(mResponseFromApi);
+								if(mJSONObj.getBoolean(AppConstants.API_KEY_PARAMETER.updateAvailable)){
+									showUpdateAvailConfirmationMaterialDialog();
+								}
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								FileLog.e(TAG, e.toString());
+							}catch(Exception e){
+								FileLog.e(TAG, e.toString());
+							}
+						}
+					}
+				});
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void showUpdateAvailConfirmationMaterialDialog(){
+		MaterialDialog mMaterialDialog = new MaterialDialog.Builder(MotherActivity.this)
+        .title(getResources().getString(R.string.update_title_message))
+        .titleColor(Utilities.getAppColor())
+        .content(getResources().getString(R.string.update_delete_message))
+        .contentColor(Utilities.getAppColor())
+        .positiveText(getResources().getString(R.string.update))
+        .positiveColor(Utilities.getAppColor())
+        .negativeText(getResources().getString(R.string.sample_fragment_settings_dialog_language_negative))
+        .negativeColor(Utilities.getAppColor())
+        .cancelable(false)
+        .callback(new MaterialDialog.ButtonCallback() {
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB) @Override
+            public void onPositive(MaterialDialog dialog) {
+            	dialog.dismiss();
+				Intent mIntent = new Intent(Intent.ACTION_VIEW);
+				mIntent.setData(Uri.parse(AppConstants.mStoreLink));
+				startActivity(mIntent);
+            }
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB) @Override
+            public void onNegative(MaterialDialog dialog) {
+            	dialog.dismiss();
+            }
+        })
+        .show();
+	}
+	
 	/*
 	 * Drawer Initilization
 	 */
@@ -701,7 +859,7 @@ public class MotherActivity extends BaseActivity implements
 
 		mDrawerUserNameTv = (AppCompatTextView) findViewById(R.id.drawerUserNameTv);
 		mDrawerUserEmailTv = (AppCompatTextView) findViewById(R.id.drawerUserEmailTv);
-		mDrawerSyncTv = (AppCompatTextView) findViewById(R.id.drawerSyncTitleTv);
+		mDrawerSyncTv = (AppCompatTextView) findViewById(R.id.drawerSyncContentTv);
 
 		mDrawerSyncIv = (ImageView) findViewById(R.id.drawerSyncIv);
 
@@ -767,10 +925,11 @@ public class MotherActivity extends BaseActivity implements
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				RotateAnimation ranim = (RotateAnimation) AnimationUtils
-						.loadAnimation(getApplicationContext(),
-								R.anim.anim_rotate);
-				mDrawerSyncIv.startAnimation(ranim);
+				animSyncDrawer = (RotateAnimation) AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_sync);
+				mDrawerSyncIv.startAnimation(animSyncDrawer);
+				mDrawerSyncLayout.setClickable(false);
+				mDrawerSyncLayout.setEnabled(false);
+				startService(new Intent(MotherActivity.this, SyncService.class));
 			}
 		});
 
@@ -784,6 +943,7 @@ public class MotherActivity extends BaseActivity implements
 				window.setStatusBarColor(getResources().getColor(
 						android.R.color.transparent));
 			}
+			mDrawerSyncTv.setText(ApplicationLoader.getPreferences().getLastSyncTimeStampMessage());
 		} catch (Exception e) {
 		}
 	}

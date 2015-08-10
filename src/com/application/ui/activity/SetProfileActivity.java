@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +19,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +38,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.application.ui.activity.VerificationActivity.AsyncVerifyTask;
 import com.application.ui.calligraphy.CalligraphyContextWrapper;
 import com.application.ui.view.CircleImageView;
 import com.application.ui.view.MaterialRippleLayout;
@@ -52,6 +56,7 @@ import com.application.utils.Style;
 import com.application.utils.Utilities;
 import com.mobcast.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -72,18 +77,24 @@ public class SetProfileActivity extends AppCompatActivity{
 	private AppCompatEditText mNameEv;
 	private AppCompatEditText mEmailEv;
 	private AppCompatEditText mEmployeeIdEv;
+	private AppCompatEditText mFavouriteQuestionEv;
+	private AppCompatEditText mFavouriteAnswerEv;
 	
 	private AppCompatButton mNextBtn;
 	
 	private ImageView mNameValidateIv;
 	private ImageView mEmailValidateIv;
 	private ImageView mEmployeeIdIv;
+	private ImageView mFavouriteQuestionIv;
+	private ImageView mFavouriteAnswerIv;
 	private ImageView mToolBarDrawer;
 	private ImageView mUploadAnotherIv;
 	
 	private LinearLayout mNameLayout;
 	private LinearLayout mEmailLayout;
 	private LinearLayout mEmployeeIdLayout;
+	private LinearLayout mFavouriteQuestionLayout;
+	private LinearLayout mFavouriteAnswerLayout;
 	
 	private FrameLayout mCroutonViewGroup;
 	
@@ -97,6 +108,7 @@ public class SetProfileActivity extends AppCompatActivity{
 	private boolean isValidName = false;
 	private boolean isValidEmail = false;
 	private boolean isValidEmployeeId = false;
+	private boolean isValid = false;
 	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -131,12 +143,16 @@ public class SetProfileActivity extends AppCompatActivity{
 		mNameEv = (AppCompatEditText)findViewById(R.id.activitySetProfileNameEv);
 		mEmailEv = (AppCompatEditText)findViewById(R.id.activitySetProfileEmailEv);
 		mEmployeeIdEv = (AppCompatEditText)findViewById(R.id.activitySetProfileEmployeeIdEv);
+		mFavouriteQuestionEv = (AppCompatEditText)findViewById(R.id.activitySetProfileFavouriteQuestionEv);
+		mFavouriteAnswerEv= (AppCompatEditText)findViewById(R.id.activitySetProfileFavouriteAnswerEv);
 		
 		mNextBtn = (AppCompatButton)findViewById(R.id.activitySetProfileNextBtn);
 		
 		mNameValidateIv = (ImageView)findViewById(R.id.activitySetProfileNameValidateIv);
 		mEmailValidateIv = (ImageView)findViewById(R.id.activitySetProfileEmailValidateIv);
 		mEmployeeIdIv = (ImageView)findViewById(R.id.activitySetProfileEmployeeIdValidateIv);
+		mFavouriteQuestionIv = (ImageView)findViewById(R.id.activitySetProfileFavouriteQuestionValidateIv);
+		mFavouriteAnswerIv = (ImageView)findViewById(R.id.activitySetProfileFavouriteAnswerValidateIv);
 		
 		mProgressWheel = (ProgressWheel)findViewById(R.id.activitySetProfileProgressWheel);
 		
@@ -145,6 +161,8 @@ public class SetProfileActivity extends AppCompatActivity{
 		mNameLayout = (LinearLayout)findViewById(R.id.activitySetProfileNameLayout);
 		mEmailLayout = (LinearLayout)findViewById(R.id.activitySetProfileEmailLayout);
 		mEmployeeIdLayout= (LinearLayout)findViewById(R.id.activitySetProfileEmployeeIdLayout);
+		mFavouriteQuestionLayout= (LinearLayout)findViewById(R.id.activitySetProfileFavouriteQuestionLayout);
+		mFavouriteAnswerLayout= (LinearLayout)findViewById(R.id.activitySetProfileFavouriteAnswerLayout);
 		
 		mCroutonViewGroup = (FrameLayout)findViewById(R.id.croutonViewGroup);
 	}
@@ -169,12 +187,45 @@ public class SetProfileActivity extends AppCompatActivity{
 		mNameEv.setText(ApplicationLoader.getPreferences().getUserDisplayName());
 		mEmailEv.setText(ApplicationLoader.getPreferences().getUserEmailAddress());
 		mEmployeeIdEv.setText(ApplicationLoader.getPreferences().getUserEmployeeId());
+		mFavouriteQuestionEv.setText(ApplicationLoader.getPreferences().getUserFavouriteQuestion());
+		mFavouriteAnswerEv.setText(ApplicationLoader.getPreferences().getUserFavouriteAnswer());
 		
 		mImageLoader = ApplicationLoader.getUILImageLoader();
-		mImageLoader.displayImage(ApplicationLoader.getPreferences().getUserProfileImageLink(), mProfileCirleIv);
+		if(!TextUtils.isEmpty(ApplicationLoader.getPreferences().getUserProfileImageLink())){
+			mImageLoader.displayImage(ApplicationLoader.getPreferences().getUserProfileImageLink(), mProfileCirleIv, new ImageLoadingListener() {
+				@Override
+				public void onLoadingStarted(String arg0, View arg1) {
+					// TODO Auto-generated method stub
+					mProgressWheel.setVisibility(View.VISIBLE);
+					mProfileCirleIv.setVisibility(View.GONE);
+				}
+				
+				@Override
+				public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+					// TODO Auto-generated method stub
+					mProgressWheel.setVisibility(View.GONE);
+					mProfileCirleIv.setVisibility(View.VISIBLE);
+				}
+				
+				@Override
+				public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
+					// TODO Auto-generated method stub
+					mProgressWheel.setVisibility(View.GONE);
+					mProfileCirleIv.setVisibility(View.VISIBLE);
+				}
+				
+				@Override
+				public void onLoadingCancelled(String arg0, View arg1) {
+					// TODO Auto-generated method stub
+					mProgressWheel.setVisibility(View.GONE);
+					mProfileCirleIv.setVisibility(View.VISIBLE);
+				}
+			});	
+		}
+		
 	}
 	
-	private void setClickListener(){
+	@SuppressLint("NewApi") private void setClickListener(){
 		mUploadAnotherIv.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -189,8 +240,12 @@ public class SetProfileActivity extends AppCompatActivity{
 				// TODO Auto-generated method stub
 				if(!BuildVars.DEBUG_DESIGN){
 					if (Utilities.isInternetConnected()) {
-						if(isValidName && isValidEmail){
-							new AsyncUpdateProfileTask().execute();
+						if(isValid){
+							if (AndroidUtilities.isAboveIceCreamSandWich()) {
+								new AsyncUpdateProfileTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+							} else {
+								new AsyncUpdateProfileTask().execute();
+							}
 						}
 					} else {
 						Utilities.showCrouton(
@@ -269,6 +324,36 @@ public class SetProfileActivity extends AppCompatActivity{
 				}
 			}
 		});
+		
+		mFavouriteQuestionEv.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			@SuppressWarnings("deprecation")
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				// TODO Auto-generated method stub
+				if (hasFocus) {
+					mFavouriteQuestionLayout.setBackgroundDrawable(getResources()
+							.getDrawable(R.drawable.shape_editbox_selected));
+				} else {
+					mFavouriteQuestionLayout.setBackgroundDrawable(getResources()
+							.getDrawable(R.drawable.shape_editbox_normal));
+				}
+			}
+		});
+		
+		mFavouriteAnswerEv.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			@SuppressWarnings("deprecation")
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				// TODO Auto-generated method stub
+				if (hasFocus) {
+					mFavouriteAnswerLayout.setBackgroundDrawable(getResources()
+							.getDrawable(R.drawable.shape_editbox_selected));
+				} else {
+					mFavouriteAnswerLayout.setBackgroundDrawable(getResources()
+							.getDrawable(R.drawable.shape_editbox_normal));
+				}
+			}
+		});
 	}
 	
 	private void setTextWatcher(){
@@ -337,59 +422,137 @@ public class SetProfileActivity extends AppCompatActivity{
 
 			}
 		});
+		
+		mFavouriteQuestionEv.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence mCharsequence, int start,
+					int before, int count) {
+				// TODO Auto-generated method stub
+				validateFavouriteQuestion(mCharsequence);
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence mCharsequence,
+					int start, int count, int after) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable mEditable) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		
+		mFavouriteAnswerEv.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence mCharsequence, int start,
+					int before, int count) {
+				// TODO Auto-generated method stub
+				validateFavouriteAnswer(mCharsequence);
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence mCharsequence,
+					int start, int count, int after) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable mEditable) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 	
 	private void validateName(CharSequence mCharsequence){
+		mNameValidateIv.setImageResource(R.drawable.ic_text_process);
 		if (!TextUtils.isEmpty(mCharsequence.toString())) {
 			Pattern p = Pattern.compile("^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}");
 			Matcher matcher = p.matcher(mCharsequence.toString());
 			if (matcher.matches()) {
 				isValidName =  true;
+				mNameValidateIv.setImageResource(R.drawable.ic_text_correct);
 			}else{
 				isValidName = false;
+				mNameValidateIv.setImageResource(R.drawable.ic_text_incorrect);
 			}
 		}else{
 			isValidName = false;
+			mNameValidateIv.setImageResource(R.drawable.ic_text_incorrect);
 		}
 		setUiOfNextAccordingly();
 	}
 	
 	private void validateEmail(CharSequence mCharsequence){
+		mEmailValidateIv.setImageResource(R.drawable.ic_text_process);
 		if (!TextUtils.isEmpty(mCharsequence.toString())) {
 			if (!android.util.Patterns.EMAIL_ADDRESS.matcher(
 					mCharsequence.toString()).matches()) {
 				isValidEmail = false;
+				mEmailValidateIv.setImageResource(R.drawable.ic_text_incorrect);
 			}else{
 				isValidEmail = true;
+				mEmailValidateIv.setImageResource(R.drawable.ic_text_correct);
 			}
 		}else{
 			isValidEmail = false;
+			mEmailValidateIv.setImageResource(R.drawable.ic_text_incorrect);
 		}
 		setUiOfNextAccordingly();
 	}
 	
 	
 	private void validateEmployeeId(CharSequence mCharsequence){
+		mEmployeeIdIv.setImageResource(R.drawable.ic_text_process);
 		if (!TextUtils.isEmpty(mCharsequence.toString())) {
 			Pattern p = Pattern.compile("[0-9]+");
 			Matcher matcher = p.matcher(mCharsequence.toString());
 			if (matcher.matches()) {
 				isValidEmployeeId =  true;
+				mEmployeeIdIv.setImageResource(R.drawable.ic_text_correct);
 			}else{
 				isValidEmployeeId = false;
+				mEmployeeIdIv.setImageResource(R.drawable.ic_text_incorrect);
 			}
 		}else{
 			isValidEmployeeId = false;
+			mEmployeeIdIv.setImageResource(R.drawable.ic_text_incorrect);
+		}
+		setUiOfNextAccordingly();
+	}
+	
+	private void validateFavouriteQuestion(CharSequence mCharsequence){
+		mFavouriteQuestionIv.setImageResource(R.drawable.ic_text_process);
+		if (!TextUtils.isEmpty(mCharsequence.toString())) {
+			mFavouriteQuestionIv.setImageResource(R.drawable.ic_text_correct);
+		}else{
+			mFavouriteQuestionIv.setImageResource(R.drawable.ic_text_incorrect);
+		}
+		setUiOfNextAccordingly();
+	}
+	
+	private void validateFavouriteAnswer(CharSequence mCharsequence){
+		mFavouriteAnswerIv.setImageResource(R.drawable.ic_text_process);
+		if (!TextUtils.isEmpty(mCharsequence.toString())) {
+			mFavouriteAnswerIv.setImageResource(R.drawable.ic_text_correct);
+		}else{
+			mFavouriteAnswerIv.setImageResource(R.drawable.ic_text_incorrect);
 		}
 		setUiOfNextAccordingly();
 	}
 	
 	@SuppressWarnings("deprecation")
 	private void setUiOfNextAccordingly(){
-		if(isValidName && isValidEmail && isValidEmployeeId){
+		if(isValidName && isValidEmail /*&& isValidEmployeeId*/){
 			mNextBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_button_pressed));
+			isValid = true;
 		}else{
 			mNextBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_button_normal));
+			isValid = false;
 		}
 	}
 	
@@ -452,7 +615,7 @@ public class SetProfileActivity extends AppCompatActivity{
 		try {
 			JSONObject jsonObj = JSONRequestBuilder.getPostUserProfile(mNameEv
 					.getText().toString(), mEmailEv.getText().toString(),
-					mEmployeeIdEv.getText().toString(), mPicturePath);
+					mEmployeeIdEv.getText().toString(), mPicturePath, mFavouriteQuestionEv.getText().toString(), mFavouriteAnswerEv.getText().toString());
 			if(BuildVars.USE_OKHTTP){
 				return RetroFitClient
 						.postJSON(new OkHttpClient(),AppConstants.API.API_UPDATE_USER, jsonObj.toString(), TAG);
@@ -475,6 +638,8 @@ public class SetProfileActivity extends AppCompatActivity{
 			String name = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.name);
 			String emailAddress = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.emailAddress);
 			String employeeId =  mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.employeeId);
+			String mFavouriteQuestion = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.favouriteQuestion);
+			String mFavouriteAnswer = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.favouriteAnswer);
 			if(!TextUtils.isEmpty(mProfileImage)){
 				ApplicationLoader.getPreferences().setUserProfileImageLink(mProfileImage);
 			}
@@ -489,6 +654,15 @@ public class SetProfileActivity extends AppCompatActivity{
 			
 			if(!TextUtils.isEmpty(employeeId)){
 				ApplicationLoader.getPreferences().setUserEmployeeId(employeeId);
+			}
+			
+
+			if(!TextUtils.isEmpty(mFavouriteAnswer)){
+				ApplicationLoader.getPreferences().setUserFavouriteAnswer(mFavouriteAnswer);
+			}
+			
+			if(!TextUtils.isEmpty(mFavouriteQuestion)){
+				ApplicationLoader.getPreferences().setUserFavouriteQuestion(mFavouriteQuestion);
 			}
 			
 			Intent mIntent = new Intent(SetProfileActivity.this, MotherActivity.class);

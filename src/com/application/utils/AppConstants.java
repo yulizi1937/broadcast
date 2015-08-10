@@ -25,7 +25,7 @@ public class AppConstants {
 		public static final MediaType API_CONTENTTYPE = MediaType.parse("application/json; charset=utf-8");
 		// API V2
 		public static final String API_HOST        = "http://54.165.41.77";
-//		public static final String API_HOST        = "http://192.168.0.120";
+//		public static final String API_HOST        = "http://192.168.0.108";
 		public static final String API_CLIENT      = "";
 		public static final String API_VERSION     = "/v2";
 		public static final String API_FOLDER      ="/api/";
@@ -35,18 +35,28 @@ public class AppConstants {
 		public static final String API_LOGIN                = API_URL + "checkUser";
 		public static final String API_VERIFY               = API_URL + "verifyUser";
 		public static final String API_UPDATE_USER          = API_URL + "updateUser";
+		public static final String API_LOGOUT_USER          = API_URL + "appLogOut";
+		public static final String API_APP_VERSION          = API_URL + "checkAppVersion";
+		public static final String API_APP_FEEDBACK         = API_URL + "submitAppFeedback";
+		public static final String API_APP_REPORT           = API_URL + "submitAppReport";
+		public static final String API_APP_SETTINGS         = API_URL + "submitAppSetting";
 		public static final String API_FETCH_PUSH_DATA      = API_URL + "fetchPushData";
 		public static final String API_FETCH_FEED_MOBCAST   = API_URL + "fetchFeedMobcast";
 		public static final String API_FETCH_FEED_TRAINING  = API_URL + "fetchFeedTraining";
+		public static final String API_FETCH_FEED_EVENT     = API_URL + "fetchFeedEvent";
+		public static final String API_FETCH_FEED_AWARD     = API_URL + "fetchFeedAward";
 		public static final String API_FETCH_FEED_ACTION    = API_URL + "fetchFeedAction";
+		public static final String API_SYNC                 = API_URL + "syncMobcastData";
 		public static final String API_UPDATE_REPORT        = API_URL + "updateUserReport";
 		public static final String API_SUBMIT_FEEDBACK      = API_URL + "submitUserFeedback";
+		public static final String API_SUBMIT_QUIZ          = API_URL + "submitUserQuiz";
 	}
 	
 	public interface API_KEY_PARAMETER{
 		public static final String userName                = "mobileNumber";
 		public static final String otp                     = "otp";
 		public static final String deviceType              = "deviceType";
+		public static final String device                  = "device";
 		public static final String deviceMfg               = "deviceMfg";
 		public static final String deviceName              = "deviceName";
 		public static final String regId                   = "regId";
@@ -56,8 +66,10 @@ public class AppConstants {
 		public static final String appVersion              = "appVersion";
 		public static final String deviceIsTablet          = "deviceIsTablet";
 		public static final String success                 = "success";
+		public static final String updateAvailable         = "updateAvailable";
 		public static final String apiKey                  = "apiKey";
 		public static final String errorMessage            = "errorMessage";
+		public static final String successMessage          = "successMessage";
 		public static final String accessToken             = "accessToken";
 		public static final String sortByAsc               = "sortByAsc";
 		public static final String limit                   = "limit";
@@ -66,9 +78,14 @@ public class AppConstants {
 		public static final String emailAddress            = "emailAddress";
 		public static final String profileImage            = "profileImage";
 		public static final String employeeId              = "employeeId";
+		public static final String favouriteQuestion       = "favouriteQuestion";
+		public static final String favouriteAnswer         = "favouriteAnswer";
 		public static final String countryCode             = "countryCode";
 		public static final String category                = "category";
+		public static final String description             = "description";
+		public static final String company                 = "company";
 		public static final String subcategory             = "subcategory";
+		public static final String subCategory             = "subCategory";
 		public static final String action                  = "action";
 		public static final String duration                = "duration";
 		public static final String _id                     = "id";
@@ -160,8 +177,9 @@ public class AppConstants {
 		public static final String trainingQuizId           = "trainingQuizId";
 		public static final String trainingQuizQueId        = "trainingQuizQueId";
 		public static final String trainingQuizQueType      = "trainingQuizQueType";
+		public static final String trainingQuizCorrectAnswer= "trainingQuizCorrectAnswer";
 		public static final String trainingQuizAnswer       = "trainingQuizAnswer";
-		public static final String trainingQuizPoints       = "trainingQuizPoints";
+		public static final String trainingQuizScore        = "trainingQuizScore";
 		public static final String trainingQuizDuration     = "trainingQuizDuration";
 		public static final String trainingQuizQueTitle     = "trainingQuizQueTitle";
 		public static final String trainingQuizOption1      = "trainingQuizOption1";
@@ -171,6 +189,58 @@ public class AppConstants {
 		public static final String trainingQuizOption5      = "trainingQuizOption5";
 		public static final String trainingQuizOption6      = "trainingQuizOption6";
 		public static final String trainingQuizOption7      = "trainingQuizOption7";
+		public static final String trainingQuizTimeTaken    = "trainingQuizTimeTaken";
+		public static final String eventId                  = "eventId";
+		public static final String eventSentDate            = "eventSentDate";
+		public static final String eventSentTime            = "eventSentTime";
+		public static final String eventTitle               = "eventTitle";
+		public static final String eventBy                  = "eventBy";
+		public static final String eventDescription         = "eventDescription";
+		public static final String eventGoingCount          = "eventGoingCount";
+		public static final String eventInvitedCount        = "eventInvitedCount";
+		public static final String eventLikeCount           = "eventLikeCount";
+		public static final String eventReadCount           = "eventReadCount";
+		public static final String eventStartDate           = "eventStartDate";
+		public static final String eventEndDate             = "eventEndDate";
+		public static final String eventLandMark            = "eventLandmark";
+		public static final String eventFromTime            = "eventFromTime";
+		public static final String eventToTime              = "eventToTime";
+		public static final String eventIsRead              = "eventIsRead";
+		public static final String eventIsLiked             = "eventIsLiked";
+		public static final String eventIsGoing             = "eventIsGoing";
+		public static final String eventIsSharing           = "eventIsSharing";
+		public static final String eventCoverLink           = "eventCoverLink";
+		public static final String eventFileSize            = "eventFileSize";
+		public static final String eventIsExpiryDateSet     = "eventIsExpiryDateSet";
+		public static final String eventExpiryDate          = "eventExpiryDate";
+		public static final String eventExpiryTime          = "eventExpiryTime";
+		public static final String eventVenue               = "eventVenue";
+		public static final String eventMap                 = "eventMap";
+		public static final String awardId                  = "awardId";
+		public static final String awardTitle               = "awardTitle";
+		public static final String awardReceiverName        = "awardReceiverName";
+		public static final String awardReceiverEmail       = "awardReceiverEmail";
+		public static final String awardReceiverMobile      = "awardReceiverMobile";
+		public static final String awardDate                = "awardDate";
+		public static final String awardDescription         = "awardDescription";
+		public static final String awardCity                = "awardCity";
+		public static final String awardDepartment          = "awardDepartment";
+		public static final String awardReadCount           = "awardReadCount";
+		public static final String awardLikeCount           = "awardLikeCount";
+		public static final String awardShareCount          = "awardShareCount";
+		public static final String awardCongratulatedCount  = "awardCongratulatedCount";
+		public static final String awardSentDate            = "awardSentDate";
+		public static final String awardSentTime            = "awardSentTime";
+		public static final String awardIsRead              = "awardIsRead";
+		public static final String awardIsLike              = "awardIsLiked";
+		public static final String awardIsCongratulated     = "awardIsCongratulated";
+		public static final String awardIsSharing           = "awardIsSharing";
+		public static final String awardCoverLink           = "awardCoverLink";
+		public static final String awardCoverThumbnail      = "awardCoverThumbnail";
+		public static final String awardFileSize       = "awardFileSize";
+		public static final String awardIsExpiryDateSet     = "awardIsExpiryDateSet";
+		public static final String awardExpiryDate          = "awardExpiryDate";
+		public static final String awardExpiryTime          = "awardExpiryTime";
 		
 	}
 	
@@ -204,6 +274,7 @@ public class AppConstants {
 	public interface FOLDER{
 		public static final String ROOT_FOLDER = "/.con/.mobcast";
 		public static final String BUILD_FOLDER = Environment.getExternalStorageDirectory().getPath() + ROOT_FOLDER + "/.mobcastvanilla/";
+		public static final String BUILD_FOLDER_FILE_MANAGER = ROOT_FOLDER + "/.mobcastvanilla/";
 		public static final String LOG_FOLDER = BUILD_FOLDER + "logs/" ;
 		public static final String IMAGE_FOLDER = BUILD_FOLDER + "image/" ;
 		public static final String AUDIO_FOLDER = BUILD_FOLDER + "audio/" ;
@@ -243,6 +314,9 @@ public class AppConstants {
 		public static final int FEEDBACK  = 10;
 		public static final int QUIZ      = 11;
 		public static final int PROFILE   = 12;
+		public static final int EVENT     = 13;
+		public static final int AWARD     = 14;
+		public static final int RELOGIN   = 15;
 	}
 	
 	public interface TRAINING{
@@ -257,7 +331,7 @@ public class AppConstants {
 		public static final String PPT             = "ppt";//8
 		public static final String XLS             = "xls";//9
 		public static final String QUIZ            = "quiz";//10
-		public static final String STREAM          = "stream";//11
+		public static final String STREAM          = "livestreamyoutube";//11
 	}
 	
 	public interface INTENT{
@@ -275,12 +349,18 @@ public class AppConstants {
 		public static final String USERNAME         = "userName";
 		public static final String OTP              = "otp";
 		public static final String MOBCAST          = "mobcast";
+		public static final String SYNC             = "sync";
 		public static final String CHAT             = "chat";
 		public static final String TRAINING         = "training";
 		public static final String AWARD            = "award";
 		public static final String EVENT            = "event";
+		public static final String RELOGIN          = "relogin";
 		public static final String OBJECT           = "object";
 		public static final String POSITION         = "position";
+		public static final String POINTS           = "points";
+		public static final String TIMETAKEN        = "timeTaken";
+		public static final String QUIZINCORRECT    = "quizInCorrect";
+		public static final String LOGOUT           = "logOut";
 		public static final String ID               = "id";
 		public static final String TYPE             = "type";
 		public static final String LINK             = "link";
@@ -306,6 +386,11 @@ public class AppConstants {
 	}
 	
 	public static final String deviceType = "android";
+	
+	public static final String mStoreLink = "";
+	
+	public static final String decrypted = "_decrypted";
+	public static final String encrypted = "_encrypted";
 
 	public static final String GREEN = "#006400";
 	public static final String BLUE = "#01AFD2";

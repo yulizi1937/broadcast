@@ -64,15 +64,6 @@ public class SimpleRecyclerItemActivity extends SwipeBackBaseActivity {
 		setUiListener();
 	}
 
-	@SuppressLint("NewApi")
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_event_detail, menu);
-		return true;
-	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub

@@ -141,7 +141,7 @@ public class SplashActivity extends AppCompatActivity {
 					finish();
 				}else{
 					Intent mIntent = new Intent(SplashActivity.this,
-							TutorialActivity.class);
+							LoginActivity.class);
 					startActivity(mIntent);
 					AndroidUtilities.enterWindowAnimation(SplashActivity.this);
 					finish();

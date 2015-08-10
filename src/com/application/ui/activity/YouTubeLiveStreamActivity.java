@@ -241,6 +241,7 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 						getDataFromDBForMobcast(mCursor);
 					}else{
 						mCursor = getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, null, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId}, DBConstant.Training_Columns.COLUMN_TRAINING_ID + " DESC");
+						getDataFromDBForTraining(mCursor);
 					}
 					if(mCursor!=null){
 						mCursor.close();
@@ -272,6 +273,36 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 			if(mCursorFileInfo!=null && mCursorFileInfo.getCount() > 0){
 				mCursorFileInfo.moveToFirst();
 				mContentLiveStreamURL = mCursorFileInfo.getString(mCursorFileInfo.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_LIVE_STREAM_YOUTUBE));
+			}
+			if(mCursorFileInfo!=null){
+				mCursorFileInfo.close();
+			}
+			
+			isShareOptionEnable = mContentIsSharing;
+			setIntentDataToUi();
+		}
+	}
+	
+	private void getDataFromDBForTraining(Cursor mCursor){
+		if(mCursor!=null && mCursor.getCount() > 0){
+			mCursor.moveToFirst();
+			mContentTitle = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE));
+			mContentDesc = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DESC));
+			mContentIsLike = Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE)));
+			mContentIsSharing =  Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARING)));
+			mContentLikeCount = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO));
+			mContentViewCount = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT));
+			mContentLink = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LINK));
+			mContentBy = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_BY));
+			mContentDate = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DATE));
+			mContentTime = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TIME));
+			mContentIsRead = Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ)));
+			
+			Cursor mCursorFileInfo = getContentResolver().query(DBConstant.Training_File_Columns.CONTENT_URI, null, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId}, null);
+			
+			if(mCursorFileInfo!=null && mCursorFileInfo.getCount() > 0){
+				mCursorFileInfo.moveToFirst();
+				mContentLiveStreamURL = mCursorFileInfo.getString(mCursorFileInfo.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_LIVE_STREAM_YOUTUBE));
 			}
 			if(mCursorFileInfo!=null){
 				mCursorFileInfo.close();

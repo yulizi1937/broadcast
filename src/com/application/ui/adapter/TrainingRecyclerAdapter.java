@@ -25,6 +25,7 @@ import android.net.Uri;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,9 +33,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.application.beans.Training;
+import com.application.ui.adapter.MobcastRecyclerAdapter.OnItemLongClickListener;
 import com.application.ui.view.FlexibleDividerDecoration;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AppConstants;
+import com.application.utils.ApplicationLoader;
 import com.application.utils.FileLog;
 import com.application.utils.Utilities;
 import com.mobcast.R;
@@ -63,14 +66,16 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     private ArrayList<Training> mArrayListTraining;
     private View mHeaderView;
     public OnItemClickListener mItemClickListener;
+    public OnItemLongClickListener mItemLongClickListener;
     private Context mContext;
     private ImageLoader mImageLoader;
 
     public TrainingRecyclerAdapter(Context context, ArrayList<Training> mArrayListTraining, View headerView) {
         mInflater = LayoutInflater.from(context);
+        mContext = context;
         this.mArrayListTraining = mArrayListTraining;
         mHeaderView = headerView;
-        this.mContext = mContext;
+        mImageLoader = ApplicationLoader.getUILImageLoader();
     }
 
     @Override
@@ -184,7 +189,9 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 			processXlsViewHolder(viewHolder, position);
 		} else if (viewHolder instanceof QuizViewHolder) {
 			processQuizViewHolder(viewHolder, position);
-		} else if (viewHolder instanceof InteractiveViewHolder) {
+		} else if (viewHolder instanceof YoutubeLiveStreamViewHolder) {
+			processLiveStreamViewHolder(viewHolder, position);
+		}else if (viewHolder instanceof InteractiveViewHolder) {
 		}
     }
     
@@ -196,6 +203,15 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 			final OnItemClickListener mItemClickListener) {
 		this.mItemClickListener = mItemClickListener;
 	}
+	
+	public interface OnItemLongClickListener {
+		public void onItemLongClick(View view, int position);
+	}
+
+	public void setOnItemLongClickListener(
+			final OnItemLongClickListener mItemLongClickListener) {
+		this.mItemLongClickListener = mItemLongClickListener;
+	}
 
     static class HeaderViewHolder extends RecyclerView.ViewHolder {
         public HeaderViewHolder(View view) {
@@ -204,7 +220,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     
-    public class TextViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class TextViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
     	FrameLayout mTrainingTextRootLayout;
     	
     	View mTrainingTextReadView;
@@ -233,6 +249,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTrainingTextSummaryTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingTextSummaryTv);
             
             mTrainingTextRootLayout.setOnClickListener(this);
+            mTrainingTextRootLayout.setOnLongClickListener(this);
         }
         
         public void onClick(View v) {
@@ -240,12 +257,24 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+        
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
     }
     
     
     
 	public class ImageViewHolder extends RecyclerView.ViewHolder implements
-			View.OnClickListener {
+			View.OnClickListener, View.OnLongClickListener {
     	FrameLayout mTrainingImageRootLayout;
     	
     	View mTrainingImageReadView;
@@ -263,6 +292,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         
         public ImageViewHolder(View view) {
             super(view);
+            Log.i(TAG,"ImageViewHolder");
             mTrainingImageRootLayout = (FrameLayout)view.findViewById(R.id.itemRecyclerTrainingImageRootLayout);
             
             mTrainingImageReadView = (View)view.findViewById(R.id.itemRecyclerTrainingImageReadView);
@@ -279,7 +309,10 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             
             mTrainingImageProgressWheel = (ProgressWheel)view.findViewById(R.id.itemRecyclerTrainingImageLoadingProgress);
             
+            mTrainingImageReadView.setVisibility(View.INVISIBLE);
+            
             mTrainingImageRootLayout.setOnClickListener(this);
+            mTrainingImageRootLayout.setOnLongClickListener(this);
             
         }
         public void onClick(View v) {
@@ -287,10 +320,22 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+        
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
     }
     
 	public class VideoViewHolder extends RecyclerView.ViewHolder implements
-			View.OnClickListener {
+			View.OnClickListener, View.OnLongClickListener {
     	FrameLayout mTrainingVideoRootLayout;
     	
     	View mTrainingVideoReadView;
@@ -327,6 +372,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTrainingVideoLoadingProgress = (ProgressWheel)view.findViewById(R.id.itemRecyclerTrainingVideoLoadingProgress);
             
             mTrainingVideoRootLayout.setOnClickListener(this);
+            mTrainingVideoRootLayout.setOnLongClickListener(this);
         }
         
         public void onClick(View v) {
@@ -334,9 +380,21 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+        
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
     }
     
-    public class AudioViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class AudioViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
     	FrameLayout mTrainingAudioRootLayout;
     	
     	View mTrainingAudioReadView;
@@ -372,15 +430,28 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTrainingAudioSummaryTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingAudioSummaryTv);
             
             mTrainingAudioRootLayout.setOnClickListener(this);
+            mTrainingAudioRootLayout.setOnLongClickListener(this);
         }
         public void onClick(View v) {
 			if (mItemClickListener != null) {
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+        
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
     }
     
-    public  class PdfViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public  class PdfViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
     	FrameLayout mTrainingPdfRootLayout;
     	
     	View mTrainingPdfReadView;
@@ -414,15 +485,28 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTrainingPdfViewFileNameTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingPdfDetailFileInfoNameTv);
             
             mTrainingPdfRootLayout.setOnClickListener(this);
+            mTrainingPdfRootLayout.setOnLongClickListener(this);
         }
         public void onClick(View v) {
 			if (mItemClickListener != null) {
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+        
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
     }
     
-    public class DocViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class DocViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
     	FrameLayout mTrainingDocRootLayout;
     	
     	View mTrainingDocReadView;
@@ -456,6 +540,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTrainingDocViewFileNameTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingDocDetailFileInfoNameTv);
             
             mTrainingDocRootLayout.setOnClickListener(this);
+            mTrainingDocRootLayout.setOnLongClickListener(this);
         }
         
         public void onClick(View v) {
@@ -463,9 +548,21 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+        
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
     }
     
-   public class PptViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+   public class PptViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
     	FrameLayout mTrainingPptRootLayout;
     	
     	View mTrainingPptReadView;
@@ -499,15 +596,28 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTrainingPptViewFileNameTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingPptDetailFileInfoNameTv);
             
             mTrainingPptRootLayout.setOnClickListener(this);
+            mTrainingPptRootLayout.setOnLongClickListener(this);
         }
         public void onClick(View v) {
 			if (mItemClickListener != null) {
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+        
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
     }
     
-    public class XlsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class XlsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
     	FrameLayout mTrainingXlsRootLayout;
     	
     	View mTrainingXlsReadView;
@@ -541,6 +651,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTrainingXlsViewFileNameTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingXlsDetailFileInfoNameTv);
             
             mTrainingXlsRootLayout.setOnClickListener(this);
+            mTrainingXlsRootLayout.setOnLongClickListener(this);
         }
         
         public void onClick(View v) {
@@ -548,10 +659,22 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+        
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
     }
     
     
-    public class QuizViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class QuizViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
     	FrameLayout mTrainingQuizRootLayout;
     	
     	View mTrainingQuizReadView;
@@ -583,6 +706,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTrainingQuizDetailScoreTv= (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingQuizDetailPointsTv);
             
             mTrainingQuizRootLayout.setOnClickListener(this);
+            mTrainingQuizRootLayout.setOnLongClickListener(this);
         }
         
         public void onClick(View v) {
@@ -590,9 +714,21 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+        
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
     }
     
-    public class InteractiveViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class InteractiveViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
     	FrameLayout mTrainingInteractiveRootLayout;
     	
     	View mTrainingInteractiveReadView;
@@ -618,6 +754,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTrainingInteractiveDetailLinkTv= (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingInteractiveDetailLinkTv);
             
             mTrainingInteractiveRootLayout.setOnClickListener(this);
+            mTrainingInteractiveRootLayout.setOnLongClickListener(this);
         }
         
         public void onClick(View v) {
@@ -625,9 +762,21 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+        
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
     }
     
-	public class YoutubeLiveStreamViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+	public class YoutubeLiveStreamViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 		FrameLayout mMobcastLiveRootLayout;
 
 		View mMobcastLiveReadView;
@@ -664,12 +813,25 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 			mMobcastLiveReadView.setVisibility(View.INVISIBLE);
     
 			mMobcastLiveRootLayout.setOnClickListener(this);
+			mMobcastLiveRootLayout.setOnLongClickListener(this);
 		}
 
 		public void onClick(View v) {
 			if (mItemClickListener != null) {
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
+		}
+		
+		/* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
 		}
 	}
 	
@@ -887,6 +1049,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 			
 			final String mThumbnailPath = mObj.getmFileInfo().get(0).getmThumbnailPath();
 			if(Utilities.checkIfFileExists(mThumbnailPath)){
+//				mImageLoader.displayImage("file:///"+mThumbnailPath, ((ImageViewHolder)viewHolder).mTrainingImageMainImageViewIv);
 				((ImageViewHolder)viewHolder).mTrainingImageMainImageViewIv.setImageURI(Uri.parse(mThumbnailPath));
 			}else{
 				mImageLoader.displayImage(mObj.getmFileInfo().get(0).getmThumbnailLink(), ((ImageViewHolder)viewHolder).mTrainingImageMainImageViewIv, new ImageLoadingListener() {
@@ -1157,6 +1320,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 				((QuizViewHolder)viewHolder).mTrainingQuizRootLayout.setBackgroundResource(R.color.white);
 			}
 			((QuizViewHolder)viewHolder).mTrainingQuizDetailQuestionCountTv.setText(mObj.getmFileInfo().get(0).getmPages());
+			((QuizViewHolder)viewHolder).mTrainingQuizDetailTimerTv.setText(mObj.getmFileInfo().get(0).getmDuration());
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

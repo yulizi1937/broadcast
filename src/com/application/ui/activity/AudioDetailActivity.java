@@ -150,13 +150,13 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-//		decryptFileOnResume();
+		decryptFileOnResume();
 	}
 
 	@Override
 	protected void onPause() {
 		cleanUp();
-//		deleteDecryptedFile();
+		deleteDecryptedFile();
 		super.onPause();
 	}
 
@@ -869,8 +869,8 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	
 	private void decryptFileOnResume(){
 		try{
-			if(mContentFilePath!=null){
-				mContentFilePath = mContentFilePath.replace("_decrypted", "");
+			if(Utilities.isContainsDecrypted(mContentFilePath)){
+				mContentFilePath = mContentFilePath.replace(AppConstants.decrypted, "");
 				mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
 			}
 		}catch(Exception e){
@@ -880,11 +880,9 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	
 	private void deleteDecryptedFile(){
 		try{
-			if(mContentFilePath!=null){
-				if(mContentFilePath.contains("_decrypted")){
+			if(Utilities.isContainsDecrypted(mContentFilePath)){
 					new File(mContentFilePath).delete();
-				}	
-			}
+			}	
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

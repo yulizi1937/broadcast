@@ -11,8 +11,6 @@ package com.application.utils;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.http.entity.mime.MinimalField;
-
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
@@ -21,14 +19,13 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 
 import com.application.crashreporting.ExceptionHandler;
-import com.application.sqlite.DBConstant;
+import com.application.receiver.SyncAlarmReceiver;
 import com.application.ui.calligraphy.CalligraphyConfig;
 import com.application.ui.service.AnyDoNotificationService;
 import com.facebook.stetho.Stetho;
@@ -131,6 +128,18 @@ public class ApplicationLoader extends Application {
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
 				.setDefaultFontPath("fonts/RobotoCondensedRegular.ttf")
 				.setFontAttrId(R.attr.fontPath).build());
+	}
+	
+	public static void setSyncServiceAlarm() {
+		SyncAlarmReceiver syncAlarmReceiver = new SyncAlarmReceiver();
+		syncAlarmReceiver.setAlarm(getApplication().getApplicationContext());
+		ApplicationLoader.getPreferences().setSyncAlarmService(true);
+	}
+	
+	public static void cancelSyncServiceAlarm() {
+		SyncAlarmReceiver syncAlarmReceiver = new SyncAlarmReceiver();
+		syncAlarmReceiver.cancelAlarm(getApplication().getApplicationContext());
+		ApplicationLoader.getPreferences().setSyncAlarmService(false);
 	}
 	
 	@SuppressWarnings("deprecation")

@@ -39,14 +39,15 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/edit_profile_framelayout_inner_height"
-                        android:background="@color/toolbar_background" >
+                        android:background="@color/toolbar_background"
+                        android:paddingTop="4dp" >
 
                         <com.application.ui.view.CircleImageView
                             android:id="@+id/activitySetProfileCircleImageView"
                             android:layout_width="@dimen/edit_profile_circleimageview_height"
                             android:layout_height="@dimen/edit_profile_circleimageview_height"
                             android:layout_gravity="top|center"
-                            android:src="@drawable/sample_picture_event_cover"
+                            android:src="@drawable/ic_sample_picture"
                             android:visibility="visible"
                             circleimageview:border_color="@android:color/white"
                             circleimageview:border_width="2dp" />
@@ -85,43 +86,6 @@
                 </FrameLayout>
 
                 <LinearLayout
-                    android:id="@+id/activitySetProfileEmailLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/login_editbox_height"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/shape_editbox_normal"
-                    android:clickable="true"
-                    android:orientation="horizontal"
-                    android:padding="1dp" >
-
-                    <android.support.v7.widget.AppCompatEditText
-                        android:id="@+id/activitySetProfileEmailEv"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="start|center"
-                        android:layout_weight="9"
-                        android:background="@android:color/white"
-                        android:gravity="start|center"
-                        android:hint="@string/hint_email_id"
-                        android:inputType="textEmailAddress"
-                        android:paddingEnd="1dp"
-                        android:paddingLeft="4dp"
-                        android:paddingRight="1dp"
-                        android:paddingStart="4dp"
-                        android:textSize="@dimen/login_edittext_size" />
-
-                    <ImageView
-                        android:id="@+id/activitySetProfileEmailValidateIv"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@android:color/white"
-                        android:contentDescription="@string/desc_activity_login_validation" />
-                </LinearLayout>
-
-                <LinearLayout
                     android:id="@+id/activitySetProfileNameLayout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/login_editbox_height"
@@ -155,7 +119,46 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@android:color/white"
-                        android:contentDescription="@string/desc_activity_login_validation" />
+                        android:contentDescription="@string/desc_activity_login_validation"
+                        android:scaleType="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/activitySetProfileEmailLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/login_editbox_height"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_editbox_normal"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:padding="1dp" >
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/activitySetProfileEmailEv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start|center"
+                        android:layout_weight="9"
+                        android:background="@android:color/white"
+                        android:gravity="start|center"
+                        android:hint="@string/hint_email_id"
+                        android:inputType="textEmailAddress"
+                        android:paddingEnd="1dp"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="1dp"
+                        android:paddingStart="4dp"
+                        android:textSize="@dimen/login_edittext_size" />
+
+                    <ImageView
+                        android:id="@+id/activitySetProfileEmailValidateIv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/white"
+                        android:contentDescription="@string/desc_activity_login_validation"
+                        android:scaleType="center" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -179,7 +182,7 @@
                         android:background="@android:color/white"
                         android:gravity="start|center"
                         android:hint="@string/hint_employee_id"
-                        android:inputType="phone"
+                        android:inputType="text"
                         android:paddingEnd="1dp"
                         android:paddingLeft="4dp"
                         android:paddingRight="1dp"
@@ -192,7 +195,86 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@android:color/white"
-                        android:contentDescription="@string/desc_activity_login_validation" />
+                        android:contentDescription="@string/desc_activity_login_validation"
+                        android:scaleType="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/activitySetProfileFavouriteQuestionLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/login_editbox_height"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_editbox_normal"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:padding="1dp"
+                    android:visibility="visible" >
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/activitySetProfileFavouriteQuestionEv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start|center"
+                        android:layout_weight="9"
+                        android:background="@android:color/white"
+                        android:gravity="start|center"
+                        android:hint="@string/activity_edit_profile_question"
+                        android:inputType="text"
+                        android:paddingEnd="1dp"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="1dp"
+                        android:paddingStart="4dp"
+                        android:textSize="@dimen/login_edittext_size" />
+
+                    <ImageView
+                        android:id="@+id/activitySetProfileFavouriteQuestionValidateIv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/white"
+                        android:contentDescription="@string/desc_activity_login_validation"
+                        android:scaleType="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/activitySetProfileFavouriteAnswerLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/login_editbox_height"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_editbox_normal"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:padding="1dp"
+                    android:visibility="visible" >
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/activitySetProfileFavouriteAnswerEv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start|center"
+                        android:layout_weight="9"
+                        android:background="@android:color/white"
+                        android:gravity="start|center"
+                        android:hint="@string/activity_edit_profile_answer"
+                        android:inputType="text"
+                        android:paddingEnd="1dp"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="1dp"
+                        android:paddingStart="4dp"
+                        android:textSize="@dimen/login_edittext_size" />
+
+                    <ImageView
+                        android:id="@+id/activitySetProfileFavouriteAnswerValidateIv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/white"
+                        android:contentDescription="@string/desc_activity_login_validation"
+                        android:scaleType="center" />
                 </LinearLayout>
 
                 <android.support.v7.widget.AppCompatButton

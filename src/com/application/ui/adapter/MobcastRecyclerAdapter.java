@@ -64,6 +64,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private ArrayList<Mobcast> mArrayListMobcast;
     private View mHeaderView;
     public OnItemClickListener mItemClickListener;
+    public OnItemLongClickListener mItemLongClickListener;
     private Context mContext;
     private ImageLoader mImageLoader;
 
@@ -202,6 +203,15 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			final OnItemClickListener mItemClickListener) {
 		this.mItemClickListener = mItemClickListener;
 	}
+	
+	public interface OnItemLongClickListener {
+		public void onItemLongClick(View view, int position);
+	}
+
+	public void setOnItemLongClickListener(
+			final OnItemLongClickListener mItemLongClickListener) {
+		this.mItemLongClickListener = mItemLongClickListener;
+	}
 
     static class HeaderViewHolder extends RecyclerView.ViewHolder {
         public HeaderViewHolder(View view) {
@@ -210,7 +220,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     
-    public class TextViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class TextViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
     	FrameLayout mMobcastTextRootLayout;
     	
     	View mMobcastTextReadView;
@@ -241,6 +251,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastTextReadView.setVisibility(View.INVISIBLE);
             
             mMobcastTextRootLayout.setOnClickListener(this);
+            mMobcastTextRootLayout.setOnLongClickListener(this);
         }
         
         public void onClick(View v) {
@@ -248,12 +259,23 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+
+		/* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
     }
     
     
     
-	public class ImageViewHolder extends RecyclerView.ViewHolder implements
-			View.OnClickListener {
+	public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
     	FrameLayout mMobcastImageRootLayout;
     	
     	View mMobcastImageReadView;
@@ -286,9 +308,10 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastImageLinkTv = (ImageView) view.findViewById(R.id.itemRecyclerMobcastImageLinkTv);
             
             mMobcastImageProgressWheel = (ProgressWheel)view.findViewById(R.id.itemRecyclerMobcastImageLoadingProgress);
-            mMobcastImageReadView.setVisibility(View.VISIBLE);
+            mMobcastImageReadView.setVisibility(View.INVISIBLE);
             
             mMobcastImageRootLayout.setOnClickListener(this);
+            mMobcastImageRootLayout.setOnLongClickListener(this);
             
         }
         public void onClick(View v) {
@@ -296,10 +319,21 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+        
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
     }
     
-	public class VideoViewHolder extends RecyclerView.ViewHolder implements
-			View.OnClickListener {
+	public class VideoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
     	FrameLayout mMobcastVideoRootLayout;
     	
     	View mMobcastVideoReadView;
@@ -339,6 +373,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastVideoReadView.setVisibility(View.INVISIBLE);
             
             mMobcastVideoRootLayout.setOnClickListener(this);
+            mMobcastVideoRootLayout.setOnLongClickListener(this);
         }
         
         public void onClick(View v) {
@@ -346,9 +381,20 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
     }
 	
-	public class YoutubeLiveStreamViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+	public class YoutubeLiveStreamViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 		FrameLayout mMobcastLiveRootLayout;
 
 		View mMobcastLiveReadView;
@@ -385,6 +431,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			mMobcastLiveReadView.setVisibility(View.INVISIBLE);
     
 			mMobcastLiveRootLayout.setOnClickListener(this);
+			mMobcastLiveRootLayout.setOnLongClickListener(this);
 		}
 
 		public void onClick(View v) {
@@ -392,9 +439,21 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+		
+		/* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
 	}
     
-    public class AudioViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class AudioViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
     	FrameLayout mMobcastAudioRootLayout;
     	
     	View mMobcastAudioReadView;
@@ -432,15 +491,28 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastAudioReadView.setVisibility(View.INVISIBLE);
             
             mMobcastAudioRootLayout.setOnClickListener(this);
+            mMobcastAudioRootLayout.setOnLongClickListener(this);
         }
         public void onClick(View v) {
 			if (mItemClickListener != null) {
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+        
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
     }
     
-    public  class PdfViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public  class PdfViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
     	FrameLayout mMobcastPdfRootLayout;
     	
     	View mMobcastPdfReadView;
@@ -476,15 +548,28 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastPdfReadView.setVisibility(View.INVISIBLE);
             
             mMobcastPdfRootLayout.setOnClickListener(this);
+            mMobcastPdfRootLayout.setOnLongClickListener(this);
         }
         public void onClick(View v) {
 			if (mItemClickListener != null) {
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+        
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
     }
     
-    public class DocViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class DocViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
     	FrameLayout mMobcastDocRootLayout;
     	
     	View mMobcastDocReadView;
@@ -520,6 +605,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastDocReadView.setVisibility(View.INVISIBLE);
             
             mMobcastDocRootLayout.setOnClickListener(this);
+            mMobcastDocRootLayout.setOnLongClickListener(this);
         }
         
         public void onClick(View v) {
@@ -527,9 +613,21 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+        
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
     }
     
-   public class PptViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+   public class PptViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
     	FrameLayout mMobcastPptRootLayout;
     	
     	View mMobcastPptReadView;
@@ -565,15 +663,28 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastPptReadView.setVisibility(View.INVISIBLE);
             
             mMobcastPptRootLayout.setOnClickListener(this);
+            mMobcastPptRootLayout.setOnLongClickListener(this);
         }
         public void onClick(View v) {
 			if (mItemClickListener != null) {
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+        
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
     }
     
-    public class XlsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class XlsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
     	FrameLayout mMobcastXlsRootLayout;
     	
     	View mMobcastXlsReadView;
@@ -609,6 +720,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastXlsReadView.setVisibility(View.INVISIBLE);
             
             mMobcastXlsRootLayout.setOnClickListener(this);
+            mMobcastXlsRootLayout.setOnLongClickListener(this);
         }
         
         public void onClick(View v) {
@@ -616,10 +728,22 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
+        
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
+		}
     }
     
     
-    public class FeedbackViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class FeedbackViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
     	FrameLayout mMobcastFeedbackRootLayout;
     	
     	View mMobcastFeedbackReadView;
@@ -651,12 +775,25 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastFeedbackReadView.setVisibility(View.INVISIBLE);
             
             mMobcastFeedbackRootLayout.setOnClickListener(this);
+            mMobcastFeedbackRootLayout.setOnLongClickListener(this);
         }
         
         public void onClick(View v) {
 			if (mItemClickListener != null) {
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
+		}
+        
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
 		}
     }
     
@@ -669,7 +806,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 		}
 	}
     
-    public class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
     	FrameLayout mMobcastNewsRootLayout;
     	
     	View mMobcastNewsReadView;
@@ -697,12 +834,25 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mMobcastNewsReadView.setVisibility(View.INVISIBLE);
             
             mMobcastNewsRootLayout.setOnClickListener(this);
+            mMobcastNewsRootLayout.setOnLongClickListener(this);
         }
         
         public void onClick(View v) {
 			if (mItemClickListener != null) {
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
+		}
+        
+        /* (non-Javadoc)
+		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
+		 */
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			if (mItemLongClickListener != null) {
+				mItemLongClickListener.onItemLongClick(v, getLayoutPosition());
+			}
+			return true;
 		}
     }
 
@@ -1002,13 +1152,13 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			((PdfViewHolder)viewHolder).mMobcastPdfViewCountTv.setText(mObj.getmViewCount());
 			((PdfViewHolder)viewHolder).mMobcastPdfLikeCountTv.setText(mObj.getmLikeCount());
 			if(!mObj.isRead()){
-				((PdfViewHolder)viewHolder).mMobcastPdfIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_ppt_focused));
+				((PdfViewHolder)viewHolder).mMobcastPdfIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_pdf_focused));
 				((PdfViewHolder)viewHolder).mMobcastPdfIndicatorIv.setBackgroundColor(mContext.getResources().getColor(R.color.unread_background));
 				((PdfViewHolder)viewHolder).mMobcastPdfTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
 				((PdfViewHolder)viewHolder).mMobcastPdfReadView.setVisibility(View.VISIBLE);
 				((PdfViewHolder)viewHolder).mMobcastPdfRootLayout.setBackgroundResource(R.color.unread_background);
 			}else{
-				((PdfViewHolder)viewHolder).mMobcastPdfIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_ppt_normal));
+				((PdfViewHolder)viewHolder).mMobcastPdfIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_pdf_normal));
 				((PdfViewHolder)viewHolder).mMobcastPdfIndicatorIv.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
 				((PdfViewHolder)viewHolder).mMobcastPdfTitleTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
 				((PdfViewHolder)viewHolder).mMobcastPdfReadView.setVisibility(View.GONE);

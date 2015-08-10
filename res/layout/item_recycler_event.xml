@@ -209,11 +209,11 @@
                     android:gravity="center" >
 
                     <ImageView
+                        android:id="@+id/itemRecyclerEventDetailIsGoingIv"
                         android:layout_width="@dimen/item_recycler_mobcast_feedback_view_detail_image_width"
                         android:layout_height="@dimen/item_recycler_mobcast_feedback_view_detail_image_height"
                         android:layout_marginLeft="@dimen/item_recycler_mobcast_feedback_view_detail_image_margin_left"
                         android:layout_marginTop="@dimen/item_recycler_mobcast_feedback_view_detail_image_margin_top"
-                        android:background="@drawable/ic_event_accepted"
                         android:scaleType="centerInside"
                         tools:ignore="ContentDescription" />
 

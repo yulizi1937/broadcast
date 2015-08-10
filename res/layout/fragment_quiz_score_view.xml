@@ -35,7 +35,7 @@
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/fragmentQuizScoreQuestionTitleTv"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/quiz_question_number_height"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginTop="8dp"
         android:gravity="center"
@@ -46,7 +46,7 @@
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/quiz_question_number_height"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginTop="8dp"
         android:gravity="center"
@@ -57,7 +57,7 @@
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/fragmentQuizScoreCorrectAnswerTv"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/quiz_question_number_height"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginTop="8dp"
         android:gravity="center"

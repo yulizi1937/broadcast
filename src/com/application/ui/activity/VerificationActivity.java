@@ -6,10 +6,13 @@ package com.application.ui.activity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -31,6 +34,7 @@ import android.widget.TextView;
 import com.application.sms.Sms;
 import com.application.sms.SmsListener;
 import com.application.sms.SmsRadar;
+import com.application.ui.activity.LoginActivity.AsyncLoginTask;
 import com.application.ui.calligraphy.CalligraphyContextWrapper;
 import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.MobcastProgressDialog;
@@ -344,7 +348,7 @@ public class VerificationActivity extends AppCompatActivity {
 		});
 	}
 
-	private void setClickListener() {
+	@SuppressLint("NewApi") private void setClickListener() {
 		mNextBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -358,7 +362,11 @@ public class VerificationActivity extends AppCompatActivity {
 							&& !TextUtils.isEmpty(mVerificationCode4.getText()
 									.toString())) {
 						if (Utilities.isInternetConnected()) {
-							new AsyncVerifyTask().execute();
+							if (AndroidUtilities.isAboveIceCreamSandWich()) {
+								new AsyncVerifyTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+							} else {
+								new AsyncVerifyTask().execute();
+							}
 						} else {
 							Utilities.showCrouton(
 									VerificationActivity.this,
@@ -479,6 +487,8 @@ public class VerificationActivity extends AppCompatActivity {
 			String emailAddress = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.emailAddress);
 			String employeeId =  mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.employeeId);
 			String mProfileImage = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.profileImage);
+			String mFavouriteQuestion = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.favouriteQuestion);
+			String mFavouriteAnswer = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.favouriteAnswer);
 			
 			if(!TextUtils.isEmpty(name)){
 				ApplicationLoader.getPreferences().setUserDisplayName(name);
@@ -494,6 +504,18 @@ public class VerificationActivity extends AppCompatActivity {
 			
 			if(!TextUtils.isEmpty(mProfileImage)){
 				ApplicationLoader.getPreferences().setUserProfileImageLink(mProfileImage);
+			}
+			
+			if(!TextUtils.isEmpty(mFavouriteAnswer)){
+				ApplicationLoader.getPreferences().setUserFavouriteAnswer(mFavouriteAnswer);
+			}
+			
+			if(!TextUtils.isEmpty(mFavouriteQuestion)){
+				ApplicationLoader.getPreferences().setUserFavouriteQuestion(mFavouriteQuestion);
+			}
+			
+			if(BuildVars.IS_AUTOSYNC){
+				ApplicationLoader.setSyncServiceAlarm();
 			}
 			
 			Intent mIntent = new Intent(VerificationActivity.this, SetProfileActivity.class);

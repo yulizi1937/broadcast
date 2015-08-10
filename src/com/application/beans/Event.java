@@ -11,111 +11,144 @@ import android.os.Parcelable;
  * 
  */
 public class Event implements Parcelable {
-	private String mEventId;
-	private String mEventTitle;
-	private String mEventViewCount;
-	private String mEventBy;
-	private String mEventDate;
-	private String mEventTime;
-	private String mEventSendDate;
-	private String mEventSendTime;
-	private String mEventSummary;
+	private String mId;
+	private String mTitle;
+	private String mViewCount;
+	private String mLikeCount;
+	private String mGoingCount;
+	private String mBy;
+	private String mStartDate;
+	private String mStartTime;
+	private String mReceivedDate;
+	private String mReceivedTime;
+	private String mDaysLeft;
+	private String mFileType;
 	private boolean isRead;
 	private boolean isGoingToAttend;
+	private boolean isLike;
 
 	public Event() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Event(String mEventId, String mEventTitle, String mEventViewCount,
-			String mEventBy, String mEventDate, String mEventTime,
-			String mEventSendDate, String mEventSendTime, String mEventSummary,
-			boolean isRead, boolean isGoingToAttend) {
+	public Event(String mId, String mTitle, String mViewCount,
+			String mLikeCount, String mGoingCount, String mBy,
+			String mStartDate, String mStartTime, String mReceivedDate,
+			String mReceivedTime, String mDaysLeft, String mFileType,
+			boolean isRead, boolean isGoingToAttend, boolean isLike) {
 		super();
-		this.mEventId = mEventId;
-		this.mEventTitle = mEventTitle;
-		this.mEventViewCount = mEventViewCount;
-		this.mEventBy = mEventBy;
-		this.mEventDate = mEventDate;
-		this.mEventTime = mEventTime;
-		this.mEventSendDate = mEventSendDate;
-		this.mEventSendTime = mEventSendTime;
-		this.mEventSummary = mEventSummary;
+		this.mId = mId;
+		this.mTitle = mTitle;
+		this.mViewCount = mViewCount;
+		this.mLikeCount = mLikeCount;
+		this.mGoingCount = mGoingCount;
+		this.mBy = mBy;
+		this.mStartDate = mStartDate;
+		this.mStartTime = mStartTime;
+		this.mReceivedDate = mReceivedDate;
+		this.mReceivedTime = mReceivedTime;
+		this.mDaysLeft = mDaysLeft;
+		this.mFileType = mFileType;
 		this.isRead = isRead;
 		this.isGoingToAttend = isGoingToAttend;
+		this.isLike = isLike;
 	}
 
-	public String getmEventId() {
-		return mEventId;
+	public String getmId() {
+		return mId;
 	}
 
-	public void setmEventId(String mEventId) {
-		this.mEventId = mEventId;
+	public void setmId(String mId) {
+		this.mId = mId;
 	}
 
-	public String getmEventTitle() {
-		return mEventTitle;
+	public String getmTitle() {
+		return mTitle;
 	}
 
-	public void setmEventTitle(String mEventTitle) {
-		this.mEventTitle = mEventTitle;
+	public void setmTitle(String mTitle) {
+		this.mTitle = mTitle;
 	}
 
-	public String getmEventViewCount() {
-		return mEventViewCount;
+	public String getmViewCount() {
+		return mViewCount;
 	}
 
-	public void setmEventViewCount(String mEventViewCount) {
-		this.mEventViewCount = mEventViewCount;
+	public void setmViewCount(String mViewCount) {
+		this.mViewCount = mViewCount;
 	}
 
-	public String getmEventBy() {
-		return mEventBy;
+	public String getmLikeCount() {
+		return mLikeCount;
 	}
 
-	public void setmEventBy(String mEventBy) {
-		this.mEventBy = mEventBy;
+	public void setmLikeCount(String mLikeCount) {
+		this.mLikeCount = mLikeCount;
 	}
 
-	public String getmEventDate() {
-		return mEventDate;
+	public String getmGoingCount() {
+		return mGoingCount;
 	}
 
-	public void setmEventDate(String mEventDate) {
-		this.mEventDate = mEventDate;
+	public void setmGoingCount(String mGoingCount) {
+		this.mGoingCount = mGoingCount;
 	}
 
-	public String getmEventTime() {
-		return mEventTime;
+	public String getmBy() {
+		return mBy;
 	}
 
-	public void setmEventTime(String mEventTime) {
-		this.mEventTime = mEventTime;
+	public void setmBy(String mBy) {
+		this.mBy = mBy;
 	}
 
-	public String getmEventSendDate() {
-		return mEventSendDate;
+	public String getmStartDate() {
+		return mStartDate;
 	}
 
-	public void setmEventSendDate(String mEventSendDate) {
-		this.mEventSendDate = mEventSendDate;
+	public void setmStartDate(String mStartDate) {
+		this.mStartDate = mStartDate;
 	}
 
-	public String getmEventSendTime() {
-		return mEventSendTime;
+	public String getmStartTime() {
+		return mStartTime;
 	}
 
-	public void setmEventSendTime(String mEventSendTime) {
-		this.mEventSendTime = mEventSendTime;
+	public void setmStartTime(String mStartTime) {
+		this.mStartTime = mStartTime;
 	}
 
-	public String getmEventSummary() {
-		return mEventSummary;
+	public String getmReceivedDate() {
+		return mReceivedDate;
 	}
 
-	public void setmEventSummary(String mEventSummary) {
-		this.mEventSummary = mEventSummary;
+	public void setmReceivedDate(String mReceivedDate) {
+		this.mReceivedDate = mReceivedDate;
+	}
+
+	public String getmReceivedTime() {
+		return mReceivedTime;
+	}
+
+	public void setmReceivedTime(String mReceivedTime) {
+		this.mReceivedTime = mReceivedTime;
+	}
+
+	public String getmDaysLeft() {
+		return mDaysLeft;
+	}
+
+	public void setmDaysLeft(String mDaysLeft) {
+		this.mDaysLeft = mDaysLeft;
+	}
+
+	public String getmFileType() {
+		return mFileType;
+	}
+
+	public void setmFileType(String mFileType) {
+		this.mFileType = mFileType;
 	}
 
 	public boolean isRead() {
@@ -134,18 +167,30 @@ public class Event implements Parcelable {
 		this.isGoingToAttend = isGoingToAttend;
 	}
 
+	public boolean isLike() {
+		return isLike;
+	}
+
+	public void setLike(boolean isLike) {
+		this.isLike = isLike;
+	}
+
 	protected Event(Parcel in) {
-		mEventId = in.readString();
-		mEventTitle = in.readString();
-		mEventViewCount = in.readString();
-		mEventBy = in.readString();
-		mEventDate = in.readString();
-		mEventTime = in.readString();
-		mEventSendDate = in.readString();
-		mEventSendTime = in.readString();
-		mEventSummary = in.readString();
+		mId = in.readString();
+		mTitle = in.readString();
+		mViewCount = in.readString();
+		mLikeCount = in.readString();
+		mGoingCount = in.readString();
+		mBy = in.readString();
+		mStartDate = in.readString();
+		mStartTime = in.readString();
+		mReceivedDate = in.readString();
+		mReceivedTime = in.readString();
+		mDaysLeft = in.readString();
+		mFileType = in.readString();
 		isRead = in.readByte() != 0x00;
 		isGoingToAttend = in.readByte() != 0x00;
+		isLike = in.readByte() != 0x00;
 	}
 
 	@Override
@@ -155,19 +200,24 @@ public class Event implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(mEventId);
-		dest.writeString(mEventTitle);
-		dest.writeString(mEventViewCount);
-		dest.writeString(mEventBy);
-		dest.writeString(mEventDate);
-		dest.writeString(mEventTime);
-		dest.writeString(mEventSendDate);
-		dest.writeString(mEventSendTime);
-		dest.writeString(mEventSummary);
+		dest.writeString(mId);
+		dest.writeString(mTitle);
+		dest.writeString(mViewCount);
+		dest.writeString(mLikeCount);
+		dest.writeString(mGoingCount);
+		dest.writeString(mBy);
+		dest.writeString(mStartDate);
+		dest.writeString(mStartTime);
+		dest.writeString(mReceivedDate);
+		dest.writeString(mReceivedTime);
+		dest.writeString(mDaysLeft);
+		dest.writeString(mFileType);
 		dest.writeByte((byte) (isRead ? 0x01 : 0x00));
 		dest.writeByte((byte) (isGoingToAttend ? 0x01 : 0x00));
+		dest.writeByte((byte) (isLike ? 0x01 : 0x00));
 	}
 
+	@SuppressWarnings("unused")
 	public static final Parcelable.Creator<Event> CREATOR = new Parcelable.Creator<Event>() {
 		@Override
 		public Event createFromParcel(Parcel in) {

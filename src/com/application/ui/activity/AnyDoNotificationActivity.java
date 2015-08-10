@@ -37,6 +37,7 @@ import com.application.sqlite.DBConstant;
 import com.application.ui.calligraphy.CalligraphyContextWrapper;
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.BottomSheetAnyDo;
+import com.application.ui.view.CircleImageView;
 import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
 import com.application.ui.view.RoundedBackgroundSpan;
@@ -147,6 +148,10 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 			return R.layout.item_recycler_mobcast_image;
 		case AppConstants.TYPE.STREAM:
 			return R.layout.item_recycler_mobcast_video;
+		case AppConstants.TYPE.EVENT:
+			return R.layout.item_recycler_event;
+		case AppConstants.TYPE.AWARD:
+			return R.layout.item_recycler_award;
 		default:
 			return R.layout.item_recycler_mobcast_text;
 		}
@@ -368,6 +373,12 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 			break;
 		case AppConstants.TYPE.QUIZ:
 			processNotificationQuiz();
+			break;
+		case AppConstants.TYPE.EVENT:
+			processNotificationEvent();
+			break;
+		case AppConstants.TYPE.AWARD:
+			processNotificationAward();
 			break;
 		}
 	}
@@ -1032,6 +1043,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		mContentLayout.findViewById(R.id.itemRecyclerTrainingQuizViewCountTv).setVisibility(View.GONE);
 		mContentLayout.findViewById(R.id.itemRecyclerTrainingQuizReadView).setVisibility(View.GONE);
 		AppCompatTextView mQuestionTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerTrainingQuizDetailQuestionTv);
+		AppCompatTextView mTimeTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerTrainingQuizDetailTimeTv);
+		AppCompatTextView mTotalPointsTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerTrainingQuizDetailPointsTv);
 		
 		Cursor mCursor = getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, null, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{String.valueOf(mId)}, null);
 		if(mCursor!=null && mCursor.getCount() > 0){
@@ -1040,15 +1053,120 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 			mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TIME))));
 		}
 		
-		Cursor mCursorFeedback = getContentResolver().query(DBConstant.Training_Quiz_Columns.CONTENT_URI, null, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ID + "=?", new String[]{String.valueOf(mId)}, null);
-		if(mCursorFeedback!=null && mCursorFeedback.getCount() > 0){
-			mQuestionTv.setText(mCursorFeedback.getCount() + " " +getResources().getString(R.string.item_recycler_mobcast_feedback_question));	
+		int mTotalPoints = 0;
+		long mTime = 0;
+		Cursor mCursorQuiz = getContentResolver().query(DBConstant.Training_Quiz_Columns.CONTENT_URI, null, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ID + "=?", new String[]{String.valueOf(mId)}, null);
+		if(mCursorQuiz!=null && mCursorQuiz.getCount() > 0){
+			mQuestionTv.setText(mCursorQuiz.getCount() + " " +getResources().getString(R.string.item_recycler_mobcast_feedback_question));	
+			mCursorQuiz.moveToFirst();
+			mTime = Long.parseLong(mCursorQuiz.getString(mCursorQuiz.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_DURATION)));
+			mTotalPointsTv.setText(String.valueOf(Utilities.convertTimeFromSecsTo(mTime)));
+			do{
+				mTotalPoints+=Integer.parseInt(mCursorQuiz.getString(mCursorQuiz.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION_POINTS)));
+			}while(mCursorQuiz.moveToNext());
+			
+			mTotalPointsTv.setText(String.valueOf(mTotalPoints));
 		}else{
 			mQuestionTv.setVisibility(View.GONE);
 		}
 		
-		if(mCursorFeedback!=null)
-			mCursorFeedback.close();
+		if(mCursorQuiz!=null)
+			mCursorQuiz.close();
+		
+		if(mCursor!=null)
+			mCursor.close();
+	}
+	
+	private void processNotificationEvent(){
+		AppCompatTextView mTitleTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerEventTitleTv);
+		AppCompatTextView mByTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerEventByTv);
+		mContentLayout.findViewById(R.id.itemRecyclerEventLikeCountTv).setVisibility(View.GONE);
+		mContentLayout.findViewById(R.id.itemRecyclerEventViewCountTv).setVisibility(View.GONE);
+		mContentLayout.findViewById(R.id.itemRecyclerEventReadView).setVisibility(View.GONE);
+		mContentLayout.findViewById(R.id.itemRecyclerEventDetailIsGoingLayout).setVisibility(View.GONE);
+		AppCompatTextView mDaysLeftTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerEventDetailDaysLeftTv);
+		AppCompatTextView mAttendTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerEventDetailAttendanceTv);
+		
+		
+		Cursor mCursor = getContentResolver().query(DBConstant.Event_Columns.CONTENT_URI, null, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{String.valueOf(mId)}, null);
+		if(mCursor!=null && mCursor.getCount() > 0){
+			mCursor.moveToFirst();
+			mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_TITLE)));
+			mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_TIME))));
+			mDaysLeftTv.setText(Utilities.formatDaysLeft(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_START_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_START_TIME))));
+			mAttendTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_GOING_NO)) + " "+ ApplicationLoader.getApplication().getResources().getString(R.string.going));
+		}
+		
+		if(mCursor!=null)
+			mCursor.close();
+	}
+	
+	
+	private void processNotificationAward(){
+		AppCompatTextView mReceiverNameTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerAwardWinnerName);
+		AppCompatTextView mAwardName = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerAwardName);
+		final CircleImageView mImageView = (CircleImageView)mContentLayout.findViewById(R.id.itemRecyclerAwardIv);
+		final ProgressWheel mProgressWheel = (ProgressWheel)mContentLayout.findViewById(R.id.itemRecyclerAwardImageLoadingProgress);
+		mContentLayout.findViewById(R.id.itemRecyclerCongratulateIv).setVisibility(View.GONE);
+		mContentLayout.findViewById(R.id.itemRecyclerAwardMessageIv).setVisibility(View.GONE);
+		mContentLayout.findViewById(R.id.itemRecyclerReadView).setVisibility(View.GONE);
+		AppCompatTextView mCongratulatedCount = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerAwardCongratulatedTv);
+		String mContentFileThumbPath = null;
+		String mContentFileThumbLink = null;
+		
+		ImageLoader mImageLoader = ApplicationLoader.getUILImageLoader();
+		
+		Cursor mCursor = getContentResolver().query(DBConstant.Award_Columns.CONTENT_URI, null, DBConstant.Award_Columns.COLUMN_AWARD_ID + "=?", new String[]{String.valueOf(mId)}, null);
+		if(mCursor!=null && mCursor.getCount() > 0){
+			mCursor.moveToFirst();
+			mReceiverNameTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_NAME)));
+			mAwardName.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_RECOGNITION)));
+			mCongratulatedCount.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_CONGRATULATE_NO)) + " " + getResources().getString(R.string.congratulated_text));
+			mContentFileThumbPath = mCursor.getString(mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_THUMBNAIL_PATH));
+			mContentFileThumbLink = mCursor.getString(mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_THUMBNAIL_LINK));
+		}
+		
+		try {
+			mImageView.setImageURI(Uri.parse(mContentFileThumbPath));
+			
+			final String mThumbnailPath = mContentFileThumbPath;
+			if(Utilities.checkIfFileExists(mThumbnailPath)){
+				mImageView.setImageURI(Uri.parse(mThumbnailPath));
+			}else{
+				mImageLoader.displayImage(mContentFileThumbLink, mImageView, new ImageLoadingListener() {
+					@Override
+					public void onLoadingStarted(String arg0, View arg1) {
+						// TODO Auto-generated method stub
+						mProgressWheel.setVisibility(View.VISIBLE);
+						mImageView.setVisibility(View.GONE);
+					}
+					
+					@Override
+					public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+						// TODO Auto-generated method stub
+						mProgressWheel.setVisibility(View.GONE);
+						mImageView.setVisibility(View.VISIBLE);
+					}
+					
+					@Override
+					public void onLoadingComplete(String arg0, View arg1, Bitmap mBitmap) {
+						// TODO Auto-generated method stub
+						mProgressWheel.setVisibility(View.GONE);
+						mImageView.setVisibility(View.VISIBLE);
+						Utilities.writeBitmapToSDCard(mBitmap, mThumbnailPath);
+					}
+					
+					@Override
+					public void onLoadingCancelled(String arg0, View arg1) {
+						// TODO Auto-generated method stub
+						mProgressWheel.setVisibility(View.GONE);
+						mImageView.setVisibility(View.VISIBLE);
+					}
+				});
+			}
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
 		
 		if(mCursor!=null)
 			mCursor.close();

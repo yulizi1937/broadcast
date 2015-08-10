@@ -232,7 +232,7 @@
 
     <!-- item_recycler_mobcast_feedback -->
     <dimen name="item_recycler_mobcast_feedback_view_detail_layout_height">20dp</dimen>
-    <dimen name="item_recycler_mobcast_feedback_view_detail_text_size">8sp</dimen>
+    <dimen name="item_recycler_mobcast_feedback_view_detail_text_size">10sp</dimen>
     <dimen name="item_recycler_mobcast_feedback_view_detail_image_width">8dp</dimen>
     <dimen name="item_recycler_mobcast_feedback_view_detail_image_height">8dp</dimen>
     <dimen name="item_recycler_mobcast_feedback_view_detail_image_margin_top">6dp</dimen>

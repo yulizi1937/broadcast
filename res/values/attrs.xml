@@ -314,5 +314,10 @@
     <declare-styleable name="Themes">
         <attr name="numberProgressBarStyle" format="reference"/>
     </declare-styleable>
+    
+    <!-- PanningView -->
+    <declare-styleable name="PanningView">
+		<attr name="panningDurationInMs" format="integer" />
+	</declare-styleable>
 
 </resources>

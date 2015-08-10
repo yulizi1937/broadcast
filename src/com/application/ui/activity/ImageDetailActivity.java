@@ -140,13 +140,13 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-//		decryptFileOnResume();
+		decryptFileOnResume();
 	}
 	
 	@Override
 	protected void onPause() {
 		super.onPause();
-//		deleteDecryptedFile();
+		deleteDecryptedFile();
 	}
 
 	  
@@ -453,29 +453,31 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 	}
 
 	private void downloadFileInBackground(final int position) {
-		DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
-				ImageDetailActivity.this, false, true,
-				mContentFileLink.get(position), mContentFilePath.get(position),
-				AppConstants.TYPE.IMAGE, Long.parseLong(mContentFileSize), TAG);
-		mDownloadAsyncTask.execute();
-		mDownloadAsyncTask
-				.setOnPostExecuteListener(new OnPostExecuteListener() {
-					@Override
-					public void onPostExecute(boolean isDownloaded) {
-						// TODO Auto-generated method stub
-						if (isDownloaded) {
-							mContentDecryptedFilePath.add(Utilities
-									.fbConcealDecryptFile(TAG, new File(
-											mContentFilePath.get(position))));
-							if (!TextUtils.isEmpty(mContentDecryptedFilePath.get(position))) {
-								if(mContentFilePath.size()-1 == position){
-									setImageViewPager(mContentDecryptedFilePath);
-									downloadThumbnailInBackground();
+		try{
+			DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
+					ImageDetailActivity.this, false, true,
+					mContentFileLink.get(position), mContentFilePath.get(position),
+					AppConstants.TYPE.IMAGE, Long.parseLong(mContentFileSize), TAG);
+			mDownloadAsyncTask.execute();
+			mDownloadAsyncTask
+					.setOnPostExecuteListener(new OnPostExecuteListener() {
+						@Override
+						public void onPostExecute(boolean isDownloaded) {
+							// TODO Auto-generated method stub
+							if (isDownloaded) {
+								mContentDecryptedFilePath.add(Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath.get(position))));
+								if (!TextUtils.isEmpty(mContentDecryptedFilePath.get(position))) {
+									if(mContentFilePath.size()-1 == position){
+										setImageViewPager(mContentDecryptedFilePath);
+										downloadThumbnailInBackground();
+									}
 								}
 							}
 						}
-					}
-				});
+					});
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	private void downloadThumbnailInBackground(){
@@ -658,10 +660,12 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 	private void decryptFileOnResume(){
 		try{
 			if(mContentFilePathList!=null && mContentFilePathList.size() > 0){
+				mContentDecryptedFilePath.clear();
 				for(int i = 0; i < mContentFilePathList.size();i++){
-					mContentDecryptedFilePath.clear();
 					String mPath = mContentFilePathList.get(i);
-					mContentDecryptedFilePath.add(Utilities.fbConcealDecryptFile(TAG, new File(mPath)));
+					if(checkIfFileExists(mPath)){
+						mContentDecryptedFilePath.add(Utilities.fbConcealDecryptFile(TAG, new File(mPath)));
+					}
 				}
 			}
 		}catch(Exception e){
@@ -673,7 +677,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 		try{
 			if(mContentDecryptedFilePath!=null && mContentDecryptedFilePath.size() > 0){
 				for(int i = 0 ;i < mContentDecryptedFilePath.size();i++){
-					if(mContentDecryptedFilePath.get(i).contains("_decrypted")){
+					if(Utilities.isContainsDecrypted(mContentDecryptedFilePath.get(i))){
 						new File(mContentDecryptedFilePath.get(i)).delete();
 					}
 				}	

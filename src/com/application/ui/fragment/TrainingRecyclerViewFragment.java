@@ -11,7 +11,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +21,9 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.AppCompatButton;
@@ -28,8 +32,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
-import android.text.TextUtils;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -50,6 +57,9 @@ import com.application.ui.activity.XlsDetailActivity;
 import com.application.ui.activity.YouTubeLiveStreamActivity;
 import com.application.ui.adapter.TrainingRecyclerAdapter;
 import com.application.ui.adapter.TrainingRecyclerAdapter.OnItemClickListener;
+import com.application.ui.adapter.TrainingRecyclerAdapter.OnItemLongClickListener;
+import com.application.ui.materialdialog.MaterialDialog;
+import com.application.ui.view.BottomSheet;
 import com.application.ui.view.HorizontalDividerItemDecoration;
 import com.application.ui.view.MobcastProgressDialog;
 import com.application.ui.view.ObservableRecyclerView;
@@ -63,6 +73,7 @@ import com.application.utils.ObservableScrollViewCallbacks;
 import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.ScrollUtils;
+import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.mobcast.R;
 import com.squareup.okhttp.OkHttpClient;
@@ -396,7 +407,12 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 					ArrayList<TrainingFileInfo> mTrainingQuizInfoList = new ArrayList<>();
 					TrainingFileInfo quizObj = new TrainingFileInfo();
 					quizObj.setmPages(mCursorQuizInfo.getCount() + " " + getResources().getString(R.string.item_recycler_mobcast_feedback_question));
-					quizObj.setmDuration(mCursorQuizInfo.getString(mCursorQuizInfo.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_DURATION)));
+					try{
+						String []mTime = Utilities.convertTimeFromSecsTo(Long.parseLong(mCursorQuizInfo.getString(mCursorQuizInfo.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_DURATION)))).split(" ");
+						quizObj.setmDuration(mTime[0]+" "+ mTime[1]);
+					}catch(Exception e){
+						FileLog.e(TAG, e.toString());
+					}
 					mTrainingQuizInfoList.add(quizObj);
 					Obj.setmFileInfo(mTrainingQuizInfoList);
 				}
@@ -553,10 +569,21 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 				}
 			});
 		}
+		
+		if(mAdapter!=null){
+			mAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
+				@Override
+				public void onItemLongClick(View view, int position) {
+					// TODO Auto-generated method stub
+//					position=-1;
+					showContextMenu(position, view);
+				}
+			});
+		}
 	}
 	
 	private void saveViewPosition(int position){
-		ApplicationLoader.getPreferences().setViewIdMobcast(String.valueOf(position));
+		ApplicationLoader.getPreferences().setViewIdTraining(String.valueOf(position));
 	}
 	
 	private void checkReadFromDBAndUpdateToObj(){
@@ -639,6 +666,189 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 	}
 	
 	/*
+	 * ContextMenu
+	 */
+	private void showContextMenu(int mPosition, View mView){
+		try{
+			mPosition =  mPosition - 1;
+			if(mPosition!= -1){
+				int mType = Utilities.getMediaType(mArrayListTraining.get(mPosition).getmFileType());
+				String mTitle = mArrayListTraining.get(mPosition).getmTitle();
+				boolean isRead = mArrayListTraining.get(mPosition).isRead();
+				ContextMenuFragment newFragment = new ContextMenuFragment(mPosition, mType, mTitle, isRead , mView);
+		        newFragment.show(getFragmentManager(), "dialog");
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	public class ContextMenuFragment extends DialogFragment {
+		int mPosition;
+		int mType;
+		String mTitle;
+		boolean isRead;
+		View mView;
+	    public ContextMenuFragment (int mPosition, int mType, String mTitle, boolean isRead, View mView) {
+	    	this.mPosition = mPosition;
+	    	this.mTitle = mTitle;
+	    	this.mType = mType;
+	    	this.isRead = isRead;
+	    	this.mView = mView;
+	    }
+
+	    @Override
+	    public Dialog onCreateDialog(Bundle savedInstanceState) {
+	        return getContextMenu(mPosition, mType, mTitle, isRead, mView);
+	    }
+	}
+	
+	private BottomSheet getContextMenu(final int mPosition, int mType, final String mTitle, boolean isRead, final View mView){
+		BottomSheet mBottomSheet;
+		mBottomSheet = new BottomSheet.Builder(getActivity()).icon(Utilities.getRoundedBitmapForContextMenu(mType)).title(mTitle).sheet(R.menu.context_menu_mobcast).build();
+         final Menu menu = mBottomSheet.getMenu();
+         
+         SpannableString mSpannabledRead = new SpannableString(getResources().getString(R.string.context_menu_read));
+         SpannableString mSpannabledUnRead = new SpannableString(getResources().getString(R.string.context_menu_unread));
+         SpannableString mSpannabledDelete = new SpannableString(getResources().getString(R.string.context_menu_delete));
+         SpannableString mSpannabledView = new SpannableString(getResources().getString(R.string.context_menu_view));
+         
+         mSpannabledRead.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledRead.length(), 0);
+         mSpannabledUnRead.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledUnRead.length(), 0);
+         mSpannabledDelete.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledDelete.length(), 0);
+         mSpannabledView.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledView.length(), 0);
+         
+         menu.getItem(0).setTitle(mSpannabledRead);
+         menu.getItem(1).setTitle(mSpannabledUnRead);
+         menu.getItem(2).setTitle(mSpannabledDelete);
+         menu.getItem(3).setTitle(mSpannabledView);
+         
+         /**
+          * Read
+          */
+         menu.getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+             @Override
+             public boolean onMenuItemClick(MenuItem item) {
+            	 contextMenuMarkAsRead(mPosition);
+                 return true;
+             }
+         });
+         
+         /**
+          * UnRead
+          */
+         menu.getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+             @Override
+             public boolean onMenuItemClick(MenuItem item) {
+            	 contextMenuMarkAsUnRead(mPosition);
+                 return true;
+             }
+         });
+         
+         /**
+          * Delete
+          */
+         menu.getItem(2).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+             @Override
+             public boolean onMenuItemClick(MenuItem item) {
+            	 showDeleteConfirmationDialog(mPosition, mTitle);
+//            	 contextMenuDelete(mPosition);
+                 return true;
+             }
+         });
+         
+         /**
+          * View
+          */
+         menu.getItem(3).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+             @Override
+             public boolean onMenuItemClick(MenuItem item) {
+            	 contextMenuView(mPosition, mView);
+                 return true;
+             }
+         });
+         
+         return mBottomSheet;
+	}
+	
+	private void contextMenuMarkAsRead(int mPosition){
+		try{
+		 ContentValues values = new ContentValues();
+		 String mTrainingId = mArrayListTraining.get(mPosition).getmId();
+		 values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, "true");
+		 getActivity().getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mTrainingId});	
+       	 mArrayListTraining.get(mPosition).setRead(true);
+       	 mRecyclerView.getAdapter().notifyItemChanged(mPosition+1);
+       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.TRAINING);
+       	 UserReport.updateUserReportApi(mTrainingId, AppConstants.INTENTCONSTANTS.TRAINING, AppConstants.REPORT.READ, "");
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void contextMenuMarkAsUnRead(int mPosition){
+		try{
+		 ContentValues values = new ContentValues();
+	     values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, "false");
+		 getActivity().getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mArrayListTraining.get(mPosition).getmId()});
+		 mArrayListTraining.get(mPosition).setRead(false);
+       	 mRecyclerView.getAdapter().notifyItemChanged(mPosition+1);
+       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.TRAINING);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void contextMenuDelete(int mPosition){
+		try{
+		 getActivity().getContentResolver().delete(DBConstant.Training_Columns.CONTENT_URI, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mArrayListTraining.get(mPosition).getmId()});
+       	 getActivity().getContentResolver().delete(DBConstant.Training_File_Columns.CONTENT_URI, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mArrayListTraining.get(mPosition).getmId()});
+       	 mArrayListTraining.remove(mPosition);
+       	 if(mArrayListTraining.size() == 0){
+       		 checkDataInAdapter();
+       	 }else{
+       		mRecyclerView.getAdapter().notifyDataSetChanged();
+       	 }
+       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.TRAINING);			
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void contextMenuView(int mPosition , View mView){
+		try{
+			mView.performClick();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void showDeleteConfirmationDialog(final int mPosition, String mTitle){
+		MaterialDialog mMaterialDialog = new MaterialDialog.Builder(getActivity())
+        .title(getResources().getString(R.string.content_delete_message) + " " + mTitle + "?")
+        .iconRes(R.drawable.context_menu_delete)
+        .titleColor(Utilities.getAppColor())
+        .positiveText(getResources().getString(R.string.button_delete))
+        .positiveColor(Utilities.getAppColor())
+        .negativeText(getResources().getString(R.string.sample_fragment_settings_dialog_language_negative))
+        .negativeColor(Utilities.getAppColor())
+        .callback(new MaterialDialog.ButtonCallback() {
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB) @Override
+            public void onPositive(MaterialDialog dialog) {
+            	dialog.dismiss();
+            	contextMenuDelete(mPosition);
+            }
+
+            @Override
+            public void onNegative(MaterialDialog dialog) {
+            	dialog.dismiss();
+            }
+        })
+        .show();
+	}
+
+	
+	/*
 	 * AsyncTask To Refresh
 	 */
 	
@@ -681,124 +891,110 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 		try {
 			if (Utilities.isSuccessFromApi(mResponseFromApi)) {
 				JSONObject mJSONObj = new JSONObject(mResponseFromApi);
-				JSONObject mJSONMobObj = mJSONObj.getJSONObject(AppConstants.API_KEY_PARAMETER.training);
-				String mTrainingId = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingId);
-				String mType = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingType);
-				String mDate = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingDate);
-				String mTime = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingTime);
-				String mExpiryDate = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingExpiryDate);
-				String mExpiryTime = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingExpiryTime);
-				ContentValues values = new ContentValues();
-				values.put(DBConstant.Training_Columns.COLUMN_TRAINING_ID, mTrainingId);
-				values.put(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingTitle));
-				values.put(DBConstant.Training_Columns.COLUMN_TRAINING_BY, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingBy));
-				values.put(DBConstant.Training_Columns.COLUMN_TRAINING_DESC, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingDescription));
-				values.put(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingViewCount));
-				values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingLikeCount));
-				values.put(DBConstant.Training_Columns.COLUMN_TRAINING_DATE, mDate);
-				values.put(DBConstant.Training_Columns.COLUMN_TRAINING_TIME, mTime);
-				values.put(DBConstant.Training_Columns.COLUMN_TRAINING_DATE_FORMATTED, Utilities.getMilliSecond(mDate, mTime));
-				values.put(DBConstant.Training_Columns.COLUMN_TRAINING_TYPE, mType);
-				values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingIsRead));
-				values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingIsLiked));
-				values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARING, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingIsSharing));
-				values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_DOWNLOADABLE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingIsDownloadable));
-				values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LINK, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingLink));
-				values.put(DBConstant.Training_Columns.COLUMN_TRAINING_EXPIRY_DATE, mExpiryDate);
-				values.put(DBConstant.Training_Columns.COLUMN_TRAINING_EXPIRY_TIME, mExpiryTime);
-				values.put(DBConstant.Training_Columns.COLUMN_TRAINING_TIME_FORMATTED, Utilities.getMilliSecond(mExpiryDate, mExpiryTime));
+				JSONArray mJSONMobMainArrObj = mJSONObj.getJSONArray(AppConstants.API_KEY_PARAMETER.training);
 				
-				Cursor mIsExistCursor = getActivity().getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, new String[]{DBConstant.Training_Columns.COLUMN_ID},  DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mTrainingId}, null);
-				if(mIsExistCursor!=null && mIsExistCursor.getCount() > 0){
-					mIsExistCursor.close();
-					return;
-				}
-				if(mIsExistCursor!=null)
-					mIsExistCursor.close();
-				
-				
-				Uri isInsertUri = getActivity().getContentResolver().insert(DBConstant.Training_Columns.CONTENT_URI, values);
-				boolean isInsertedInDB = Utilities.checkWhetherInsertedOrNot(TAG,isInsertUri);
-				
-				/*if(isInsertedInDB){
-					ApplicationLoader.getPreferences().setLastIdTraining(mTrainingId);
-				}*/
-				
-				boolean isThumbnailDownloaded = false;
-				boolean isFileDownloaded = false;
-				
-				int mIntType = Utilities.getMediaType(mType);
-				
-				if(mIntType!= AppConstants.TYPE.FEEDBACK && mIntType!= AppConstants.TYPE.TEXT){
-					JSONArray mJSONArrMobFileObj = mJSONMobObj.getJSONArray(AppConstants.API_KEY_PARAMETER.trainingFileInfo);
+				for (int i = 0; i < mJSONMobMainArrObj.length(); i++) {
+					JSONObject mJSONMobObj = mJSONMobMainArrObj.getJSONObject(i);
+					String mTrainingId = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingId);
+					String mType = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingType);
+					String mDate = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingDate);
+					String mTime = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingTime);
+					String mExpiryDate = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingExpiryDate);
+					String mExpiryTime = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingExpiryTime);
+					ContentValues values = new ContentValues();
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_ID, mTrainingId);
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingTitle));
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_BY, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingBy));
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_DESC, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingDescription));
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingViewCount));
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingLikeCount));
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_DATE, mDate);
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_TIME, mTime);
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_DATE_FORMATTED, Utilities.getMilliSecond(mDate, mTime));
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_TYPE, mType);
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingIsRead));
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingIsLiked));
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARING, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingIsSharing));
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_DOWNLOADABLE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingIsDownloadable));
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LINK, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.trainingLink));
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_EXPIRY_DATE, mExpiryDate);
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_EXPIRY_TIME, mExpiryTime);
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_TIME_FORMATTED, Utilities.getMilliSecond(mExpiryDate, mExpiryTime));
 					
-					for (int i = 0; i < mJSONArrMobFileObj.length(); i++) {
-						JSONObject mJSONFileInfoObj = mJSONArrMobFileObj.getJSONObject(i);
-						ContentValues valuesFileInfo = new ContentValues();
-						String mThumbnailLink = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingThumbnail);
-						String mFileLink = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFileLink);
-						String mFileName = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFileName);
-						String mIsDefault = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingisDefault);
-						String mThumbnailName = Utilities.getFilePath(mIntType, true, Utilities.getFileName(mThumbnailLink));
-						valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_ID, mTrainingId);
-						valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LINK, mFileLink);
-						valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_ID, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFileId));
-						valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PATH, Utilities.getFilePath(mIntType, false, mFileName));
-						valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LANG, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFileLang));
-						valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_SIZE, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFileSize));
-						valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_DURATION, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFileDuration));
-						valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PAGES, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFilePages));
-						valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_IS_DEFAULT, mIsDefault);
-						valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_LIVE_STREAM, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingLiveStream));
-						valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_LIVE_STREAM_YOUTUBE, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingLiveStreamYouTube));
-						valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_READ_DURATION, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingReadDuration));
-						valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_NAME, mFileName);
-						valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_THUMBNAIL_LINK, mThumbnailLink);
-						valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_THUMBNAIL_PATH, mThumbnailName);
-						
-						
-						Uri isInsertFileInfoUri = getActivity().getContentResolver().insert(DBConstant.Training_File_Columns.CONTENT_URI, valuesFileInfo);
-						Utilities.checkWhetherInsertedOrNot(TAG,isInsertFileInfoUri);
-						
-						if (Boolean.parseBoolean(mIsDefault)) { //download file which is by default only
-							if(!TextUtils.isEmpty(mThumbnailLink)){
-								isThumbnailDownloaded = Utilities.downloadFile(mIntType, true,false, mThumbnailLink, Utilities.getFileName(mThumbnailName));//thumbnail, isEncrypt
-								}
-
-								if(ApplicationLoader.getPreferences().getDownloadAndNotify()){
-									if(!TextUtils.isEmpty(mFileLink)){
-									boolean isToEncrypt = Utilities.isToEncryptFile(mIntType);
-										isFileDownloaded = Utilities.downloadFile(mIntType, false, isToEncrypt, mFileLink, mFileName);
-									}
-								}
-						}
-
+					Cursor mIsExistCursor = getActivity().getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, new String[]{DBConstant.Training_Columns.COLUMN_ID},  DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mTrainingId}, null);
+					if(mIsExistCursor!=null && mIsExistCursor.getCount() > 0){
+						mIsExistCursor.close();
+						return;
 					}
-				}else if(mIntType == AppConstants.TYPE.QUIZ){
-					JSONArray mJSONArrMobFeedObj = mJSONMobObj.getJSONArray(AppConstants.API_KEY_PARAMETER.trainingQuizInfo);
+					if(mIsExistCursor!=null)
+						mIsExistCursor.close();
 					
-					for (int k = 0; k < mJSONArrMobFeedObj.length(); k++) {
-							JSONObject mJSONQuizObj = mJSONArrMobFeedObj.getJSONObject(k);
-							ContentValues valuesQuizInfo = new ContentValues();
-							String mQuizId = mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizId);
-							String mQuizQid = mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizQueId);
-							valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ID, mQuizId);
-							valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QID, mQuizQid);
-							valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_TYPE, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizQueType));
-							valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizQueTitle));
-							valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_CORRECT_OPTION, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizAnswer));
-							valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION_POINTS, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizPoints));
-							valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_DURATION, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizDuration));
-							valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_1, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizOption1));
-							valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_2, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizOption2));
-							valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_3, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizOption3));
-							valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_4, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizOption4));
-							valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_5, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizOption5));
-							valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_6, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizOption6));
-							valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_7, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizOption7));
+					
+					Uri isInsertUri = getActivity().getContentResolver().insert(DBConstant.Training_Columns.CONTENT_URI, values);
+					boolean isInsertedInDB = Utilities.checkWhetherInsertedOrNot(TAG,isInsertUri);
+					
+					/*if(isInsertedInDB){
+						ApplicationLoader.getPreferences().setLastIdTraining(mTrainingId);
+					}*/
+					
+					int mIntType = Utilities.getMediaType(mType);
+					
+					if(mIntType!= AppConstants.TYPE.QUIZ && mIntType!= AppConstants.TYPE.TEXT){
+						JSONArray mJSONArrMobFileObj = mJSONMobObj.getJSONArray(AppConstants.API_KEY_PARAMETER.trainingFileInfo);
+						
+						for (int j = 0; j < mJSONArrMobFileObj.length(); j++) {
+							JSONObject mJSONFileInfoObj = mJSONArrMobFileObj.getJSONObject(j);
+							ContentValues valuesFileInfo = new ContentValues();
+							String mThumbnailLink = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingThumbnail);
+							String mFileLink = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFileLink);
+							String mFileName = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFileName);
+							String mIsDefault = mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingisDefault);
+							String mThumbnailName = Utilities.getFilePath(mIntType, true, Utilities.getFileName(mThumbnailLink));
+							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_ID, mTrainingId);
+							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LINK, mFileLink);
+							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_ID, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFileId));
+							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PATH, Utilities.getFilePath(mIntType, false, mFileName));
+							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LANG, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFileLang));
+							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_SIZE, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFileSize));
+							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_DURATION, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFileDuration));
+							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PAGES, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFilePages));
+							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_IS_DEFAULT, mIsDefault);
+							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_LIVE_STREAM, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingLiveStream));
+							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_LIVE_STREAM_YOUTUBE, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingLiveStreamYouTube));
+							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_READ_DURATION, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingReadDuration));
+							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_NAME, mFileName);
+							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_THUMBNAIL_LINK, mThumbnailLink);
+							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_THUMBNAIL_PATH, mThumbnailName);
 							
-							Uri isInsertQuizInfoUri = getActivity().getContentResolver().insert(DBConstant.Training_Quiz_Columns.CONTENT_URI, valuesQuizInfo);
-							Utilities.checkWhetherInsertedOrNot(TAG,isInsertQuizInfoUri);
+							
+							getActivity().getContentResolver().insert(DBConstant.Training_File_Columns.CONTENT_URI, valuesFileInfo);
+						}
+					}else if(mIntType == AppConstants.TYPE.QUIZ){
+						JSONArray mJSONArrMobFeedObj = mJSONMobObj.getJSONArray(AppConstants.API_KEY_PARAMETER.trainingQuizInfo);
+						
+						for (int k = 0; k < mJSONArrMobFeedObj.length(); k++) {
+								JSONObject mJSONQuizObj = mJSONArrMobFeedObj.getJSONObject(k);
+								ContentValues valuesQuizInfo = new ContentValues();
+								String mQuizId = mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizId);
+								String mQuizQid = mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizQueId);
+								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ID, mQuizId);
+								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QID, mQuizQid);
+								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_TYPE, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizQueType));
+								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizQueTitle));
+								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_CORRECT_OPTION, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizCorrectAnswer));
+								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION_POINTS, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizScore));
+								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_DURATION, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizDuration));
+								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_1, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizOption1));
+								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_2, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizOption2));
+								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_3, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizOption3));
+								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_4, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizOption4));
+								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_5, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizOption5));
+								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_6, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizOption6));
+								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_7, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizOption7));
+								
+								Uri isInsertQuizInfoUri = getActivity().getContentResolver().insert(DBConstant.Training_Quiz_Columns.CONTENT_URI, valuesQuizInfo);
+								Utilities.checkWhetherInsertedOrNot(TAG,isInsertQuizInfoUri);
+						}
 					}
 				}
 				

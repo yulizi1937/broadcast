@@ -56,9 +56,11 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -75,6 +77,8 @@ import android.renderscript.ScriptIntrinsicBlur;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DimenRes;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
@@ -597,6 +601,64 @@ public class Utilities {
 		
 	}
 	
+	public static String getSyncTime(boolean isFailed){
+		try{
+			long mCurrentTimeMillis = System.currentTimeMillis();
+			SimpleDateFormat mDateFormat = new SimpleDateFormat("dd MMM hh:mm");
+			Date mDate = new Date(mCurrentTimeMillis);
+			String mCurrentDateAndTime = mDateFormat.format(mDate);
+			if(isFailed){
+				return ApplicationLoader.getApplication().getResources().getString(R.string.sync_failed)+" "+ mCurrentDateAndTime;
+			}else{
+				return ApplicationLoader.getApplication().getResources().getString(R.string.sync_passed)+"  "+ mCurrentDateAndTime;
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+			return "Failed due to unknown error";
+		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	@SuppressLint("SimpleDateFormat") 
+	public static boolean isContentDateSameAsToday(String mDate) {
+		try {
+			SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+			Date todayDate = dateFormatter.parse(dateFormatter
+					.format(new Date()));
+			Date contentDate = dateFormatter.parse(dateFormatter.format(mDate));
+
+			if (todayDate.getYear() == contentDate.getYear()) {
+				if (todayDate.getMonth() == contentDate.getMonth()) {
+					if (todayDate.getDate() == contentDate.getDate()) {
+						return true;
+					} else {
+						return false;
+					}
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+			return false;
+		}
+	}
+	
+	
+	public static String convertTimeFromSecsTo(long milliSeconds){
+		if(milliSeconds >= 60){
+			if(milliSeconds >= 60*60){
+				return milliSeconds/60*60 + " hours";
+			}else{
+				return milliSeconds/60 + " mins";
+			}
+		}else{
+			return milliSeconds + " sec";
+		}
+	}
+	
     public static int resolveDimension(Context context, @AttrRes int attr, @DimenRes int fallbackRes) {
         TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
         try {
@@ -773,7 +835,19 @@ public class Utilities {
 			// TODO Auto-generated catch block
 			FileLog.e(TAG, e.toString());
 		}
-		return null;
+		return "Please try again after sometime!";
+	}
+	
+	
+	public static String getSuccessMessageFromApi(String mResponseFromApi){
+		try {
+			return new JSONObject(mResponseFromApi)
+					.getString(AppConstants.API_KEY_PARAMETER.successMessage);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			FileLog.e(TAG, e.toString());
+		}
+		return  "Successfully!";
 	}
 	
 	public static String readFile(String s) {
@@ -861,6 +935,8 @@ public class Utilities {
 			return AppConstants.TYPE.STREAM;
 		}else if(mType.toLowerCase().equalsIgnoreCase("feedback")){
 			return AppConstants.TYPE.FEEDBACK;
+		}else if(mType.toLowerCase().equalsIgnoreCase("quiz")){
+			return AppConstants.TYPE.QUIZ;
 		}else{
 			return AppConstants.TYPE.OTHER;	
 		}
@@ -933,6 +1009,13 @@ public class Utilities {
 		}
 	}
 	
+	public static boolean isContainsDecrypted(String mPath){
+		if(mPath!=null && mPath.contains(AppConstants.decrypted)){
+			return true;
+		}
+		return false;
+	}
+	
 	public static void fbConcealEncryptFile(String TAG,File mPlainFile){
 		try{
 			FBConcealCrypto mCryptography = new FBConcealCrypto(mPlainFile);
@@ -955,6 +1038,93 @@ public class Utilities {
 			return null;
 		}
 	}
+	
+	public static String formatDaysLeft(String mDate, String mTime){
+		try{
+			StringBuilder strBuilder = new StringBuilder();
+			strBuilder.append(getLeftDateTime(mDate, mTime));
+			return strBuilder.toString();
+		}catch(Exception e){
+			return " Days Left";
+		}
+	}
+	
+	@SuppressLint("SimpleDateFormat") public static String getLeftDateTime(String mDate, String mTime){
+		try {
+			SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat dateFormatterWithYear = new SimpleDateFormat("MMM dd yyyy");
+			Date todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
+			Date contentDate = dateFormatter.parse(mDate);
+
+			SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss");
+			Date todayTime = timeFormatter.parse(timeFormatter.format(new Date()));
+			Date contentTime = timeFormatter.parse(mTime);
+
+			Calendar currentCalendar = Calendar.getInstance();
+			currentCalendar.setTime(todayDate);
+			Calendar targetCalendar = Calendar.getInstance();
+			targetCalendar.setTime(contentDate);
+
+			int currentWeek = currentCalendar.get(Calendar.DAY_OF_YEAR);
+			int targetWeek = targetCalendar.get(Calendar.DAY_OF_YEAR);
+			int numberOfDays = Math.abs(targetWeek - currentWeek);
+			
+			if (todayDate.getYear() == contentDate.getYear()) {
+				if (todayDate.getMonth() == contentDate.getMonth()) {
+					if (todayDate.getDate() == contentDate.getDate()) {
+						int todayHours = todayTime.getHours();
+						int contentHours = contentTime.getHours();
+						int todayMinutes = todayTime.getMinutes();
+						int contentMinutes = contentTime.getMinutes();
+						if (todayHours == contentHours || (Math.abs(contentHours - todayHours) == 1 && contentMinutes < todayMinutes)) {
+							int todaySeconds = todayTime.getSeconds();
+							int contentSeconds = contentTime.getSeconds();
+							if (todayMinutes == contentMinutes
+									|| (Math.abs((contentMinutes - todayMinutes)) == 1 && todaySeconds < contentSeconds)) {
+								if (contentSeconds >= todaySeconds)
+									return String.format("%02d", contentSeconds - todaySeconds)
+											+ " secs left";
+								else
+									return String.format("%02d", todaySeconds + 60 - contentSeconds)
+											+ " secs ago";
+							} else {
+								if (contentMinutes <= todayMinutes)
+									return String.format("%02d", todayMinutes - contentMinutes)
+											+ " mins left";
+								else
+									return String.format("%02d", todayMinutes + 60 - contentMinutes)
+											+ " mins ago";
+							}
+						} else {
+							if (Math.abs(contentHours - todayHours) != 1)
+								return String.format("%02d", Math.abs(todayHours - contentHours))
+										+ " hours left";
+							else
+								return "01 hour left";
+						}
+					} else if (numberOfDays == 1){
+						return String.format("%02d", Math.abs(numberOfDays)) + " day left";
+					}else{
+						return String.format("%02d", Math.abs(numberOfDays)) + " days left";	
+					}
+				} else {
+					if (numberOfDays == 1) {
+						return String.format("%02d", Math.abs(numberOfDays)) + "day left";
+					}
+					return String.format("%02d", Math.abs(numberOfDays)) + " days left";
+				}
+			} else {
+				return dateFormatterWithYear.format(contentDate);
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception ex) {
+			FileLog.e(TAG, ex.toString());
+		}
+		return null;
+	}
+	
 	
 	public static String formatBy(String mBy, String mDate, String mTime){
 		try{
@@ -1114,6 +1284,66 @@ public class Utilities {
 		}catch(Exception e){
 			Log.i(TAG, e.toString());
 		}
+	}
+	
+	public static Drawable getRoundedBitmapForContextMenu(int mType) {
+		int imageId = 0;
+		switch (mType) {
+		case AppConstants.TYPE.TEXT:
+			imageId = R.drawable.ic_mobcast_text_focused;
+			break;
+		case AppConstants.TYPE.AUDIO:
+			imageId = R.drawable.ic_mobcast_audio_focused;
+			break;
+		case AppConstants.TYPE.VIDEO:
+			imageId = R.drawable.ic_mobcast_video_focused;
+			break;
+		case AppConstants.TYPE.IMAGE:
+			imageId = R.drawable.ic_mobcast_image_focus;
+			break;
+		case AppConstants.TYPE.PDF:
+			imageId = R.drawable.ic_mobcast_pdf_focused;
+			break;
+		case AppConstants.TYPE.XLS:
+			imageId = R.drawable.ic_mobcast_xls_focused;
+			break;
+		case AppConstants.TYPE.PPT:
+			imageId = R.drawable.ic_mobcast_ppt_focused;
+			break;
+		case AppConstants.TYPE.DOC:
+			imageId = R.drawable.ic_mobcast_doc_focus;
+			break;
+		case AppConstants.TYPE.FEEDBACK:
+			imageId = R.drawable.ic_mobcast_feedback_focused;
+			break;
+		case AppConstants.TYPE.QUIZ:
+			imageId = R.drawable.ic_mobcast_quiz_focused;
+			break;
+		case AppConstants.TYPE.STREAM:
+			imageId = R.drawable.ic_mobcast_video_focused;
+			break;
+		case AppConstants.TYPE.EVENT:
+			imageId = R.drawable.ic_event_focused;
+			break;
+		default:
+			imageId = R.drawable.ic_launcher;
+			break;
+		}
+		Bitmap src = BitmapFactory.decodeResource(ApplicationLoader.getApplication().getResources(), imageId);
+		Bitmap dst;
+		if (src.getWidth() >= src.getHeight()) {
+			dst = Bitmap.createBitmap(src, src.getWidth() / 2 - src.getHeight()
+					/ 2, 0, src.getHeight(), src.getHeight());
+		} else {
+			dst = Bitmap.createBitmap(src, 0,
+					src.getHeight() / 2 - src.getWidth() / 2, src.getWidth(),
+					src.getWidth());
+		}
+		RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory
+				.create(ApplicationLoader.getApplication().getResources(), dst);
+		roundedBitmapDrawable.setCornerRadius(dst.getWidth() / 2);
+		roundedBitmapDrawable.setAntiAlias(true);
+		return roundedBitmapDrawable;
 	}
 	
 	@SuppressLint("NewApi") 

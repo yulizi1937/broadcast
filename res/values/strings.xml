@@ -9,12 +9,22 @@
     <string name="LanguageCode">en</string>
     <string name="speak_now">Speak now</string>
     <string name="internet_unavailable">Please check your internet connection!</string>
+    <string name="relogin_title">Please re-login!</string>
+    <string name="relogin_message">You need to relogin.</string>
+    <string name="sync_failed">Failed as internet not avail at </string>
+    <string name="sync_passed">Synced at </string>
     <string name="feedback_incomplete">Please fill the feedback properly!</string>
+    <string name="quiz_incomplete">Please fill the quiz properly!</string>
     <string name="api_connection_timeout">Server not responding!</string>
     <string name="api_unknown_error">Please try again in few minutes!</string>
     <string name="share_advertisement">Share via Mobcast Application \n visit us at : www.mobcast.in</string>
     <string name="file_delete_message">Are you sure want to delete these files?</string>
     <string name="logout_title_message">Are you sure want to Log Out?</string>
+    <string name="content_delete_message">Are you sure want to delete </string>
+    <string name="button_delete">Delete</string>
+    <string name="update_title_message">A New Update is Available!</string>
+    <string name="update_delete_message">These version is no longer supported. Please update the application.</string>
+    <string name="update">Update</string>
     <string name="logout_content_message">Logging out will delete all your content from the app and files too.</string>
     <string name="logging_out" tools:ignore="TypographyEllipsis">Logging Out...</string>
 
@@ -51,6 +61,12 @@
     <string name="action_help_video">How to use?</string>
     <string name="action_help_faq">FAQ</string>
     <string name="action_add_cal">Add to calendar</string>
+    
+    <!-- Context Menu -->
+    <string name="context_menu_read">Mark as Read</string>
+    <string name="context_menu_unread">Mark as Unread</string>
+    <string name="context_menu_delete">Delete</string>
+    <string name="context_menu_view">View</string>
 
     <!-- Time -->
     <string name="Yesterday">yesterday</string>
@@ -79,6 +95,11 @@
 
     <!-- string formatters -->
     <string name="content_by">By : </string>
+    <string name="days_left">left</string>
+    <string name="going"> going</string>
+    <string name="accepted"> Accepted</string>
+    <string name="notgoing"> Decline</string>
+    <string name="congratulated_text"> people congratulated!</string>
     <!-- activity_login -->
     <string name="textview_login">Please enter your Mobile Number</string>
     <string name="textview_login_countrycode">+91</string>
@@ -219,6 +240,8 @@
     <string name="sample_quiz_score_goofed_up">YOU GOT 3 OUT OF 4 QUESTIONS RIGHT!</string>
     <string name="sample_quiz_score_goofed_up_at">FIND OUT WHICH ANSWER DO YOU GOOFED UP AT!</string>
     <string name="sample_quiz_score_correct_answer">CORRECT ANSWER IS:</string>
+    <string name="fragment_quizscore_thank_you_header">Thank you for your valuable time!</string>
+    <string name="fragment_quiztimes_up_header">Time Limit for Quiz is Up!</string>
 
     <!-- fragment_quiz_selective_radio -->
     <!-- <string name="sample_quiz_selective_radio_title">INDICATOR OF MUNLIER LC KIDS?</string> -->
@@ -370,6 +393,7 @@
     <string name="sample_fragment_settings_notification_birthday_time">Notify birthday at</string>
     <string name="sample_fragment_settings_notification_birthday_mute">Mute birthday notification</string>
     <string name="sample_fragment_settings_notification_download_notify">Download and Notify</string>
+    <string name="sample_fragment_settings_notification_anydo">Custom Notification</string>
     <string name="sample_fragment_settings_header_about">About</string>
     <string name="sample_fragment_settings_about_text">About Mobcast</string>
     <string name="sample_fragment_settings_about_build_version_text">Build Version\n v2.0.1(1)</string>
@@ -564,6 +588,7 @@ Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic 
     <string name="dialog_birthday_message_positive">SEND</string>
     <string name="dialog_birthday_message_negative" tools:ignore="ButtonCase">CANCEL</string>
     <string name="dialog_birthday_wish_title">Are you sure want to wish </string>
+    <string name="dialog_birthday_award_title">Are you sure want to Congratulate </string>
 
     <!-- ImageView Description -->
     <string name="desc_toolbar_plain_back">ToolBarPlainBack</string>
@@ -591,6 +616,10 @@ Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic 
     <string name="emptyRefresh">REFRESH</string>
     <string name="emptyTrainingTitle">Welcome to Training!</string>
     <string name="emptyTrainingMessage">When you\'ll receive training, they will show up here.</string>
+    <string name="emptyEventTitle">Welcome to Event!</string>
+    <string name="emptyEventMessage">When you\'ll receive event, they will show up here.</string>
+    <string name="emptyAwardTitle">Welcome to Award!</string>
+    <string name="emptyAwardMessage">When you\'ll receive award, they will show up here.</string>
     <string name="emptyChatTitle">Welcome to Chat!</string>
     <string name="emptyChatMessage">When you\'ll receive chat, they will show up here.</string>
 

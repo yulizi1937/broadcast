@@ -31,8 +31,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="16dp"
-            android:padding="1dp"
-            android:background="@drawable/shape_rectange_quiz_box" >
+            android:background="@drawable/shape_rectange_quiz_box"
+            android:padding="1dp" >
 
             <RadioGroup
                 android:id="@+id/fragmentQuizSelectionRadioGroup"
@@ -78,7 +78,8 @@
                     android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
                     android:text="@string/sample_quiz_selective_radio_group_ac"
                     android:textColor="@color/toolbar_background"
-                    android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+                    android:textSize="@dimen/fragment_quiz_selective_quiz_option_size"
+                    android:visibility="gone" />
 
                 <View
                     android:layout_width="match_parent"
@@ -93,7 +94,56 @@
                     android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
                     android:text="@string/sample_quiz_selective_radio_group_ad"
                     android:textColor="@color/toolbar_background"
-                    android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+                    android:textSize="@dimen/fragment_quiz_selective_quiz_option_size"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/toolbar_background" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/fragmentQuizSelectionRadioButton5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+                    android:text="@string/sample_quiz_selective_radio_group_ad"
+                    android:textColor="@color/toolbar_background"
+                    android:textSize="@dimen/fragment_quiz_selective_quiz_option_size"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/toolbar_background" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/fragmentQuizSelectionRadioButton6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+                    android:text="@string/sample_quiz_selective_radio_group_ad"
+                    android:textColor="@color/toolbar_background"
+                    android:textSize="@dimen/fragment_quiz_selective_quiz_option_size"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/toolbar_background" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/fragmentQuizSelectionRadioButton7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+                    android:text="@string/sample_quiz_selective_radio_group_ad"
+                    android:textColor="@color/toolbar_background"
+                    android:textSize="@dimen/fragment_quiz_selective_quiz_option_size"
+                    android:visibility="gone" />
             </RadioGroup>
         </FrameLayout>
     </LinearLayout>

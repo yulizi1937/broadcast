@@ -3,9 +3,12 @@
  */
 package com.application.ui.activity;
 
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
@@ -23,12 +26,23 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.application.ui.activity.LoginActivity.AsyncLoginTask;
 import com.application.ui.view.CircleImageView;
+import com.application.ui.view.MobcastProgressDialog;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.ApplicationLoader;
+import com.application.utils.BuildVars;
+import com.application.utils.FileLog;
+import com.application.utils.JSONRequestBuilder;
+import com.application.utils.RestClient;
+import com.application.utils.RetroFitClient;
+import com.application.utils.Style;
+import com.application.utils.Utilities;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.mobcast.R;
+import com.squareup.okhttp.OkHttpClient;
 
 /**
  * @author Vikalp Patel(VikalpPatelCE)
@@ -133,7 +147,7 @@ public class FeedbackAppActivity extends SwipeBackBaseActivity {
 		setMaterialRippleView();
 	}
 
-	private void setOnClickListener() {
+	@SuppressLint("NewApi") private void setOnClickListener() {
 		mAppFeedbackCategoryLayout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -144,6 +158,24 @@ public class FeedbackAppActivity extends SwipeBackBaseActivity {
 				startActivityForResult(mIntent, AppConstants.INTENT.INTENT_CATEGORY);
 				AndroidUtilities.enterWindowAnimation(FeedbackAppActivity.this);
 			}
+		});
+		
+		mAppFeedbackSubmitBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+					if (Utilities.isInternetConnected()) {
+						if(isValidSubmit){
+							if (AndroidUtilities.isAboveIceCreamSandWich()) {
+								new AsyncAppFeedbackTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+							} else {
+								new AsyncAppFeedbackTask().execute();
+							}
+						}
+					} else {
+						Utilities.showCrouton(FeedbackAppActivity.this,mCroutonViewGroup,getResources().getString(R.string.internet_unavailable),Style.ALERT);
+					}
+				}
 		});
 	}
 
@@ -205,6 +237,83 @@ public class FeedbackAppActivity extends SwipeBackBaseActivity {
 			setMaterialRippleOnView(mAppFeedbackSubmitBtn);
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
+		}
+	}
+	
+	private String apiSubmitAppFeedback() {
+		try {
+				JSONObject jsonObj = JSONRequestBuilder.getPostAppFeedbackData(mAppFeedbackCategorySelectedTv.getText().toString(), mAppFeedbackEditText.getText().toString());
+				if(BuildVars.USE_OKHTTP){
+					return RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_APP_FEEDBACK, jsonObj.toString(), TAG);	
+				}else{
+					return RestClient.postJSON(AppConstants.API.API_APP_FEEDBACK, jsonObj, TAG);	
+				}	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			FileLog.e(TAG, e.toString());
+		}
+		return null;
+	}
+
+	private void parseDataFromApi(String mResponseFromApi) {
+		try{
+			if(!TextUtils.isEmpty(mResponseFromApi)){
+				if(Utilities.isSuccessFromApi(mResponseFromApi)){
+					Utilities.showCrouton(FeedbackAppActivity.this, mCroutonViewGroup, Utilities.getSuccessMessageFromApi(mResponseFromApi), Style.CONFIRM);
+					mAppFeedbackEditText.setText("");
+				}
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	public class AsyncAppFeedbackTask extends AsyncTask<Void, Void, Void> {
+		private String mResponseFromApi;
+		private boolean isSuccess = true;
+		private String mErrorMessage = "";
+		private MobcastProgressDialog mProgressDialog;
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			mProgressDialog = new MobcastProgressDialog(FeedbackAppActivity.this);
+			mProgressDialog.setMessage(ApplicationLoader.getApplication().getResources().getString(R.string.loadingSubmit));
+			mProgressDialog.show();
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			try{
+				mResponseFromApi = apiSubmitAppFeedback();
+				isSuccess = Utilities.isSuccessFromApi(mResponseFromApi);
+			}catch(Exception e){
+				FileLog.e(TAG, e.toString());
+				if(mProgressDialog!=null){
+					mProgressDialog.dismiss();
+				}
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			
+			if(mProgressDialog!=null){
+				mProgressDialog.dismiss();
+			}
+			if (isSuccess) {
+				parseDataFromApi(mResponseFromApi);
+			} else {
+				mErrorMessage = Utilities
+						.getErrorMessageFromApi(mResponseFromApi);
+				Utilities.showCrouton(FeedbackAppActivity.this, mCroutonViewGroup,
+						mErrorMessage, Style.ALERT);
+			}
 		}
 	}
 }

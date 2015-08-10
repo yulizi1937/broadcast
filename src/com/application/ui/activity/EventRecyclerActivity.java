@@ -4,20 +4,40 @@
 package com.application.ui.activity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
-import android.app.SearchManager;
+import android.annotation.TargetApi;
+import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.SearchView;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,16 +46,29 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.application.beans.Event;
+import com.application.sqlite.DBConstant;
 import com.application.ui.adapter.EventRecyclerAdapter;
 import com.application.ui.adapter.EventRecyclerAdapter.OnItemClickListener;
+import com.application.ui.adapter.EventRecyclerAdapter.OnItemLongClickListener;
+import com.application.ui.materialdialog.MaterialDialog;
+import com.application.ui.view.BottomSheet;
 import com.application.ui.view.HorizontalDividerItemDecoration;
 import com.application.ui.view.MaterialRippleLayout;
+import com.application.ui.view.MobcastProgressDialog;
 import com.application.ui.view.ObservableRecyclerView;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.ApplicationLoader;
+import com.application.utils.BuildVars;
+import com.application.utils.FileLog;
+import com.application.utils.JSONRequestBuilder;
+import com.application.utils.RestClient;
+import com.application.utils.RetroFitClient;
+import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.mobcast.R;
+import com.squareup.okhttp.OkHttpClient;
 
 /**
  * @author Vikalp Patel(VikalpPatelCE)
@@ -50,13 +83,29 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 	private ProgressWheel mToolBarMenuRefreshProgress;
 	private ImageView mToolBarMenuRefresh;
 	
+	private FrameLayout mEmptyFrameLayout;
+
+	private AppCompatTextView mEmptyTitleTextView;
+	private AppCompatTextView mEmptyMessageTextView;
+
+	private AppCompatButton mEmptyRefreshBtn;
+	
+	private SwipeRefreshLayout mSwipeRefreshLayout;
+	
 	private ObservableRecyclerView mRecyclerView;
 	
 	private FrameLayout mCroutonViewGroup;
 	
 	private EventRecyclerAdapter mAdapter;
 	
+	private ArrayList<Event> mArrayListEvent;
 	
+	private Context mContext;
+	
+	private LinearLayoutManager mLinearLayoutManager;
+	
+    private boolean mLoadMore = false; 
+    int mFirstVisibleItem, mVisibleItemCount, mTotalItemCount;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,13 +119,12 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 	
 	
 	@Override
-	protected void onResume() {
+	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		setRecycleAdapter();
+		checkReadFromDBAndUpdateToObj();
 		setUiListener();
 	}
-
 	
 	@SuppressLint("NewApi") @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -126,21 +174,84 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 	private void toolBarRefresh(){
 		mToolBarMenuRefresh.setVisibility(View.GONE);
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
-		new Handler().postDelayed(new Runnable() {
+		if (!mLoadMore) {
+            	mLoadMore = true;
+	            refreshFeedFromApi(true, false, AppConstants.BULK);
+        }
+	}
+
+	private void setUiListener() {
+		setRecyclerAdapterListener();
+		setRecyclerScrollListener();
+		setSwipeRefreshListener();
+		setMaterialRippleView();
+		setClickListener();
+	}
+
+	private void setMaterialRippleView() {
+		try {
+			setMaterialRippleOnView(mEmptyRefreshBtn);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void setClickListener(){
+		mEmptyRefreshBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void run() {
+			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				mToolBarMenuRefresh.setVisibility(View.VISIBLE);
-				mToolBarMenuRefreshProgress.setVisibility(View.GONE);				
+				refreshFeedFromApi(true, true, AppConstants.BULK);
 			}
-		}, 5000);
+		});
+	}
+	
+	@SuppressLint("NewApi") 
+	private void setSwipeRefreshListener() {
+		mSwipeRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				// TODO Auto-generated method stub
+				refreshFeedFromApi(true, true, 0);
+			}
+		});
+	}
+	
+	@SuppressLint("NewApi") 
+	private void refreshFeedFromApi(boolean isRefreshFeed, boolean sortByAsc, int limit){//sortByAsc:true-> new data //sortByAsc:false->Old Data
+		if(Utilities.isInternetConnected()){
+			if(AndroidUtilities.isAboveIceCreamSandWich()){
+				new AsyncRefreshTask(isRefreshFeed,sortByAsc,limit).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+			}else{
+				new AsyncRefreshTask(isRefreshFeed,sortByAsc,limit).execute();
+			}
+		}
 	}
 
 
-
 	private void initUi(){
+		mContext = EventRecyclerActivity.this;
+		
 		mCroutonViewGroup = (FrameLayout)findViewById(R.id.croutonViewGroup);
 		mRecyclerView = (ObservableRecyclerView)findViewById(R.id.scroll_wo);
+		
+		mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
+
+		mEmptyFrameLayout = (FrameLayout)findViewById(R.id.fragmentEmptyLayout);
+
+		mEmptyTitleTextView = (AppCompatTextView)findViewById(R.id.layoutEmptyTitleTv);
+		mEmptyMessageTextView = (AppCompatTextView)findViewById(R.id.layoutEmptyMessageTv);
+
+		mEmptyRefreshBtn = (AppCompatButton)findViewById(R.id.layoutEmptyRefreshBtn);
+		
+		mLinearLayoutManager = new LinearLayoutManager(mContext);
+		mRecyclerView.setLayoutManager(mLinearLayoutManager);
+		
+		ApplicationLoader.getPreferences().setViewIdEvent("-1");
+		
+		checkDataInAdapter();
+
+		setSwipeRefreshLayoutCustomisation();
 	}
 	
 	/**
@@ -155,16 +266,10 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 		setSupportActionBar(mToolBar);
 	}
 	
-	private void setRecycleAdapter(){
-		LinearLayoutManager layoutManager = new LinearLayoutManager(EventRecyclerActivity.this);
-	    mRecyclerView.setLayoutManager(layoutManager);
-	    ArrayList<Event> mList= new ArrayList<Event>();
-		for (int i = 0; i < 1; i++) {
-	    	Event obj = new Event();
-//	    	obj.setmEventTitle("SUNDAY 8TH MARCH '15 WOMEN'S DAY SPECIAL "+String.valueOf(i));
-	    	mList.add(obj);
-	    }
-	    mAdapter = new EventRecyclerAdapter(EventRecyclerActivity.this, mList);
+	private void setRecyclerAdapter(){
+	    mAdapter = new EventRecyclerAdapter(mContext, mArrayListEvent);
+	    mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+		mRecyclerView.setHasFixedSize(false);
 	    if(AndroidUtilities.isAboveIceCreamSandWich()){
         	AlphaInAnimationAdapter mAlphaAdapter = new AlphaInAnimationAdapter(mAdapter);
             ScaleInAnimationAdapter mScaleInAdapter = new ScaleInAnimationAdapter(mAlphaAdapter);
@@ -180,23 +285,611 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 			                .build());
 	}
 	
-	private void setUiListener(){
-		setRecyclerAdapterListener();
+	
+	private void setEmptyData() {
+		mEmptyTitleTextView.setText(getResources().getString(
+				R.string.emptyEventTitle));
+		mEmptyMessageTextView.setText(getResources().getString(
+				R.string.emptyEventMessage));
+		mRecyclerView.setVisibility(View.GONE);
+		mEmptyFrameLayout.setVisibility(View.VISIBLE);
 	}
 	
-	private void setRecyclerAdapterListener(){
-		mAdapter.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(View view, int position) {
-				// TODO Auto-generated method stub
-				switch (view.getId()) {
-				default:
-					Intent mIntent = new Intent(EventRecyclerActivity.this, EventDetailActivity.class);
-					startActivity(mIntent);
-					AndroidUtilities.enterWindowAnimation(EventRecyclerActivity.this);
-					break;
+	private void setSwipeRefreshLayoutCustomisation() {
+		mSwipeRefreshLayout.setColorSchemeColors(
+				Color.parseColor(AppConstants.COLOR.MOBCAST_RED),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_YELLOW),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_PURPLE),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_GREEN),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_BLUE));
+	}
+	
+	
+	private void setRecyclerAdapterListener() {
+		if(mAdapter!=null){
+			mAdapter.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(View view, int position) {
+					// TODO Auto-generated method stub
+//					position-=1;
+					switch (view.getId()) {
+					case R.id.itemRecyclerEventRootLayout:
+						Intent mIntentEvent = new Intent(EventRecyclerActivity.this,EventDetailActivity.class);
+						mIntentEvent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.EVENT);
+						mIntentEvent.putExtra(AppConstants.INTENTCONSTANTS.ID, mArrayListEvent.get(position).getmId());
+						saveViewPosition(position);
+						startActivity(mIntentEvent);
+						AndroidUtilities.enterWindowAnimation(EventRecyclerActivity.this);
+						break;
+					}
+
+				}
+			});
+		}
+		
+		if(mAdapter!=null){
+			mAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
+				@Override
+				public void onItemLongClick(View view, int position) {
+					// TODO Auto-generated method stub
+//					position=-1;
+					showContextMenu(position, view);
+				}
+			});
+		}
+	}
+	
+	private void setRecyclerScrollListener() {
+		if(mAdapter!=null){
+			mRecyclerView.setOnScrollListener(new OnScrollListener() {
+				@Override
+				public void onScrollStateChanged(RecyclerView recyclerView,
+						int newState) {
+					// TODO Auto-generated method stub
+					super.onScrollStateChanged(recyclerView, newState);
+					int topRowVerticalPosition = (recyclerView == null || recyclerView
+							.getChildCount() == 0) ? 0 : recyclerView.getChildAt(0)
+							.getTop();
+					mSwipeRefreshLayout.setEnabled(topRowVerticalPosition >= 0);
+				}
+
+				
+				@Override
+				public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+					// TODO Auto-generated method stub
+					super.onScrolled(recyclerView, dx, dy);
+			        mVisibleItemCount = mLinearLayoutManager.getChildCount();
+			        mTotalItemCount = mLinearLayoutManager.getItemCount();
+			        mFirstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
+			 
+			        if (!mLoadMore) {
+						if (mVisibleItemCount + mFirstVisibleItem >= mTotalItemCount) {
+			            	mLoadMore = true;
+				            refreshFeedFromApi(true, false, AppConstants.BULK);
+			            }
+			        }
+				}
+			});
+		}
+	}
+	
+	private void checkDataInAdapter() {
+		Cursor mCursor = getContentResolver().query(
+				DBConstant.Event_Columns.CONTENT_URI, null, null, null,
+				DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_DATE_FORMATTED + " DESC");
+		if (mCursor != null && mCursor.getCount() > 0) {
+			addEventObjectListFromDBToBeans(mCursor, false, false);
+			if (mArrayListEvent.size() > 0) {
+				setRecyclerAdapter();
+			}
+		} else {
+			setEmptyData();
+		}
+
+		if (mCursor != null) {
+			mCursor.close();
+		}
+	}
+	
+	public class EventSort implements Comparator<Event>{
+	    @Override
+	    public int compare(Event Obj1, Event Obj2) {
+	        try{
+	        	if(Integer.parseInt(Obj1.getmId()) < Integer.parseInt(Obj2.getmId())){
+		            return 1;
+		        } else {
+		            return -1;
+		        }
+	        }catch(Exception e){
+	        	FileLog.e(TAG, e.toString());
+	        	return -1;
+	        }
+	    }
+	}
+	
+	private void addEventObjectListFromDBToBeans(Cursor mCursor, boolean isFromBroadCastReceiver, boolean isToAddOldData){
+		int mIntEventId = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_ID);
+		int mIntEventTitle = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_TITLE);
+		int mIntEventViewCount = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_READ_NO);
+		int mIntEventLikeCount = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO);
+		int mIntEventGoingCount = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_GOING_NO);
+		int mIntEventBy = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_BY);
+		int mIntEventStartDate = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_START_DATE);
+		int mIntEventStartTime = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_START_TIME);
+		int mIntEventReceivedDate = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_DATE);
+		int mIntEventReceivedTime = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_TIME);
+		int mIntEventIsRead = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_IS_READ);
+		int mIntEventIsLike = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_IS_LIKE);
+		int mIntEventIsGoing = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN);
+		
+		
+		if(!isToAddOldData){
+			mArrayListEvent = new ArrayList<Event>();
+		}else{
+			if(mArrayListEvent==null){
+				mArrayListEvent = new ArrayList<Event>();	
+			}
+		}
+		mCursor.moveToFirst();
+		do {
+			Event Obj = new Event();
+			String mEventId = mCursor.getString(mIntEventId);
+			String mEventReceivedDate = mCursor.getString(mIntEventReceivedDate);
+			String mEventReceivedTime = mCursor.getString(mIntEventReceivedTime);
+			Obj.setmId(mEventId);
+			Obj.setmTitle(mCursor.getString(mIntEventTitle));
+			Obj.setmBy(Utilities.formatBy(mCursor.getString(mIntEventBy), mEventReceivedDate, mEventReceivedTime));
+			Obj.setmDaysLeft(Utilities.formatDaysLeft(mCursor.getString(mIntEventStartDate), mCursor.getString(mIntEventStartTime)));
+			Obj.setmLikeCount(mCursor.getString(mIntEventLikeCount));
+			Obj.setmViewCount(mCursor.getString(mIntEventViewCount));
+			Obj.setmGoingCount(mCursor.getString(mIntEventGoingCount));
+			Obj.setGoingToAttend(Boolean.parseBoolean(mCursor.getString(mIntEventIsGoing)));
+			Obj.setRead(Boolean.parseBoolean(mCursor.getString(mIntEventIsRead)));
+			Obj.setLike(Boolean.parseBoolean(mCursor.getString(mIntEventIsLike)));
+			Obj.setmFileType(AppConstants.INTENTCONSTANTS.EVENT);
+			
+			if(!isFromBroadCastReceiver){
+				mArrayListEvent.add(Obj);	
+			}else{
+				mArrayListEvent.add(0,Obj);
+			}
+		} while (mCursor.moveToNext());
+	
+		Collections.sort(mArrayListEvent, new EventSort());
+	}
+	
+	private void saveViewPosition(int position){
+		ApplicationLoader.getPreferences().setViewIdEvent(String.valueOf(position));
+	}
+	
+	private void checkReadFromDBAndUpdateToObj(){
+		int position = Integer.parseInt(ApplicationLoader.getPreferences().getViewIdEvent());
+//		position-=1;
+		if (position >= 0 && position < mArrayListEvent.size()) {
+			if(mArrayListEvent!=null && mArrayListEvent.size() > 0){
+				Cursor mCursor = getContentResolver().query(DBConstant.Event_Columns.CONTENT_URI, new String[]{DBConstant.Event_Columns.COLUMN_EVENT_ID, DBConstant.Event_Columns.COLUMN_EVENT_IS_READ, DBConstant.Event_Columns.COLUMN_EVENT_IS_LIKE, DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO}, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mArrayListEvent.get(position).getmId()}, null);
+				
+				if(mCursor!=null && mCursor.getCount() >0){
+					mCursor.moveToFirst();
+					boolean isToNotify = false;
+					if(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_IS_READ)))){
+						mArrayListEvent.get(position).setRead(true);
+						isToNotify = true;
+					}
+					if(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_IS_LIKE)))){
+						mArrayListEvent.get(position).setLike(true);
+						mArrayListEvent.get(position).setmLikeCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO)));
+						isToNotify = true;
+					}
+					if(isToNotify){
+						mRecyclerView.getAdapter().notifyDataSetChanged();
+					}
+				}
+				
+				if(mCursor!=null)
+					mCursor.close();
+			}
+		}
+	}
+	
+	public void passDataToFragment(int mId, String mCategory) {
+		try{
+			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.EVENT)){
+				Cursor mCursor = null;
+				boolean isToAddOldData = false;
+				if(mId == -786){
+					mCursor = mContext.getContentResolver().query(DBConstant.Event_Columns.CONTENT_URI, null, DBConstant.Event_Columns.COLUMN_EVENT_ID + "<?", new String[]{mArrayListEvent.get(mArrayListEvent.size()-1).getmId()}, DBConstant.Event_Columns.COLUMN_EVENT_ID + " DESC");
+					isToAddOldData = true;
+				}else{
+					mCursor = mContext.getContentResolver().query(DBConstant.Event_Columns.CONTENT_URI, null, null, null, DBConstant.Event_Columns.COLUMN_EVENT_ID + " DESC");
+				}
+				if(mCursor!=null && mCursor.getCount() > 0){
+					mSwipeRefreshLayout.setEnabled(true);
+					mSwipeRefreshLayout.setRefreshing(true);
+					mCursor.moveToFirst();
+					addEventObjectListFromDBToBeans(mCursor, false, isToAddOldData);
+					AndroidUtilities.runOnUIThread(new Runnable() {
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							if(mAdapter!=null){
+								mAdapter.addEventObjList(mArrayListEvent);
+								mRecyclerView.getAdapter().notifyDataSetChanged();
+							}else{
+								setRecyclerAdapter();
+								setUiListener();
+							}
+							mSwipeRefreshLayout.setRefreshing(false);
+							
+							if(mRecyclerView.getVisibility() == View.GONE){
+								mEmptyFrameLayout.setVisibility(View.GONE);
+								mRecyclerView.setVisibility(View.VISIBLE);
+							}
+						}
+					}, 1000);
+					
+				}
+				
+				if(mCursor!=null)
+					mCursor.close();
+			}			
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	/*
+	 * ContextMenu
+	 */
+	private void showContextMenu(int mPosition, View mView){
+		try{
+//			mPosition =  mPosition - 1;
+			if(mPosition!= -1){
+				int mType = AppConstants.TYPE.EVENT;
+				String mTitle = mArrayListEvent.get(mPosition).getmTitle();
+				boolean isRead = mArrayListEvent.get(mPosition).isRead();
+				ContextMenuFragment newFragment = new ContextMenuFragment(mPosition, mType, mTitle, isRead , mView);
+		        newFragment.show(getSupportFragmentManager(), "dialog");
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	public class ContextMenuFragment extends DialogFragment {
+		int mPosition;
+		int mType;
+		String mTitle;
+		boolean isRead;
+		View mView;
+	    public ContextMenuFragment (int mPosition, int mType, String mTitle, boolean isRead, View mView) {
+	    	this.mPosition = mPosition;
+	    	this.mTitle = mTitle;
+	    	this.mType = mType;
+	    	this.isRead = isRead;
+	    	this.mView = mView;
+	    }
+
+	    @Override
+	    public Dialog onCreateDialog(Bundle savedInstanceState) {
+	        return getContextMenu(mPosition, mType, mTitle, isRead, mView);
+	    }
+	}
+	
+	private BottomSheet getContextMenu(final int mPosition, int mType, final String mTitle, boolean isRead, final View mView){
+		BottomSheet mBottomSheet;
+		mBottomSheet = new BottomSheet.Builder(EventRecyclerActivity.this).icon(Utilities.getRoundedBitmapForContextMenu(mType)).title(mTitle).sheet(R.menu.context_menu_mobcast).build();
+         final Menu menu = mBottomSheet.getMenu();
+         
+         SpannableString mSpannabledRead = new SpannableString(getResources().getString(R.string.context_menu_read));
+         SpannableString mSpannabledUnRead = new SpannableString(getResources().getString(R.string.context_menu_unread));
+         SpannableString mSpannabledDelete = new SpannableString(getResources().getString(R.string.context_menu_delete));
+         SpannableString mSpannabledView = new SpannableString(getResources().getString(R.string.context_menu_view));
+         
+         mSpannabledRead.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledRead.length(), 0);
+         mSpannabledUnRead.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledUnRead.length(), 0);
+         mSpannabledDelete.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledDelete.length(), 0);
+         mSpannabledView.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledView.length(), 0);
+         
+         menu.getItem(0).setTitle(mSpannabledRead);
+         menu.getItem(1).setTitle(mSpannabledUnRead);
+         menu.getItem(2).setTitle(mSpannabledDelete);
+         menu.getItem(3).setTitle(mSpannabledView);
+         
+         /**
+          * Read
+          */
+         menu.getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+             @Override
+             public boolean onMenuItemClick(MenuItem item) {
+            	 contextMenuMarkAsRead(mPosition);
+                 return true;
+             }
+         });
+         
+         /**
+          * UnRead
+          */
+         menu.getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+             @Override
+             public boolean onMenuItemClick(MenuItem item) {
+            	 contextMenuMarkAsUnRead(mPosition);
+                 return true;
+             }
+         });
+         
+         /**
+          * Delete
+          */
+         menu.getItem(2).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+             @Override
+             public boolean onMenuItemClick(MenuItem item) {
+            	 showDeleteConfirmationDialog(mPosition, mTitle);
+//            	 contextMenuDelete(mPosition);
+                 return true;
+             }
+         });
+         
+         /**
+          * View
+          */
+         menu.getItem(3).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+             @Override
+             public boolean onMenuItemClick(MenuItem item) {
+            	 contextMenuView(mPosition, mView);
+                 return true;
+             }
+         });
+         
+         return mBottomSheet;
+	}
+	
+	private void contextMenuMarkAsRead(int mPosition){
+		try{
+		 ContentValues values = new ContentValues();
+		 String mEventId = mArrayListEvent.get(mPosition).getmId();
+		 values.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_READ, "true");
+		 getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, values, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mEventId});	
+       	 mArrayListEvent.get(mPosition).setRead(true);
+       	 mRecyclerView.getAdapter().notifyItemChanged(mPosition);
+       	 UserReport.updateUserReportApi(mEventId, AppConstants.INTENTCONSTANTS.EVENT, AppConstants.REPORT.READ, "");
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void contextMenuMarkAsUnRead(int mPosition){
+		try{
+		 ContentValues values = new ContentValues();
+	     values.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_READ, "false");
+		 getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, values, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mArrayListEvent.get(mPosition).getmId()});
+		 mArrayListEvent.get(mPosition).setRead(false);
+       	 mRecyclerView.getAdapter().notifyItemChanged(mPosition);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void contextMenuDelete(int mPosition){
+		try{
+		 getContentResolver().delete(DBConstant.Event_Columns.CONTENT_URI, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mArrayListEvent.get(mPosition).getmId()});
+       	 mArrayListEvent.remove(mPosition);
+       	 if(mArrayListEvent.size() == 0){
+       		 checkDataInAdapter();
+       	 }else{
+       		mRecyclerView.getAdapter().notifyDataSetChanged();
+       	 }
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void contextMenuView(int mPosition , View mView){
+		try{
+			mView.performClick();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void showDeleteConfirmationDialog(final int mPosition, String mTitle){
+		MaterialDialog mMaterialDialog = new MaterialDialog.Builder(EventRecyclerActivity.this)
+        .title(getResources().getString(R.string.content_delete_message) + " " + mTitle + "?")
+        .iconRes(R.drawable.context_menu_delete)
+        .titleColor(Utilities.getAppColor())
+        .positiveText(getResources().getString(R.string.button_delete))
+        .positiveColor(Utilities.getAppColor())
+        .negativeText(getResources().getString(R.string.sample_fragment_settings_dialog_language_negative))
+        .negativeColor(Utilities.getAppColor())
+        .callback(new MaterialDialog.ButtonCallback() {
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB) @Override
+            public void onPositive(MaterialDialog dialog) {
+            	dialog.dismiss();
+            	contextMenuDelete(mPosition);
+            }
+
+            @Override
+            public void onNegative(MaterialDialog dialog) {
+            	dialog.dismiss();
+            }
+        })
+        .show();
+	}
+	/*
+	 * AsyncTask To Refresh
+	 */
+	
+	public String apiRefreshFeedMobcast(boolean sortByAsc, int limit){
+		try {
+			JSONObject jsonObj =null;
+			 if(sortByAsc){
+				jsonObj = JSONRequestBuilder.getPostFetchFeedEvent(sortByAsc,limit, mArrayListEvent != null ? mArrayListEvent.get(0).getmId() : String.valueOf("0"));
+			 }else{
+				 jsonObj= JSONRequestBuilder.getPostFetchFeedEvent(sortByAsc,limit, mArrayListEvent.get(mArrayListEvent.size()-2).getmId());
+			 }
+			if(BuildVars.USE_OKHTTP){
+				return RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_FETCH_FEED_EVENT, jsonObj.toString(), TAG);	
+			}else{
+				return RestClient.postJSON(AppConstants.API.API_FETCH_FEED_EVENT, jsonObj, TAG);	
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			FileLog.e(TAG, e.toString());
+		}
+		return null;
+	}
+	
+	public String apiRefreshFeedAction(){
+		try {
+			JSONObject jsonObj = JSONRequestBuilder.getPostFetchFeedAction(AppConstants.INTENTCONSTANTS.EVENT);
+			if(BuildVars.USE_OKHTTP){
+				return RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_FETCH_FEED_ACTION, jsonObj.toString(), TAG);	
+			}else{
+				return RestClient.postJSON(AppConstants.API.API_FETCH_FEED_ACTION, jsonObj, TAG);	
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			FileLog.e(TAG, e.toString());
+		}
+		return null;
+	}
+	
+	public void parseDataFromApi(String mResponseFromApi, boolean isToAddOldData){
+		try{
+			if (Utilities.isSuccessFromApi(mResponseFromApi)) {
+				JSONObject mJSONObj = new JSONObject(mResponseFromApi);
+				JSONArray mJSONMobMainArrObj = mJSONObj.getJSONArray(AppConstants.API_KEY_PARAMETER.event);
+				
+				for (int i = 0; i < mJSONMobMainArrObj.length(); i++) {
+					JSONObject mJSONMobObj = mJSONMobMainArrObj.getJSONObject(i);
+					
+					String mEventId = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventId);
+					String mDate = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventSentDate);
+					String mTime = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventSentTime);
+					String mExpiryDate = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventExpiryDate);
+					String mExpiryTime = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventExpiryTime);
+					String mFileLink = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventCoverLink);
+					String mFileName = Utilities.getFileName(mFileLink);
+					ContentValues values = new ContentValues();
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_ID, mEventId);
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_TITLE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventTitle));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_BY, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventBy));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_DESC, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventDescription));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_GOING_NO, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventGoingCount));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventLikeCount));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_READ_NO, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventReadCount));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_INVITED_NO, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventInvitedCount));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_DATE, mDate);
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_TIME, mTime);
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_DATE_FORMATTED, Utilities.getMilliSecond(mDate, mTime));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_READ, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventIsRead));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_LIKE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventIsLiked));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_SHARING, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventIsSharing));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventIsGoing));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_FILE_LINK, mFileLink);
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_FILE_PATH, Utilities.getFilePath(AppConstants.TYPE.IMAGE, false, mFileName));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_FILE_SIZE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventFileSize));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_START_DATE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventStartDate));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_END_DATE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventEndDate));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_START_TIME, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventFromTime));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_END_TIME, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventToTime));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_VENUE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventVenue));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_MAP, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.eventMap));
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_EXPIRY_DATE, mExpiryDate);
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_EXPIRY_TIME, mExpiryTime);
+					values.put(DBConstant.Event_Columns.COLUMN_EVENT_EXPIRY_DATE_FORMATTED, Utilities.getMilliSecond(mExpiryDate, mExpiryTime));
+					
+					
+					Uri isInsertUri = getContentResolver().insert(DBConstant.Event_Columns.CONTENT_URI, values);
+					boolean isInsertedInDB = Utilities.checkWhetherInsertedOrNot(TAG,isInsertUri);
+					
+					/*if(isInsertedInDB){
+						ApplicationLoader.getPreferences().setLastIdEvent(mEventId);
+					}*/
+				}
+				
+				if(isToAddOldData){
+					passDataToFragment(-786, AppConstants.INTENTCONSTANTS.EVENT);					
+				}else{
+					passDataToFragment(0, AppConstants.INTENTCONSTANTS.EVENT);	
 				}
 			}
-		});
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	public class AsyncRefreshTask extends AsyncTask<Void, Void, Void> {
+		private String mResponseFromApi;
+		private boolean isSuccess = true;
+		private String mErrorMessage = "";
+		private MobcastProgressDialog mProgressDialog;
+		private boolean isRefreshFeed = true;
+		private boolean sortByAsc =false;
+		private int limit;
+
+		public AsyncRefreshTask(boolean isRefreshFeed, boolean sortByAsc,int limit){
+			this.isRefreshFeed = isRefreshFeed;
+			this.sortByAsc = sortByAsc;
+			this.limit = limit;
+		}
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			if (mArrayListEvent == null) {
+				mProgressDialog = new MobcastProgressDialog(EventRecyclerActivity.this);
+				mProgressDialog.setMessage(ApplicationLoader.getApplication().getResources().getString(R.string.loadingRefresh));
+				mProgressDialog.show();
+			}
+			
+			if(!sortByAsc){
+				Event Obj = new Event();
+				Obj.setmFileType(AppConstants.MOBCAST.FOOTER);
+				mArrayListEvent.add(Obj);
+				mRecyclerView.getAdapter().notifyDataSetChanged();
+			}
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			try{
+				mResponseFromApi = isRefreshFeed ? apiRefreshFeedMobcast(sortByAsc,limit) : apiRefreshFeedAction();
+				isSuccess = Utilities.isSuccessFromApi(mResponseFromApi);
+			}catch(Exception e){
+				FileLog.e(TAG, e.toString());
+				if(mProgressDialog!=null){
+					mProgressDialog.dismiss();
+				}
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			
+			if(!sortByAsc){
+				mLoadMore = false;
+				mArrayListEvent.remove(mArrayListEvent.size()-1);
+				mRecyclerView.getAdapter().notifyDataSetChanged();
+			}
+			
+			if (isSuccess) {
+				parseDataFromApi(mResponseFromApi, !sortByAsc);
+			}
+
+			if(mProgressDialog!=null){
+				mProgressDialog.dismiss();
+			}
+			
+			if(mSwipeRefreshLayout.isRefreshing()){
+				mToolBarMenuRefresh.setVisibility(View.VISIBLE);
+				mToolBarMenuRefreshProgress.setVisibility(View.GONE);
+				mSwipeRefreshLayout.setRefreshing(false);
+			}
+		}
 	}
 }

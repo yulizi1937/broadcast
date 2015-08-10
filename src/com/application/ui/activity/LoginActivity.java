@@ -10,16 +10,19 @@ import org.json.JSONObject;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
@@ -31,13 +34,17 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.application.ui.adapter.WhatWeDoPagerAdapter;
 import com.application.ui.calligraphy.CalligraphyContextWrapper;
+import com.application.ui.view.CirclePageIndicator;
 import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.MobcastProgressDialog;
 import com.application.utils.AndroidUtilities;
@@ -50,6 +57,9 @@ import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
 import com.application.utils.Utilities;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
@@ -64,6 +74,12 @@ public class LoginActivity extends AppCompatActivity {
 	private static final String TAG = LoginActivity.class.getSimpleName();
 	private static final int INTENT_COUNTRY_CODE = 1001;
 
+	private ViewPager mViewPager;
+	
+	private CirclePageIndicator mCirclerPagerIndicator;
+	
+	private WhatWeDoPagerAdapter mAdapter;
+	
 	private AppCompatTextView mLoginTitleTv;
 	private AppCompatTextView mCountryCodeTv;
 	private AppCompatTextView mAdminTv;
@@ -86,15 +102,25 @@ public class LoginActivity extends AppCompatActivity {
 
 	private String userId;
 	private String countryCodeValue = "IN";
+	
+	private GoogleCloudMessaging gcm;
+	private String regid;
+	public static final String EXTRA_MESSAGE = "message";
+	public static final String PROPERTY_REG_ID = "registration_id";
+	private static final String PROPERTY_APP_VERSION = "appVersion";
+	private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+	private Context applicationContext;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		setFullScreen();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		setSecurity();
 		initUi();
-		initToolBar();
+//		initToolBar();
+		initViewPager();
 		setUiListener();
 		tryToGetUserId();
 		tryToGetUserCountryCode();
@@ -118,6 +144,9 @@ public class LoginActivity extends AppCompatActivity {
 		mAdminTv = (AppCompatTextView) findViewById(R.id.activityLoginAdminstration);
 		mCountryCodeTv = (AppCompatTextView) findViewById(R.id.activityLoginCountryCodeTv);
 		mLoginTitleTv = (AppCompatTextView) findViewById(R.id.activityLoginTv);
+		
+		mViewPager = (ViewPager)findViewById(R.id.activityLoginViewPager);
+		mCirclerPagerIndicator = (CirclePageIndicator)findViewById(R.id.activityLoginCirclePageIndicator);
 
 		mLoginIdEt = (AppCompatEditText) findViewById(R.id.activityLoginIdEv);
 
@@ -138,6 +167,12 @@ public class LoginActivity extends AppCompatActivity {
 		mToolBarDrawer.setVisibility(View.GONE);
 		mToolBarTitleTv.setText(getResources().getString(
 				R.string.LoginActivityTitle));
+	}
+	
+	private void initViewPager(){
+		mAdapter = new WhatWeDoPagerAdapter(getSupportFragmentManager());
+		mViewPager.setAdapter(mAdapter);
+		mCirclerPagerIndicator.setViewPager(mViewPager);
 	}
 
 	private void setUiListener() {
@@ -182,7 +217,7 @@ public class LoginActivity extends AppCompatActivity {
 		setClickListener();
 	}
 
-	private void setClickListener() {
+	@SuppressLint("NewApi") private void setClickListener() {
 		mNextBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -191,7 +226,11 @@ public class LoginActivity extends AppCompatActivity {
 					if (!TextUtils.isEmpty(mLoginIdEt.getText().toString())) {
 						if (Utilities.isInternetConnected()) {
 							if(isValidLoginId){
-								new AsyncLoginTask().execute();
+								if (AndroidUtilities.isAboveIceCreamSandWich()) {
+									new AsyncLoginTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+								} else {
+									new AsyncLoginTask().execute();
+								}
 							}
 						} else {
 							Utilities.showCrouton(
@@ -304,6 +343,17 @@ public class LoginActivity extends AppCompatActivity {
 				.rippleAlpha(0.2f).rippleHover(true).rippleOverlay(true)
 				.rippleBackground(Color.parseColor("#00000000")).create();
 	}
+	
+	private void setFullScreen() {
+		try {
+					requestWindowFeature(Window.FEATURE_NO_TITLE);
+					getWindow().setFlags(
+							WindowManager.LayoutParams.FLAG_FULLSCREEN,
+							WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+	}
 
 	private void tryToGetUserId() {
 		if (BuildVars.IS_MOBILENUMBER_PRIMARY) {
@@ -408,7 +458,8 @@ public class LoginActivity extends AppCompatActivity {
 					return RestClient.postJSON(AppConstants.API.API_LOGIN, jsonObj, TAG);	
 				}	
 			}else{
-				finish();
+				applicationContext = ApplicationLoader.getApplication().getApplicationContext();
+				initPlayServices();
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -490,5 +541,110 @@ public class LoginActivity extends AppCompatActivity {
 						mErrorMessage, Style.ALERT);
 			}
 		}
+	}
+	
+	
+	/**
+	 * GCM API
+	 */
+	
+	/*
+	 * GCM API
+	 */
+	private void initPlayServices() {
+		if (checkPlayServices()) {
+			gcm = GoogleCloudMessaging.getInstance(applicationContext);
+			regid = getRegistrationId();
+
+			if (regid.length() == 0) {
+				registerInBackground();
+			}else{
+				ApplicationLoader.getPreferences().setRegId(regid);
+			}
+		} else {
+			FileLog.d("tmessages", "No valid Google Play Services APK found.");
+		}
+	}
+
+	private boolean checkPlayServices() {
+		int resultCode = GooglePlayServicesUtil
+				.isGooglePlayServicesAvailable(this);
+		return resultCode == ConnectionResult.SUCCESS;
+	}
+
+	private String getRegistrationId() {
+		final SharedPreferences prefs = getGCMPreferences(applicationContext);
+		String registrationId = prefs.getString(PROPERTY_REG_ID, "");
+		if (registrationId.length() == 0) {
+			FileLog.d("tmessages", "Registration not found.");
+			return "";
+		}
+		int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION,
+				Integer.MIN_VALUE);
+		int currentVersion = ApplicationLoader.getAppVersion();
+		if (registeredVersion != currentVersion) {
+			FileLog.d("tmessages", "App version changed.");
+			return "";
+		}
+		return registrationId;
+	}
+
+	private SharedPreferences getGCMPreferences(Context context) {
+		return getSharedPreferences(ApplicationLoader.class.getSimpleName(),
+				Context.MODE_PRIVATE);
+	}
+
+
+	@SuppressLint("NewApi") private void registerInBackground() {
+		AsyncTask<String, String, Boolean> task = new AsyncTask<String, String, Boolean>() {
+			@Override
+			protected Boolean doInBackground(String... objects) {
+				if (gcm == null) {
+					gcm = GoogleCloudMessaging.getInstance(applicationContext);
+				}
+				int count = 0;
+				while (count < 1000) {
+					try {
+						count++;
+						regid = gcm.register(AppConstants.PUSH.PROJECT_ID);
+						storeRegistrationId(applicationContext, regid);
+						ApplicationLoader.getPreferences().setRegId(regid);
+						if(isValidLoginId){
+							mNextBtn.performClick();
+						}
+						return true;
+					} catch (Exception e) {
+						FileLog.e("tmessages", e);
+					}
+					try {
+						if (count % 20 == 0) {
+							Thread.sleep(60000 * 30);
+						} else {
+							Thread.sleep(5000);
+						}
+					} catch (InterruptedException e) {
+						FileLog.e("tmessages", e);
+					}
+				}
+				return false;
+			}
+		};
+
+		if (android.os.Build.VERSION.SDK_INT >= 11) {
+			task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null,
+					null);
+		} else {
+			task.execute(null, null, null);
+		}
+	}
+
+	private void storeRegistrationId(Context context, String regId) {
+		final SharedPreferences prefs = getGCMPreferences(context);
+		int appVersion = ApplicationLoader.getAppVersion();
+		FileLog.e("tmessages", "Saving regId on app version " + appVersion);
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString(PROPERTY_REG_ID, regId);
+		editor.putInt(PROPERTY_APP_VERSION, appVersion);
+		editor.commit();
 	}
 }

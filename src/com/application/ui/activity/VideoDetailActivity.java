@@ -162,13 +162,13 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-//		decryptFileOnResume();
+		decryptFileOnResume();
 	}
 	
 	@Override
 	protected void onPause() {
 		cleanUp();
-//		deleteDecryptedFile();
+		deleteDecryptedFile();
 		super.onPause();
 	}
 
@@ -254,14 +254,6 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		mToolBarMenuRefresh.setVisibility(View.GONE);
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
 		refreshFeedActionFromApi();
-		/*new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				mToolBarMenuRefresh.setVisibility(View.VISIBLE);
-				mToolBarMenuRefreshProgress.setVisibility(View.GONE);
-			}
-		}, 5000);*/
 	}
 
 	private void initUi() {
@@ -848,33 +840,37 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void downloadFileInBackground(){
-		if(Utilities.isInternetConnected()){
-			DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
-					VideoDetailActivity.this, false, true,
-					mContentFileLink, mContentFilePath,
-					AppConstants.TYPE.VIDEO, Long.parseLong(mContentFileSize), TAG);
-			mDownloadAsyncTask.execute();
-			mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
-				@Override
-				public void onPostExecute(boolean isDownloaded) {
-					// TODO Auto-generated method stub
-					if(isDownloaded){
-						mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
-						if(!TextUtils.isEmpty(mContentFilePath)){
-							initVideoPlayer(mContentFilePath);
-							Utilities.downloadQueue.postRunnable(new Runnable() {
-								@Override
-								public void run() {
-									// TODO Auto-generated method stub
-									Utilities.downloadFile(AppConstants.TYPE.VIDEO, true, false, mContentFileThumbLink, Utilities.getFileName(mContentFileThumbLink));
-								}
-							});
-						}	
+		try{
+			if(Utilities.isInternetConnected()){
+				DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
+						VideoDetailActivity.this, false, true,
+						mContentFileLink, mContentFilePath,
+						AppConstants.TYPE.VIDEO, Long.parseLong(mContentFileSize), TAG);
+				mDownloadAsyncTask.execute();
+				mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
+					@Override
+					public void onPostExecute(boolean isDownloaded) {
+						// TODO Auto-generated method stub
+						if(isDownloaded){
+							mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
+							if(!TextUtils.isEmpty(mContentFilePath)){
+								initVideoPlayer(mContentFilePath);
+								Utilities.downloadQueue.postRunnable(new Runnable() {
+									@Override
+									public void run() {
+										// TODO Auto-generated method stub
+										Utilities.downloadFile(AppConstants.TYPE.VIDEO, true, false, mContentFileThumbLink, Utilities.getFileName(mContentFileThumbLink));
+									}
+								});
+							}	
+						}
 					}
-				}
-			});
-		}else{
-			Utilities.showCrouton(VideoDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.internet_unavailable), Style.ALERT);
+				});
+			}else{
+				Utilities.showCrouton(VideoDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.internet_unavailable), Style.ALERT);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 	
@@ -970,9 +966,9 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	
 	private void decryptFileOnResume(){
 		try{
-			if(mContentFilePath!=null){
-				mContentFilePath = mContentFilePath.replace("_decrypted", "");
-				mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));	
+			if(Utilities.isContainsDecrypted(mContentFilePath)){
+					mContentFilePath = mContentFilePath.replace(AppConstants.decrypted, "");
+					mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
@@ -981,10 +977,8 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	
 	private void deleteDecryptedFile(){
 		try{
-			if(mContentFilePath!=null){
-				if(mContentFilePath.contains("_decrypted")){
+			if(Utilities.isContainsDecrypted(mContentFilePath)){
 					new File(mContentFilePath).delete();
-				}	
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());

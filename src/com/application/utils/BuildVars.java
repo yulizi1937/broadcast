@@ -22,6 +22,11 @@ public class BuildVars {
 	public static final boolean DEBUG_OTP = true;
 	
 	/*
+	 * Sync
+	 */
+	public static final boolean IS_AUTOSYNC = false;
+	
+	/*
 	 * Network Preferences
 	 */
 	

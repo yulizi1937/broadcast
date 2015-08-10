@@ -220,6 +220,28 @@ public class AppPreferences {
 		return flag;
 	}
 	
+	public void setUserFavouriteQuestion(String str) {
+		editor = sharedPreferences.edit();
+		editor.putString("userFavouriteQuestion", str);
+		editor.commit();
+	}
+
+	public String getUserFavouriteQuestion() {
+		String flag = sharedPreferences.getString("userFavouriteQuestion", null);
+		return flag;
+	}
+	
+	public void setUserFavouriteAnswer(String str) {
+		editor = sharedPreferences.edit();
+		editor.putString("userFavouriteAnswer", str);
+		editor.commit();
+	}
+
+	public String getUserFavouriteAnswer() {
+		String flag = sharedPreferences.getString("userFavouriteAnswer", null);
+		return flag;
+	}
+	
 	/*
 	 * PREFERENCES : DEVICE DETAILS
 	 */
@@ -310,6 +332,18 @@ public class AppPreferences {
 		return mDownloadAndNotify;
 	}
 	
+	public void setBirthdayNotificationMute(boolean isBirthdayNotificationMute) {
+		editor = sharedPreferences.edit();
+		editor.putBoolean("setBirthdayNotificationMute", isBirthdayNotificationMute);
+		editor.commit();
+	}
+
+	public boolean isBirthdayNotificationMute() {
+		boolean isBirthdayNotificationMute= sharedPreferences.getBoolean("setBirthdayNotificationMute",
+				false);
+		return isBirthdayNotificationMute;
+	}
+	
 	public void setAnyDoNotification(boolean isAnyDoNotification) {
 		editor = sharedPreferences.edit();
 		editor.putBoolean("isAnyDoNotification", isAnyDoNotification);
@@ -349,15 +383,37 @@ public class AppPreferences {
 		return mViewIdMobcast;
 	}
 	
-	public void setViewIdTraining(String mLastIdMobcast) {
+	public void setViewIdTraining(String mLastIdTraining) {
 		editor = sharedPreferences.edit();
-		editor.putString("setViewIdTraining", mLastIdMobcast);
+		editor.putString("setViewIdTraining", mLastIdTraining);
 		editor.commit();
 	}
 
 	public String getViewIdTraining() {
-		String mViewIdMobcast= sharedPreferences.getString("setViewIdTraining","-1");
-		return mViewIdMobcast;
+		String mViewIdTraining= sharedPreferences.getString("setViewIdTraining","-1");
+		return mViewIdTraining;
+	}
+	
+	public void setViewIdEvent(String mLastIdEvent) {
+		editor = sharedPreferences.edit();
+		editor.putString("setViewIdEvent", mLastIdEvent);
+		editor.commit();
+	}
+
+	public String getViewIdEvent() {
+		String mViewIdEvent= sharedPreferences.getString("setViewIdEvent","-1");
+		return mViewIdEvent;
+	}
+	
+	public void setViewIdAward(String mLastIdAward) {
+		editor = sharedPreferences.edit();
+		editor.putString("setViewIdAward", mLastIdAward);
+		editor.commit();
+	}
+
+	public String getViewIdAward() {
+		String mViewIdAward= sharedPreferences.getString("setViewIdAward","-1");
+		return mViewIdAward;
 	}
 	
 
@@ -418,6 +474,30 @@ public class AppPreferences {
 	public String getLastIdBirthday() {
 		String mLastIdBirthday= sharedPreferences.getString("mLastIdBirthday","0");
 		return mLastIdBirthday;
+	}
+	
+	/*
+	 * Sync 
+	 */
+	public void setSyncAlarmService(boolean value) {
+		editor = sharedPreferences.edit();
+		editor.putBoolean("isSyncAlarmService", value);
+		editor.commit();
+	}
+
+	public boolean isSyncAlarmService() {
+		return sharedPreferences.getBoolean("isSyncAlarmService", false);
+	}
+	
+	public void setLastSyncTimeStampMessage(String mLastSyncTimeStampMessage) {
+		editor = sharedPreferences.edit();
+		editor.putString("mLastSyncTimeStampMessage", mLastSyncTimeStampMessage);
+		editor.commit();
+	}
+
+	public String getLastSyncTimeStampMessage() {
+		String mLastSyncTimeStampMessage= sharedPreferences.getString("mLastSyncTimeStampMessage","Failed due to unknown error!");
+		return mLastSyncTimeStampMessage;
 	}
 	
 	/*

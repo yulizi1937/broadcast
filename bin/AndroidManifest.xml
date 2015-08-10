@@ -241,6 +241,24 @@
             android:name="com.application.ui.service.AnyDoNotificationService"
             android:exported="false"
             android:label="@string/app_name" />
+        
+        <!-- SYNC SERVICE -->
+        <receiver android:name="com.application.receiver.SyncAlarmReceiver" />
+        <receiver
+            android:name="com.application.receiver.BootReceiver"
+            android:enabled="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" >
+                </action>
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.application.receiver.NetworkChangeReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.application.ui.service.SyncService" />
 
         <!-- SMS RADAR SERVICE -->
         <service

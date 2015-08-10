@@ -13,16 +13,18 @@ import android.os.Parcelable;
 public class QuizPagerInfo implements Parcelable {
 	private String mQuizId;
 	private String mQuizType;
+	private String mQuizQId;
 
 	public QuizPagerInfo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public QuizPagerInfo(String mQuizId, String mQuizType) {
+	public QuizPagerInfo(String mQuizId, String mQuizType, String mQuizQId) {
 		super();
 		this.mQuizId = mQuizId;
 		this.mQuizType = mQuizType;
+		this.mQuizQId = mQuizQId;
 	}
 
 	public String getmQuizId() {
@@ -41,9 +43,18 @@ public class QuizPagerInfo implements Parcelable {
 		this.mQuizType = mQuizType;
 	}
 
+	public String getmQuizQId() {
+		return mQuizQId;
+	}
+
+	public void setmQuizQId(String mQuizQId) {
+		this.mQuizQId = mQuizQId;
+	}
+
 	protected QuizPagerInfo(Parcel in) {
 		mQuizId = in.readString();
 		mQuizType = in.readString();
+		mQuizQId = in.readString();
 	}
 
 	@Override
@@ -55,8 +66,10 @@ public class QuizPagerInfo implements Parcelable {
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(mQuizId);
 		dest.writeString(mQuizType);
+		dest.writeString(mQuizQId);
 	}
 
+	@SuppressWarnings("unused")
 	public static final Parcelable.Creator<QuizPagerInfo> CREATOR = new Parcelable.Creator<QuizPagerInfo>() {
 		@Override
 		public QuizPagerInfo createFromParcel(Parcel in) {

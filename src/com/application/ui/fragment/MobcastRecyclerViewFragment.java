@@ -11,7 +11,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +21,9 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.AppCompatButton;
@@ -28,8 +32,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
-import android.util.Log;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -50,6 +57,9 @@ import com.application.ui.activity.XlsDetailActivity;
 import com.application.ui.activity.YouTubeLiveStreamActivity;
 import com.application.ui.adapter.MobcastRecyclerAdapter;
 import com.application.ui.adapter.MobcastRecyclerAdapter.OnItemClickListener;
+import com.application.ui.adapter.MobcastRecyclerAdapter.OnItemLongClickListener;
+import com.application.ui.materialdialog.MaterialDialog;
+import com.application.ui.view.BottomSheet;
 import com.application.ui.view.HorizontalDividerItemDecoration;
 import com.application.ui.view.MobcastProgressDialog;
 import com.application.ui.view.ObservableRecyclerView;
@@ -63,6 +73,7 @@ import com.application.utils.ObservableScrollViewCallbacks;
 import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.ScrollUtils;
+import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.mobcast.R;
 import com.squareup.okhttp.OkHttpClient;
@@ -543,6 +554,18 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 				}
 			});
 		}
+		
+		
+		if(mAdapter!=null){
+			mAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
+				@Override
+				public void onItemLongClick(View view, int position) {
+					// TODO Auto-generated method stub
+//					position=-1;
+					showContextMenu(position, view);
+				}
+			});
+		}
 	}
 	
 	private void saveViewPosition(int position){
@@ -629,6 +652,189 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
+	}
+	
+	
+	/*
+	 * ContextMenu
+	 */
+	private void showContextMenu(int mPosition, View mView){
+		try{
+			mPosition =  mPosition - 1;
+			if(mPosition!= -1){
+				int mType = Utilities.getMediaType(mArrayListMobcast.get(mPosition).getmFileType());
+				String mTitle = mArrayListMobcast.get(mPosition).getmTitle();
+				boolean isRead = mArrayListMobcast.get(mPosition).isRead();
+				ContextMenuFragment newFragment = new ContextMenuFragment(mPosition, mType, mTitle, isRead , mView);
+		        newFragment.show(getFragmentManager(), "dialog");
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	public class ContextMenuFragment extends DialogFragment {
+		int mPosition;
+		int mType;
+		String mTitle;
+		boolean isRead;
+		View mView;
+	    public ContextMenuFragment (int mPosition, int mType, String mTitle, boolean isRead, View mView) {
+	    	this.mPosition = mPosition;
+	    	this.mTitle = mTitle;
+	    	this.mType = mType;
+	    	this.isRead = isRead;
+	    	this.mView = mView;
+	    }
+
+	    @Override
+	    public Dialog onCreateDialog(Bundle savedInstanceState) {
+	        return getContextMenu(mPosition, mType, mTitle, isRead, mView);
+	    }
+	}
+	
+	private BottomSheet getContextMenu(final int mPosition, int mType, final String mTitle, boolean isRead, final View mView){
+		BottomSheet mBottomSheet;
+		mBottomSheet = new BottomSheet.Builder(getActivity()).icon(Utilities.getRoundedBitmapForContextMenu(mType)).title(mTitle).sheet(R.menu.context_menu_mobcast).build();
+         final Menu menu = mBottomSheet.getMenu();
+         
+         SpannableString mSpannabledRead = new SpannableString(getResources().getString(R.string.context_menu_read));
+         SpannableString mSpannabledUnRead = new SpannableString(getResources().getString(R.string.context_menu_unread));
+         SpannableString mSpannabledDelete = new SpannableString(getResources().getString(R.string.context_menu_delete));
+         SpannableString mSpannabledView = new SpannableString(getResources().getString(R.string.context_menu_view));
+         
+         mSpannabledRead.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledRead.length(), 0);
+         mSpannabledUnRead.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledUnRead.length(), 0);
+         mSpannabledDelete.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledDelete.length(), 0);
+         mSpannabledView.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledView.length(), 0);
+         
+         menu.getItem(0).setTitle(mSpannabledRead);
+         menu.getItem(1).setTitle(mSpannabledUnRead);
+         menu.getItem(2).setTitle(mSpannabledDelete);
+         menu.getItem(3).setTitle(mSpannabledView);
+         
+         /**
+          * Read
+          */
+         menu.getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+             @Override
+             public boolean onMenuItemClick(MenuItem item) {
+            	 contextMenuMarkAsRead(mPosition);
+                 return true;
+             }
+         });
+         
+         /**
+          * UnRead
+          */
+         menu.getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+             @Override
+             public boolean onMenuItemClick(MenuItem item) {
+            	 contextMenuMarkAsUnRead(mPosition);
+                 return true;
+             }
+         });
+         
+         /**
+          * Delete
+          */
+         menu.getItem(2).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+             @Override
+             public boolean onMenuItemClick(MenuItem item) {
+            	 showDeleteConfirmationDialog(mPosition, mTitle);
+//            	 contextMenuDelete(mPosition);
+                 return true;
+             }
+         });
+         
+         /**
+          * View
+          */
+         menu.getItem(3).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+             @Override
+             public boolean onMenuItemClick(MenuItem item) {
+            	 contextMenuView(mPosition, mView);
+                 return true;
+             }
+         });
+         
+         return mBottomSheet;
+	}
+	
+	private void contextMenuMarkAsRead(int mPosition){
+		try{
+		 ContentValues values = new ContentValues();
+		 String mMobcastId = mArrayListMobcast.get(mPosition).getmId();
+		 values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ, "true");
+		 getActivity().getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, values, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mMobcastId});	
+       	 mArrayListMobcast.get(mPosition).setRead(true);
+       	 mRecyclerView.getAdapter().notifyItemChanged(mPosition+1);
+       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.MOBCAST);
+       	 UserReport.updateUserReportApi(mMobcastId, AppConstants.INTENTCONSTANTS.MOBCAST, AppConstants.REPORT.READ, "");
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void contextMenuMarkAsUnRead(int mPosition){
+		try{
+		 ContentValues values = new ContentValues();
+	     values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ, "false");
+		 getActivity().getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, values, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mArrayListMobcast.get(mPosition).getmId()});
+		 mArrayListMobcast.get(mPosition).setRead(false);
+       	 mRecyclerView.getAdapter().notifyItemChanged(mPosition+1);
+       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.MOBCAST);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void contextMenuDelete(int mPosition){
+		try{
+		 getActivity().getContentResolver().delete(DBConstant.Mobcast_Columns.CONTENT_URI, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mArrayListMobcast.get(mPosition).getmId()});
+       	 getActivity().getContentResolver().delete(DBConstant.Mobcast_File_Columns.CONTENT_URI, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mArrayListMobcast.get(mPosition).getmId()});
+       	 mArrayListMobcast.remove(mPosition);
+       	 if(mArrayListMobcast.size() == 0){
+       		 checkDataInAdapter();
+       	 }else{
+       		mRecyclerView.getAdapter().notifyDataSetChanged();
+       	 }
+       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.MOBCAST);			
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void contextMenuView(int mPosition , View mView){
+		try{
+			mView.performClick();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void showDeleteConfirmationDialog(final int mPosition, String mTitle){
+		MaterialDialog mMaterialDialog = new MaterialDialog.Builder(getActivity())
+        .title(getResources().getString(R.string.content_delete_message) + " " + mTitle + "?")
+        .iconRes(R.drawable.context_menu_delete)
+        .titleColor(Utilities.getAppColor())
+        .positiveText(getResources().getString(R.string.button_delete))
+        .positiveColor(Utilities.getAppColor())
+        .negativeText(getResources().getString(R.string.sample_fragment_settings_dialog_language_negative))
+        .negativeColor(Utilities.getAppColor())
+        .callback(new MaterialDialog.ButtonCallback() {
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB) @Override
+            public void onPositive(MaterialDialog dialog) {
+            	dialog.dismiss();
+            	contextMenuDelete(mPosition);
+            }
+
+            @Override
+            public void onNegative(MaterialDialog dialog) {
+            	dialog.dismiss();
+            }
+        })
+        .show();
 	}
 	
 	/*

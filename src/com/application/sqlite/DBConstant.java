@@ -113,21 +113,27 @@ public class DBConstant {
 		public static final String COLUMN_EVENT_FILE_LINK				    = "_event_file_link";
 		public static final String COLUMN_EVENT_FILE_PATH				    = "_event_file_path";
 		public static final String COLUMN_EVENT_FILE_APPEND				    = "_event_file_append";
+		public static final String COLUMN_EVENT_FILE_SIZE 				    = "_event_file_size";
 		public static final String COLUMN_EVENT_IS_JOIN				        = "_event_is_join";
 		public static final String COLUMN_EVENT_IS_CALENDAR				    = "_event_is_calendar";
 		public static final String COLUMN_EVENT_IS_SHARING		        	= "_event_sharing";
 		public static final String COLUMN_EVENT_IS_READ				        = "_event_is_read";
+		public static final String COLUMN_EVENT_IS_LIKE				        = "_event_is_like";
 		public static final String COLUMN_EVENT_MAP				            = "_event_map";
 		public static final String COLUMN_EVENT_INVITED_NO				    = "_event_invited_no";
 		public static final String COLUMN_EVENT_GOING_NO				    = "_event_going_no";
 		public static final String COLUMN_EVENT_DECLINE_NO				    = "_event_decline_no";
 		public static final String COLUMN_EVENT_MAYBE_NO				    = "_event_maybe_no";
+		public static final String COLUMN_EVENT_LIKE_NO				        = "_event_like_no";
+		public static final String COLUMN_EVENT_READ_NO				        = "_event_read_no";
 		public static final String COLUMN_EVENT_START_DATE_FORMATTED	    = "_event_start_date_formatted";
 		public static final String COLUMN_EVENT_END_DATE_FORMATTED	        = "_event_end_date_formatted";
 		public static final String COLUMN_EVENT_RECEIVED_DATE        	    = "_event_received_date";
 		public static final String COLUMN_EVENT_RECEIVED_TIME        	    = "_event_received_time";
+		public static final String COLUMN_EVENT_RECEIVED_DATE_FORMATTED     = "_event_received_date_formatted";
 		public static final String COLUMN_EVENT_EXPIRY_DATE				    = "_event_expiry_date";
 		public static final String COLUMN_EVENT_EXPIRY_TIME				    = "_event_expiry_time";
+		public static final String COLUMN_EVENT_EXPIRY_DATE_FORMATTED		= "_event_expiry_date_formatted";
 	}
 	
 	public static class Award_Columns implements BaseColumns
@@ -144,6 +150,15 @@ public class DBConstant {
 		public static final String COLUMN_AWARD_DEPARTMENT        		    = "_award_department";
 		public static final String COLUMN_AWARD_FILE_LINK			        = "_award_file_link";
 		public static final String COLUMN_AWARD_FILE_PATH			        = "_award_file_path";
+		public static final String COLUMN_AWARD_FILE_SIZE			        = "_award_file_size";
+		public static final String COLUMN_AWARD_THUMBNAIL_PATH			    = "_award_thumbnail_path";
+		public static final String COLUMN_AWARD_THUMBNAIL_LINK			    = "_award_thumbnail_link";
+		public static final String COLUMN_AWARD_DESCRIPTION 			    = "_award_description";
+		public static final String COLUMN_AWARD_RECEIVER_EMAIL 			    = "_award_receiver_email";
+		public static final String COLUMN_AWARD_READ_NO      			    = "_award_read_no";
+		public static final String COLUMN_AWARD_LIKE_NO      			    = "_award_like_no";
+		public static final String COLUMN_AWARD_RECEIVED_DATE      			= "_award_received_date";
+		public static final String COLUMN_AWARD_EXPIRY_DATE_FORMATTED    	= "_award_expiry_date_formatted";
 		public static final String COLUMN_AWARD_FILE_APPEND			        = "_award_file_append";
 		public static final String COLUMN_AWARD_IS_SHARE 					= "_award_is_share";
 		public static final String COLUMN_AWARD_IS_CONGRATULATE		        = "_award_is_congratulate";

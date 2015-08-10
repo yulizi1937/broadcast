@@ -13,7 +13,7 @@ import android.os.Parcelable;
 public class QuizScorePagerInfo implements Parcelable {
 	private String mQuestionNo;
 	private String mQuestionTitle;
-	private String mCorrectAnswer;
+	private String mQuestionId;
 
 	public QuizScorePagerInfo() {
 		super();
@@ -21,11 +21,11 @@ public class QuizScorePagerInfo implements Parcelable {
 	}
 
 	public QuizScorePagerInfo(String mQuestionNo, String mQuestionTitle,
-			String mCorrectAnswer) {
+			String mQuestionId) {
 		super();
 		this.mQuestionNo = mQuestionNo;
 		this.mQuestionTitle = mQuestionTitle;
-		this.mCorrectAnswer = mCorrectAnswer;
+		this.mQuestionId = mQuestionId;
 	}
 
 	public String getmQuestionNo() {
@@ -44,18 +44,18 @@ public class QuizScorePagerInfo implements Parcelable {
 		this.mQuestionTitle = mQuestionTitle;
 	}
 
-	public String getmCorrectAnswer() {
-		return mCorrectAnswer;
+	public String getmQuestionId() {
+		return mQuestionId;
 	}
 
-	public void setmCorrectAnswer(String mCorrectAnswer) {
-		this.mCorrectAnswer = mCorrectAnswer;
+	public void setmQuestionId(String mQuestionId) {
+		this.mQuestionId = mQuestionId;
 	}
 
 	protected QuizScorePagerInfo(Parcel in) {
 		mQuestionNo = in.readString();
 		mQuestionTitle = in.readString();
-		mCorrectAnswer = in.readString();
+		mQuestionId = in.readString();
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class QuizScorePagerInfo implements Parcelable {
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(mQuestionNo);
 		dest.writeString(mQuestionTitle);
-		dest.writeString(mCorrectAnswer);
+		dest.writeString(mQuestionId);
 	}
 
 	@SuppressWarnings("unused")

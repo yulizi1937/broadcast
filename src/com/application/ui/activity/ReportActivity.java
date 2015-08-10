@@ -3,9 +3,14 @@
  */
 package com.application.ui.activity;
 
+import java.nio.MappedByteBuffer;
+
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
@@ -23,13 +28,23 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.application.ui.activity.FeedbackAppActivity.AsyncAppFeedbackTask;
 import com.application.ui.view.CircleImageView;
+import com.application.ui.view.MobcastProgressDialog;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.ApplicationLoader;
+import com.application.utils.BuildVars;
 import com.application.utils.FileLog;
+import com.application.utils.JSONRequestBuilder;
+import com.application.utils.RestClient;
+import com.application.utils.RetroFitClient;
+import com.application.utils.Style;
+import com.application.utils.Utilities;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.mobcast.R;
+import com.squareup.okhttp.OkHttpClient;
 
 /**
  * @author Vikalp Patel(VikalpPatelCE)
@@ -151,7 +166,7 @@ public class ReportActivity extends SwipeBackBaseActivity {
 		setMaterialRippleView();
 	}
 
-	private void setOnClickListener() {
+	@SuppressLint("NewApi") private void setOnClickListener() {
 		mReportCategoryLayout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -167,7 +182,24 @@ public class ReportActivity extends SwipeBackBaseActivity {
 				AndroidUtilities.enterWindowAnimation(ReportActivity.this);
 			}
 		});
-
+		
+		mReportSubmitBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (Utilities.isInternetConnected()) {
+					if(isValidSubmit){
+						if (AndroidUtilities.isAboveIceCreamSandWich()) {
+							new AsyncAppReportTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+						} else {
+							new AsyncAppReportTask().execute();
+						}
+					}
+				} else {
+					Utilities.showCrouton(ReportActivity.this,mCroutonViewGroup,getResources().getString(R.string.internet_unavailable),Style.ALERT);
+				}
+			}
+		});
 	}
 
 	@Override
@@ -230,6 +262,83 @@ public class ReportActivity extends SwipeBackBaseActivity {
 			setMaterialRippleOnView(mReportSubmitBtn);
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
+		}
+	}
+	
+	private String apiSubmitAppReport() {
+		try {
+				JSONObject jsonObj = JSONRequestBuilder.getPostAppReportData(mReportCategorySelectedTv.getText().toString(), mReportEditText.getText().toString());
+				if(BuildVars.USE_OKHTTP){
+					return RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_APP_REPORT, jsonObj.toString(), TAG);	
+				}else{
+					return RestClient.postJSON(AppConstants.API.API_APP_REPORT, jsonObj, TAG);	
+				}	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			FileLog.e(TAG, e.toString());
+		}
+		return null;
+	}
+
+	private void parseDataFromApi(String mResponseFromApi) {
+		try{
+			if(!TextUtils.isEmpty(mResponseFromApi)){
+				if(Utilities.isSuccessFromApi(mResponseFromApi)){
+					Utilities.showCrouton(ReportActivity.this, mCroutonViewGroup, Utilities.getSuccessMessageFromApi(mResponseFromApi), Style.CONFIRM);
+					mReportEditText.setText("");
+				}
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	public class AsyncAppReportTask extends AsyncTask<Void, Void, Void> {
+		private String mResponseFromApi;
+		private boolean isSuccess = true;
+		private String mErrorMessage = "";
+		private MobcastProgressDialog mProgressDialog;
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			mProgressDialog = new MobcastProgressDialog(ReportActivity.this);
+			mProgressDialog.setMessage(ApplicationLoader.getApplication().getResources().getString(R.string.loadingSubmit));
+			mProgressDialog.show();
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			try{
+				mResponseFromApi = apiSubmitAppReport();
+				isSuccess = Utilities.isSuccessFromApi(mResponseFromApi);
+			}catch(Exception e){
+				FileLog.e(TAG, e.toString());
+				if(mProgressDialog!=null){
+					mProgressDialog.dismiss();
+				}
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			
+			if(mProgressDialog!=null){
+				mProgressDialog.dismiss();
+			}
+			if (isSuccess) {
+				parseDataFromApi(mResponseFromApi);
+			} else {
+				mErrorMessage = Utilities
+						.getErrorMessageFromApi(mResponseFromApi);
+				Utilities.showCrouton(ReportActivity.this, mCroutonViewGroup,
+						mErrorMessage, Style.ALERT);
+			}
 		}
 	}
 }
