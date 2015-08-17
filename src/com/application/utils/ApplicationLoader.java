@@ -29,6 +29,12 @@ import com.application.receiver.SyncAlarmReceiver;
 import com.application.ui.calligraphy.CalligraphyConfig;
 import com.application.ui.service.AnyDoNotificationService;
 import com.facebook.stetho.Stetho;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.GAServiceManager;
+import com.google.analytics.tracking.android.MapBuilder;
+import com.google.analytics.tracking.android.StandardExceptionParser;
+import com.google.analytics.tracking.android.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -56,12 +62,12 @@ public class ApplicationLoader extends Application {
 
 	public static SharedPreferences sharedPreferences;
 	public static AppPreferences preferences;
-	
+
 	public static ImageLoader mImageLoader;
 
 	public static void postInitApplication() {
 	}
-	
+
 	@Override
 	protected void attachBaseContext(Context base) {
 		// TODO Auto-generated method stub
@@ -85,18 +91,17 @@ public class ApplicationLoader extends Application {
 		} else {
 			initCalligraphy();
 		}
-//		startAnyDoNotificationService();
 		ApplicationLoader app = (ApplicationLoader) ApplicationLoader.applicationContext;
-		if(!BuildVars.DEBUG_DESIGN){
+		if (!BuildVars.DEBUG_DESIGN) {
 			app.initPlayServices();
 		}
-		
-		if(BuildVars.DEBUG_STETHO){
+
+		if (BuildVars.DEBUG_STETHO) {
 			initStetho(applicationLoader);
 		}
-		
+
 		initImageLoader();
-		
+		initAnalyticsV3();
 	}
 
 	public static Context getApplication() {
@@ -115,11 +120,11 @@ public class ApplicationLoader extends Application {
 	public static AppPreferences getPreferences() {
 		return preferences;
 	}
-	
+
 	public static SharedPreferences getSharedPreferences() {
 		return sharedPreferences;
 	}
-	
+
 	public static synchronized ApplicationLoader getInstance() {
 		return applicationLoader;
 	}
@@ -129,28 +134,29 @@ public class ApplicationLoader extends Application {
 				.setDefaultFontPath("fonts/RobotoCondensedRegular.ttf")
 				.setFontAttrId(R.attr.fontPath).build());
 	}
-	
+
 	public static void setSyncServiceAlarm() {
 		SyncAlarmReceiver syncAlarmReceiver = new SyncAlarmReceiver();
 		syncAlarmReceiver.setAlarm(getApplication().getApplicationContext());
 		ApplicationLoader.getPreferences().setSyncAlarmService(true);
 	}
-	
+
 	public static void cancelSyncServiceAlarm() {
 		SyncAlarmReceiver syncAlarmReceiver = new SyncAlarmReceiver();
 		syncAlarmReceiver.cancelAlarm(getApplication().getApplicationContext());
 		ApplicationLoader.getPreferences().setSyncAlarmService(false);
 	}
-	
+
 	@SuppressWarnings("deprecation")
-	public static void initImageLoader(){
+	public static void initImageLoader() {
 		mImageLoader = ImageLoader.getInstance();
-		mImageLoader.init(ImageLoaderConfiguration.createDefault(ApplicationLoader.getApplication()));
+		mImageLoader.init(ImageLoaderConfiguration
+				.createDefault(ApplicationLoader.getApplication()));
 		L.disableLogging();
 	}
-	
-	public static ImageLoader getUILImageLoader(){
-		if(mImageLoader==null){
+
+	public static ImageLoader getUILImageLoader() {
+		if (mImageLoader == null) {
 			initImageLoader();
 		}
 		return mImageLoader;
@@ -161,30 +167,146 @@ public class ApplicationLoader extends Application {
 				AnyDoNotificationService.class);
 		getApplication().startService(service);
 	}
-	
+
 	/*
 	 * CREATE DB
 	 */
-	
-	/*public static void initDB(){
-		Cursor mCursor = applicationContext.getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, null, null, null);
-		mCursor.close();
-		Utilities.devSendDBInMail(applicationContext);
-	}*/
-	
-	/*
-	 * STETHO DEBUG BRIDGE
-	 */
-	
-	public static void initStetho(Context applicationContext){
-		Stetho.initialize(
-		        Stetho.newInitializerBuilder(applicationContext)
-		            .enableDumpapp(Stetho.defaultDumperPluginsProvider(applicationContext))
-		            .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(applicationContext))
-		            .build());
-	}
 
 	/*
+	 * public static void initDB(){ Cursor mCursor =
+	 * applicationContext.getContentResolver
+	 * ().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, null, null, null);
+	 * mCursor.close(); Utilities.devSendDBInMail(applicationContext); }
+	 */
+
+	/**
+	 * STETHO DEBUG BRIDGE
+	 */
+
+	public static void initStetho(Context applicationContext) {
+		Stetho.initialize(Stetho
+				.newInitializerBuilder(applicationContext)
+				.enableDumpapp(
+						Stetho.defaultDumperPluginsProvider(applicationContext))
+				.enableWebKitInspector(
+						Stetho.defaultInspectorModulesProvider(applicationContext))
+				.build());
+	}
+
+	/**
+	 * Google Analytics
+	 */
+
+	public static void initAnalyticsV4() {
+		AnalyticsTrackersV4.initialize(ApplicationLoader.getApplication());
+		AnalyticsTrackersV4.getInstance().get(AnalyticsTrackersV4.Target.APP);
+	}
+	
+
+	public static synchronized Tracker getGoogleAnalyticsTrackerV4() {
+		AnalyticsTrackersV4 analyticsTrackers = AnalyticsTrackersV4.getInstance();
+		return analyticsTrackers.get(AnalyticsTrackersV4.Target.APP);
+	}
+
+	public static void trackScreenViewV4(String screenName) {
+		Tracker t = getGoogleAnalyticsTrackerV4();
+		/**
+		 * Google Analytics v4//
+		 * // Set screen name. t.setScreenName(screenName); // Send a screen
+		 * view. t.send(new HitBuilders.ScreenViewBuilder().build());
+		 * GoogleAnalytics
+		 * .getInstance(ApplicationLoader.getApplication()).dispatchLocalHits();
+		 */		
+		t.set(Fields.SCREEN_NAME, screenName);
+		t.send(MapBuilder.createAppView().build());
+	}
+
+	public static void trackExceptionV4(Exception e) {
+		if (e != null) {
+			Tracker t = getGoogleAnalyticsTrackerV4();
+			/**
+			 * Google Analytics v4// t.send(new HitBuilders.ExceptionBuilder()
+			 * .setDescription( new
+			 * StandardExceptionParser(ApplicationLoader.getApplication(), null)
+			 * .getDescription(Thread.currentThread() .getName(),
+			 * e)).setFatal(false) .build());
+			 */
+			t.send(MapBuilder.createException(
+					new StandardExceptionParser(ApplicationLoader
+							.getApplication(), null).getDescription(Thread
+							.currentThread().getName(), e), false).build());
+		}
+	}
+
+	public static void trackEventV4(String category, String action, String label) {
+		Tracker t = getGoogleAnalyticsTrackerV4();
+
+		// Build and send an Event.
+		/**
+		 * Google Analytics v4// t.send(new
+		 * HitBuilders.EventBuilder().setCategory(category)
+		 * .setAction(action).setLabel(label).build());
+		 */
+
+		t.send(MapBuilder.createEvent(category, action, label, null).build());
+	}
+	
+	public static void initAnalyticsV3() {
+		AnalyticsTrackersV3.initialize(ApplicationLoader.getApplication());
+		AnalyticsTrackersV3.getInstance().get(AnalyticsTrackersV3.Target.APP);
+	}
+	
+	public static synchronized Tracker getGoogleAnalyticsTrackerV3() {
+		AnalyticsTrackersV3 analyticsTrackers = AnalyticsTrackersV3.getInstance();
+		return analyticsTrackers.get(AnalyticsTrackersV3.Target.APP);
+	}
+	
+	public static void trackScreenViewV3(String screenName) {
+		try{
+			Tracker t = getGoogleAnalyticsTrackerV3();
+			if(t==null){
+				t = EasyTracker.getInstance(applicationContext);
+			}
+			t.set(Fields.SCREEN_NAME, screenName);
+			t.send(MapBuilder.createAppView().build());
+			GAServiceManager.getInstance().dispatchLocalHits();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	public static void trackExceptionV3(Exception e) {
+		try{
+			if (e != null) {
+				Tracker t = getGoogleAnalyticsTrackerV3();
+				if(t==null){
+					t = EasyTracker.getInstance(applicationContext);
+				}
+				t.send(MapBuilder.createException(
+						new StandardExceptionParser(ApplicationLoader
+								.getApplication(), null).getDescription(Thread
+								.currentThread().getName(), e), false).build());
+				GAServiceManager.getInstance().dispatchLocalHits();
+			}
+		}catch(Exception ex){
+			FileLog.e(TAG, ex.toString());
+		}
+	}
+	
+	public static void trackEventV3(String category, String action, String label) {
+		try{
+			Tracker t = getGoogleAnalyticsTrackerV3();
+			if(t==null){
+				t= EasyTracker.getInstance(applicationContext);
+			}
+			t.send(MapBuilder.createEvent(category, action, label, null).build());
+			GAServiceManager.getInstance().dispatchLocalHits();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+
+	/**
 	 * GCM API
 	 */
 	private void initPlayServices() {
@@ -194,7 +316,7 @@ public class ApplicationLoader extends Application {
 
 			if (regid.length() == 0) {
 				registerInBackground();
-			}else{
+			} else {
 				ApplicationLoader.getPreferences().setRegId(regid);
 			}
 		} else {

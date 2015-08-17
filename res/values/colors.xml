@@ -5,8 +5,8 @@
     <color name="background_tab_pressed">#6633B5E5</color>
     <color name="toolbar_background">#ff254E7A</color>
     <color name="toolbar_background_statusbar">#ff193655</color>
-    
-<!--     #ff193655 #ff2B5E93-->
+
+    <!-- #ff193655 #ff2B5E93 -->
     <color name="slidingtablayout_text_default">#ff92a6bc</color>
     <color name="background_application">#FFFFFFFF</color>
     <color name="unread_highlight">#00AFF0</color>
@@ -15,24 +15,18 @@
     <color name="text_highlight">#00AFF0</color>
     <color name="orange">#FE9915</color>
     <color name="green">#26A95D</color>
-    
     <color name="background_unread">#DDE7EE</color>
-    
     <color name="tutorial">#1F000000</color>
-    
+    <color name="chattext_background">#EBF0F3</color>
     <color name="progress_dialog_background">#F4F4F4</color>
-    
     <color name="gray">#AAAAAA</color>
-    
     <color name="black_shade_light">#5A000000</color>
     <color name="white_shade_light">#9AFFFFFF</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#FF0000</color>
-    
     <color name="divider_color">#d8d8d8</color>
     <color name="light_gray">#FBFBFB</color>
     <color name="gray_empty_bg">#EDEDED</color>
-    
     <color name="item_audio">#9B59B6</color>
     <color name="item_doc">#1CDCFF</color>
     <color name="item_pdf">#F5696C</color>
@@ -40,7 +34,6 @@
     <color name="item_xls">#26A95D</color>
     <color name="item_image">#34495E</color>
     <color name="item_video">#F1C40F</color>
-    
 
     <!-- activity_login -->
     <color name="editbox_color">#577995</color>
@@ -52,7 +45,7 @@
 
     <!-- fragment_quiz -->
     <color name="timer_rim">#2A5D92</color>
-    
+
     <!-- fragment_quiz_score -->
     <color name="background_light_blue">#F1F5F8</color>
 
@@ -68,20 +61,20 @@
     <!-- item_recycler_event -->
     <color name="item_event_by">#FE9915</color>
     <color name="item_text_highlight">#00AFF0</color>
-    
+
     <!-- item_recycler_mobcast_pdf -->
     <color name="item_recycler_mobcast_pdf_color">#F5696C</color>
     <color name="item_recycler_mobcast_timeline_color">#FE9915</color>
-    
+
     <!-- item_recycler_mobcast_doc -->
     <color name="item_recycler_mobcast_doc_color">#1CDCFF</color>
 
     <!-- item_recycler_mobcast_xls -->
     <color name="item_recycler_mobcast_xls_color">#26A95D</color>
-    
+
     <!-- item_recycler_mobcast_feedback -->
     <color name="item_recycler_mobcast_feedback_detail_background_color">#FBFBFB</color>
-    
+
     <!-- CirclePageIndicator -->
     <color name="vpi__background_holo_dark">#ff000000</color>
     <color name="vpi__background_holo_light">#fff3f3f3</color>
@@ -94,14 +87,14 @@
     <!-- BottomSheet -->
     <color name="bs_divider_color">#1f000000</color>
     <color name="bs_dark_divider_color">#1fffffff</color>
-    
+
     <!-- DiscreetSeekBar -->
-        <color name="dsb_progress_color">#ff009688</color>
+    <color name="dsb_progress_color">#ff009688</color>
     <color name="dsb_track_color">#ff939393</color>
     <color name="dsb_disabled_color">#66939393</color>
     <color name="dsb_ripple_color_pressed">#77939393</color>
     <color name="dsb_ripple_color_focused">#99999999</color>
-    
+
     <!-- SmoothProgressBar -->
     <integer-array name="pocket_bar_colors">
         <item>@color/pocket_color_1</item>
@@ -121,7 +114,6 @@
         <item>@color/pocket_color_4</item>
         <item>@color/pocket_color_4</item>
     </integer-array>
-
     <integer-array name="pocket_background_colors">
         <item>@color/pocket_color_1</item>
         <item>@color/pocket_color_2</item>
@@ -133,8 +125,8 @@
     <color name="pocket_color_2">#34bdb7</color>
     <color name="pocket_color_3">#ee4458</color>
     <color name="pocket_color_4">#fcb74d</color>
-    
-     <!-- Color for the top outer pixels in the stroke: 18% white (these are multiplied) -->
+
+    <!-- Color for the top outer pixels in the stroke: 18% white (these are multiplied) -->
     <color name="fab_stroke_top_outer_color">#2EFFFFFF</color>
     <!-- Color for the top inner pixels in the stroke: 10% white (these are multiplied) -->
     <color name="fab_stroke_top_inner_color">#1AFFFFFF</color>
@@ -149,9 +141,7 @@
     <color name="shadow_mid_color">#14000000</color>
     <!-- Shadow color for the furthest pixels of a shadow -->
     <color name="shadow_end_color">@android:color/transparent</color>
-
     <color name="error_color">#FFDD2C00</color>
-
     <color name="snackbar_background_color">#323232</color>
 
 </resources>

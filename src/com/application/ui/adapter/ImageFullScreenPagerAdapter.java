@@ -34,7 +34,7 @@ public class ImageFullScreenPagerAdapter extends FragmentStatePagerAdapter{
 	@Override
 	public Fragment getItem(int position) {
 		// TODO Auto-generated method stub
-			return ImageViewFullScreenFragment.newInstance(mPosition, mArrayListString);	
+			return ImageViewFullScreenFragment.newInstance(position, mArrayListString);	
 	}
 
 	/* (non-Javadoc)

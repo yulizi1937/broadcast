@@ -3,6 +3,8 @@
  */
 package com.application.ui.activity;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,6 +31,8 @@ import com.application.ui.view.BottomSheet;
 import com.application.ui.view.CirclePageIndicator;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.FileLog;
+import com.application.utils.Utilities;
 import com.mobcast.R;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
@@ -61,6 +65,7 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 	private Intent mIntent;
 	private int mPosition;
 	private String mContentFilePath[];
+	private ArrayList<String> mContentDecryptedFilePath = new ArrayList<>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +83,16 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		decryptFileOnResume();
+		if(mContentDecryptedFilePath.size()> 0){
+			setImageViewPager();
+		}
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		deleteDecryptedFile();
 	}
 	
 	@Override
@@ -138,9 +153,9 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 		mIntent = getIntent();
 		mPosition = mIntent.getIntExtra(AppConstants.INTENTCONSTANTS.POSITION, 0);
 		mContentFilePath = mIntent.getStringArrayExtra(AppConstants.INTENTCONSTANTS.OBJECT);
-		if(mContentFilePath!=null){
-			setImageViewPager();
-		}
+//		if(mContentFilePath!=null){
+//			setImageViewPager();
+//		}
 	}
 	
 	/**
@@ -168,9 +183,9 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 	}
 
 	private void setImageViewPager() {
-		mArrayListString = Arrays.asList(mContentFilePath);
+//		mArrayListString = Arrays.asList(mContentFilePath);
 		mAdapter = new ImageFullScreenPagerAdapter(getSupportFragmentManager(),
-				mArrayListString, mPosition);
+				mContentDecryptedFilePath, mPosition);
 		mImageViewPager.setAdapter(mAdapter);
 		mImageCirclePageIndicator.setViewPager(mImageViewPager);
 	}
@@ -202,6 +217,39 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 		}
 	}
 
+	
+	private void decryptFileOnResume(){
+		try{
+			if(mContentFilePath!=null && mContentFilePath.length > 0){
+				mContentDecryptedFilePath.clear();
+				for(int i = 0; i < mContentFilePath.length;i++){
+					if(Utilities.isContainsDecrypted(mContentFilePath[i])){
+						mContentFilePath[i] = mContentFilePath[i].replace(AppConstants.decrypted, "");
+					}
+					if(checkIfFileExists(mContentFilePath[i])){
+						mContentDecryptedFilePath.add(Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath[i])));
+					}
+				}
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void deleteDecryptedFile(){
+		try{
+			if(mContentDecryptedFilePath!=null && mContentDecryptedFilePath.size() > 0){
+				for(int i = 0 ;i < mContentDecryptedFilePath.size();i++){
+					if(Utilities.isContainsDecrypted(mContentDecryptedFilePath.get(i))){
+						new File(mContentDecryptedFilePath.get(i)).delete();
+					}
+				}	
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
 	@Override
 	@Deprecated
 	protected Dialog onCreateDialog(int id, Bundle args) {

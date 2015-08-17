@@ -92,6 +92,35 @@ public class DBConstant {
 		public static final String COLUMN_TRAINING_FILE_ID 				    = "_training_file_id";
 	}
 	
+	public static class Chat_Columns implements BaseColumns
+	{
+		public static final Uri CONTENT_URI = Uri.parse("content://"+ ApplicationDB.AUTHORITY + "/chat");
+		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/chat";
+		
+		public static final String COLUMN_ID 							= "_id";
+		public static final String COLUMN_USER_ID 					    = "_user_id";
+		public static final String COLUMN_GROUP_ID						= "_group_id";
+		public static final String COLUMN_GROUP_ID_MYSQL				= "_group_id_mysql";
+		public static final String COLUMN_CITY_ID						= "_city_id";
+		public static final String COLUMN_USER_JABBER_ID			    = "_user_jabber_id";
+		public static final String COLUMN_USER_ID_MYSQL					= "_user_id_mysql";
+		public static final String COLUMN_USER_SENT_MESSAGE			    = "_is_user_sent";
+		public static final String COLUMN_MESSAGE						= "_message";
+		public static final String COLUMN_MESSAGE_ID					= "_message_id";
+		public static final String COLUMN_PATH                 			= "_path";
+		public static final String COLUMN_FILE_LINK            			= "_file_link";
+		public static final String COLUMN_TYPE      					= "_type";
+		public static final String COLUMN_ISSENT 				        = "_is_sent";
+		public static final String COLUMN_ISREAD 				    	= "_is_read";
+		public static final String COLUMN_ISDELIEVERED 					= "_is_delieverd";
+		public static final String COLUMN_ISNOTIFIED 					= "_is_notified";
+		public static final String COLUMN_TIMESTAMP 					= "_timestamp";
+		public static final String COLUMN_MESSAGE_TIME 					= "_message_time";
+		public static final String COLUMN_MESSAGE_DATE 					= "_message_date";
+		public static final String COLUMN_TAGGED	 					= "_tagged";
+		public static final String COLUMN_ISLEFT	 					= "_is_left";
+	}
+	
 	
 	public static class Event_Columns implements BaseColumns
 	{

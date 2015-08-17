@@ -3,6 +3,7 @@
  */
 package com.application.ui.fragment;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.content.Intent;
@@ -19,6 +20,7 @@ import com.application.ui.activity.ImageFullScreenActivity;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.FileLog;
+import com.application.utils.Utilities;
 import com.mobcast.R;
 
 /**

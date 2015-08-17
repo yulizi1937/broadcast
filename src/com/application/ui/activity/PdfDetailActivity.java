@@ -120,6 +120,8 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 	private ArrayList<String> mContentFilePathList = new ArrayList<>();
 	private ArrayList<String> mContentFileSizeList = new ArrayList<>();
 
+	private boolean isFromNotification = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -195,6 +197,10 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 		case android.R.id.home:
 			finish();
 			AndroidUtilities.exitWindowAnimation(PdfDetailActivity.this);
+			if(isFromNotification){
+				Intent mIntent = new Intent(PdfDetailActivity.this, MotherActivity.class);
+				startActivity(mIntent);
+			}
 			return true;
 		case R.id.action_share:
 			showDialog(0);
@@ -209,6 +215,16 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		if(isFromNotification){
+			Intent mIntent = new Intent(PdfDetailActivity.this, MotherActivity.class);
+			startActivity(mIntent);
 		}
 	}
 
@@ -262,6 +278,7 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 				Cursor mCursor = null;
 				mId = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.ID);
 				mCategory = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY).toString();
+				isFromNotification = mIntent.getBooleanExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, false);
 				if(!TextUtils.isEmpty(mId) && !TextUtils.isEmpty(mCategory)){
 					if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
 						mCursor = getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId}, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + " DESC");
@@ -702,7 +719,13 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 			mNewValues.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_IS_DEFAULT, "true");
 			getContentResolver().update(DBConstant.Mobcast_File_Columns.CONTENT_URI, mNewValues, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID + "=?" +"  AND "+ DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG + "=?", new String[]{mId, mContentLanguage});
 		}else{
+			ContentValues values = new ContentValues();
+			values.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_IS_DEFAULT, "false");
+			getContentResolver().update(DBConstant.Training_File_Columns.CONTENT_URI, values, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 			
+			ContentValues mNewValues = new ContentValues();
+			mNewValues.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_IS_DEFAULT, "true");
+			getContentResolver().update(DBConstant.Training_File_Columns.CONTENT_URI, mNewValues, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID + "=?" +"  AND "+ DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LANG + "=?", new String[]{mId, mContentLanguage});
 		}
 	}
 

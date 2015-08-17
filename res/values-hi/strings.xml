@@ -406,6 +406,8 @@
 
     <string-array name="drawer_array">
         <item>प्रोफ़ाइल</item>
+        <item>कब्जा</item>
+        <item>भरती</item>
         <item>सेटिंग</item>
         <item>मदद</item>
         <item>रिपोर्ट</item>

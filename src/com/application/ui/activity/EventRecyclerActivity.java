@@ -467,7 +467,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 //		position-=1;
 		if (position >= 0 && position < mArrayListEvent.size()) {
 			if(mArrayListEvent!=null && mArrayListEvent.size() > 0){
-				Cursor mCursor = getContentResolver().query(DBConstant.Event_Columns.CONTENT_URI, new String[]{DBConstant.Event_Columns.COLUMN_EVENT_ID, DBConstant.Event_Columns.COLUMN_EVENT_IS_READ, DBConstant.Event_Columns.COLUMN_EVENT_IS_LIKE, DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO}, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mArrayListEvent.get(position).getmId()}, null);
+				Cursor mCursor = getContentResolver().query(DBConstant.Event_Columns.CONTENT_URI, new String[]{DBConstant.Event_Columns.COLUMN_EVENT_ID, DBConstant.Event_Columns.COLUMN_EVENT_IS_READ, DBConstant.Event_Columns.COLUMN_EVENT_IS_LIKE, DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO, DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN}, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mArrayListEvent.get(position).getmId()}, null);
 				
 				if(mCursor!=null && mCursor.getCount() >0){
 					mCursor.moveToFirst();
@@ -481,6 +481,12 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 						mArrayListEvent.get(position).setmLikeCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO)));
 						isToNotify = true;
 					}
+					
+					if(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN)))){
+						mArrayListEvent.get(position).setGoingToAttend(true);
+						isToNotify = true;
+					}
+					
 					if(isToNotify){
 						mRecyclerView.getAdapter().notifyDataSetChanged();
 					}

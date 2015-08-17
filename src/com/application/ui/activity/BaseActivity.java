@@ -38,6 +38,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
 
+import com.application.beans.Chat;
 import com.application.beans.Mobcast;
 import com.application.beans.Training;
 import com.application.ui.adapter.SimpleHeaderRecyclerAdapter;
@@ -47,6 +48,7 @@ import com.application.ui.view.BottomSheet;
 import com.application.ui.view.MaterialRippleLayout;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.ApplicationLoader;
 import com.application.utils.BuildVars;
 import com.application.utils.FileLog;
 import com.mobcast.R;
@@ -222,7 +224,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 	public static ArrayList<Training> getDummyTrainingData() {
 		return getDummyTrainingData(NUM_OF_ITEMS);
 	}
-
+	
 	public static ArrayList<Training> getDummyTrainingData(int num) {
 		ArrayList<Training> items = new ArrayList<Training>();
 /*		for (int i = 1; i <= num; i++) {
@@ -267,6 +269,37 @@ public abstract class BaseActivity extends AppCompatActivity {
 				Obj.setmFileType(AppConstants.TRAINING.TEXT);
 			}
 			items.add(Obj);
+		}
+		return items;
+	}
+	
+	public static ArrayList<Chat> getDummyChatData() {
+		return getDummyChatData(1);
+	}
+	
+	public static ArrayList<Chat> getDummyChatData(int num) {
+		ArrayList<Chat> items = new ArrayList<Chat>();
+		for (int i = 0; i < num; i++) {
+			Chat Obj = new Chat();
+			if(ApplicationLoader.getPreferences().getUserName().equalsIgnoreCase(AppConstants.mChatUser1)){
+				Obj.setmName(AppConstants.mChatName2);
+				Obj.setIsRead(AppConstants.mChatUser1);//from
+				Obj.setmLastMessageTime(AppConstants.mChatUser2);//to
+				Obj.setmUserDpLink(AppConstants.mChatUserDp1);
+				ApplicationLoader.getPreferences().setChatOppositePerson(AppConstants.mChatName2);
+				ApplicationLoader.getPreferences().setChatFrom(AppConstants.mChatUser1);
+				ApplicationLoader.getPreferences().setChatTo(AppConstants.mChatUser2);
+				items.add(Obj);
+			}else if(ApplicationLoader.getPreferences().getUserName().equalsIgnoreCase(AppConstants.mChatUser2)){
+				Obj.setmName(AppConstants.mChatName1);
+				Obj.setIsRead(AppConstants.mChatUser2);//from
+				Obj.setmLastMessageTime(AppConstants.mChatUser1);//to
+				Obj.setmUserDpLink(AppConstants.mChatUserDp2);
+				ApplicationLoader.getPreferences().setChatOppositePerson(AppConstants.mChatName1);
+				ApplicationLoader.getPreferences().setChatFrom(AppConstants.mChatUser2);
+				ApplicationLoader.getPreferences().setChatTo(AppConstants.mChatUser1);
+				items.add(Obj);
+			}
 		}
 		return items;
 	}

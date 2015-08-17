@@ -4,8 +4,11 @@
 package com.application.ui.activity;
 
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import android.annotation.SuppressLint;
@@ -17,6 +20,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.CalendarContract;
+import android.provider.CalendarContract.Events;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
@@ -114,6 +119,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 	private boolean mContentIsGoing;
 	private boolean mContentIsRead;
 
+	private boolean isFromNotification = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -176,9 +182,26 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 		case android.R.id.home:
 			finish();
 			AndroidUtilities.exitWindowAnimation(EventDetailActivity.this);
+			if(isFromNotification){
+				Intent mIntent = new Intent(EventDetailActivity.this, MotherActivity.class);
+				startActivity(mIntent);
+			}
+			return true;
+		case R.id.action_add_cal:
+			addEventToCalendar();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		if(isFromNotification){
+			Intent mIntent = new Intent(EventDetailActivity.this, MotherActivity.class);
+			startActivity(mIntent);
 		}
 	}
 
@@ -291,6 +314,59 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 				}
 			}
 		});
+		
+		mEventLikeTv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				try{
+					if(!mContentIsLike){
+						if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.EVENT)){
+							ContentValues values = new ContentValues();
+							values.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_LIKE, "true");
+							values.put(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO, String.valueOf(Integer.parseInt(mContentLikeCount)+1));
+							getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, values, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId});
+						}
+						mEventLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
+						mEventLikeTv.setText(String.valueOf(Integer.parseInt(mContentLikeCount)+1));
+						mEventLikeTv.setTextColor(getResources().getColor(R.color.red));
+						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LIKE, "");
+					}
+				}catch(Exception e){
+					FileLog.e(TAG, e.toString());
+				}
+			}
+		});
+		
+		mEventAttendJoinBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.JOIN, "");
+				ContentValues mValues = new ContentValues();
+				mValues.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN, "true");
+				getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, mValues, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId});
+				mEventAttendJoinBtn.setText(getResources().getString(R.string.accepted));
+				mEventAttendJoinBtn.setBackgroundResource(R.drawable.shape_button_green_fill);
+				mEventAttendDeclineBtn.setText(getResources().getString(R.string.fragment_event_detail_button_decline));
+				mEventAttendDeclineBtn.setBackgroundResource(R.drawable.shape_button_orange_border);
+			}
+		});
+		
+		mEventAttendDeclineBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.JOIN, "");
+				ContentValues mValues = new ContentValues();
+				mValues.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN, "false");
+				getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, mValues, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId});
+				mEventAttendDeclineBtn.setText(getResources().getString(R.string.notgoing));
+				mEventAttendDeclineBtn.setBackgroundResource(R.drawable.shape_button_red_fill);
+				mEventAttendJoinBtn.setText(getResources().getString(R.string.fragment_event_detail_button_join));
+				mEventAttendJoinBtn.setBackgroundResource(R.drawable.shape_button_orange_fill);
+			}
+		});
 	}
 	
 	private void getIntentData(){
@@ -300,6 +376,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 				Cursor mCursor = null;
 				mId = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.ID);
 				mCategory = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY).toString();
+				isFromNotification = mIntent.getBooleanExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, false);
 				if(!TextUtils.isEmpty(mId) && !TextUtils.isEmpty(mCategory)){
 					if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.EVENT)){
 						mCursor = getContentResolver().query(DBConstant.Event_Columns.CONTENT_URI, null, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId}, DBConstant.Event_Columns.COLUMN_EVENT_ID + " DESC");
@@ -327,6 +404,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 			mContentDesc = mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_DESC));
 			mContentIsLike = Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_IS_LIKE)));
 			mContentIsSharing =  Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_IS_SHARING)));
+			mContentIsGoing =  Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN)));
 			mContentLikeCount = mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO));
 			mContentViewCount = mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_READ_NO));
 			mContentBy = mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_BY));
@@ -370,6 +448,21 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 				mEventLocationTextTv.setText(mContentEventVenue);
 			}
 			
+			if(mContentIsLike){
+				mEventLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
+				mEventLikeTv.setText(mContentLikeCount);
+				mEventLikeTv.setTextColor(getResources().getColor(R.color.red));
+			}
+			
+			if(mContentIsGoing){
+				mEventAttendJoinBtn.setText(getResources().getString(R.string.going));
+				mEventAttendJoinBtn.setBackgroundResource(R.drawable.shape_button_green_fill);
+			}else{
+				mEventAttendDeclineBtn.setText(getResources().getString(R.string.notgoing));
+				mEventAttendDeclineBtn.setBackgroundResource(R.drawable.shape_button_red_fill);
+			}
+			
+			
 			mEventAttendInvitedNumberTv.setText(mContentEventInvited);
 			mEventAttendGoingNumberTv.setText(mContentEventGoing);
 			
@@ -389,6 +482,33 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 			FileLog.e(TAG, e.toString());
 		}
 	}
+	
+	@SuppressLint({ "InlinedApi", "SimpleDateFormat" }) private void addEventToCalendar() {
+		// TODO Auto-generated method stub
+		Intent mCalIntent = new Intent(Intent.ACTION_EDIT);
+		mCalIntent.setType("vnd.android.cursor.item/event");
+		Date mFromTime = null;
+		Date mToTime = null;
+		try {
+			mFromTime = new SimpleDateFormat("yyyy-mm-dd").parse(mContentEventFromTime);
+			mToTime = new SimpleDateFormat("yyyy-mm-dd").parse(mContentEventToTime);
+			mCalIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,mFromTime);
+			mCalIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,mToTime);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		mCalIntent.putExtra(Events.TITLE, mContentTitle);
+		mCalIntent.putExtra(Events.DESCRIPTION, mContentDesc);
+		mCalIntent.putExtra(Events.EVENT_LOCATION, mContentEventVenue);
+		mCalIntent.putExtra(Events.ALL_DAY, 1);
+		mCalIntent.putExtra(Events.STATUS, 1);
+		mCalIntent.putExtra(Events.VISIBLE, 0);
+		mCalIntent.putExtra(Events.HAS_ALARM, 1);
+		startActivity(mCalIntent);
+	}
+	
 	
 	@SuppressLint({ "SimpleDateFormat", "DefaultLocale" }) private void setDataToUiAccCurrentDate(){
 		try{

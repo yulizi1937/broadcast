@@ -47,6 +47,7 @@ import com.application.ui.view.ProgressWheel;
 import com.application.ui.view.VisualizerView;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.ApplicationLoader;
 import com.application.utils.DownloadAsyncTask;
 import com.application.utils.FetchActionAsyncTask;
 import com.application.utils.FileLog;
@@ -88,7 +89,6 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	
 	private VisualizerView mVisualizerView;
 	
-	private ImageView mShareIv;
 	private ImageView mPlayIv;
 	
 	private AppCompatTextView mAudioNewsLinkTv;
@@ -102,6 +102,8 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	
 	private MediaPlayer mPlayer;
 	private Thread mSeekBarThread;
+	
+	private ThreadPauseControl mThreadSafe = new ThreadPauseControl();
 	
 	private boolean isShareOptionEnable = true;
 	
@@ -133,6 +135,8 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	private ArrayList<String> mContentFilePathList = new ArrayList<>();
 	private ArrayList<String> mContentFileSizeList = new ArrayList<>();
 	
+	private boolean isFromNotification = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -141,6 +145,7 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 		initToolBar();
 		initUi();
 		getIntentData();
+		ApplicationLoader.getPreferences().setAudioPlayPosition(-1);
 		initUiWithData();
 		setUiListener();
 		setSwipeRefreshLayoutCustomisation();
@@ -221,6 +226,10 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 		case android.R.id.home:
 			finish();
 			AndroidUtilities.exitWindowAnimation(AudioDetailActivity.this);
+			if(isFromNotification){
+				Intent mIntent = new Intent(AudioDetailActivity.this, MotherActivity.class);
+				startActivity(mIntent);
+			}
 			return true;
 		case R.id.action_share:
 			showDialog(0);
@@ -233,6 +242,16 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		if(isFromNotification){
+			Intent mIntent = new Intent(AudioDetailActivity.this, MotherActivity.class);
+			startActivity(mIntent);
 		}
 	}
 	
@@ -285,6 +304,7 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 				Cursor mCursor = null;
 				mId = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.ID);
 				mCategory = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY).toString();
+				isFromNotification = mIntent.getBooleanExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, false);
 				if(!TextUtils.isEmpty(mId) && !TextUtils.isEmpty(mCategory)){
 					if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
 						mCursor = getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId}, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + " DESC");
@@ -476,21 +496,22 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 		mAudioNewsLinkTv.setText(Html.fromHtml(getResources().getString(R.string.sample_news_detail_link)));
 	}
 	
-	  private void initMediaPlayer(String mPath)
-	  {
+	  private void initMediaPlayer(String mPath){
 		mPlayer = MediaPlayer.create(this, Uri.parse(mPath));
 	    mPlayer.setLooping(false);
-	    mPlayer.start();
+//	    mPlayer.start();
 	    mPlayer.setOnPreparedListener(new OnPreparedListener() {
 			@SuppressWarnings("deprecation")
 			@Override
 			public void onPrepared(MediaPlayer mp) {
 				// TODO Auto-generated method stub
 				mTotalDuration = mPlayer.getDuration();
-				mPlayIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause_audio));
+//				mPlayIv.setImageResource(R.drawable.ic_pause_audio);
 				mDiscreteSeekBar.setMin(0);
 				mDiscreteSeekBar.setMax(mTotalDuration);
-				isPlaying = true;
+				mAudioControllerCurrentDurationTv.setText(Utilities
+						.getTimeFromMilliSeconds((long) mTotalDuration));
+				isPlaying = false;
 				mDiscreteSeekBar.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
 		            @Override
 		            public int transform(int value) {
@@ -510,10 +531,10 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 					}
 		            
 		        });
-				runOnSeekBarThread();
+//				runOnSeekBarThread();
 			}
 		});
-
+	    
 	    // We need to link the visualizer view to the media player so that
 	    // it displays something
 	    mVisualizerView.link(mPlayer);
@@ -522,29 +543,30 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	    addLineRenderer();
 	  }
 
-	  private void cleanUp()
-	  {
-	    if (mPlayer != null)
-	    {
+	  private void cleanUp(){
+	    if (mPlayer != null) {
 	      mVisualizerView.release();
 	      mPlayer.release();
 	      mPlayer = null;
 	    }
 	  }
 	  
-	  private void addLineRenderer()
-	  {
-	    Paint linePaint = new Paint();
-	    linePaint.setStrokeWidth(1f);
-	    linePaint.setAntiAlias(true);
-	    linePaint.setColor(Color.argb(88, 0, 128, 255));
+	  private void addLineRenderer(){
+		  try{
+			    Paint linePaint = new Paint();
+			    linePaint.setStrokeWidth(1f);
+			    linePaint.setAntiAlias(true);
+			    linePaint.setColor(Color.argb(88, 0, 128, 255));
 
-	    Paint lineFlashPaint = new Paint();
-	    lineFlashPaint.setStrokeWidth(5f);
-	    lineFlashPaint.setAntiAlias(true);
-	    lineFlashPaint.setColor(Color.argb(188, 255, 255, 255));
-	    LineRenderer lineRenderer = new LineRenderer(linePaint, lineFlashPaint, true);
-	    mVisualizerView.addRenderer(lineRenderer);
+			    Paint lineFlashPaint = new Paint();
+			    lineFlashPaint.setStrokeWidth(5f);
+			    lineFlashPaint.setAntiAlias(true);
+			    lineFlashPaint.setColor(Color.argb(188, 255, 255, 255));
+			    LineRenderer lineRenderer = new LineRenderer(linePaint, lineFlashPaint, true);
+			    mVisualizerView.addRenderer(lineRenderer);
+		  }catch(Exception e){
+			FileLog.e(TAG, e.toString());  
+		  }
 	  }
 
 	/**
@@ -609,12 +631,25 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
 				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, "");
-				if(isPlaying){
-					mPlayer.pause();
-					mPlayIv.setImageResource(R.drawable.ic_play_audio);
-					isPlaying = false;
-				}else{
+				if(!isPlaying){
+					Log.i(TAG, "play");
+					mPlayIv.setImageResource(R.drawable.ic_pause_audio);
+					isPlaying = true;
+					int mPosition = ApplicationLoader.getPreferences().getAudioPlayPosition();
+					if(mPosition!=-1){
+						mPlayer.seekTo(ApplicationLoader.getPreferences().getAudioPlayPosition());
+						mThreadSafe.unpause();
+					}else{
+						runOnSeekBarThread();	
+					}
 					mPlayer.start();
+				}else{
+					Log.i(TAG, "pause");
+					mPlayIv.setImageResource(R.drawable.ic_play_audio);
+					ApplicationLoader.getPreferences().setAudioPlayPosition(mPlayer.getCurrentPosition());
+					isPlaying = false;
+					mPlayer.pause();
+					mThreadSafe.pause();
 				}
 			}
 		});
@@ -811,7 +846,13 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 			mNewValues.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_IS_DEFAULT, "true");
 			getContentResolver().update(DBConstant.Mobcast_File_Columns.CONTENT_URI, mNewValues, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID + "=?" +"  AND "+ DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG + "=?", new String[]{mId, mContentLanguage});
 		}else{
+			ContentValues values = new ContentValues();
+			values.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_IS_DEFAULT, "false");
+			getContentResolver().update(DBConstant.Training_File_Columns.CONTENT_URI, values, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 			
+			ContentValues mNewValues = new ContentValues();
+			mNewValues.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_IS_DEFAULT, "true");
+			getContentResolver().update(DBConstant.Training_File_Columns.CONTENT_URI, mNewValues, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID + "=?" +"  AND "+ DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LANG + "=?", new String[]{mId, mContentLanguage});
 		}
 	}
 	
@@ -832,9 +873,11 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	}
 
 	private void resetMediaPlayer(){
-		mPlayIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_play_audio));
+		mPlayIv.setImageResource(R.drawable.ic_play_audio);
 		mProgress = 0;
+		isPlaying = false;
 		mDiscreteSeekBar.setProgress(0);
+		ApplicationLoader.getPreferences().setAudioPlayPosition(-1);
 	}
 	
 	private void runOnSeekBarThread(){
@@ -848,23 +891,50 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 			}
 		};
 		
-		final Runnable mSeekBarProgressRunnable = new Runnable() {
+		Runnable mSeekBarProgressRunnable = new Runnable() {
 			public void run() {
-				while (mProgress <= mTotalDuration) {
-					mHandler.post(mSeekBarRunnable);
-					mProgress++;
-					try {
-						Thread.sleep(1);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+				synchronized (this) {
+					while (mProgress <= mTotalDuration) {
+						if (!mThreadSafe.needToPause) {
+							mHandler.post(mSeekBarRunnable);
+							mProgress++;
+							try {
+								Thread.sleep(1);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
 					}
 				}
 			}
-	    };
+		};
 	    
 	    mSeekBarThread = new Thread(mSeekBarProgressRunnable);
 	    mSeekBarThread.start();
+	}
+	
+	public class ThreadPauseControl {
+	    private boolean needToPause = false;
+	    public synchronized void pausePoint() {
+	        while (!needToPause) {
+	            try {
+					wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        }
+	    }
+
+	    public synchronized void pause() {
+	        needToPause = true;
+	    }
+
+	    public synchronized void unpause() {
+	        needToPause = false;
+	        this.notifyAll();
+	    }
 	}
 	
 	private void decryptFileOnResume(){

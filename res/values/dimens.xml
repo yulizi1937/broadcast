@@ -42,6 +42,14 @@
     <dimen name="edit_profile_circleimageview_height">96dp</dimen>
     <dimen name="edit_profile_progresswheel_height">48dp</dimen>
     <dimen name="edit_profile_upload_imageview_height">48dp</dimen>
+    
+    <!-- activity_recruitment_detail -->
+    <dimen name="activity_recruitment_detail_text_size">16sp</dimen>
+    <dimen name="activity_recruitment_detail_designation_size">10sp</dimen>
+    <dimen name="activity_recruitment_detail_experience_size">14sp</dimen>
+    <dimen name="activity_recruitment_detail_title_size">18sp</dimen>
+    <dimen name="activity_recruitment_heading_padding">7dp</dimen>
+    <dimen name="activity_recruitment_heading_expand_width">24dp</dimen>
 
     <!-- item_recycler_award -->
     <dimen name="award_winner_textview_size">14sp</dimen>
@@ -205,6 +213,14 @@
     <dimen name="activity_tutorial_next_image_margin">16dp</dimen>
     <dimen name="fragment_tutorial_phone_padding_top_bottom">24dp</dimen>
     <dimen name="fragment_tutorial_phone_padding_left_right">12dp</dimen>
+    
+    <!-- fragment_capture -->
+    <dimen name="fragment_capture_note_max_height">120dp</dimen>
+    <dimen name="fragment_capture_note_min_height">90dp</dimen>
+    <dimen name="fragment_capture_note_margin">8dp</dimen>
+    <dimen name="fragment_capture_note_padding">8dp</dimen>
+    <dimen name="fragment_capture_button_text_size">16sp</dimen>
+    <dimen name="fragment_capture_attach_another_layout_height">86sp</dimen>
 
     <!-- item_recycler_mobcast_text -->
     <dimen name="item_recycler_mobcast_text_indicator_line_margin_left">32dp</dimen>
@@ -238,6 +254,11 @@
     <dimen name="item_recycler_mobcast_feedback_view_detail_image_margin_top">6dp</dimen>
     <dimen name="item_recycler_mobcast_feedback_view_detail_image_margin_left">4dp</dimen>
     <dimen name="item_recycler_mobcast_feedback_view_detail_text_margin_left">14dp</dimen>
+    
+    <!-- iten_recycler_recruitment -->
+    <dimen name="item_recycler_recruitment_indicator_date_text_size">11sp</dimen>
+    <dimen name="item_recycler_recruitment_indicator_month_text_size">9sp</dimen>
+    <dimen name="item_recycler_recruitment_indicator_date_height">16dp</dimen>
 
     <!-- section_layout_birthday_header -->
     <dimen name="birthday_section_header_textview_size">11sp</dimen>

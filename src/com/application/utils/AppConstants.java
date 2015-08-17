@@ -45,11 +45,16 @@ public class AppConstants {
 		public static final String API_FETCH_FEED_TRAINING  = API_URL + "fetchFeedTraining";
 		public static final String API_FETCH_FEED_EVENT     = API_URL + "fetchFeedEvent";
 		public static final String API_FETCH_FEED_AWARD     = API_URL + "fetchFeedAward";
+		public static final String API_FETCH_FEED_RECRUITMENT= API_URL + "fetchFeedRecruitment";
 		public static final String API_FETCH_FEED_ACTION    = API_URL + "fetchFeedAction";
 		public static final String API_SYNC                 = API_URL + "syncMobcastData";
 		public static final String API_UPDATE_REPORT        = API_URL + "updateUserReport";
 		public static final String API_SUBMIT_FEEDBACK      = API_URL + "submitUserFeedback";
 		public static final String API_SUBMIT_QUIZ          = API_URL + "submitUserQuiz";
+		public static final String API_SUBMIT_CAPTURE       = API_URL + "submitCapture";
+		public static final String API_SUBMIT_AWARD_MESSAGE = API_URL + "submitAwardMessage";
+		public static final String API_SUBMIT_BDAY_MESSAGE  = API_URL + "submitBirthdayMessage";
+		public static final String API_SEND_CHAT            = API_URL + "sendChatMessage";
 	}
 	
 	public interface API_KEY_PARAMETER{
@@ -71,6 +76,9 @@ public class AppConstants {
 		public static final String errorMessage            = "errorMessage";
 		public static final String successMessage          = "successMessage";
 		public static final String accessToken             = "accessToken";
+		public static final String from             	   = "from";
+		public static final String to             		   = "to";
+		public static final String message                 = "message";
 		public static final String sortByAsc               = "sortByAsc";
 		public static final String limit                   = "limit";
 		public static final String name                    = "name";
@@ -94,10 +102,12 @@ public class AppConstants {
 		public static final String lastEventId             = "lastEventId";
 		public static final String lastAwardId             = "lastAwardId";
 		public static final String lastBirthdayId          = "lastBirthdayId";
+		public static final String lastRecruitmentId       = "lastRecruitmentId";
 		public static final String mobcast                 = "mobcast";
 		public static final String training                = "training";
 		public static final String chat                    = "chat";
 		public static final String award                   = "award";
+		public static final String recruitment             = "recruitment";
 		public static final String event                   = "event";
 		public static final String birthday                = "birthday";
 		public static final String feedback                = "feedback";
@@ -237,10 +247,37 @@ public class AppConstants {
 		public static final String awardIsSharing           = "awardIsSharing";
 		public static final String awardCoverLink           = "awardCoverLink";
 		public static final String awardCoverThumbnail      = "awardCoverThumbnail";
-		public static final String awardFileSize       = "awardFileSize";
+		public static final String awardFileSize            = "awardFileSize";
 		public static final String awardIsExpiryDateSet     = "awardIsExpiryDateSet";
 		public static final String awardExpiryDate          = "awardExpiryDate";
 		public static final String awardExpiryTime          = "awardExpiryTime";
+		public static final String captureFileCount         = "fileCount";
+		public static final String captureNote              = "note";
+		public static final String captureFile          	= "file";
+		public static final String jobTitle          	    = "jobTitle";
+		public static final String jobDesignation          	= "jobDesignation";
+		public static final String jobLocation          	= "jobLocation";
+		public static final String jobExperience          	= "jobExperience";
+		public static final String jobSkills              	= "jobSkills";
+		public static final String jobDescription          	= "jobDescription";
+		public static final String jobQualification         = "jobQualification";
+		public static final String jobCTC          	        = "jobCTC";
+		public static final String contactName          	= "contactName";
+		public static final String contactMobile          	= "contactMobile";
+		public static final String contactDesignation       = "contactDesignation";
+		public static final String contactEmail          	= "contactEmail";
+		public static final String isContactSharing         = "isContactSharing";
+		public static final String isSharing          	    = "isSharing";
+		public static final String likeCount          	    = "likeCount";
+		public static final String isLiked          	    = "isLiked";
+		public static final String isRead          	        = "isRead";
+		public static final String viewCount          	    = "viewCount";
+		public static final String shareCount             	= "shareCount";
+		public static final String isExpiryDateSet          = "isExpiryDateSet";
+		public static final String expiryDate          	    = "expiryDate";
+		public static final String expiryTime          	    = "expiryTime";
+		public static final String sentDate          	    = "sentDate";
+		public static final String sentTime              	= "sentTime";
 		
 	}
 	
@@ -260,15 +297,17 @@ public class AppConstants {
 	
 	public interface REPORT{
 		public static final String READ = "read";
-		public static final String VIEW = "view";
+//		public static final String VIEW = "view";
 		public static final String PUSH = "push";
 		public static final String SYNC = "sync";
 		public static final String PLAY = "play";
 		public static final String SHARE= "share";
 		public static final String ANYDO= "anydo";
+		public static final String JOIN = "join";
 		public static final String LINK = "link";
 		public static final String LIKE = "like";
 		public static final String OPEN = "open";
+		public static final String CONG = "congratulate";
 	}
 
 	public interface FOLDER{
@@ -317,6 +356,8 @@ public class AppConstants {
 		public static final int EVENT     = 13;
 		public static final int AWARD     = 14;
 		public static final int RELOGIN   = 15;
+		public static final int CHAT      = 16;
+		public static final int RECRUITMENT= 17;
 	}
 	
 	public interface TRAINING{
@@ -345,6 +386,7 @@ public class AppConstants {
 		public static final String ACTIVITYTITLE    = "activityTitle";
 		public static final String CATEGORYARRAY    = "categoryArray";
 		public static final String CATEGORY         = "category";
+		public static final String ISFROMNOTIFICATION= "isFromNotification";
 		public static final String HELP             = "help";
 		public static final String USERNAME         = "userName";
 		public static final String OTP              = "otp";
@@ -354,6 +396,7 @@ public class AppConstants {
 		public static final String TRAINING         = "training";
 		public static final String AWARD            = "award";
 		public static final String EVENT            = "event";
+		public static final String RECRUITMENT      = "recruitment";
 		public static final String RELOGIN          = "relogin";
 		public static final String OBJECT           = "object";
 		public static final String POSITION         = "position";
@@ -365,6 +408,13 @@ public class AppConstants {
 		public static final String TYPE             = "type";
 		public static final String LINK             = "link";
 		public static final String OPEN             = "open";
+		public static final String DISPLAYNAME      = "name";
+		public static final String FILEPATH         = "path";
+		public static final String TIME             = "time";
+		public static final String FROM             = "from";
+		public static final String TO               = "to";
+		public static final String DP               = "dp";
+		public static final String CAPTURE          = "capture";
 	}
 	
 	public interface NOTIFICATION{
@@ -386,6 +436,15 @@ public class AppConstants {
 	}
 	
 	public static final String deviceType = "android";
+	
+	public static final String mChatUser1 = "9920277790";
+	public static final String mChatUser2 = "9769688838";
+	
+	public static final String mChatName1  = "Anup Burade";
+	public static final String mChatName2  = "Ashwin Roy Choudhary";
+	
+	public static final String mChatUserDp1 = "https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-xfp1/v/t1.0-9/283450_10150239966167890_4445638_n.jpg?oh=d732af3013919548417322e29b9305aa&oe=5681357E&__gda__=1451109996_a70c4977a9dd0e5dba7548624e5aeb72";
+	public static final String mChatUserDp2 = "https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-xtf1/v/t1.0-9/11811481_10153147923287293_2856968601704623332_n.jpg?oh=96f2badd78ef8e3fa37189572acdd2a8&oe=5683E41C&__gda__=1448067128_df409765385da599fca2de26dafef21f";
 	
 	public static final String mStoreLink = "";
 	

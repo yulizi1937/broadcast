@@ -4,14 +4,21 @@
 package com.application.ui.activity;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
+import android.net.TrafficStats;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,6 +51,8 @@ import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
 import com.application.utils.Utilities;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.GAServiceManager;
 import com.mobcast.R;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -74,8 +83,6 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mFileStorageAppTv;
 	private AppCompatTextView mFileStorageDeviceTv;
 	
-
-
 	private AppCompatCheckBox mNotificationBirthdayMuteCheckBox;
 	private AppCompatCheckBox mNotificationDownloadAndNotifyCheckBox;
 	private AppCompatCheckBox mNotificationAnyDoCheckBox;
@@ -101,6 +108,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	private boolean isCustomNotification = false;
 	private boolean isDownloadAndNotify = false;
 			
+	private int isDeveloperMode = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -233,11 +241,11 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 
 	private void setUiListener() {
 		setMaterialRippleView();
-		setOnClickListener();
+		setClickListener();
 		setCheckBoxListener();
 	}
 
-	private void setOnClickListener() {
+	private void setClickListener() {
 		mGeneralLangugageLayout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -302,6 +310,23 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 				Intent mIntent = new Intent(SettingsActivity.this, FileManagerActivity.class);
 				startActivity(mIntent);
 				AndroidUtilities.enterWindowAnimation(SettingsActivity.this);
+			}
+		});
+		
+		mAboutBuildVersionLayout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				if(!ApplicationLoader.getPreferences().isDeveloperMode()){
+					if(isDeveloperMode >=3){
+						ApplicationLoader.getPreferences().setDeveloperMode(true);
+						Utilities.showCrouton(SettingsActivity.this, mCroutonViewGroup, getResources().getString(R.string.developer_message), Style.INFO);
+					}else{
+						isDeveloperMode++;
+					}
+				}else{//Developer Mode
+					showTrafficDialog();
+				}
 			}
 		});
 	}
@@ -455,7 +480,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			// TODO Auto-generated method stub
 			try{
 				mFloatAppStorage = AndroidUtilities.getPercentageOfFileSizeFromFreeMemory(AndroidUtilities.getFolderSize(new File(
-						Environment.getExternalStorageDirectory(), AppConstants.FOLDER.ROOT_FOLDER).getAbsolutePath()));
+						Environment.getExternalStorageDirectory(), AppConstants.FOLDER.BUILD_FOLDER).getAbsolutePath()));
 			}catch(Exception e){
 				FileLog.e(TAG, e.toString());
 			}
@@ -476,14 +501,112 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			LinearLayout.LayoutParams  paramsDevice = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 100 - mFloatAppStorage);
 			mFileStorageDeviceTv.setLayoutParams(paramsDevice);
 			
-			mFileStorageAppTv.setText(Utilities.formatFileSize(AndroidUtilities.getFolderSize(new File(
-					Environment.getExternalStorageDirectory(), "Download").getAbsolutePath())));
+			mFileStorageAppTv.setText("Used : "+Utilities.formatFileSize(AndroidUtilities.getFolderSize(new File(
+					Environment.getExternalStorageDirectory(), AppConstants.FOLDER.BUILD_FOLDER).getAbsolutePath())));
 			
-			mFileStorageDeviceTv.setText(Utilities.formatFileSize(AndroidUtilities.getFolderSize(
-					Environment.getExternalStorageDirectory().getAbsolutePath())));
+//			mFileStorageDeviceTv.setText(Utilities.formatFileSize(AndroidUtilities.getFolderSize(
+//					Environment.getExternalStorageDirectory().getAbsolutePath())));
+			
+			mFileStorageDeviceTv.setText("Used : "+Utilities.formatFileSize(AndroidUtilities.getFolderSize(new File(
+					Environment.getExternalStorageDirectory(), AppConstants.FOLDER.BUILD_FOLDER).getAbsolutePath())));
 		}
 	}
 	
+	
+	/**
+	 * Traffic : Stats
+	 */
+	
+	private void showTrafficDialog(){
+//		String mTrafficStatics = getTrafficStats();
+		getTrafficStats();
+		MaterialDialog mMaterialDialog = new MaterialDialog.Builder(SettingsActivity.this)
+        .title(getResources().getString(R.string.sample_fragment_settings_dialog_traffic_title))
+//        .content(mTrafficStatics)
+        .titleColor(Utilities.getAppColor())
+        .positiveText(getResources().getString(R.string.sample_fragment_settings_dialog_language_positive))
+        .positiveColor(Utilities.getAppColor())
+        .callback(new MaterialDialog.ButtonCallback() {
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB) @Override
+            public void onPositive(MaterialDialog dialog) {
+            	dialog.dismiss();
+            }
+        })
+        .show();
+	}
+	
+	private void getTrafficStats(){
+		TrafficSnapshot latest=null;
+		latest=new TrafficSnapshot(this);
+		
+		ArrayList<String> log=new ArrayList<String>();
+		HashSet<Integer> intersection=new HashSet<Integer>(latest.apps.keySet());
+		
+		for (Integer uid : intersection) {
+			TrafficRecord latest_rec=latest.apps.get(uid);
+			emitLog(latest_rec.tag, latest_rec, log);
+		}
+		
+		Collections.sort(log);
+		
+		for (String row : log) {
+			Log.d("TrafficMonitor", row);
+		}
+	}
+	
+	private void emitLog(CharSequence name, TrafficRecord latest_rec, ArrayList<String> rows) {
+		if (latest_rec.rx > -1 || latest_rec.tx > -1) {
+			StringBuilder buf = new StringBuilder(name);
+
+			buf.append("=");
+			buf.append(String.valueOf(latest_rec.rx));
+			buf.append(" received");
+
+			buf.append(", ");
+			buf.append(String.valueOf(latest_rec.tx));
+			buf.append(" sent");
+			
+			rows.add(buf.toString());
+		}
+	}
+	
+	@SuppressLint("UseSparseArrays") class TrafficSnapshot {
+		TrafficRecord device=null;
+		HashMap<Integer, TrafficRecord> apps= new HashMap<Integer, TrafficRecord>();
+		
+		TrafficSnapshot(Context ctxt) {
+			device=new TrafficRecord();
+			
+			HashMap<Integer, String> appNames=new HashMap<Integer, String>();
+			
+			for (ApplicationInfo app : ctxt.getPackageManager().getInstalledApplications(0)) {
+				if(app.packageName.equalsIgnoreCase(getResources().getString(R.string.package_name))){
+					appNames.put(app.uid, app.packageName);	
+				}
+			}
+			
+			for (Integer uid : appNames.keySet()) {
+				apps.put(uid, new TrafficRecord(uid, appNames.get(uid)));
+			}
+		}
+	}
+	
+	class TrafficRecord {
+		long tx=0;
+		long rx=0;
+		String tag=null;
+		
+		TrafficRecord() {
+			tx=TrafficStats.getTotalTxBytes();
+			rx=TrafficStats.getTotalRxBytes();
+		}
+		
+		TrafficRecord(int uid, String tag) {
+			tx=TrafficStats.getUidTxBytes(uid);
+			rx=TrafficStats.getUidRxBytes(uid);
+			this.tag=tag;
+		}
+	}
 	
 	/**
 	 * API : Submit App Settings To API
@@ -612,5 +735,21 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		}
 	}
 	
+	/**
+	 * Google Analytics
+	 */
+	 @Override
+	  public void onStart() {
+	    super.onStart();
+	    EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+	    GAServiceManager.getInstance().dispatchLocalHits();
+	  }
+
+	  @Override
+	  public void onStop() {
+	    super.onStop();
+	    EasyTracker.getInstance(this).activityStop(this);  // Add this method.
+	    GAServiceManager.getInstance().dispatchLocalHits();
+	  }
 	
 }

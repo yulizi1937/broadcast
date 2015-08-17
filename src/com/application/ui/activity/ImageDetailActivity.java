@@ -412,9 +412,10 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 				mImageLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
 				mImageLikeTv.setTextColor(getResources().getColor(R.color.red));
 			}
-
+			
 			if (mContentLanguageList != null && mContentLanguageList.size() > 1) {
-				setLanguageChipsLayout(mContentLanguageList);
+//				setLanguageChipsLayout(mContentLanguageList);
+				mLanguageLinearLayout.setVisibility(View.GONE);
 			} else {
 				mLanguageLinearLayout.setVisibility(View.GONE);
 			}
@@ -648,9 +649,6 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 						@Override
 						public void onClick(View view) {
 							// TODO Auto-generated method stub
-							Utilities.showCrouton(ImageDetailActivity.this,
-									mCroutonViewGroup, mContentLanguageList
-											.get(j).toString(), Style.INFO);
 						}
 					});
 			mLanguageFlowLayout.addView(mChip);

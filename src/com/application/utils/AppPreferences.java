@@ -368,8 +368,19 @@ public class AppPreferences {
 		return mChatSound;
 	}
 	
+	public void setDeveloperMode(boolean mDeveloperMode) {
+		editor = sharedPreferences.edit();
+		editor.putBoolean("mDeveloperMode", mDeveloperMode);
+		editor.commit();
+	}
+
+	public boolean isDeveloperMode() {
+		boolean mDeveloperMode= sharedPreferences.getBoolean("mDeveloperMode",false);
+		return mDeveloperMode;
+	}
+	
 	/*
-	 * 
+	 * RecyclerView : Save Position 
 	 */
 
 	public void setViewIdMobcast(String mLastIdMobcast) {
@@ -416,6 +427,39 @@ public class AppPreferences {
 		return mViewIdAward;
 	}
 	
+	
+	public void setViewIdRecruitment(String mLastIdRecruitment) {
+		editor = sharedPreferences.edit();
+		editor.putString("setViewIdRecruitment", mLastIdRecruitment);
+		editor.commit();
+	}
+
+	public String getViewIdRecruitment() {
+		String mViewIdRecruitment= sharedPreferences.getString("setViewIdRecruitment","-1");
+		return mViewIdRecruitment;
+	}
+	
+	public void setVideoViewPosition(int mLastPosition) {
+		editor = sharedPreferences.edit();
+		editor.putInt("setPositionVideoView", mLastPosition);
+		editor.commit();
+	}
+
+	public int getVideoViewPosition() {
+		int mVideoViewPosition= sharedPreferences.getInt("setPositionVideoView",-1);
+		return mVideoViewPosition;
+	}
+	
+	public void setAudioPlayPosition(int mLastPosition) {
+		editor = sharedPreferences.edit();
+		editor.putInt("setPositionAudioPlay", mLastPosition);
+		editor.commit();
+	}
+
+	public int getAudioPlayPosition() {
+		int mAudioPlayPosition= sharedPreferences.getInt("setPositionAudioPlay",-1);
+		return mAudioPlayPosition;
+	}
 
 	/*
 	 * Last id : Mobcast, Training, Event, Award & Birthday
@@ -498,6 +542,42 @@ public class AppPreferences {
 	public String getLastSyncTimeStampMessage() {
 		String mLastSyncTimeStampMessage= sharedPreferences.getString("mLastSyncTimeStampMessage","Failed due to unknown error!");
 		return mLastSyncTimeStampMessage;
+	}
+	
+	/*
+	 * Chat
+	 */
+	public void setChatOppositePerson(String mChatOppositePerson) {
+		editor = sharedPreferences.edit();
+		editor.putString("mChatOppositePerson", mChatOppositePerson);
+		editor.commit();
+	}
+
+	public String getChatOppositePerson() {
+		String mChatOppositePerson= sharedPreferences.getString("mChatOppositePerson","User1");
+		return mChatOppositePerson;
+	}
+	
+	public void setChatFrom(String mChatFrom) {
+		editor = sharedPreferences.edit();
+		editor.putString("mChatFrom", mChatFrom);
+		editor.commit();
+	}
+
+	public String getChatFrom() {
+		String mChatFrom= sharedPreferences.getString("mChatFrom","User1");
+		return mChatFrom;
+	}
+	
+	public void setChatTo(String mChatTo) {
+		editor = sharedPreferences.edit();
+		editor.putString("mChatTo", mChatTo);
+		editor.commit();
+	}
+
+	public String getChatTo() {
+		String mChatTo= sharedPreferences.getString("mChatTo","User1");
+		return mChatTo;
 	}
 	
 	/*

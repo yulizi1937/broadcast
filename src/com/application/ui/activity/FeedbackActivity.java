@@ -90,6 +90,8 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 	private boolean mContentIsLike;
 	private boolean mContentIsRead;
 	
+	private boolean isFromNotification = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -123,6 +125,10 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 		case android.R.id.home:
 			finish();
 			AndroidUtilities.exitWindowAnimation(FeedbackActivity.this);
+			if(isFromNotification){
+				Intent mIntent = new Intent(FeedbackActivity.this, MotherActivity.class);
+				startActivity(mIntent);
+			}
 			return true;
 		case R.id.action_report:
 			Intent mIntent  = new Intent(FeedbackActivity.this, ReportActivity.class);
@@ -132,6 +138,16 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		if(isFromNotification){
+			Intent mIntent = new Intent(FeedbackActivity.this, MotherActivity.class);
+			startActivity(mIntent);
 		}
 	}
 
@@ -174,6 +190,7 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 				Cursor mCursor = null;
 				mId = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.ID);
 				mCategory = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY).toString();
+				isFromNotification = mIntent.getBooleanExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, false);
 				if(!TextUtils.isEmpty(mId) && !TextUtils.isEmpty(mCategory)){
 					if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
 						mCursor = getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId}, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + " DESC");

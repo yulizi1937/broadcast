@@ -3,6 +3,8 @@
  */
 package com.application.ui.activity;
 
+import java.io.File;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
@@ -24,12 +26,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -78,12 +82,14 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 	private Intent mIntent;
 	
 	private View mContentLayout;
+	private FrameLayout mActivityLayout;
 	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_anydo_notification);
+		mActivityLayout = (FrameLayout)findViewById(R.id.activityAnyDoNotificationActivityLayout);
 		getIntentData();
 	}
 	
@@ -171,7 +177,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 						@Override
 						public void onDismiss(DialogInterface dialog) {
 							// TODO Auto-generated method stub
-							onBackPressed();
+//							onBackPressed();
+							finish();
 						}
 					}).listener(new DialogInterface.OnClickListener() {
 						@Override
@@ -206,7 +213,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 				@Override
 				public void onDismiss(DialogInterface dialog) {
 					// TODO Auto-generated method stub
-					onBackPressed();
+//					onBackPressed();
+					finish();
 				}
 			}).listener(new DialogInterface.OnClickListener() {
 				@Override
@@ -253,6 +261,7 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 					// TODO Auto-generated method stub
 					Intent mIntent = new NotificationHandle(ApplicationLoader.getApplication().getApplicationContext(), mId, mCategory, mType).getIntent();
 					startActivity(mIntent);
+					NotificationsController.getInstance().dismissNotification();
 					mBottomSheetAnyDo.dismiss();
 				}
 			});
@@ -278,9 +287,18 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 					// TODO Auto-generated method stub
 					if(mBottomSheetAnyDo!=null)
 						mBottomSheetAnyDo.dismiss();
+					finish();
 				}
 			});
 		}
+		
+		mActivityLayout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
 	}
 
 	private Drawable getRoundedBitmap(int imageId) {
@@ -561,12 +579,20 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 			
 			if(mCursorFileInfo!=null && mCursorFileInfo.getCount() > 0){
 				mCursorFileInfo.moveToFirst();
-				do{
+//				do{
 					if(Boolean.parseBoolean(mCursorFileInfo.getString(mCursorFileInfo.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_IS_DEFAULT)))){
-						mContentFileThumbPath = mCursorFileInfo.getString(mCursorFileInfo.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_PATH));
-						mContentFileThumbLink = mCursorFileInfo.getString(mCursorFileInfo.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_LINK));
+						String mThumbPath = mCursorFileInfo.getString(mCursorFileInfo.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_PATH));
+						String mThumbLink = mCursorFileInfo.getString(mCursorFileInfo.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_LINK));
+						
+						if(!TextUtils.isEmpty(mThumbLink)){
+							mContentFileThumbLink = mThumbLink;	
+						}
+						
+						if(!TextUtils.isEmpty(mThumbPath)){
+							mContentFileThumbPath = mThumbPath;	
+						}
 					}
-				}while(mCursorFileInfo.moveToNext());
+//				}while(mCursorFileInfo.moveToNext());
 			}
 			
 			if(mCursorFileInfo!=null){

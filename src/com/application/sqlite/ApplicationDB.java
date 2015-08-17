@@ -124,6 +124,38 @@ public class ApplicationDB extends ContentProvider{
 				Log.i(TAG, strBuilderTraining.toString());
 			}
 
+			StringBuilder strBuilderChat = new StringBuilder();
+			strBuilderChat.append("CREATE TABLE ");
+			strBuilderChat.append(DBConstant.TABLE_CHAT);
+			strBuilderChat.append('(');
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_USER_ID +" TEXT ," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_GROUP_ID +" TEXT ," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_CITY_ID +" TEXT ," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_USER_ID_MYSQL +" TEXT ," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_USER_JABBER_ID +" TEXT ," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_GROUP_ID_MYSQL +" TEXT ," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_MESSAGE +" TEXT ," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_MESSAGE_ID +" TEXT UNIQUE," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_PATH +" TEXT ," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_FILE_LINK +" TEXT ," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_TYPE +" NUMBER DEFAULT 0," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_ISSENT +" NUMBER DEFAULT 0," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_USER_SENT_MESSAGE +" NUMBER DEFAULT 0," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_ISDELIEVERED +" NUMBER DEFAULT 0," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_ISREAD +" NUMBER DEFAULT 0," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_TIMESTAMP +" TEXT ," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_MESSAGE_TIME +" TEXT ," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_MESSAGE_DATE +" TEXT ," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_TAGGED +" TEXT ," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_ISLEFT +" NUMBER DEFAULT 0," );
+			strBuilderChat.append(DBConstant.Chat_Columns.COLUMN_ISNOTIFIED +" NUMBER DEFAULT 0" );
+			strBuilderChat.append(')');
+			db.execSQL(strBuilderChat.toString());
+			if (BuildVars.DEBUG) {
+				Log.i(TAG, strBuilderChat.toString());
+			}		
+			
 		
 		//event
 		StringBuilder strBuilderEvent = new StringBuilder();
@@ -576,6 +608,8 @@ public class ApplicationDB extends ContentProvider{
 			return DBConstant.Mobcast_Columns.CONTENT_TYPE;
 		case TRAINING:
 			return DBConstant.Training_Columns.CONTENT_TYPE;
+		case CHAT:
+			return DBConstant.Chat_Columns.CONTENT_TYPE;
 		case EVENTS:
 			return DBConstant.Event_Columns.CONTENT_TYPE;
 		case AWARDS:
@@ -635,6 +669,15 @@ public class ApplicationDB extends ContentProvider{
 				if (rowId > 0) 
 				{
 					Uri noteUri = ContentUris.withAppendedId(DBConstant.Training_Columns.CONTENT_URI, rowId);
+					getContext().getContentResolver().notifyChange(noteUri, null);
+					return noteUri;
+				}
+				break;
+			case CHAT:
+				 rowId = db.insertWithOnConflict(DBConstant.TABLE_CHAT, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+				if (rowId > 0) 
+				{
+					Uri noteUri = ContentUris.withAppendedId(DBConstant.Chat_Columns.CONTENT_URI, rowId);
 					getContext().getContentResolver().notifyChange(noteUri, null);
 					return noteUri;
 				}
@@ -732,6 +775,10 @@ public class ApplicationDB extends ContentProvider{
 			qb.setTables(DBConstant.TABLE_TRAINING);
 			qb.setProjectionMap(trainingProjectionMap);
 			break;
+		case CHAT:
+			qb.setTables(DBConstant.TABLE_CHAT);
+			qb.setProjectionMap(chatProjectionMap);
+			break;
 		case EVENTS:
 			qb.setTables(DBConstant.TABLE_EVENT);
 			qb.setProjectionMap(eventProjectionMap);
@@ -782,6 +829,9 @@ public class ApplicationDB extends ContentProvider{
 		case TRAINING:
 			count = db.update(DBConstant.TABLE_TRAINING, values, where, whereArgs);
 			break;
+		case CHAT:
+			count = db.update(DBConstant.TABLE_CHAT, values, where, whereArgs);
+			break;
 		case EVENTS:
 			count = db.update(DBConstant.TABLE_EVENT, values, where, whereArgs);
 			break;
@@ -814,6 +864,7 @@ public class ApplicationDB extends ContentProvider{
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_MOBCAST, MOBCAST);
 		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_TRAINING, TRAINING);
+		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_CHAT, CHAT);
 		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_EVENT, EVENTS);
 		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_AWARD, AWARDS);
 		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_BIRTHDAY, BIRTHDAY);
@@ -872,6 +923,30 @@ public class ApplicationDB extends ContentProvider{
 		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_EXPIRY_TIME, DBConstant.Training_Columns.COLUMN_TRAINING_EXPIRY_TIME);
 		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_FILE_ID, DBConstant.Training_Columns.COLUMN_TRAINING_FILE_ID);
 		trainingProjectionMap.put(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT, DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT);
+		
+		chatProjectionMap = new HashMap<String, String>();
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_ID, DBConstant.Chat_Columns.COLUMN_ID);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_USER_ID, DBConstant.Chat_Columns.COLUMN_USER_ID);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_GROUP_ID, DBConstant.Chat_Columns.COLUMN_GROUP_ID);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_CITY_ID, DBConstant.Chat_Columns.COLUMN_CITY_ID);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_USER_ID_MYSQL, DBConstant.Chat_Columns.COLUMN_USER_ID_MYSQL);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_USER_JABBER_ID, DBConstant.Chat_Columns.COLUMN_USER_JABBER_ID);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_GROUP_ID_MYSQL, DBConstant.Chat_Columns.COLUMN_GROUP_ID_MYSQL);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_MESSAGE, DBConstant.Chat_Columns.COLUMN_MESSAGE);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_MESSAGE_ID, DBConstant.Chat_Columns.COLUMN_MESSAGE_ID);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_USER_SENT_MESSAGE, DBConstant.Chat_Columns.COLUMN_USER_SENT_MESSAGE);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_PATH, DBConstant.Chat_Columns.COLUMN_PATH);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_FILE_LINK, DBConstant.Chat_Columns.COLUMN_FILE_LINK);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_TYPE, DBConstant.Chat_Columns.COLUMN_TYPE);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_ISSENT, DBConstant.Chat_Columns.COLUMN_ISSENT);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_ISDELIEVERED, DBConstant.Chat_Columns.COLUMN_ISDELIEVERED);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_ISREAD, DBConstant.Chat_Columns.COLUMN_ISREAD);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_ISNOTIFIED, DBConstant.Chat_Columns.COLUMN_ISNOTIFIED);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_TIMESTAMP, DBConstant.Chat_Columns.COLUMN_TIMESTAMP);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_MESSAGE_TIME, DBConstant.Chat_Columns.COLUMN_MESSAGE_TIME);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_MESSAGE_DATE, DBConstant.Chat_Columns.COLUMN_MESSAGE_DATE);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_TAGGED, DBConstant.Chat_Columns.COLUMN_TAGGED);
+		chatProjectionMap.put(DBConstant.Chat_Columns.COLUMN_ISLEFT, DBConstant.Chat_Columns.COLUMN_ISLEFT);
 		
 		
 		eventProjectionMap = new HashMap<String, String>();

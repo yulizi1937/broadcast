@@ -1232,6 +1232,30 @@ public class Utilities {
 		return null;
 	}
 	
+	@SuppressLint("SimpleDateFormat") @SuppressWarnings("deprecation")
+	public static String getDate(String mDate){
+		try{
+			SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+			Date contentDate = dateFormatter.parse(mDate);
+			return String.valueOf(contentDate.getDate());
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+			return " ";
+		}
+	}
+	
+	@SuppressLint({ "SimpleDateFormat", "DefaultLocale" }) @SuppressWarnings("deprecation")
+	public static String getMonth(String mDate){
+		try{
+			SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+			Date contentDate = dateFormatter.parse(mDate);
+			return String.valueOf(String.valueOf(new SimpleDateFormat("MMM").format(contentDate)).toUpperCase());
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+			return " ";
+		}
+	}
+	
 	public static boolean downloadFile(int mType, boolean mIsThumbnail,boolean mIsEncrypt,String mUrl, String mFileName){
 		File mFile = new File(Utilities.getFilePath(mType, mIsThumbnail, mFileName));
 		
@@ -1324,6 +1348,9 @@ public class Utilities {
 			break;
 		case AppConstants.TYPE.EVENT:
 			imageId = R.drawable.ic_event_focused;
+			break;
+		case AppConstants.TYPE.RECRUITMENT:
+			imageId = R.drawable.ic_drawer_recruitment;
 			break;
 		default:
 			imageId = R.drawable.ic_launcher;

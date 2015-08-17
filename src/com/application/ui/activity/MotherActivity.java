@@ -80,6 +80,8 @@ import com.application.utils.ScrollUtils;
 import com.application.utils.Scrollable;
 import com.application.utils.Style;
 import com.application.utils.Utilities;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.GAServiceManager;
 import com.mobcast.R;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
@@ -359,10 +361,10 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	private void notifySlidingTabLayoutChange(){
 		
 		mArrayListMotherHeader.get(0).setmIsUnread(getUnreadOfMobcast() > 0 ? true : false);
-		mArrayListMotherHeader.get(1).setmIsUnread(getUnreadOfTraining() > 0 ? true : false);
+		mArrayListMotherHeader.get(2).setmIsUnread(getUnreadOfTraining() > 0 ? true : false);
 		
 		mArrayListMotherHeader.get(0).setmUnreadCount(String.valueOf(getUnreadOfMobcast()));
-		mArrayListMotherHeader.get(1).setmUnreadCount(String.valueOf(getUnreadOfTraining()));
+		mArrayListMotherHeader.get(2).setmUnreadCount(String.valueOf(getUnreadOfTraining()));
 		
 		mPagerAdapter.notifyDataSetChanged(mArrayListMotherHeader);
 		
@@ -429,11 +431,11 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		obj1.setmUnreadCount(String.valueOf(mUnreadCountMobcast));
 		mArrayListMotherHeader.add(obj1);
 
-//		MotherHeader obj2 = new MotherHeader();
-//		obj2.setmIsUnread(false);
-//		obj2.setmTitle(getResources().getString(R.string.layout_mother_chat));
-//		obj2.setmUnreadCount("0");
-//		mArrayListMotherHeader.add(obj2);
+		MotherHeader obj2 = new MotherHeader();
+		obj2.setmIsUnread(false);
+		obj2.setmTitle(getResources().getString(R.string.layout_mother_chat));
+		obj2.setmUnreadCount("0");
+		mArrayListMotherHeader.add(obj2);
 
 		MotherHeader obj3 = new MotherHeader();
 		int mUnreadCountTraining = getUnreadOfTraining();
@@ -868,6 +870,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		String[] mDrawerItemArray = getResources().getStringArray(
 				R.array.drawer_array);
 		int[] mDrawableResId = new int[] { R.drawable.ic_drawer_profile,
+				R.drawable.ic_drawer_capture, R.drawable.ic_drawer_recruitment,
 				R.drawable.ic_drawer_settings, R.drawable.ic_drawer_help,
 				R.drawable.ic_drawer_report, R.drawable.ic_drawer_feedback,
 				R.drawable.ic_drawer_logout, R.drawable.ic_drawer_about };
@@ -967,22 +970,28 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 			drawerIntent = new Intent(MotherActivity.this, EditProfileActivity.class);
 			break;
 		case 1:
-			drawerIntent = new Intent(MotherActivity.this, SettingsActivity.class);
+			drawerIntent = new Intent(MotherActivity.this, CaptureActivity.class);
 			break;
 		case 2:
+			drawerIntent = new Intent(MotherActivity.this, RecruitmentRecyclerActivity.class);
+			break;
+		case 3:
+			drawerIntent = new Intent(MotherActivity.this, SettingsActivity.class);
+			break;
+		case 4:
 			drawerIntent = new Intent(MotherActivity.this, TutorialActivity.class);
 			drawerIntent.putExtra(AppConstants.INTENTCONSTANTS.HELP, true);
 			break;
-		case 3:
+		case 5:
 			drawerIntent = new Intent(MotherActivity.this, ReportActivity.class);
 			break;
-		case 4:
+		case 6:
 			drawerIntent = new Intent(MotherActivity.this, FeedbackAppActivity.class);
 			break;
-		case 5:
+		case 7:
 			showLogOutConfirmationMaterialDialog();
 			break;
-		case 6:
+		case 8:
 			drawerIntent = new Intent(MotherActivity.this, AboutActivity.class);
 			break;
 		default:
@@ -1088,4 +1097,19 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 			FileLog.e(TAG, e.toString());
 		}
 	}
+	
+	/**
+	 * Google Analytics
+	 */
+	 @Override
+	  public void onStart() {
+	    super.onStart();
+	    EasyTracker.getInstance(this).activityStart(this);
+	  }
+
+	  @Override
+	  public void onStop() {
+	    super.onStop();
+	    EasyTracker.getInstance(this).activityStop(this);
+	  }
 }

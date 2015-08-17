@@ -29,7 +29,7 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />al
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -148,13 +148,18 @@
         <activity
             android:name="com.application.ui.activity.VideoFullScreenActivity"
             android:configChanges="locale|orientation"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.application.ui.activity.YouTubeLiveStreamActivity"
             android:configChanges="locale|orientation" />
         <activity
             android:name="com.application.ui.activity.TextDetailActivity"
-            android:configChanges="locale|orientation" />
+            android:configChanges="locale|orientation"
+            android:parentActivityName="com.application.ui.activity.MotherActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.application.ui.activity.MotherActivity" />
+        </activity>
         <activity
             android:name="com.application.ui.activity.PdfDetailActivity"
             android:configChanges="locale|orientation" />
@@ -211,6 +216,18 @@
         <activity
             android:name="com.application.ui.activity.YouTubeLiveFullScreenActivity"
             android:screenOrientation="landscape" />
+        <activity
+            android:name="com.application.ui.activity.ChatDetailActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.CaptureActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.RecruitmentRecyclerActivity"
+            android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.ui.activity.RecruitmentDetailActivity"
+            android:configChanges="locale|orientation" />
 
         <!-- GCM Receiver -->
         <receiver
@@ -231,9 +248,9 @@
         <!-- Any.DO Notification Activity -->
         <activity
             android:name="com.application.ui.activity.AnyDoNotificationActivity"
-            android:launchMode="standard"
             android:excludeFromRecents="true"
             android:finishOnTaskLaunch="true"
+            android:launchMode="standard"
             android:noHistory="true"
             android:theme="@style/Theme.AppCompat.Translucent" />
 
@@ -241,7 +258,7 @@
             android:name="com.application.ui.service.AnyDoNotificationService"
             android:exported="false"
             android:label="@string/app_name" />
-        
+
         <!-- SYNC SERVICE -->
         <receiver android:name="com.application.receiver.SyncAlarmReceiver" />
         <receiver
@@ -260,6 +277,18 @@
 
         <service android:name="com.application.ui.service.SyncService" />
 
+        <!-- Google Analytics -->
+        <!-- Used for Google Play Store Campaign Measurement -->
+        <service android:name="com.google.analytics.tracking.android.CampaignTrackingService" />
+
+        <receiver
+            android:name="com.google.analytics.tracking.android.CampaignTrackingReceiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver" >
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
         <!-- SMS RADAR SERVICE -->
         <service
             android:name="com.application.sms.SmsRadarService"

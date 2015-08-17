@@ -48,6 +48,7 @@ import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.ApplicationLoader;
 import com.application.utils.DownloadAsyncTask;
 import com.application.utils.DownloadAsyncTask.OnPostExecuteListener;
 import com.application.utils.FetchActionAsyncTask;
@@ -110,10 +111,14 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 
 	private int mProgress;
 	private int mTotalDuration;
+	
+	private boolean isVideoPause = false;
 
 	private Handler mHandler;
 
 	private Thread mSeekBarThread;
+	
+	private PauseControl  mThreadSafe = new PauseControl();
 
 	private boolean isShareOptionEnable = true;
 	
@@ -143,7 +148,8 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	private ArrayList<String> mContentFilePathList = new ArrayList<>();
 	private ArrayList<String> mContentFileSizeList = new ArrayList<>();
 	
-
+	private boolean isFromNotification = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -156,6 +162,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		initAnimation();
 		setUiListener();
 		setSwipeRefreshLayoutCustomisation();
+		ApplicationLoader.getPreferences().setVideoViewPosition(-1);
 	}
 
 	@Override
@@ -163,6 +170,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onResume();
 		decryptFileOnResume();
+		resumeVideoFromFullScreen();
 	}
 	
 	@Override
@@ -233,6 +241,10 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		case android.R.id.home:
 			finish();
 			AndroidUtilities.exitWindowAnimation(VideoDetailActivity.this);
+			if(isFromNotification){
+				Intent mIntent = new Intent(VideoDetailActivity.this, MotherActivity.class);
+				startActivity(mIntent);
+			}
 			return true;
 		case R.id.action_share:
 			showDialog(0);
@@ -247,6 +259,35 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		if(isFromNotification){
+			Intent mIntent = new Intent(VideoDetailActivity.this, MotherActivity.class);
+			startActivity(mIntent);
+		}
+	}
+	
+	private void resumeVideoFromFullScreen(){
+		try{
+			int mVideoViewPosition = ApplicationLoader.getPreferences().getVideoViewPosition(); 
+			if (mVideoViewPosition != -1) {
+				mVideoDescFrameLayout.setVisibility(View.GONE);
+				mVideoCoverIv.setVisibility(View.GONE);
+				mVideoPlayIv.setVisibility(View.GONE);
+				mVideoView.requestFocus();
+				mVideoView.seekTo(mVideoViewPosition);
+				mVideoView.start();
+				mProgress = mVideoViewPosition; 
+//				runOnSeekBarThread();
+				mThreadSafe.unpause();
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 
@@ -303,6 +344,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 				Cursor mCursor = null;
 				mId = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.ID);
 				mCategory = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY).toString();
+				isFromNotification = mIntent.getBooleanExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, false);
 				if(!TextUtils.isEmpty(mId) && !TextUtils.isEmpty(mCategory)){
 					if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
 						mCursor = getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId}, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + " DESC");
@@ -533,17 +575,24 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 						.getTimeFromMilliSeconds((long) mProgress));
 			}
 		};
+		
 
-		final Runnable mSeekBarProgressRunnable = new Runnable() {
+		Runnable mSeekBarProgressRunnable = new Runnable() {
 			public void run() {
-				while (mProgress <= mTotalDuration) {
-					mHandler.post(mSeekBarRunnable);
-					mProgress++;
-					try {
-						Thread.sleep(1);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+				synchronized (this) {
+
+					while (mProgress <= mTotalDuration) {
+						if (!mThreadSafe.needToPause) {
+							mHandler.post(mSeekBarRunnable);
+							mProgress++;
+							try {
+								Thread.sleep(1);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+
 					}
 				}
 			}
@@ -551,6 +600,29 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 
 		mSeekBarThread = new Thread(mSeekBarProgressRunnable);
 		mSeekBarThread.start();
+	}
+	
+	public class PauseControl {
+	    private boolean needToPause = false;
+	    public synchronized void pausePoint() {
+	        while (!needToPause) {
+	            try {
+					wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        }
+	    }
+
+	    public synchronized void pause() {
+	        needToPause = true;
+	    }
+
+	    public synchronized void unpause() {
+	        needToPause = false;
+	        this.notifyAll();
+	    }
 	}
 
 	private void initAnimation() {
@@ -637,16 +709,40 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, "");
-				playVideo();
+				if(!isVideoPause){
+					mProgress = 0;
+					UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, "");
+					playVideo();	
+				}else{
+					mVideoView.requestFocus();
+					mVideoView.seekTo(ApplicationLoader.getPreferences().getVideoViewPosition());
+					mVideoView.start();
+					mVideoPlayIv.setVisibility(View.GONE);
+					mVideoMediaControllerFrameLayout.setVisibility(View.VISIBLE);
+					mVideoPauseIv.setVisibility(View.VISIBLE);
+//					runOnSeekBarThread();
+					mThreadSafe.unpause();
+				}
 			}
 		});
 
 		mVideoPauseIv.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View arg0) {
+			public void onClick(View view) {
 				// TODO Auto-generated method stub
 				mVideoView.pause();
+				mVideoMediaControllerFrameLayout.setVisibility(View.GONE);
+				mVideoPauseIv.setVisibility(View.GONE);
+				mVideoPlayIv.setVisibility(View.VISIBLE);
+				isVideoPause = true;
+				try {
+					ApplicationLoader.getPreferences().setVideoViewPosition(mVideoView.getCurrentPosition());
+//					mSeekBarThread.interrupt();
+					mThreadSafe.pause();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 
@@ -654,9 +750,17 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent mIntentVideoFullScreen = new Intent(
-						VideoDetailActivity.this, VideoFullScreenActivity.class);
-				startActivity(mIntentVideoFullScreen);
+				try{
+					Intent mIntentVideoFullScreen = new Intent(VideoDetailActivity.this, VideoFullScreenActivity.class);
+					mIntentVideoFullScreen.putExtra(AppConstants.INTENTCONSTANTS.FILEPATH, mContentFilePath);
+					mIntentVideoFullScreen.putExtra(AppConstants.INTENTCONSTANTS.TIME, mVideoView.getCurrentPosition());
+					startActivity(mIntentVideoFullScreen);
+//					mSeekBarThread.interrupt();
+					mVideoView.pause();
+					mThreadSafe.pause();
+				}catch(Exception e){
+					FileLog.e(TAG, e.toString());
+				}
 			}
 		});
 		
@@ -952,7 +1056,13 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 			mNewValues.put(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_IS_DEFAULT, "true");
 			getContentResolver().update(DBConstant.Mobcast_File_Columns.CONTENT_URI, mNewValues, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID + "=?" +"  AND "+ DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG + "=?", new String[]{mId, mContentLanguage});
 		}else{
+			ContentValues values = new ContentValues();
+			values.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_IS_DEFAULT, "false");
+			getContentResolver().update(DBConstant.Training_File_Columns.CONTENT_URI, values, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 			
+			ContentValues mNewValues = new ContentValues();
+			mNewValues.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_IS_DEFAULT, "true");
+			getContentResolver().update(DBConstant.Training_File_Columns.CONTENT_URI, mNewValues, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID + "=?" +"  AND "+ DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LANG + "=?", new String[]{mId, mContentLanguage});
 		}
 	}
 

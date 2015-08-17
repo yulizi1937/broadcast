@@ -270,6 +270,21 @@ public class JSONRequestBuilder {
 		return stringBuffer;
 	}
 	
+	public static JSONObject getPostFetchFeedRecruitment(boolean sortByAsc, int limit, String mLastRecruitmentId) {
+		JSONObject stringBuffer = new JSONObject();
+		try {
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, AppConstants.INTENTCONSTANTS.RECRUITMENT);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.lastRecruitmentId, mLastRecruitmentId);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.sortByAsc, sortByAsc);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.limit, limit);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		return stringBuffer;
+	}
+	
 	public static JSONObject getPostFetchFeedActionForId(String mCategory, String mId) {
 		JSONObject stringBuffer = new JSONObject();
 		try {
@@ -395,6 +410,35 @@ public class JSONRequestBuilder {
 			}
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.user, mJSONObjUser);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		return stringBuffer;
+	}
+	
+	public static JSONObject getPostChatMessage(String mMessage, String mFrom, String mTo) {
+		JSONObject stringBuffer = new JSONObject();
+		try {
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, AppConstants.INTENTCONSTANTS.CHAT);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.message, mMessage);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.from, mFrom);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.to, mTo);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		return stringBuffer;
+	}
+	
+	public static JSONObject getPostMessage(String mMessage, String mId, String mCategory) {
+		JSONObject stringBuffer = new JSONObject();
+		try {
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, mCategory);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.message, mMessage);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER._id, mId);
 		} catch (Exception e) {
 			FileLog.e(TAG, e.toString());
 		}

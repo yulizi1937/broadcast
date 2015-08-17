@@ -111,6 +111,8 @@ public class QuizActivity extends SwipeBackBaseActivity {
 	private int mQuizScore = 0;
 	private int mQuizTimeTaken = 0;
 	
+	private boolean isFromNotification = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -144,6 +146,10 @@ public class QuizActivity extends SwipeBackBaseActivity {
 		case android.R.id.home:
 			finish();
 			AndroidUtilities.exitWindowAnimation(QuizActivity.this);
+			if(isFromNotification){
+				Intent mIntent = new Intent(QuizActivity.this, MotherActivity.class);
+				startActivity(mIntent);
+			}
 			return true;
 		case R.id.action_report:
 			Intent mIntent  = new Intent(QuizActivity.this, ReportActivity.class);
@@ -153,6 +159,17 @@ public class QuizActivity extends SwipeBackBaseActivity {
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		if(isFromNotification){
+			Intent mIntent = new Intent(QuizActivity.this, MotherActivity.class);
+			startActivity(mIntent);
 		}
 	}
 
@@ -200,6 +217,7 @@ public class QuizActivity extends SwipeBackBaseActivity {
 				Cursor mCursor = null;
 				mId = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.ID);
 				mCategory = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY).toString();
+				isFromNotification = mIntent.getBooleanExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, false);
 				if(!TextUtils.isEmpty(mId) && !TextUtils.isEmpty(mCategory)){
 					if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
 						mCursor = getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, null, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId}, DBConstant.Training_Columns.COLUMN_TRAINING_ID + " DESC");

@@ -3,7 +3,10 @@
  */
 package com.application.ui.activity;
 
+import java.io.File;
+
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +25,10 @@ import android.widget.VideoView;
 import com.application.ui.view.DiscreteSeekBar;
 import com.application.ui.view.DiscreteSeekBar.OnProgressChangeListener;
 import com.application.utils.AndroidUtilities;
+import com.application.utils.AppConstants;
+import com.application.utils.ApplicationLoader;
+import com.application.utils.FileLog;
+import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.mobcast.R;
 
@@ -55,6 +62,13 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 
 	private Handler mHandler;
 	private Thread mSeekBarThread;
+	
+	private PauseControl mThreadSafe = new PauseControl();
+	
+	private Intent mIntent;
+	private String mContentFilePath;
+	
+	private boolean isVideoPause = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,14 +78,17 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 		setContentView(R.layout.activity_video_fullscreen);
 		initUi();
 		initAnimation();
+		getIntentData();
 		setUiListener();
-		initVideoPlayer();
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		decryptFileOnResume();
+		initVideoPlayer(mContentFilePath);
+		mThreadSafe.unpause();
 	}
 
 	@Override
@@ -92,6 +109,9 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 
 		mVideoFullScreenIv = (ImageView) findViewById(R.id.fragmentVideoFullScreenMediaControllerFullScreenIv);
 		mVideoPauseIv = (ImageView)findViewById(R.id.fragmentVideoFullScreenVideoPauseIv);
+		mVideoPlayIv = (ImageView)findViewById(R.id.fragmentVideoFullScreenVideoPlayIv);
+		
+		mVideoFullScreenIv = (ImageView)findViewById(R.id.fragmentVideoFullScreenMediaControllerFullScreenIv);
 
 		mVideoView = (VideoView) findViewById(R.id.fragmentVideoFullScreenVideoView);
 
@@ -102,10 +122,25 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 
 		mVideoMediaControllerFrameLayout = (FrameLayout) findViewById(R.id.fragmentVideoFullScreenMediaControllerLayout);
 	}
-
+	
+	private void getIntentData(){
+		mIntent = getIntent();
+		mContentFilePath = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.FILEPATH);
+		mProgress = mIntent.getIntExtra(AppConstants.INTENTCONSTANTS.TIME, -1);
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		saveVideoViewPosition();
+		mThreadSafe.pause();
+	}
+	
 	@Override
 	protected void onPause() {
 		cleanUp();
+		deleteDecryptedFile();
 		super.onPause();
 	}
 
@@ -114,10 +149,14 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 		cleanUp();
 		super.onDestroy();
 	}
+	
+	private void saveVideoViewPosition() {
+		ApplicationLoader.getPreferences().setVideoViewPosition(
+				mVideoView.getCurrentPosition());
+	}
 
-	private void initVideoPlayer() {
-		mVideoView.setVideoPath("android.resource://" + getPackageName()
-				+ "/raw/hdfcconverted");
+	private void initVideoPlayer(String mVideoPath) {
+		mVideoView.setVideoPath(mVideoPath);
 		mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 			@Override
 			public void onPrepared(MediaPlayer mp) {
@@ -147,6 +186,11 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 				runOnSeekBarThread();
 			}
 		});
+		if(mProgress!=-1){
+			mVideoView.requestFocus();
+			mVideoView.start();
+			mVideoView.seekTo(mProgress);
+		}
 	}
 
 	private void runOnSeekBarThread() {
@@ -160,16 +204,21 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 			}
 		};
 
-		final Runnable mSeekBarProgressRunnable = new Runnable() {
+		Runnable mSeekBarProgressRunnable = new Runnable() {
 			public void run() {
-				while (mProgress <= mTotalDuration) {
-					mHandler.post(mSeekBarRunnable);
-					mProgress++;
-					try {
-						Thread.sleep(1);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+				synchronized (this) {
+					while (mProgress <= mTotalDuration) {
+						if (!mThreadSafe.needToPause) {
+							mHandler.post(mSeekBarRunnable);
+							mProgress++;
+							try {
+								Thread.sleep(1);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+
 					}
 				}
 			}
@@ -177,6 +226,29 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 
 		mSeekBarThread = new Thread(mSeekBarProgressRunnable);
 		mSeekBarThread.start();
+	}
+	
+	public class PauseControl {
+	    private boolean needToPause = false;
+	    public synchronized void pausePoint() {
+	        while (!needToPause) {
+	            try {
+					wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        }
+	    }
+
+	    public synchronized void pause() {
+	        needToPause = true;
+	    }
+
+	    public synchronized void unpause() {
+	        needToPause = false;
+	        this.notifyAll();
+	    }
 	}
 
 	private void initAnimation() {
@@ -243,13 +315,43 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 
 	private void setOnClickListener() {
 		// TODO Auto-generated method stub
-		playVideo();
+		mVideoPlayIv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				if(!isVideoPause){
+					mProgress = 0;
+					playVideo();	
+				}else{
+					mVideoView.requestFocus();
+					mVideoView.seekTo(ApplicationLoader.getPreferences().getVideoViewPosition());
+					mVideoView.start();
+					mVideoPlayIv.setVisibility(View.GONE);
+					mVideoMediaControllerFrameLayout.setVisibility(View.VISIBLE);
+					mVideoPauseIv.setVisibility(View.VISIBLE);
+//					runOnSeekBarThread();
+					mThreadSafe.unpause();
+				}	
+			}
+		});
 		
 		mVideoPauseIv.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				mVideoView.pause();
+				mVideoMediaControllerFrameLayout.setVisibility(View.GONE);
+				mVideoPauseIv.setVisibility(View.GONE);
+				mVideoPlayIv.setVisibility(View.VISIBLE);
+				isVideoPause = true;
+				try {
+					ApplicationLoader.getPreferences().setVideoViewPosition(mVideoView.getCurrentPosition());
+//					mSeekBarThread.interrupt();
+					mThreadSafe.pause();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 	}
@@ -328,6 +430,27 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 			int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 			              | View.SYSTEM_UI_FLAG_FULLSCREEN;
 			decorView.setSystemUiVisibility(uiOptions);
+		}
+	}
+	
+	private void decryptFileOnResume(){
+		try{
+			if(Utilities.isContainsDecrypted(mContentFilePath)){
+					mContentFilePath = mContentFilePath.replace(AppConstants.decrypted, "");
+					mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void deleteDecryptedFile(){
+		try{
+			if(Utilities.isContainsDecrypted(mContentFilePath)){
+					new File(mContentFilePath).delete();
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 

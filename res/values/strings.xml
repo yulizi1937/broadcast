@@ -24,7 +24,11 @@
     <string name="button_delete">Delete</string>
     <string name="update_title_message">A New Update is Available!</string>
     <string name="update_delete_message">These version is no longer supported. Please update the application.</string>
+    <string name="developer_message">You are developer! Please click it one more time.</string>
     <string name="update">Update</string>
+    <string name="capture_validation">Please add images!</string>
+    <string name="congratulate_message">You just congratulated </string>
+    <string name="congratulate_message_validation">You already congratulated  </string>
     <string name="logout_content_message">Logging out will delete all your content from the app and files too.</string>
     <string name="logging_out" tools:ignore="TypographyEllipsis">Logging Out...</string>
 
@@ -57,6 +61,7 @@
     <string name="action_delete">Delete</string>
     <string name="action_info">Info</string>
     <string name="action_share">Share</string>
+    <string name="action_submit">Submit</string>
     <string name="action_help_mobcast">About Mobcast</string>
     <string name="action_help_video">How to use?</string>
     <string name="action_help_faq">FAQ</string>
@@ -157,6 +162,21 @@
     <string name="activity_edit_profile_update_btn">Update</string>
     <string name="activity_edit_profile_question">Your Favourite Question</string>
     <string name="activity_edit_profile_answer">Your answer to your Favourite Question</string>
+    
+    <!-- activity_capture -->
+    <string name="CaptureActivityTitle">Capture</string>
+    
+    <!-- activity_recycler_recruitment -->
+    <string name="RecruitmentRecyclerActivityTitle">Recruitment</string>
+    <string name="details">DETAILS</string>
+    <string name="skills">SKILLS</string>
+    <string name="jobdescription">JOB DESCRIPTION</string>
+    <string name="qualification">QUALIFICATION</string>
+    <string name="ctc">CTC</string>
+    <string name="contact">CONTACT</string>
+    <string name="sample_recruitment_job_title">SALES EXECUTIVE</string>
+    <string name="sample_recruitment_job_location">MUMBAI</string>
+    <string name="sample_recruitment_job_experience">2YRS</string>
 
     <!-- item_recycler_award -->
     <!-- <string name="sample_winner_name">MR. BHAVESH ZAVERI</string> -->
@@ -225,6 +245,7 @@
     <string name="sample_quiz_pager_counter">12/60</string>
     <string name="button_previous">PREVIOUS</string>
     <string name="button_submit">SUBMIT</string>
+    <string name="button_send">SEND</string>
     <string name="sample_question_header_box">QUESTION</string>
     <string name="QuizActivityTitle">Quiz</string>
 
@@ -350,6 +371,8 @@
         <item>Android:Audio</item>
         <item>Android:Doc</item>
         <item>Android:Feedback</item>
+        <item>Android:Award</item>
+        <item>Android:Event</item>
         <item>Android:Image</item>
         <item>Android:Interactive</item>
         <item>Android:Login</item>
@@ -365,6 +388,8 @@
         <item>Android:Video</item>
         <item>Android:Quiz</item>
         <item>Android:Xls</item>
+        <item>Android:Capture</item>
+        <item>Android:Recruitment</item>
         <item>Web</item>
         <item>General</item>
         <item>Others</item>
@@ -401,6 +426,7 @@
     <string name="sample_fragment_settings_dialog_language_title">Are you sure want to change Application Language to </string>
     <string name="sample_fragment_settings_dialog_language_positive">OK</string>
     <string name="sample_fragment_settings_dialog_language_negative" tools:ignore="ButtonCase">CANCEL</string>
+    <string name="sample_fragment_settings_dialog_traffic_title">Traffic Stats</string>
     <string name="SettingsActivityTitle">Settings</string>
     <string name="sample_fragment_settings_dialog_birthday_notify_1">09:00 am</string>
     <string name="sample_fragment_settings_dialog_birthday_notify_2">12:00 pm</string>
@@ -449,6 +475,15 @@
     <!-- fragment_tutorial -->
     <string name="fragment_tutorial_header">See more photos</string>
     <string name="fragment_tutorial_functionality">pinch to zoom</string>
+    
+    <!-- fragment_capture -->
+    <string name="fragment_capture_note_hint">Note</string>
+    <string name="fragment_capture_note_char_limit">0/500</string>
+    <string name="fragment_capture_another_heading">ATTACH ANOTHER IMAGE</string>
+    <string name="fragment_capture_attached_heading">ATTACHED IMAGE</string>
+    <string name="fragment_capture_browse">BROWSE</string>
+    <string name="fragment_capture_submit">SUBMIT</string>
+    <string name="fragment_capture_takeapic">TAKE A PIC</string>
 
     <!-- item_simple -->
     <string name="CategoryActivityTitle">Category</string>
@@ -488,8 +523,8 @@ The inaugural set of “Preferred Platform Partners” includes BrightRoll, Doub
     <string name="sample_item_recycler_mobcast_audio_title">Aditya Puri Of HDFC Bank Says Growth Will Pick Up This Fiscal</string>
     <string name="sample_item_recycler_mobcast_audio_by">BY: TECHNOLOGY TEAM - YESTERDAY</string>
     <string name="sample_item_recycler_mobcast_audio_view_count">290</string>
-    <!-- <string name="sample_item_recycler_mobcast_audio_summary">Lorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec, condimentum magna. Read More</string> -->
-    <string name="sample_item_recycler_mobcast_audio_summary">The worst is behind us says HDFC Bank\'s Aditya Puri! He says the Government is working on unclogging many projects. Here he is speaking exclusively to ET NOW about Modi magic.</string>
+    <string name="sample_item_recycler_mobcast_audio_summary">Lorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec, condimentum magna. Read More</string>
+<!--     <string name="sample_item_recycler_mobcast_audio_summary">The worst is behind us says HDFC Bank\'s Aditya Puri! He says the Government is working on unclogging many projects. Here he is speaking exclusively to ET NOW about Modi magic.</string> -->
     <string name="sample_item_recycler_mobcast_audio_file_name">ADITYA_PURI.MP3</string>
     <string name="sample_item_recycler_mobcast_audio_file_info">3:48</string>
 
@@ -573,6 +608,8 @@ Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic 
 
     <string-array name="drawer_array">
         <item>Profile</item>
+        <item>Capture</item>
+        <item>Recruitment</item>
         <item>Settings</item>
         <item>Help</item>
         <item>Report</item>
@@ -622,5 +659,9 @@ Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic 
     <string name="emptyAwardMessage">When you\'ll receive award, they will show up here.</string>
     <string name="emptyChatTitle">Welcome to Chat!</string>
     <string name="emptyChatMessage">When you\'ll receive chat, they will show up here.</string>
+    <string name="emptyCaptureTitle">Welcome to Capture!</string>
+    <string name="emptyCaptureMessage">When you\'ll add images, they will show up here.</string>
+    <string name="emptyRecruitmentTitle">Welcome to Recruitment!</string>
+    <string name="emptyRecruitmentMessage">When you\'ll receive recruitment, they will show up here.</string>
 
 </resources>

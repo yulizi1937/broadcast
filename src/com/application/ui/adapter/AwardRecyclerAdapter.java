@@ -216,7 +216,7 @@ public class AwardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 				((AwardViewHolder)viewHolder).mRootLayout.setBackgroundResource(R.color.white);
 			}
 			
-			if(!mObj.isCongratulated()){
+			if(mObj.isCongratulated()){
 				((AwardViewHolder)viewHolder).mCongratulateIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_award_cong_selected));
 			}else{
 				((AwardViewHolder)viewHolder).mCongratulateIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_award_cong_normal));

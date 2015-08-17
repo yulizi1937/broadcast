@@ -93,6 +93,8 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 	private boolean mContentIsRead;
 	private String mContentLiveStreamURL;
 	
+	private boolean isFromNotification = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -135,6 +137,10 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 		case android.R.id.home:
 			finish();
 			AndroidUtilities.exitWindowAnimation(YouTubeLiveStreamActivity.this);
+			if(isFromNotification){
+				Intent mIntent = new Intent(YouTubeLiveStreamActivity.this, MotherActivity.class);
+				startActivity(mIntent);
+			}
 			return true;
 		case R.id.action_report:
 			Intent mIntent  = new Intent(YouTubeLiveStreamActivity.this, ReportActivity.class);
@@ -192,6 +198,15 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 			return null;
 		}
 
+		@Override
+		public void onBackPressed() {
+			// TODO Auto-generated method stub
+			super.onBackPressed();
+			if(isFromNotification){
+				Intent mIntent = new Intent(YouTubeLiveStreamActivity.this, MotherActivity.class);
+				startActivity(mIntent);
+			}
+		}
 	private void toolBarRefresh() {
 		mToolBarMenuRefresh.setVisibility(View.GONE);
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
@@ -235,6 +250,7 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 				Cursor mCursor = null;
 				mId = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.ID);
 				mCategory = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY).toString();
+				isFromNotification = mIntent.getBooleanExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, false);
 				if(!TextUtils.isEmpty(mId) && !TextUtils.isEmpty(mCategory)){
 					if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
 						mCursor = getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId}, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + " DESC");
