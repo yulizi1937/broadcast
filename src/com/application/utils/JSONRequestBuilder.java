@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.database.Cursor;
+import android.text.TextUtils;
 
 import com.application.beans.MobcastFeedbackSubmit;
 import com.application.beans.TrainingQuizSubmit;
@@ -366,6 +367,22 @@ public class JSONRequestBuilder {
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, mCategory);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.action, mActivity);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.duration, mDuration);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		return stringBuffer;
+	}
+	
+	public static JSONObject getPostRecruitmentContactShareDate(String mId, String mReferenceName, String mReferencePhoneNumber, String mReferenceEmailAddress) {
+		JSONObject stringBuffer = new JSONObject();
+		try {
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, AppConstants.INTENTCONSTANTS.RECRUITMENT);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER._id, mId);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.referenceName, !TextUtils.isEmpty(mReferenceName)?mReferenceName:" ");
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.referenceEmailAddress, !TextUtils.isEmpty(mReferenceEmailAddress)?mReferenceEmailAddress:" ");
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.referencePhoneNumber, !TextUtils.isEmpty(mReferencePhoneNumber)?mReferencePhoneNumber:" ");
 		} catch (Exception e) {
 			FileLog.e(TAG, e.toString());
 		}

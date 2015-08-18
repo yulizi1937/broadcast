@@ -20,6 +20,7 @@ public class BuildVars {
 	public static final boolean DEBUG_API = true;
 	public static final boolean DEBUG_DESIGN = false;
 	public static final boolean DEBUG_OTP = true;
+	public static final boolean DEBUG_CRASH_EMAIL = false;
 	
 	/*
 	 * Sync

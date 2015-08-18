@@ -445,12 +445,7 @@ public class QuizActivity extends SwipeBackBaseActivity {
 						.equalsIgnoreCase(
 								getResources().getString(R.string.button_next))) {
 					changePagerTo(mQuestionViewPager.getCurrentItem() + 1);
-				} else if (mQuizNavigationNextBtn
-						.getText()
-						.toString()
-						.equalsIgnoreCase(
-								getResources()
-										.getString(R.string.button_submit))) {
+				} else if (mQuizNavigationNextBtn.getText().toString().equalsIgnoreCase(getResources().getString(R.string.button_submit))) {
 					ArrayList<TrainingQuizSubmit> mList = validateIfEveryQuestionAnswer();
 					if (mList != null && mList.size() > 0) {
 						if(Utilities.isInternetConnected()){
@@ -616,7 +611,9 @@ public class QuizActivity extends SwipeBackBaseActivity {
 									mQuizScore = mQuizScore - (mPoints/mNumberExtraOption);
 									mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
 									mQuizScorePagerInfo.setmQuestionId(mQueId);
-								}else{
+								}else if(mAnswerArr.length < mCorrectAnswerArr1.length){
+									int mNumberExtraOption = mCorrectAnswerArr1.length - mAnswerArr.length;
+									mQuizScore = mQuizScore - (mPoints/mNumberExtraOption);
 									mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
 									mQuizScorePagerInfo.setmQuestionId(mQueId);
 								}
@@ -676,6 +673,7 @@ public class QuizActivity extends SwipeBackBaseActivity {
 			Intent mIntent = new Intent(QuizActivity.this, QuizScoreActivity.class);
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.TIMETAKEN, String.valueOf(mQuizTimeTaken));
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.POINTS, String.valueOf(mQuizScore));
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.TOTAL, String.valueOf(mArrayListQuizPagerInfo.size()));
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.QUIZINCORRECT, mArrayListQuizScorePagerInfo);
 			startActivity(mIntent);
 			AndroidUtilities.enterWindowAnimation(QuizActivity.this);

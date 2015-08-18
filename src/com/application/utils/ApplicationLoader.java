@@ -8,8 +8,11 @@
 
 package com.application.utils;
 
+import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
@@ -30,6 +33,8 @@ import com.application.ui.calligraphy.CalligraphyConfig;
 import com.application.ui.service.AnyDoNotificationService;
 import com.facebook.stetho.Stetho;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.ExceptionParser;
+import com.google.analytics.tracking.android.ExceptionReporter;
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GAServiceManager;
 import com.google.analytics.tracking.android.MapBuilder;
@@ -83,7 +88,9 @@ public class ApplicationLoader extends Application {
 
 		preferences = new AppPreferences(this);
 		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-		ExceptionHandler.register(applicationLoader);
+		if(BuildVars.DEBUG_CRASH_EMAIL){
+			ExceptionHandler.register(applicationLoader);	
+		}		
 		if (!ApplicationLoader.getPreferences().getAppLanguageCode()
 				.equalsIgnoreCase("en")) {
 			changeApplicationLanguage(ApplicationLoader.getPreferences()
@@ -254,6 +261,7 @@ public class ApplicationLoader extends Application {
 	public static void initAnalyticsV3() {
 		AnalyticsTrackersV3.initialize(ApplicationLoader.getApplication());
 		AnalyticsTrackersV3.getInstance().get(AnalyticsTrackersV3.Target.APP);
+		trackExceptionV3FullStackTrace();
 	}
 	
 	public static synchronized Tracker getGoogleAnalyticsTrackerV3() {
@@ -277,7 +285,7 @@ public class ApplicationLoader extends Application {
 	
 	public static void trackExceptionV3(Exception e) {
 		try{
-			if (e != null) {
+			/*if (e != null) {
 				Tracker t = getGoogleAnalyticsTrackerV3();
 				if(t==null){
 					t = EasyTracker.getInstance(applicationContext);
@@ -287,10 +295,31 @@ public class ApplicationLoader extends Application {
 								.getApplication(), null).getDescription(Thread
 								.currentThread().getName(), e), false).build());
 				GAServiceManager.getInstance().dispatchLocalHits();
-			}
+			}*/
 		}catch(Exception ex){
 			FileLog.e(TAG, ex.toString());
 		}
+	}
+	
+	public static void trackExceptionV3FullStackTrace(){
+		Tracker t = getGoogleAnalyticsTrackerV3();
+		if(t==null){
+			t = EasyTracker.getInstance(applicationContext);
+		}
+//		UncaughtExceptionHandler myHandler = new ExceptionReporter(t,GAServiceManager.getInstance(),Thread.getDefaultUncaughtExceptionHandler(),applicationContext);
+//		Thread.setDefaultUncaughtExceptionHandler(myHandler);
+		
+		Thread.UncaughtExceptionHandler uncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
+		if (uncaughtExceptionHandler instanceof ExceptionReporter) {
+		    ExceptionReporter exceptionReporter = (ExceptionReporter) uncaughtExceptionHandler;
+		    exceptionReporter.setExceptionParser(new ExceptionParser() {
+		        @Override
+		        public String getDescription(String s, Throwable throwable) {
+		            return "Thread: " + s + ", Stacktrace: " + ExceptionUtils.getStackTrace(throwable);
+		        }
+		    });
+		}
+		GAServiceManager.getInstance().dispatchLocalHits();
 	}
 	
 	public static void trackEventV3(String category, String action, String label) {

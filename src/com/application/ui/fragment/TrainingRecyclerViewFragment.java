@@ -404,12 +404,18 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 				
 				if(mCursorQuizInfo!=null && mCursorQuizInfo.getCount() > 0){
 					mCursorQuizInfo.moveToFirst();
+					int mTotalPoints = 0;
 					ArrayList<TrainingFileInfo> mTrainingQuizInfoList = new ArrayList<>();
 					TrainingFileInfo quizObj = new TrainingFileInfo();
 					quizObj.setmPages(mCursorQuizInfo.getCount() + " " + getResources().getString(R.string.item_recycler_mobcast_feedback_question));
 					try{
 						String []mTime = Utilities.convertTimeFromSecsTo(Long.parseLong(mCursorQuizInfo.getString(mCursorQuizInfo.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_DURATION)))).split(" ");
 						quizObj.setmDuration(mTime[0]+" "+ mTime[1]);
+						
+						do{
+							mTotalPoints+=Integer.parseInt(mCursorQuizInfo.getString(mCursorQuizInfo.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION_POINTS)));
+						}while(mCursorQuizInfo.moveToNext());
+						quizObj.setmQuestions(mTotalPoints + " "+getResources().getString(R.string.item_recycler_training_quiz_points));
 					}catch(Exception e){
 						FileLog.e(TAG, e.toString());
 					}

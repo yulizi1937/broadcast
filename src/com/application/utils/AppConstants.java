@@ -54,6 +54,7 @@ public class AppConstants {
 		public static final String API_SUBMIT_CAPTURE       = API_URL + "submitCapture";
 		public static final String API_SUBMIT_AWARD_MESSAGE = API_URL + "submitAwardMessage";
 		public static final String API_SUBMIT_BDAY_MESSAGE  = API_URL + "submitBirthdayMessage";
+		public static final String API_SUBMIT_REF           = API_URL + "submitRecruitmentReference";
 		public static final String API_SEND_CHAT            = API_URL + "sendChatMessage";
 	}
 	
@@ -277,7 +278,10 @@ public class AppConstants {
 		public static final String expiryDate          	    = "expiryDate";
 		public static final String expiryTime          	    = "expiryTime";
 		public static final String sentDate          	    = "sentDate";
-		public static final String sentTime              	= "sentTime";
+		public static final String sentTime          	    = "sentTime";
+		public static final String referenceName            = "referenceName";
+		public static final String referencePhoneNumber     = "referencePhoneNumber";
+		public static final String referenceEmailAddress    = "referenceEmailAddress";
 		
 	}
 	
@@ -304,6 +308,7 @@ public class AppConstants {
 		public static final String SHARE= "share";
 		public static final String ANYDO= "anydo";
 		public static final String JOIN = "join";
+		public static final String DECL = "decline";
 		public static final String LINK = "link";
 		public static final String LIKE = "like";
 		public static final String OPEN = "open";
@@ -386,6 +391,7 @@ public class AppConstants {
 		public static final String ACTIVITYTITLE    = "activityTitle";
 		public static final String CATEGORYARRAY    = "categoryArray";
 		public static final String CATEGORY         = "category";
+		public static final String ACTION           = "action";
 		public static final String ISFROMNOTIFICATION= "isFromNotification";
 		public static final String HELP             = "help";
 		public static final String USERNAME         = "userName";
@@ -401,6 +407,7 @@ public class AppConstants {
 		public static final String OBJECT           = "object";
 		public static final String POSITION         = "position";
 		public static final String POINTS           = "points";
+		public static final String TOTAL            = "total";
 		public static final String TIMETAKEN        = "timeTaken";
 		public static final String QUIZINCORRECT    = "quizInCorrect";
 		public static final String LOGOUT           = "logOut";

@@ -115,13 +115,13 @@ public class AndroidUtilities {
 		int width = ApplicationLoader.getApplication().getResources()
 				.getDisplayMetrics().widthPixels;
 		if (width < 320) {
-			return 10;
+			return 9;//10
 		} else if (width > 320 && width <= 480) {
-			return 11;
+			return 10;//11
 		} else if (width > 480 && width < 540) {
-			return 12;
+			return 11;//12
 		} else {
-			return 13;
+			return 12;//13
 		}
 	}
 
@@ -129,13 +129,13 @@ public class AndroidUtilities {
 		int width = ApplicationLoader.getApplication().getResources()
 				.getDisplayMetrics().widthPixels;
 		if (width < 320) {
-			return 18;
+			return 19;//18
 		} else if (width > 320 && width <= 480) {
-			return 17;
+			return 18;//17
 		} else if (width > 480 && width < 540) {
-			return 15;
+			return 16;//15
 		} else {
-			return 15;
+			return 16;
 		}
 	}
 
@@ -610,8 +610,10 @@ public class AndroidUtilities {
 	}
 	
 	public static long getFolderSize(String mFolderPath){
-		if(new File(mFolderPath).isDirectory()){
-			return FileUtils.sizeOfDirectory(new File(mFolderPath));
+		if(new File(mFolderPath).exists()){
+			if(new File(mFolderPath).isDirectory()){
+				return FileUtils.sizeOfDirectory(new File(mFolderPath));
+			}
 		}
 		return 0;
 	}

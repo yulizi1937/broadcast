@@ -61,6 +61,7 @@
     <string name="action_delete">Delete</string>
     <string name="action_info">Info</string>
     <string name="action_share">Share</string>
+    <string name="action_contact_share">Share Contact From Phonebook</string>
     <string name="action_submit">Submit</string>
     <string name="action_help_mobcast">About Mobcast</string>
     <string name="action_help_video">How to use?</string>
@@ -103,8 +104,10 @@
     <string name="days_left">left</string>
     <string name="going"> going</string>
     <string name="accepted"> Accepted</string>
+    <string name="accept"> Accept</string>
     <string name="notgoing"> Decline</string>
     <string name="congratulated_text"> people congratulated!</string>
+    <string name="congratulated_action">Congratulate</string>
     <!-- activity_login -->
     <string name="textview_login">Please enter your Mobile Number</string>
     <string name="textview_login_countrycode">+91</string>
@@ -571,11 +574,13 @@ The inaugural set of “Preferred Platform Partners” includes BrightRoll, Doub
     <string name="sample_item_recycler_mobcast_feedback_count">1.5K</string>
     <string name="sample_item_recycler_mobcast_feedback_question">2 Questions</string>
     <string name="item_recycler_mobcast_feedback_question">Questions</string>
+    
 
     <!-- item_recylcer_training_quiz -->
-    <string name="sample_item_recycler_training_question_time">03 mins</string>
-    <string name="sample_item_recycler_training_question_attempted">02 attempts</string>
-    <string name="sample_item_recycler_training_question_score">556 pts</string>
+    <string name="sample_item_recycler_training_question_time">00 mins</string>
+    <string name="sample_item_recycler_training_question_attempted">00 attempts</string>
+    <string name="sample_item_recycler_training_question_score">00 pts</string>
+    <string name="item_recycler_training_quiz_points">pts</string>
 
     <!-- item_reycler_mobcast_news -->
     <string name="sample_item_recycler_mobcast_news_link">http://www.google.com/</string>

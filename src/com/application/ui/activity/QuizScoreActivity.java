@@ -70,6 +70,8 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 	
 	private String mTimeTaken;
 	private String mTotalPoints;
+	private String mTotalQuestions = "0";
+	private String mIncorrectQuestions = "0";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +152,11 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 		mIntent = getIntent();
 		mTimeTaken = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.TIMETAKEN);
 		mTotalPoints = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.POINTS);
+		mTotalQuestions = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.TOTAL);
 		mArrayListQuizScorePagerInfo = mIntent.getParcelableArrayListExtra(AppConstants.INTENTCONSTANTS.QUIZINCORRECT);
+		if(mArrayListQuizScorePagerInfo!=null && mArrayListQuizScorePagerInfo.size() > 0){
+			mIncorrectQuestions = String.valueOf(Integer.parseInt(mTotalQuestions) - mArrayListQuizScorePagerInfo.size());	
+		}
 		setIntentDataToUi();
 	}
 	
@@ -164,6 +170,12 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 			String[] mTime = Utilities.convertTimeFromSecsTo(Long.parseLong(mTimeTaken)).split(" ");
 			mQuizScoreTimeTakenTv.setText(mTime[0]);
 			mQuizScoreTimeTakenTextTv.setText(mTime[1]);
+		}
+		
+		if(mArrayListQuizScorePagerInfo!=null && mArrayListQuizScorePagerInfo.size() > 0){
+			mQuizScoreCorrectAnswerTv.setText(Integer.parseInt(mTotalQuestions) - Integer.parseInt(mIncorrectQuestions) + "/" + mTotalQuestions);
+		}else{
+			mQuizScoreCorrectAnswerTv.setText(mTotalQuestions+ "/" + mTotalQuestions);
 		}
 		
 		
@@ -196,6 +208,12 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 			mQuizScoreQuestionPagerCounterTv.setVisibility(View.VISIBLE);
 			mQuestionScoreCirclePageIndicator.setVisibility(View.GONE);
 			mQuestionScoreViewPager.setOnPageChangeListener(mPagerListener);
+		}
+		
+		if (mArrayListQuizScorePagerInfo.size() == 1) {
+			mQuizScoreNavigationPrevBtn.setVisibility(View.GONE);
+			mQuizScoreNavigationNextBtn.setText(getResources().getString(
+					R.string.button_submit));
 		}
 
 	}

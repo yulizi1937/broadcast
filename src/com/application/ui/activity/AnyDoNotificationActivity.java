@@ -1080,13 +1080,13 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		}
 		
 		int mTotalPoints = 0;
-		long mTime = 0;
+		String []mTime;
 		Cursor mCursorQuiz = getContentResolver().query(DBConstant.Training_Quiz_Columns.CONTENT_URI, null, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ID + "=?", new String[]{String.valueOf(mId)}, null);
 		if(mCursorQuiz!=null && mCursorQuiz.getCount() > 0){
 			mQuestionTv.setText(mCursorQuiz.getCount() + " " +getResources().getString(R.string.item_recycler_mobcast_feedback_question));	
 			mCursorQuiz.moveToFirst();
-			mTime = Long.parseLong(mCursorQuiz.getString(mCursorQuiz.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_DURATION)));
-			mTotalPointsTv.setText(String.valueOf(Utilities.convertTimeFromSecsTo(mTime)));
+			mTime = Utilities.convertTimeFromSecsTo(Long.parseLong(mCursorQuiz.getString(mCursorQuiz.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_DURATION)))).split(" ");
+			mTimeTv.setText(mTime[0]+" "+mTime[1]);
 			do{
 				mTotalPoints+=Integer.parseInt(mCursorQuiz.getString(mCursorQuiz.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION_POINTS)));
 			}while(mCursorQuiz.moveToNext());

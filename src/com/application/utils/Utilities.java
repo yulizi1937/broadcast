@@ -1067,7 +1067,7 @@ public class Utilities {
 
 			int currentWeek = currentCalendar.get(Calendar.DAY_OF_YEAR);
 			int targetWeek = targetCalendar.get(Calendar.DAY_OF_YEAR);
-			int numberOfDays = Math.abs(targetWeek - currentWeek);
+			int numberOfDays = targetWeek - currentWeek;
 			
 			if (todayDate.getYear() == contentDate.getYear()) {
 				if (todayDate.getMonth() == contentDate.getMonth()) {
@@ -1104,14 +1104,19 @@ public class Utilities {
 						}
 					} else if (numberOfDays == 1){
 						return String.format("%02d", Math.abs(numberOfDays)) + " day left";
+					} else if(String.valueOf(numberOfDays).contains("-")){
+						return String.format("%02d", Math.abs(numberOfDays)) + " days ago";
 					}else{
 						return String.format("%02d", Math.abs(numberOfDays)) + " days left";	
 					}
 				} else {
 					if (numberOfDays == 1) {
 						return String.format("%02d", Math.abs(numberOfDays)) + "day left";
+					} else if(String.valueOf(numberOfDays).contains("-")){
+						return String.format("%02d", Math.abs(numberOfDays)) + " days ago";
+					}else{
+						return String.format("%02d", Math.abs(numberOfDays)) + " days left";	
 					}
-					return String.format("%02d", Math.abs(numberOfDays)) + " days left";
 				}
 			} else {
 				return dateFormatterWithYear.format(contentDate);
@@ -1371,6 +1376,31 @@ public class Utilities {
 		roundedBitmapDrawable.setCornerRadius(dst.getWidth() / 2);
 		roundedBitmapDrawable.setAntiAlias(true);
 		return roundedBitmapDrawable;
+	}
+	
+	public static Bitmap getRoundedBitmap(String mPath) {
+		try{
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inSampleSize = 4;
+			options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+			Bitmap src =  BitmapFactory.decodeFile(mPath,options);
+			Bitmap dst;
+			if (src.getWidth() >= src.getHeight()) {
+				dst = Bitmap.createBitmap(src, src.getWidth() / 2 - src.getHeight()
+						/ 2, 0, src.getHeight(), src.getHeight());
+			} else {
+				dst = Bitmap.createBitmap(src, 0,
+						src.getHeight() / 2 - src.getWidth() / 2, src.getWidth(),
+						src.getWidth());
+			}
+			RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(ApplicationLoader.getApplication().getResources(), dst);
+			roundedBitmapDrawable.setCornerRadius(dst.getWidth() / 2);
+			roundedBitmapDrawable.setAntiAlias(true);
+			return dst;
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return null;
 	}
 	
 	@SuppressLint("NewApi") 

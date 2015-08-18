@@ -1321,6 +1321,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 			}
 			((QuizViewHolder)viewHolder).mTrainingQuizDetailQuestionCountTv.setText(mObj.getmFileInfo().get(0).getmPages());
 			((QuizViewHolder)viewHolder).mTrainingQuizDetailTimerTv.setText(mObj.getmFileInfo().get(0).getmDuration());
+			((QuizViewHolder)viewHolder).mTrainingQuizDetailScoreTv.setText(mObj.getmFileInfo().get(0).getmQuestions());
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

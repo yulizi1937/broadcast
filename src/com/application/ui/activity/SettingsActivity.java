@@ -480,7 +480,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			// TODO Auto-generated method stub
 			try{
 				mFloatAppStorage = AndroidUtilities.getPercentageOfFileSizeFromFreeMemory(AndroidUtilities.getFolderSize(new File(
-						Environment.getExternalStorageDirectory(), AppConstants.FOLDER.BUILD_FOLDER).getAbsolutePath()));
+						Environment.getExternalStorageDirectory(), AppConstants.FOLDER.BUILD_FOLDER_FILE_MANAGER).getAbsolutePath()));
 			}catch(Exception e){
 				FileLog.e(TAG, e.toString());
 			}
@@ -502,13 +502,13 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			mFileStorageDeviceTv.setLayoutParams(paramsDevice);
 			
 			mFileStorageAppTv.setText("Used : "+Utilities.formatFileSize(AndroidUtilities.getFolderSize(new File(
-					Environment.getExternalStorageDirectory(), AppConstants.FOLDER.BUILD_FOLDER).getAbsolutePath())));
+					Environment.getExternalStorageDirectory(), AppConstants.FOLDER.BUILD_FOLDER_FILE_MANAGER).getAbsolutePath())));
 			
 //			mFileStorageDeviceTv.setText(Utilities.formatFileSize(AndroidUtilities.getFolderSize(
 //					Environment.getExternalStorageDirectory().getAbsolutePath())));
 			
 			mFileStorageDeviceTv.setText("Used : "+Utilities.formatFileSize(AndroidUtilities.getFolderSize(new File(
-					Environment.getExternalStorageDirectory(), AppConstants.FOLDER.BUILD_FOLDER).getAbsolutePath())));
+					Environment.getExternalStorageDirectory(), AppConstants.FOLDER.BUILD_FOLDER_FILE_MANAGER).getAbsolutePath())));
 		}
 	}
 	

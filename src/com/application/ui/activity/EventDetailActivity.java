@@ -357,7 +357,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.JOIN, "");
+				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.DECL, "");
 				ContentValues mValues = new ContentValues();
 				mValues.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN, "false");
 				getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, mValues, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId});
@@ -490,10 +490,10 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 		Date mFromTime = null;
 		Date mToTime = null;
 		try {
-			mFromTime = new SimpleDateFormat("yyyy-mm-dd").parse(mContentEventFromTime);
-			mToTime = new SimpleDateFormat("yyyy-mm-dd").parse(mContentEventToTime);
-			mCalIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,mFromTime);
-			mCalIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,mToTime);
+			mFromTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(mContentEventDate + " " +mContentEventFromTime);
+			mToTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(mContentEventDate + " "+mContentEventToTime);
+			mCalIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,mFromTime.getTime());
+			mCalIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,mToTime.getTime());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -502,7 +502,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 		mCalIntent.putExtra(Events.TITLE, mContentTitle);
 		mCalIntent.putExtra(Events.DESCRIPTION, mContentDesc);
 		mCalIntent.putExtra(Events.EVENT_LOCATION, mContentEventVenue);
-		mCalIntent.putExtra(Events.ALL_DAY, 1);
+		mCalIntent.putExtra(Events.ALL_DAY, false);
 		mCalIntent.putExtra(Events.STATUS, 1);
 		mCalIntent.putExtra(Events.VISIBLE, 0);
 		mCalIntent.putExtra(Events.HAS_ALARM, 1);

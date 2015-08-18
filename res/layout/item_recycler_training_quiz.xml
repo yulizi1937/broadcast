@@ -111,6 +111,7 @@
                     android:text="@string/sample_item_recycler_mobcast_text_view_count"
                     android:textColor="@color/toolbar_background"
                     android:textSize="@dimen/event_view_textview_size"
+                    android:visibility="gone"
                     tools:ignore="RtlSymmetry" />
 
                 <android.support.v7.widget.AppCompatTextView
@@ -127,6 +128,7 @@
                     android:text="@string/sample_item_recycler_mobcast_text_view_count"
                     android:textColor="@color/toolbar_background"
                     android:textSize="@dimen/event_view_textview_size"
+                    android:visibility="gone"
                     tools:ignore="RtlSymmetry" />
             </RelativeLayout>
 

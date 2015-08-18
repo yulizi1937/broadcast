@@ -352,6 +352,33 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 				mDrawerSyncIv.clearAnimation();
 				mDrawerSyncTv.setText(ApplicationLoader.getPreferences().getLastSyncTimeStampMessage());
 				onResume();
+				/*int mCurrentPosition = mPager.getCurrentItem();
+				int mLastPosition = mArrayListMotherHeader.size();
+				if(mCurrentPosition == 0){
+					if(mLastPosition!=mCurrentPosition){
+						if(mLastPosition-mCurrentPosition > 2){
+							mPager.setCurrentItem(mCurrentPosition+2);	
+						}else{
+							mPager.setCurrentItem(mCurrentPosition+1);
+						}
+						mPager.setCurrentItem(mCurrentPosition);
+					}
+				}else if(mCurrentPosition == mLastPosition){
+					if(mLastPosition!=mCurrentPosition){
+						if(mLastPosition-2 > 0){
+							mPager.setCurrentItem(mCurrentPosition-2);	
+						}else{
+							mPager.setCurrentItem(mCurrentPosition-1);
+						}
+						mPager.setCurrentItem(mCurrentPosition);
+					}
+				}else{
+					if(mLastPosition!=mCurrentPosition){
+						mPager.setCurrentItem(mCurrentPosition-1);
+						mPager.setCurrentItem(mCurrentPosition+1);
+						mPager.setCurrentItem(mCurrentPosition);
+					}
+				}*/
 			}catch(Exception e){
 				FileLog.e(TAG, e.toString());
 			}

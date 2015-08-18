@@ -42,6 +42,7 @@
     <uses-permission android:name="com.mobcast.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <permission
         android:name="com.mobcast.permission.C2D_MESSAGE"
@@ -228,7 +229,10 @@
         <activity
             android:name="com.application.ui.activity.RecruitmentDetailActivity"
             android:configChanges="locale|orientation" />
-
+        
+        <!-- Notification ActionHandler Receiver -->
+		<receiver android:name="com.application.receiver.NotificationActionAwardReceiver"/>
+		<receiver android:name="com.application.receiver.NotificationActionEventReceiver"/>
         <!-- GCM Receiver -->
         <receiver
             android:name="com.application.receiver.GcmBroadcastReceiver"
