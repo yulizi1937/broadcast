@@ -67,6 +67,7 @@ import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -172,6 +173,9 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void toolBarRefresh(){
+		if(!mSwipeRefreshLayout.isRefreshing()){
+			mSwipeRefreshLayout.setRefreshing(true);
+		}
 		mToolBarMenuRefresh.setVisibility(View.GONE);
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
 		if (!mLoadMore) {
@@ -212,6 +216,8 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 			@Override
 			public void onRefresh() {
 				// TODO Auto-generated method stub
+				mToolBarMenuRefresh.setVisibility(View.GONE);
+				mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
 				refreshFeedFromApi(true, true, 0);
 			}
 		});
@@ -374,6 +380,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void checkDataInAdapter() {
+		checkExpiredEventAndDeleteFromDB();
 		Cursor mCursor = getContentResolver().query(
 				DBConstant.Event_Columns.CONTENT_URI, null, null, null,
 				DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_DATE_FORMATTED + " DESC");
@@ -405,6 +412,11 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 	        	return -1;
 	        }
 	    }
+	}
+	
+	private void checkExpiredEventAndDeleteFromDB(){
+		long mCurrentTimeMillis = System.currentTimeMillis();
+		getContentResolver().delete(DBConstant.Event_Columns.CONTENT_URI, DBConstant.Event_Columns.COLUMN_EVENT_EXPIRY_DATE_FORMATTED + "<?", new String[]{String.valueOf(mCurrentTimeMillis)});
 	}
 	
 	private void addEventObjectListFromDBToBeans(Cursor mCursor, boolean isFromBroadCastReceiver, boolean isToAddOldData){
@@ -443,7 +455,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 			Obj.setmLikeCount(mCursor.getString(mIntEventLikeCount));
 			Obj.setmViewCount(mCursor.getString(mIntEventViewCount));
 			Obj.setmGoingCount(mCursor.getString(mIntEventGoingCount));
-			Obj.setGoingToAttend(Boolean.parseBoolean(mCursor.getString(mIntEventIsGoing)));
+			Obj.setIsGoingToAttend(mCursor.getString(mIntEventIsGoing));
 			Obj.setRead(Boolean.parseBoolean(mCursor.getString(mIntEventIsRead)));
 			Obj.setLike(Boolean.parseBoolean(mCursor.getString(mIntEventIsLike)));
 			Obj.setmFileType(AppConstants.INTENTCONSTANTS.EVENT);
@@ -467,7 +479,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 //		position-=1;
 		if (position >= 0 && position < mArrayListEvent.size()) {
 			if(mArrayListEvent!=null && mArrayListEvent.size() > 0){
-				Cursor mCursor = getContentResolver().query(DBConstant.Event_Columns.CONTENT_URI, new String[]{DBConstant.Event_Columns.COLUMN_EVENT_ID, DBConstant.Event_Columns.COLUMN_EVENT_IS_READ, DBConstant.Event_Columns.COLUMN_EVENT_IS_LIKE, DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO, DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN}, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mArrayListEvent.get(position).getmId()}, null);
+				Cursor mCursor = getContentResolver().query(DBConstant.Event_Columns.CONTENT_URI, new String[]{DBConstant.Event_Columns.COLUMN_EVENT_ID, DBConstant.Event_Columns.COLUMN_EVENT_IS_READ, DBConstant.Event_Columns.COLUMN_EVENT_IS_LIKE, DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO, DBConstant.Event_Columns.COLUMN_EVENT_READ_NO,DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN}, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mArrayListEvent.get(position).getmId()}, null);
 				
 				if(mCursor!=null && mCursor.getCount() >0){
 					mCursor.moveToFirst();
@@ -482,10 +494,10 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 						isToNotify = true;
 					}
 					
-					if(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN)))){
-						mArrayListEvent.get(position).setGoingToAttend(true);
-						isToNotify = true;
-					}
+					mArrayListEvent.get(position).setmLikeCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO)));
+					mArrayListEvent.get(position).setmViewCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_READ_NO)));
+					mArrayListEvent.get(position).setIsGoingToAttend(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN)));
+					isToNotify = true;
 					
 					if(isToNotify){
 						mRecyclerView.getAdapter().notifyDataSetChanged();
@@ -891,11 +903,26 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 				mProgressDialog.dismiss();
 			}
 			
-			if(mSwipeRefreshLayout.isRefreshing()){
+//			if(mSwipeRefreshLayout.isRefreshing()){
 				mToolBarMenuRefresh.setVisibility(View.VISIBLE);
 				mToolBarMenuRefreshProgress.setVisibility(View.GONE);
 				mSwipeRefreshLayout.setRefreshing(false);
-			}
+//			}
 		}
+	}
+	
+	/**
+	 * Google Analytics v3
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
 	}
 }

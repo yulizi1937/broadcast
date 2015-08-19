@@ -22,8 +22,11 @@ import android.widget.LinearLayout;
 
 import com.application.ui.view.BottomSheet;
 import com.application.utils.AndroidUtilities;
+import com.application.utils.AppConstants;
+import com.application.utils.UserReport;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 
 /**
@@ -198,6 +201,7 @@ public class AboutActivity extends SwipeBackBaseActivity {
 	@Deprecated
 	protected Dialog onCreateDialog(int id, Bundle args) {
 		// TODO Auto-generated method stub
+		UserReport.updateUserReportApi("-1", "about", AppConstants.REPORT.SHARE, "");
 		return getShareAction();
 	}
 
@@ -205,5 +209,20 @@ public class AboutActivity extends SwipeBackBaseActivity {
 		return getShareActions(
 				new BottomSheet.Builder(this).grid().title("Share To "),
 				"Hello ").limit(R.integer.bs_initial_grid_row).build();
+	}
+	
+	/**
+	 * Google Analytics v3
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
 	}
 }

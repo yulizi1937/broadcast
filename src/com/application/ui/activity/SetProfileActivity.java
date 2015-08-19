@@ -51,6 +51,7 @@ import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
 import com.application.utils.Utilities;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -720,4 +721,19 @@ public class SetProfileActivity extends AppCompatActivity{
 			}
 		}
 	}
+	
+	/**
+	 * Google Analytics
+	 */
+	 @Override
+	  public void onStart() {
+	    super.onStart();
+	    EasyTracker.getInstance(this).activityStart(this);
+	  }
+
+	  @Override
+	  public void onStop() {
+	    super.onStop();
+	    EasyTracker.getInstance(this).activityStop(this);
+	  }
 }

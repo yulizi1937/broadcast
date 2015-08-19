@@ -162,6 +162,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 		super.onResume();
 		checkReadFromDBAndUpdateToObj();
 		setUiListener();
+		ApplicationLoader.trackScreenViewV3(ApplicationLoader.getApplication().getResources().getString(R.string.com_application_ui_fragment_TrainingRecyclerViewFragment));
 	}
 
 	private void setUiListener() {
@@ -251,6 +252,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 	}
 	
 	private void checkDataInAdapter() {
+		checkExpiredTrainingAndDeleteFromDB();
 		Cursor mCursor = getActivity().getContentResolver().query(
 				DBConstant.Training_Columns.CONTENT_URI, null, null, null,
 				DBConstant.Training_Columns.COLUMN_TRAINING_DATE_FORMATTED + " DESC");
@@ -258,6 +260,8 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 			addTrainingObjectListFromDBToBeans(mCursor, false,false);
 			if (mArrayListTraining.size() > 0) {
 				setRecyclerAdapter();
+			}else {
+				setEmptyData();
 			}
 		} else {
 			setEmptyData();
@@ -305,6 +309,11 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 	        	return -1;
 	        }
 	    }
+	}
+	
+	private void checkExpiredTrainingAndDeleteFromDB(){
+		long mCurrentTimeMillis = System.currentTimeMillis();
+		getActivity().getContentResolver().delete(DBConstant.Training_Columns.CONTENT_URI, DBConstant.Training_Columns.COLUMN_TRAINING_TIME_FORMATTED + "<?", new String[]{String.valueOf(mCurrentTimeMillis)});
 	}
 	
 	private void addTrainingObjectListFromDBToBeans(Cursor mCursor, boolean isFromBroadCastReceiver, boolean isToAddOldData){
@@ -597,7 +606,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 //		position-=1;
 		if (position >= 0 && position < mArrayListTraining.size()) {
 			if(mArrayListTraining!=null && mArrayListTraining.size() > 0){
-				Cursor mCursor = getActivity().getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, new String[]{DBConstant.Training_Columns.COLUMN_TRAINING_ID, DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE, DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO}, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mArrayListTraining.get(position).getmId()}, null);
+				Cursor mCursor = getActivity().getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, new String[]{DBConstant.Training_Columns.COLUMN_TRAINING_ID, DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE, DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, DBConstant.Training_Columns.COLUMN_TRAINING_READ_NO}, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mArrayListTraining.get(position).getmId()}, null);
 				
 				if(mCursor!=null && mCursor.getCount() >0){
 					mCursor.moveToFirst();
@@ -611,6 +620,11 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 						mArrayListTraining.get(position).setmLikeCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO)));
 						isToNotify = true;
 					}
+					
+					mArrayListTraining.get(position).setmLikeCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO)));
+					mArrayListTraining.get(position).setmViewCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_READ_NO)));
+					isToNotify = true;
+					
 					if(isToNotify){
 						mRecyclerView.getAdapter().notifyDataSetChanged();
 					}

@@ -23,8 +23,8 @@ public class Event implements Parcelable {
 	private String mReceivedTime;
 	private String mDaysLeft;
 	private String mFileType;
+	private String isGoingToAttend;
 	private boolean isRead;
-	private boolean isGoingToAttend;
 	private boolean isLike;
 
 	public Event() {
@@ -36,7 +36,7 @@ public class Event implements Parcelable {
 			String mLikeCount, String mGoingCount, String mBy,
 			String mStartDate, String mStartTime, String mReceivedDate,
 			String mReceivedTime, String mDaysLeft, String mFileType,
-			boolean isRead, boolean isGoingToAttend, boolean isLike) {
+			String isGoingToAttend, boolean isRead, boolean isLike) {
 		super();
 		this.mId = mId;
 		this.mTitle = mTitle;
@@ -50,8 +50,8 @@ public class Event implements Parcelable {
 		this.mReceivedTime = mReceivedTime;
 		this.mDaysLeft = mDaysLeft;
 		this.mFileType = mFileType;
-		this.isRead = isRead;
 		this.isGoingToAttend = isGoingToAttend;
+		this.isRead = isRead;
 		this.isLike = isLike;
 	}
 
@@ -151,20 +151,20 @@ public class Event implements Parcelable {
 		this.mFileType = mFileType;
 	}
 
+	public String getIsGoingToAttend() {
+		return isGoingToAttend;
+	}
+
+	public void setIsGoingToAttend(String isGoingToAttend) {
+		this.isGoingToAttend = isGoingToAttend;
+	}
+
 	public boolean isRead() {
 		return isRead;
 	}
 
 	public void setRead(boolean isRead) {
 		this.isRead = isRead;
-	}
-
-	public boolean isGoingToAttend() {
-		return isGoingToAttend;
-	}
-
-	public void setGoingToAttend(boolean isGoingToAttend) {
-		this.isGoingToAttend = isGoingToAttend;
 	}
 
 	public boolean isLike() {
@@ -188,8 +188,8 @@ public class Event implements Parcelable {
 		mReceivedTime = in.readString();
 		mDaysLeft = in.readString();
 		mFileType = in.readString();
+		isGoingToAttend = in.readString();
 		isRead = in.readByte() != 0x00;
-		isGoingToAttend = in.readByte() != 0x00;
 		isLike = in.readByte() != 0x00;
 	}
 
@@ -212,8 +212,8 @@ public class Event implements Parcelable {
 		dest.writeString(mReceivedTime);
 		dest.writeString(mDaysLeft);
 		dest.writeString(mFileType);
+		dest.writeString(isGoingToAttend);
 		dest.writeByte((byte) (isRead ? 0x01 : 0x00));
-		dest.writeByte((byte) (isGoingToAttend ? 0x01 : 0x00));
 		dest.writeByte((byte) (isLike ? 0x01 : 0x00));
 	}
 

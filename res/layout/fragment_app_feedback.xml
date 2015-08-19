@@ -62,7 +62,7 @@
                 android:layout_width="@dimen/fragment_report_category_circleimageview_width"
                 android:layout_height="@dimen/fragment_report_category_circleimageview_width"
                 android:layout_gravity="start"
-                android:src="@drawable/sample_picture_event_cover"
+                android:src="@drawable/ic_sample_picture"
                 circleimageview:border_color="@android:color/white"
                 circleimageview:border_width="1dp"
                 tools:ignore="RtlHardcoded,ContentDescription" />

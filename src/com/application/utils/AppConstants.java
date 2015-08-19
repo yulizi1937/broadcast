@@ -363,6 +363,7 @@ public class AppConstants {
 		public static final int RELOGIN   = 15;
 		public static final int CHAT      = 16;
 		public static final int RECRUITMENT= 17;
+		public static final int UPDATEAPP = 18;
 	}
 	
 	public interface TRAINING{
@@ -402,6 +403,11 @@ public class AppConstants {
 		public static final String TRAINING         = "training";
 		public static final String AWARD            = "award";
 		public static final String EVENT            = "event";
+		public static final String BIRTHDAY         = "birthday";
+		public static final String REMOTECONTENTDELETE= "remoteContentDelete";
+		public static final String REMOTEWIPE       = "remoteWipe";
+		public static final String REMOTELOGOUT     = "remoteLogout";
+		public static final String UPDATEAPP        = "updateApp";
 		public static final String RECRUITMENT      = "recruitment";
 		public static final String RELOGIN          = "relogin";
 		public static final String OBJECT           = "object";
@@ -453,7 +459,7 @@ public class AppConstants {
 	public static final String mChatUserDp1 = "https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-xfp1/v/t1.0-9/283450_10150239966167890_4445638_n.jpg?oh=d732af3013919548417322e29b9305aa&oe=5681357E&__gda__=1451109996_a70c4977a9dd0e5dba7548624e5aeb72";
 	public static final String mChatUserDp2 = "https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-xtf1/v/t1.0-9/11811481_10153147923287293_2856968601704623332_n.jpg?oh=96f2badd78ef8e3fa37189572acdd2a8&oe=5683E41C&__gda__=1448067128_df409765385da599fca2de26dafef21f";
 	
-	public static final String mStoreLink = "";
+	public static final String mStoreLink = "https://play.google.com/store";
 	
 	public static final String decrypted = "_decrypted";
 	public static final String encrypted = "_encrypted";

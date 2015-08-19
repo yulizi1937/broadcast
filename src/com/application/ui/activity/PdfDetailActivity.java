@@ -51,6 +51,7 @@ import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 
 /**
@@ -553,14 +554,16 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 	
 	private void openPDFFromApps(){
 		try{
-			Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-			intent.setAction(Intent.ACTION_VIEW);
-			intent.setDataAndType(
-					Uri.parse("file://" +mContentFilePath),
-					"application/pdf");
-			startActivity(intent);
-			AndroidUtilities.enterWindowAnimation(PdfDetailActivity.this);
+			if(checkIfFileExists(mContentFilePath)){
+				Intent intent = new Intent(Intent.ACTION_VIEW);
+				intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+				intent.setAction(Intent.ACTION_VIEW);
+				intent.setDataAndType(Uri.parse("file://" +mContentFilePath),"application/pdf");
+				startActivity(intent);
+				AndroidUtilities.enterWindowAnimation(PdfDetailActivity.this);
+			}else{
+				Utilities.showCrouton(PdfDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.file_not_available), Style.ALERT);
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -603,6 +606,9 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
 				mValues.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_READ_NO, mViewCount);
 				getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, mValues, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+			}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+				mValues.put(DBConstant.Training_Columns.COLUMN_TRAINING_READ_NO, mViewCount);
+				getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, mValues, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 			}
 			mPdfViewTv.setText(mViewCount);
 		}
@@ -612,6 +618,9 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
 				mValues.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, mViewCount);
 				getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, mValues, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+			}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+				mValues.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, mViewCount);
+				getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, mValues, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 			}
 			mPdfLikeTv.setText(mLikeCount);
 		}
@@ -733,6 +742,7 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 	@Deprecated
 	protected Dialog onCreateDialog(int id, Bundle args) {
 		// TODO Auto-generated method stub
+		UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.SHARE, "");
 		return getShareAction();
 	}
 
@@ -765,5 +775,20 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 				Color.parseColor(AppConstants.COLOR.MOBCAST_PURPLE),
 				Color.parseColor(AppConstants.COLOR.MOBCAST_GREEN),
 				Color.parseColor(AppConstants.COLOR.MOBCAST_BLUE));
+	}
+	
+	/**
+	 * Google Analytics v3
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
 	}
 }

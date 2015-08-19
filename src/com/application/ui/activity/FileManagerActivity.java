@@ -52,6 +52,7 @@ import com.application.utils.ApplicationLoader;
 import com.application.utils.FileLog;
 import com.application.utils.LocaleController;
 import com.application.utils.Utilities;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 
 /**
@@ -891,5 +892,20 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
             }
         })
         .show();
+	}
+	
+	/**
+	 * Google Analytics v3
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
 	}
 }

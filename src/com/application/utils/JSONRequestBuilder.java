@@ -58,8 +58,8 @@ public class JSONRequestBuilder {
 		try {
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
-//			stringBuffer.put(AppConstants.API_KEY_PARAMETER.appVersion, Utilities.getApplicationVersion());
-			stringBuffer.put(AppConstants.API_KEY_PARAMETER.appVersion, "2.1");
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.appVersion, Utilities.getApplicationVersion());
+//			stringBuffer.put(AppConstants.API_KEY_PARAMETER.appVersion, "2.1");
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.deviceType, AppConstants.deviceType);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.device, AppConstants.deviceType);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.regId, ApplicationLoader.getPreferences().getRegId());

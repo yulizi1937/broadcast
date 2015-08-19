@@ -41,7 +41,6 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -50,9 +49,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.application.beans.Award;
-import com.application.beans.MessageObject;
 import com.application.sqlite.DBConstant;
-import com.application.ui.activity.ChatDetailActivity.AsyncSendMessageTask;
 import com.application.ui.adapter.AwardRecyclerAdapter;
 import com.application.ui.adapter.AwardRecyclerAdapter.OnItemClickListener;
 import com.application.ui.adapter.AwardRecyclerAdapter.OnItemLongClickListener;
@@ -74,6 +71,7 @@ import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -186,6 +184,9 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 	}
 
 	private void toolBarRefresh() {
+		if(!mSwipeRefreshLayout.isRefreshing()){
+			mSwipeRefreshLayout.setRefreshing(true);
+		}
 		mToolBarMenuRefresh.setVisibility(View.GONE);
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
 		if (!mLoadMore) {
@@ -226,6 +227,8 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 			@Override
 			public void onRefresh() {
 				// TODO Auto-generated method stub
+				mToolBarMenuRefresh.setVisibility(View.GONE);
+				mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
 				refreshFeedFromApi(true, true, 0);
 			}
 		});
@@ -537,17 +540,14 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 	}
 
 	private void checkDataInAdapter() {
-		Cursor mCursor = getContentResolver().query(
-				DBConstant.Award_Columns.CONTENT_URI,
-				null,
-				null,
-				null,
-				DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE_FORMATTED
-						+ " DESC");
+		checkExpiredAwardAndDeleteFromDB();
+		Cursor mCursor = getContentResolver().query(DBConstant.Award_Columns.CONTENT_URI,null,null,null,DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE_FORMATTED+ " DESC");
 		if (mCursor != null && mCursor.getCount() > 0) {
 			addAwardObjectListFromDBToBeans(mCursor, false, false);
 			if (mArrayListAward.size() > 0) {
 				setRecyclerAdapter();
+			}else {
+				setEmptyData();
 			}
 		} else {
 			setEmptyData();
@@ -574,37 +574,28 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 			}
 		}
 	}
+	
+	private void checkExpiredAwardAndDeleteFromDB(){
+		long mCurrentTimeMillis = System.currentTimeMillis();
+		getContentResolver().delete(DBConstant.Award_Columns.CONTENT_URI, DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_DATE_FORMATTED + "<?", new String[]{String.valueOf(mCurrentTimeMillis)});
+	}
 
 	private void addAwardObjectListFromDBToBeans(Cursor mCursor,
 			boolean isFromBroadCastReceiver, boolean isToAddOldData) {
-		int mIntAwardId = mCursor
-				.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_ID);
-		int mIntAwardName = mCursor
-				.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_NAME);
-		int mIntAwardRecognition = mCursor
-				.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_RECOGNITION);
-		int mIntAwardThumbLink = mCursor
-				.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_THUMBNAIL_LINK);
-		int mIntAwardThumbPath = mCursor
-				.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_THUMBNAIL_PATH);
-		int mIntAwardReceivedDate = mCursor
-				.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_DATE);
-		int mIntAwardReceivedTime = mCursor
-				.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_TIME);
-		int mIntAwardDate = mCursor
-				.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE);
-		int mIntAwardViewCount = mCursor
-				.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_READ_NO);
-		int mIntAwardLikeCount = mCursor
-				.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_LIKE_NO);
-		int mIntAwardCongratulatedCount = mCursor
-				.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_CONGRATULATE_NO);
-		int mIntAwardIsRead = mCursor
-				.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_IS_READ);
-		int mIntAwardIsLike = mCursor
-				.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_IS_LIKE);
-		int mIntAwardIsCongratulated = mCursor
-				.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_IS_CONGRATULATE);
+		int mIntAwardId = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_ID);
+		int mIntAwardName = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_NAME);
+		int mIntAwardRecognition = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_RECOGNITION);
+		int mIntAwardThumbLink = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_THUMBNAIL_LINK);
+		int mIntAwardThumbPath = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_THUMBNAIL_PATH);
+		int mIntAwardReceivedDate = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_DATE);
+		int mIntAwardReceivedTime = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_TIME);
+		int mIntAwardDate = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE);
+		int mIntAwardViewCount = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_READ_NO);
+		int mIntAwardLikeCount = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_LIKE_NO);
+		int mIntAwardCongratulatedCount = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_CONGRATULATE_NO);
+		int mIntAwardIsRead = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_IS_READ);
+		int mIntAwardIsLike = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_IS_LIKE);
+		int mIntAwardIsCongratulated = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_IS_CONGRATULATE);
 
 		if (!isToAddOldData) {
 			mArrayListAward = new ArrayList<Award>();
@@ -617,10 +608,8 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		do {
 			Award Obj = new Award();
 			String mAwardId = mCursor.getString(mIntAwardId);
-			String mAwardReceivedDate = mCursor
-					.getString(mIntAwardReceivedDate);
-			String mAwardReceivedTime = mCursor
-					.getString(mIntAwardReceivedTime);
+			String mAwardReceivedDate = mCursor.getString(mIntAwardReceivedDate);
+			String mAwardReceivedTime = mCursor.getString(mIntAwardReceivedTime);
 			Obj.setmId(mAwardId);
 			Obj.setmName(mCursor.getString(mIntAwardName));
 			Obj.setmRecognition(mCursor.getString(mIntAwardRecognition));
@@ -631,12 +620,10 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 			Obj.setmAwardDate(mCursor.getString(mIntAwardDate));
 			Obj.setmLikeCount(mCursor.getString(mIntAwardLikeCount));
 			Obj.setmViewCount(mCursor.getString(mIntAwardViewCount));
-			Obj.setmCongratulatedCount(mCursor
-					.getString(mIntAwardCongratulatedCount));
+			Obj.setmCongratulatedCount(mCursor.getString(mIntAwardCongratulatedCount));
 			Obj.setRead(Boolean.parseBoolean(mCursor.getString(mIntAwardIsRead)));
 			Obj.setLike(Boolean.parseBoolean(mCursor.getString(mIntAwardIsLike)));
-			Obj.setCongratulated(Boolean.parseBoolean(mCursor
-					.getString(mIntAwardIsCongratulated)));
+			Obj.setCongratulated(Boolean.parseBoolean(mCursor.getString(mIntAwardIsCongratulated)));
 			Obj.setmFileType(AppConstants.INTENTCONSTANTS.AWARD);
 
 			if (!isFromBroadCastReceiver) {
@@ -660,12 +647,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		if (position >= 0 && position < mArrayListAward.size()) {
 			if (mArrayListAward != null && mArrayListAward.size() > 0) {
 				Cursor mCursor = getContentResolver()
-						.query(DBConstant.Award_Columns.CONTENT_URI,
-								new String[] {
-										DBConstant.Award_Columns.COLUMN_AWARD_ID,
-										DBConstant.Award_Columns.COLUMN_AWARD_IS_READ,
-										DBConstant.Award_Columns.COLUMN_AWARD_IS_LIKE,
-										DBConstant.Award_Columns.COLUMN_AWARD_LIKE_NO },
+						.query(DBConstant.Award_Columns.CONTENT_URI,new String[] {DBConstant.Award_Columns.COLUMN_AWARD_ID,DBConstant.Award_Columns.COLUMN_AWARD_IS_READ,DBConstant.Award_Columns.COLUMN_AWARD_IS_LIKE,DBConstant.Award_Columns.COLUMN_AWARD_LIKE_NO },
 								DBConstant.Award_Columns.COLUMN_AWARD_ID + "=?",
 								new String[] { mArrayListAward.get(position)
 										.getmId() }, null);
@@ -1023,130 +1005,51 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		try {
 			if (Utilities.isSuccessFromApi(mResponseFromApi)) {
 				JSONObject mJSONObj = new JSONObject(mResponseFromApi);
-				JSONArray mJSONMobMainArrObj = mJSONObj
-						.getJSONArray(AppConstants.API_KEY_PARAMETER.award);
+				JSONArray mJSONMobMainArrObj = mJSONObj.getJSONArray(AppConstants.API_KEY_PARAMETER.award);
 
 				for (int i = 0; i < mJSONMobMainArrObj.length(); i++) {
-					JSONObject mJSONMobObj = mJSONMobMainArrObj
-							.getJSONObject(i);
+					JSONObject mJSONMobObj = mJSONMobMainArrObj.getJSONObject(i);
 
-					String mAwardId = mJSONMobObj
-							.getString(AppConstants.API_KEY_PARAMETER.awardId);
-					String mDate = mJSONMobObj
-							.getString(AppConstants.API_KEY_PARAMETER.awardSentDate);
-					String mTime = mJSONMobObj
-							.getString(AppConstants.API_KEY_PARAMETER.awardSentTime);
-					String mExpiryDate = mJSONMobObj
-							.getString(AppConstants.API_KEY_PARAMETER.awardExpiryDate);
-					String mExpiryTime = mJSONMobObj
-							.getString(AppConstants.API_KEY_PARAMETER.awardExpiryTime);
-					String mFileLink = mJSONMobObj
-							.getString(AppConstants.API_KEY_PARAMETER.awardCoverLink);
+					String mAwardId = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardId);
+					String mDate = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardSentDate);
+					String mTime = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardSentTime);
+					String mExpiryDate = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardExpiryDate);
+					String mExpiryTime = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardExpiryTime);
+					String mFileLink = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardCoverLink);
 					String mFileName = Utilities.getFileName(mFileLink);
-					String mThumbnailLink = mJSONMobObj
-							.getString(AppConstants.API_KEY_PARAMETER.awardCoverThumbnail);
-					String mThumbnailPath = Utilities.getFilePath(
-							AppConstants.TYPE.IMAGE, true,
-							Utilities.getFileName(mThumbnailLink));
-					String mFilePath = Utilities.getFilePath(
-							AppConstants.TYPE.IMAGE, false,
-							Utilities.getFileName(mFileLink));
+					String mThumbnailLink = mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardCoverThumbnail);
+					String mThumbnailPath = Utilities.getFilePath(AppConstants.TYPE.IMAGE, true,Utilities.getFileName(mThumbnailLink));
+					String mFilePath = Utilities.getFilePath(AppConstants.TYPE.IMAGE, false,Utilities.getFileName(mFileLink));
 					ContentValues values = new ContentValues();
-					values.put(DBConstant.Award_Columns.COLUMN_AWARD_ID,
-							mAwardId);
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_RECOGNITION,
-							mJSONMobObj
-									.getString(AppConstants.API_KEY_PARAMETER.awardTitle));
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_NAME,
-							mJSONMobObj
-									.getString(AppConstants.API_KEY_PARAMETER.awardReceiverName));
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_MOBILE,
-							mJSONMobObj
-									.getString(AppConstants.API_KEY_PARAMETER.awardReceiverMobile));
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_EMAIL,
-							mJSONMobObj
-									.getString(AppConstants.API_KEY_PARAMETER.awardReceiverEmail));
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE,
-							mJSONMobObj
-									.getString(AppConstants.API_KEY_PARAMETER.awardDate));
-					values.put(DBConstant.Award_Columns.COLUMN_AWARD_DATE,
-							mDate);
-					values.put(DBConstant.Award_Columns.COLUMN_AWARD_TIME,
-							mTime);
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_DATE_FORMATTED,
-							Utilities.getMilliSecond(mDate, mTime));
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_DESCRIPTION,
-							mJSONMobObj
-									.getString(AppConstants.API_KEY_PARAMETER.awardDescription));
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_CITY,
-							mJSONMobObj
-									.getString(AppConstants.API_KEY_PARAMETER.awardCity));
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_DEPARTMENT,
-							mJSONMobObj
-									.getString(AppConstants.API_KEY_PARAMETER.awardDepartment));
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_READ_NO,
-							mJSONMobObj
-									.getString(AppConstants.API_KEY_PARAMETER.awardReadCount));
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_LIKE_NO,
-							mJSONMobObj
-									.getString(AppConstants.API_KEY_PARAMETER.awardLikeCount));
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_CONGRATULATE_NO,
-							mJSONMobObj
-									.getString(AppConstants.API_KEY_PARAMETER.awardCongratulatedCount));
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_IS_READ,
-							mJSONMobObj
-									.getString(AppConstants.API_KEY_PARAMETER.awardIsRead));
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_IS_LIKE,
-							mJSONMobObj
-									.getString(AppConstants.API_KEY_PARAMETER.awardIsLike));
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_IS_CONGRATULATE,
-							mJSONMobObj
-									.getString(AppConstants.API_KEY_PARAMETER.awardIsCongratulated));
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_IS_SHARING,
-							mJSONMobObj
-									.getString(AppConstants.API_KEY_PARAMETER.awardIsSharing));
-					values.put(DBConstant.Award_Columns.COLUMN_AWARD_FILE_LINK,
-							mFileLink);
-					values.put(DBConstant.Award_Columns.COLUMN_AWARD_FILE_PATH,
-							mFilePath);
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_FILE_SIZE,
-							mJSONMobObj
-									.getString(AppConstants.API_KEY_PARAMETER.awardFileSize));
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_THUMBNAIL_LINK,
-							mThumbnailLink);
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_THUMBNAIL_PATH,
-							mThumbnailPath);
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_DATE,
-							mExpiryDate);
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_TIME,
-							mExpiryTime);
-					values.put(
-							DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_DATE_FORMATTED,
-							Utilities.getMilliSecond(mExpiryDate, mExpiryTime));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_ID,mAwardId);
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_RECOGNITION,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardTitle));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_NAME,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardReceiverName));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_MOBILE,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardReceiverMobile));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_EMAIL,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardReceiverEmail));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardDate));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_DATE,mDate);
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_TIME,mTime);
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_DATE_FORMATTED,Utilities.getMilliSecond(mDate, mTime));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_DESCRIPTION,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardDescription));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_CITY,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardCity));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_DEPARTMENT,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardDepartment));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_READ_NO,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardReadCount));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_LIKE_NO,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardLikeCount));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_CONGRATULATE_NO,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardCongratulatedCount));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_IS_READ,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardIsRead));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_IS_LIKE,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardIsLike));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_IS_CONGRATULATE,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardIsCongratulated));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_IS_SHARING,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardIsSharing));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_FILE_LINK,mFileLink);
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_FILE_PATH,mFilePath);
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_FILE_SIZE,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardFileSize));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_THUMBNAIL_LINK,mThumbnailLink);
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_THUMBNAIL_PATH,mThumbnailPath);
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_DATE,mExpiryDate);
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_TIME,mExpiryTime);
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_DATE_FORMATTED,Utilities.getMilliSecond(mExpiryDate, mExpiryTime));
 
-					getContentResolver().insert(
-							DBConstant.Award_Columns.CONTENT_URI, values);
+					getContentResolver().insert(DBConstant.Award_Columns.CONTENT_URI, values);
 
 				}
 
@@ -1356,5 +1259,20 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 						mCroutonViewGroup, mErrorMessage, Style.ALERT);
 			}
 		}
+	}
+	
+	/**
+	 * Google Analytics v3
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
 	}
 }

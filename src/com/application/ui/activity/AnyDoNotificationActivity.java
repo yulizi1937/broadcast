@@ -53,6 +53,7 @@ import com.application.utils.NotificationHandle;
 import com.application.utils.NotificationsController;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -1196,5 +1197,20 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		
 		if(mCursor!=null)
 			mCursor.close();
+	}
+	
+	/**
+	 * Google Analytics v3
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
 	}
 }

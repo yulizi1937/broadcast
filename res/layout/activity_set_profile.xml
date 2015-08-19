@@ -58,7 +58,7 @@
                             android:layout_height="@dimen/edit_profile_progresswheel_height"
                             android:layout_gravity="center"
                             android:visibility="gone"
-                            progresswheel:matProg_barColor="@color/toolbar_background"
+                            progresswheel:matProg_barColor="@android:color/white"
                             progresswheel:matProg_progressIndeterminate="true" />
 
                         <android.support.v7.widget.AppCompatTextView

@@ -29,6 +29,7 @@ import com.application.ui.view.CirclePageIndicator;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.Utilities;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 
 /**
@@ -332,6 +333,21 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}
+	}
+	
+	/**
+	 * Google Analytics v3
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
 	}
 
 }

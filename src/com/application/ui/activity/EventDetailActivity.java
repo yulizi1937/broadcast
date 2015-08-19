@@ -6,9 +6,7 @@ package com.application.ui.activity;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import android.annotation.SuppressLint;
@@ -22,7 +20,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
@@ -38,14 +38,18 @@ import android.widget.ImageView;
 
 import com.application.sqlite.DBConstant;
 import com.application.ui.view.BottomSheet;
+import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.DownloadAsyncTask;
+import com.application.utils.FetchActionAsyncTask;
+import com.application.utils.DownloadAsyncTask.OnPostExecuteListener;
+import com.application.utils.FetchActionAsyncTask.OnPostExecuteTaskListener;
 import com.application.utils.FileLog;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
-import com.application.utils.DownloadAsyncTask.OnPostExecuteListener;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 
 /**
@@ -113,10 +117,10 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 	private String mContentFileLink;
 	private String mContentFilePath;
 	private String mContentFileSize;
+	private String mContentIsGoing;
 	
 	private boolean mContentIsSharing;
 	private boolean mContentIsLike;
-	private boolean mContentIsGoing;
 	private boolean mContentIsRead;
 
 	private boolean isFromNotification = false;
@@ -169,6 +173,27 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_event_detail, menu);
+		if (AndroidUtilities.isAboveGingerBread()) {
+			MenuItem refreshItem = menu
+					.findItem(R.id.action_refresh_actionable);
+			if (refreshItem != null) {
+				View mView = MenuItemCompat.getActionView(refreshItem);
+				MaterialRippleLayout mToolBarMenuRefreshLayout = (MaterialRippleLayout) mView
+						.findViewById(R.id.toolBarActionItemRefresh);
+				mToolBarMenuRefreshProgress = (ProgressWheel) mView
+						.findViewById(R.id.toolBarActionItemProgressWheel);
+				mToolBarMenuRefresh = (ImageView) mView
+						.findViewById(R.id.toolBarActionItemImageView);
+				mToolBarMenuRefreshLayout
+						.setOnClickListener(new View.OnClickListener() {
+							@Override
+							public void onClick(View mView) {
+								// TODO Auto-generated method stub
+								toolBarRefresh();
+							}
+						});
+			}
+		}
 		return true;
 	}
 
@@ -208,14 +233,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 	private void toolBarRefresh() {
 		mToolBarMenuRefresh.setVisibility(View.GONE);
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				mToolBarMenuRefresh.setVisibility(View.VISIBLE);
-				mToolBarMenuRefreshProgress.setVisibility(View.GONE);
-			}
-		}, 5000);
+		refreshFeedActionFromApi();
 	}
 
 	private void initUi() {
@@ -273,6 +291,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 	private void setUiListener() {
 		setMaterialRippleView();
 		setOnClickListener();
+		setSwipeRefreshListener();
 	}
 
 	private void setHtmlData() {
@@ -344,12 +363,13 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 				// TODO Auto-generated method stub
 				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.JOIN, "");
 				ContentValues mValues = new ContentValues();
-				mValues.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN, "true");
+				mValues.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN, "1");
 				getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, mValues, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId});
 				mEventAttendJoinBtn.setText(getResources().getString(R.string.accepted));
 				mEventAttendJoinBtn.setBackgroundResource(R.drawable.shape_button_green_fill);
 				mEventAttendDeclineBtn.setText(getResources().getString(R.string.fragment_event_detail_button_decline));
 				mEventAttendDeclineBtn.setBackgroundResource(R.drawable.shape_button_orange_border);
+				mEventAttendDeclineBtn.setTextColor(getResources().getColor(R.color.orange));
 			}
 		});
 		
@@ -359,14 +379,66 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 				// TODO Auto-generated method stub
 				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.DECL, "");
 				ContentValues mValues = new ContentValues();
-				mValues.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN, "false");
+				mValues.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN, "0");
 				getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, mValues, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId});
 				mEventAttendDeclineBtn.setText(getResources().getString(R.string.notgoing));
 				mEventAttendDeclineBtn.setBackgroundResource(R.drawable.shape_button_red_fill);
+				mEventAttendDeclineBtn.setTextColor(getResources().getColor(R.color.white));
 				mEventAttendJoinBtn.setText(getResources().getString(R.string.fragment_event_detail_button_join));
 				mEventAttendJoinBtn.setBackgroundResource(R.drawable.shape_button_orange_fill);
 			}
 		});
+	}
+	
+	@SuppressLint("NewApi") 
+	private void setSwipeRefreshListener() {
+		mSwipeRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				// TODO Auto-generated method stub
+				toolBarRefresh();
+			}
+		});
+	}
+	
+	private void refreshFeedActionFromApi(){
+		if(Utilities.isInternetConnected()){
+			if(!mSwipeRefreshLayout.isRefreshing()){
+				mSwipeRefreshLayout.setRefreshing(true);
+			}
+			FetchActionAsyncTask mFetchActionAsyncTask = new FetchActionAsyncTask(EventDetailActivity.this, mId, mCategory, TAG);
+			mFetchActionAsyncTask.execute();
+			mFetchActionAsyncTask.setOnPostExecuteListener(new OnPostExecuteTaskListener() {
+				@Override
+				public void onPostExecute(String mViewCount, String mLikeCount) {
+					// TODO Auto-generated method stub
+					updateFeedActionToDBAndUi(mViewCount, mLikeCount);
+					mSwipeRefreshLayout.setRefreshing(false);
+					mToolBarMenuRefresh.setVisibility(View.VISIBLE);
+					mToolBarMenuRefreshProgress.setVisibility(View.GONE);
+				}
+			});
+		}
+	}
+	
+	private void updateFeedActionToDBAndUi(String mViewCount, String mLikeCount){
+		if(mViewCount!=null){
+			ContentValues mValues = new ContentValues();
+			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.EVENT)){
+				mValues.put(DBConstant.Event_Columns.COLUMN_EVENT_READ_NO, mViewCount);
+				getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, mValues, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId});
+			}
+			mEventViewTv.setText(mViewCount);
+		}
+		
+		if(mLikeCount!=null){
+			ContentValues mValues = new ContentValues();
+			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.EVENT)){
+				mValues.put(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO, mViewCount);
+				getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, mValues, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId});
+			}
+			mEventLikeTv.setText(mLikeCount);
+		}
 	}
 	
 	private void getIntentData(){
@@ -404,7 +476,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 			mContentDesc = mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_DESC));
 			mContentIsLike = Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_IS_LIKE)));
 			mContentIsSharing =  Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_IS_SHARING)));
-			mContentIsGoing =  Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN)));
+			mContentIsGoing =  mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN));
 			mContentLikeCount = mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO));
 			mContentViewCount = mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_READ_NO));
 			mContentBy = mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_BY));
@@ -454,12 +526,13 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 				mEventLikeTv.setTextColor(getResources().getColor(R.color.red));
 			}
 			
-			if(mContentIsGoing){
+			if(mContentIsGoing.equalsIgnoreCase("1")){
 				mEventAttendJoinBtn.setText(getResources().getString(R.string.going));
 				mEventAttendJoinBtn.setBackgroundResource(R.drawable.shape_button_green_fill);
-			}else{
+			}else if(mContentIsGoing.equalsIgnoreCase("0")){
 				mEventAttendDeclineBtn.setText(getResources().getString(R.string.notgoing));
 				mEventAttendDeclineBtn.setBackgroundResource(R.drawable.shape_button_red_fill);
+				mEventAttendDeclineBtn.setTextColor(getResources().getColor(R.color.white));
 			}
 			
 			
@@ -594,6 +667,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 	@Deprecated
 	protected Dialog onCreateDialog(int id, Bundle args) {
 		// TODO Auto-generated method stub
+		UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.SHARE, "");
 		return getShareAction();
 	}
 
@@ -623,5 +697,19 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 				Color.parseColor(AppConstants.COLOR.MOBCAST_GREEN),
 				Color.parseColor(AppConstants.COLOR.MOBCAST_BLUE));
 	}
-	
+
+	/**
+	 * Google Analytics v3
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
+	}
 }

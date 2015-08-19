@@ -213,14 +213,18 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 				((EventViewHolder)viewHolder).mEventLikeCountTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
 			}
 			
-			if(!mObj.isGoingToAttend()){
+			if(mObj.getIsGoingToAttend().equalsIgnoreCase("0")){
 				((EventViewHolder)viewHolder).mEventIsGoingTextTv.setTextColor(mContext.getResources().getColor(R.color.red));
 				((EventViewHolder)viewHolder).mEventIsGoingTextTv.setText(mContext.getResources().getString(R.string.notgoing));
 				((EventViewHolder)viewHolder).mEventIsGoingTextIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_event_declined));
-			}else{
+			}else if(mObj.getIsGoingToAttend().equalsIgnoreCase("1")){
 				((EventViewHolder)viewHolder).mEventIsGoingTextTv.setTextColor(mContext.getResources().getColor(R.color.green));
 				((EventViewHolder)viewHolder).mEventIsGoingTextTv.setText(mContext.getResources().getString(R.string.accepted));
 				((EventViewHolder)viewHolder).mEventIsGoingTextIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_event_accepted));				
+			}else{
+				((EventViewHolder)viewHolder).mEventIsGoingTextTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
+				((EventViewHolder)viewHolder).mEventIsGoingTextTv.setText(mContext.getResources().getString(R.string.maybe));
+				((EventViewHolder)viewHolder).mEventIsGoingTextIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_item_feedback_question));
 			}
 			
 		}catch(Exception e){

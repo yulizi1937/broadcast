@@ -56,6 +56,7 @@ import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.application.utils.DownloadAsyncTask.OnPostExecuteListener;
 import com.application.utils.FetchActionAsyncTask.OnPostExecuteTaskListener;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 
 /**
@@ -99,6 +100,10 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	int mProgress = 0;
 	int mTotalDuration = 0;
 	Handler mHandler;
+	
+	private long mReportStart = 0;
+	private long mReportStop = 0;
+	private long mReportDuration = 0;
 	
 	private MediaPlayer mPlayer;
 	private Thread mSeekBarThread;
@@ -295,6 +300,8 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 		mAudioNewsLinkTv = (AppCompatTextView)findViewById(R.id.fragmentAudioDetailLinkTv);
 		
 		mAudioNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentAudioDetailViewSourceLayout);
+		mPlayIv.setEnabled(false);
+		mDiscreteSeekBar.setEnabled(false);
 	}
 	
 	private void getIntentData(){
@@ -442,7 +449,9 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 			if(checkIfFileExists(mContentFilePath)){
 				mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
 				if(!TextUtils.isEmpty(mContentFilePath)){
-					initMediaPlayer(mContentFilePath);	
+					initMediaPlayer(mContentFilePath);
+					mPlayIv.setEnabled(true);
+					mDiscreteSeekBar.setEnabled(true);
 				}
 			}else{
 				downloadFileInBackground();
@@ -462,23 +471,31 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void downloadFileInBackground(){
-		DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
-				AudioDetailActivity.this, false, true,
-				mContentFileLink, mContentFilePath,
-				AppConstants.TYPE.AUDIO, Long.parseLong(mContentFileSize), TAG);
-		mDownloadAsyncTask.execute();
-		mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
-			@Override
-			public void onPostExecute(boolean isDownloaded) {
-				// TODO Auto-generated method stub
-				if(isDownloaded){
-					mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
-					if(!TextUtils.isEmpty(mContentFilePath)){
-						initMediaPlayer(mContentFilePath);
-					}	
+		mPlayIv.setEnabled(false);
+		mDiscreteSeekBar.setEnabled(false);
+		if(Utilities.isInternetConnected()){
+			DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
+					AudioDetailActivity.this, false, true,
+					mContentFileLink, mContentFilePath,
+					AppConstants.TYPE.AUDIO, Long.parseLong(mContentFileSize), TAG);
+			mDownloadAsyncTask.execute();
+			mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
+				@Override
+				public void onPostExecute(boolean isDownloaded) {
+					// TODO Auto-generated method stub
+					if(isDownloaded){
+						mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
+						if(!TextUtils.isEmpty(mContentFilePath)){
+							initMediaPlayer(mContentFilePath);
+							mPlayIv.setEnabled(true);
+							mDiscreteSeekBar.setEnabled(true);
+						}	
+					}
 				}
-			}
-		});
+			});	
+		}else{
+			Utilities.showCrouton(AudioDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.file_not_available), Style.ALERT);
+		}
 	}
 
 	private void updateReadInDb(){
@@ -640,9 +657,10 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 						mPlayer.seekTo(ApplicationLoader.getPreferences().getAudioPlayPosition());
 						mThreadSafe.unpause();
 					}else{
-						runOnSeekBarThread();	
+						runOnSeekBarThread();
 					}
 					mPlayer.start();
+					mReportStart = System.currentTimeMillis();
 				}else{
 					Log.i(TAG, "pause");
 					mPlayIv.setImageResource(R.drawable.ic_play_audio);
@@ -650,6 +668,9 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 					isPlaying = false;
 					mPlayer.pause();
 					mThreadSafe.pause();
+					mReportStop = System.currentTimeMillis();
+					mReportDuration += mReportStop - mReportStart;
+					UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, Utilities.getTimeFromMilliSeconds(mReportDuration));
 				}
 			}
 		});
@@ -729,6 +750,9 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
 				mValues.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_READ_NO, mViewCount);
 				getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, mValues, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+			}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+				mValues.put(DBConstant.Training_Columns.COLUMN_TRAINING_READ_NO, mViewCount);
+				getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, mValues, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 			}
 			mAudioViewTv.setText(mViewCount);
 		}
@@ -738,6 +762,9 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
 				mValues.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, mViewCount);
 				getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, mValues, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+			}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+				mValues.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, mViewCount);
+				getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, mValues, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 			}
 			mAudioLikeTv.setText(mLikeCount);
 		}
@@ -811,6 +838,8 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void downloadFileInBackgroundForDiffLanguage(){
+		mPlayIv.setEnabled(false);
+		mDiscreteSeekBar.setEnabled(false);
 		if(Utilities.isInternetConnected()){
 			DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
 					AudioDetailActivity.this, false, true,
@@ -825,6 +854,8 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 						mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
 						if(!TextUtils.isEmpty(mContentFilePath)){
 							initMediaPlayer(mContentFilePath);
+							mPlayIv.setEnabled(true);
+							mDiscreteSeekBar.setEnabled(true);
 							updateDBWithDiffLanguageAsDefault();
 							updateLanguageChip();
 						}	
@@ -878,6 +909,9 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 		isPlaying = false;
 		mDiscreteSeekBar.setProgress(0);
 		ApplicationLoader.getPreferences().setAudioPlayPosition(-1);
+		mReportStop = System.currentTimeMillis();
+		mReportDuration += mReportStop - mReportStart;
+		UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, Utilities.getTimeFromMilliSeconds(mReportDuration));
 	}
 	
 	private void runOnSeekBarThread(){
@@ -962,6 +996,7 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	@Deprecated
 	protected Dialog onCreateDialog(int id, Bundle args) {
 		// TODO Auto-generated method stub
+		UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.SHARE, "");
 		return getShareAction();
 	}
 	
@@ -984,5 +1019,20 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 				Color.parseColor(AppConstants.COLOR.MOBCAST_PURPLE),
 				Color.parseColor(AppConstants.COLOR.MOBCAST_GREEN),
 				Color.parseColor(AppConstants.COLOR.MOBCAST_BLUE));
+	}
+	
+	/**
+	 * Google Analytics v3
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
 	}
 }

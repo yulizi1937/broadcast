@@ -30,6 +30,7 @@ import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.FileLog;
 import com.application.utils.Utilities;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 
 /**
@@ -167,5 +168,20 @@ public class LanguageActivity extends SwipeBackBaseActivity {
             FileLog.e("tmessages", e);
             return null;
         }
+	}
+	
+	/**
+	 * Google Analytics v3
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
 	}
 }

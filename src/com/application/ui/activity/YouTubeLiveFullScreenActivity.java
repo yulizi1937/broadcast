@@ -6,6 +6,7 @@ package com.application.ui.activity;
 import android.os.Bundle;
 
 import com.application.utils.AppConstants;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.mobcast.R;
@@ -61,6 +62,21 @@ public class YouTubeLiveFullScreenActivity extends
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+	}
+	
+	/**
+	 * Google Analytics v3
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
 	}
 
 }

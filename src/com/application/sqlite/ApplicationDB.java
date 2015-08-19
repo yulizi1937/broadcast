@@ -69,8 +69,8 @@ public class ApplicationDB extends ContentProvider{
 			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE +" TEXT ," );
 			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME +" TEXT ," );
 			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TYPE +" TEXT ," );
-			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE_FORMATTED +" TEXT ," );
-			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME_FORMATTED +" TEXT ," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE_FORMATTED +" INTEGER ," );
+			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME_FORMATTED +" INTEGER ," );
 			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ +" NUMBER DEFAULT 0," );
 			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARING +" NUMBER DEFAULT 0," );
 			strBuilderMobcast.append(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_SHARE +" NUMBER DEFAULT 0," );
@@ -104,8 +104,8 @@ public class ApplicationDB extends ContentProvider{
 			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_DATE +" TEXT ," );
 			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_TIME +" TEXT ," );
 			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_TYPE +" TEXT ," );
-			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_DATE_FORMATTED +" TEXT ," );
-			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_TIME_FORMATTED +" TEXT ," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_DATE_FORMATTED +" INTEGER ," );
+			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_TIME_FORMATTED +" INTEGER ," );
 			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ +" NUMBER DEFAULT 0," );
 			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARING +" NUMBER DEFAULT 0," );
 			strBuilderTraining.append(DBConstant.Training_Columns.COLUMN_TRAINING_IS_SHARE +" NUMBER DEFAULT 0," );
@@ -180,7 +180,7 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_MAYBE_NO +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_READ_NO +" TEXT ," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN +" NUMBER DEFAULT 0," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN +" NUMBER DEFAULT 2," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_IS_READ +" NUMBER DEFAULT 0," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_IS_SHARING +" NUMBER DEFAULT 0," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_IS_CALENDAR +" NUMBER DEFAULT 0," );
@@ -195,7 +195,7 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_DATE_FORMATTED +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_EXPIRY_DATE +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_EXPIRY_TIME +" TEXT ," );
-		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_EXPIRY_DATE_FORMATTED +" TEXT ," );
+		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_EXPIRY_DATE_FORMATTED +" INTEGER ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_START_DATE_FORMATTED +" TEXT ," );
 		strBuilderEvent.append(DBConstant.Event_Columns.COLUMN_EVENT_END_DATE_FORMATTED +" TEXT" );
 		strBuilderEvent.append(')');
@@ -237,7 +237,7 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_TIME +" TEXT ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_DATE_FORMATTED +" TEXT ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE_FORMATTED +" TEXT ," );
-		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_DATE_FORMATTED +" TEXT ," );
+		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_DATE_FORMATTED +" INTEGER ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_TIME +" TEXT ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_EXPIRY_DATE +" TEXT ," );
 		strBuilderAward.append(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVER_MOBILE +" NUMBER DEFAULT 0" );

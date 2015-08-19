@@ -30,6 +30,7 @@ import com.application.utils.ApplicationLoader;
 import com.application.utils.BuildVars;
 import com.application.utils.FileLog;
 import com.application.utils.Utilities;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
@@ -229,5 +230,20 @@ public class SplashActivity extends AppCompatActivity {
         	FileLog.e(TAG, e.toString());
         }
     }
+	
+	/**
+	 * Google Analytics
+	 */
+	 @Override
+	  public void onStart() {
+	    super.onStart();
+	    EasyTracker.getInstance(this).activityStart(this);
+	  }
+
+	  @Override
+	  public void onStop() {
+	    super.onStop();
+	    EasyTracker.getInstance(this).activityStop(this);
+	  }
 
 }

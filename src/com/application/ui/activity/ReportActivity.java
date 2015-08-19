@@ -10,6 +10,8 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
@@ -43,7 +45,11 @@ import com.application.utils.Style;
 import com.application.utils.Utilities;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.squareup.okhttp.OkHttpClient;
 
 /**
@@ -73,6 +79,8 @@ public class ReportActivity extends SwipeBackBaseActivity {
 	private boolean isValidSubmit = false;
 
 	private Intent mIntent;
+	
+	private ImageLoader mImageLoader;
 
 	private String mSelectedOption;
 
@@ -84,6 +92,7 @@ public class ReportActivity extends SwipeBackBaseActivity {
 		initToolBar();
 		initUi();
 		setUiListener();
+		setDataFromPreferences();
 		setAnimation();
 		getIntentData();
 	}
@@ -200,6 +209,43 @@ public class ReportActivity extends SwipeBackBaseActivity {
 				}
 			}
 		});
+	}
+	
+	private void setDataFromPreferences(){
+		final String mProfileImagePath = Utilities.getFilePath(AppConstants.TYPE.PROFILE, false, Utilities.getFileName(ApplicationLoader.getPreferences().getUserProfileImageLink()));
+		if(!TextUtils.isEmpty(ApplicationLoader.getPreferences().getUserProfileImageLink())){
+			ApplicationLoader.getPreferences().setUserProfileImagePath(mProfileImagePath);
+			if(Utilities.checkIfFileExists(mProfileImagePath)){
+				mReportProfileCircleImageView.setImageURI(Uri.parse(mProfileImagePath));
+			}else{
+				mImageLoader = ApplicationLoader.getUILImageLoader();
+				mImageLoader.displayImage(ApplicationLoader.getPreferences().getUserProfileImageLink(), mReportProfileCircleImageView, new ImageLoadingListener() {
+					@Override
+					public void onLoadingStarted(String arg0, View arg1) {
+						// TODO Auto-generated method stub
+						mReportProfileCircleImageView.setVisibility(View.GONE);
+					}
+					
+					@Override
+					public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+						// TODO Auto-generated method stub
+						mReportProfileCircleImageView.setVisibility(View.VISIBLE);
+					}
+					
+					@Override
+					public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
+						// TODO Auto-generated method stub
+						mReportProfileCircleImageView.setVisibility(View.VISIBLE);
+					}
+					
+					@Override
+					public void onLoadingCancelled(String arg0, View arg1) {
+						// TODO Auto-generated method stub
+						mReportProfileCircleImageView.setVisibility(View.VISIBLE);
+					}
+				});
+			}
+		}
 	}
 
 	@Override
@@ -340,5 +386,20 @@ public class ReportActivity extends SwipeBackBaseActivity {
 						mErrorMessage, Style.ALERT);
 			}
 		}
+	}
+	
+	/**
+	 * Google Analytics v3
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
 	}
 }

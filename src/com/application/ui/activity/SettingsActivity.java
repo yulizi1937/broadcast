@@ -736,20 +736,17 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	}
 	
 	/**
-	 * Google Analytics
+	 * Google Analytics v3
 	 */
-	 @Override
-	  public void onStart() {
-	    super.onStart();
-	    EasyTracker.getInstance(this).activityStart(this);  // Add this method.
-	    GAServiceManager.getInstance().dispatchLocalHits();
-	  }
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
 
-	  @Override
-	  public void onStop() {
-	    super.onStop();
-	    EasyTracker.getInstance(this).activityStop(this);  // Add this method.
-	    GAServiceManager.getInstance().dispatchLocalHits();
-	  }
-	
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
+	}
 }

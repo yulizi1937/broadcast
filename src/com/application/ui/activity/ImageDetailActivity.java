@@ -48,6 +48,7 @@ import com.application.utils.FileLog;
 import com.application.utils.Style;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 
 /**
@@ -606,6 +607,9 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
 				mValues.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_READ_NO, mViewCount);
 				getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, mValues, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+			}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+				mValues.put(DBConstant.Training_Columns.COLUMN_TRAINING_READ_NO, mViewCount);
+				getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, mValues, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 			}
 			mImageViewTv.setText(mViewCount);
 		}
@@ -615,6 +619,9 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
 				mValues.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, mViewCount);
 				getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, mValues, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+			}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+				mValues.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, mViewCount);
+				getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, mValues, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 			}
 			mImageLikeTv.setText(mLikeCount);
 		}
@@ -689,6 +696,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 	@Deprecated
 	protected Dialog onCreateDialog(int id, Bundle args) {
 		// TODO Auto-generated method stub
+		UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.SHARE, "");
 		return getShareAction();
 	}
 
@@ -713,5 +721,20 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 				Color.parseColor(AppConstants.COLOR.MOBCAST_PURPLE),
 				Color.parseColor(AppConstants.COLOR.MOBCAST_GREEN),
 				Color.parseColor(AppConstants.COLOR.MOBCAST_BLUE));
+	}
+	
+	/**
+	 * Google Analytics v3
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
 	}
 }

@@ -23,6 +23,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
@@ -162,6 +163,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		super.onResume();
 		checkReadFromDBAndUpdateToObj();
 		setUiListener();
+		ApplicationLoader.trackScreenViewV3(ApplicationLoader.getApplication().getResources().getString(R.string.com_application_ui_fragment_MobcastRecyclerViewFragment));
 	}
 
 	private void setUiListener() {
@@ -235,6 +237,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	}
 
 	private void checkDataInAdapter() {
+		checkExpiredMobcastAndDeleteFromDB();
 		Cursor mCursor = getActivity().getContentResolver().query(
 				DBConstant.Mobcast_Columns.CONTENT_URI, null, null, null,
 				DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE_FORMATTED + " DESC");
@@ -242,6 +245,8 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 			addMobcastObjectListFromDBToBeans(mCursor, false, false);
 			if (mArrayListMobcast.size() > 0) {
 				setRecyclerAdapter();
+			} else {
+				setEmptyData();
 			}
 		} else {
 			setEmptyData();
@@ -295,6 +300,11 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	    }
 	}
 	
+	private void checkExpiredMobcastAndDeleteFromDB(){
+		long mCurrentTimeMillis = System.currentTimeMillis();
+		getActivity().getContentResolver().delete(DBConstant.Mobcast_Columns.CONTENT_URI, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME_FORMATTED + "<?", new String[]{String.valueOf(mCurrentTimeMillis)});
+	}
+	
 	
 	private void addMobcastObjectListFromDBToBeans(Cursor mCursor, boolean isFromBroadCastReceiver, boolean isToAddOldData){
 		int mIntMobcastId = mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID);
@@ -337,6 +347,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 				mArrayListMobcast = new ArrayList<Mobcast>();	
 			}
 		}
+		
 		mCursor.moveToFirst();
 		do {
 			Mobcast  Obj = new Mobcast();
@@ -577,7 +588,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 //		position-=1;
 		if (position >= 0 && position < mArrayListMobcast.size()) {
 			if(mArrayListMobcast!=null && mArrayListMobcast.size() > 0){
-				Cursor mCursor = getActivity().getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, new String[]{DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO}, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mArrayListMobcast.get(position).getmId()}, null);
+				Cursor mCursor = getActivity().getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, new String[]{DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO,DBConstant.Mobcast_Columns.COLUMN_MOBCAST_READ_NO}, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mArrayListMobcast.get(position).getmId()}, null);
 				
 				if(mCursor!=null && mCursor.getCount() >0){
 					mCursor.moveToFirst();
@@ -591,6 +602,10 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 						mArrayListMobcast.get(position).setmLikeCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO)));
 						isToNotify = true;
 					}
+					
+					mArrayListMobcast.get(position).setmLikeCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO)));
+					mArrayListMobcast.get(position).setmViewCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_READ_NO)));
+					isToNotify = true;
 					if(isToNotify){
 						mRecyclerView.getAdapter().notifyDataSetChanged();
 					}

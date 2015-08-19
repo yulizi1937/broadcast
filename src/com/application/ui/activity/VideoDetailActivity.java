@@ -57,6 +57,7 @@ import com.application.utils.FileLog;
 import com.application.utils.Style;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 
 /**
@@ -111,6 +112,10 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 
 	private int mProgress;
 	private int mTotalDuration;
+	
+	private long mReportStart = 0;
+	private long mReportStop = 0;
+	private long mReportDuration = 0;
 	
 	private boolean isVideoPause = false;
 
@@ -334,7 +339,8 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		mVideoNewsLinkTv = (AppCompatTextView)findViewById(R.id.fragmentVideoDetailLinkTv);
 		
 		mVideoNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentVideoDetailViewSourceLayout);
-		
+
+		mVideoPlayIv.setEnabled(false);
 	}
 
 	private void getIntentData(){
@@ -487,6 +493,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 				mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
 				if(!TextUtils.isEmpty(mContentFilePath)){
 					initVideoPlayer(mContentFilePath);	
+					mVideoPlayIv.setEnabled(true);
 				}
 			}else{
 				downloadFileInBackground();
@@ -556,6 +563,9 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 						mVideoDescFrameLayout.setVisibility(View.VISIBLE);
 						mVideoCoverIv.setVisibility(View.VISIBLE);
 						mVideoPlayIv.setVisibility(View.VISIBLE);
+						mReportStop = System.currentTimeMillis();
+						mReportDuration += mReportStop - mReportStart;
+						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, Utilities.getTimeFromMilliSeconds(mReportDuration));
 					}
 				});
 				
@@ -712,7 +722,8 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 				if(!isVideoPause){
 					mProgress = 0;
 					UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, "");
-					playVideo();	
+					playVideo();
+					mReportStart = System.currentTimeMillis();
 				}else{
 					mVideoView.requestFocus();
 					mVideoView.seekTo(ApplicationLoader.getPreferences().getVideoViewPosition());
@@ -722,6 +733,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 					mVideoPauseIv.setVisibility(View.VISIBLE);
 //					runOnSeekBarThread();
 					mThreadSafe.unpause();
+					mReportStart = System.currentTimeMillis();
 				}
 			}
 		});
@@ -735,10 +747,13 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 				mVideoPauseIv.setVisibility(View.GONE);
 				mVideoPlayIv.setVisibility(View.VISIBLE);
 				isVideoPause = true;
+				mReportStop = System.currentTimeMillis();
+				mReportDuration += mReportStop - mReportStart;
 				try {
 					ApplicationLoader.getPreferences().setVideoViewPosition(mVideoView.getCurrentPosition());
 //					mSeekBarThread.interrupt();
 					mThreadSafe.pause();
+					UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, Utilities.getTimeFromMilliSeconds(mReportDuration));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -849,6 +864,9 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
 				mValues.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_READ_NO, mViewCount);
 				getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, mValues, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+			}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+				mValues.put(DBConstant.Training_Columns.COLUMN_TRAINING_READ_NO, mViewCount);
+				getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, mValues, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 			}
 			mVideoViewTv.setText(mViewCount);
 		}
@@ -858,6 +876,9 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
 				mValues.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, mViewCount);
 				getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, mValues, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+			}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+				mValues.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, mViewCount);
+				getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, mValues, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 			}
 			mVideoLikeTv.setText(mLikeCount);
 		}
@@ -945,6 +966,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	
 	private void downloadFileInBackground(){
 		try{
+			mVideoPlayIv.setEnabled(false);
 			if(Utilities.isInternetConnected()){
 				DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
 						VideoDetailActivity.this, false, true,
@@ -959,6 +981,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 							mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
 							if(!TextUtils.isEmpty(mContentFilePath)){
 								initVideoPlayer(mContentFilePath);
+								mVideoPlayIv.setEnabled(true);
 								Utilities.downloadQueue.postRunnable(new Runnable() {
 									@Override
 									public void run() {
@@ -971,7 +994,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 					}
 				});
 			}else{
-				Utilities.showCrouton(VideoDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.internet_unavailable), Style.ALERT);
+				Utilities.showCrouton(VideoDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.file_not_available), Style.ALERT);
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
@@ -1014,6 +1037,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void downloadFileInBackgroundForDiffLanguage(){
+		mVideoPlayIv.setEnabled(false);
 		if(Utilities.isInternetConnected()){
 			DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
 					VideoDetailActivity.this, false, true,
@@ -1028,6 +1052,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 						mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
 						if(!TextUtils.isEmpty(mContentFilePath)){
 							initVideoPlayer(mContentFilePath);
+							mVideoPlayIv.setEnabled(true);
 							updateDBWithDiffLanguageAsDefault();
 							updateLanguageChip();
 							Utilities.downloadQueue.postRunnable(new Runnable() {
@@ -1104,6 +1129,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	@Deprecated
 	protected Dialog onCreateDialog(int id, Bundle args) {
 		// TODO Auto-generated method stub
+		UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.SHARE, "");
 		return getShareAction();
 	}
 
@@ -1128,5 +1154,20 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 				Color.parseColor(AppConstants.COLOR.MOBCAST_PURPLE),
 				Color.parseColor(AppConstants.COLOR.MOBCAST_GREEN),
 				Color.parseColor(AppConstants.COLOR.MOBCAST_BLUE));
+	}
+	
+	/**
+	 * Google Analytics v3
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
 	}
 }

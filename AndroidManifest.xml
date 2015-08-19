@@ -155,12 +155,7 @@
             android:configChanges="locale|orientation" />
         <activity
             android:name="com.application.ui.activity.TextDetailActivity"
-            android:configChanges="locale|orientation"
-            android:parentActivityName="com.application.ui.activity.MotherActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.application.ui.activity.MotherActivity" />
-        </activity>
+            android:configChanges="locale|orientation" />
         <activity
             android:name="com.application.ui.activity.PdfDetailActivity"
             android:configChanges="locale|orientation" />
@@ -229,10 +224,11 @@
         <activity
             android:name="com.application.ui.activity.RecruitmentDetailActivity"
             android:configChanges="locale|orientation" />
-        
+
         <!-- Notification ActionHandler Receiver -->
-		<receiver android:name="com.application.receiver.NotificationActionAwardReceiver"/>
-		<receiver android:name="com.application.receiver.NotificationActionEventReceiver"/>
+        <receiver android:name="com.application.receiver.NotificationActionAwardReceiver" />
+        <receiver android:name="com.application.receiver.NotificationActionEventAcceptReceiver" />
+        <receiver android:name="com.application.receiver.NotificationActionEventDeclineReceiver" />
         <!-- GCM Receiver -->
         <receiver
             android:name="com.application.receiver.GcmBroadcastReceiver"

@@ -852,8 +852,6 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
         .contentColor(Utilities.getAppColor())
         .positiveText(getResources().getString(R.string.update))
         .positiveColor(Utilities.getAppColor())
-        .negativeText(getResources().getString(R.string.sample_fragment_settings_dialog_language_negative))
-        .negativeColor(Utilities.getAppColor())
         .cancelable(false)
         .callback(new MaterialDialog.ButtonCallback() {
             @TargetApi(Build.VERSION_CODES.HONEYCOMB) @Override
@@ -862,10 +860,6 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 				Intent mIntent = new Intent(Intent.ACTION_VIEW);
 				mIntent.setData(Uri.parse(AppConstants.mStoreLink));
 				startActivity(mIntent);
-            }
-            @TargetApi(Build.VERSION_CODES.HONEYCOMB) @Override
-            public void onNegative(MaterialDialog dialog) {
-            	dialog.dismiss();
             }
         })
         .show();
@@ -1126,17 +1120,17 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	}
 	
 	/**
-	 * Google Analytics
+	 * Google Analytics v3
 	 */
-	 @Override
-	  public void onStart() {
-	    super.onStart();
-	    EasyTracker.getInstance(this).activityStart(this);
-	  }
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
 
-	  @Override
-	  public void onStop() {
-	    super.onStop();
-	    EasyTracker.getInstance(this).activityStop(this);
-	  }
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
+	}
 }

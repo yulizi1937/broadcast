@@ -58,6 +58,7 @@ import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
 import com.application.utils.Utilities;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -229,39 +230,44 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 		mQuestionEv.setText(ApplicationLoader.getPreferences().getUserFavouriteQuestion());
 		mAnswerEv.setText(ApplicationLoader.getPreferences().getUserFavouriteAnswer());
 		
-		mImageLoader = ApplicationLoader.getUILImageLoader();
+		final String mProfileImagePath = Utilities.getFilePath(AppConstants.TYPE.PROFILE, false, Utilities.getFileName(ApplicationLoader.getPreferences().getUserProfileImageLink()));
 		if(!TextUtils.isEmpty(ApplicationLoader.getPreferences().getUserProfileImageLink())){
-			mImageLoader.displayImage(ApplicationLoader.getPreferences().getUserProfileImageLink(), mProfileCirleIv, new ImageLoadingListener() {
-				@Override
-				public void onLoadingStarted(String arg0, View arg1) {
-					// TODO Auto-generated method stub
-					mProgressWheel.setVisibility(View.VISIBLE);
-					mProfileCirleIv.setVisibility(View.GONE);
-				}
-				
-				@Override
-				public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
-					// TODO Auto-generated method stub
-					mProgressWheel.setVisibility(View.GONE);
-					mProfileCirleIv.setVisibility(View.VISIBLE);
-				}
-				
-				@Override
-				public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
-					// TODO Auto-generated method stub
-					mProgressWheel.setVisibility(View.GONE);
-					mProfileCirleIv.setVisibility(View.VISIBLE);
-				}
-				
-				@Override
-				public void onLoadingCancelled(String arg0, View arg1) {
-					// TODO Auto-generated method stub
-					mProgressWheel.setVisibility(View.GONE);
-					mProfileCirleIv.setVisibility(View.VISIBLE);
-				}
-			});	
+			ApplicationLoader.getPreferences().setUserProfileImagePath(mProfileImagePath);
+			if(Utilities.checkIfFileExists(mProfileImagePath)){
+				mProfileCirleIv.setImageURI(Uri.parse(mProfileImagePath));
+			}else{
+				mImageLoader = ApplicationLoader.getUILImageLoader();
+				mImageLoader.displayImage(ApplicationLoader.getPreferences().getUserProfileImageLink(), mProfileCirleIv, new ImageLoadingListener() {
+					@Override
+					public void onLoadingStarted(String arg0, View arg1) {
+						// TODO Auto-generated method stub
+						mProgressWheel.setVisibility(View.VISIBLE);
+						mProfileCirleIv.setVisibility(View.GONE);
+					}
+					
+					@Override
+					public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+						// TODO Auto-generated method stub
+						mProgressWheel.setVisibility(View.GONE);
+						mProfileCirleIv.setVisibility(View.VISIBLE);
+					}
+					
+					@Override
+					public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
+						// TODO Auto-generated method stub
+						mProgressWheel.setVisibility(View.GONE);
+						mProfileCirleIv.setVisibility(View.VISIBLE);
+					}
+					
+					@Override
+					public void onLoadingCancelled(String arg0, View arg1) {
+						// TODO Auto-generated method stub
+						mProgressWheel.setVisibility(View.GONE);
+						mProfileCirleIv.setVisibility(View.VISIBLE);
+					}
+				});
+			}
 		}
-		
 	}
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB) private void setClickListener(){
@@ -713,5 +719,20 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 			}
 		}
 	}
+	
+	/**
+	 * Google Analytics
+	 */
+	 @Override
+	  public void onStart() {
+	    super.onStart();
+	    EasyTracker.getInstance(this).activityStart(this);
+	  }
+
+	  @Override
+	  public void onStop() {
+	    super.onStop();
+	    EasyTracker.getInstance(this).activityStop(this);
+	  }
 }
 

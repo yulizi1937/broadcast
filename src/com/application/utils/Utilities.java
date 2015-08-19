@@ -623,9 +623,8 @@ public class Utilities {
 	public static boolean isContentDateSameAsToday(String mDate) {
 		try {
 			SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-			Date todayDate = dateFormatter.parse(dateFormatter
-					.format(new Date()));
-			Date contentDate = dateFormatter.parse(dateFormatter.format(mDate));
+			Date todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
+			Date contentDate = dateFormatter.parse(mDate);
 
 			if (todayDate.getYear() == contentDate.getYear()) {
 				if (todayDate.getMonth() == contentDate.getMonth()) {

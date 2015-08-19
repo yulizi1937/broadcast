@@ -27,6 +27,7 @@
     <string name="developer_message">You are developer! Please click it one more time.</string>
     <string name="update">Update</string>
     <string name="capture_validation">Please add images!</string>
+    <string name="file_not_available">File not available. Please press back and open it again! Make sure internet is available</string>
     <string name="congratulate_message">You just congratulated </string>
     <string name="congratulate_message_validation">You already congratulated  </string>
     <string name="logout_content_message">Logging out will delete all your content from the app and files too.</string>
@@ -104,6 +105,7 @@
     <string name="days_left">left</string>
     <string name="going"> going</string>
     <string name="accepted"> Accepted</string>
+    <string name="maybe"> May be</string>
     <string name="accept"> Accept</string>
     <string name="notgoing"> Decline</string>
     <string name="congratulated_text"> people congratulated!</string>
