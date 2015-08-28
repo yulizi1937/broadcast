@@ -41,6 +41,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.application.beans.Mobcast;
 import com.application.beans.Training;
 import com.application.beans.TrainingFileInfo;
 import com.application.sqlite.DBConstant;
@@ -56,8 +57,8 @@ import com.application.ui.activity.VideoDetailActivity;
 import com.application.ui.activity.XlsDetailActivity;
 import com.application.ui.activity.YouTubeLiveStreamActivity;
 import com.application.ui.adapter.TrainingRecyclerAdapter;
-import com.application.ui.adapter.TrainingRecyclerAdapter.OnItemClickListener;
-import com.application.ui.adapter.TrainingRecyclerAdapter.OnItemLongClickListener;
+import com.application.ui.adapter.TrainingRecyclerAdapter.OnItemClickListenerT;
+import com.application.ui.adapter.TrainingRecyclerAdapter.OnItemLongClickListenerT;
 import com.application.ui.materialdialog.MaterialDialog;
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.HorizontalDividerItemDecoration;
@@ -67,6 +68,7 @@ import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.BuildVars;
+import com.application.utils.FetchFeedActionAsyncTask;
 import com.application.utils.FileLog;
 import com.application.utils.JSONRequestBuilder;
 import com.application.utils.ObservableScrollViewCallbacks;
@@ -75,6 +77,7 @@ import com.application.utils.RetroFitClient;
 import com.application.utils.ScrollUtils;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
+import com.application.utils.FetchFeedActionAsyncTask.OnPostExecuteFeedActionTaskListener;
 import com.mobcast.R;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -492,7 +495,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 
 	private void setRecyclerAdapterListener() {
 		if(mAdapter!=null){
-			mAdapter.setOnItemClickListener(new OnItemClickListener() {
+			mAdapter.setOnItemClickListener(new OnItemClickListenerT() {
 				@Override
 				public void onItemClick(View view, int position) {
 					// TODO Auto-generated method stub
@@ -586,7 +589,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 		}
 		
 		if(mAdapter!=null){
-			mAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
+			mAdapter.setOnItemLongClickListener(new OnItemLongClickListenerT() {
 				@Override
 				public void onItemLongClick(View view, int position) {
 					// TODO Auto-generated method stub
@@ -606,7 +609,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 //		position-=1;
 		if (position >= 0 && position < mArrayListTraining.size()) {
 			if(mArrayListTraining!=null && mArrayListTraining.size() > 0){
-				Cursor mCursor = getActivity().getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, new String[]{DBConstant.Training_Columns.COLUMN_TRAINING_ID, DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE, DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, DBConstant.Training_Columns.COLUMN_TRAINING_READ_NO}, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mArrayListTraining.get(position).getmId()}, null);
+				Cursor mCursor = getActivity().getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, new String[]{DBConstant.Training_Columns.COLUMN_TRAINING_ID, DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE, DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT}, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mArrayListTraining.get(position).getmId()}, null);
 				
 				if(mCursor!=null && mCursor.getCount() >0){
 					mCursor.moveToFirst();
@@ -622,7 +625,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 					}
 					
 					mArrayListTraining.get(position).setmLikeCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO)));
-					mArrayListTraining.get(position).setmViewCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_READ_NO)));
+					mArrayListTraining.get(position).setmViewCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT)));
 					isToNotify = true;
 					
 					if(isToNotify){
@@ -1091,6 +1094,10 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 			if (isSuccess) {
 				parseDataFromApi(mResponseFromApi, !sortByAsc);
 			}
+			
+			if(sortByAsc){
+				refreshFeedActionFromApi();
+			}
 
 			if(mProgressDialog!=null){
 				mProgressDialog.dismiss();
@@ -1103,6 +1110,68 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 			if(mSwipeRefreshLayout.isRefreshing()){
 				mSwipeRefreshLayout.setRefreshing(false);
 			}
+		}
+	}
+	
+	/**
+	 * Async : Refresh Feed Like + Read count
+	 */
+	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB) private void refreshFeedActionFromApi(){
+		try{
+			if(Utilities.isInternetConnected()){
+				if(!mSwipeRefreshLayout.isRefreshing()){
+					mSwipeRefreshLayout.setRefreshing(true);
+				}
+				FetchFeedActionAsyncTask mFetchFeedActionAsyncTask = new FetchFeedActionAsyncTask(mParentActivity, AppConstants.INTENTCONSTANTS.TRAINING, JSONRequestBuilder.getPostFetchFeedAction(AppConstants.INTENTCONSTANTS.TRAINING), TAG);
+				if(AndroidUtilities.isAboveIceCreamSandWich()){
+					mFetchFeedActionAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+				}else{
+					mFetchFeedActionAsyncTask.execute();
+				}
+				mFetchFeedActionAsyncTask.setOnPostExecuteFeedActionTaskListener(new OnPostExecuteFeedActionTaskListener() {
+					@Override
+					public void onPostExecute(String mResponseFromApi, boolean isSuccess) {
+						// TODO Auto-generated method stub
+						if(isSuccess){
+							updateArrayListTrainingObjectWithLatestFeedActionCount();
+						}
+						mSwipeRefreshLayout.setRefreshing(false);
+					}
+				});
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void updateArrayListTrainingObjectWithLatestFeedActionCount(){
+		try{
+			Cursor mCursor = getActivity().getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, new String[]{DBConstant.Training_Columns.COLUMN_ID, DBConstant.Training_Columns.COLUMN_TRAINING_ID, DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT},  null, null, DBConstant.Training_Columns.COLUMN_TRAINING_DATE_FORMATTED + " DESC");
+			if(mCursor!=null && mCursor.getCount() > 0){
+				mCursor.moveToFirst();
+				int mIntTrainingId = mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_ID);
+				int mIntTrainingLikeCount = mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO);
+				int mIntTrainingViewCount = mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT);
+				int i = 0;
+				do{
+					Training Obj = mArrayListTraining.get(i);
+					if(!Obj.getmFileType().toString().equalsIgnoreCase(AppConstants.MOBCAST.FOOTER)){
+						if(Obj.getmId().equalsIgnoreCase(mCursor.getString(mIntTrainingId))){
+							Obj.setmLikeCount(mCursor.getString(mIntTrainingLikeCount));
+							Obj.setmViewCount(mCursor.getString(mIntTrainingViewCount));
+						}
+					}
+					i++;
+				}while(mCursor.moveToNext());
+			}
+			
+			if(mCursor!=null){
+				mCursor.close();
+			}
+			mRecyclerView.getAdapter().notifyDataSetChanged();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 }

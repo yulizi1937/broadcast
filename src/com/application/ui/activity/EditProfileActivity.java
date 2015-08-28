@@ -224,49 +224,53 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 	
 
 	private void setDataFromPreferences(){
-		mNameEv.setText(ApplicationLoader.getPreferences().getUserDisplayName());
-		mEmailEv.setText(ApplicationLoader.getPreferences().getUserEmailAddress());
-		mEmployeeIdEv.setText(ApplicationLoader.getPreferences().getUserEmployeeId());
-		mQuestionEv.setText(ApplicationLoader.getPreferences().getUserFavouriteQuestion());
-		mAnswerEv.setText(ApplicationLoader.getPreferences().getUserFavouriteAnswer());
-		
-		final String mProfileImagePath = Utilities.getFilePath(AppConstants.TYPE.PROFILE, false, Utilities.getFileName(ApplicationLoader.getPreferences().getUserProfileImageLink()));
-		if(!TextUtils.isEmpty(ApplicationLoader.getPreferences().getUserProfileImageLink())){
-			ApplicationLoader.getPreferences().setUserProfileImagePath(mProfileImagePath);
-			if(Utilities.checkIfFileExists(mProfileImagePath)){
-				mProfileCirleIv.setImageURI(Uri.parse(mProfileImagePath));
-			}else{
-				mImageLoader = ApplicationLoader.getUILImageLoader();
-				mImageLoader.displayImage(ApplicationLoader.getPreferences().getUserProfileImageLink(), mProfileCirleIv, new ImageLoadingListener() {
-					@Override
-					public void onLoadingStarted(String arg0, View arg1) {
-						// TODO Auto-generated method stub
-						mProgressWheel.setVisibility(View.VISIBLE);
-						mProfileCirleIv.setVisibility(View.GONE);
-					}
-					
-					@Override
-					public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
-						// TODO Auto-generated method stub
-						mProgressWheel.setVisibility(View.GONE);
-						mProfileCirleIv.setVisibility(View.VISIBLE);
-					}
-					
-					@Override
-					public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
-						// TODO Auto-generated method stub
-						mProgressWheel.setVisibility(View.GONE);
-						mProfileCirleIv.setVisibility(View.VISIBLE);
-					}
-					
-					@Override
-					public void onLoadingCancelled(String arg0, View arg1) {
-						// TODO Auto-generated method stub
-						mProgressWheel.setVisibility(View.GONE);
-						mProfileCirleIv.setVisibility(View.VISIBLE);
-					}
-				});
+		try{
+			mNameEv.setText(ApplicationLoader.getPreferences().getUserDisplayName());
+			mEmailEv.setText(ApplicationLoader.getPreferences().getUserEmailAddress());
+			mEmployeeIdEv.setText(ApplicationLoader.getPreferences().getUserEmployeeId());
+			mQuestionEv.setText(ApplicationLoader.getPreferences().getUserFavouriteQuestion());
+			mAnswerEv.setText(ApplicationLoader.getPreferences().getUserFavouriteAnswer());
+			
+			final String mProfileImagePath = Utilities.getFilePath(AppConstants.TYPE.PROFILE, false, Utilities.getFileName(ApplicationLoader.getPreferences().getUserProfileImageLink()));
+			if(!TextUtils.isEmpty(ApplicationLoader.getPreferences().getUserProfileImageLink())){
+				ApplicationLoader.getPreferences().setUserProfileImagePath(mProfileImagePath);
+				if(Utilities.checkIfFileExists(mProfileImagePath)){
+					mProfileCirleIv.setImageURI(Uri.parse(mProfileImagePath));
+				}else{
+					mImageLoader = ApplicationLoader.getUILImageLoader();
+					mImageLoader.displayImage(ApplicationLoader.getPreferences().getUserProfileImageLink(), mProfileCirleIv, new ImageLoadingListener() {
+						@Override
+						public void onLoadingStarted(String arg0, View arg1) {
+							// TODO Auto-generated method stub
+							mProgressWheel.setVisibility(View.VISIBLE);
+							mProfileCirleIv.setVisibility(View.GONE);
+						}
+						
+						@Override
+						public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+							// TODO Auto-generated method stub
+							mProgressWheel.setVisibility(View.GONE);
+							mProfileCirleIv.setVisibility(View.VISIBLE);
+						}
+						
+						@Override
+						public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
+							// TODO Auto-generated method stub
+							mProgressWheel.setVisibility(View.GONE);
+							mProfileCirleIv.setVisibility(View.VISIBLE);
+						}
+						
+						@Override
+						public void onLoadingCancelled(String arg0, View arg1) {
+							// TODO Auto-generated method stub
+							mProgressWheel.setVisibility(View.GONE);
+							mProfileCirleIv.setVisibility(View.VISIBLE);
+						}
+					});
+				}
 			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 	

@@ -50,6 +50,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -601,6 +602,57 @@ public class Utilities {
 		
 	}
 	
+	public static String getTodayDate(){
+		try{
+			long mCurrentTimeMillis = System.currentTimeMillis();
+			SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date mDate = new Date(mCurrentTimeMillis);
+			return mDateFormat.format(mDate);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return "2020-01-01";
+	}
+	
+	public static String getCurrentYear(){
+		try{
+			long mCurrentTimeMillis = System.currentTimeMillis();
+			SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy");
+			Date mDate = new Date(mCurrentTimeMillis);
+			return mDateFormat.format(mDate);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return "2020";
+	}
+	
+	public static String getCurrentDay(int mMonth,int mDay){
+		try{
+			long mCurrentTimeMillis = System.currentTimeMillis();
+			SimpleDateFormat mDateFormat = new SimpleDateFormat("dd MMMM EEEE");
+			Date mDate = new Date(mCurrentTimeMillis);
+			mDate.setYear(Integer.parseInt(getCurrentYear()));
+			mDate.setDate(mDay);
+			mDate.setMonth(mMonth-1);
+			return mDateFormat.format(mDate);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return "January 01";
+	}
+	
+	public static String getTodayTime(){
+		try {
+			long mCurrentTimeMillis = System.currentTimeMillis();
+			SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss");
+			Date mDate = new Date(mCurrentTimeMillis);
+			return timeFormatter.format(mDate);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return "00:00:00";
+	}
+	
 	public static String getSyncTime(boolean isFailed){
 		try{
 			long mCurrentTimeMillis = System.currentTimeMillis();
@@ -805,6 +857,27 @@ public class Utilities {
 			e.printStackTrace();
 			return "VERSION NAME NOT FOUND";
 		}
+	}
+	
+	/** Open another app.
+	 * @param context current Context, like Activity, App, or Service
+	 * @param packageName the full package name of the app to open
+	 * @return true if likely successful, false if unsuccessful
+	 */
+	public static boolean openApp(Context context, String packageName) {
+	    PackageManager manager = context.getPackageManager();
+	    try {
+	        Intent i = manager.getLaunchIntentForPackage(packageName);
+	        if (i == null) {
+	            return false;
+	            //throw new PackageManager.NameNotFoundException();
+	        }
+	        i.addCategory(Intent.CATEGORY_LAUNCHER);
+	        context.startActivity(i);
+	        return true;
+	    } catch (Exception e) {
+	        return false;
+	    }
 	}
 	
 	public static boolean isInternetConnected() {

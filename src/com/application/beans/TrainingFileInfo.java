@@ -26,6 +26,7 @@ public class TrainingFileInfo implements Parcelable {
 	private String mFileName;
 	private String mFileSize;
 	private String mFileIsDefault;
+	private String mFileId;
 
 	public TrainingFileInfo() {
 		super();
@@ -36,7 +37,8 @@ public class TrainingFileInfo implements Parcelable {
 			String mDuration, String mPages, String mQuestions,
 			String mFileLanguages, String mSelectedLanguage, String mFilePath,
 			String mFileLink, String mThumbnailLink, String mThumbnailPath,
-			String mFileName, String mFileSize, String mFileIsDefault) {
+			String mFileName, String mFileSize, String mFileIsDefault,
+			String mFileId) {
 		super();
 		this.mTimeTaken = mTimeTaken;
 		this.mAttempts = mAttempts;
@@ -53,6 +55,7 @@ public class TrainingFileInfo implements Parcelable {
 		this.mFileName = mFileName;
 		this.mFileSize = mFileSize;
 		this.mFileIsDefault = mFileIsDefault;
+		this.mFileId = mFileId;
 	}
 
 	public String getmTimeTaken() {
@@ -175,6 +178,14 @@ public class TrainingFileInfo implements Parcelable {
 		this.mFileIsDefault = mFileIsDefault;
 	}
 
+	public String getmFileId() {
+		return mFileId;
+	}
+
+	public void setmFileId(String mFileId) {
+		this.mFileId = mFileId;
+	}
+
 	protected TrainingFileInfo(Parcel in) {
 		mTimeTaken = in.readString();
 		mAttempts = in.readString();
@@ -191,6 +202,7 @@ public class TrainingFileInfo implements Parcelable {
 		mFileName = in.readString();
 		mFileSize = in.readString();
 		mFileIsDefault = in.readString();
+		mFileId = in.readString();
 	}
 
 	@Override
@@ -215,6 +227,7 @@ public class TrainingFileInfo implements Parcelable {
 		dest.writeString(mFileName);
 		dest.writeString(mFileSize);
 		dest.writeString(mFileIsDefault);
+		dest.writeString(mFileId);
 	}
 
 	@SuppressWarnings("unused")

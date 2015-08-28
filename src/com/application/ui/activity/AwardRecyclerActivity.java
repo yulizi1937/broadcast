@@ -49,10 +49,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.application.beans.Award;
+import com.application.beans.Event;
 import com.application.sqlite.DBConstant;
 import com.application.ui.adapter.AwardRecyclerAdapter;
-import com.application.ui.adapter.AwardRecyclerAdapter.OnItemClickListener;
-import com.application.ui.adapter.AwardRecyclerAdapter.OnItemLongClickListener;
+import com.application.ui.adapter.AwardRecyclerAdapter.OnItemClickListenerA;
+import com.application.ui.adapter.AwardRecyclerAdapter.OnItemLongClickListenerA;
 import com.application.ui.materialdialog.MaterialDialog;
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.HorizontalDividerItemDecoration;
@@ -64,6 +65,7 @@ import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.BuildVars;
+import com.application.utils.FetchFeedActionAsyncTask;
 import com.application.utils.FileLog;
 import com.application.utils.JSONRequestBuilder;
 import com.application.utils.RestClient;
@@ -71,6 +73,7 @@ import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
+import com.application.utils.FetchFeedActionAsyncTask.OnPostExecuteFeedActionTaskListener;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 import com.squareup.okhttp.OkHttpClient;
@@ -329,7 +332,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 
 	private void setRecyclerAdapterListener() {
 		if (mAdapter != null) {
-			mAdapter.setOnItemClickListener(new OnItemClickListener() {
+			mAdapter.setOnItemClickListener(new OnItemClickListenerA() {
 				@Override
 				public void onItemClick(View view, int position) {
 					// TODO Auto-generated method stub
@@ -376,7 +379,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		}
 
 		if (mAdapter != null) {
-			mAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
+			mAdapter.setOnItemLongClickListener(new OnItemLongClickListenerA() {
 				@Override
 				public void onItemLongClick(View view, int position) {
 					// TODO Auto-generated method stub
@@ -1130,6 +1133,10 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 			if (isSuccess) {
 				parseDataFromApi(mResponseFromApi, !sortByAsc);
 			}
+			
+			if(sortByAsc){
+				refreshFeedActionFromApi();
+			}
 
 			if (mProgressDialog != null) {
 				mProgressDialog.dismiss();
@@ -1143,7 +1150,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		}
 	}
 
-	/*
+	/**
 	 * AsyncTask : Sent Chat to Server
 	 */
 
@@ -1258,6 +1265,70 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 				Utilities.showCrouton(AwardRecyclerActivity.this,
 						mCroutonViewGroup, mErrorMessage, Style.ALERT);
 			}
+		}
+	}
+	
+	/**
+	 * Async : Refresh Feed Like + Read count
+	 */
+	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB) private void refreshFeedActionFromApi(){
+		try{
+			if(Utilities.isInternetConnected()){
+				if(!mSwipeRefreshLayout.isRefreshing()){
+					mSwipeRefreshLayout.setRefreshing(true);
+				}
+				FetchFeedActionAsyncTask mFetchFeedActionAsyncTask = new FetchFeedActionAsyncTask(AwardRecyclerActivity.this, AppConstants.INTENTCONSTANTS.AWARD, JSONRequestBuilder.getPostFetchFeedAction(AppConstants.INTENTCONSTANTS.AWARD), TAG);
+				if(AndroidUtilities.isAboveIceCreamSandWich()){
+					mFetchFeedActionAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+				}else{
+					mFetchFeedActionAsyncTask.execute();
+				}
+				mFetchFeedActionAsyncTask.setOnPostExecuteFeedActionTaskListener(new OnPostExecuteFeedActionTaskListener() {
+					@Override
+					public void onPostExecute(String mResponseFromApi, boolean isSuccess) {
+						// TODO Auto-generated method stub
+						if(isSuccess){
+							updateArrayListAwardObjectWithLatestFeedActionCount();
+						}
+						mSwipeRefreshLayout.setRefreshing(false);
+					}
+				});
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void updateArrayListAwardObjectWithLatestFeedActionCount(){
+		try{
+			Cursor mCursor = getContentResolver().query(DBConstant.Award_Columns.CONTENT_URI, new String[]{DBConstant.Award_Columns.COLUMN_ID, DBConstant.Award_Columns.COLUMN_AWARD_ID, DBConstant.Award_Columns.COLUMN_AWARD_LIKE_NO, DBConstant.Award_Columns.COLUMN_AWARD_READ_NO},  null, null, DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE_FORMATTED + " DESC");
+			if(mCursor!=null && mCursor.getCount() > 0){
+				mCursor.moveToFirst();
+				int mIntAwardId = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_ID);
+				int mIntAwardLikeCount = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_LIKE_NO);
+				int mIntAwardViewCount = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_READ_NO);
+				int mIntAwardCongratulateCount = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_CONGRATULATE_NO);
+				int i = 0;
+				do{
+					Award Obj = mArrayListAward.get(i);
+					if(!Obj.getmFileType().toString().equalsIgnoreCase(AppConstants.MOBCAST.FOOTER)){
+						if(Obj.getmId().equalsIgnoreCase(mCursor.getString(mIntAwardId))){
+							Obj.setmLikeCount(mCursor.getString(mIntAwardLikeCount));
+							Obj.setmViewCount(mCursor.getString(mIntAwardViewCount));
+							Obj.setmCongratulatedCount(mCursor.getString(mIntAwardCongratulateCount));
+						}
+					}
+					i++;
+				}while(mCursor.moveToNext());
+			}
+			
+			if(mCursor!=null){
+				mCursor.close();
+			}
+			mRecyclerView.getAdapter().notifyDataSetChanged();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 	

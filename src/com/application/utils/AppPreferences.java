@@ -439,6 +439,18 @@ public class AppPreferences {
 		return mViewIdRecruitment;
 	}
 	
+	public void setViewIdBirthday(String mLastIdBirthday) {
+		editor = sharedPreferences.edit();
+		editor.putString("setViewIdBirthday", mLastIdBirthday);
+		editor.commit();
+	}
+
+	public String getViewIdBirthday() {
+		String mViewIdBirthday= sharedPreferences.getString("setViewIdBirthday","-1");
+		return mViewIdBirthday;
+	}
+	
+	
 	public void setVideoViewPosition(int mLastPosition) {
 		editor = sharedPreferences.edit();
 		editor.putInt("setPositionVideoView", mLastPosition);

@@ -233,7 +233,9 @@ public class DBConstant {
 		public static final String COLUMN_BIRTHDAY_DATE_FORMATTED		    = "_birthday_date_formatted";
 		public static final String COLUMN_BIRTHDAY_RECEIVED_DATE_FORMATTED  = "_birthday_received_date_formatted";
 		public static final String COLUMN_BIRTHDAY_RECEIVER_TIME_FORMATTED	= "_birthday_receiver_time_formatted";
+		public static final String COLUMN_BIRTHDAY_IS_MALE              	= "_birthday_receiver_is_male";
 		public static final String COLUMN_BIRTHDAY_RECEIVER_MOBILE 			= "_birthday_receiver_mobile";
+		public static final String COLUMN_BIRTHDAY_RECEIVER_EMAIL 			= "_birthday_receiver_email";
 		public static final String COLUMN_BIRTHDAY_EXPIRY_DATE         	    = "_birthday_expiry_date";
 		public static final String COLUMN_BIRTHDAY_EXPIRY_TIME     		    = "_birthday_expiry_time";
 		

@@ -37,8 +37,8 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 	private LayoutInflater mInflater;
 	private Context mContext;
 	private ArrayList<Event> mArrayListEvent;
-	OnItemClickListener mItemClickListener;
-	public OnItemLongClickListener mItemLongClickListener;
+	public OnItemClickListenerE mItemClickListener;
+	public OnItemLongClickListenerE mItemLongClickListener;
 
 	public EventRecyclerAdapter(Context mContext,
 			ArrayList<Event> mArrayListEvent) {
@@ -163,21 +163,21 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 		}
 	}
 
-	public interface OnItemClickListener {
+	public interface OnItemClickListenerE {
 		public void onItemClick(View view, int position);
 	}
 
 	public void setOnItemClickListener(
-			final OnItemClickListener mItemClickListener) {
+			final OnItemClickListenerE mItemClickListener) {
 		this.mItemClickListener = mItemClickListener;
 	}
 	
-	public interface OnItemLongClickListener {
+	public interface OnItemLongClickListenerE {
 		public void onItemLongClick(View view, int position);
 	}
 
 	public void setOnItemLongClickListener(
-			final OnItemLongClickListener mItemLongClickListener) {
+			final OnItemLongClickListenerE mItemLongClickListener) {
 		this.mItemLongClickListener = mItemLongClickListener;
 	}
 	

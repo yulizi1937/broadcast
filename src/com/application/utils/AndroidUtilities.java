@@ -115,13 +115,13 @@ public class AndroidUtilities {
 		int width = ApplicationLoader.getApplication().getResources()
 				.getDisplayMetrics().widthPixels;
 		if (width < 320) {
-			return 9;//10
+			return 9;//10//9
 		} else if (width > 320 && width <= 480) {
-			return 10;//11
+			return 10;//11//10
 		} else if (width > 480 && width < 540) {
-			return 11;//12
+			return 11;//12//11
 		} else {
-			return 12;//13
+			return 12;//13//12
 		}
 	}
 
@@ -129,13 +129,13 @@ public class AndroidUtilities {
 		int width = ApplicationLoader.getApplication().getResources()
 				.getDisplayMetrics().widthPixels;
 		if (width < 320) {
-			return 19;//18
+			return 19;//18//19
 		} else if (width > 320 && width <= 480) {
-			return 18;//17
+			return 18;//17//18
 		} else if (width > 480 && width < 540) {
-			return 16;//15
+			return 16;//15//16
 		} else {
-			return 16;
+			return 16;//16
 		}
 	}
 

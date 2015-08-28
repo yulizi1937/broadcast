@@ -258,11 +258,11 @@ public class JSONRequestBuilder {
 		return stringBuffer;
 	}
 	
-	public static JSONObject getPostFetchFeedBirthday() {
+	public static JSONObject getPostFetchFeedBirthday(String mLastBirthdayId) {
 		JSONObject stringBuffer = new JSONObject();
 		try {
-			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, AppConstants.INTENTCONSTANTS.AWARD);
-			stringBuffer.put(AppConstants.API_KEY_PARAMETER.lastBirthdayId, ApplicationLoader.getPreferences().getLastIdBirthday());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, AppConstants.INTENTCONSTANTS.BIRTHDAY);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.lastBirthdayId, mLastBirthdayId);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
 		} catch (Exception e) {
@@ -302,7 +302,7 @@ public class JSONRequestBuilder {
 	public static JSONObject getPostFetchFeedAction(String mCategory) {
 		JSONObject stringBuffer = new JSONObject();
 		try {
-			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, AppConstants.INTENTCONSTANTS.MOBCAST);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, mCategory);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
 			Cursor mCursor = null;
@@ -319,6 +319,10 @@ public class JSONRequestBuilder {
 				mCursor = ApplicationLoader.getApplication().getApplicationContext().getContentResolver().query(DBConstant.
 						Event_Columns.CONTENT_URI	, new String[]{DBConstant.Event_Columns.COLUMN_ID, DBConstant.Event_Columns.COLUMN_EVENT_ID}, null, null, DBConstant.Event_Columns.COLUMN_EVENT_ID + " ASC");
 				mIntColumnMobcastId = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_ID);
+			}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.AWARD)){
+				mCursor = ApplicationLoader.getApplication().getApplicationContext().getContentResolver().query(DBConstant.
+						Award_Columns.CONTENT_URI	, new String[]{DBConstant.Award_Columns.COLUMN_ID, DBConstant.Award_Columns.COLUMN_AWARD_ID}, null, null, DBConstant.Award_Columns.COLUMN_AWARD_ID + " ASC");
+				mIntColumnMobcastId = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_ID);
 			}
 			
 			if(mCursor!=null && mCursor.getCount() > 0){
@@ -358,6 +362,24 @@ public class JSONRequestBuilder {
 		return stringBuffer;
 	}
 	
+	public static JSONObject getPostSearchData(String mCategory, String mLastId, String mSearchTerm,String mSearchBy, String mFilter, int mLimit, boolean sortByAsc) {
+		JSONObject stringBuffer = new JSONObject();
+		try {
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, mCategory);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER._id, mLastId);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.sortByAsc, sortByAsc);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.limit, mLimit);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.searchTerm, mSearchTerm);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.by, mSearchBy);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.filter, mFilter);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		return stringBuffer;
+	}
+	
 	public static JSONObject getPostUpdateReport(String mId , String mCategory, String mActivity, String mDuration){
 		JSONObject stringBuffer = new JSONObject();
 		try {
@@ -367,6 +389,20 @@ public class JSONRequestBuilder {
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, mCategory);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.action, mActivity);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.duration, mDuration);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		return stringBuffer;
+	}
+	
+	public static JSONObject getPostUpdateRemoteReport(String mId , String mCategory, String mUniqueId){
+		JSONObject stringBuffer = new JSONObject();
+		try {
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER._id, mId);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, mCategory);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.uniqueId, mUniqueId);
 		} catch (Exception e) {
 			FileLog.e(TAG, e.toString());
 		}

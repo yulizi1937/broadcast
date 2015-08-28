@@ -188,39 +188,43 @@ public class FeedbackAppActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void setDataFromPreferences(){
-		final String mProfileImagePath = Utilities.getFilePath(AppConstants.TYPE.PROFILE, false, Utilities.getFileName(ApplicationLoader.getPreferences().getUserProfileImageLink()));
-		if(!TextUtils.isEmpty(ApplicationLoader.getPreferences().getUserProfileImageLink())){
-			ApplicationLoader.getPreferences().setUserProfileImagePath(mProfileImagePath);
-			if(Utilities.checkIfFileExists(mProfileImagePath)){
-				mAppFeedbackProfileCircleImageView.setImageURI(Uri.parse(mProfileImagePath));
-			}else{
-				mImageLoader = ApplicationLoader.getUILImageLoader();
-				mImageLoader.displayImage(ApplicationLoader.getPreferences().getUserProfileImageLink(), mAppFeedbackProfileCircleImageView, new ImageLoadingListener() {
-					@Override
-					public void onLoadingStarted(String arg0, View arg1) {
-						// TODO Auto-generated method stub
-						mAppFeedbackProfileCircleImageView.setVisibility(View.GONE);
-					}
-					
-					@Override
-					public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
-						// TODO Auto-generated method stub
-						mAppFeedbackProfileCircleImageView.setVisibility(View.VISIBLE);
-					}
-					
-					@Override
-					public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
-						// TODO Auto-generated method stub
-						mAppFeedbackProfileCircleImageView.setVisibility(View.VISIBLE);
-					}
-					
-					@Override
-					public void onLoadingCancelled(String arg0, View arg1) {
-						// TODO Auto-generated method stub
-						mAppFeedbackProfileCircleImageView.setVisibility(View.VISIBLE);
-					}
-				});
+		try{
+			final String mProfileImagePath = Utilities.getFilePath(AppConstants.TYPE.PROFILE, false, Utilities.getFileName(ApplicationLoader.getPreferences().getUserProfileImageLink()));
+			if(!TextUtils.isEmpty(ApplicationLoader.getPreferences().getUserProfileImageLink())){
+				ApplicationLoader.getPreferences().setUserProfileImagePath(mProfileImagePath);
+				if(Utilities.checkIfFileExists(mProfileImagePath)){
+					mAppFeedbackProfileCircleImageView.setImageURI(Uri.parse(mProfileImagePath));
+				}else{
+					mImageLoader = ApplicationLoader.getUILImageLoader();
+					mImageLoader.displayImage(ApplicationLoader.getPreferences().getUserProfileImageLink(), mAppFeedbackProfileCircleImageView, new ImageLoadingListener() {
+						@Override
+						public void onLoadingStarted(String arg0, View arg1) {
+							// TODO Auto-generated method stub
+							mAppFeedbackProfileCircleImageView.setVisibility(View.GONE);
+						}
+						
+						@Override
+						public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+							// TODO Auto-generated method stub
+							mAppFeedbackProfileCircleImageView.setVisibility(View.VISIBLE);
+						}
+						
+						@Override
+						public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
+							// TODO Auto-generated method stub
+							mAppFeedbackProfileCircleImageView.setVisibility(View.VISIBLE);
+						}
+						
+						@Override
+						public void onLoadingCancelled(String arg0, View arg1) {
+							// TODO Auto-generated method stub
+							mAppFeedbackProfileCircleImageView.setVisibility(View.VISIBLE);
+						}
+					});
+				}
 			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 

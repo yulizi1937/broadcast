@@ -192,7 +192,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 				R.drawable.ic_toolbar_award));
 
 		MenuItem menuItemBirthday = menu.findItem(R.id.action_birthday);
-		menuItemBirthday.setIcon(buildCounterDrawable(1,
+		menuItemBirthday.setIcon(buildCounterDrawable(getUnreadOfBirthday(),
 				R.drawable.ic_toolbar_birthday));
 		/*if (AndroidUtilities.isAboveHoneyComb()) {
 			MenuItem searchItem = menu.findItem(R.id.action_search);
@@ -214,7 +214,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		// TODO Auto-generated method stub
 		switch (item.getItemId()) {
 		case R.id.action_search:
-			/*Intent mIntentSearch = new Intent(MotherActivity.this, SearchMotherActivity.class);
+			Intent mIntentSearch = new Intent(MotherActivity.this, SearchActivity.class);
 			switch(mPager.getCurrentItem()){
 			case 0:
 				mIntentSearch.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.MOBCAST);
@@ -227,7 +227,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 				break;
 			}
 			startActivity(mIntentSearch);
-			AndroidUtilities.enterWindowAnimation(MotherActivity.this);*/
+			AndroidUtilities.enterWindowAnimation(MotherActivity.this);
 			return true;
 		case R.id.action_award:
 			Intent mIntent = new Intent(MotherActivity.this,
@@ -514,6 +514,17 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	
 	private int getUnreadOfAward(){
 		Cursor mCursor = getContentResolver().query(DBConstant.Award_Columns.CONTENT_URI, null, DBConstant.Award_Columns.COLUMN_AWARD_IS_READ + "=?", new String[]{"false"}, null);
+		if(mCursor!=null && mCursor.getCount() > 0){
+			return mCursor.getCount();
+		}
+		if(mCursor!=null){
+			mCursor.close();
+		}
+		return 0;
+	}
+	
+	private int getUnreadOfBirthday(){
+		Cursor mCursor = getContentResolver().query(DBConstant.Birthday_Columns.CONTENT_URI, null, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_READ + "=?" + " OR " + DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_READ + "=?" , new String[]{"false","0"}, null);
 		if(mCursor!=null && mCursor.getCount() > 0){
 			return mCursor.getCount();
 		}

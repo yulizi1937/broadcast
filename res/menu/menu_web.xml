@@ -13,10 +13,10 @@
         tools:ignore="UnusedAttribute,AlwaysShowAction"/>
     <item
         android:id="@+id/action_view_web"
-        android:icon="@drawable/ic_toolbar_search"
+        android:icon="@drawable/ic_web"
         android:orderInCategory="100"
         android:title="@string/action_view_web"
-        app:showAsAction="never"/>
+        app:showAsAction="always"/>
     <item
         android:id="@+id/action_report"
         android:icon="@drawable/ic_toolbar_search"

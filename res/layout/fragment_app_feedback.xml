@@ -90,6 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:checked="true"
+            android:visibility="gone"
             android:text="@string/sample_report_category_include_logs"
             android:textColor="@drawable/selector_text_view_about"
             android:textSize="@dimen/fragment_report_category_spinner_text" />

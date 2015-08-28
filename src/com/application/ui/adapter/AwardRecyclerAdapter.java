@@ -48,8 +48,8 @@ public class AwardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 	@SuppressWarnings("unused")
 	private Context mContext;
 	private ArrayList<Award> mArrayListAward;
-	public OnItemClickListener mItemClickListener;
-	public OnItemLongClickListener mItemLongClickListener;
+	public OnItemClickListenerA mItemClickListener;
+	public OnItemLongClickListenerA mItemLongClickListener;
 	private ImageLoader mImageLoader;
 
 	public AwardRecyclerAdapter(Context mContext,
@@ -182,21 +182,21 @@ public class AwardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 		}
 	}
 
-	public interface OnItemClickListener {
+	public interface OnItemClickListenerA {
 		public void onItemClick(View view, int position);
 	}
 
 	public void setOnItemClickListener(
-			final OnItemClickListener mItemClickListener) {
+			final OnItemClickListenerA mItemClickListener) {
 		this.mItemClickListener = mItemClickListener;
 	}
 	
-	public interface OnItemLongClickListener {
+	public interface OnItemLongClickListenerA {
 		public void onItemLongClick(View view, int position);
 	}
 
 	public void setOnItemLongClickListener(
-			final OnItemLongClickListener mItemLongClickListener) {
+			final OnItemLongClickListenerA mItemLongClickListener) {
 		this.mItemLongClickListener = mItemLongClickListener;
 	}
 	

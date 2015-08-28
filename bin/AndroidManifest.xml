@@ -51,7 +51,7 @@
     <application
         android:name="com.application.utils.ApplicationLoader"
         android:allowBackup="true"
-        android:debuggable="true"
+        android:debuggable="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
@@ -202,9 +202,6 @@
             android:configChanges="locale|orientation" />
         <activity
             android:name="com.application.ui.activity.TutorialActivity"
-            android:configChanges="locale|orientation" />
-        <activity
-            android:name="com.application.ui.activity.SearchMotherActivity"
             android:configChanges="locale|orientation" />
         <activity
             android:name="com.application.ui.activity.SearchActivity"

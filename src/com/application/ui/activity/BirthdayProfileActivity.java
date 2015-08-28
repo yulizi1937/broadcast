@@ -3,36 +3,43 @@
  */
 package com.application.ui.activity;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
-import org.apache.http.entity.mime.MinimalField;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.application.beans.Birthday;
+import com.application.sqlite.DBConstant;
+import com.application.ui.adapter.MobcastRecyclerAdapter.ImageViewHolder;
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.CircleImageView;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.ApplicationLoader;
+import com.application.utils.FileLog;
+import com.application.utils.Utilities;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 /**
  * @author Vikalp Patel(VikalpPatelCE)
@@ -57,6 +64,8 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 	private ImageView mBirthdayProfileActionChatIv;
 	private ImageView mBirthdayProfileActionMsgIv;
 	private ImageView mBirthdayProfileActionEmailIv;
+	
+	private ProgressWheel mBirthdayProfileCircleIvProgressWheel;
 
 	private AppCompatTextView mBirthdayProfileNameTv;
 	private AppCompatTextView mBirthdayProfileDateTv;
@@ -64,8 +73,25 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mBirthdayProfileAgeTv;
 	private AppCompatTextView mBirthdayProfileDepTv;
 	
+	private ImageLoader mImageLoader;
+	
 	private Intent mIntent;
-	private ArrayList<Birthday> mArrayListBirthday;
+	private String mId;
+	private String mCategory;
+	private String mContentName;
+	private String mContentCity;
+	private String mContentMobile;
+	private String mContentEmail;
+	private String mContentDate;
+	private String mContentSunSign;
+	private String mContentAge;
+	private String mContentDep;
+	private String mContentDOB;
+	private String mContentFileLink;
+	private boolean isMale = false;
+	
+	private boolean isFromNotification = false;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +161,8 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		mBirthdayProfileFrameLayout = (FrameLayout) findViewById(R.id.fragmentBirthdayProfileRootLayout);
 
 		mBirthdayProfileCircleImageView = (CircleImageView) findViewById(R.id.fragmentBirthdayProfileImageIv);
+		
+		mBirthdayProfileCircleIvProgressWheel = (ProgressWheel)findViewById(R.id.fragmentBirthdayProfileImageLoadingProgress);
 
 		mBirthdayProfileNameTv = (AppCompatTextView) findViewById(R.id.fragmentBirthdayProfileNameTv);
 		mBirthdayProfileDateTv = (AppCompatTextView) findViewById(R.id.fragmentBirthdayProfileDateTv);
@@ -150,27 +178,29 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 	
 	private void getIntentData(){
 		mIntent = getIntent();
-		mArrayListBirthday = mIntent.getParcelableArrayListExtra(AppConstants.INTENTCONSTANTS.CATEGORY);
-		int position = mIntent.getIntExtra(AppConstants.INTENTCONSTANTS.ID, 0);
-		if (position < 2) {
-			position = 0;
-		} else if (position < 4) {
-			position = 1;
-		} else {
-			position = 2;
-		}
-		Birthday Obj = mArrayListBirthday.get(position);
-		mBirthdayProfileNameTv.setText(Obj.getmBirthdayUserName());
-		mBirthdayProfileDepTv.setText(Obj.getmBirthdayUserDep());
-		if(Obj.getmBirthdayUserName().equalsIgnoreCase("Ashwin Roy")){
-			mBirthdayProfileAgeTv.setText("28");
-			mBirthdayProfileDateTv.setText("28 August");
-		}else if(Obj.getmBirthdayUserName().equalsIgnoreCase("Vikalp Patel")){
-			mBirthdayProfileAgeTv.setText("24");
-			mBirthdayProfileDateTv.setText("08 October");
-		}else {
-			mBirthdayProfileAgeTv.setText("26");
-			mBirthdayProfileDateTv.setText("10 December");
+		try{
+			if(mIntent!=null){
+				Cursor mCursor = null;
+				mId = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.ID);
+				mCategory = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY).toString();
+				isFromNotification = mIntent.getBooleanExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, false);
+				if(!TextUtils.isEmpty(mId) && !TextUtils.isEmpty(mCategory)){
+					if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.BIRTHDAY)){
+						mCursor = getContentResolver().query(DBConstant.Birthday_Columns.CONTENT_URI, null, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID + "=?", new String[]{mId}, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID + " DESC");
+						getDataFromDBForBirthday(mCursor);
+					}
+					if(mCursor!=null){
+						mCursor.close();
+					}
+				}else{
+					finish();
+					AndroidUtilities.exitWindowAnimation(BirthdayProfileActivity.this);
+				}
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+			finish();
+			AndroidUtilities.exitWindowAnimation(BirthdayProfileActivity.this);
 		}
 	}
 
@@ -210,6 +240,100 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 	}
 
 	private void setOnClickListener() {
+	}
+	
+	private void getDataFromDBForBirthday(Cursor mCursor){
+		if(mCursor!=null && mCursor.getCount() > 0){
+			mCursor.moveToFirst();
+			mContentName = mCursor.getString(mCursor.getColumnIndex(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_NAME));
+			mContentCity =  mCursor.getString(mCursor.getColumnIndex(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_CITY));
+			mContentAge =  mCursor.getString(mCursor.getColumnIndex(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_AGE));
+			mContentDep = mCursor.getString(mCursor.getColumnIndex(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DEPARTMENT));
+			mContentDOB = mCursor.getString(mCursor.getColumnIndex(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DOB));
+			mContentFileLink =  mCursor.getString(mCursor.getColumnIndex(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_FILE_LINK));
+			mContentMobile =  mCursor.getString(mCursor.getColumnIndex(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVER_MOBILE));
+			mContentEmail =  mCursor.getString(mCursor.getColumnIndex(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVER_EMAIL));
+			setIntentDataToUi();
+		}
+	}
+	
+	private void setIntentDataToUi(){
+		if(!TextUtils.isEmpty(mContentName)){
+			mBirthdayProfileNameTv.setText(mContentName);
+		}
+		
+		if(!TextUtils.isEmpty(mContentDep)){
+			mBirthdayProfileDepTv.setText(mContentDep);
+		}
+		
+		if(!TextUtils.isEmpty(mContentSunSign)){
+			mBirthdayProfileSunSignTv.setText(mContentSunSign);
+		}
+		
+		if(!TextUtils.isEmpty(mContentCity)){
+			
+		}
+		
+		if(TextUtils.isEmpty(mContentAge)){
+			calculateAge();
+			if(TextUtils.isEmpty(mContentAge)){
+				mBirthdayProfileAgeTv.setText(mContentAge + " YRS");	
+			}
+		}
+		
+		if(!TextUtils.isEmpty(mContentDOB)){
+			mBirthdayProfileDateTv.setText(mContentDOB);
+		}
+		
+		if(!TextUtils.isEmpty(mContentFileLink)){
+			mImageLoader = ApplicationLoader.getUILImageLoader();
+			mImageLoader.displayImage(mContentFileLink, mBirthdayProfileCircleImageView, new ImageLoadingListener() {
+				@Override
+				public void onLoadingStarted(String arg0, View arg1) {
+					// TODO Auto-generated method stub
+					mBirthdayProfileCircleIvProgressWheel.setVisibility(View.VISIBLE);
+					mBirthdayProfileCircleImageView.setVisibility(View.GONE);
+				}
+				
+				@Override
+				public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+					// TODO Auto-generated method stub
+					mBirthdayProfileCircleIvProgressWheel.setVisibility(View.GONE);
+					mBirthdayProfileCircleImageView.setVisibility(View.VISIBLE);
+				}
+				
+				@Override
+				public void onLoadingComplete(String arg0, View arg1, Bitmap mBitmap) {
+					// TODO Auto-generated method stub
+					mBirthdayProfileCircleIvProgressWheel.setVisibility(View.GONE);
+					mBirthdayProfileCircleImageView.setVisibility(View.VISIBLE);
+				}
+				
+				@Override
+				public void onLoadingCancelled(String arg0, View arg1) {
+					// TODO Auto-generated method stub
+					mBirthdayProfileCircleIvProgressWheel.setVisibility(View.GONE);
+					mBirthdayProfileCircleImageView.setVisibility(View.VISIBLE);
+				}
+			});
+		}
+		
+		updateReadInDb();
+	}
+	
+	private void calculateAge(){
+		try{
+			mContentAge = String.valueOf(Integer.parseInt(Utilities.getCurrentYear()) - Integer.parseInt(mContentDOB.substring(0, 4)));
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void updateReadInDb(){
+		ContentValues values = new ContentValues();
+		values.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_READ, "true");
+		getContentResolver().update(DBConstant.Birthday_Columns.CONTENT_URI, values, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID + "=?", new String[]{mId});	
+		
 	}
 
 	@Override

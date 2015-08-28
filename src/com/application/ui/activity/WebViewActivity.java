@@ -6,10 +6,12 @@ package com.application.ui.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -124,6 +126,11 @@ public class WebViewActivity extends SwipeBackBaseActivity {
 			startActivity(mIntent);
 			AndroidUtilities.enterWindowAnimation(WebViewActivity.this);
 			return true;
+		case R.id.action_view_web:
+			Intent mBrowserIntent = new Intent(Intent.ACTION_VIEW);
+			mBrowserIntent.setData(Uri.parse(mUrl));
+			startActivity(mBrowserIntent);
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -132,6 +139,9 @@ public class WebViewActivity extends SwipeBackBaseActivity {
 	private void toolBarRefresh() {
 		mToolBarMenuRefresh.setVisibility(View.GONE);
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
+		if(!TextUtils.isEmpty(mUrl)){
+			mWebView.loadUrl(mUrl);
+		}
 		new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {

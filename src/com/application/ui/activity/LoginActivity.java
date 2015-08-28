@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -20,7 +21,9 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -90,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
 	private AppCompatEditText mLoginIdEt;
 
 	private AppCompatButton mNextBtn;
+	private AppCompatButton mNextBtn1;
 
 	private Toolbar mToolBar;
 
@@ -103,6 +107,10 @@ public class LoginActivity extends AppCompatActivity {
 
 	private String userId;
 	private String countryCodeValue = "IN";
+	
+	private Handler mHandler = new Handler();
+	private changePagerRunnable mRunnable = new changePagerRunnable();
+	private int mRunnableTimer = 4000;
 	
 	private GoogleCloudMessaging gcm;
 	private String regid;
@@ -122,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
 		initUi();
 //		initToolBar();
 		initViewPager();
+		setAutomatePager();
 		setUiListener();
 		tryToGetUserId();
 		tryToGetUserCountryCode();
@@ -152,6 +161,7 @@ public class LoginActivity extends AppCompatActivity {
 		mLoginIdEt = (AppCompatEditText) findViewById(R.id.activityLoginIdEv);
 
 		mNextBtn = (AppCompatButton) findViewById(R.id.activityLoginNextBtn);
+		mNextBtn1 = (AppCompatButton) findViewById(R.id.activityLoginNextBtn1);
 
 		mLoginIdIv = (ImageView) findViewById(R.id.activityLoginValidateIv);
 
@@ -175,6 +185,23 @@ public class LoginActivity extends AppCompatActivity {
 		mViewPager.setAdapter(mAdapter);
 		mCirclerPagerIndicator.setViewPager(mViewPager);
 	}
+	
+	private void setAutomatePager(){
+		mHandler.postDelayed(mRunnable, mRunnableTimer);
+	}
+	
+	private void changeCurrentPager(){
+		int mPosition = mViewPager.getCurrentItem();
+		mPosition++;
+		if (mPosition < 4) {
+			mViewPager.setCurrentItem(mPosition,true);
+		}else{
+			mPosition = 0;
+			mViewPager.setCurrentItem(mPosition,true);
+			mHandler.removeCallbacks(mRunnable);
+		}
+	}
+	
 
 	private void setUiListener() {
 		mLoginIdEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -185,9 +212,13 @@ public class LoginActivity extends AppCompatActivity {
 				if (hasFocus) {
 					mLoginLayout.setBackgroundDrawable(getResources()
 							.getDrawable(R.drawable.shape_editbox_selected));
+					mNextBtn.setVisibility(View.GONE);
+					mNextBtn1.setVisibility(View.VISIBLE);
 				} else {
 					mLoginLayout.setBackgroundDrawable(getResources()
 							.getDrawable(R.drawable.shape_editbox_normal));
+					mNextBtn.setVisibility(View.VISIBLE);
+					mNextBtn1.setVisibility(View.GONE);
 				}
 			}
 		});
@@ -223,31 +254,16 @@ public class LoginActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				if(!BuildVars.DEBUG_DESIGN){
-					if (!TextUtils.isEmpty(mLoginIdEt.getText().toString())) {
-						if (Utilities.isInternetConnected()) {
-							if(isValidLoginId){
-								if (AndroidUtilities.isAboveIceCreamSandWich()) {
-									new AsyncLoginTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
-								} else {
-									new AsyncLoginTask().execute();
-								}
-							}
-						} else {
-							Utilities.showCrouton(
-									LoginActivity.this,
-									mCroutonViewGroup,
-									getResources().getString(
-											R.string.internet_unavailable),
-									Style.ALERT);
-						}
-					}	
-				}else{
-					Intent mIntent = new Intent(LoginActivity.this,
-							VerificationActivity.class);
-					startActivity(mIntent);
-					AndroidUtilities.enterWindowAnimation(LoginActivity.this);	
-				}
+				doCheckApiUserExists();
+			}
+		});
+		
+		mNextBtn1.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				doCheckApiUserExists();	
 			}
 		});
 
@@ -262,6 +278,48 @@ public class LoginActivity extends AppCompatActivity {
 				AndroidUtilities.enterWindowAnimation(LoginActivity.this);
 			}
 		});
+	}
+	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB) private void doCheckApiUserExists(){
+		if(!BuildVars.DEBUG_DESIGN){
+			if (!TextUtils.isEmpty(mLoginIdEt.getText().toString())) {
+				if (Utilities.isInternetConnected()) {
+					if(isValidLoginId){
+						mHandler.removeCallbacks(mRunnable);
+						if (AndroidUtilities.isAboveIceCreamSandWich()) {
+							new AsyncLoginTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+						} else {
+							new AsyncLoginTask().execute();
+						}
+					}
+				} else {
+					Utilities.showCrouton(
+							LoginActivity.this,
+							mCroutonViewGroup,
+							getResources().getString(
+									R.string.internet_unavailable),
+							Style.ALERT);
+				}
+			}	
+		}else{
+			Intent mIntent = new Intent(LoginActivity.this,
+					VerificationActivity.class);
+			startActivity(mIntent);
+			AndroidUtilities.enterWindowAnimation(LoginActivity.this);	
+		}
+	}
+	
+	private class changePagerRunnable implements Runnable{
+		/* (non-Javadoc)
+		 * @see java.lang.Runnable#run()
+		 */
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			changeCurrentPager();
+			mHandler.postDelayed(mRunnable, mRunnableTimer);
+		}
+		
 	}
 
 	/**
@@ -318,8 +376,12 @@ public class LoginActivity extends AppCompatActivity {
 		if (isValidLoginId) {
 			mNextBtn.setBackgroundDrawable(getResources().getDrawable(
 					R.drawable.shape_button_pressed));
+			mNextBtn1.setBackgroundDrawable(getResources().getDrawable(
+					R.drawable.shape_button_pressed));
 		} else {
 			mNextBtn.setBackgroundDrawable(getResources().getDrawable(
+					R.drawable.shape_button_normal));
+			mNextBtn1.setBackgroundDrawable(getResources().getDrawable(
 					R.drawable.shape_button_normal));
 		}
 	}
@@ -327,6 +389,7 @@ public class LoginActivity extends AppCompatActivity {
 	private void setMaterialRippleView() {
 		try {
 			setMaterialRippleOnView(mNextBtn);
+			setMaterialRippleOnView(mNextBtn1);
 			setMaterialRippleWithGrayOnView(mCountryCodeTv);
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());

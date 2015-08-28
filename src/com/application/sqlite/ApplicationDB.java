@@ -257,6 +257,11 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID +" INTEGER UNIQUE," );
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_NAME +" TEXT ," );
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DEPARTMENT +" TEXT ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVER_EMAIL +" TEXT ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVER_MOBILE +" TEXT ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVED_DATE_FORMATTED +" TEXT ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVER_TIME_FORMATTED +" TEXT ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_MALE +" NUMBER DEFAULT 0," );
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_LIKE +" NUMBER DEFAULT 0," );
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_MESSAGE +" NUMBER DEFAULT 0," );
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_READ +" NUMBER DEFAULT 0," );
@@ -267,7 +272,7 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_SUN_SIGN +" TEXT ," );
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_CITY +" TEXT ," );
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DATE +" TEXT ," );
-		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DATE_FORMATTED +" TEXT ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DATE_FORMATTED +" INTEGER ," );
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DAY +" TEXT ," );
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DOB +" TEXT ," );
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_FILE_LINK +" TEXT ," );
@@ -1041,6 +1046,11 @@ public class ApplicationDB extends ContentProvider{
 		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_FILE_APPEND, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_FILE_APPEND);
 		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_FILE_LINK, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_FILE_LINK);
 		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_FILE_PATH, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_FILE_PATH);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVER_EMAIL, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVER_EMAIL);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVER_MOBILE, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVER_MOBILE);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVED_DATE_FORMATTED, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVED_DATE_FORMATTED);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVER_TIME_FORMATTED, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVER_TIME_FORMATTED);
+		birthdayProjectionMap.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_MALE, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_MALE);
 
 		
 		mobcastFileProjectionMap = new HashMap<String, String>();

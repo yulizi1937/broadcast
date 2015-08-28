@@ -30,6 +30,7 @@ import android.widget.GridView;
 import android.widget.ListView;
 
 import com.application.beans.Chat;
+import com.application.beans.MIS;
 import com.application.beans.Mobcast;
 import com.application.beans.Training;
 import com.application.ui.activity.BaseActivity;
@@ -53,6 +54,10 @@ public abstract class BaseFragment extends Fragment {
 	
 	public static ArrayList<Chat> getDummyChatData() {
 		return BaseActivity.getDummyChatData();
+	}
+	
+	public static ArrayList<MIS> getDummyMISData() {
+		return BaseActivity.getDummyMISData();
 	}
 
 	protected int getActionBarSize() {

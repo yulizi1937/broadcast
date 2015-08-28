@@ -40,7 +40,7 @@
                     android:layout_height="96dp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/drawer_item_profile_image_view_margin_bottom"
-                    android:src="@drawable/sample_picture_event_cover"
+                    android:src="@drawable/ic_sample_picture"
                     android:visibility="visible"
                     circleimageview:border_color="@android:color/white"
                     circleimageview:border_width="2dp" />

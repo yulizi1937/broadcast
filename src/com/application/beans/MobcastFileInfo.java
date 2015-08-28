@@ -12,6 +12,7 @@ import android.os.Parcelable;
  */
 public class MobcastFileInfo implements Parcelable {
 	private String mDuration;
+	private String mFileId;
 	private String mPages;
 	private String mQuestions;
 	private String mFileLanguages;
@@ -24,17 +25,14 @@ public class MobcastFileInfo implements Parcelable {
 	private String mFileSize;
 	private String mFileIsDefault;
 
-	public MobcastFileInfo() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public MobcastFileInfo(String mDuration, String mPages, String mQuestions,
-			String mFileLanguages, String mSelectedLanguage, String mFilePath,
-			String mFileLink, String mThumbnailLink, String mThumbnailPath,
-			String mFileName, String mFileSize, String mFileIsDefault) {
+	public MobcastFileInfo(String mDuration, String mFileId, String mPages,
+			String mQuestions, String mFileLanguages, String mSelectedLanguage,
+			String mFilePath, String mFileLink, String mThumbnailLink,
+			String mThumbnailPath, String mFileName, String mFileSize,
+			String mFileIsDefault) {
 		super();
 		this.mDuration = mDuration;
+		this.mFileId = mFileId;
 		this.mPages = mPages;
 		this.mQuestions = mQuestions;
 		this.mFileLanguages = mFileLanguages;
@@ -48,12 +46,25 @@ public class MobcastFileInfo implements Parcelable {
 		this.mFileIsDefault = mFileIsDefault;
 	}
 
+	public MobcastFileInfo() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getmDuration() {
 		return mDuration;
 	}
 
 	public void setmDuration(String mDuration) {
 		this.mDuration = mDuration;
+	}
+
+	public String getmFileId() {
+		return mFileId;
+	}
+
+	public void setmFileId(String mFileId) {
+		this.mFileId = mFileId;
 	}
 
 	public String getmPages() {
@@ -146,6 +157,7 @@ public class MobcastFileInfo implements Parcelable {
 
 	protected MobcastFileInfo(Parcel in) {
 		mDuration = in.readString();
+		mFileId = in.readString();
 		mPages = in.readString();
 		mQuestions = in.readString();
 		mFileLanguages = in.readString();
@@ -167,6 +179,7 @@ public class MobcastFileInfo implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(mDuration);
+		dest.writeString(mFileId);
 		dest.writeString(mPages);
 		dest.writeString(mQuestions);
 		dest.writeString(mFileLanguages);

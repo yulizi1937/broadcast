@@ -30,6 +30,7 @@
     <string name="file_not_available">File not available. Please press back and open it again! Make sure internet is available</string>
     <string name="congratulate_message">You just congratulated </string>
     <string name="congratulate_message_validation">You already congratulated  </string>
+    <string name="wished_message_validation">You already wished  </string>
     <string name="logout_content_message">Logging out will delete all your content from the app and files too.</string>
     <string name="logging_out" tools:ignore="TypographyEllipsis">Logging Out...</string>
 
@@ -74,6 +75,7 @@
     <string name="context_menu_unread">Mark as Unread</string>
     <string name="context_menu_delete">Delete</string>
     <string name="context_menu_view">View</string>
+    <string name="context_menu_save">Save</string>
 
     <!-- Time -->
     <string name="Yesterday">yesterday</string>
@@ -209,18 +211,24 @@
 
     <!-- layout_mother -->
     <string name="layout_mother_mobcast">MOBCAST</string>
+<!--     <string name="layout_mother_mobcast">CK BULLETIN</string> -->
     <string name="layout_mother_chat">CHAT</string>
+<!--     <string name="layout_mother_chat">MIS</string> -->
     <string name="layout_mother_training">TRAINING</string>
 
     <!-- layout_drawer_search_mother -->
-    <string name="layout_drawer_search_mother_search_by">Search By</string>
+    <string name="layout_drawer_search_mother_search_by">Search On</string>
     <string name="layout_drawer_search_mother_search_local">On Device</string>
     <string name="layout_drawer_search_mother_search_web">On Web</string>
     <string name="layout_drawer_search_mother_search_for">Search For</string>
     <string name="layout_drawer_search_mother_search_video">Video</string>
     <string name="layout_drawer_search_mother_search_image">Image</string>
+    <string name="layout_drawer_search_mother_search_feedback">Feedback</string>
+    <string name="layout_drawer_search_mother_search_quiz">Quiz</string>
+    <string name="layout_drawer_search_mother_search_text">Text</string>
     <string name="layout_drawer_search_mother_search_audio">Audio</string>
     <string name="layout_drawer_search_mother_search_doc">Documents</string>
+    <string name="layout_drawer_search_mother_search_by_text">By</string>
     <string name="layout_drawer_search_mother_search_all">All</string>
     <string name="layout_drawer_search_mother_search_livestream">Live Stream</string>
 
@@ -668,7 +676,10 @@ Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic 
     <string name="emptyChatMessage">When you\'ll receive chat, they will show up here.</string>
     <string name="emptyCaptureTitle">Welcome to Capture!</string>
     <string name="emptyCaptureMessage">When you\'ll add images, they will show up here.</string>
+    <string name="emptyBirthdayTitle">Welcome to Birthday!</string>
+    <string name="emptyBirthdayMessage">When you\'ll receive birthday, they will show up here.</string>
     <string name="emptyRecruitmentTitle">Welcome to Recruitment!</string>
     <string name="emptyRecruitmentMessage">When you\'ll receive recruitment, they will show up here.</string>
+    <string name="emptyRefreshOnSearch">SEARCH ONLINE</string>
 
 </resources>

@@ -23,13 +23,13 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
@@ -68,6 +68,8 @@ import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.BuildVars;
+import com.application.utils.FetchFeedActionAsyncTask;
+import com.application.utils.FetchFeedActionAsyncTask.OnPostExecuteFeedActionTaskListener;
 import com.application.utils.FileLog;
 import com.application.utils.JSONRequestBuilder;
 import com.application.utils.ObservableScrollViewCallbacks;
@@ -145,8 +147,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 				.findViewById(R.id.layoutEmptyRefreshBtn);
 
 		mLinearLayoutManager = new LinearLayoutManager(mParentActivity);
-		mRecyclerView
-		.setLayoutManager(mLinearLayoutManager);
+		mRecyclerView.setLayoutManager(mLinearLayoutManager);
 		
 		ApplicationLoader.getPreferences().setViewIdMobcast("-1");
 		
@@ -588,7 +589,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 //		position-=1;
 		if (position >= 0 && position < mArrayListMobcast.size()) {
 			if(mArrayListMobcast!=null && mArrayListMobcast.size() > 0){
-				Cursor mCursor = getActivity().getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, new String[]{DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO,DBConstant.Mobcast_Columns.COLUMN_MOBCAST_READ_NO}, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mArrayListMobcast.get(position).getmId()}, null);
+				Cursor mCursor = getActivity().getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, new String[]{DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO,DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT}, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mArrayListMobcast.get(position).getmId()}, null);
 				
 				if(mCursor!=null && mCursor.getCount() >0){
 					mCursor.moveToFirst();
@@ -604,7 +605,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 					}
 					
 					mArrayListMobcast.get(position).setmLikeCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO)));
-					mArrayListMobcast.get(position).setmViewCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_READ_NO)));
+					mArrayListMobcast.get(position).setmViewCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT)));
 					isToNotify = true;
 					if(isToNotify){
 						mRecyclerView.getAdapter().notifyDataSetChanged();
@@ -1064,6 +1065,10 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 			if (isSuccess) {
 				parseDataFromApi(mResponseFromApi, !sortByAsc);
 			}
+			
+			if(sortByAsc){
+				refreshFeedActionFromApi();
+			}
 
 			if(mProgressDialog!=null){
 				mProgressDialog.dismiss();
@@ -1072,6 +1077,68 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 			if(mSwipeRefreshLayout.isRefreshing()){
 				mSwipeRefreshLayout.setRefreshing(false);
 			}
+		}
+	}
+	
+	/**
+	 * Async : Refresh Feed Like + Read count
+	 */
+	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB) private void refreshFeedActionFromApi(){
+		try{
+			if(Utilities.isInternetConnected()){
+				if(!mSwipeRefreshLayout.isRefreshing()){
+					mSwipeRefreshLayout.setRefreshing(true);
+				}
+				FetchFeedActionAsyncTask mFetchFeedActionAsyncTask = new FetchFeedActionAsyncTask(mParentActivity, AppConstants.INTENTCONSTANTS.MOBCAST, JSONRequestBuilder.getPostFetchFeedAction(AppConstants.INTENTCONSTANTS.MOBCAST), TAG);
+				if(AndroidUtilities.isAboveIceCreamSandWich()){
+					mFetchFeedActionAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+				}else{
+					mFetchFeedActionAsyncTask.execute();
+				}
+				mFetchFeedActionAsyncTask.setOnPostExecuteFeedActionTaskListener(new OnPostExecuteFeedActionTaskListener() {
+					@Override
+					public void onPostExecute(String mResponseFromApi, boolean isSuccess) {
+						// TODO Auto-generated method stub
+						if(isSuccess){
+							updateArrayListMobcastObjectWithLatestFeedActionCount();
+						}
+						mSwipeRefreshLayout.setRefreshing(false);
+					}
+				});
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void updateArrayListMobcastObjectWithLatestFeedActionCount(){
+		try{
+			Cursor mCursor = getActivity().getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, new String[]{DBConstant.Mobcast_Columns.COLUMN_ID, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT},  null, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE_FORMATTED + " DESC");
+			if(mCursor!=null && mCursor.getCount() > 0){
+				mCursor.moveToFirst();
+				int mIntMobcastId = mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID);
+				int mIntMobcastLikeCount = mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO);
+				int mIntMobcastViewCount = mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT);
+				int i = 0;
+				do{
+					Mobcast Obj = mArrayListMobcast.get(i);
+					if(!Obj.getmFileType().toString().equalsIgnoreCase(AppConstants.MOBCAST.FOOTER)){
+						if(Obj.getmId().equalsIgnoreCase(mCursor.getString(mIntMobcastId))){
+							Obj.setmLikeCount(mCursor.getString(mIntMobcastLikeCount));
+							Obj.setmViewCount(mCursor.getString(mIntMobcastViewCount));
+						}
+					}
+					i++;
+				}while(mCursor.moveToNext());
+			}
+			
+			if(mCursor!=null){
+				mCursor.close();
+			}
+			mRecyclerView.getAdapter().notifyDataSetChanged();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 }

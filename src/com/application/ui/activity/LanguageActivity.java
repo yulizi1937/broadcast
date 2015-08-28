@@ -72,7 +72,7 @@ public class LanguageActivity extends SwipeBackBaseActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_event_detail, menu);
+		inflater.inflate(R.menu.menu_image_fullscreen, menu);
 		return true;
 	}
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:circleimageview="http://schemas.android.com/apk/res-auto"
+    xmlns:progresswheel="http://schemas.android.com/apk/res-auto"
     xmlns:ripple="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -54,7 +55,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="@string/sample_fragment_birthday_profile_city"
                         android:textColor="@color/text_highlight"
                         android:textSize="@dimen/fragment_birthday_profile_city_text_size"
                         android:textStyle="bold" />
@@ -66,7 +66,6 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
                         android:gravity="center"
-                        android:text="@string/sample_fragment_birthday_profile_date"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/fragment_birthday_profile_birthdate_text_size" />
                 </LinearLayout>
@@ -82,6 +81,18 @@
                 circleimageview:border_color="@android:color/white"
                 circleimageview:border_width="2dp"
                 tools:ignore="RtlHardcoded,ContentDescription" />
+
+            <com.application.ui.view.ProgressWheel
+                android:id="@+id/fragmentBirthdayProfileImageLoadingProgress"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/fragment_birthday_profile_margin_top"
+                android:visibility="gone"
+                progresswheel:matProg_barColor="@android:color/white"
+                progresswheel:matProg_barWidth="2dp"
+                progresswheel:matProg_progressIndeterminate="true"
+                tools:ignore="RtlHardcoded" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/fragmentBirthdayProfileDepartmentTv"
@@ -128,7 +139,6 @@
                     android:layout_gravity="top|center"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/sample_fragment_birthday_profile_sun_sign"
                     android:textSize="@dimen/fragment_birthday_profile_sun_sign_text_size"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -161,7 +171,6 @@
                     android:layout_gravity="top|center"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/sample_fragment_birthday_profile_age"
                     android:textSize="@dimen/fragment_birthday_profile_sun_sign_text_size"
                     android:textStyle="bold" />
             </LinearLayout>

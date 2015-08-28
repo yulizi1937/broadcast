@@ -33,7 +33,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.application.beans.Training;
-import com.application.ui.adapter.MobcastRecyclerAdapter.OnItemLongClickListener;
 import com.application.ui.view.FlexibleDividerDecoration;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AppConstants;
@@ -65,8 +64,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     private LayoutInflater mInflater;
     private ArrayList<Training> mArrayListTraining;
     private View mHeaderView;
-    public OnItemClickListener mItemClickListener;
-    public OnItemLongClickListener mItemLongClickListener;
+    public OnItemClickListenerT mItemClickListener;
+    public OnItemLongClickListenerT mItemLongClickListener;
     private Context mContext;
     private ImageLoader mImageLoader;
 
@@ -195,21 +194,21 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 		}
     }
     
-	public interface OnItemClickListener {
+	public interface OnItemClickListenerT {
 		public void onItemClick(View view, int position);
 	}
 
 	public void setOnItemClickListener(
-			final OnItemClickListener mItemClickListener) {
+			final OnItemClickListenerT mItemClickListener) {
 		this.mItemClickListener = mItemClickListener;
 	}
 	
-	public interface OnItemLongClickListener {
+	public interface OnItemLongClickListenerT {
 		public void onItemLongClick(View view, int position);
 	}
 
 	public void setOnItemLongClickListener(
-			final OnItemLongClickListener mItemLongClickListener) {
+			final OnItemLongClickListenerT mItemLongClickListener) {
 		this.mItemLongClickListener = mItemLongClickListener;
 	}
 

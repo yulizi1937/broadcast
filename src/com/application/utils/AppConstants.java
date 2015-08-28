@@ -46,9 +46,11 @@ public class AppConstants {
 		public static final String API_FETCH_FEED_EVENT     = API_URL + "fetchFeedEvent";
 		public static final String API_FETCH_FEED_AWARD     = API_URL + "fetchFeedAward";
 		public static final String API_FETCH_FEED_RECRUITMENT= API_URL + "fetchFeedRecruitment";
+		public static final String API_FETCH_FEED_BIRTHDAY  = API_URL + "fetchFeedBirthday";
 		public static final String API_FETCH_FEED_ACTION    = API_URL + "fetchFeedAction";
 		public static final String API_SYNC                 = API_URL + "syncMobcastData";
 		public static final String API_UPDATE_REPORT        = API_URL + "updateUserReport";
+		public static final String API_UPDATE_REMOTE_REPORT = API_URL + "updateUserRemoteReport";
 		public static final String API_SUBMIT_FEEDBACK      = API_URL + "submitUserFeedback";
 		public static final String API_SUBMIT_QUIZ          = API_URL + "submitUserQuiz";
 		public static final String API_SUBMIT_CAPTURE       = API_URL + "submitCapture";
@@ -56,6 +58,7 @@ public class AppConstants {
 		public static final String API_SUBMIT_BDAY_MESSAGE  = API_URL + "submitBirthdayMessage";
 		public static final String API_SUBMIT_REF           = API_URL + "submitRecruitmentReference";
 		public static final String API_SEND_CHAT            = API_URL + "sendChatMessage";
+		public static final String API_SEARCH               = API_URL + "search";
 	}
 	
 	public interface API_KEY_PARAMETER{
@@ -82,6 +85,9 @@ public class AppConstants {
 		public static final String message                 = "message";
 		public static final String sortByAsc               = "sortByAsc";
 		public static final String limit                   = "limit";
+		public static final String searchTerm              = "searchTerm";
+		public static final String by                      = "by";
+		public static final String filter                  = "filter";
 		public static final String name                    = "name";
 		public static final String user                    = "user";
 		public static final String emailAddress            = "emailAddress";
@@ -91,6 +97,7 @@ public class AppConstants {
 		public static final String favouriteAnswer         = "favouriteAnswer";
 		public static final String countryCode             = "countryCode";
 		public static final String category                = "category";
+		public static final String uniqueId                = "uniqueId";
 		public static final String description             = "description";
 		public static final String company                 = "company";
 		public static final String subcategory             = "subcategory";
@@ -211,6 +218,7 @@ public class AppConstants {
 		public static final String eventInvitedCount        = "eventInvitedCount";
 		public static final String eventLikeCount           = "eventLikeCount";
 		public static final String eventReadCount           = "eventReadCount";
+		public static final String eventViewCount           = "eventViewCount";
 		public static final String eventStartDate           = "eventStartDate";
 		public static final String eventEndDate             = "eventEndDate";
 		public static final String eventLandMark            = "eventLandmark";
@@ -237,6 +245,7 @@ public class AppConstants {
 		public static final String awardCity                = "awardCity";
 		public static final String awardDepartment          = "awardDepartment";
 		public static final String awardReadCount           = "awardReadCount";
+		public static final String awardViewCount           = "awardViewCount";
 		public static final String awardLikeCount           = "awardLikeCount";
 		public static final String awardShareCount          = "awardShareCount";
 		public static final String awardCongratulatedCount  = "awardCongratulatedCount";
@@ -282,6 +291,21 @@ public class AppConstants {
 		public static final String referenceName            = "referenceName";
 		public static final String referencePhoneNumber     = "referencePhoneNumber";
 		public static final String referenceEmailAddress    = "referenceEmailAddress";
+		public static final String birthdayId               = "birthdayId";
+		public static final String birthdayUserId           = "birthdayUserId";
+		public static final String birthdayDateOfBirth      = "birthdayDateOfBirth";
+		public static final String birthdayCurrentYear      = "birthdayCurrentYear";
+		public static final String birthdayCurrentMonth     = "birthdayCurrentMonth";
+		public static final String birthdayCreateDate       = "birthdayCreateDate";
+		public static final String birthdayUserName         = "birthdayUserName";
+		public static final String birthdayUserEmailId      = "birthdayUserEmailId";
+		public static final String birthdayUserMobileNumber = "birthdayUserMobileNumber";
+		public static final String birthdayUserEmployeeId   = "birthdayUserEmployeeId";
+		public static final String birthdayUserProfileImage = "birthdayUserProfileImage";
+		public static final String birthdayUserDep          = "birthdayUserDep";
+		public static final String birthdayUserCity         = "birthdayUserCity";
+		public static final String birthdayUserSunSign      = "birthdayUserSunSign";
+		public static final String birthdayUserIsMale       = "isMale";
 		
 	}
 	
@@ -313,6 +337,7 @@ public class AppConstants {
 		public static final String LIKE = "like";
 		public static final String OPEN = "open";
 		public static final String CONG = "congratulate";
+		public static final String WISH = "wish";
 	}
 
 	public interface FOLDER{
@@ -342,6 +367,11 @@ public class AppConstants {
 		public static final String FEEDBACK = "feedback";//10
 		public static final String STREAM   = "livestreamyoutube";//11
 		public static final String FOOTER   = "footer";//12
+	}
+	
+	public interface BIRTHDAY{
+		public static final String SECTION   = "section";//0
+		public static final String DETAIL    = "detail";//1
 	}
 	
 	public interface TYPE{
@@ -408,6 +438,7 @@ public class AppConstants {
 		public static final String REMOTEWIPE       = "remoteWipe";
 		public static final String REMOTELOGOUT     = "remoteLogout";
 		public static final String UPDATEAPP        = "updateApp";
+		public static final String GCMSUCCESS       = "gcmSuccess";
 		public static final String RECRUITMENT      = "recruitment";
 		public static final String RELOGIN          = "relogin";
 		public static final String OBJECT           = "object";
@@ -468,6 +499,9 @@ public class AppConstants {
 	public static final String BLUE = "#01AFD2";
 	
 	public static final int NOTIFICATION_ID = 434;
-	public static final int BULK = 25;
+	public static final int BULK = 8;
+	
+	public static final String SEARCH_FILTER = "-100000000";
+	public static final String SEARCH_WEB    = "-200000000";
 
 }

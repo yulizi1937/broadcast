@@ -48,8 +48,8 @@ import android.widget.ImageView;
 import com.application.beans.Event;
 import com.application.sqlite.DBConstant;
 import com.application.ui.adapter.EventRecyclerAdapter;
-import com.application.ui.adapter.EventRecyclerAdapter.OnItemClickListener;
-import com.application.ui.adapter.EventRecyclerAdapter.OnItemLongClickListener;
+import com.application.ui.adapter.EventRecyclerAdapter.OnItemClickListenerE;
+import com.application.ui.adapter.EventRecyclerAdapter.OnItemLongClickListenerE;
 import com.application.ui.materialdialog.MaterialDialog;
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.HorizontalDividerItemDecoration;
@@ -61,6 +61,8 @@ import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.BuildVars;
+import com.application.utils.FetchFeedActionAsyncTask;
+import com.application.utils.FetchFeedActionAsyncTask.OnPostExecuteFeedActionTaskListener;
 import com.application.utils.FileLog;
 import com.application.utils.JSONRequestBuilder;
 import com.application.utils.RestClient;
@@ -313,7 +315,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 	
 	private void setRecyclerAdapterListener() {
 		if(mAdapter!=null){
-			mAdapter.setOnItemClickListener(new OnItemClickListener() {
+			mAdapter.setOnItemClickListener(new OnItemClickListenerE() {
 				@Override
 				public void onItemClick(View view, int position) {
 					// TODO Auto-generated method stub
@@ -334,7 +336,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 		}
 		
 		if(mAdapter!=null){
-			mAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
+			mAdapter.setOnItemLongClickListener(new OnItemLongClickListenerE() {
 				@Override
 				public void onItemLongClick(View view, int position) {
 					// TODO Auto-generated method stub
@@ -898,6 +900,10 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 			if (isSuccess) {
 				parseDataFromApi(mResponseFromApi, !sortByAsc);
 			}
+			
+			if(sortByAsc){
+				refreshFeedActionFromApi();
+			}
 
 			if(mProgressDialog!=null){
 				mProgressDialog.dismiss();
@@ -908,6 +914,68 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 				mToolBarMenuRefreshProgress.setVisibility(View.GONE);
 				mSwipeRefreshLayout.setRefreshing(false);
 //			}
+		}
+	}
+	
+	/**
+	 * Async : Refresh Feed Like + Read count
+	 */
+	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB) private void refreshFeedActionFromApi(){
+		try{
+			if(Utilities.isInternetConnected()){
+				if(!mSwipeRefreshLayout.isRefreshing()){
+					mSwipeRefreshLayout.setRefreshing(true);
+				}
+				FetchFeedActionAsyncTask mFetchFeedActionAsyncTask = new FetchFeedActionAsyncTask(EventRecyclerActivity.this, AppConstants.INTENTCONSTANTS.EVENT, JSONRequestBuilder.getPostFetchFeedAction(AppConstants.INTENTCONSTANTS.EVENT), TAG);
+				if(AndroidUtilities.isAboveIceCreamSandWich()){
+					mFetchFeedActionAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+				}else{
+					mFetchFeedActionAsyncTask.execute();
+				}
+				mFetchFeedActionAsyncTask.setOnPostExecuteFeedActionTaskListener(new OnPostExecuteFeedActionTaskListener() {
+					@Override
+					public void onPostExecute(String mResponseFromApi, boolean isSuccess) {
+						// TODO Auto-generated method stub
+						if(isSuccess){
+							updateArrayListEventObjectWithLatestFeedActionCount();
+						}
+						mSwipeRefreshLayout.setRefreshing(false);
+					}
+				});
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void updateArrayListEventObjectWithLatestFeedActionCount(){
+		try{
+			Cursor mCursor = getContentResolver().query(DBConstant.Event_Columns.CONTENT_URI, new String[]{DBConstant.Event_Columns.COLUMN_ID, DBConstant.Event_Columns.COLUMN_EVENT_ID, DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO, DBConstant.Event_Columns.COLUMN_EVENT_READ_NO},  null, null, DBConstant.Event_Columns.COLUMN_EVENT_RECEIVED_DATE_FORMATTED + " DESC");
+			if(mCursor!=null && mCursor.getCount() > 0){
+				mCursor.moveToFirst();
+				int mIntEventId = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_ID);
+				int mIntEventLikeCount = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO);
+				int mIntEventViewCount = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_READ_NO);
+				int i = 0;
+				do{
+					Event Obj = mArrayListEvent.get(i);
+					if(!Obj.getmFileType().toString().equalsIgnoreCase(AppConstants.MOBCAST.FOOTER)){
+						if(Obj.getmId().equalsIgnoreCase(mCursor.getString(mIntEventId))){
+							Obj.setmLikeCount(mCursor.getString(mIntEventLikeCount));
+							Obj.setmViewCount(mCursor.getString(mIntEventViewCount));
+						}
+					}
+					i++;
+				}while(mCursor.moveToNext());
+			}
+			
+			if(mCursor!=null){
+				mCursor.close();
+			}
+			mRecyclerView.getAdapter().notifyDataSetChanged();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 	
