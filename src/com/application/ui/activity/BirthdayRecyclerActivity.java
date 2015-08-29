@@ -53,6 +53,7 @@ import com.application.ui.adapter.BirthdayRecyclerAdapter;
 import com.application.ui.adapter.BirthdayRecyclerAdapter.OnItemClickListener;
 import com.application.ui.materialdialog.MaterialDialog;
 import com.application.ui.view.HorizontalDividerItemDecoration;
+import com.application.ui.view.LoadToast;
 import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.MobcastProgressDialog;
 import com.application.ui.view.ObservableRecyclerView;
@@ -116,6 +117,7 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 		setContentView(R.layout.activity_recycler_birthday);
 		initToolBar();
 		initUi();
+		syncDataWithApi();
 	}
 	
 	
@@ -184,7 +186,7 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 		}
 		mToolBarMenuRefresh.setVisibility(View.GONE);
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
-		refreshFeedFromApi(true, false, AppConstants.BULK);
+		refreshFeedFromApi(true, true, 0);
 	}
 	
 	@SuppressLint("NewApi")
@@ -260,6 +262,10 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 		setSwipeRefreshListener();
 		setMaterialRippleView();
 		setClickListener();
+	}
+	
+	private void syncDataWithApi(){
+		refreshFeedFromApi(true, true, 0);
 	}
 	
 	private void setMaterialRippleView() {
@@ -496,13 +502,13 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 				if (mId == -786) {
 					mCursor = getContentResolver().query(
 							DBConstant.Birthday_Columns.CONTENT_URI,null,DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID + "<?",new String[] { mArrayListBirthday.get(mArrayListBirthday.size() - 1).getmId() },
-							DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DATE_FORMATTED + " DESC");
+							DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID + " DESC");
 					isToAddOldData = true;
 				} else {
 					mCursor = getContentResolver().query(
 							DBConstant.Birthday_Columns.CONTENT_URI, null, null,
 							null,
-							DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DATE_FORMATTED + " DESC");
+							DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID + " DESC");
 				}
 				if (mCursor != null && mCursor.getCount() > 0) {
 					mSwipeRefreshLayout.setEnabled(true);
@@ -748,6 +754,10 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 
 			if (isSuccess) {
 				parseDataFromApi(mResponseFromApi, !sortByAsc);
+			}else{
+				if(sortByAsc){
+					AndroidUtilities.showSnackBar(BirthdayRecyclerActivity.this, Utilities.getErrorMessageFromApi(mResponseFromApi));
+				}
 			}
 			
 
@@ -802,7 +812,7 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 	private void parseDataFromApi(String mResponseFromApi, String mId, String mPosition) {
 		try {
 			if (!TextUtils.isEmpty(mResponseFromApi)) {
-				Utilities.showCrouton(BirthdayRecyclerActivity.this,mCroutonViewGroup,Utilities.getSuccessMessageFromApi(mResponseFromApi),Style.CONFIRM);
+//				Utilities.showCrouton(BirthdayRecyclerActivity.this,mCroutonViewGroup,Utilities.getSuccessMessageFromApi(mResponseFromApi),Style.CONFIRM);
 				ContentValues mValues = new ContentValues();
 				mValues.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_MESSAGE,"true");
 				getContentResolver().update(DBConstant.Birthday_Columns.CONTENT_URI, mValues, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID + "=?", new String[]{mId});
@@ -822,6 +832,7 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 		private String mId;
 		private String mPosition;
 		private MobcastProgressDialog mProgressDialog;
+		private LoadToast mLoadToast;
 
 		public AsyncSendMessageTask(String mMessage, String mId, String mPosition) {
 			this.mMessage = mMessage;
@@ -833,10 +844,17 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
 			super.onPreExecute();
-			mProgressDialog = new MobcastProgressDialog(BirthdayRecyclerActivity.this);
+			/*mProgressDialog = new MobcastProgressDialog(BirthdayRecyclerActivity.this);
 			mProgressDialog.setMessage(ApplicationLoader.getApplication()
 					.getResources().getString(R.string.loadingSubmit));
-			mProgressDialog.show();
+			mProgressDialog.show();*/
+			
+			mLoadToast = new LoadToast(BirthdayRecyclerActivity.this);
+			mLoadToast.setText(ApplicationLoader.getApplication()
+					.getResources().getString(R.string.loadingMessage));
+			mLoadToast.setProgressColor(ApplicationLoader.getApplication().getResources().getColor(R.color.toolbar_background));
+			mLoadToast.setTranslationY(170);
+			mLoadToast.show();
 		}
 
 		@Override
@@ -849,6 +867,10 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 				FileLog.e(TAG, e.toString());
 				if (mProgressDialog != null) {
 					mProgressDialog.dismiss();
+				}
+				
+				if(mLoadToast!=null){
+					mLoadToast.error();
 				}
 			}
 			return null;
@@ -864,12 +886,17 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 			}
 
 			if (isSuccess) {
+				if(mLoadToast!=null){
+					mLoadToast.success();
+				}
 				parseDataFromApi(mResponseFromApi, mId,mPosition);
 			} else {
 				mErrorMessage = Utilities
 						.getErrorMessageFromApi(mResponseFromApi);
-				Utilities.showCrouton(BirthdayRecyclerActivity.this,
-						mCroutonViewGroup, mErrorMessage, Style.ALERT);
+//				Utilities.showCrouton(BirthdayRecyclerActivity.this,mCroutonViewGroup, mErrorMessage, Style.ALERT);
+				if(mLoadToast!=null){
+					mLoadToast.error();
+				}
 			}
 		}
 	}

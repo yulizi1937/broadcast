@@ -15,8 +15,6 @@ import java.util.Hashtable;
 
 import org.apache.commons.io.FileUtils;
 
-import com.mobcast.R;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -29,6 +27,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.util.DisplayMetrics;
 import android.util.StateSet;
 import android.view.Display;
 import android.view.Surface;
@@ -41,9 +40,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.application.ui.view.SnackBar;
+import com.mobcast.R;
+
 @SuppressLint("NewApi")
 public class AndroidUtilities {
-
+	private static final String TAG = AndroidUtilities.class.getSimpleName();
 	private static final Hashtable<String, Typeface> typefaceCache = new Hashtable<String, Typeface>();
 	private static int prevOrientation = -10;
 	private static boolean waitingForSms = false;
@@ -112,31 +114,80 @@ public class AndroidUtilities {
 
 	public static int getSlidingTabTextSize() {
 		// TODO Auto-generated method stub
-		int width = ApplicationLoader.getApplication().getResources()
-				.getDisplayMetrics().widthPixels;
+		int width = ApplicationLoader.getApplication().getResources().getDisplayMetrics().widthPixels;
 		if (width < 320) {
-			return 9;//10//9
+			return 8;//10//9
 		} else if (width > 320 && width <= 480) {
-			return 10;//11//10
+			return 9;//11//10
 		} else if (width > 480 && width < 540) {
-			return 11;//12//11
+			return 10;//12//11
 		} else {
-			return 12;//13//12
+			return 11;//13//12
 		}
+		
+//		double diagonalInches = getScreenSizeInInches();
+//		
+//		if (diagonalInches < 4) {
+//			return 9;//10//9
+//		} else if (diagonalInches >= 4 && diagonalInches < 5) {
+//			return 11;//11//10
+//		} else if (diagonalInches >= 5 && diagonalInches < 6) {
+//			return 12;//12//11
+//		} else if (diagonalInches >= 6 && diagonalInches < 7) {
+//			return 14;//12//11
+//		}else {
+//			return 15;//13//12
+//		}
 	}
 
 	public static int getSlidingTabPadding() {
 		int width = ApplicationLoader.getApplication().getResources()
 				.getDisplayMetrics().widthPixels;
 		if (width < 320) {
-			return 19;//18//19
+			return 20;//18//19
 		} else if (width > 320 && width <= 480) {
-			return 18;//17//18
+			return 19;//17//18
 		} else if (width > 480 && width < 540) {
-			return 16;//15//16
+			return 17;//15//16
 		} else {
 			return 16;//16
 		}
+		
+//		double diagonalInches = getScreenSizeInInches();
+//		
+//		if (diagonalInches < 4) {
+//			return 19;//18//19
+//		} else if (diagonalInches >= 4 && diagonalInches < 5) {
+//			return 18;//17//18
+//		} else if (diagonalInches >= 5 && diagonalInches < 6) {
+//			return 16;//15//16
+//		} else if (diagonalInches >= 6 && diagonalInches < 7) {
+//			return 15;//15//16
+//		}else {
+//			return 14;//16
+//		}
+	}
+	
+	public static double getScreenSizeInInches(){
+		try{
+			DisplayMetrics metrics = ApplicationLoader.getApplication().getResources().getDisplayMetrics();
+			int widthPixels = metrics.widthPixels;
+			int heightPixels = metrics.heightPixels;
+			
+			float widthDpi = metrics.xdpi;
+			float heightDpi = metrics.ydpi;
+			
+			float widthInches = widthPixels / widthDpi;
+			float heightInches = heightPixels / heightDpi;
+			
+			double diagonalInches = Math.sqrt(
+				    (widthInches * widthInches) 
+				    + (heightInches * heightInches));
+			return diagonalInches;
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return 5;
 	}
 
 	public static void unlockOrientation(Activity activity) {
@@ -641,6 +692,19 @@ public class AndroidUtilities {
 	
 	public static void exitWindowAnimation(Activity mActivity){
 		mActivity.overridePendingTransition (R.anim.slide_in_right, R.anim.slide_out_right);
+	}
+	
+	public static void showSnackBar(Activity mActivity, String mMessage){
+		try{
+			new SnackBar.Builder(mActivity)
+		    .withMessage(mMessage)
+		    .withStyle(SnackBar.Style.INFO)
+		    .withTextColorId(R.color.sb__snack_text_color)
+		    .withDuration(SnackBar.SHORT_SNACK)
+		    .show();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	

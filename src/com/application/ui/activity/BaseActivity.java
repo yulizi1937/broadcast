@@ -315,40 +315,40 @@ public abstract class BaseActivity extends AppCompatActivity {
 			MIS Obj = new MIS();
 			switch(i){
 			case 0:
+				Obj.setmTitle("My Office – Attendance & PJP");
+				Obj.setmLink("in.jts.myapp");
+				break;
+			case 1:
 				Obj.setmTitle("Cavinkomm Reports");
 				Obj.setmLink("http://124.7.223.32/CKN");
 				break;
-			case 1:
+			case 2:
 				Obj.setmTitle("Take Insight Reports – Secondary Sales MIS");
 				Obj.setmLink("http://www.ckinsight.com");
 				break;
-			case 2:
+			case 3:
 				Obj.setmTitle("RSSM wise Productivity, ECO and Unbilled Outlets");
 				Obj.setmLink("http://www.cavinkomm.net/RSConnectMISReport/");
 				break;
-			case 3:
+			case 4:
 				Obj.setmTitle("Top Outlet Performance(Outlet Trend Report - Week wise)");
 				Obj.setmLink("http://www.cavinkomm.net/RSConnectMISReport/");
 				break;
-			case 4:
+			case 5:
 				Obj.setmTitle("SFA Reports – IVY Mobility");
 				Obj.setmLink("http://idistcavinkarein.ivymobileapps.com/web");
 				break;
-			case 5:
+			case 6:
 				Obj.setmTitle("Utility Reports");
 				Obj.setmLink("http://cavinkomm.net/ckplreport/utilityreports/upgraded/home.asp");
 				break;
-			case 6:
+			case 7:
 				Obj.setmTitle("Market Working Report");
 				Obj.setmLink("http://cavinkomm.net/mktg/upgraded/reports/loginfo.asp");
 				break;
-			case 7:
+			case 8:
 				Obj.setmTitle("CK HRIMS – Employee Portal");
 				Obj.setmLink("http://my.cavinkare.com");
-				break;
-			case 8:
-				Obj.setmTitle("MyOffice");
-				Obj.setmLink("in.jts.myapp");
 				break;
 			}
 			items.add(Obj);

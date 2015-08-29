@@ -57,6 +57,7 @@ import com.application.ui.adapter.AwardRecyclerAdapter.OnItemLongClickListenerA;
 import com.application.ui.materialdialog.MaterialDialog;
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.HorizontalDividerItemDecoration;
+import com.application.ui.view.LoadToast;
 import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.MobcastProgressDialog;
 import com.application.ui.view.ObservableRecyclerView;
@@ -194,7 +195,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
 		if (!mLoadMore) {
 			mLoadMore = true;
-			refreshFeedFromApi(true, false, AppConstants.BULK);
+			refreshFeedFromApi(true, true, 0);
 		}
 	}
 
@@ -1132,6 +1133,10 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 
 			if (isSuccess) {
 				parseDataFromApi(mResponseFromApi, !sortByAsc);
+			}else{
+				if(sortByAsc){
+					AndroidUtilities.showSnackBar(AwardRecyclerActivity.this, Utilities.getErrorMessageFromApi(mResponseFromApi));
+				}
 			}
 			
 			if(sortByAsc){
@@ -1198,10 +1203,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 	private void parseDataFromApi(String mResponseFromApi) {
 		try {
 			if (!TextUtils.isEmpty(mResponseFromApi)) {
-				Utilities.showCrouton(AwardRecyclerActivity.this,
-						mCroutonViewGroup,
-						Utilities.getSuccessMessageFromApi(mResponseFromApi),
-						Style.CONFIRM);
+//				Utilities.showCrouton(AwardRecyclerActivity.this,mCroutonViewGroup,Utilities.getSuccessMessageFromApi(mResponseFromApi),Style.CONFIRM);
 			}
 		} catch (Exception e) {
 			FileLog.e(TAG, e.toString());
@@ -1215,6 +1217,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		private String mMessage;
 		private String mId;
 		private MobcastProgressDialog mProgressDialog;
+		private LoadToast mLoadToast;
 
 		public AsyncSendMessageTask(String mMessage, String mId) {
 			this.mMessage = mMessage;
@@ -1225,11 +1228,17 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
 			super.onPreExecute();
-			mProgressDialog = new MobcastProgressDialog(
+			/*mProgressDialog = new MobcastProgressDialog(
 					AwardRecyclerActivity.this);
 			mProgressDialog.setMessage(ApplicationLoader.getApplication()
 					.getResources().getString(R.string.loadingSubmit));
-			mProgressDialog.show();
+			mProgressDialog.show();*/
+			mLoadToast = new LoadToast(AwardRecyclerActivity.this);
+			mLoadToast.setText(ApplicationLoader.getApplication()
+					.getResources().getString(R.string.loadingMessage));
+			mLoadToast.setProgressColor(ApplicationLoader.getApplication().getResources().getColor(R.color.toolbar_background));
+			mLoadToast.setTranslationY(170);
+			mLoadToast.show();
 		}
 
 		@Override
@@ -1243,6 +1252,10 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 				FileLog.e(TAG, e.toString());
 				if (mProgressDialog != null) {
 					mProgressDialog.dismiss();
+				}
+				
+				if(mLoadToast!=null){
+					mLoadToast.error();
 				}
 			}
 			return null;
@@ -1258,12 +1271,16 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 			}
 
 			if (isSuccess) {
+				if(mLoadToast!=null){
+					mLoadToast.success();
+				}
 				parseDataFromApi(mResponseFromApi);
 			} else {
-				mErrorMessage = Utilities
-						.getErrorMessageFromApi(mResponseFromApi);
-				Utilities.showCrouton(AwardRecyclerActivity.this,
-						mCroutonViewGroup, mErrorMessage, Style.ALERT);
+				mErrorMessage = Utilities.getErrorMessageFromApi(mResponseFromApi);
+//				Utilities.showCrouton(AwardRecyclerActivity.this,mCroutonViewGroup, mErrorMessage, Style.ALERT);
+				if(mLoadToast!=null){
+					mLoadToast.error();
+				}
 			}
 		}
 	}

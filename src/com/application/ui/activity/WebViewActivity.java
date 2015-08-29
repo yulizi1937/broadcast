@@ -161,6 +161,7 @@ public class WebViewActivity extends SwipeBackBaseActivity {
 	private void initWebViewClient(){
 		mWebView.setWebChromeClient(new MyWebViewChromeClient());
 		mWebView.setWebViewClient(new MyWebViewClient());
+		mWebView.getSettings().setBuiltInZoomControls(true);
     	mWebView.loadUrl(mUrl);
     	setToolBarOption();
 	}

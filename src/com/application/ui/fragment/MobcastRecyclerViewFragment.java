@@ -29,7 +29,6 @@ import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
@@ -269,7 +268,9 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 			@Override
 			public void onRefresh() {
 				// TODO Auto-generated method stub
-				refreshFeedFromApi(true, true, 0);
+				if (mArrayListMobcast != null && mArrayListMobcast.size() > 0) {
+					refreshFeedFromApi(true, true, 0);	
+				}
 			}
 		});
 	}
@@ -1064,6 +1065,10 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 			
 			if (isSuccess) {
 				parseDataFromApi(mResponseFromApi, !sortByAsc);
+			}else{
+				if(sortByAsc){
+					AndroidUtilities.showSnackBar(getActivity(), Utilities.getErrorMessageFromApi(mResponseFromApi));
+				}
 			}
 			
 			if(sortByAsc){

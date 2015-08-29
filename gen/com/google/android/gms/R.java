@@ -34,8 +34,8 @@ public final class R {
 		public static final int common_signin_btn_light_text_disabled = 0x7f060006;
 		public static final int common_signin_btn_light_text_focused = 0x7f060007;
 		public static final int common_signin_btn_light_text_pressed = 0x7f060005;
-		public static final int common_signin_btn_text_dark = 0x7f060098;
-		public static final int common_signin_btn_text_light = 0x7f060099;
+		public static final int common_signin_btn_text_dark = 0x7f0600a1;
+		public static final int common_signin_btn_text_light = 0x7f0600a2;
 	}
 	public static final class drawable {
 		public static final int common_signin_btn_icon_dark = 0x7f02004f;
@@ -62,17 +62,17 @@ public final class R {
 		public static final int common_signin_btn_text_normal_light = 0x7f020064;
 		public static final int common_signin_btn_text_pressed_dark = 0x7f020065;
 		public static final int common_signin_btn_text_pressed_light = 0x7f020066;
-		public static final int ic_plusone_medium_off_client = 0x7f0200ee;
-		public static final int ic_plusone_small_off_client = 0x7f0200ef;
-		public static final int ic_plusone_standard_off_client = 0x7f0200f0;
-		public static final int ic_plusone_tall_off_client = 0x7f0200f1;
+		public static final int ic_plusone_medium_off_client = 0x7f0200f1;
+		public static final int ic_plusone_small_off_client = 0x7f0200f2;
+		public static final int ic_plusone_standard_off_client = 0x7f0200f3;
+		public static final int ic_plusone_tall_off_client = 0x7f0200f4;
 	}
 	public static final class id {
-		public static final int hybrid = 0x7f0b000e;
-		public static final int none = 0x7f0b000f;
-		public static final int normal = 0x7f0b0010;
-		public static final int satellite = 0x7f0b0011;
-		public static final int terrain = 0x7f0b0012;
+		public static final int hybrid = 0x7f0b0011;
+		public static final int none = 0x7f0b0012;
+		public static final int normal = 0x7f0b0013;
+		public static final int satellite = 0x7f0b0014;
+		public static final int terrain = 0x7f0b0015;
 	}
 	public static final class string {
 		public static final int auth_client_needs_enabling_title = 0x7f070014;

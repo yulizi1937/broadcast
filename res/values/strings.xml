@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="app_name">Mobcast</string>
+    <string name="app_name">CK Mobcast</string>
     <string name="package_name">com.mobcast</string>
     <string name="toolbar_background">#254E7A</string>
     <string name="LanguageName">English</string>
@@ -24,11 +24,14 @@
     <string name="button_delete">Delete</string>
     <string name="update_title_message">A New Update is Available!</string>
     <string name="update_delete_message">These version is no longer supported. Please update the application.</string>
+    <string name="birthday_title_message">Wish Happy Birthday!</string>
+    <string name="birthday_desc_message">Many of your colleagues having birthday today!</string>
     <string name="developer_message">You are developer! Please click it one more time.</string>
     <string name="update">Update</string>
     <string name="capture_validation">Please add images!</string>
     <string name="file_not_available">File not available. Please press back and open it again! Make sure internet is available</string>
     <string name="congratulate_message">You just congratulated </string>
+    <string name="save_message">Saved locally!</string>
     <string name="congratulate_message_validation">You already congratulated  </string>
     <string name="wished_message_validation">You already wished  </string>
     <string name="logout_content_message">Logging out will delete all your content from the app and files too.</string>
@@ -111,7 +114,7 @@
     <string name="accept"> Accept</string>
     <string name="notgoing"> Decline</string>
     <string name="congratulated_text"> people congratulated!</string>
-    <string name="congratulated_action">Congratulate</string>
+    <string name="congratulated_action"> Say Congrats!</string>
     <!-- activity_login -->
     <string name="textview_login">Please enter your Mobile Number</string>
     <string name="textview_login_countrycode">+91</string>
@@ -210,10 +213,10 @@
     <string name="sample_event_summary">Nielsen’s Consumer 360 is a global events series that brings you innovative thought leaders and industry experts who share exclusive insights to help you develop business solutions fueled with punch and ingenuity. Learn to drive successful outcomes from well-respected trailblazers who will share their cutting edge strategies and results. Explore uncommon ideas across the consumer spectrum to help you harness the power of people today and then delve into industry-specific discussions focused on your needs.</string>
 
     <!-- layout_mother -->
-    <string name="layout_mother_mobcast">MOBCAST</string>
-<!--     <string name="layout_mother_mobcast">CK BULLETIN</string> -->
-    <string name="layout_mother_chat">CHAT</string>
-<!--     <string name="layout_mother_chat">MIS</string> -->
+<!--     <string name="layout_mother_mobcast">MOBCAST</string> -->
+    <string name="layout_mother_mobcast">CK BULLETIN</string>
+<!--     <string name="layout_mother_chat">CHAT</string> -->
+    <string name="layout_mother_chat">MIS</string>
     <string name="layout_mother_training">TRAINING</string>
 
     <!-- layout_drawer_search_mother -->
@@ -623,6 +626,7 @@ Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic 
 
     <string-array name="drawer_array">
         <item>Profile</item>
+        <item>My Office – Attendance &amp; PJP</item>
         <item>Capture</item>
         <item>Recruitment</item>
         <item>Settings</item>
@@ -661,6 +665,7 @@ Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic 
     <string name="loadingVerify" tools:ignore="TypographyEllipsis">Verifying...</string>
     <string name="loadingUpdate" tools:ignore="TypographyEllipsis">Updating...</string>
     <string name="loadingSubmit" tools:ignore="TypographyEllipsis">Submitting...</string>
+    <string name="loadingMessage" tools:ignore="TypographyEllipsis">Sending message...</string>
 
     <!-- emptyMessages -->
     <string name="emptyTitle">Welcome to Mobcast!</string>

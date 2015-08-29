@@ -144,4 +144,17 @@
     <color name="error_color">#FFDD2C00</color>
     <color name="snackbar_background_color">#323232</color>
 
+    <!-- LoadToast -->
+    <color name="color_accent">#7c4dff</color>
+    <color name="color_success">#3CCD88</color>
+    <color name="color_error">#f44336</color>
+
+    <!-- SnackBar -->
+    <color name="sb__snack_bkgnd">#323232</color>
+    <color name="sb__snack_alert_bkgnd">#ffff4444</color>
+    <color name="sb__transparent">#00000000</color>
+    <color name="sb__dim_white">#20FFFFFF</color>
+    <color name="sb__button_text_color">#FB6541</color>
+    <color name="sb__snack_text_color">#EEFF41</color>
+
 </resources>

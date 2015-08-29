@@ -796,7 +796,7 @@ public class Utilities {
 	}
 
 	@SuppressLint("NewApi")
-	public static double checkDisplaySize() {
+	public static String checkDisplaySize() {
 		try {
 			WindowManager manager = (WindowManager) ApplicationLoader.applicationContext
 					.getSystemService(Context.WINDOW_SERVICE);
@@ -813,11 +813,13 @@ public class Utilities {
 							+ " " + displaySize.y);
 				}
 			}
-			return Math.sqrt((displaySize.x * displaySize.x)
-					+ (displaySize.y * displaySize.y));
+			
+//			return Math.sqrt((displaySize.x * displaySize.x)
+//					+ (displaySize.y * displaySize.y)) + AndroidUtilities.getScreenSizeInInches();
+			return   displaySize.x+ " x " + displaySize.y  + " "+ AndroidUtilities.getScreenSizeInInches();
 		} catch (Exception e) {
 			FileLog.e("tmessages", e);
-			return 0;
+			return "0";
 		}
 	}
 	

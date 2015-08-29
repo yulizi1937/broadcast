@@ -282,7 +282,9 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 			@Override
 			public void onRefresh() {
 				// TODO Auto-generated method stub
-				refreshFeedFromApi(true, true, 0);
+				if (mArrayListTraining != null && mArrayListTraining.size() > 0) {
+					refreshFeedFromApi(true, true, 0);	
+				}
 			}
 		});
 	}
@@ -1093,6 +1095,10 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 			
 			if (isSuccess) {
 				parseDataFromApi(mResponseFromApi, !sortByAsc);
+			}else{
+				if(sortByAsc){
+					AndroidUtilities.showSnackBar(getActivity(), Utilities.getErrorMessageFromApi(mResponseFromApi));
+				}
 			}
 			
 			if(sortByAsc){

@@ -901,7 +901,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		
 		String[] mDrawerItemArray = getResources().getStringArray(
 				R.array.drawer_array);
-		int[] mDrawableResId = new int[] { R.drawable.ic_drawer_profile,
+		int[] mDrawableResId = new int[] { R.drawable.ic_drawer_profile,R.drawable.ic_drawer_myoffice,
 				R.drawable.ic_drawer_capture, R.drawable.ic_drawer_recruitment,
 				R.drawable.ic_drawer_settings, R.drawable.ic_drawer_help,
 				R.drawable.ic_drawer_report, R.drawable.ic_drawer_feedback,
@@ -994,46 +994,58 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	}
 
 	private void selectItem(int position) {
-		Fragment fragment = null;
-		Bundle args = new Bundle();
-		Intent drawerIntent = null;
-		switch (position) {
-		case 0:
-			drawerIntent = new Intent(MotherActivity.this, EditProfileActivity.class);
-			break;
-		case 1:
-			drawerIntent = new Intent(MotherActivity.this, CaptureActivity.class);
-			break;
-		case 2:
-			drawerIntent = new Intent(MotherActivity.this, RecruitmentRecyclerActivity.class);
-			break;
-		case 3:
-			drawerIntent = new Intent(MotherActivity.this, SettingsActivity.class);
-			break;
-		case 4:
-			drawerIntent = new Intent(MotherActivity.this, TutorialActivity.class);
-			drawerIntent.putExtra(AppConstants.INTENTCONSTANTS.HELP, true);
-			break;
-		case 5:
-			drawerIntent = new Intent(MotherActivity.this, ReportActivity.class);
-			break;
-		case 6:
-			drawerIntent = new Intent(MotherActivity.this, FeedbackAppActivity.class);
-			break;
-		case 7:
-			showLogOutConfirmationMaterialDialog();
-			break;
-		case 8:
-			drawerIntent = new Intent(MotherActivity.this, AboutActivity.class);
-			break;
-		default:
-			break;
-		}
-		mDrawerLayout.closeDrawer(mScrimInsetsFrameLayout);
-		
-		if (drawerIntent != null){
-			startActivity(drawerIntent);
-			AndroidUtilities.enterWindowAnimation(MotherActivity.this);	
+		try{
+			Fragment fragment = null;
+			Bundle args = new Bundle();
+			Intent drawerIntent = null;
+			switch (position) {
+			case 0:
+				drawerIntent = new Intent(MotherActivity.this, EditProfileActivity.class);
+				break;
+			case 1:
+				if(!Utilities.openApp(MotherActivity.this, "in.jts.myapp")){
+					Intent mBrowserIntent = new Intent(Intent.ACTION_VIEW);
+					mBrowserIntent.setData(Uri.parse("http://www.jajo.in/myovp11.apk"));
+					startActivity(mBrowserIntent);
+					AndroidUtilities.enterWindowAnimation(MotherActivity.this);	
+				}
+				return;
+			case 2:
+				drawerIntent = new Intent(MotherActivity.this, CaptureActivity.class);
+				break;
+			case 3:
+				drawerIntent = new Intent(MotherActivity.this, RecruitmentRecyclerActivity.class);
+				break;
+			case 4:
+				drawerIntent = new Intent(MotherActivity.this, SettingsActivity.class);
+				break;
+			case 5:
+				drawerIntent = new Intent(MotherActivity.this, TutorialActivity.class);
+				drawerIntent.putExtra(AppConstants.INTENTCONSTANTS.HELP, true);
+				break;
+			case 6:
+				drawerIntent = new Intent(MotherActivity.this, ReportActivity.class);
+				break;
+			case 7:
+				drawerIntent = new Intent(MotherActivity.this, FeedbackAppActivity.class);
+				break;
+			case 8:
+				showLogOutConfirmationMaterialDialog();
+				break;
+			case 9:
+				drawerIntent = new Intent(MotherActivity.this, AboutActivity.class);
+				break;
+			default:
+				break;
+			}
+			mDrawerLayout.closeDrawer(mScrimInsetsFrameLayout);
+			
+			if (drawerIntent != null){
+				startActivity(drawerIntent);
+				AndroidUtilities.enterWindowAnimation(MotherActivity.this);	
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 

@@ -339,8 +339,7 @@ public class AppPreferences {
 	}
 
 	public boolean isBirthdayNotificationMute() {
-		boolean isBirthdayNotificationMute= sharedPreferences.getBoolean("setBirthdayNotificationMute",
-				false);
+		boolean isBirthdayNotificationMute= sharedPreferences.getBoolean("setBirthdayNotificationMute",false);
 		return isBirthdayNotificationMute;
 	}
 	

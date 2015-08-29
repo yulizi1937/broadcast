@@ -182,7 +182,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
 		if (!mLoadMore) {
             	mLoadMore = true;
-	            refreshFeedFromApi(true, false, AppConstants.BULK);
+            	refreshFeedFromApi(true, true, 0);
         }
 	}
 
@@ -899,6 +899,10 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 			
 			if (isSuccess) {
 				parseDataFromApi(mResponseFromApi, !sortByAsc);
+			}else{
+				if(sortByAsc){
+					AndroidUtilities.showSnackBar(EventRecyclerActivity.this, Utilities.getErrorMessageFromApi(mResponseFromApi));
+				}
 			}
 			
 			if(sortByAsc){

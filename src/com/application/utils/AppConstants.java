@@ -394,6 +394,7 @@ public class AppConstants {
 		public static final int CHAT      = 16;
 		public static final int RECRUITMENT= 17;
 		public static final int UPDATEAPP = 18;
+		public static final int BIRTHDAY  = 19;
 	}
 	
 	public interface TRAINING{
@@ -499,7 +500,7 @@ public class AppConstants {
 	public static final String BLUE = "#01AFD2";
 	
 	public static final int NOTIFICATION_ID = 434;
-	public static final int BULK = 8;
+	public static final int BULK = 25;
 	
 	public static final String SEARCH_FILTER = "-100000000";
 	public static final String SEARCH_WEB    = "-200000000";
