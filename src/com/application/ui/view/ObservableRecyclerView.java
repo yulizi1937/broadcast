@@ -27,6 +27,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.application.utils.FileLog;
 import com.application.utils.ObservableScrollViewCallbacks;
 import com.application.utils.ScrollState;
 import com.application.utils.Scrollable;
@@ -37,7 +38,7 @@ import com.application.utils.Scrollable;
  * provided by the support library officially.
  */
 public class ObservableRecyclerView extends RecyclerView implements Scrollable {
-
+	private static final String TAG = ObservableRecyclerView.class.getSimpleName();
     // Fields that should be saved onSaveInstanceState
     private int mPrevFirstVisiblePosition;
     private int mPrevFirstVisibleChildHeight = -1;
@@ -98,78 +99,82 @@ public class ObservableRecyclerView extends RecyclerView implements Scrollable {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
-        if (mCallbacks != null) {
-            if (getChildCount() > 0) {
-                int firstVisiblePosition = getChildPosition(getChildAt(0));
-                int lastVisiblePosition = getChildPosition(getChildAt(getChildCount() - 1));
-                for (int i = firstVisiblePosition, j = 0; i <= lastVisiblePosition; i++, j++) {
-                    if (mChildrenHeights.indexOfKey(i) < 0 || getChildAt(j).getHeight() != mChildrenHeights.get(i)) {
-                        mChildrenHeights.put(i, getChildAt(j).getHeight());
+        try{
+            if (mCallbacks != null) {
+                if (getChildCount() > 0) {
+                    int firstVisiblePosition = getChildPosition(getChildAt(0));
+                    int lastVisiblePosition = getChildPosition(getChildAt(getChildCount() - 1));
+                    for (int i = firstVisiblePosition, j = 0; i <= lastVisiblePosition; i++, j++) {
+                        if (mChildrenHeights.indexOfKey(i) < 0 || getChildAt(j).getHeight() != mChildrenHeights.get(i)) {
+                            mChildrenHeights.put(i, getChildAt(j).getHeight());
+                        }
                     }
-                }
 
-                View firstVisibleChild = getChildAt(0);
-                if (firstVisibleChild != null) {
-                    if (mPrevFirstVisiblePosition < firstVisiblePosition) {
-                        // scroll down
-                        int skippedChildrenHeight = 0;
-                        if (firstVisiblePosition - mPrevFirstVisiblePosition != 1) {
-                            for (int i = firstVisiblePosition - 1; i > mPrevFirstVisiblePosition; i--) {
-                                if (0 < mChildrenHeights.indexOfKey(i)) {
-                                    skippedChildrenHeight += mChildrenHeights.get(i);
-                                } else {
-                                    // Approximate each item's height to the first visible child.
-                                    // It may be incorrect, but without this, scrollY will be broken
-                                    // when scrolling from the bottom.
-                                    skippedChildrenHeight += firstVisibleChild.getHeight();
+                    View firstVisibleChild = getChildAt(0);
+                    if (firstVisibleChild != null) {
+                        if (mPrevFirstVisiblePosition < firstVisiblePosition) {
+                            // scroll down
+                            int skippedChildrenHeight = 0;
+                            if (firstVisiblePosition - mPrevFirstVisiblePosition != 1) {
+                                for (int i = firstVisiblePosition - 1; i > mPrevFirstVisiblePosition; i--) {
+                                    if (0 < mChildrenHeights.indexOfKey(i)) {
+                                        skippedChildrenHeight += mChildrenHeights.get(i);
+                                    } else {
+                                        // Approximate each item's height to the first visible child.
+                                        // It may be incorrect, but without this, scrollY will be broken
+                                        // when scrolling from the bottom.
+                                        skippedChildrenHeight += firstVisibleChild.getHeight();
+                                    }
                                 }
                             }
-                        }
-                        mPrevScrolledChildrenHeight += mPrevFirstVisibleChildHeight + skippedChildrenHeight;
-                        mPrevFirstVisibleChildHeight = firstVisibleChild.getHeight();
-                    } else if (firstVisiblePosition < mPrevFirstVisiblePosition) {
-                        // scroll up
-                        int skippedChildrenHeight = 0;
-                        if (mPrevFirstVisiblePosition - firstVisiblePosition != 1) {
-                            for (int i = mPrevFirstVisiblePosition - 1; i > firstVisiblePosition; i--) {
-                                if (0 < mChildrenHeights.indexOfKey(i)) {
-                                    skippedChildrenHeight += mChildrenHeights.get(i);
-                                } else {
-                                    // Approximate each item's height to the first visible child.
-                                    // It may be incorrect, but without this, scrollY will be broken
-                                    // when scrolling from the bottom.
-                                    skippedChildrenHeight += firstVisibleChild.getHeight();
+                            mPrevScrolledChildrenHeight += mPrevFirstVisibleChildHeight + skippedChildrenHeight;
+                            mPrevFirstVisibleChildHeight = firstVisibleChild.getHeight();
+                        } else if (firstVisiblePosition < mPrevFirstVisiblePosition) {
+                            // scroll up
+                            int skippedChildrenHeight = 0;
+                            if (mPrevFirstVisiblePosition - firstVisiblePosition != 1) {
+                                for (int i = mPrevFirstVisiblePosition - 1; i > firstVisiblePosition; i--) {
+                                    if (0 < mChildrenHeights.indexOfKey(i)) {
+                                        skippedChildrenHeight += mChildrenHeights.get(i);
+                                    } else {
+                                        // Approximate each item's height to the first visible child.
+                                        // It may be incorrect, but without this, scrollY will be broken
+                                        // when scrolling from the bottom.
+                                        skippedChildrenHeight += firstVisibleChild.getHeight();
+                                    }
                                 }
                             }
+                            mPrevScrolledChildrenHeight -= firstVisibleChild.getHeight() + skippedChildrenHeight;
+                            mPrevFirstVisibleChildHeight = firstVisibleChild.getHeight();
+                        } else if (firstVisiblePosition == 0) {
+                            mPrevFirstVisibleChildHeight = firstVisibleChild.getHeight();
                         }
-                        mPrevScrolledChildrenHeight -= firstVisibleChild.getHeight() + skippedChildrenHeight;
-                        mPrevFirstVisibleChildHeight = firstVisibleChild.getHeight();
-                    } else if (firstVisiblePosition == 0) {
-                        mPrevFirstVisibleChildHeight = firstVisibleChild.getHeight();
-                    }
-                    if (mPrevFirstVisibleChildHeight < 0) {
-                        mPrevFirstVisibleChildHeight = 0;
-                    }
-                    mScrollY = mPrevScrolledChildrenHeight - firstVisibleChild.getTop();
-                    mPrevFirstVisiblePosition = firstVisiblePosition;
+                        if (mPrevFirstVisibleChildHeight < 0) {
+                            mPrevFirstVisibleChildHeight = 0;
+                        }
+                        mScrollY = mPrevScrolledChildrenHeight - firstVisibleChild.getTop();
+                        mPrevFirstVisiblePosition = firstVisiblePosition;
 
-                    mCallbacks.onScrollChanged(mScrollY, mFirstScroll, mDragging);
-                    if (mFirstScroll) {
-                        mFirstScroll = false;
-                    }
+                        mCallbacks.onScrollChanged(mScrollY, mFirstScroll, mDragging);
+                        if (mFirstScroll) {
+                            mFirstScroll = false;
+                        }
 
-                    if (mPrevScrollY < mScrollY) {
-                        //down
-                        mScrollState = ScrollState.UP;
-                    } else if (mScrollY < mPrevScrollY) {
-                        //up
-                        mScrollState = ScrollState.DOWN;
-                    } else {
-                        mScrollState = ScrollState.STOP;
+                        if (mPrevScrollY < mScrollY) {
+                            //down
+                            mScrollState = ScrollState.UP;
+                        } else if (mScrollY < mPrevScrollY) {
+                            //up
+                            mScrollState = ScrollState.DOWN;
+                        } else {
+                            mScrollState = ScrollState.STOP;
+                        }
+                        mPrevScrollY = mScrollY;
                     }
-                    mPrevScrollY = mScrollY;
                 }
             }
+        }catch(Exception e){
+        	FileLog.e(TAG, e.toString());
         }
     }
 

@@ -64,26 +64,33 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     private LayoutInflater mInflater;
     private ArrayList<Training> mArrayListTraining;
     private View mHeaderView;
+    private boolean isGrid = false;
     public OnItemClickListenerT mItemClickListener;
     public OnItemLongClickListenerT mItemLongClickListener;
     private Context mContext;
     private ImageLoader mImageLoader;
 
-    public TrainingRecyclerAdapter(Context context, ArrayList<Training> mArrayListTraining, View headerView) {
+    public TrainingRecyclerAdapter(Context context, ArrayList<Training> mArrayListTraining, View headerView,boolean isGrid) {
         mInflater = LayoutInflater.from(context);
         mContext = context;
         this.mArrayListTraining = mArrayListTraining;
+        this.isGrid = isGrid;
         mHeaderView = headerView;
         mImageLoader = ApplicationLoader.getUILImageLoader();
     }
 
     @Override
     public int getItemCount() {
-        if (mHeaderView == null) {
-            return mArrayListTraining.size();
-        } else {
-            return mArrayListTraining.size() + 1;
-        }
+    	 if (mHeaderView == null) {
+             return mArrayListTraining.size();
+         } else {
+         	if(!isGrid){
+         		return mArrayListTraining.size() + 1;	
+         	}else{
+         		return mArrayListTraining.size() + 2;
+         	}
+             
+         }
     }
     
     public void addTrainingObjList(ArrayList<Training> mListTraining){
@@ -98,11 +105,22 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public int getItemViewType(int position) {
-    	switch(position){
-    	case 0:
-    		return VIEW_TYPE_HEADER;
-    	default:
-    		return getItemTypeFromObject(position-1);
+    	if(!isGrid){
+    		switch(position){
+        	case 0:
+        		return VIEW_TYPE_HEADER;
+        	default:
+        		return getItemTypeFromObject(position-1);
+        	}
+    	}else{
+    		switch(position){
+        	case 0:
+        		return VIEW_TYPE_HEADER;
+        	case 1:
+        		return VIEW_TYPE_HEADER;
+        	default:
+        		return getItemTypeFromObject(position-2);
+        	}
     	}
 //        return (position == 0) ? VIEW_TYPE_HEADER : VIEW_TYPE_ITEM;
     }

@@ -22,29 +22,30 @@ public class BuildVars {
 	public static final boolean DEBUG_OTP = true;
 	public static final boolean DEBUG_CRASH_EMAIL = false;
 	
-	/*
+	/**
+	 * DESIGN : GRID 
+	 */
+	public static final boolean IS_GRID = true;
+	
+	/**
 	 * Sync
 	 */
 	public static final boolean IS_AUTOSYNC = false;
 	
-	/*
+	/**
 	 * Network Preferences
 	 */
 	
 	public static final boolean USE_OKHTTP = true;
 	
-	/*
+	/**
 	 * CLIENT PURPOSE
 	 */
 	public static final boolean IS_MOBILENUMBER_PRIMARY = true;
 	
 	
-	/*
-	 * 
-	 */
-	
-	/*
-	 * CRASH REPORTING
+	/**
+	 * CRASH REPORTING : DUMPING STACKTRACE IN A MAIL
 	 */
 	public static String SEND_LOGS_EMAIL = "androidbugtrace@gmail.com";
 	public static String EMAIL_USERNAME = "androidbugtrace@gmail.com";

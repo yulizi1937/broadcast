@@ -17,6 +17,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -29,6 +30,7 @@ import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
@@ -64,6 +66,7 @@ import com.application.ui.view.BottomSheet;
 import com.application.ui.view.HorizontalDividerItemDecoration;
 import com.application.ui.view.MobcastProgressDialog;
 import com.application.ui.view.ObservableRecyclerView;
+import com.application.ui.view.VerticalDividerItemDecoration;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
@@ -108,7 +111,10 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 	
 	private Context mContext;
 	
-	private LinearLayoutManager mLinearLayoutManager;
+	private GridLayoutManager mGridLayoutManager;
+	
+	private boolean isGrid = false;
+	private int mGridColumn = 1;
 	
     private boolean mLoadMore = false; 
     int mFirstVisibleItem, mVisibleItemCount, mTotalItemCount;
@@ -145,9 +151,10 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 		mEmptyRefreshBtn = (AppCompatButton) view
 				.findViewById(R.id.layoutEmptyRefreshBtn);
 		
-		mLinearLayoutManager = new LinearLayoutManager(mParentActivity);
-		mRecyclerView
-		.setLayoutManager(mLinearLayoutManager);
+		isToApplyGridOrNot();
+		
+		mGridLayoutManager = new GridLayoutManager(mParentActivity, mGridColumn);
+		mRecyclerView.setLayoutManager(mGridLayoutManager);
 		
 		ApplicationLoader.getPreferences().setViewIdTraining("-1");
 
@@ -239,9 +246,9 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 				public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 					// TODO Auto-generated method stub
 					super.onScrolled(recyclerView, dx, dy);
-			        mVisibleItemCount = mLinearLayoutManager.getChildCount();
-			        mTotalItemCount = mLinearLayoutManager.getItemCount();
-			        mFirstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
+			        mVisibleItemCount = mGridLayoutManager.getChildCount();
+			        mTotalItemCount = mGridLayoutManager.getItemCount();
+			        mFirstVisibleItem = mGridLayoutManager.findFirstVisibleItemPosition();
 			 
 			        if (!mLoadMore) {
 						if (mVisibleItemCount + mFirstVisibleItem >= mTotalItemCount) {
@@ -457,7 +464,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 //		mArrayListTraining = getDummyTrainingData();
 		// setDummyDataWithHeader(mRecyclerView, headerView);
 		mAdapter = new TrainingRecyclerAdapter(getActivity(),
-				mArrayListTraining, headerView);
+				mArrayListTraining, headerView, isGrid);
 		mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 		mRecyclerView.setHasFixedSize(false);
 		if (AndroidUtilities.isAboveIceCreamSandWich()) {
@@ -474,6 +481,14 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 						getActivity()).color(Utilities.getDividerColor())
 						.sizeResId(R.dimen.fragment_recyclerview_divider)
 						.visibilityProvider(mAdapter).build());
+		
+		if(isGrid){
+			mRecyclerView
+			.addItemDecoration(new VerticalDividerItemDecoration.Builder(
+					getActivity()).color(Utilities.getDividerColor())
+					.sizeResId(R.dimen.fragment_recyclerview_divider)
+					.visibilityProvider(mAdapter).build());	
+		}
 
 		if (mParentActivity instanceof ObservableScrollViewCallbacks) {
 			// Scroll to the specified offset after layout
@@ -596,6 +611,9 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 				public void onItemLongClick(View view, int position) {
 					// TODO Auto-generated method stub
 //					position=-1;
+					if(isGrid){
+						position+=1;
+					}
 					showContextMenu(position, view);
 				}
 			});
@@ -695,7 +713,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 	 */
 	private void showContextMenu(int mPosition, View mView){
 		try{
-			mPosition =  mPosition - 1;
+			mPosition =  mPosition - mGridColumn;
 			if(mPosition!= -1){
 				int mType = Utilities.getMediaType(mArrayListTraining.get(mPosition).getmFileType());
 				String mTitle = mArrayListTraining.get(mPosition).getmTitle();
@@ -883,7 +901,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 			 if(sortByAsc){
 				jsonObj = JSONRequestBuilder.getPostFetchFeedTraining(sortByAsc,limit, mArrayListTraining != null ? mArrayListTraining.get(0).getmId() : String.valueOf("0"));
 			 }else{
-				 jsonObj= JSONRequestBuilder.getPostFetchFeedTraining(sortByAsc,limit, mArrayListTraining.get(mArrayListTraining.size()-2).getmId());
+				 jsonObj= JSONRequestBuilder.getPostFetchFeedTraining(sortByAsc,limit, isGrid?mArrayListTraining.get(mArrayListTraining.size()-3).getmId():mArrayListTraining.get(mArrayListTraining.size()-2).getmId());
 			 }
 			if(BuildVars.USE_OKHTTP){
 				return RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_FETCH_FEED_TRAINING, jsonObj.toString(), TAG);	
@@ -1060,9 +1078,11 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 			}
 			
 			if(!sortByAsc){
-				Training Obj = new Training();
-				Obj.setmFileType(AppConstants.MOBCAST.FOOTER);
-				mArrayListTraining.add(Obj);
+				for(int i = 0 ; i < mGridColumn ; i++){
+					Training Obj = new Training();
+					Obj.setmFileType(AppConstants.MOBCAST.FOOTER);
+					mArrayListTraining.add(Obj);
+				}
 				mRecyclerView.getAdapter().notifyDataSetChanged();
 			}
 		}
@@ -1089,7 +1109,9 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 			
 			if(!sortByAsc){
 				mLoadMore = false;
-				mArrayListTraining.remove(mArrayListTraining.size()-1);
+				for(int i = 0; i < mGridColumn;i++){
+					mArrayListTraining.remove(mArrayListTraining.size()-1);
+				}
 				mRecyclerView.getAdapter().notifyDataSetChanged();
 			}
 			
@@ -1176,6 +1198,19 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 				mCursor.close();
 			}
 			mRecyclerView.getAdapter().notifyDataSetChanged();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void isToApplyGridOrNot(){
+		try{
+			if(BuildVars.IS_GRID){
+				if(AndroidUtilities.getScreenSizeInInches() >= 7.0 && getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+					isGrid = true;
+					mGridColumn = 2;
+				}
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

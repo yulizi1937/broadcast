@@ -21,6 +21,8 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.net.Uri;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -63,17 +65,19 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private LayoutInflater mInflater;
     private ArrayList<Mobcast> mArrayListMobcast;
     private View mHeaderView;
+    private boolean isGrid = false;
     public OnItemClickListener mItemClickListener;
     public OnItemLongClickListener mItemLongClickListener;
     private Context mContext;
     private ImageLoader mImageLoader;
 
-    public MobcastRecyclerAdapter(Context context, ArrayList<Mobcast> mArrayListMobcast, View headerView) {
+    public MobcastRecyclerAdapter(Context context, ArrayList<Mobcast> mArrayListMobcast, View headerView, boolean isGrid) {
         mInflater = LayoutInflater.from(context);
         mContext = context;
         this.mArrayListMobcast = mArrayListMobcast;
         mHeaderView = headerView;
         mImageLoader = ApplicationLoader.getUILImageLoader();
+        this.isGrid = isGrid;
     }
     
     
@@ -82,7 +86,12 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         if (mHeaderView == null) {
             return mArrayListMobcast.size();
         } else {
-            return mArrayListMobcast.size() + 1;
+        	if(!isGrid){
+        		return mArrayListMobcast.size() + 1;	
+        	}else{
+        		return mArrayListMobcast.size() + 2;
+        	}
+            
         }
     }
     
@@ -98,11 +107,22 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public int getItemViewType(int position) {
-    	switch(position){
-    	case 0:
-    		return VIEW_TYPE_HEADER;
-    	default:
-    		return getItemTypeFromObject(position-1);
+    	if(!isGrid){
+    		switch(position){
+        	case 0:
+        		return VIEW_TYPE_HEADER;
+        	default:
+        		return getItemTypeFromObject(position-1);
+        	}
+    	}else{
+    		switch(position){
+        	case 0:
+        		return VIEW_TYPE_HEADER;
+        	case 1:
+        		return VIEW_TYPE_HEADER;
+        	default:
+        		return getItemTypeFromObject(position-2);
+        	}
     	}
 //        return (position == 0) ? VIEW_TYPE_HEADER : VIEW_TYPE_ITEM;
     }

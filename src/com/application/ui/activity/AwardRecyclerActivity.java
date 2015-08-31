@@ -19,6 +19,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -32,7 +33,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.Toolbar;
@@ -49,7 +50,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.application.beans.Award;
-import com.application.beans.Event;
 import com.application.sqlite.DBConstant;
 import com.application.ui.adapter.AwardRecyclerAdapter;
 import com.application.ui.adapter.AwardRecyclerAdapter.OnItemClickListenerA;
@@ -62,11 +62,13 @@ import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.MobcastProgressDialog;
 import com.application.ui.view.ObservableRecyclerView;
 import com.application.ui.view.ProgressWheel;
+import com.application.ui.view.VerticalDividerItemDecoration;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.BuildVars;
 import com.application.utils.FetchFeedActionAsyncTask;
+import com.application.utils.FetchFeedActionAsyncTask.OnPostExecuteFeedActionTaskListener;
 import com.application.utils.FileLog;
 import com.application.utils.JSONRequestBuilder;
 import com.application.utils.RestClient;
@@ -74,7 +76,6 @@ import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
-import com.application.utils.FetchFeedActionAsyncTask.OnPostExecuteFeedActionTaskListener;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 import com.squareup.okhttp.OkHttpClient;
@@ -112,7 +113,10 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 
 	private Context mContext;
 
-	private LinearLayoutManager mLinearLayoutManager;
+	private GridLayoutManager mGridLayoutManager;
+	
+	private boolean isGrid = false;
+	private int mGridColumn = 1;
 
 	private boolean mLoadMore = false;
 	int mFirstVisibleItem, mVisibleItemCount, mTotalItemCount;
@@ -267,8 +271,10 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 
 		mEmptyRefreshBtn = (AppCompatButton) findViewById(R.id.layoutEmptyRefreshBtn);
 
-		mLinearLayoutManager = new LinearLayoutManager(mContext);
-		mRecyclerView.setLayoutManager(mLinearLayoutManager);
+		isToApplyGridOrNot();
+		
+		mGridLayoutManager = new GridLayoutManager(mContext, mGridColumn);
+		mRecyclerView.setLayoutManager(mGridLayoutManager);
 
 		ApplicationLoader.getPreferences().setViewIdAward("-1");
 
@@ -311,6 +317,17 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 								R.dimen.fragment_recyclerview_award_left_margin,
 								R.dimen.fragment_recyclerview_award_right_margin)
 						.build());
+		
+		if(isGrid){
+			mRecyclerView
+			.addItemDecoration(new VerticalDividerItemDecoration.Builder(
+					this)
+					.color(Utilities.getDividerColor())
+					.marginResId(
+							R.dimen.fragment_recyclerview_award_left_margin,
+							R.dimen.fragment_recyclerview_award_right_margin)
+					.build());	
+		}
 	}
 
 	private void setEmptyData() {
@@ -527,9 +544,9 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 				public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 					// TODO Auto-generated method stub
 					super.onScrolled(recyclerView, dx, dy);
-					mVisibleItemCount = mLinearLayoutManager.getChildCount();
-					mTotalItemCount = mLinearLayoutManager.getItemCount();
-					mFirstVisibleItem = mLinearLayoutManager
+					mVisibleItemCount = mGridLayoutManager.getChildCount();
+					mTotalItemCount = mGridLayoutManager.getItemCount();
+					mFirstVisibleItem = mGridLayoutManager
 							.findFirstVisibleItemPosition();
 
 					if (!mLoadMore) {
@@ -967,9 +984,11 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 						limit, mArrayListAward != null ? mArrayListAward.get(0)
 								.getmId() : String.valueOf("0"));
 			} else {
-				jsonObj = JSONRequestBuilder.getPostFetchFeedAward(sortByAsc,
-						limit, mArrayListAward.get(mArrayListAward.size() - 2)
-								.getmId());
+//				jsonObj = JSONRequestBuilder.getPostFetchFeedAward(sortByAsc,
+//						limit, mArrayListAward.get(mArrayListAward.size() - 2)
+//								.getmId());
+				
+				jsonObj= JSONRequestBuilder.getPostFetchFeedAward(sortByAsc,limit, isGrid?mArrayListAward.get(mArrayListAward.size()-3).getmId():mArrayListAward.get(mArrayListAward.size()-2).getmId());
 			}
 			if (BuildVars.USE_OKHTTP) {
 				return RetroFitClient.postJSON(new OkHttpClient(),
@@ -1097,9 +1116,11 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 			}
 
 			if (!sortByAsc) {
-				Award Obj = new Award();
-				Obj.setmFileType(AppConstants.MOBCAST.FOOTER);
-				mArrayListAward.add(Obj);
+				for(int i = 0 ; i < mGridColumn ; i++){
+					Award Obj = new Award();
+					Obj.setmFileType(AppConstants.MOBCAST.FOOTER);
+					mArrayListAward.add(Obj);
+				}
 				mRecyclerView.getAdapter().notifyDataSetChanged();
 			}
 		}
@@ -1127,7 +1148,9 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 
 			if (!sortByAsc) {
 				mLoadMore = false;
-				mArrayListAward.remove(mArrayListAward.size() - 1);
+				for(int i = 0; i < mGridColumn;i++){
+					mArrayListAward.remove(mArrayListAward.size()-1);
+				}
 				mRecyclerView.getAdapter().notifyDataSetChanged();
 			}
 
@@ -1344,6 +1367,19 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 				mCursor.close();
 			}
 			mRecyclerView.getAdapter().notifyDataSetChanged();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void isToApplyGridOrNot(){
+		try{
+			if(BuildVars.IS_GRID){
+				if(AndroidUtilities.getScreenSizeInInches() >= 7.0 && getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+					isGrid = true;
+					mGridColumn = 2;
+				}	
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

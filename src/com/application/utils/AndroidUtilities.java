@@ -168,7 +168,7 @@ public class AndroidUtilities {
 //		}
 	}
 	
-	public static double getScreenSizeInInches(){
+	@SuppressLint("DefaultLocale") public static double getScreenSizeInInches(){
 		try{
 			DisplayMetrics metrics = ApplicationLoader.getApplication().getResources().getDisplayMetrics();
 			int widthPixels = metrics.widthPixels;
@@ -183,11 +183,11 @@ public class AndroidUtilities {
 			double diagonalInches = Math.sqrt(
 				    (widthInches * widthInches) 
 				    + (heightInches * heightInches));
-			return diagonalInches;
+			return Double.parseDouble(String.format("%.2f", diagonalInches));
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
-		return 5;
+		return 5.0;
 	}
 
 	public static void unlockOrientation(Activity activity) {

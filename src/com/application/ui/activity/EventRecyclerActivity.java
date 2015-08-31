@@ -19,6 +19,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -32,6 +33,7 @@ import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
@@ -45,6 +47,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.application.beans.Award;
 import com.application.beans.Event;
 import com.application.sqlite.DBConstant;
 import com.application.ui.adapter.EventRecyclerAdapter;
@@ -57,6 +60,7 @@ import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.MobcastProgressDialog;
 import com.application.ui.view.ObservableRecyclerView;
 import com.application.ui.view.ProgressWheel;
+import com.application.ui.view.VerticalDividerItemDecoration;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
@@ -105,7 +109,10 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 	
 	private Context mContext;
 	
-	private LinearLayoutManager mLinearLayoutManager;
+	private GridLayoutManager mGridLayoutManager;
+	
+	private boolean isGrid = false;
+	private int mGridColumn = 1;
 	
     private boolean mLoadMore = false; 
     int mFirstVisibleItem, mVisibleItemCount, mTotalItemCount;
@@ -252,8 +259,10 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 
 		mEmptyRefreshBtn = (AppCompatButton)findViewById(R.id.layoutEmptyRefreshBtn);
 		
-		mLinearLayoutManager = new LinearLayoutManager(mContext);
-		mRecyclerView.setLayoutManager(mLinearLayoutManager);
+		isToApplyGridOrNot();
+		
+		mGridLayoutManager = new GridLayoutManager(mContext, mGridColumn);
+		mRecyclerView.setLayoutManager(mGridLayoutManager);
 		
 		ApplicationLoader.getPreferences().setViewIdEvent("-1");
 		
@@ -291,6 +300,15 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 			                .sizeResId(R.dimen.fragment_recyclerview_divider)
 			                .visibilityProvider(mAdapter)
 			                .build());
+		 
+		 if(isGrid){
+			 mRecyclerView.addItemDecoration(
+				        new VerticalDividerItemDecoration.Builder(this)
+				                .color(Utilities.getDividerColor())
+				                .sizeResId(R.dimen.fragment_recyclerview_divider)
+				                .visibilityProvider(mAdapter)
+				                .build());	 
+		 }
 	}
 	
 	
@@ -366,9 +384,9 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 				public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 					// TODO Auto-generated method stub
 					super.onScrolled(recyclerView, dx, dy);
-			        mVisibleItemCount = mLinearLayoutManager.getChildCount();
-			        mTotalItemCount = mLinearLayoutManager.getItemCount();
-			        mFirstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
+			        mVisibleItemCount = mGridLayoutManager.getChildCount();
+			        mTotalItemCount = mGridLayoutManager.getItemCount();
+			        mFirstVisibleItem = mGridLayoutManager.findFirstVisibleItemPosition();
 			 
 			        if (!mLoadMore) {
 						if (mVisibleItemCount + mFirstVisibleItem >= mTotalItemCount) {
@@ -745,7 +763,8 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 			 if(sortByAsc){
 				jsonObj = JSONRequestBuilder.getPostFetchFeedEvent(sortByAsc,limit, mArrayListEvent != null ? mArrayListEvent.get(0).getmId() : String.valueOf("0"));
 			 }else{
-				 jsonObj= JSONRequestBuilder.getPostFetchFeedEvent(sortByAsc,limit, mArrayListEvent.get(mArrayListEvent.size()-2).getmId());
+//				 jsonObj= JSONRequestBuilder.getPostFetchFeedEvent(sortByAsc,limit, mArrayListEvent.get(mArrayListEvent.size()-2).getmId());
+				 jsonObj= JSONRequestBuilder.getPostFetchFeedEvent(sortByAsc,limit, isGrid?mArrayListEvent.get(mArrayListEvent.size()-3).getmId():mArrayListEvent.get(mArrayListEvent.size()-2).getmId());
 			 }
 			if(BuildVars.USE_OKHTTP){
 				return RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_FETCH_FEED_EVENT, jsonObj.toString(), TAG);	
@@ -864,9 +883,11 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 			}
 			
 			if(!sortByAsc){
-				Event Obj = new Event();
-				Obj.setmFileType(AppConstants.MOBCAST.FOOTER);
-				mArrayListEvent.add(Obj);
+				for(int i = 0 ; i < mGridColumn ; i++){
+					Event Obj = new Event();
+					Obj.setmFileType(AppConstants.MOBCAST.FOOTER);
+					mArrayListEvent.add(Obj);
+				}
 				mRecyclerView.getAdapter().notifyDataSetChanged();
 			}
 		}
@@ -893,7 +914,9 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 			
 			if(!sortByAsc){
 				mLoadMore = false;
-				mArrayListEvent.remove(mArrayListEvent.size()-1);
+				for(int i = 0; i < mGridColumn;i++){
+					mArrayListEvent.remove(mArrayListEvent.size()-1);	
+				}
 				mRecyclerView.getAdapter().notifyDataSetChanged();
 			}
 			
@@ -978,6 +1001,19 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 				mCursor.close();
 			}
 			mRecyclerView.getAdapter().notifyDataSetChanged();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void isToApplyGridOrNot(){
+		try{
+			if(BuildVars.IS_GRID){
+				if(AndroidUtilities.getScreenSizeInInches() >= 7.0 && getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+					isGrid = true;
+					mGridColumn = 2;
+				}	
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

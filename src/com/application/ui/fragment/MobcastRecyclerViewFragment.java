@@ -17,6 +17,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -29,7 +30,7 @@ import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.text.SpannableString;
@@ -63,6 +64,7 @@ import com.application.ui.view.BottomSheet;
 import com.application.ui.view.HorizontalDividerItemDecoration;
 import com.application.ui.view.MobcastProgressDialog;
 import com.application.ui.view.ObservableRecyclerView;
+import com.application.ui.view.VerticalDividerItemDecoration;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
@@ -107,7 +109,10 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	
 	private Context mContext;
 	
-	private LinearLayoutManager mLinearLayoutManager;
+	private GridLayoutManager mGridLayoutManager;
+	
+	private boolean isGrid = false;
+	private int mGridColumn = 1;
 	
     private boolean mLoadMore = false; 
     int mFirstVisibleItem, mVisibleItemCount, mTotalItemCount;
@@ -144,9 +149,11 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 
 		mEmptyRefreshBtn = (AppCompatButton) view
 				.findViewById(R.id.layoutEmptyRefreshBtn);
-
-		mLinearLayoutManager = new LinearLayoutManager(mParentActivity);
-		mRecyclerView.setLayoutManager(mLinearLayoutManager);
+		
+		isToApplyGridOrNot();
+		
+		mGridLayoutManager = new GridLayoutManager(mParentActivity, mGridColumn);
+		mRecyclerView.setLayoutManager(mGridLayoutManager);
 		
 		ApplicationLoader.getPreferences().setViewIdMobcast("-1");
 		
@@ -221,9 +228,9 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 				public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 					// TODO Auto-generated method stub
 					super.onScrolled(recyclerView, dx, dy);
-			        mVisibleItemCount = mLinearLayoutManager.getChildCount();
-			        mTotalItemCount = mLinearLayoutManager.getItemCount();
-			        mFirstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
+			        mVisibleItemCount = mGridLayoutManager.getChildCount();
+			        mTotalItemCount = mGridLayoutManager.getItemCount();
+			        mFirstVisibleItem = mGridLayoutManager.findFirstVisibleItemPosition();
 			 
 			        if (!mLoadMore) {
 						if (mVisibleItemCount + mFirstVisibleItem >= mTotalItemCount) {
@@ -435,7 +442,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 //				mArrayListMobcast, headerView);
 		
 		mAdapter = new MobcastRecyclerAdapter(getActivity(),
-				mArrayListMobcast, headerView);
+				mArrayListMobcast, headerView, isGrid);
 		mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 		mRecyclerView.setHasFixedSize(false);
 		if (AndroidUtilities.isAboveIceCreamSandWich()) {
@@ -452,6 +459,14 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 						getActivity()).color(Utilities.getDividerColor())
 						.sizeResId(R.dimen.fragment_recyclerview_divider)
 						.visibilityProvider(mAdapter).build());
+		
+		if(isGrid){
+			mRecyclerView
+			.addItemDecoration(new VerticalDividerItemDecoration.Builder(
+					getActivity()).color(Utilities.getDividerColor())
+					.sizeResId(R.dimen.fragment_recyclerview_divider)
+					.visibilityProvider(mAdapter).build());	
+		}
 
 		if (mParentActivity instanceof ObservableScrollViewCallbacks) {
 			// Scroll to the specified offset after layout
@@ -575,6 +590,9 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 				public void onItemLongClick(View view, int position) {
 					// TODO Auto-generated method stub
 //					position=-1;
+					if(isGrid){
+						position+=1;
+					}
 					showContextMenu(position, view);
 				}
 			});
@@ -677,7 +695,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	 */
 	private void showContextMenu(int mPosition, View mView){
 		try{
-			mPosition =  mPosition - 1;
+			mPosition =  mPosition - mGridColumn;
 			if(mPosition!= -1){
 				int mType = Utilities.getMediaType(mArrayListMobcast.get(mPosition).getmFileType());
 				String mTitle = mArrayListMobcast.get(mPosition).getmTitle();
@@ -864,7 +882,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 			 if(sortByAsc){
 				jsonObj = JSONRequestBuilder.getPostFetchFeedMobcast(sortByAsc,limit, mArrayListMobcast != null ? mArrayListMobcast.get(0).getmId() : String.valueOf("0"));
 			 }else{
-				 jsonObj= JSONRequestBuilder.getPostFetchFeedMobcast(sortByAsc,limit, mArrayListMobcast.get(mArrayListMobcast.size()-2).getmId());
+				 jsonObj= JSONRequestBuilder.getPostFetchFeedMobcast(sortByAsc,limit, isGrid?mArrayListMobcast.get(mArrayListMobcast.size()-3).getmId():mArrayListMobcast.get(mArrayListMobcast.size()-2).getmId());
 			 }
 			if(BuildVars.USE_OKHTTP){
 				return RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_FETCH_FEED_MOBCAST, jsonObj.toString(), TAG);	
@@ -1030,9 +1048,11 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 			}
 			
 			if(!sortByAsc){
-				Mobcast Obj = new Mobcast();
-				Obj.setmFileType(AppConstants.MOBCAST.FOOTER);
-				mArrayListMobcast.add(Obj);
+				for(int i = 0 ; i < mGridColumn ; i++){
+					Mobcast Obj = new Mobcast();
+					Obj.setmFileType(AppConstants.MOBCAST.FOOTER);
+					mArrayListMobcast.add(Obj);
+				}
 				mRecyclerView.getAdapter().notifyDataSetChanged();
 			}
 		}
@@ -1059,7 +1079,9 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 			
 			if(!sortByAsc){
 				mLoadMore = false;
-				mArrayListMobcast.remove(mArrayListMobcast.size()-1);
+				for(int i = 0; i < mGridColumn;i++){
+					mArrayListMobcast.remove(mArrayListMobcast.size()-1);
+				}
 				mRecyclerView.getAdapter().notifyDataSetChanged();
 			}
 			
@@ -1142,6 +1164,19 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 				mCursor.close();
 			}
 			mRecyclerView.getAdapter().notifyDataSetChanged();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void isToApplyGridOrNot(){
+		try{
+			if(BuildVars.IS_GRID){
+				if(AndroidUtilities.getScreenSizeInInches() >= 7.0 && getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+					isGrid = true;
+					mGridColumn = 2;
+				}	
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
