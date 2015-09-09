@@ -17,6 +17,26 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/fragment_image_frame_height" >
 
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/fragmentImageDetailDownloadBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/download_btn_height"
+                android:layout_gravity="right|bottom"
+                android:layout_marginBottom="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/shape_button_download"
+                android:gravity="center"
+                android:minWidth="@dimen/download_btn_width"
+                android:paddingBottom="@dimen/download_btn_padding_bottom"
+                android:paddingLeft="@dimen/download_btn_padding_left"
+                android:paddingRight="@dimen/download_btn_padding_right"
+                android:paddingTop="@dimen/download_btn_padding_top"
+                android:text="@string/button_download_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/download_btn_text_size"
+                android:visibility="gone"
+                tools:ignore="RtlHardcoded" />
+
             <ImageView
                 android:id="@+id/fragmentImageDetailPreviousIv"
                 android:layout_width="@dimen/fragment_image_next_width"

@@ -34,6 +34,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.application.beans.Mobcast;
+import com.application.ui.adapter.TrainingRecyclerAdapter.AudioViewHolder;
 import com.application.ui.view.FlexibleDividerDecoration;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AppConstants;
@@ -962,6 +963,10 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 				((VideoViewHolder)viewHolder).mMobcastVideoLinkTv.setVisibility(View.GONE);
 			}
 			
+			if(!TextUtils.isEmpty(mObj.getmFileInfo().get(0).getmDuration())){
+				((VideoViewHolder)viewHolder).mMobcastVideoViewDurationTv.setText(mObj.getmFileInfo().get(0).getmDuration());
+			}
+			
 			final String mThumbnailPath = mObj.getmFileInfo().get(0).getmThumbnailPath();
 			if(Utilities.checkIfFileExists(mThumbnailPath)){
 				((VideoViewHolder)viewHolder).mMobcastVideoThumbnailIv.setImageURI(Uri.parse(mThumbnailPath));
@@ -1015,13 +1020,13 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveViewCountTv.setText(mObj.getmViewCount());
 			((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveLikeCountTv.setText(mObj.getmLikeCount());
 			if(!mObj.isRead()){
-				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_video_focused));
+				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_live_stream_focused));
 				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveIndicatorIv.setBackgroundColor(mContext.getResources().getColor(R.color.unread_background));
 				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
 				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveReadView.setVisibility(View.VISIBLE);
 				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveRootLayout.setBackgroundResource(R.color.unread_background);
 			}else{
-				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_video_normal));
+				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_live_stream_normal));
 				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveIndicatorIv.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
 				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveTitleTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
 				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveReadView.setVisibility(View.GONE);
@@ -1152,6 +1157,9 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			
 			if(TextUtils.isEmpty(mObj.getmLink())){
 				((AudioViewHolder)viewHolder).mMobcastAudioLinkTv.setVisibility(View.GONE);
+			}
+			if(!TextUtils.isEmpty(mObj.getmFileInfo().get(0).getmDuration())){
+				((AudioViewHolder)viewHolder).mMobcastAudioViewDurationTv.setText(mObj.getmFileInfo().get(0).getmDuration());
 			}
 			
 			((AudioViewHolder)viewHolder).mMobcastAudioSummaryTv.setText(mObj.getmDescription());

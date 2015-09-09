@@ -52,6 +52,7 @@ public class SimpleRecyclerItemActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_category);
+		setSecurity();
 		getIntentData();
 		initToolBar();
 		initUi();

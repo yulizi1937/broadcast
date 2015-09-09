@@ -25,7 +25,7 @@ public class AppConstants {
 		public static final MediaType API_CONTENTTYPE = MediaType.parse("application/json; charset=utf-8");
 		// API V2
 		public static final String API_HOST        = "http://54.165.41.77";
-//		public static final String API_HOST        = "http://192.168.0.108";
+//		public static final String API_HOST        = "http://192.168.0.108:8100";
 		public static final String API_CLIENT      = "";
 		public static final String API_VERSION     = "/v2";
 		public static final String API_FOLDER      ="/api/";
@@ -95,6 +95,7 @@ public class AppConstants {
 		public static final String employeeId              = "employeeId";
 		public static final String favouriteQuestion       = "favouriteQuestion";
 		public static final String favouriteAnswer         = "favouriteAnswer";
+		public static final String birthdate               = "birthDate";
 		public static final String countryCode             = "countryCode";
 		public static final String category                = "category";
 		public static final String uniqueId                = "uniqueId";
@@ -315,8 +316,8 @@ public class AppConstants {
 	}
 	
 	public interface PUSH{
-		public static final String PROJECT_ID ="40394833851";
-		public static final String API_KEY ="AIzaSyCK0tovRWYY_Iy42H-MfUntueLq-nZRNlg";
+		public static final String PROJECT_ID ="798674642543";//"40394833851";
+		public static final String API_KEY    ="AIzaSyBQ5MYjN4U7U5E2nBLufyBKdCt-01IayJY";//"AIzaSyCK0tovRWYY_Iy42H-MfUntueLq-nZRNlg";
 	}
 	
 	public interface YOUTUBE{
@@ -427,6 +428,7 @@ public class AppConstants {
 		public static final String ISFROMNOTIFICATION= "isFromNotification";
 		public static final String HELP             = "help";
 		public static final String USERNAME         = "userName";
+		public static final String COUNTRYCODE      = "countryCode";
 		public static final String OTP              = "otp";
 		public static final String MOBCAST          = "mobcast";
 		public static final String SYNC             = "sync";
@@ -440,6 +442,7 @@ public class AppConstants {
 		public static final String REMOTELOGOUT     = "remoteLogout";
 		public static final String UPDATEAPP        = "updateApp";
 		public static final String GCMSUCCESS       = "gcmSuccess";
+		public static final String REMOTESUSPEND    = "remoteSuspend";
 		public static final String RECRUITMENT      = "recruitment";
 		public static final String RELOGIN          = "relogin";
 		public static final String OBJECT           = "object";
@@ -480,27 +483,42 @@ public class AppConstants {
 		public static final String MOBCAST_BLUE    = "#008CED";
 	}
 	
+	public interface SHOWCASEVIEW{
+		public static final String SHOWCASE_ID = "786";
+		public static final String SEQUENCE1 = "1234";
+		public static final String SEQUENCE2 = "2345";
+		public static final String SEQUENCE3 = "3456";
+		public static final String SEQUENCE4 = "4567";
+		public static final String SEQUENCE5 = "5678";	
+	}
+	
 	public static final String deviceType = "android";
 	
-	public static final String mChatUser1 = "9920277790";
-	public static final String mChatUser2 = "9769688838";
+	public static final String mChatUser1 = "9920277790";//"9920277790";
+	public static final String mChatUser2 = "9819135685";//"9769688838";
 	
-	public static final String mChatName1  = "Anup Burade";
-	public static final String mChatName2  = "Ashwin Roy Choudhary";
+	public static final String mChatName1  = "Anupriya";//"Anup Burade";
+	public static final String mChatName2  = "Varun";//"Ashwin Roy Choudhary";
 	
-	public static final String mChatUserDp1 = "https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-xfp1/v/t1.0-9/283450_10150239966167890_4445638_n.jpg?oh=d732af3013919548417322e29b9305aa&oe=5681357E&__gda__=1451109996_a70c4977a9dd0e5dba7548624e5aeb72";
-	public static final String mChatUserDp2 = "https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-xtf1/v/t1.0-9/11811481_10153147923287293_2856968601704623332_n.jpg?oh=96f2badd78ef8e3fa37189572acdd2a8&oe=5683E41C&__gda__=1448067128_df409765385da599fca2de26dafef21f";
+	public static final String mChatUserDp2 = "https://scontent-hkg3-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/11060272_10152903098622331_8045057861757358066_n.jpg?oh=560fe1ff0355546a203020293534b9ba&oe=567B3824";
+	public static final String mChatUserDp1 = "https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/5/005/013/2cd/311ec51.jpg";
 	
-	public static final String mStoreLink = "https://play.google.com/store";
+	public static final String mStoreLink = "https://play.google.com/store/apps/details?id=com.mobcast";
+	public static final String mSupportEmail = "support@mobcast.in";
 	
 	public static final String decrypted = "_decrypted";
+	
 	public static final String encrypted = "_encrypted";
 
 	public static final String GREEN = "#006400";
 	public static final String BLUE = "#01AFD2";
 	
+	public static final int DRAWER_RECRUITMENT_POS = 2;//3-CK
+	
 	public static final int NOTIFICATION_ID = 434;
-	public static final int BULK = 25;
+	public static final int BULK = 20;
+	
+	public static final int BUBBLESTAY = 5000;
 	
 	public static final String SEARCH_FILTER = "-100000000";
 	public static final String SEARCH_WEB    = "-200000000";

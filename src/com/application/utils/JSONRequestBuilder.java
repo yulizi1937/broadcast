@@ -448,7 +448,7 @@ public class JSONRequestBuilder {
 		return stringBuffer;
 	}
 	
-	public static JSONObject getPostUserProfile(String mName, String mEmailAddress, String mEmployeeId, String mProfilePath, String mFavouriteQuestion , String mFavouriteAnswer){
+	public static JSONObject getPostUserProfile(String mName, String mEmailAddress, String mEmployeeId, String mProfilePath, String mFavouriteQuestion , String mFavouriteAnswer, String mDOB){
 		JSONObject stringBuffer = new JSONObject();
 		try {
 			JSONObject mJSONObjUser = new JSONObject();
@@ -457,6 +457,7 @@ public class JSONRequestBuilder {
 			mJSONObjUser.put(AppConstants.API_KEY_PARAMETER.employeeId, mEmployeeId);
 			mJSONObjUser.put(AppConstants.API_KEY_PARAMETER.favouriteQuestion, mFavouriteQuestion);
 			mJSONObjUser.put(AppConstants.API_KEY_PARAMETER.favouriteAnswer, mFavouriteAnswer);
+			mJSONObjUser.put(AppConstants.API_KEY_PARAMETER.birthdate, mDOB);
 			try{
 				mJSONObjUser.put(AppConstants.API_KEY_PARAMETER.profileImage, Utilities.getEncodedFileToByteArray(new File(mProfilePath).getAbsolutePath()));
 			}catch(Exception e){

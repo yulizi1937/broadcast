@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -81,6 +82,8 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mXlsFileInfoTv;
 	private AppCompatTextView mLanguageHeaderTv;
 	
+	private AppCompatButton mXlsDownloadBtn;
+	
 	private AppCompatTextView mXlsNewsLinkTv;
 
 	private LinearLayout mXlsNewsLinkLayout;
@@ -126,6 +129,7 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_xls_detail);
+		setSecurity();
 		initToolBar();
 		initUi();
 		initUiWithData();
@@ -247,6 +251,8 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 		mLanguageLinearLayout = (LinearLayout) findViewById(R.id.fragmentXlsDetailLanguageLayout);
 		mLanguageFlowLayout = (FlowLayout) findViewById(R.id.fragmentXlsDetailLanguageFlowLayout);
 		mLanguageHeaderTv = (AppCompatTextView) findViewById(R.id.fragmentXlsDetailLanguageHeaderTv);
+		
+		mXlsDownloadBtn = (AppCompatButton)findViewById(R.id.fragmentXlsDetailDownloadBtn);
 		
 		mXlsTitleTv = (AppCompatTextView)findViewById(R.id.fragmentXlsDetailTitleTv);
 		
@@ -445,21 +451,33 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void downloadFileInBackground(){
-		DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
-				XlsDetailActivity.this, false, false,
-				mContentFileLink, mContentFilePath,
-				AppConstants.TYPE.XLS, Long.parseLong(mContentFileSize), TAG);
-		mDownloadAsyncTask.execute();
-		mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
-			@Override
-			public void onPostExecute(boolean isDownloaded) {
-				// TODO Auto-generated method stub
-				if(isDownloaded){
-					if(checkIfFileExists(mContentFilePath)){
-					}	
+		if(Utilities.isInternetConnected()){
+			DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
+					XlsDetailActivity.this, false, false,
+					mContentFileLink, mContentFilePath,
+					AppConstants.TYPE.XLS, Long.parseLong(mContentFileSize), TAG);
+			mDownloadAsyncTask.execute();
+			mXlsDownloadBtn.setVisibility(View.VISIBLE);
+			mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
+				@Override
+				public void onPostExecute(boolean isDownloaded) {
+					// TODO Auto-generated method stub
+					if(isDownloaded){
+						if(checkIfFileExists(mContentFilePath)){
+							mXlsDownloadBtn.setVisibility(View.GONE);
+						}else{
+							mXlsDownloadBtn.setVisibility(View.VISIBLE);
+							AndroidUtilities.showSnackBar(XlsDetailActivity.this, getResources().getString(R.string.file_download));
+						}
+					}else{
+						mXlsDownloadBtn.setVisibility(View.VISIBLE);
+						AndroidUtilities.showSnackBar(XlsDetailActivity.this, getResources().getString(R.string.file_download));
+					}
 				}
-			}
-		});
+			});
+		}else{
+			Utilities.showCrouton(XlsDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.file_not_available), Style.ALERT);
+		}
 	}
 
 	private void updateReadInDb(){
@@ -546,6 +564,14 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 				
 			}
 		});
+		
+		mXlsDownloadBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				downloadFileInBackground();
+			}
+		});
 	}
 	
 	private void openXlsFromApps(){
@@ -560,10 +586,12 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 				startActivity(intent);
 				AndroidUtilities.enterWindowAnimation(XlsDetailActivity.this);
 			}else{
-				Utilities.showCrouton(XlsDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.file_not_available), Style.ALERT);
+				mXlsDownloadBtn.setVisibility(View.VISIBLE);
+				AndroidUtilities.showSnackBar(XlsDetailActivity.this, getResources().getString(R.string.file_download));
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
+			AndroidUtilities.showSnackBar(XlsDetailActivity.this, getResources().getString(R.string.file_app_not_found));
 		}
 	}
 	
@@ -751,6 +779,7 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 
 	private void setMaterialRippleView() {
 		try {
+			setMaterialRippleOnView(mXlsDownloadBtn);
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}

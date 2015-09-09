@@ -9,6 +9,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.AppCompatTextView;
@@ -98,6 +99,7 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_birthday_profile);
+		setSecurity();
 		initToolBar();
 		initUi();
 		getIntentData();
@@ -240,6 +242,42 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 	}
 
 	private void setOnClickListener() {
+		mBirthdayProfileActionCallIv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(!TextUtils.isEmpty(mContentMobile)){
+					Intent mIntent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", mContentMobile, null));
+					startActivity(mIntent);
+				}
+			}
+		});
+		
+		mBirthdayProfileActionEmailIv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(!TextUtils.isEmpty(mContentEmail)){
+					Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",mContentEmail, null));
+				emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Happy Birthday " +mContentName);
+				emailIntent.putExtra(Intent.EXTRA_TEXT, "");
+				startActivity(Intent.createChooser(emailIntent, "Send email"));
+				}
+			}
+		});
+		
+		mBirthdayProfileActionMsgIv.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(!TextUtils.isEmpty(mContentMobile)){
+					Intent smsIntent = new Intent(Intent.ACTION_SENDTO,Uri.parse("smsto:"+mContentMobile));
+					smsIntent.putExtra("sms_body", "Happy Birthday " + mContentName);
+					startActivity(smsIntent);
+				}
+			}
+		});
 	}
 	
 	private void getDataFromDBForBirthday(Cursor mCursor){
@@ -284,6 +322,8 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		if(!TextUtils.isEmpty(mContentDOB)){
 			mBirthdayProfileDateTv.setText(mContentDOB);
 		}
+		
+		mBirthdayProfileActionChatIv.setVisibility(View.GONE);
 		
 		if(!TextUtils.isEmpty(mContentFileLink)){
 			mImageLoader = ApplicationLoader.getUILImageLoader();

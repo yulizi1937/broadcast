@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -595,6 +596,91 @@ public class Utilities {
 					+ getRelativeLeft((View) myView.getParent());
 	}
 	
+	
+	public static void showBadgeNotification(Context mContext){
+    	try{
+    		int mCount  = 0;
+    		mCount = Utilities.getUnreadCount(mContext);		
+    		if(mCount>0){
+    			BadgeUtils.setBadge(mContext, mCount);
+    		}else{
+    			BadgeUtils.clearBadge(mContext);
+    		}
+    	}catch(Exception e){
+    		FileLog.e(TAG, e.toString());
+    	}
+    }
+	public static int getUnreadCount(Context mContext){
+		int mCount = 0;
+		try{
+			mCount = getUnreadOfMobcast(mContext)
+					+ getUnreadOfTraining(mContext)
+					+ getUnreadOfAward(mContext) 
+					+ getUnreadOfEvent(mContext)
+					+ getUnreadOfBirthday(mContext); 
+			return mCount;
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+			return mCount;
+		}
+	}
+	
+	public static int getUnreadOfMobcast(Context mContext){
+		Cursor mCursor = mContext.getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ + "=?", new String[]{"false"}, null);
+		if(mCursor!=null && mCursor.getCount() > 0){
+			return mCursor.getCount();
+		}
+		if(mCursor!=null){
+			mCursor.close();
+		}
+		return 0;
+		
+	}
+	
+	public static int getUnreadOfTraining(Context mContext){
+		Cursor mCursor = mContext.getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, null, DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ + "=?", new String[]{"false"}, null);
+		if(mCursor!=null && mCursor.getCount() > 0){
+			return mCursor.getCount();
+		}
+		if(mCursor!=null){
+			mCursor.close();
+		}
+		return 0;
+	}
+	
+	public static int getUnreadOfEvent(Context mContext){
+		Cursor mCursor = mContext.getContentResolver().query(DBConstant.Event_Columns.CONTENT_URI, null, DBConstant.Event_Columns.COLUMN_EVENT_IS_READ + "=?", new String[]{"false"}, null);
+		if(mCursor!=null && mCursor.getCount() > 0){
+			return mCursor.getCount();
+		}
+		if(mCursor!=null){
+			mCursor.close();
+		}
+		return 0;
+	}
+	
+	public static int getUnreadOfAward(Context mContext){
+		Cursor mCursor = mContext.getContentResolver().query(DBConstant.Award_Columns.CONTENT_URI, null, DBConstant.Award_Columns.COLUMN_AWARD_IS_READ + "=?", new String[]{"false"}, null);
+		if(mCursor!=null && mCursor.getCount() > 0){
+			return mCursor.getCount();
+		}
+		if(mCursor!=null){
+			mCursor.close();
+		}
+		return 0;
+	}
+	
+	public static int getUnreadOfBirthday(Context mContext){
+		Cursor mCursor = mContext.getContentResolver().query(DBConstant.Birthday_Columns.CONTENT_URI, null, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_READ + "=?" + " OR " + DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_READ + "=?" , new String[]{"false","0"}, null);
+		if(mCursor!=null && mCursor.getCount() > 0){
+			return mCursor.getCount();
+		}
+		if(mCursor!=null){
+			mCursor.close();
+		}
+		return 0;
+	}
+	
 	@SuppressLint("DefaultLocale") public static String getTimeFromMilliSeconds(long milliSeconds){
 		return String.format("%02d:%02d",
 	            TimeUnit.MILLISECONDS.toMinutes(milliSeconds) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(milliSeconds)),
@@ -626,15 +712,25 @@ public class Utilities {
 		return "2020";
 	}
 	
-	public static String getCurrentDay(int mMonth,int mDay){
+	@SuppressLint("SimpleDateFormat") public static String getCurrentDay(int mMonth,int mDay){
 		try{
-			long mCurrentTimeMillis = System.currentTimeMillis();
+			
 			SimpleDateFormat mDateFormat = new SimpleDateFormat("dd MMMM EEEE");
-			Date mDate = new Date(mCurrentTimeMillis);
+			/*Date mDate = new Date(mCurrentTimeMillis);
+			long mCurrentTimeMillis = System.currentTimeMillis();
 			mDate.setYear(Integer.parseInt(getCurrentYear()));
-			mDate.setDate(mDay);
 			mDate.setMonth(mMonth-1);
-			return mDateFormat.format(mDate);
+			mDate.setDate(mDay);
+			return mDateFormat.format(mDate);*/
+			
+			Calendar c = Calendar.getInstance();
+			c.setFirstDayOfWeek(Calendar.MONDAY);
+			c.set(Calendar.YEAR, Integer.parseInt(getCurrentYear()));
+			c.set(Calendar.MONTH, mMonth-1);
+			c.set(Calendar.DATE, mDay);
+			
+			return mDateFormat.format(c.getTime());
+			
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -861,6 +957,25 @@ public class Utilities {
 		}
 	}
 	
+	public static String getApplicationVersionCode() {
+		PackageInfo pInfo = null;
+		try {
+			pInfo = ApplicationLoader
+					.getApplication()
+					.getApplicationContext()
+					.getPackageManager()
+					.getPackageInfo(
+							ApplicationLoader.getApplication()
+									.getApplicationContext().getPackageName(),
+							0);
+			return String.valueOf(pInfo.versionCode);
+		} catch (NameNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "VERSION NAME NOT FOUND";
+		}
+	}
+	
 	/** Open another app.
 	 * @param context current Context, like Activity, App, or Service
 	 * @param packageName the full package name of the app to open
@@ -1077,6 +1192,14 @@ public class Utilities {
 		case AppConstants.TYPE.PPT:
 			return false;
 		case AppConstants.TYPE.OTHER:
+			return false;
+		case AppConstants.TYPE.AUDIO:
+			return false;
+		case AppConstants.TYPE.IMAGE:
+			return false;
+		case AppConstants.TYPE.EVENT:
+			return false;
+		case AppConstants.TYPE.AWARD:
 			return false;
 		default:
 			return true;

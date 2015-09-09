@@ -77,6 +77,7 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 		super.onCreate(savedInstanceState);
 		hideNavigationBar();
 		setContentView(R.layout.activity_video_fullscreen);
+		setSecurity();
 		initUi();
 		initAnimation();
 		getIntentData();

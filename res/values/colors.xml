@@ -6,6 +6,18 @@
     <color name="toolbar_background">#ff254E7A</color>
     <color name="toolbar_background_statusbar">#ff193655</color>
 
+    <!-- <color name="background_tab_pressed">#6633B5E5</color> -->
+    <!-- <color name="toolbar_background">#ff3fb637</color> -->
+    <!-- <color name="toolbar_background_statusbar">#ff193655</color> -->
+
+
+    <!-- mobcast_logo_colors -->
+    <color name="mobcast_red">#9AFFFFFF</color>
+    <color name="mobcast_yellow">#ffFFCD00</color>
+    <color name="mobcast_purple">#FF8F46AD</color>
+    <color name="mobcast_green">#FF02B86B</color>
+    <color name="mobcast_blue">#FF008CED</color>
+
     <!-- #ff193655 #ff2B5E93 -->
     <color name="slidingtablayout_text_default">#ff92a6bc</color>
     <color name="background_application">#FFFFFFFF</color>

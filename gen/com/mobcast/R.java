@@ -34,31 +34,33 @@ public final class R {
         public static final int popup_exit=0x7f040016;
         public static final int rotate=0x7f040017;
         public static final int rotate_infinite=0x7f040018;
-        public static final int slide_in_left=0x7f040019;
-        public static final int slide_in_right=0x7f04001a;
-        public static final int slide_out_left=0x7f04001b;
-        public static final int slide_out_right=0x7f04001c;
-        public static final int snackbar_in=0x7f04001d;
-        public static final int snackbar_out=0x7f04001e;
-        public static final int tutorial_slide_in_left=0x7f04001f;
-        public static final int tutorial_slide_in_right=0x7f040020;
-        public static final int tutorial_slide_in_up=0x7f040021;
-        public static final int tutorial_slide_out_down=0x7f040022;
-        public static final int tutorial_slide_out_left=0x7f040023;
-        public static final int tutorial_slide_out_right=0x7f040024;
-        public static final int tutorial_slide_out_up=0x7f040025;
+        public static final int slide_in_down=0x7f040019;
+        public static final int slide_in_left=0x7f04001a;
+        public static final int slide_in_right=0x7f04001b;
+        public static final int slide_out_left=0x7f04001c;
+        public static final int slide_out_right=0x7f04001d;
+        public static final int slide_out_up=0x7f04001e;
+        public static final int snackbar_in=0x7f04001f;
+        public static final int snackbar_out=0x7f040020;
+        public static final int tutorial_slide_in_left=0x7f040021;
+        public static final int tutorial_slide_in_right=0x7f040022;
+        public static final int tutorial_slide_in_up=0x7f040023;
+        public static final int tutorial_slide_out_down=0x7f040024;
+        public static final int tutorial_slide_out_left=0x7f040025;
+        public static final int tutorial_slide_out_right=0x7f040026;
+        public static final int tutorial_slide_out_up=0x7f040027;
     }
     public static final class array {
-        public static final int birthday_time_array=0x7f0d0006;
-        public static final int drawer_array=0x7f0d0007;
-        public static final int feedback_app_array=0x7f0d0003;
-        public static final int langugae_array=0x7f0d0004;
-        public static final int langugae_code_array=0x7f0d0005;
-        public static final int pocket_background_colors=0x7f0d0001;
+        public static final int birthday_time_array=0x7f0e0006;
+        public static final int drawer_array=0x7f0e0007;
+        public static final int feedback_app_array=0x7f0e0003;
+        public static final int langugae_array=0x7f0e0004;
+        public static final int langugae_code_array=0x7f0e0005;
+        public static final int pocket_background_colors=0x7f0e0001;
         /**  SmoothProgressBar 
          */
-        public static final int pocket_bar_colors=0x7f0d0000;
-        public static final int report_category_array=0x7f0d0002;
+        public static final int pocket_bar_colors=0x7f0e0000;
+        public static final int report_category_array=0x7f0e0002;
     }
     public static final class attr {
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
@@ -3197,16 +3199,16 @@ containing a value of this type.
         public static final int zOrderOnTop=0x7f01000d;
     }
     public static final class bool {
-        public static final int abc_action_bar_embed_tabs=0x7f080000;
-        public static final int abc_action_bar_embed_tabs_pre_jb=0x7f080001;
-        public static final int abc_action_bar_expanded_action_views_exclusive=0x7f080002;
+        public static final int abc_action_bar_embed_tabs=0x7f090000;
+        public static final int abc_action_bar_embed_tabs_pre_jb=0x7f090001;
+        public static final int abc_action_bar_expanded_action_views_exclusive=0x7f090002;
         /** 
          Whether action menu items should be displayed in ALLCAPS or not.
          Defaults to true. If this is not appropriate for specific locales
          it should be disabled in that locale's resources.
     
          */
-        public static final int abc_config_actionMenuItemAllCaps=0x7f080005;
+        public static final int abc_config_actionMenuItemAllCaps=0x7f090005;
         /** 
     Whether action menu items should obey the "withText" showAsAction
     flag. This may be set to false for situations where space is
@@ -3216,322 +3218,332 @@ containing a value of this type.
          This may be set to false for situations where space is
          extremely limited. 
          */
-        public static final int abc_config_allowActionMenuItemTextWithIcon=0x7f080004;
-        public static final int abc_config_closeDialogWhenTouchOutside=0x7f080006;
-        public static final int abc_config_showMenuShortcutsWhenKeyboardPresent=0x7f080003;
-        public static final int default_circle_indicator_centered=0x7f080009;
-        public static final int default_circle_indicator_snap=0x7f08000a;
+        public static final int abc_config_allowActionMenuItemTextWithIcon=0x7f090004;
+        public static final int abc_config_closeDialogWhenTouchOutside=0x7f090006;
+        public static final int abc_config_showMenuShortcutsWhenKeyboardPresent=0x7f090003;
+        public static final int default_circle_indicator_centered=0x7f090009;
+        public static final int default_circle_indicator_snap=0x7f09000a;
         /**  Enable automatic Activity measurement 
          */
-        public static final int ga_autoActivityTracking=0x7f080007;
+        public static final int ga_autoActivityTracking=0x7f090007;
         /**  Enable automatic Crash Reporting 
          */
-        public static final int ga_reportUncaughtExceptions=0x7f080008;
+        public static final int ga_reportUncaughtExceptions=0x7f090008;
         /**  PanningView 
          */
-        public static final int portrait=0x7f08000e;
-        public static final int spb_default_mirror_mode=0x7f08000c;
-        public static final int spb_default_progressiveStart_activated=0x7f08000d;
-        public static final int spb_default_reversed=0x7f08000b;
+        public static final int portrait=0x7f09000e;
+        public static final int spb_default_mirror_mode=0x7f09000c;
+        public static final int spb_default_progressiveStart_activated=0x7f09000d;
+        public static final int spb_default_reversed=0x7f09000b;
     }
     public static final class color {
-        public static final int abc_background_cache_hint_selector_material_dark=0x7f060098;
-        public static final int abc_background_cache_hint_selector_material_light=0x7f060099;
-        public static final int abc_input_method_navigation_guard=0x7f06000d;
-        public static final int abc_primary_text_disable_only_material_dark=0x7f06009a;
-        public static final int abc_primary_text_disable_only_material_light=0x7f06009b;
-        public static final int abc_primary_text_material_dark=0x7f06009c;
-        public static final int abc_primary_text_material_light=0x7f06009d;
-        public static final int abc_search_url_text=0x7f06009e;
-        public static final int abc_search_url_text_normal=0x7f06000a;
-        public static final int abc_search_url_text_pressed=0x7f06000c;
-        public static final int abc_search_url_text_selected=0x7f06000b;
-        public static final int abc_secondary_text_material_dark=0x7f06009f;
-        public static final int abc_secondary_text_material_light=0x7f0600a0;
-        public static final int accent_material_dark=0x7f060019;
-        public static final int accent_material_light=0x7f060018;
-        public static final int background_application=0x7f060041;
-        public static final int background_floating_material_dark=0x7f060010;
-        public static final int background_floating_material_light=0x7f060011;
+        public static final int abc_background_cache_hint_selector_material_dark=0x7f07009d;
+        public static final int abc_background_cache_hint_selector_material_light=0x7f07009e;
+        public static final int abc_input_method_navigation_guard=0x7f07000d;
+        public static final int abc_primary_text_disable_only_material_dark=0x7f07009f;
+        public static final int abc_primary_text_disable_only_material_light=0x7f0700a0;
+        public static final int abc_primary_text_material_dark=0x7f0700a1;
+        public static final int abc_primary_text_material_light=0x7f0700a2;
+        public static final int abc_search_url_text=0x7f0700a3;
+        public static final int abc_search_url_text_normal=0x7f07000a;
+        public static final int abc_search_url_text_pressed=0x7f07000c;
+        public static final int abc_search_url_text_selected=0x7f07000b;
+        public static final int abc_secondary_text_material_dark=0x7f0700a4;
+        public static final int abc_secondary_text_material_light=0x7f0700a5;
+        public static final int accent_material_dark=0x7f070019;
+        public static final int accent_material_light=0x7f070018;
+        public static final int background_application=0x7f070046;
+        public static final int background_floating_material_dark=0x7f070010;
+        public static final int background_floating_material_light=0x7f070011;
         /**  fragment_quiz_score 
          */
-        public static final int background_light_blue=0x7f060060;
-        public static final int background_material_dark=0x7f06000e;
-        public static final int background_material_light=0x7f06000f;
+        public static final int background_light_blue=0x7f070065;
+        public static final int background_material_dark=0x7f07000e;
+        public static final int background_material_light=0x7f07000f;
         /**  #254E7A 
          */
-        public static final int background_tab_pressed=0x7f06003d;
-        public static final int background_unread=0x7f060048;
-        public static final int black_shade_light=0x7f06004d;
+        public static final int background_tab_pressed=0x7f07003d;
+        public static final int background_unread=0x7f07004d;
+        public static final int black_shade_light=0x7f070052;
         /**  White 50% 
          */
-        public static final int bright_foreground_disabled_material_dark=0x7f060022;
+        public static final int bright_foreground_disabled_material_dark=0x7f070022;
         /**  Black 50% 
          */
-        public static final int bright_foreground_disabled_material_light=0x7f060023;
-        public static final int bright_foreground_inverse_material_dark=0x7f060024;
-        public static final int bright_foreground_inverse_material_light=0x7f060025;
-        public static final int bright_foreground_material_dark=0x7f060020;
-        public static final int bright_foreground_material_light=0x7f060021;
-        public static final int bs_dark_divider_color=0x7f060078;
+        public static final int bright_foreground_disabled_material_light=0x7f070023;
+        public static final int bright_foreground_inverse_material_dark=0x7f070024;
+        public static final int bright_foreground_inverse_material_light=0x7f070025;
+        public static final int bright_foreground_material_dark=0x7f070020;
+        public static final int bright_foreground_material_light=0x7f070021;
+        public static final int bs_dark_divider_color=0x7f07007d;
         /**  BottomSheet 
          */
-        public static final int bs_divider_color=0x7f060077;
-        public static final int button_material_dark=0x7f06001a;
-        public static final int button_material_light=0x7f06001b;
-        public static final int chattext_background=0x7f06004a;
+        public static final int bs_divider_color=0x7f07007c;
+        public static final int button_material_dark=0x7f07001a;
+        public static final int button_material_light=0x7f07001b;
+        public static final int chattext_background=0x7f07004f;
         /**  LoadToast 
          */
-        public static final int color_accent=0x7f06008b;
-        public static final int color_error=0x7f06008d;
-        public static final int color_success=0x7f06008c;
-        public static final int common_action_bar_splitter=0x7f060009;
+        public static final int color_accent=0x7f070090;
+        public static final int color_error=0x7f070092;
+        public static final int color_success=0x7f070091;
+        public static final int common_action_bar_splitter=0x7f070009;
         /**  Sign-in Button Colors 
          */
-        public static final int common_signin_btn_dark_text_default=0x7f060000;
-        public static final int common_signin_btn_dark_text_disabled=0x7f060002;
-        public static final int common_signin_btn_dark_text_focused=0x7f060003;
-        public static final int common_signin_btn_dark_text_pressed=0x7f060001;
-        public static final int common_signin_btn_default_background=0x7f060008;
-        public static final int common_signin_btn_light_text_default=0x7f060004;
-        public static final int common_signin_btn_light_text_disabled=0x7f060006;
-        public static final int common_signin_btn_light_text_focused=0x7f060007;
-        public static final int common_signin_btn_light_text_pressed=0x7f060005;
-        public static final int common_signin_btn_text_dark=0x7f0600a1;
-        public static final int common_signin_btn_text_light=0x7f0600a2;
-        public static final int default_circle_indicator_fill_color=0x7f060094;
-        public static final int default_circle_indicator_page_color=0x7f060095;
-        public static final int default_circle_indicator_stroke_color=0x7f060096;
+        public static final int common_signin_btn_dark_text_default=0x7f070000;
+        public static final int common_signin_btn_dark_text_disabled=0x7f070002;
+        public static final int common_signin_btn_dark_text_focused=0x7f070003;
+        public static final int common_signin_btn_dark_text_pressed=0x7f070001;
+        public static final int common_signin_btn_default_background=0x7f070008;
+        public static final int common_signin_btn_light_text_default=0x7f070004;
+        public static final int common_signin_btn_light_text_disabled=0x7f070006;
+        public static final int common_signin_btn_light_text_focused=0x7f070007;
+        public static final int common_signin_btn_light_text_pressed=0x7f070005;
+        public static final int common_signin_btn_text_dark=0x7f0700a6;
+        public static final int common_signin_btn_text_light=0x7f0700a7;
+        public static final int default_circle_indicator_fill_color=0x7f070099;
+        public static final int default_circle_indicator_page_color=0x7f07009a;
+        public static final int default_circle_indicator_stroke_color=0x7f07009b;
         /**  dialog_birthday_message 
          */
-        public static final int dialog_birthday_message_textview_color=0x7f06005e;
-        public static final int dim_foreground_disabled_material_dark=0x7f060028;
-        public static final int dim_foreground_disabled_material_light=0x7f060029;
-        public static final int dim_foreground_material_dark=0x7f060026;
-        public static final int dim_foreground_material_light=0x7f060027;
-        public static final int divider_color=0x7f060051;
-        public static final int dsb_disabled_color=0x7f06007b;
+        public static final int dialog_birthday_message_textview_color=0x7f070063;
+        public static final int dim_foreground_disabled_material_dark=0x7f070028;
+        public static final int dim_foreground_disabled_material_light=0x7f070029;
+        public static final int dim_foreground_material_dark=0x7f070026;
+        public static final int dim_foreground_material_light=0x7f070027;
+        public static final int divider_color=0x7f070056;
+        public static final int dsb_disabled_color=0x7f070080;
         /**  DiscreetSeekBar 
          */
-        public static final int dsb_progress_color=0x7f060079;
-        public static final int dsb_ripple_color_focused=0x7f06007d;
-        public static final int dsb_ripple_color_pressed=0x7f06007c;
-        public static final int dsb_track_color=0x7f06007a;
+        public static final int dsb_progress_color=0x7f07007e;
+        public static final int dsb_ripple_color_focused=0x7f070082;
+        public static final int dsb_ripple_color_pressed=0x7f070081;
+        public static final int dsb_track_color=0x7f07007f;
         /**  activity_login 
          */
-        public static final int editbox_color=0x7f06005b;
-        public static final int edittext_login_background=0x7f06005d;
-        public static final int error_color=0x7f060089;
+        public static final int editbox_color=0x7f070060;
+        public static final int edittext_login_background=0x7f070062;
+        public static final int error_color=0x7f07008e;
         /**  Color for the bottom inner pixels in the stroke: 4% black (these are multiplied) 
          */
-        public static final int fab_stroke_end_inner_color=0x7f060085;
+        public static final int fab_stroke_end_inner_color=0x7f07008a;
         /**  Color for the bottom outer pixels in the stroke: 6% black (these are multiplied) 
          */
-        public static final int fab_stroke_end_outer_color=0x7f060084;
+        public static final int fab_stroke_end_outer_color=0x7f070089;
         /**  Color for the top inner pixels in the stroke: 10% white (these are multiplied) 
          */
-        public static final int fab_stroke_top_inner_color=0x7f060083;
+        public static final int fab_stroke_top_inner_color=0x7f070088;
         /**  Color for the top outer pixels in the stroke: 18% white (these are multiplied) 
          */
-        public static final int fab_stroke_top_outer_color=0x7f060082;
-        public static final int gray=0x7f06004c;
-        public static final int gray_empty_bg=0x7f060053;
-        public static final int green=0x7f060047;
+        public static final int fab_stroke_top_outer_color=0x7f070087;
+        public static final int gray=0x7f070051;
+        public static final int gray_empty_bg=0x7f070058;
+        public static final int green=0x7f07004c;
         /**  TODO: This is 40% alpha on the default accent color. 
          */
-        public static final int highlighted_text_material_dark=0x7f06002c;
+        public static final int highlighted_text_material_dark=0x7f07002c;
         /**  TODO: This is 40% alpha on the default accent color. 
          */
-        public static final int highlighted_text_material_light=0x7f06002d;
-        public static final int hint_foreground_material_dark=0x7f06002a;
-        public static final int hint_foreground_material_light=0x7f06002b;
-        public static final int item_audio=0x7f060054;
-        public static final int item_doc=0x7f060055;
+        public static final int highlighted_text_material_light=0x7f07002d;
+        public static final int hint_foreground_material_dark=0x7f07002a;
+        public static final int hint_foreground_material_light=0x7f07002b;
+        public static final int item_audio=0x7f070059;
+        public static final int item_doc=0x7f07005a;
         /**  item_recycler_event 
          */
-        public static final int item_event_by=0x7f060068;
-        public static final int item_image=0x7f060059;
-        public static final int item_pdf=0x7f060056;
-        public static final int item_ppt=0x7f060057;
+        public static final int item_event_by=0x7f07006d;
+        public static final int item_image=0x7f07005e;
+        public static final int item_pdf=0x7f07005b;
+        public static final int item_ppt=0x7f07005c;
         /**  item_recycler_mobcast_doc 
          */
-        public static final int item_recycler_mobcast_doc_color=0x7f06006c;
+        public static final int item_recycler_mobcast_doc_color=0x7f070071;
         /**  item_recycler_mobcast_feedback 
          */
-        public static final int item_recycler_mobcast_feedback_detail_background_color=0x7f06006e;
+        public static final int item_recycler_mobcast_feedback_detail_background_color=0x7f070073;
         /**  item_recycler_mobcast_pdf 
          */
-        public static final int item_recycler_mobcast_pdf_color=0x7f06006a;
-        public static final int item_recycler_mobcast_timeline_color=0x7f06006b;
+        public static final int item_recycler_mobcast_pdf_color=0x7f07006f;
+        public static final int item_recycler_mobcast_timeline_color=0x7f070070;
         /**  item_recycler_mobcast_xls 
          */
-        public static final int item_recycler_mobcast_xls_color=0x7f06006d;
-        public static final int item_text_highlight=0x7f060069;
-        public static final int item_video=0x7f06005a;
-        public static final int item_xls=0x7f060058;
-        public static final int light_gray=0x7f060052;
-        public static final int link_text_material_dark=0x7f06002e;
-        public static final int link_text_material_light=0x7f06002f;
-        public static final int material_blue_grey_800=0x7f06003a;
-        public static final int material_blue_grey_900=0x7f06003b;
-        public static final int material_blue_grey_950=0x7f06003c;
-        public static final int material_deep_teal_200=0x7f060038;
-        public static final int material_deep_teal_500=0x7f060039;
+        public static final int item_recycler_mobcast_xls_color=0x7f070072;
+        public static final int item_text_highlight=0x7f07006e;
+        public static final int item_video=0x7f07005f;
+        public static final int item_xls=0x7f07005d;
+        public static final int light_gray=0x7f070057;
+        public static final int link_text_material_dark=0x7f07002e;
+        public static final int link_text_material_light=0x7f07002f;
+        public static final int material_blue_grey_800=0x7f07003a;
+        public static final int material_blue_grey_900=0x7f07003b;
+        public static final int material_blue_grey_950=0x7f07003c;
+        public static final int material_deep_teal_200=0x7f070038;
+        public static final int material_deep_teal_500=0x7f070039;
         /**  Material Dialog L 
          */
-        public static final int md_btn_selected=0x7f060061;
-        public static final int md_btn_selected_dark=0x7f060062;
-        public static final int md_divider_black=0x7f060063;
-        public static final int md_divider_white=0x7f060064;
-        public static final int md_edittext_error=0x7f060067;
-        public static final int md_material_blue_600=0x7f060065;
-        public static final int md_material_blue_800=0x7f060066;
-        public static final int orange=0x7f060046;
-        public static final int pocket_color_1=0x7f06007e;
-        public static final int pocket_color_2=0x7f06007f;
-        public static final int pocket_color_3=0x7f060080;
-        public static final int pocket_color_4=0x7f060081;
-        public static final int primary_dark_material_dark=0x7f060014;
-        public static final int primary_dark_material_light=0x7f060015;
-        public static final int primary_material_dark=0x7f060012;
-        public static final int primary_material_light=0x7f060013;
-        public static final int primary_text_default_material_dark=0x7f060032;
-        public static final int primary_text_default_material_light=0x7f060030;
+        public static final int md_btn_selected=0x7f070066;
+        public static final int md_btn_selected_dark=0x7f070067;
+        public static final int md_divider_black=0x7f070068;
+        public static final int md_divider_white=0x7f070069;
+        public static final int md_edittext_error=0x7f07006c;
+        public static final int md_material_blue_600=0x7f07006a;
+        public static final int md_material_blue_800=0x7f07006b;
+        public static final int mobcast_blue=0x7f070044;
+        public static final int mobcast_green=0x7f070043;
+        public static final int mobcast_purple=0x7f070042;
+        /**  <color name="background_tab_pressed">#6633B5E5</color> 
+ <color name="toolbar_background">#ff3fb637</color> 
+ <color name="toolbar_background_statusbar">#ff193655</color> 
+ mobcast_logo_colors 
+         */
+        public static final int mobcast_red=0x7f070040;
+        public static final int mobcast_yellow=0x7f070041;
+        public static final int orange=0x7f07004b;
+        public static final int pocket_color_1=0x7f070083;
+        public static final int pocket_color_2=0x7f070084;
+        public static final int pocket_color_3=0x7f070085;
+        public static final int pocket_color_4=0x7f070086;
+        public static final int primary_dark_material_dark=0x7f070014;
+        public static final int primary_dark_material_light=0x7f070015;
+        public static final int primary_material_dark=0x7f070012;
+        public static final int primary_material_light=0x7f070013;
+        public static final int primary_text_default_material_dark=0x7f070032;
+        public static final int primary_text_default_material_light=0x7f070030;
         /**  30% of default values 
          */
-        public static final int primary_text_disabled_material_dark=0x7f060036;
+        public static final int primary_text_disabled_material_dark=0x7f070036;
         /**  26% of default values 
          */
-        public static final int primary_text_disabled_material_light=0x7f060034;
-        public static final int progress_dialog_background=0x7f06004b;
-        public static final int red=0x7f060050;
-        public static final int ripple_material_dark=0x7f060016;
-        public static final int ripple_material_light=0x7f060017;
-        public static final int sb__button_text_color=0x7f060092;
-        public static final int sb__button_text_color_green=0x7f0600a3;
-        public static final int sb__button_text_color_red=0x7f0600a4;
-        public static final int sb__button_text_color_yellow=0x7f0600a5;
-        public static final int sb__default_button_text_color=0x7f0600a6;
-        public static final int sb__dim_white=0x7f060091;
-        public static final int sb__snack_alert_bkgnd=0x7f06008f;
+        public static final int primary_text_disabled_material_light=0x7f070034;
+        public static final int progress_dialog_background=0x7f070050;
+        public static final int red=0x7f070055;
+        public static final int ripple_material_dark=0x7f070016;
+        public static final int ripple_material_light=0x7f070017;
+        public static final int sb__button_text_color=0x7f070097;
+        public static final int sb__button_text_color_green=0x7f0700a8;
+        public static final int sb__button_text_color_red=0x7f0700a9;
+        public static final int sb__button_text_color_yellow=0x7f0700aa;
+        public static final int sb__default_button_text_color=0x7f0700ab;
+        public static final int sb__dim_white=0x7f070096;
+        public static final int sb__snack_alert_bkgnd=0x7f070094;
         /**  SnackBar 
          */
-        public static final int sb__snack_bkgnd=0x7f06008e;
-        public static final int sb__snack_text_color=0x7f060093;
-        public static final int sb__transparent=0x7f060090;
-        public static final int secondary_text_default_material_dark=0x7f060033;
-        public static final int secondary_text_default_material_light=0x7f060031;
-        public static final int secondary_text_disabled_material_dark=0x7f060037;
-        public static final int secondary_text_disabled_material_light=0x7f060035;
-        public static final int selector_tab_text_color=0x7f0600a7;
+        public static final int sb__snack_bkgnd=0x7f070093;
+        public static final int sb__snack_text_color=0x7f070098;
+        public static final int sb__transparent=0x7f070095;
+        public static final int secondary_text_default_material_dark=0x7f070033;
+        public static final int secondary_text_default_material_light=0x7f070031;
+        public static final int secondary_text_disabled_material_dark=0x7f070037;
+        public static final int secondary_text_disabled_material_light=0x7f070035;
+        public static final int selector_tab_text_color=0x7f0700ac;
         /**  Shadow color for the furthest pixels of a shadow 
          */
-        public static final int shadow_end_color=0x7f060088;
+        public static final int shadow_end_color=0x7f07008d;
         /**  Shadow color for the middle pixels of a shadow 
          */
-        public static final int shadow_mid_color=0x7f060087;
+        public static final int shadow_mid_color=0x7f07008c;
         /**  Shadow color for the first pixels of a shadow 
          */
-        public static final int shadow_start_color=0x7f060086;
+        public static final int shadow_start_color=0x7f07008b;
         /**  #ff193655 #ff2B5E93 
          */
-        public static final int slidingtablayout_text_default=0x7f060040;
-        public static final int snackbar_background_color=0x7f06008a;
+        public static final int slidingtablayout_text_default=0x7f070045;
+        public static final int snackbar_background_color=0x7f07008f;
         /**  SmoothProgressBar 
          */
-        public static final int spb_default_color=0x7f060097;
-        public static final int switch_thumb_disabled_material_dark=0x7f06001e;
-        public static final int switch_thumb_disabled_material_light=0x7f06001f;
-        public static final int switch_thumb_material_dark=0x7f0600a8;
-        public static final int switch_thumb_material_light=0x7f0600a9;
-        public static final int switch_thumb_normal_material_dark=0x7f06001c;
-        public static final int switch_thumb_normal_material_light=0x7f06001d;
-        public static final int text_highlight=0x7f060045;
-        public static final int textview_login_color=0x7f06005c;
+        public static final int spb_default_color=0x7f07009c;
+        public static final int switch_thumb_disabled_material_dark=0x7f07001e;
+        public static final int switch_thumb_disabled_material_light=0x7f07001f;
+        public static final int switch_thumb_material_dark=0x7f0700ad;
+        public static final int switch_thumb_material_light=0x7f0700ae;
+        public static final int switch_thumb_normal_material_dark=0x7f07001c;
+        public static final int switch_thumb_normal_material_light=0x7f07001d;
+        public static final int text_highlight=0x7f07004a;
+        public static final int textview_login_color=0x7f070061;
         /**  fragment_quiz 
          */
-        public static final int timer_rim=0x7f06005f;
-        public static final int toolbar_background=0x7f06003e;
-        public static final int toolbar_background_statusbar=0x7f06003f;
-        public static final int transparency_event_cover=0x7f060044;
-        public static final int tutorial=0x7f060049;
-        public static final int unread_background=0x7f060043;
-        public static final int unread_highlight=0x7f060042;
+        public static final int timer_rim=0x7f070064;
+        public static final int toolbar_background=0x7f07003e;
+        public static final int toolbar_background_statusbar=0x7f07003f;
+        public static final int transparency_event_cover=0x7f070049;
+        public static final int tutorial=0x7f07004e;
+        public static final int unread_background=0x7f070048;
+        public static final int unread_highlight=0x7f070047;
         /**  CirclePageIndicator 
          */
-        public static final int vpi__background_holo_dark=0x7f06006f;
-        public static final int vpi__background_holo_light=0x7f060070;
-        public static final int vpi__bright_foreground_disabled_holo_dark=0x7f060073;
-        public static final int vpi__bright_foreground_disabled_holo_light=0x7f060074;
-        public static final int vpi__bright_foreground_holo_dark=0x7f060071;
-        public static final int vpi__bright_foreground_holo_light=0x7f060072;
-        public static final int vpi__bright_foreground_inverse_holo_dark=0x7f060075;
-        public static final int vpi__bright_foreground_inverse_holo_light=0x7f060076;
-        public static final int white=0x7f06004f;
-        public static final int white_shade_light=0x7f06004e;
+        public static final int vpi__background_holo_dark=0x7f070074;
+        public static final int vpi__background_holo_light=0x7f070075;
+        public static final int vpi__bright_foreground_disabled_holo_dark=0x7f070078;
+        public static final int vpi__bright_foreground_disabled_holo_light=0x7f070079;
+        public static final int vpi__bright_foreground_holo_dark=0x7f070076;
+        public static final int vpi__bright_foreground_holo_light=0x7f070077;
+        public static final int vpi__bright_foreground_inverse_holo_dark=0x7f07007a;
+        public static final int vpi__bright_foreground_inverse_holo_light=0x7f07007b;
+        public static final int white=0x7f070054;
+        public static final int white_shade_light=0x7f070053;
     }
     public static final class dimen {
         /**  Default content inset of an action bar. 
  Default content inset of an action bar. 
          */
-        public static final int abc_action_bar_content_inset_material=0x7f090028;
+        public static final int abc_action_bar_content_inset_material=0x7f0a0028;
         /**  Default height of an action bar. 
  Default height of an action bar. 
  Default height of an action bar. 
          */
-        public static final int abc_action_bar_default_height_material=0x7f090026;
+        public static final int abc_action_bar_default_height_material=0x7f0a0026;
         /**  Default padding of an action bar. 
  Default padding of an action bar. 
  Default padding of an action bar. 
          */
-        public static final int abc_action_bar_default_padding_material=0x7f090027;
+        public static final int abc_action_bar_default_padding_material=0x7f0a0027;
         /**  Vertical padding around action bar icons. 
          */
-        public static final int abc_action_bar_icon_vertical_padding_material=0x7f09002b;
+        public static final int abc_action_bar_icon_vertical_padding_material=0x7f0a002b;
         /**  Padding to add to the start of the overflow action button. 
  Padding to add to the start of the overflow action button. 
          */
-        public static final int abc_action_bar_navigation_padding_start_material=0x7f090029;
+        public static final int abc_action_bar_navigation_padding_start_material=0x7f0a0029;
         /**  Padding to add to the end of the overflow action button. 
  Padding to add to the end of the overflow action button. 
          */
-        public static final int abc_action_bar_overflow_padding_end_material=0x7f09002a;
+        public static final int abc_action_bar_overflow_padding_end_material=0x7f0a002a;
         /**  Padding to add to the start of the overflow action button. 
          */
-        public static final int abc_action_bar_overflow_padding_start_material=0x7f09002f;
+        public static final int abc_action_bar_overflow_padding_start_material=0x7f0a002f;
         /**  Size of the indeterminate Progress Bar 
  Size of the indeterminate Progress Bar 
          */
-        public static final int abc_action_bar_progress_bar_size=0x7f090005;
+        public static final int abc_action_bar_progress_bar_size=0x7f0a0005;
         /**  Maximum height for a stacked tab bar as part of an action bar 
          */
-        public static final int abc_action_bar_stacked_max_height=0x7f090004;
+        public static final int abc_action_bar_stacked_max_height=0x7f0a0004;
         /** 
          Maximum width for a stacked action bar tab. This prevents
          action bar tabs from becoming too wide on a wide screen when only
          a few are present.
     
          */
-        public static final int abc_action_bar_stacked_tab_max_width=0x7f090003;
+        public static final int abc_action_bar_stacked_tab_max_width=0x7f0a0003;
         /**  Bottom margin for action bar subtitles 
          */
-        public static final int abc_action_bar_subtitle_bottom_margin_material=0x7f09002d;
+        public static final int abc_action_bar_subtitle_bottom_margin_material=0x7f0a002d;
         /**  Top margin for action bar subtitles 
          */
-        public static final int abc_action_bar_subtitle_top_margin_material=0x7f09002c;
-        public static final int abc_action_button_min_height_material=0x7f090032;
-        public static final int abc_action_button_min_width_material=0x7f090031;
-        public static final int abc_action_button_min_width_overflow_material=0x7f090030;
+        public static final int abc_action_bar_subtitle_top_margin_material=0x7f0a002c;
+        public static final int abc_action_button_min_height_material=0x7f0a0032;
+        public static final int abc_action_button_min_width_material=0x7f0a0031;
+        public static final int abc_action_button_min_width_overflow_material=0x7f0a0030;
         /**  Dialog button bar height 
  Dialog button bar height 
          */
-        public static final int abc_alert_dialog_button_bar_height=0x7f09001d;
-        public static final int abc_button_inset_horizontal_material=0x7f090011;
-        public static final int abc_button_inset_vertical_material=0x7f090010;
-        public static final int abc_button_padding_horizontal_material=0x7f090013;
+        public static final int abc_alert_dialog_button_bar_height=0x7f0a001d;
+        public static final int abc_button_inset_horizontal_material=0x7f0a0011;
+        public static final int abc_button_inset_vertical_material=0x7f0a0010;
+        public static final int abc_button_padding_horizontal_material=0x7f0a0013;
         /**  Default inner padding within buttons 
          */
-        public static final int abc_button_padding_vertical_material=0x7f090012;
+        public static final int abc_button_padding_vertical_material=0x7f0a0012;
         /** 
     The maximum width we would prefer dialogs to be.  0 if there is no
     maximum (let them grow as large as the screen).  Actual values are
@@ -3540,90 +3552,90 @@ containing a value of this type.
  see comment in values/config.xml 
  see comment in values/config.xml 
          */
-        public static final int abc_config_prefDialogWidth=0x7f090002;
+        public static final int abc_config_prefDialogWidth=0x7f0a0002;
         /**  Default rounded corner for controls 
          */
-        public static final int abc_control_corner_material=0x7f090016;
+        public static final int abc_control_corner_material=0x7f0a0016;
         /**  Default insets (outer padding) around controls 
          */
-        public static final int abc_control_inset_material=0x7f090014;
+        public static final int abc_control_inset_material=0x7f0a0014;
         /**  Default inner padding within controls 
          */
-        public static final int abc_control_padding_material=0x7f090015;
+        public static final int abc_control_padding_material=0x7f0a0015;
         /**  Padding above and below selection dialog lists. 
          */
-        public static final int abc_dialog_list_padding_vertical_material=0x7f09001e;
+        public static final int abc_dialog_list_padding_vertical_material=0x7f0a001e;
         /** 
          The platform's desired minimum size for a dialog's width when it
          is along the major axis (that is the screen is landscape).  This may
          be either a fraction or a dimension.
     
          */
-        public static final int abc_dialog_min_width_major=0x7f09001f;
+        public static final int abc_dialog_min_width_major=0x7f0a001f;
         /** 
          The platform's desired minimum size for a dialog's width when it
          is along the minor axis (that is the screen is portrait).  This may
          be either a fraction or a dimension.
     
          */
-        public static final int abc_dialog_min_width_minor=0x7f090020;
-        public static final int abc_dialog_padding_material=0x7f09001b;
-        public static final int abc_dialog_padding_top_material=0x7f09001c;
-        public static final int abc_disabled_alpha_material_dark=0x7f090044;
-        public static final int abc_disabled_alpha_material_light=0x7f090043;
+        public static final int abc_dialog_min_width_minor=0x7f0a0020;
+        public static final int abc_dialog_padding_material=0x7f0a001b;
+        public static final int abc_dialog_padding_top_material=0x7f0a001c;
+        public static final int abc_disabled_alpha_material_dark=0x7f0a0044;
+        public static final int abc_disabled_alpha_material_light=0x7f0a0043;
         /**  Width of the icon in a dropdown list 
          */
-        public static final int abc_dropdownitem_icon_width=0x7f09000b;
+        public static final int abc_dropdownitem_icon_width=0x7f0a000b;
         /**  Text padding for dropdown items 
          */
-        public static final int abc_dropdownitem_text_padding_left=0x7f090009;
-        public static final int abc_dropdownitem_text_padding_right=0x7f09000a;
-        public static final int abc_edit_text_inset_bottom_material=0x7f090019;
-        public static final int abc_edit_text_inset_horizontal_material=0x7f090017;
-        public static final int abc_edit_text_inset_top_material=0x7f090018;
-        public static final int abc_floating_window_z=0x7f090042;
+        public static final int abc_dropdownitem_text_padding_left=0x7f0a0009;
+        public static final int abc_dropdownitem_text_padding_right=0x7f0a000a;
+        public static final int abc_edit_text_inset_bottom_material=0x7f0a0019;
+        public static final int abc_edit_text_inset_horizontal_material=0x7f0a0017;
+        public static final int abc_edit_text_inset_top_material=0x7f0a0018;
+        public static final int abc_floating_window_z=0x7f0a0042;
         /**  Default padding for list items. This should match the action bar
          content inset so that ListActivity items line up correctly. 
          */
-        public static final int abc_list_item_padding_horizontal_material=0x7f09002e;
-        public static final int abc_panel_menu_list_width=0x7f090006;
+        public static final int abc_list_item_padding_horizontal_material=0x7f0a002e;
+        public static final int abc_panel_menu_list_width=0x7f0a0006;
         /**  Preferred width of the search view. 
          */
-        public static final int abc_search_view_preferred_width=0x7f090008;
+        public static final int abc_search_view_preferred_width=0x7f0a0008;
         /**  Minimum width of the search view text entry area. 
  Minimum width of the search view text entry area. 
  Minimum width of the search view text entry area. 
  Minimum width of the search view text entry area. 
  Minimum width of the search view text entry area. 
          */
-        public static final int abc_search_view_text_min_width=0x7f090007;
+        public static final int abc_search_view_text_min_width=0x7f0a0007;
         /**  Since optical insets are not available pre-v18, we add a small amount of padding 
  Since SwitchCompat can use optical insets on v18+, reset the manual padding 
          */
-        public static final int abc_switch_padding=0x7f09001a;
-        public static final int abc_text_size_body_1_material=0x7f09003c;
-        public static final int abc_text_size_body_2_material=0x7f09003b;
-        public static final int abc_text_size_button_material=0x7f09003e;
-        public static final int abc_text_size_caption_material=0x7f09003d;
-        public static final int abc_text_size_display_1_material=0x7f090036;
-        public static final int abc_text_size_display_2_material=0x7f090035;
-        public static final int abc_text_size_display_3_material=0x7f090034;
-        public static final int abc_text_size_display_4_material=0x7f090033;
-        public static final int abc_text_size_headline_material=0x7f090037;
-        public static final int abc_text_size_large_material=0x7f09003f;
-        public static final int abc_text_size_medium_material=0x7f090040;
-        public static final int abc_text_size_menu_material=0x7f09003a;
-        public static final int abc_text_size_small_material=0x7f090041;
-        public static final int abc_text_size_subhead_material=0x7f090039;
+        public static final int abc_switch_padding=0x7f0a001a;
+        public static final int abc_text_size_body_1_material=0x7f0a003c;
+        public static final int abc_text_size_body_2_material=0x7f0a003b;
+        public static final int abc_text_size_button_material=0x7f0a003e;
+        public static final int abc_text_size_caption_material=0x7f0a003d;
+        public static final int abc_text_size_display_1_material=0x7f0a0036;
+        public static final int abc_text_size_display_2_material=0x7f0a0035;
+        public static final int abc_text_size_display_3_material=0x7f0a0034;
+        public static final int abc_text_size_display_4_material=0x7f0a0033;
+        public static final int abc_text_size_headline_material=0x7f0a0037;
+        public static final int abc_text_size_large_material=0x7f0a003f;
+        public static final int abc_text_size_medium_material=0x7f0a0040;
+        public static final int abc_text_size_menu_material=0x7f0a003a;
+        public static final int abc_text_size_small_material=0x7f0a0041;
+        public static final int abc_text_size_subhead_material=0x7f0a0039;
         /**  Use the default subtitle sizes on tablets. 
  Default text size for action bar subtitle.
          */
-        public static final int abc_text_size_subtitle_material_toolbar=0x7f090025;
-        public static final int abc_text_size_title_material=0x7f090038;
+        public static final int abc_text_size_subtitle_material_toolbar=0x7f0a0025;
+        public static final int abc_text_size_title_material=0x7f0a0038;
         /**  Use the default title sizes on tablets. 
  Default text size for action bar title.
          */
-        public static final int abc_text_size_title_material_toolbar=0x7f090024;
+        public static final int abc_text_size_title_material_toolbar=0x7f0a0024;
         /**  Default screen margins, per the Android Design guidelines. 
 
          Example customization of dimensions originally defined in res/values/dimens.xml
@@ -3631,49 +3643,49 @@ containing a value of this type.
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
          */
-        public static final int activity_horizontal_margin=0x7f090049;
-        public static final int activity_recruitment_detail_designation_size=0x7f090069;
-        public static final int activity_recruitment_detail_experience_size=0x7f09006a;
+        public static final int activity_horizontal_margin=0x7f0a0049;
+        public static final int activity_recruitment_detail_designation_size=0x7f0a0071;
+        public static final int activity_recruitment_detail_experience_size=0x7f0a0072;
         /**  activity_recruitment_detail 
          */
-        public static final int activity_recruitment_detail_text_size=0x7f090068;
-        public static final int activity_recruitment_detail_title_size=0x7f09006b;
-        public static final int activity_recruitment_heading_expand_width=0x7f09006d;
-        public static final int activity_recruitment_heading_padding=0x7f09006c;
-        public static final int activity_splash_appname_margin_bottom=0x7f090051;
+        public static final int activity_recruitment_detail_text_size=0x7f0a0070;
+        public static final int activity_recruitment_detail_title_size=0x7f0a0073;
+        public static final int activity_recruitment_heading_expand_width=0x7f0a0075;
+        public static final int activity_recruitment_heading_padding=0x7f0a0074;
+        public static final int activity_splash_appname_margin_bottom=0x7f0a0051;
         /**  activity_splash 
          */
-        public static final int activity_splash_appname_textsize=0x7f090050;
-        public static final int activity_splash_logo_height=0x7f090053;
-        public static final int activity_splash_logo_width=0x7f090052;
-        public static final int activity_tutorial_next_image_margin=0x7f0900e4;
-        public static final int activity_tutorial_shape_round_width=0x7f0900e2;
-        public static final int activity_vertical_margin=0x7f09004a;
-        public static final int appbar_elevation=0x7f090168;
-        public static final int award_name_congratulate_textview_size=0x7f090071;
-        public static final int award_name_textview_size=0x7f09006f;
-        public static final int award_read_strip_width=0x7f090070;
+        public static final int activity_splash_appname_textsize=0x7f0a0050;
+        public static final int activity_splash_logo_height=0x7f0a0053;
+        public static final int activity_splash_logo_width=0x7f0a0052;
+        public static final int activity_tutorial_next_image_margin=0x7f0a00ed;
+        public static final int activity_tutorial_shape_round_width=0x7f0a00eb;
+        public static final int activity_vertical_margin=0x7f0a004a;
+        public static final int appbar_elevation=0x7f0a0171;
+        public static final int award_name_congratulate_textview_size=0x7f0a0079;
+        public static final int award_name_textview_size=0x7f0a0077;
+        public static final int award_read_strip_width=0x7f0a0078;
         /**  item_recycler_award 
          */
-        public static final int award_winner_textview_size=0x7f09006e;
+        public static final int award_winner_textview_size=0x7f0a0076;
         /**  section_layout_birthday_header 
          */
-        public static final int birthday_section_header_textview_size=0x7f090107;
-        public static final int bs_grid_bottom_padding=0x7f09014b;
+        public static final int birthday_section_header_textview_size=0x7f0a0110;
+        public static final int bs_grid_bottom_padding=0x7f0a0154;
         /**  BottomSheet 
          */
-        public static final int bs_grid_left_padding=0x7f090148;
-        public static final int bs_grid_right_padding=0x7f09014a;
-        public static final int bs_grid_top_padding=0x7f090149;
-        public static final int crouton_height=0x7f09004f;
-        public static final int default_circle_indicator_radius=0x7f090045;
-        public static final int default_circle_indicator_stroke_width=0x7f090046;
+        public static final int bs_grid_left_padding=0x7f0a0151;
+        public static final int bs_grid_right_padding=0x7f0a0153;
+        public static final int bs_grid_top_padding=0x7f0a0152;
+        public static final int crouton_height=0x7f0a004f;
+        public static final int default_circle_indicator_radius=0x7f0a0045;
+        public static final int default_circle_indicator_stroke_width=0x7f0a0046;
         /**  dialog_birthday_message 
          */
-        public static final int dialog_birthday_message_textview_size=0x7f090108;
+        public static final int dialog_birthday_message_textview_size=0x7f0a0111;
         /**  bottom_sheet_anydo 
          */
-        public static final int dialog_bottomsheet_anydo_content_height=0x7f09011a;
+        public static final int dialog_bottomsheet_anydo_content_height=0x7f0a0123;
         /** 
          The platform's desired fixed height for a dialog along the major axis
          (the screen is in portrait). This may be either a fraction or a dimension.
@@ -3683,7 +3695,7 @@ containing a value of this type.
  The platform's desired fixed height for a dialog along the major axis
          (the screen is in portrait). This may be either a fraction or a dimension.
          */
-        public static final int dialog_fixed_height_major=0x7f09000e;
+        public static final int dialog_fixed_height_major=0x7f0a000e;
         /** 
          The platform's desired fixed height for a dialog along the minor axis
          (the screen is in landscape). This may be either a fraction or a dimension.
@@ -3693,7 +3705,7 @@ containing a value of this type.
  The platform's desired fixed height for a dialog along the minor axis
          (the screen is in landscape). This may be either a fraction or a dimension.
          */
-        public static final int dialog_fixed_height_minor=0x7f09000f;
+        public static final int dialog_fixed_height_minor=0x7f0a000f;
         /** 
          The platform's desired fixed width for a dialog along the major axis
          (the screen is in landscape). This may be either a fraction or a dimension.
@@ -3703,7 +3715,7 @@ containing a value of this type.
  The platform's desired fixed width for a dialog along the major axis
          (the screen is in landscape). This may be either a fraction or a dimension.
          */
-        public static final int dialog_fixed_width_major=0x7f09000c;
+        public static final int dialog_fixed_width_major=0x7f0a000c;
         /** 
          The platform's desired fixed width for a dialog along the minor axis
          (the screen is in portrait). This may be either a fraction or a dimension.
@@ -3713,301 +3725,309 @@ containing a value of this type.
  The platform's desired fixed width for a dialog along the minor axis
          (the screen is in portrait). This may be either a fraction or a dimension.
          */
-        public static final int dialog_fixed_width_minor=0x7f09000d;
-        public static final int dialog_progress_download_cancel_height=0x7f090113;
-        public static final int dialog_progress_download_cancel_margin_top=0x7f090114;
-        public static final int dialog_progress_download_cancel_text_size=0x7f090115;
-        public static final int dialog_progress_download_cancel_width=0x7f090112;
-        public static final int dialog_progress_download_filename_size=0x7f09010f;
-        public static final int dialog_progress_download_icon_height=0x7f09010d;
+        public static final int dialog_fixed_width_minor=0x7f0a000d;
+        public static final int dialog_progress_download_cancel_height=0x7f0a011c;
+        public static final int dialog_progress_download_cancel_margin_top=0x7f0a011d;
+        public static final int dialog_progress_download_cancel_text_size=0x7f0a011e;
+        public static final int dialog_progress_download_cancel_width=0x7f0a011b;
+        public static final int dialog_progress_download_filename_size=0x7f0a0118;
+        public static final int dialog_progress_download_icon_height=0x7f0a0116;
         /**  dialog_progress_download 
          */
-        public static final int dialog_progress_download_icon_width=0x7f09010c;
-        public static final int dialog_progress_download_padding=0x7f09010e;
-        public static final int dialog_progress_download_progress_size=0x7f090110;
-        public static final int dialog_progress_download_progressbar_padding=0x7f090111;
+        public static final int dialog_progress_download_icon_width=0x7f0a0115;
+        public static final int dialog_progress_download_padding=0x7f0a0117;
+        public static final int dialog_progress_download_progress_size=0x7f0a0119;
+        public static final int dialog_progress_download_progressbar_padding=0x7f0a011a;
         /**  dialog_progress_message 
          */
-        public static final int dialog_progress_message_icon_width=0x7f090109;
-        public static final int dialog_progress_message_padding=0x7f09010a;
-        public static final int dialog_progress_message_size=0x7f09010b;
-        public static final int dialog_progress_normal_padding=0x7f090118;
-        public static final int dialog_progress_normal_progress_width=0x7f090117;
-        public static final int dialog_progress_normal_text_margin_start=0x7f090119;
+        public static final int dialog_progress_message_icon_width=0x7f0a0112;
+        public static final int dialog_progress_message_padding=0x7f0a0113;
+        public static final int dialog_progress_message_size=0x7f0a0114;
+        public static final int dialog_progress_normal_padding=0x7f0a0121;
+        public static final int dialog_progress_normal_progress_width=0x7f0a0120;
+        public static final int dialog_progress_normal_text_margin_start=0x7f0a0122;
         /**  dialog_progress_normal 
          */
-        public static final int dialog_progress_normal_text_size=0x7f090116;
-        public static final int disabled_alpha_material_dark=0x7f090001;
-        public static final int disabled_alpha_material_light=0x7f090000;
+        public static final int dialog_progress_normal_text_size=0x7f0a011f;
+        public static final int disabled_alpha_material_dark=0x7f0a0001;
+        public static final int disabled_alpha_material_light=0x7f0a0000;
+        public static final int download_btn_height=0x7f0a005d;
+        public static final int download_btn_padding_bottom=0x7f0a0061;
+        public static final int download_btn_padding_left=0x7f0a005e;
+        public static final int download_btn_padding_right=0x7f0a005f;
+        public static final int download_btn_padding_top=0x7f0a0060;
+        public static final int download_btn_text_size=0x7f0a0062;
+        public static final int download_btn_width=0x7f0a005c;
         /**  include_layout_drawer 
          */
-        public static final int drawer_item_height=0x7f09011d;
-        public static final int drawer_item_image_width=0x7f090125;
-        public static final int drawer_item_last_sync_text_size=0x7f09011f;
-        public static final int drawer_item_padding_left=0x7f090126;
-        public static final int drawer_item_padding_right=0x7f090127;
-        public static final int drawer_item_profile_email_margin_bottom=0x7f090122;
-        public static final int drawer_item_profile_email_text_size=0x7f090124;
-        public static final int drawer_item_profile_frame_layout_height=0x7f09011e;
-        public static final int drawer_item_profile_image_view_margin_bottom=0x7f090120;
-        public static final int drawer_item_profile_name_margin_bottom=0x7f090121;
-        public static final int drawer_item_profile_name_text_size=0x7f090123;
-        public static final int edit_profile_circleimageview_height=0x7f090065;
+        public static final int drawer_item_height=0x7f0a0126;
+        public static final int drawer_item_image_width=0x7f0a012e;
+        public static final int drawer_item_last_sync_text_size=0x7f0a0128;
+        public static final int drawer_item_padding_left=0x7f0a012f;
+        public static final int drawer_item_padding_right=0x7f0a0130;
+        public static final int drawer_item_profile_email_margin_bottom=0x7f0a012b;
+        public static final int drawer_item_profile_email_text_size=0x7f0a012d;
+        public static final int drawer_item_profile_frame_layout_height=0x7f0a0127;
+        public static final int drawer_item_profile_image_view_margin_bottom=0x7f0a0129;
+        public static final int drawer_item_profile_name_margin_bottom=0x7f0a012a;
+        public static final int drawer_item_profile_name_text_size=0x7f0a012c;
+        public static final int edit_profile_circleimageview_height=0x7f0a006d;
         /**  activity_edit_profile 
          */
-        public static final int edit_profile_framelayout_height=0x7f090062;
-        public static final int edit_profile_framelayout_inner_height=0x7f090063;
-        public static final int edit_profile_progresswheel_height=0x7f090066;
-        public static final int edit_profile_remove_margin_top=0x7f090064;
-        public static final int edit_profile_upload_imageview_height=0x7f090067;
-        public static final int event_button_height=0x7f090087;
-        public static final int event_button_size=0x7f090086;
-        public static final int event_by_layout_size=0x7f090078;
-        public static final int event_by_textview_margin_right=0x7f090079;
-        public static final int event_by_textview_size=0x7f090075;
+        public static final int edit_profile_framelayout_height=0x7f0a006a;
+        public static final int edit_profile_framelayout_inner_height=0x7f0a006b;
+        public static final int edit_profile_progresswheel_height=0x7f0a006e;
+        public static final int edit_profile_remove_margin_top=0x7f0a006c;
+        public static final int edit_profile_upload_imageview_height=0x7f0a006f;
+        public static final int event_button_height=0x7f0a008f;
+        public static final int event_button_size=0x7f0a008e;
+        public static final int event_by_layout_size=0x7f0a0080;
+        public static final int event_by_textview_margin_right=0x7f0a0081;
+        public static final int event_by_textview_size=0x7f0a007d;
         /**  fragment_event_details 
          */
-        public static final int event_detail_cover_layout_height=0x7f09007b;
-        public static final int event_detail_cover_transparency_height=0x7f09007e;
-        public static final int event_detail_date_image_width=0x7f090085;
-        public static final int event_detail_event_date_size=0x7f09007f;
-        public static final int event_detail_event_date_text_size=0x7f090081;
-        public static final int event_detail_event_invite_size=0x7f090089;
-        public static final int event_detail_event_invite_text_size=0x7f090088;
-        public static final int event_detail_event_location_text_size=0x7f090082;
-        public static final int event_detail_event_location_view_map_size=0x7f090083;
-        public static final int event_detail_event_summary_size=0x7f09008a;
-        public static final int event_detail_event_till_size=0x7f090080;
-        public static final int event_detail_event_till_text_size=0x7f090084;
-        public static final int event_detail_share_width=0x7f09007d;
-        public static final int event_detail_time_left_layout_height=0x7f09007c;
+        public static final int event_detail_cover_layout_height=0x7f0a0083;
+        public static final int event_detail_cover_transparency_height=0x7f0a0086;
+        public static final int event_detail_date_image_width=0x7f0a008d;
+        public static final int event_detail_event_date_size=0x7f0a0087;
+        public static final int event_detail_event_date_text_size=0x7f0a0089;
+        public static final int event_detail_event_invite_size=0x7f0a0091;
+        public static final int event_detail_event_invite_text_size=0x7f0a0090;
+        public static final int event_detail_event_location_text_size=0x7f0a008a;
+        public static final int event_detail_event_location_view_map_size=0x7f0a008b;
+        public static final int event_detail_event_summary_size=0x7f0a0092;
+        public static final int event_detail_event_till_size=0x7f0a0088;
+        public static final int event_detail_event_till_text_size=0x7f0a008c;
+        public static final int event_detail_share_width=0x7f0a0085;
+        public static final int event_detail_time_left_layout_height=0x7f0a0084;
         /**  item_recycler_event 
          */
-        public static final int event_left_number_textview_size=0x7f090072;
-        public static final int event_left_string_textview_size=0x7f090073;
+        public static final int event_left_number_textview_size=0x7f0a007a;
+        public static final int event_left_string_textview_size=0x7f0a007b;
         /**  <dimen name="event_by_textview_margin_right">120dp</dimen> 
          */
-        public static final int event_link_width=0x7f09007a;
-        public static final int event_summary_textview_size=0x7f090077;
-        public static final int event_title_textview_size=0x7f090074;
-        public static final int event_view_textview_size=0x7f090076;
-        public static final int fab_border_width=0x7f090154;
-        public static final int fab_content_size=0x7f090151;
+        public static final int event_link_width=0x7f0a0082;
+        public static final int event_summary_textview_size=0x7f0a007f;
+        public static final int event_title_textview_size=0x7f0a007c;
+        public static final int event_view_textview_size=0x7f0a007e;
+        public static final int fab_border_width=0x7f0a015d;
+        public static final int fab_content_size=0x7f0a015a;
         /**  design support library 
          */
-        public static final int fab_elevation=0x7f09014f;
-        public static final int fab_size_mini=0x7f090153;
-        public static final int fab_size_normal=0x7f090152;
-        public static final int fab_translation_z_pressed=0x7f090150;
-        public static final int fragment_about_logo_height=0x7f0900aa;
-        public static final int fragment_about_version_detail_text=0x7f0900a9;
-        public static final int fragment_about_version_detail_text_margin_top=0x7f0900ab;
-        public static final int fragment_about_version_layout_margin_top=0x7f0900ac;
+        public static final int fab_elevation=0x7f0a0158;
+        public static final int fab_size_mini=0x7f0a015c;
+        public static final int fab_size_normal=0x7f0a015b;
+        public static final int fab_translation_z_pressed=0x7f0a0159;
+        public static final int fragment_about_logo_height=0x7f0a00b2;
+        public static final int fragment_about_version_detail_text=0x7f0a00b1;
+        public static final int fragment_about_version_detail_text_margin_top=0x7f0a00b3;
+        public static final int fragment_about_version_layout_margin_top=0x7f0a00b4;
         /**  fragment_about 
          */
-        public static final int fragment_about_version_text=0x7f0900a8;
+        public static final int fragment_about_version_text=0x7f0a00b0;
         /**  fragment_audio 
          */
-        public static final int fragment_audio_seekbar_textview_size=0x7f09009e;
-        public static final int fragment_audio_visual_frame_height=0x7f09009f;
-        public static final int fragment_birthday_profile_action_iv_width=0x7f0900d2;
-        public static final int fragment_birthday_profile_birthdate_text_size=0x7f0900c9;
-        public static final int fragment_birthday_profile_city_text_size=0x7f0900c8;
-        public static final int fragment_birthday_profile_department_text_size=0x7f0900cd;
+        public static final int fragment_audio_seekbar_textview_size=0x7f0a00a6;
+        public static final int fragment_audio_visual_frame_height=0x7f0a00a7;
+        public static final int fragment_birthday_profile_action_iv_width=0x7f0a00da;
+        public static final int fragment_birthday_profile_birthdate_text_size=0x7f0a00d1;
+        public static final int fragment_birthday_profile_city_text_size=0x7f0a00d0;
+        public static final int fragment_birthday_profile_department_text_size=0x7f0a00d5;
         /**  fragment_birthday_profile 
          */
-        public static final int fragment_birthday_profile_framelayout_height=0x7f0900c5;
-        public static final int fragment_birthday_profile_framelayout_material_height=0x7f0900cc;
-        public static final int fragment_birthday_profile_image_width=0x7f0900ca;
-        public static final int fragment_birthday_profile_margin_top=0x7f0900cb;
-        public static final int fragment_birthday_profile_name_margin_top=0x7f0900c6;
-        public static final int fragment_birthday_profile_name_text_size=0x7f0900c7;
-        public static final int fragment_birthday_profile_send_wishes_padding=0x7f0900d0;
-        public static final int fragment_birthday_profile_send_wishes_text_size=0x7f0900d1;
-        public static final int fragment_birthday_profile_sun_sign_layout_height=0x7f0900ce;
-        public static final int fragment_birthday_profile_sun_sign_text_size=0x7f0900cf;
-        public static final int fragment_capture_attach_another_layout_height=0x7f0900ec;
-        public static final int fragment_capture_button_text_size=0x7f0900eb;
-        public static final int fragment_capture_note_margin=0x7f0900e9;
+        public static final int fragment_birthday_profile_framelayout_height=0x7f0a00cd;
+        public static final int fragment_birthday_profile_framelayout_material_height=0x7f0a00d4;
+        public static final int fragment_birthday_profile_image_width=0x7f0a00d2;
+        public static final int fragment_birthday_profile_margin_top=0x7f0a00d3;
+        public static final int fragment_birthday_profile_name_margin_top=0x7f0a00ce;
+        public static final int fragment_birthday_profile_name_text_size=0x7f0a00cf;
+        public static final int fragment_birthday_profile_send_wishes_padding=0x7f0a00d8;
+        public static final int fragment_birthday_profile_send_wishes_text_size=0x7f0a00d9;
+        public static final int fragment_birthday_profile_sun_sign_layout_height=0x7f0a00d6;
+        public static final int fragment_birthday_profile_sun_sign_text_size=0x7f0a00d7;
+        public static final int fragment_capture_attach_another_layout_height=0x7f0a00f5;
+        public static final int fragment_capture_button_text_size=0x7f0a00f4;
+        public static final int fragment_capture_note_margin=0x7f0a00f2;
         /**  fragment_capture 
          */
-        public static final int fragment_capture_note_max_height=0x7f0900e7;
-        public static final int fragment_capture_note_min_height=0x7f0900e8;
-        public static final int fragment_capture_note_padding=0x7f0900ea;
-        public static final int fragment_detail_padding=0x7f09008c;
-        public static final int fragment_detail_title_by_content_margin_top=0x7f09008b;
+        public static final int fragment_capture_note_max_height=0x7f0a00f0;
+        public static final int fragment_capture_note_min_height=0x7f0a00f1;
+        public static final int fragment_capture_note_padding=0x7f0a00f3;
+        public static final int fragment_detail_padding=0x7f0a0094;
+        public static final int fragment_detail_title_by_content_margin_top=0x7f0a0093;
         /**  fragment_feedback_rate_ratingbar 
  fragment_image 
          */
-        public static final int fragment_image_frame_height=0x7f09009a;
-        public static final int fragment_image_language_flowlayout_padding=0x7f09009c;
-        public static final int fragment_image_language_header_text_size=0x7f09009b;
-        public static final int fragment_image_next_width=0x7f09009d;
-        public static final int fragment_language_divider_margin_left=0x7f0900db;
-        public static final int fragment_language_divider_margin_right=0x7f0900dc;
+        public static final int fragment_image_frame_height=0x7f0a00a2;
+        public static final int fragment_image_language_flowlayout_padding=0x7f0a00a4;
+        public static final int fragment_image_language_header_text_size=0x7f0a00a3;
+        public static final int fragment_image_next_width=0x7f0a00a5;
+        public static final int fragment_language_divider_margin_left=0x7f0a00e4;
+        public static final int fragment_language_divider_margin_right=0x7f0a00e5;
         /**  fragment_language 
          */
-        public static final int fragment_language_text_size=0x7f0900da;
-        public static final int fragment_news_view_source_image_width=0x7f0900a7;
+        public static final int fragment_language_text_size=0x7f0a00e3;
+        public static final int fragment_news_view_source_image_width=0x7f0a00af;
         /**  fragment_news 
          */
-        public static final int fragment_news_view_source_layout_height=0x7f0900a6;
-        public static final int fragment_pdf_image_height=0x7f0900a4;
-        public static final int fragment_pdf_image_margin_top=0x7f0900a5;
+        public static final int fragment_news_view_source_layout_height=0x7f0a00ae;
+        public static final int fragment_pdf_image_height=0x7f0a00ac;
+        public static final int fragment_pdf_image_margin_top=0x7f0a00ad;
         /**  fragment_pdf 
          */
-        public static final int fragment_pdf_image_width=0x7f0900a3;
-        public static final int fragment_quiz_score_goofed_up_at_text_size=0x7f0900b5;
-        public static final int fragment_quiz_score_goofed_up_text_size=0x7f0900b4;
+        public static final int fragment_pdf_image_width=0x7f0a00ab;
+        public static final int fragment_quiz_score_goofed_up_at_text_size=0x7f0a00bd;
+        public static final int fragment_quiz_score_goofed_up_text_size=0x7f0a00bc;
         /**  fragment_quiz_score 
          */
-        public static final int fragment_quiz_score_header_height=0x7f0900ad;
-        public static final int fragment_quiz_score_header_text_size=0x7f0900af;
-        public static final int fragment_quiz_score_height=0x7f0900ae;
-        public static final int fragment_quiz_score_question_correct_text_size=0x7f0900b7;
-        public static final int fragment_quiz_score_question_title_text_size=0x7f0900b6;
-        public static final int fragment_quiz_score_statement_text_size=0x7f0900b3;
-        public static final int fragment_quiz_score_text_detail_size=0x7f0900b2;
-        public static final int fragment_quiz_score_text_size=0x7f0900b0;
-        public static final int fragment_quiz_score_total_text_size=0x7f0900b1;
-        public static final int fragment_quiz_selective_quiz_option_padding=0x7f090099;
-        public static final int fragment_quiz_selective_quiz_option_size=0x7f090098;
+        public static final int fragment_quiz_score_header_height=0x7f0a00b5;
+        public static final int fragment_quiz_score_header_text_size=0x7f0a00b7;
+        public static final int fragment_quiz_score_height=0x7f0a00b6;
+        public static final int fragment_quiz_score_question_correct_text_size=0x7f0a00bf;
+        public static final int fragment_quiz_score_question_title_text_size=0x7f0a00be;
+        public static final int fragment_quiz_score_statement_text_size=0x7f0a00bb;
+        public static final int fragment_quiz_score_text_detail_size=0x7f0a00ba;
+        public static final int fragment_quiz_score_text_size=0x7f0a00b8;
+        public static final int fragment_quiz_score_total_text_size=0x7f0a00b9;
+        public static final int fragment_quiz_selective_quiz_option_padding=0x7f0a00a1;
+        public static final int fragment_quiz_selective_quiz_option_size=0x7f0a00a0;
         /**  fragment_quiz_selective_radio 
          */
-        public static final int fragment_quiz_selective_quiz_title_size=0x7f090097;
+        public static final int fragment_quiz_selective_quiz_title_size=0x7f0a009f;
         /**  fragment_recyclerview_award 
          */
-        public static final int fragment_recyclerview_award_left_margin=0x7f0900c3;
-        public static final int fragment_recyclerview_award_right_margin=0x7f0900c4;
+        public static final int fragment_recyclerview_award_left_margin=0x7f0a00cb;
+        public static final int fragment_recyclerview_award_right_margin=0x7f0a00cc;
         /**  fragment_recyclerview 
          */
-        public static final int fragment_recyclerview_divider=0x7f0900c0;
-        public static final int fragment_recyclerview_left_margin=0x7f0900c1;
-        public static final int fragment_recyclerview_right_margin=0x7f0900c2;
-        public static final int fragment_report_category_circleimageview_width=0x7f0900bd;
-        public static final int fragment_report_category_edittext_margin_left=0x7f0900be;
-        public static final int fragment_report_category_height=0x7f0900bb;
-        public static final int fragment_report_category_spinner_margin_top=0x7f0900bc;
-        public static final int fragment_report_category_spinner_text=0x7f0900b9;
+        public static final int fragment_recyclerview_divider=0x7f0a00c8;
+        public static final int fragment_recyclerview_left_margin=0x7f0a00c9;
+        public static final int fragment_recyclerview_right_margin=0x7f0a00ca;
+        public static final int fragment_report_category_circleimageview_width=0x7f0a00c5;
+        public static final int fragment_report_category_edittext_margin_left=0x7f0a00c6;
+        public static final int fragment_report_category_height=0x7f0a00c3;
+        public static final int fragment_report_category_spinner_margin_top=0x7f0a00c4;
+        public static final int fragment_report_category_spinner_text=0x7f0a00c1;
         /**  fragment_report 
          */
-        public static final int fragment_report_category_text=0x7f0900b8;
-        public static final int fragment_report_category_text_layout_margin_top=0x7f0900bf;
-        public static final int fragment_report_category_text_margin_top=0x7f0900ba;
-        public static final int fragment_settings_card_margin_top=0x7f0900d7;
-        public static final int fragment_settings_header_margin_top=0x7f0900d6;
-        public static final int fragment_settings_header_text_size=0x7f0900d4;
+        public static final int fragment_report_category_text=0x7f0a00c0;
+        public static final int fragment_report_category_text_layout_margin_top=0x7f0a00c7;
+        public static final int fragment_report_category_text_margin_top=0x7f0a00c2;
+        public static final int fragment_settings_card_margin_top=0x7f0a00df;
+        public static final int fragment_settings_header_margin_top=0x7f0a00de;
+        public static final int fragment_settings_header_text_size=0x7f0a00dc;
         /**  fragment_settings 
          */
-        public static final int fragment_settings_layout_padding_top_bottom=0x7f0900d3;
-        public static final int fragment_settings_relativelayout_height=0x7f0900d9;
-        public static final int fragment_settings_storage_text_size=0x7f0900d8;
-        public static final int fragment_settings_title_text_size=0x7f0900d5;
-        public static final int fragment_tutorial_drawer_width=0x7f0900e0;
-        public static final int fragment_tutorial_functionality_text_size=0x7f0900de;
+        public static final int fragment_settings_layout_padding_top_bottom=0x7f0a00db;
+        public static final int fragment_settings_option_size=0x7f0a00e2;
+        public static final int fragment_settings_relativelayout_height=0x7f0a00e1;
+        public static final int fragment_settings_storage_text_size=0x7f0a00e0;
+        public static final int fragment_settings_title_text_size=0x7f0a00dd;
+        public static final int fragment_tutorial_drawer_width=0x7f0a00e9;
+        public static final int fragment_tutorial_functionality_text_size=0x7f0a00e7;
         /**  fragment_tutorial 
          */
-        public static final int fragment_tutorial_header_text_size=0x7f0900dd;
-        public static final int fragment_tutorial_phone_padding_left_right=0x7f0900e6;
-        public static final int fragment_tutorial_phone_padding_top_bottom=0x7f0900e5;
-        public static final int fragment_tutorial_share_height=0x7f0900e1;
-        public static final int fragment_tutorial_toolbar_slidepager_size=0x7f0900df;
-        public static final int fragment_video_description_height=0x7f0900a1;
-        public static final int fragment_video_description_total_length_size=0x7f0900a2;
+        public static final int fragment_tutorial_header_text_size=0x7f0a00e6;
+        public static final int fragment_tutorial_phone_padding_left_right=0x7f0a00ef;
+        public static final int fragment_tutorial_phone_padding_top_bottom=0x7f0a00ee;
+        public static final int fragment_tutorial_share_height=0x7f0a00ea;
+        public static final int fragment_tutorial_toolbar_slidepager_size=0x7f0a00e8;
+        public static final int fragment_video_description_height=0x7f0a00a9;
+        public static final int fragment_video_description_total_length_size=0x7f0a00aa;
         /**  fragment_video 
          */
-        public static final int fragment_video_frame_height=0x7f0900a0;
-        public static final int item_recycler_mobcast_audio_view_detail_file_type_detail_text_size=0x7f0900fc;
-        public static final int item_recycler_mobcast_audio_view_detail_file_type_image_layout_width=0x7f0900fa;
-        public static final int item_recycler_mobcast_audio_view_detail_file_type_name_text_size=0x7f0900fb;
+        public static final int fragment_video_frame_height=0x7f0a00a8;
+        public static final int item_recycler_mobcast_audio_view_detail_file_type_detail_text_size=0x7f0a0105;
+        public static final int item_recycler_mobcast_audio_view_detail_file_type_image_layout_width=0x7f0a0103;
+        public static final int item_recycler_mobcast_audio_view_detail_file_type_name_text_size=0x7f0a0104;
         /**  item_recycler_mobcast_audio 
          */
-        public static final int item_recycler_mobcast_audio_view_detail_layout_height=0x7f0900f9;
-        public static final int item_recycler_mobcast_feedback_view_detail_image_height=0x7f090100;
-        public static final int item_recycler_mobcast_feedback_view_detail_image_margin_left=0x7f090102;
-        public static final int item_recycler_mobcast_feedback_view_detail_image_margin_top=0x7f090101;
-        public static final int item_recycler_mobcast_feedback_view_detail_image_width=0x7f0900ff;
+        public static final int item_recycler_mobcast_audio_view_detail_layout_height=0x7f0a0102;
+        public static final int item_recycler_mobcast_feedback_view_detail_image_height=0x7f0a0109;
+        public static final int item_recycler_mobcast_feedback_view_detail_image_margin_left=0x7f0a010b;
+        public static final int item_recycler_mobcast_feedback_view_detail_image_margin_top=0x7f0a010a;
+        public static final int item_recycler_mobcast_feedback_view_detail_image_width=0x7f0a0108;
         /**  item_recycler_mobcast_feedback 
          */
-        public static final int item_recycler_mobcast_feedback_view_detail_layout_height=0x7f0900fd;
-        public static final int item_recycler_mobcast_feedback_view_detail_text_margin_left=0x7f090103;
-        public static final int item_recycler_mobcast_feedback_view_detail_text_size=0x7f0900fe;
+        public static final int item_recycler_mobcast_feedback_view_detail_layout_height=0x7f0a0106;
+        public static final int item_recycler_mobcast_feedback_view_detail_text_margin_left=0x7f0a010c;
+        public static final int item_recycler_mobcast_feedback_view_detail_text_size=0x7f0a0107;
         /**  item_recycler_mobcast_image 
          */
-        public static final int item_recycler_mobcast_image_view_pager_layout_height=0x7f0900f5;
-        public static final int item_recycler_mobcast_image_view_pager_next_height=0x7f0900f6;
-        public static final int item_recycler_mobcast_text_content_linearlayout_margin_left=0x7f0900ee;
-        public static final int item_recycler_mobcast_text_content_linearlayout_margin_right=0x7f0900f2;
-        public static final int item_recycler_mobcast_text_content_title_margin_top=0x7f0900f3;
-        public static final int item_recycler_mobcast_text_indicator_image_height=0x7f0900f1;
-        public static final int item_recycler_mobcast_text_indicator_image_margin_left=0x7f0900ef;
-        public static final int item_recycler_mobcast_text_indicator_image_margin_top=0x7f0900f4;
-        public static final int item_recycler_mobcast_text_indicator_image_width=0x7f0900f0;
+        public static final int item_recycler_mobcast_image_view_pager_layout_height=0x7f0a00fe;
+        public static final int item_recycler_mobcast_image_view_pager_next_height=0x7f0a00ff;
+        public static final int item_recycler_mobcast_text_content_linearlayout_margin_left=0x7f0a00f7;
+        public static final int item_recycler_mobcast_text_content_linearlayout_margin_right=0x7f0a00fb;
+        public static final int item_recycler_mobcast_text_content_title_margin_top=0x7f0a00fc;
+        public static final int item_recycler_mobcast_text_indicator_image_height=0x7f0a00fa;
+        public static final int item_recycler_mobcast_text_indicator_image_margin_left=0x7f0a00f8;
+        public static final int item_recycler_mobcast_text_indicator_image_margin_top=0x7f0a00fd;
+        public static final int item_recycler_mobcast_text_indicator_image_width=0x7f0a00f9;
         /**  item_recycler_mobcast_text 
          */
-        public static final int item_recycler_mobcast_text_indicator_line_margin_left=0x7f0900ed;
-        public static final int item_recycler_mobcast_video_progress_width=0x7f0900f8;
+        public static final int item_recycler_mobcast_text_indicator_line_margin_left=0x7f0a00f6;
+        public static final int item_recycler_mobcast_video_progress_width=0x7f0a0101;
         /**  item_recycler_mobcast_video 
          */
-        public static final int item_recycler_mobcast_video_view_layout_height=0x7f0900f7;
-        public static final int item_recycler_recruitment_indicator_date_height=0x7f090106;
+        public static final int item_recycler_mobcast_video_view_layout_height=0x7f0a0100;
+        public static final int item_recycler_recruitment_indicator_date_height=0x7f0a010f;
         /**  iten_recycler_recruitment 
          */
-        public static final int item_recycler_recruitment_indicator_date_text_size=0x7f090104;
-        public static final int item_recycler_recruitment_indicator_month_text_size=0x7f090105;
+        public static final int item_recycler_recruitment_indicator_date_text_size=0x7f0a010d;
+        public static final int item_recycler_recruitment_indicator_month_text_size=0x7f0a010e;
         /**  layout_drawer_search_mother 
          */
-        public static final int layout_drawer_search_mother_checkbox_padding=0x7f090129;
+        public static final int layout_drawer_search_mother_checkbox_padding=0x7f0a0132;
         /**  layout_empty 
          */
-        public static final int layout_empty_refresh_text_size=0x7f090128;
-        public static final int login_admin_size=0x7f090058;
-        public static final int login_btn_next_height=0x7f09005b;
-        public static final int login_btn_next_width=0x7f09005a;
-        public static final int login_countrycode_size=0x7f090057;
-        public static final int login_editbox_height=0x7f090059;
-        public static final int login_edittext_size=0x7f090056;
+        public static final int layout_empty_refresh_text_size=0x7f0a0131;
+        public static final int login_admin_size=0x7f0a0058;
+        public static final int login_btn_next_height=0x7f0a005b;
+        public static final int login_btn_next_width=0x7f0a005a;
+        public static final int login_countrycode_size=0x7f0a0057;
+        public static final int login_editbox_height=0x7f0a0059;
+        public static final int login_edittext_size=0x7f0a0056;
         /**  activity_login 
          */
-        public static final int login_logo_margin_top=0x7f090054;
-        public static final int login_textview_size=0x7f090055;
-        public static final int mcab_default_content_inset=0x7f09014e;
+        public static final int login_logo_margin_top=0x7f0a0054;
+        public static final int login_textview_size=0x7f0a0055;
+        public static final int mcab_default_content_inset=0x7f0a0157;
         /**  Material Contextual ToolBar 
          */
-        public static final int mcab_toolbar_elevation=0x7f09014d;
-        public static final int md_action_corner_radius=0x7f090144;
-        public static final int md_button_frame_vertical_padding=0x7f090139;
-        public static final int md_button_height=0x7f09013a;
-        public static final int md_button_inset_horizontal=0x7f090131;
+        public static final int mcab_toolbar_elevation=0x7f0a0156;
+        public static final int md_action_corner_radius=0x7f0a014d;
+        public static final int md_button_frame_vertical_padding=0x7f0a0142;
+        public static final int md_button_height=0x7f0a0143;
+        public static final int md_button_inset_horizontal=0x7f0a013a;
         /**  Above and below buttons, 36+6+6=48 for the height of the button frame 
          */
-        public static final int md_button_inset_vertical=0x7f090130;
-        public static final int md_button_min_width=0x7f09012f;
+        public static final int md_button_inset_vertical=0x7f0a0139;
+        public static final int md_button_min_width=0x7f0a0138;
         /**  16dp - 4dp (inset from background drawable) 
          */
-        public static final int md_button_padding_frame_side=0x7f090136;
-        public static final int md_button_padding_horizontal=0x7f090133;
-        public static final int md_button_padding_horizontal_internalexternal=0x7f090135;
-        public static final int md_button_padding_vertical=0x7f090134;
-        public static final int md_button_textpadding_horizontal=0x7f090132;
-        public static final int md_button_textsize=0x7f09013d;
+        public static final int md_button_padding_frame_side=0x7f0a013f;
+        public static final int md_button_padding_horizontal=0x7f0a013c;
+        public static final int md_button_padding_horizontal_internalexternal=0x7f0a013e;
+        public static final int md_button_padding_vertical=0x7f0a013d;
+        public static final int md_button_textpadding_horizontal=0x7f0a013b;
+        public static final int md_button_textsize=0x7f0a0146;
         /**  actual content padding bottom is 16dp, but we split between button bar and content 
          */
-        public static final int md_content_padding_bottom=0x7f090138;
-        public static final int md_content_padding_top=0x7f09012d;
-        public static final int md_content_textsize=0x7f09013c;
+        public static final int md_content_padding_bottom=0x7f0a0141;
+        public static final int md_content_padding_top=0x7f0a0136;
+        public static final int md_content_textsize=0x7f0a0145;
         /**  Material Dialog L 
  Margin around the dialog, excluding the button bar 
          */
-        public static final int md_dialog_frame_margin=0x7f09012a;
-        public static final int md_divider_height=0x7f090145;
-        public static final int md_icon_margin=0x7f090141;
-        public static final int md_icon_max_size=0x7f090142;
-        public static final int md_listitem_control_margin=0x7f090140;
-        public static final int md_listitem_height=0x7f09013f;
-        public static final int md_listitem_margin_left=0x7f090143;
-        public static final int md_listitem_textsize=0x7f09013e;
-        public static final int md_neutral_button_margin=0x7f090137;
+        public static final int md_dialog_frame_margin=0x7f0a0133;
+        public static final int md_divider_height=0x7f0a014e;
+        public static final int md_icon_margin=0x7f0a014a;
+        public static final int md_icon_max_size=0x7f0a014b;
+        public static final int md_listitem_control_margin=0x7f0a0149;
+        public static final int md_listitem_height=0x7f0a0148;
+        public static final int md_listitem_margin_left=0x7f0a014c;
+        public static final int md_listitem_textsize=0x7f0a0147;
+        public static final int md_neutral_button_margin=0x7f0a0140;
         /** 
          The desired padding when no title is visible,
          This plus md_content_padding_top should equals md_dialog_frame_margin
@@ -4015,93 +4035,94 @@ containing a value of this type.
 
     
          */
-        public static final int md_notitle_vertical_padding=0x7f09012c;
-        public static final int md_simplelist_icon=0x7f090146;
-        public static final int md_simplelist_icon_margin=0x7f090147;
-        public static final int md_simplelistitem_padding_top=0x7f09012e;
+        public static final int md_notitle_vertical_padding=0x7f0a0135;
+        public static final int md_simplelist_icon=0x7f0a014f;
+        public static final int md_simplelist_icon_margin=0x7f0a0150;
+        public static final int md_simplelistitem_padding_top=0x7f0a0137;
         /**  Total title margin bottom is 16, but we split this between content and title 
          */
-        public static final int md_title_frame_margin_bottom=0x7f09012b;
-        public static final int md_title_textsize=0x7f09013b;
-        public static final int navigation_elevation=0x7f090156;
-        public static final int navigation_icon_padding=0x7f090157;
-        public static final int navigation_icon_size=0x7f090158;
-        public static final int navigation_max_width=0x7f090155;
-        public static final int navigation_padding_bottom=0x7f09015b;
-        public static final int navigation_padding_top_default=0x7f09015a;
-        public static final int navigation_separator_vertical_padding=0x7f090159;
+        public static final int md_title_frame_margin_bottom=0x7f0a0134;
+        public static final int md_title_textsize=0x7f0a0144;
+        public static final int navigation_elevation=0x7f0a015f;
+        public static final int navigation_icon_padding=0x7f0a0160;
+        public static final int navigation_icon_size=0x7f0a0161;
+        public static final int navigation_max_width=0x7f0a015e;
+        public static final int navigation_padding_bottom=0x7f0a0164;
+        public static final int navigation_padding_top_default=0x7f0a0163;
+        public static final int navigation_separator_vertical_padding=0x7f0a0162;
+        public static final int new_broadcast_text_size=0x7f0a0063;
         /**  The width of the big icons in notifications. 
          */
-        public static final int notification_large_icon_height=0x7f090022;
+        public static final int notification_large_icon_height=0x7f0a0022;
         /**  The width of the big icons in notifications. 
          */
-        public static final int notification_large_icon_width=0x7f090021;
+        public static final int notification_large_icon_width=0x7f0a0021;
         /** 
          Size of smaller notification text (see TextAppearance.StatusBar.EventContent.Line2, Info,
          Time)
     
          */
-        public static final int notification_subtext_size=0x7f090023;
-        public static final int quiz_question_navigation_height=0x7f090095;
-        public static final int quiz_question_navigation_size=0x7f090096;
-        public static final int quiz_question_number_height=0x7f090094;
-        public static final int quiz_question_number_text_size=0x7f090093;
+        public static final int notification_subtext_size=0x7f0a0023;
+        public static final int quiz_question_navigation_height=0x7f0a009d;
+        public static final int quiz_question_navigation_size=0x7f0a009e;
+        public static final int quiz_question_number_height=0x7f0a009c;
+        public static final int quiz_question_number_text_size=0x7f0a009b;
         /**  fragment_quiz 
          */
-        public static final int quiz_timer_layout_height=0x7f09008d;
-        public static final int quiz_timer_progress_bar_width=0x7f090090;
-        public static final int quiz_timer_progress_rim_width=0x7f09008f;
-        public static final int quiz_timer_progress_width=0x7f09008e;
-        public static final int quiz_timer_second_size=0x7f090091;
-        public static final int quiz_timer_second_text_size=0x7f090092;
+        public static final int quiz_timer_layout_height=0x7f0a0095;
+        public static final int quiz_timer_progress_bar_width=0x7f0a0098;
+        public static final int quiz_timer_progress_rim_width=0x7f0a0097;
+        public static final int quiz_timer_progress_width=0x7f0a0096;
+        public static final int quiz_timer_second_size=0x7f0a0099;
+        public static final int quiz_timer_second_text_size=0x7f0a009a;
         /**  Material Ripple Value 
          */
-        public static final int rippleAlpha=0x7f09014c;
+        public static final int rippleAlpha=0x7f0a0155;
         /**  SnackBar 
          */
-        public static final int sb__horizontal_margin=0x7f090169;
-        public static final int sb__vertical_margin_bottom=0x7f09016b;
-        public static final int sb__vertical_margin_top=0x7f09016a;
-        public static final int set_profile_skip_size=0x7f09005d;
+        public static final int sb__horizontal_margin=0x7f0a0172;
+        public static final int sb__vertical_margin_bottom=0x7f0a0174;
+        public static final int sb__vertical_margin_top=0x7f0a0173;
+        public static final int set_profile_skip_size=0x7f0a0065;
         /**  activity_set_profile 
          */
-        public static final int set_profile_upload_another_size=0x7f09005c;
-        public static final int shape_tutorial_round_width=0x7f0900e3;
+        public static final int set_profile_upload_another_size=0x7f0a0064;
+        public static final int shape_tutorial_round_width=0x7f0a00ec;
         /** 
          The maximum width for a Snackbar's inline action. If the view is width than this then
          the Snackbar will change to vertical stacking
     
          */
-        public static final int snackbar_action_inline_max_width=0x7f090166;
-        public static final int snackbar_background_corner_radius=0x7f090161;
-        public static final int snackbar_elevation=0x7f090160;
+        public static final int snackbar_action_inline_max_width=0x7f0a016f;
+        public static final int snackbar_background_corner_radius=0x7f0a016a;
+        public static final int snackbar_elevation=0x7f0a0169;
         /**  Extra spacing between the action and message views 
          */
-        public static final int snackbar_extra_spacing_horizontal=0x7f090165;
-        public static final int snackbar_max_width=0x7f09015f;
-        public static final int snackbar_min_width=0x7f09015e;
-        public static final int snackbar_padding_horizontal=0x7f090162;
-        public static final int snackbar_padding_vertical=0x7f090163;
-        public static final int snackbar_padding_vertical_2lines=0x7f090164;
-        public static final int snackbar_text_size=0x7f090167;
-        public static final int spb_default_stroke_separator_length=0x7f090047;
-        public static final int spb_default_stroke_width=0x7f090048;
-        public static final int tab_height=0x7f09004b;
-        public static final int tab_max_width=0x7f09015d;
-        public static final int tab_min_width=0x7f09015c;
-        public static final int toolbar_elevation=0x7f09004d;
-        public static final int toolbar_elevation_reverse=0x7f09004e;
-        public static final int toolbar_height=0x7f09004c;
+        public static final int snackbar_extra_spacing_horizontal=0x7f0a016e;
+        public static final int snackbar_max_width=0x7f0a0168;
+        public static final int snackbar_min_width=0x7f0a0167;
+        public static final int snackbar_padding_horizontal=0x7f0a016b;
+        public static final int snackbar_padding_vertical=0x7f0a016c;
+        public static final int snackbar_padding_vertical_2lines=0x7f0a016d;
+        public static final int snackbar_text_size=0x7f0a0170;
+        public static final int spb_default_stroke_separator_length=0x7f0a0047;
+        public static final int spb_default_stroke_width=0x7f0a0048;
+        public static final int tab_height=0x7f0a004b;
+        public static final int tab_max_width=0x7f0a0166;
+        public static final int tab_min_width=0x7f0a0165;
+        public static final int toolbar_elevation=0x7f0a004d;
+        public static final int toolbar_elevation_reverse=0x7f0a004e;
+        public static final int toolbar_height=0x7f0a004c;
         /**  toolbar_mother 
          */
-        public static final int toolbar_mother_padding=0x7f09011b;
-        public static final int toolbar_mother_unread_counter_text_size=0x7f09011c;
-        public static final int verfication_retry_size_btn=0x7f09005f;
-        public static final int verification_btn_resend_height=0x7f090061;
-        public static final int verification_btn_resend_width=0x7f090060;
+        public static final int toolbar_mother_padding=0x7f0a0124;
+        public static final int toolbar_mother_unread_counter_text_size=0x7f0a0125;
+        public static final int verfication_retry_size_btn=0x7f0a0067;
+        public static final int verification_btn_resend_height=0x7f0a0069;
+        public static final int verification_btn_resend_width=0x7f0a0068;
         /**  activity_verification 
          */
-        public static final int verification_retry_size=0x7f09005e;
+        public static final int verification_retry_size=0x7f0a0066;
     }
     public static final class drawable {
         public static final int a11_1=0x7f020000;
@@ -4211,1462 +4232,1499 @@ containing a value of this type.
         public static final int context_menu_read=0x7f020068;
         public static final int context_menu_unread=0x7f020069;
         public static final int context_menu_view=0x7f02006a;
-        public static final int dotshadow=0x7f02006b;
-        public static final int drawer_shadow=0x7f02006c;
-        public static final int fab_background=0x7f02006d;
-        public static final int fingerdot=0x7f02006e;
-        public static final int ic_ab_search=0x7f02006f;
-        public static final int ic_action_contact_sharing=0x7f020070;
-        public static final int ic_action_delete=0x7f020071;
-        public static final int ic_action_mic=0x7f020072;
-        public static final int ic_action_refresh=0x7f020073;
-        public static final int ic_apicontrol_fullscreen_off=0x7f020074;
-        public static final int ic_award_cong_focus=0x7f020075;
-        public static final int ic_award_cong_normal=0x7f020076;
-        public static final int ic_award_cong_selected=0x7f020077;
-        public static final int ic_award_small=0x7f020078;
-        public static final int ic_back=0x7f020079;
-        public static final int ic_back_gray=0x7f02007a;
-        public static final int ic_back_shadow=0x7f02007b;
-        public static final int ic_birthday_highlighted=0x7f02007c;
-        public static final int ic_birthday_message_focused=0x7f02007d;
-        public static final int ic_birthday_message_normal=0x7f02007e;
-        public static final int ic_birthday_wish_focused=0x7f02007f;
-        public static final int ic_birthday_wish_normal=0x7f020080;
-        public static final int ic_birthday_wish_selected=0x7f020081;
-        public static final int ic_call_focused=0x7f020082;
-        public static final int ic_call_normal=0x7f020083;
-        public static final int ic_capture_remove=0x7f020084;
-        public static final int ic_chat_focus=0x7f020085;
-        public static final int ic_chat_normal=0x7f020086;
-        public static final int ic_chat_send=0x7f020087;
-        public static final int ic_chips_download=0x7f020088;
-        public static final int ic_chips_normal=0x7f020089;
-        public static final int ic_chips_selected=0x7f02008a;
-        public static final int ic_ck_launcher=0x7f02008b;
-        public static final int ic_clear=0x7f02008c;
-        public static final int ic_cong_small=0x7f02008d;
-        public static final int ic_directory=0x7f02008e;
-        public static final int ic_done=0x7f02008f;
-        public static final int ic_drawer_about=0x7f020090;
-        public static final int ic_drawer_burger=0x7f020091;
-        public static final int ic_drawer_capture=0x7f020092;
-        public static final int ic_drawer_feedback=0x7f020093;
-        public static final int ic_drawer_help=0x7f020094;
-        public static final int ic_drawer_logout=0x7f020095;
-        public static final int ic_drawer_myoffice=0x7f020096;
-        public static final int ic_drawer_profile=0x7f020097;
-        public static final int ic_drawer_recruitment=0x7f020098;
-        public static final int ic_drawer_report=0x7f020099;
-        public static final int ic_drawer_settings=0x7f02009a;
-        public static final int ic_drawer_sync=0x7f02009b;
-        public static final int ic_email_focused=0x7f02009c;
-        public static final int ic_email_normal=0x7f02009d;
-        public static final int ic_error=0x7f02009e;
-        public static final int ic_event_accepted=0x7f02009f;
-        public static final int ic_event_add_cal=0x7f0200a0;
-        public static final int ic_event_declined=0x7f0200a1;
-        public static final int ic_event_detail_cal=0x7f0200a2;
-        public static final int ic_event_detail_hours=0x7f0200a3;
-        public static final int ic_event_detail_time=0x7f0200a4;
-        public static final int ic_event_focused=0x7f0200a5;
-        public static final int ic_event_location=0x7f0200a6;
-        public static final int ic_event_normal=0x7f0200a7;
-        public static final int ic_event_people=0x7f0200a8;
-        public static final int ic_event_share=0x7f0200a9;
-        public static final int ic_external_storage=0x7f0200aa;
-        public static final int ic_female=0x7f0200ab;
-        public static final int ic_filter=0x7f0200ac;
-        public static final int ic_hdfc_launcher=0x7f0200ad;
-        public static final int ic_history=0x7f0200ae;
-        public static final int ic_home_sync=0x7f0200af;
-        public static final int ic_info=0x7f0200b0;
-        public static final int ic_item_audio=0x7f0200b1;
-        public static final int ic_item_doc=0x7f0200b2;
-        public static final int ic_item_feedback_attempted=0x7f0200b3;
-        public static final int ic_item_feedback_points=0x7f0200b4;
-        public static final int ic_item_feedback_question=0x7f0200b5;
-        public static final int ic_item_feedback_timer=0x7f0200b6;
-        public static final int ic_item_image=0x7f0200b7;
-        public static final int ic_item_pdf=0x7f0200b8;
-        public static final int ic_item_ppt=0x7f0200b9;
-        public static final int ic_item_video=0x7f0200ba;
-        public static final int ic_item_xls=0x7f0200bb;
-        public static final int ic_language_done=0x7f0200bc;
-        public static final int ic_launcher=0x7f0200bd;
-        public static final int ic_launcher_nielsen=0x7f0200be;
-        public static final int ic_like_focused=0x7f0200bf;
-        public static final int ic_like_normal=0x7f0200c0;
-        public static final int ic_link=0x7f0200c1;
-        public static final int ic_live_stream_focused=0x7f0200c2;
-        public static final int ic_live_stream_normal=0x7f0200c3;
-        public static final int ic_male=0x7f0200c4;
-        public static final int ic_message=0x7f0200c5;
-        public static final int ic_mis_text_normal=0x7f0200c6;
-        public static final int ic_mobcast_audio=0x7f0200c7;
-        public static final int ic_mobcast_audio_focused=0x7f0200c8;
-        public static final int ic_mobcast_audio_normal=0x7f0200c9;
-        public static final int ic_mobcast_doc=0x7f0200ca;
-        public static final int ic_mobcast_doc_focus=0x7f0200cb;
-        public static final int ic_mobcast_doc_normal=0x7f0200cc;
-        public static final int ic_mobcast_feedback=0x7f0200cd;
-        public static final int ic_mobcast_feedback_focused=0x7f0200ce;
-        public static final int ic_mobcast_feedback_normal=0x7f0200cf;
-        public static final int ic_mobcast_image=0x7f0200d0;
-        public static final int ic_mobcast_image_focus=0x7f0200d1;
-        public static final int ic_mobcast_image_normal=0x7f0200d2;
-        public static final int ic_mobcast_notification_white=0x7f0200d3;
-        public static final int ic_mobcast_pdf=0x7f0200d4;
-        public static final int ic_mobcast_pdf_focused=0x7f0200d5;
-        public static final int ic_mobcast_pdf_normal=0x7f0200d6;
-        public static final int ic_mobcast_ppt_focused=0x7f0200d7;
-        public static final int ic_mobcast_ppt_normal=0x7f0200d8;
-        public static final int ic_mobcast_quiz=0x7f0200d9;
-        public static final int ic_mobcast_quiz_focused=0x7f0200da;
-        public static final int ic_mobcast_quiz_normal=0x7f0200db;
-        public static final int ic_mobcast_text=0x7f0200dc;
-        public static final int ic_mobcast_text_focused=0x7f0200dd;
-        public static final int ic_mobcast_text_normal=0x7f0200de;
-        public static final int ic_mobcast_video=0x7f0200df;
-        public static final int ic_mobcast_video_focused=0x7f0200e0;
-        public static final int ic_mobcast_video_normal=0x7f0200e1;
-        public static final int ic_mobcast_xls=0x7f0200e2;
-        public static final int ic_mobcast_xls_focused=0x7f0200e3;
-        public static final int ic_mobcast_xls_normal=0x7f0200e4;
-        public static final int ic_nav_search=0x7f0200e5;
-        public static final int ic_navigation_check=0x7f0200e6;
-        public static final int ic_navigation_refresh_dark=0x7f0200e7;
-        public static final int ic_navigation_refresh_light=0x7f0200e8;
-        public static final int ic_notification_action_award=0x7f0200e9;
-        public static final int ic_notification_action_check=0x7f0200ea;
-        public static final int ic_notification_action_close=0x7f0200eb;
-        public static final int ic_overflow=0x7f0200ec;
-        public static final int ic_pause_audio=0x7f0200ed;
-        public static final int ic_pause_video=0x7f0200ee;
-        public static final int ic_play_audio=0x7f0200ef;
-        public static final int ic_play_video=0x7f0200f0;
-        public static final int ic_plusone_medium_off_client=0x7f0200f1;
-        public static final int ic_plusone_small_off_client=0x7f0200f2;
-        public static final int ic_plusone_standard_off_client=0x7f0200f3;
-        public static final int ic_plusone_tall_off_client=0x7f0200f4;
-        public static final int ic_profile_gallery=0x7f0200f5;
-        public static final int ic_recruitment_arrow=0x7f0200f6;
-        public static final int ic_recruitment_collapse=0x7f0200f7;
-        public static final int ic_recruitment_expand=0x7f0200f8;
-        public static final int ic_recruitment_mail=0x7f0200f9;
-        public static final int ic_recruitment_mobile=0x7f0200fa;
-        public static final int ic_remove_white=0x7f0200fb;
-        public static final int ic_sample_picture=0x7f0200fc;
-        public static final int ic_share=0x7f0200fd;
-        public static final int ic_slider_button=0x7f0200fe;
-        public static final int ic_source_link=0x7f0200ff;
-        public static final int ic_storage=0x7f020100;
-        public static final int ic_storage_gallery=0x7f020101;
-        public static final int ic_text_correct=0x7f020102;
-        public static final int ic_text_incorrect=0x7f020103;
-        public static final int ic_text_process=0x7f020104;
-        public static final int ic_toolbar_award=0x7f020105;
-        public static final int ic_toolbar_birthday=0x7f020106;
-        public static final int ic_toolbar_event=0x7f020107;
-        public static final int ic_toolbar_search=0x7f020108;
-        public static final int ic_tutorial_next=0x7f020109;
-        public static final int ic_tutorial_next_focused=0x7f02010a;
-        public static final int ic_tutorial_next_normal=0x7f02010b;
-        public static final int ic_tutorial_prev=0x7f02010c;
-        public static final int ic_tutorial_prev_focused=0x7f02010d;
-        public static final int ic_tutorial_prev_normal=0x7f02010e;
-        public static final int ic_up=0x7f02010f;
-        public static final int ic_web=0x7f020110;
-        public static final int item_view=0x7f020111;
-        public static final int login_logo=0x7f020112;
-        public static final int md_btn_selected=0x7f020113;
-        public static final int md_btn_selected_dark=0x7f020114;
-        public static final int md_btn_selector=0x7f020115;
-        public static final int md_btn_selector_dark=0x7f020116;
-        public static final int md_btn_selector_ripple=0x7f020117;
-        public static final int md_btn_selector_ripple_dark=0x7f020118;
-        public static final int md_btn_shape=0x7f020119;
-        public static final int md_item_selected=0x7f02011a;
-        public static final int md_item_selected_dark=0x7f02011b;
-        public static final int md_selector=0x7f02011c;
-        public static final int md_selector_dark=0x7f02011d;
-        public static final int md_transparent=0x7f02011e;
-        public static final int media_doc_blue=0x7f02011f;
-        public static final int media_doc_green=0x7f020120;
-        public static final int media_doc_red=0x7f020121;
-        public static final int media_doc_yellow=0x7f020122;
-        public static final int mobcast_scrubber_primary_holo=0x7f020123;
-        public static final int mobcast_scrubber_progress_horizontal_holo_light=0x7f020124;
-        public static final int mobcast_scrubber_secondary_holo=0x7f020125;
-        public static final int mobcast_scrubber_track_holo_light=0x7f020126;
-        public static final int my_floater_color=0x7f020127;
-        public static final int my_progress_color=0x7f020128;
-        public static final int notification_template_icon_bg=0x7f020168;
-        public static final int player1=0x7f020129;
-        public static final int player1_pressed=0x7f02012a;
-        public static final int player2=0x7f02012b;
-        public static final int player2_pressed=0x7f02012c;
-        public static final int recycler_divider=0x7f02012d;
-        public static final int sample_picture_event_cover=0x7f02012e;
-        public static final int sb__tablet_bkgnd=0x7f02012f;
-        public static final int search_bg=0x7f020130;
-        public static final int search_bg_shadow=0x7f020131;
-        public static final int search_bg_transparent=0x7f020132;
-        public static final int search_frame=0x7f020133;
-        public static final int selector_award_congratulate=0x7f020134;
-        public static final int selector_birthday_message=0x7f020135;
-        public static final int selector_birthday_wish=0x7f020136;
-        public static final int selector_button=0x7f020137;
-        public static final int selector_call=0x7f020138;
-        public static final int selector_chat=0x7f020139;
-        public static final int selector_chips=0x7f02013a;
-        public static final int selector_editbox=0x7f02013b;
-        public static final int selector_email=0x7f02013c;
-        public static final int selector_message=0x7f02013d;
-        public static final int selector_text_view_about=0x7f02013e;
-        public static final int selector_text_view_source=0x7f02013f;
-        public static final int shadow_bottom=0x7f020140;
-        public static final int shadow_left=0x7f020141;
-        public static final int shadow_right=0x7f020142;
-        public static final int shape_button_green_fill=0x7f020143;
-        public static final int shape_button_highlight_border=0x7f020144;
-        public static final int shape_button_highlight_fill=0x7f020145;
-        public static final int shape_button_normal=0x7f020146;
-        public static final int shape_button_orange_border=0x7f020147;
-        public static final int shape_button_orange_fill=0x7f020148;
-        public static final int shape_button_pressed=0x7f020149;
-        public static final int shape_button_red_fill=0x7f02014a;
-        public static final int shape_by_orange_fill=0x7f02014b;
-        public static final int shape_card_layer=0x7f02014c;
-        public static final int shape_chips_normal=0x7f02014d;
-        public static final int shape_chips_selected=0x7f02014e;
-        public static final int shape_download_dialog_card=0x7f02014f;
-        public static final int shape_editbox_normal=0x7f020150;
-        public static final int shape_editbox_selected=0x7f020151;
-        public static final int shape_pop_up=0x7f020152;
-        public static final int shape_rectange_app=0x7f020153;
-        public static final int shape_rectange_event_left=0x7f020154;
-        public static final int shape_rectange_quiz_box=0x7f020155;
-        public static final int shape_round_event_cover_left=0x7f020156;
-        public static final int shape_round_orange_border=0x7f020157;
-        public static final int shape_round_orange_fill=0x7f020158;
-        public static final int shape_toolbar_shadow=0x7f020159;
-        public static final int shape_toolbar_unread_counter=0x7f02015a;
-        public static final int shape_tutorial=0x7f02015b;
-        public static final int shape_tutorial_round=0x7f02015c;
-        public static final int snackbar_background=0x7f02015d;
-        public static final int splash_logo=0x7f02015e;
-        public static final int tutorial_frame=0x7f02015f;
-        public static final int whatwearebg1=0x7f020160;
-        public static final int whatwearebg2=0x7f020161;
-        public static final int whatwearebg3=0x7f020162;
-        public static final int whatwearebg4=0x7f020163;
-        public static final int whatwearefg1=0x7f020164;
-        public static final int whatwearefg2=0x7f020165;
-        public static final int whatwearefg3=0x7f020166;
-        public static final int whatwearefg4=0x7f020167;
+        public static final int date_balloon=0x7f02006b;
+        public static final int dotshadow=0x7f02006c;
+        public static final int drawer_shadow=0x7f02006d;
+        public static final int fab_background=0x7f02006e;
+        public static final int fingerdot=0x7f02006f;
+        public static final int ic_ab_search=0x7f020070;
+        public static final int ic_action_contact_sharing=0x7f020071;
+        public static final int ic_action_delete=0x7f020072;
+        public static final int ic_action_mic=0x7f020073;
+        public static final int ic_action_refresh=0x7f020074;
+        public static final int ic_apicontrol_fullscreen_off=0x7f020075;
+        public static final int ic_award_cong_focus=0x7f020076;
+        public static final int ic_award_cong_normal=0x7f020077;
+        public static final int ic_award_cong_selected=0x7f020078;
+        public static final int ic_award_small=0x7f020079;
+        public static final int ic_back=0x7f02007a;
+        public static final int ic_back_gray=0x7f02007b;
+        public static final int ic_back_shadow=0x7f02007c;
+        public static final int ic_birthday_highlighted=0x7f02007d;
+        public static final int ic_birthday_message_focused=0x7f02007e;
+        public static final int ic_birthday_message_normal=0x7f02007f;
+        public static final int ic_birthday_wish_focused=0x7f020080;
+        public static final int ic_birthday_wish_normal=0x7f020081;
+        public static final int ic_birthday_wish_selected=0x7f020082;
+        public static final int ic_call_focused=0x7f020083;
+        public static final int ic_call_normal=0x7f020084;
+        public static final int ic_capture_remove=0x7f020085;
+        public static final int ic_chat_focus=0x7f020086;
+        public static final int ic_chat_normal=0x7f020087;
+        public static final int ic_chat_send=0x7f020088;
+        public static final int ic_chips_download=0x7f020089;
+        public static final int ic_chips_normal=0x7f02008a;
+        public static final int ic_chips_selected=0x7f02008b;
+        public static final int ic_ck_launcher=0x7f02008c;
+        public static final int ic_clear=0x7f02008d;
+        public static final int ic_cong_small=0x7f02008e;
+        public static final int ic_directory=0x7f02008f;
+        public static final int ic_done=0x7f020090;
+        public static final int ic_drawer_about=0x7f020091;
+        public static final int ic_drawer_burger=0x7f020092;
+        public static final int ic_drawer_capture=0x7f020093;
+        public static final int ic_drawer_feedback=0x7f020094;
+        public static final int ic_drawer_help=0x7f020095;
+        public static final int ic_drawer_logout=0x7f020096;
+        public static final int ic_drawer_myoffice=0x7f020097;
+        public static final int ic_drawer_profile=0x7f020098;
+        public static final int ic_drawer_recruitment=0x7f020099;
+        public static final int ic_drawer_report=0x7f02009a;
+        public static final int ic_drawer_settings=0x7f02009b;
+        public static final int ic_drawer_sync=0x7f02009c;
+        public static final int ic_email_focused=0x7f02009d;
+        public static final int ic_email_normal=0x7f02009e;
+        public static final int ic_error=0x7f02009f;
+        public static final int ic_event_accepted=0x7f0200a0;
+        public static final int ic_event_add_cal=0x7f0200a1;
+        public static final int ic_event_declined=0x7f0200a2;
+        public static final int ic_event_detail_cal=0x7f0200a3;
+        public static final int ic_event_detail_hours=0x7f0200a4;
+        public static final int ic_event_detail_time=0x7f0200a5;
+        public static final int ic_event_focused=0x7f0200a6;
+        public static final int ic_event_location=0x7f0200a7;
+        public static final int ic_event_normal=0x7f0200a8;
+        public static final int ic_event_people=0x7f0200a9;
+        public static final int ic_event_share=0x7f0200aa;
+        public static final int ic_external_storage=0x7f0200ab;
+        public static final int ic_female=0x7f0200ac;
+        public static final int ic_filter=0x7f0200ad;
+        public static final int ic_hdfc_launcher=0x7f0200ae;
+        public static final int ic_history=0x7f0200af;
+        public static final int ic_home_sync=0x7f0200b0;
+        public static final int ic_info=0x7f0200b1;
+        public static final int ic_item_audio=0x7f0200b2;
+        public static final int ic_item_doc=0x7f0200b3;
+        public static final int ic_item_feedback_attempted=0x7f0200b4;
+        public static final int ic_item_feedback_points=0x7f0200b5;
+        public static final int ic_item_feedback_question=0x7f0200b6;
+        public static final int ic_item_feedback_timer=0x7f0200b7;
+        public static final int ic_item_image=0x7f0200b8;
+        public static final int ic_item_pdf=0x7f0200b9;
+        public static final int ic_item_ppt=0x7f0200ba;
+        public static final int ic_item_video=0x7f0200bb;
+        public static final int ic_item_xls=0x7f0200bc;
+        public static final int ic_language_done=0x7f0200bd;
+        public static final int ic_launcher=0x7f0200be;
+        public static final int ic_launcher_nielsen=0x7f0200bf;
+        public static final int ic_like_focused=0x7f0200c0;
+        public static final int ic_like_normal=0x7f0200c1;
+        public static final int ic_link=0x7f0200c2;
+        public static final int ic_live_stream_focused=0x7f0200c3;
+        public static final int ic_live_stream_normal=0x7f0200c4;
+        public static final int ic_male=0x7f0200c5;
+        public static final int ic_message=0x7f0200c6;
+        public static final int ic_mis_text_normal=0x7f0200c7;
+        public static final int ic_mobcast_audio=0x7f0200c8;
+        public static final int ic_mobcast_audio_focused=0x7f0200c9;
+        public static final int ic_mobcast_audio_normal=0x7f0200ca;
+        public static final int ic_mobcast_doc=0x7f0200cb;
+        public static final int ic_mobcast_doc_focus=0x7f0200cc;
+        public static final int ic_mobcast_doc_normal=0x7f0200cd;
+        public static final int ic_mobcast_feedback=0x7f0200ce;
+        public static final int ic_mobcast_feedback_focused=0x7f0200cf;
+        public static final int ic_mobcast_feedback_normal=0x7f0200d0;
+        public static final int ic_mobcast_image=0x7f0200d1;
+        public static final int ic_mobcast_image_focus=0x7f0200d2;
+        public static final int ic_mobcast_image_normal=0x7f0200d3;
+        public static final int ic_mobcast_notification_white=0x7f0200d4;
+        public static final int ic_mobcast_pdf=0x7f0200d5;
+        public static final int ic_mobcast_pdf_focused=0x7f0200d6;
+        public static final int ic_mobcast_pdf_normal=0x7f0200d7;
+        public static final int ic_mobcast_ppt_focused=0x7f0200d8;
+        public static final int ic_mobcast_ppt_normal=0x7f0200d9;
+        public static final int ic_mobcast_quiz=0x7f0200da;
+        public static final int ic_mobcast_quiz_focused=0x7f0200db;
+        public static final int ic_mobcast_quiz_normal=0x7f0200dc;
+        public static final int ic_mobcast_text=0x7f0200dd;
+        public static final int ic_mobcast_text_focused=0x7f0200de;
+        public static final int ic_mobcast_text_normal=0x7f0200df;
+        public static final int ic_mobcast_video=0x7f0200e0;
+        public static final int ic_mobcast_video_focused=0x7f0200e1;
+        public static final int ic_mobcast_video_normal=0x7f0200e2;
+        public static final int ic_mobcast_xls=0x7f0200e3;
+        public static final int ic_mobcast_xls_focused=0x7f0200e4;
+        public static final int ic_mobcast_xls_normal=0x7f0200e5;
+        public static final int ic_nav_search=0x7f0200e6;
+        public static final int ic_navigation_check=0x7f0200e7;
+        public static final int ic_navigation_refresh_dark=0x7f0200e8;
+        public static final int ic_navigation_refresh_light=0x7f0200e9;
+        public static final int ic_notification_action_award=0x7f0200ea;
+        public static final int ic_notification_action_check=0x7f0200eb;
+        public static final int ic_notification_action_close=0x7f0200ec;
+        public static final int ic_overflow=0x7f0200ed;
+        public static final int ic_pause_audio=0x7f0200ee;
+        public static final int ic_pause_video=0x7f0200ef;
+        public static final int ic_play_audio=0x7f0200f0;
+        public static final int ic_play_video=0x7f0200f1;
+        public static final int ic_plusone_medium_off_client=0x7f0200f2;
+        public static final int ic_plusone_small_off_client=0x7f0200f3;
+        public static final int ic_plusone_standard_off_client=0x7f0200f4;
+        public static final int ic_plusone_tall_off_client=0x7f0200f5;
+        public static final int ic_profile_gallery=0x7f0200f6;
+        public static final int ic_recruitment_arrow=0x7f0200f7;
+        public static final int ic_recruitment_collapse=0x7f0200f8;
+        public static final int ic_recruitment_expand=0x7f0200f9;
+        public static final int ic_recruitment_mail=0x7f0200fa;
+        public static final int ic_recruitment_mobile=0x7f0200fb;
+        public static final int ic_remove_white=0x7f0200fc;
+        public static final int ic_sample_picture=0x7f0200fd;
+        public static final int ic_share=0x7f0200fe;
+        public static final int ic_slider_button=0x7f0200ff;
+        public static final int ic_source_link=0x7f020100;
+        public static final int ic_storage=0x7f020101;
+        public static final int ic_storage_gallery=0x7f020102;
+        public static final int ic_text_correct=0x7f020103;
+        public static final int ic_text_incorrect=0x7f020104;
+        public static final int ic_text_process=0x7f020105;
+        public static final int ic_toolbar_award=0x7f020106;
+        public static final int ic_toolbar_birthday=0x7f020107;
+        public static final int ic_toolbar_event=0x7f020108;
+        public static final int ic_toolbar_search=0x7f020109;
+        public static final int ic_tutorial_next=0x7f02010a;
+        public static final int ic_tutorial_next_focused=0x7f02010b;
+        public static final int ic_tutorial_next_normal=0x7f02010c;
+        public static final int ic_tutorial_prev=0x7f02010d;
+        public static final int ic_tutorial_prev_focused=0x7f02010e;
+        public static final int ic_tutorial_prev_normal=0x7f02010f;
+        public static final int ic_up=0x7f020110;
+        public static final int ic_web=0x7f020111;
+        public static final int item_view=0x7f020112;
+        public static final int login_logo=0x7f020113;
+        public static final int md_btn_selected=0x7f020114;
+        public static final int md_btn_selected_dark=0x7f020115;
+        public static final int md_btn_selector=0x7f020116;
+        public static final int md_btn_selector_dark=0x7f020117;
+        public static final int md_btn_selector_ripple=0x7f020118;
+        public static final int md_btn_selector_ripple_dark=0x7f020119;
+        public static final int md_btn_shape=0x7f02011a;
+        public static final int md_item_selected=0x7f02011b;
+        public static final int md_item_selected_dark=0x7f02011c;
+        public static final int md_selector=0x7f02011d;
+        public static final int md_selector_dark=0x7f02011e;
+        public static final int md_transparent=0x7f02011f;
+        public static final int media_doc_blue=0x7f020120;
+        public static final int media_doc_green=0x7f020121;
+        public static final int media_doc_red=0x7f020122;
+        public static final int media_doc_yellow=0x7f020123;
+        public static final int mobcast_scrubber_primary_holo=0x7f020124;
+        public static final int mobcast_scrubber_progress_horizontal_holo_light=0x7f020125;
+        public static final int mobcast_scrubber_secondary_holo=0x7f020126;
+        public static final int mobcast_scrubber_track_holo_light=0x7f020127;
+        public static final int my_floater_color=0x7f020128;
+        public static final int my_progress_color=0x7f020129;
+        public static final int notification_template_icon_bg=0x7f02016b;
+        public static final int player1=0x7f02012a;
+        public static final int player1_pressed=0x7f02012b;
+        public static final int player2=0x7f02012c;
+        public static final int player2_pressed=0x7f02012d;
+        public static final int recycler_divider=0x7f02012e;
+        public static final int sample_picture_event_cover=0x7f02012f;
+        public static final int sb__tablet_bkgnd=0x7f020130;
+        public static final int search_bg=0x7f020131;
+        public static final int search_bg_shadow=0x7f020132;
+        public static final int search_bg_transparent=0x7f020133;
+        public static final int search_frame=0x7f020134;
+        public static final int selector_award_congratulate=0x7f020135;
+        public static final int selector_birthday_message=0x7f020136;
+        public static final int selector_birthday_wish=0x7f020137;
+        public static final int selector_button=0x7f020138;
+        public static final int selector_call=0x7f020139;
+        public static final int selector_chat=0x7f02013a;
+        public static final int selector_chips=0x7f02013b;
+        public static final int selector_editbox=0x7f02013c;
+        public static final int selector_email=0x7f02013d;
+        public static final int selector_message=0x7f02013e;
+        public static final int selector_text_view_about=0x7f02013f;
+        public static final int selector_text_view_source=0x7f020140;
+        public static final int shadow_bottom=0x7f020141;
+        public static final int shadow_left=0x7f020142;
+        public static final int shadow_right=0x7f020143;
+        public static final int shape_button_download=0x7f020144;
+        public static final int shape_button_green_fill=0x7f020145;
+        public static final int shape_button_highlight_border=0x7f020146;
+        public static final int shape_button_highlight_fill=0x7f020147;
+        public static final int shape_button_normal=0x7f020148;
+        public static final int shape_button_orange_border=0x7f020149;
+        public static final int shape_button_orange_fill=0x7f02014a;
+        public static final int shape_button_pressed=0x7f02014b;
+        public static final int shape_button_red_fill=0x7f02014c;
+        public static final int shape_by_orange_fill=0x7f02014d;
+        public static final int shape_card_layer=0x7f02014e;
+        public static final int shape_chips_normal=0x7f02014f;
+        public static final int shape_chips_selected=0x7f020150;
+        public static final int shape_download_dialog_card=0x7f020151;
+        public static final int shape_editbox_normal=0x7f020152;
+        public static final int shape_editbox_selected=0x7f020153;
+        public static final int shape_new_broadcast=0x7f020154;
+        public static final int shape_pop_up=0x7f020155;
+        public static final int shape_rectange_app=0x7f020156;
+        public static final int shape_rectange_event_left=0x7f020157;
+        public static final int shape_rectange_quiz_box=0x7f020158;
+        public static final int shape_round_event_cover_left=0x7f020159;
+        public static final int shape_round_orange_border=0x7f02015a;
+        public static final int shape_round_orange_fill=0x7f02015b;
+        public static final int shape_toolbar_shadow=0x7f02015c;
+        public static final int shape_toolbar_unread_counter=0x7f02015d;
+        public static final int shape_tutorial=0x7f02015e;
+        public static final int shape_tutorial_round=0x7f02015f;
+        public static final int snackbar_background=0x7f020160;
+        public static final int splash_logo=0x7f020161;
+        public static final int tutorial_frame=0x7f020162;
+        public static final int whatwearebg1=0x7f020163;
+        public static final int whatwearebg2=0x7f020164;
+        public static final int whatwearebg3=0x7f020165;
+        public static final int whatwearebg4=0x7f020166;
+        public static final int whatwearefg1=0x7f020167;
+        public static final int whatwearefg2=0x7f020168;
+        public static final int whatwearefg3=0x7f020169;
+        public static final int whatwearefg4=0x7f02016a;
     }
     public static final class id {
-        public static final int TAG_BIRTHDAYUSERNAME=0x7f0b000c;
-        public static final int action0=0x7f0b0471;
-        public static final int actionItemCounter=0x7f0b02cb;
-        public static final int actionItemCounterPanelLayout=0x7f0b02ca;
-        public static final int actionItemLayout=0x7f0b02c9;
-        public static final int action_add_cal=0x7f0b049f;
-        public static final int action_award=0x7f0b04a4;
-        public static final int action_bar=0x7f0b005f;
-        public static final int action_bar_activity_content=0x7f0b0003;
-        public static final int action_bar_container=0x7f0b005e;
-        public static final int action_bar_root=0x7f0b005a;
-        public static final int action_bar_spinner=0x7f0b0002;
-        public static final int action_bar_subtitle=0x7f0b0043;
-        public static final int action_bar_title=0x7f0b0042;
-        public static final int action_birthday=0x7f0b04a3;
-        public static final int action_capture_submit=0x7f0b049e;
-        public static final int action_contact=0x7f0b0497;
-        public static final int action_contact_share=0x7f0b04a6;
-        public static final int action_context_bar=0x7f0b0060;
-        public static final int action_delete=0x7f0b0498;
-        public static final int action_divider=0x7f0b0475;
-        public static final int action_event=0x7f0b04a5;
-        public static final int action_help_faq=0x7f0b04a2;
-        public static final int action_help_how=0x7f0b04a0;
-        public static final int action_help_mobcast=0x7f0b04a1;
-        public static final int action_info=0x7f0b0499;
-        public static final int action_menu_divider=0x7f0b0005;
-        public static final int action_menu_presenter=0x7f0b0006;
-        public static final int action_mode_bar=0x7f0b005c;
-        public static final int action_mode_bar_stub=0x7f0b005b;
-        public static final int action_mode_close_button=0x7f0b0044;
-        public static final int action_refresh=0x7f0b049a;
-        public static final int action_refresh_actionable=0x7f0b049b;
-        public static final int action_report=0x7f0b049d;
-        public static final int action_search=0x7f0b049c;
-        public static final int action_share=0x7f0b0496;
-        public static final int action_view_web=0x7f0b04a7;
-        public static final int activityAnyDoNotificationActivityLayout=0x7f0b0071;
-        public static final int activityCountrySelectFrameLayout=0x7f0b0073;
-        public static final int activityEditProfileAnswerEv=0x7f0b0085;
-        public static final int activityEditProfileAnswerLayout=0x7f0b0084;
-        public static final int activityEditProfileAnswerValidateIv=0x7f0b0086;
-        public static final int activityEditProfileCircleImageView=0x7f0b0074;
-        public static final int activityEditProfileEmailEv=0x7f0b007c;
-        public static final int activityEditProfileEmailLayout=0x7f0b007b;
-        public static final int activityEditProfileEmailValidateIv=0x7f0b007d;
-        public static final int activityEditProfileEmployeeIdEv=0x7f0b007f;
-        public static final int activityEditProfileEmployeeIdLayout=0x7f0b007e;
-        public static final int activityEditProfileEmployeeIdValidateIv=0x7f0b0080;
-        public static final int activityEditProfileEmployeeQuestionEv=0x7f0b0082;
-        public static final int activityEditProfileEmployeeQuestionLayout=0x7f0b0081;
-        public static final int activityEditProfileEmployeeQuestionValidateIv=0x7f0b0083;
-        public static final int activityEditProfileNameEv=0x7f0b0079;
-        public static final int activityEditProfileNameLayout=0x7f0b0078;
-        public static final int activityEditProfileNameValidateIv=0x7f0b007a;
-        public static final int activityEditProfileNextBtn=0x7f0b0087;
-        public static final int activityEditProfileProgressWheel=0x7f0b0075;
-        public static final int activityEditProfileRemoveTv=0x7f0b0076;
-        public static final int activityEditProfileUploadAnotherIv=0x7f0b0077;
-        public static final int activityFacebookConcealDecryptBtn=0x7f0b008b;
-        public static final int activityFacebookConcealDecryptTv=0x7f0b008c;
-        public static final int activityFacebookConcealEncrptBtn=0x7f0b0089;
-        public static final int activityFacebookConcealEncryptTv=0x7f0b008a;
-        public static final int activityLoginAdminstration=0x7f0b0099;
-        public static final int activityLoginCirclePageIndicator=0x7f0b0091;
-        public static final int activityLoginCountryCodeTv=0x7f0b0094;
-        public static final int activityLoginIdEv=0x7f0b0095;
-        public static final int activityLoginLayout=0x7f0b0093;
-        public static final int activityLoginLogoIv=0x7f0b008f;
-        public static final int activityLoginNextBtn=0x7f0b0098;
-        public static final int activityLoginNextBtn1=0x7f0b0097;
-        public static final int activityLoginScrollViewLayout=0x7f0b008e;
-        public static final int activityLoginTv=0x7f0b0092;
-        public static final int activityLoginValidateIv=0x7f0b0096;
-        public static final int activityLoginViewPager=0x7f0b0090;
-        public static final int activityRecruitmentContactEmailLayout=0x7f0b022e;
-        public static final int activityRecruitmentContactMobileLayout=0x7f0b022c;
-        public static final int activityRecruitmentDetailCTCExpandLayout=0x7f0b0222;
-        public static final int activityRecruitmentDetailCTCIv=0x7f0b0224;
-        public static final int activityRecruitmentDetailCTCLabelTv=0x7f0b0223;
-        public static final int activityRecruitmentDetailCTCTv=0x7f0b0225;
-        public static final int activityRecruitmentDetailContactDesignationTv=0x7f0b022b;
-        public static final int activityRecruitmentDetailContactEmailTv=0x7f0b022f;
-        public static final int activityRecruitmentDetailContactExpandLayout=0x7f0b0226;
-        public static final int activityRecruitmentDetailContactIv=0x7f0b0228;
-        public static final int activityRecruitmentDetailContactLabelTv=0x7f0b0227;
-        public static final int activityRecruitmentDetailContactLayout=0x7f0b0229;
-        public static final int activityRecruitmentDetailContactMobileTv=0x7f0b022d;
-        public static final int activityRecruitmentDetailContactNameTv=0x7f0b022a;
-        public static final int activityRecruitmentDetailDesignationTv=0x7f0b0213;
-        public static final int activityRecruitmentDetailExpandLayout=0x7f0b020e;
-        public static final int activityRecruitmentDetailExperienceTv=0x7f0b0215;
-        public static final int activityRecruitmentDetailIv=0x7f0b0210;
-        public static final int activityRecruitmentDetailJobDescriptionExpandLayout=0x7f0b021a;
-        public static final int activityRecruitmentDetailJobDescriptionIv=0x7f0b021c;
-        public static final int activityRecruitmentDetailJobDescriptionLabelTv=0x7f0b021b;
-        public static final int activityRecruitmentDetailJobDescriptionTv=0x7f0b021d;
-        public static final int activityRecruitmentDetailLabelTv=0x7f0b020f;
-        public static final int activityRecruitmentDetailLayout=0x7f0b0211;
-        public static final int activityRecruitmentDetailLocationTv=0x7f0b0214;
-        public static final int activityRecruitmentDetailQualificationExpandLayout=0x7f0b021e;
-        public static final int activityRecruitmentDetailQualificationIv=0x7f0b0220;
-        public static final int activityRecruitmentDetailQualificationLabelTv=0x7f0b021f;
-        public static final int activityRecruitmentDetailQualificationTv=0x7f0b0221;
-        public static final int activityRecruitmentDetailSkillsExpandLayout=0x7f0b0216;
-        public static final int activityRecruitmentDetailSkillsIv=0x7f0b0218;
-        public static final int activityRecruitmentDetailSkillsLabelTv=0x7f0b0217;
-        public static final int activityRecruitmentDetailSkillsTv=0x7f0b0219;
-        public static final int activityRecruitmentDetailTitleTv=0x7f0b0212;
-        public static final int activitySetProfileCircleImageView=0x7f0b009c;
-        public static final int activitySetProfileEmailEv=0x7f0b00a4;
-        public static final int activitySetProfileEmailLayout=0x7f0b00a3;
-        public static final int activitySetProfileEmailValidateIv=0x7f0b00a5;
-        public static final int activitySetProfileEmployeeIdEv=0x7f0b00a7;
-        public static final int activitySetProfileEmployeeIdLayout=0x7f0b00a6;
-        public static final int activitySetProfileEmployeeIdValidateIv=0x7f0b00a8;
-        public static final int activitySetProfileFavouriteAnswerEv=0x7f0b00ad;
-        public static final int activitySetProfileFavouriteAnswerLayout=0x7f0b00ac;
-        public static final int activitySetProfileFavouriteAnswerValidateIv=0x7f0b00ae;
-        public static final int activitySetProfileFavouriteQuestionEv=0x7f0b00aa;
-        public static final int activitySetProfileFavouriteQuestionLayout=0x7f0b00a9;
-        public static final int activitySetProfileFavouriteQuestionValidateIv=0x7f0b00ab;
-        public static final int activitySetProfileNameEv=0x7f0b00a1;
-        public static final int activitySetProfileNameLayout=0x7f0b00a0;
-        public static final int activitySetProfileNameValidateIv=0x7f0b00a2;
-        public static final int activitySetProfileNextBtn=0x7f0b00af;
-        public static final int activitySetProfileProgressWheel=0x7f0b009d;
-        public static final int activitySetProfileRemoveTv=0x7f0b009e;
-        public static final int activitySetProfileSkipBtn=0x7f0b00b0;
-        public static final int activitySetProfileUploadAnotherIv=0x7f0b009f;
-        public static final int activitySplashAppNameTv=0x7f0b00b4;
-        public static final int activitySplashLayout=0x7f0b00b1;
-        public static final int activitySplashLogoIv=0x7f0b00b2;
-        public static final int activitySplashShimmerLayout=0x7f0b00b3;
-        public static final int activityTutorialCirclePageIndicator=0x7f0b00b6;
-        public static final int activityTutorialNextIv=0x7f0b00b7;
-        public static final int activityTutorialPreviousIv=0x7f0b00b8;
-        public static final int activityTutorialViewPager=0x7f0b00b5;
-        public static final int activityVerificationAdminstration=0x7f0b00c2;
-        public static final int activityVerificationAdminstrationTryAgain=0x7f0b00c6;
-        public static final int activityVerificationBtn=0x7f0b00c1;
-        public static final int activityVerificationCode1=0x7f0b00bd;
-        public static final int activityVerificationCode2=0x7f0b00be;
-        public static final int activityVerificationCode3=0x7f0b00bf;
-        public static final int activityVerificationCode4=0x7f0b00c0;
-        public static final int activityVerificationLayout=0x7f0b00bc;
-        public static final int activityVerificationLogoIv=0x7f0b00ba;
-        public static final int activityVerificationRaiseTickedBtn=0x7f0b00c5;
-        public static final int activityVerificationResendBtn=0x7f0b00c4;
-        public static final int activityVerificationRetryTv=0x7f0b00c3;
-        public static final int activityVerificationTv=0x7f0b00bb;
-        public static final int activity_chooser_view_content=0x7f0b0045;
-        public static final int alertTitle=0x7f0b004f;
-        public static final int all=0x7f0b0030;
-        public static final int always=0x7f0b0024;
-        public static final int beginning=0x7f0b002b;
-        public static final int border=0x7f0b0450;
-        public static final int bottom=0x7f0b0031;
-        public static final int bottom_sheet_close=0x7f0b00cf;
-        public static final int bottom_sheet_frame=0x7f0b00ce;
-        public static final int bottom_sheet_gridview=0x7f0b00cb;
-        public static final int bottom_sheet_new=0x7f0b00cc;
-        public static final int bottom_sheet_read_count=0x7f0b00cd;
-        public static final int bottom_sheet_title=0x7f0b00ca;
-        public static final int bottom_sheet_title_image=0x7f0b00c9;
-        public static final int bottom_sheet_view=0x7f0b00d0;
-        public static final int bs_list_image=0x7f0b00d1;
-        public static final int bs_list_title=0x7f0b00d2;
-        public static final int bs_more=0x7f0b000d;
-        public static final int buttonDefaultNegative=0x7f0b0464;
-        public static final int buttonDefaultNeutral=0x7f0b0463;
-        public static final int buttonDefaultPositive=0x7f0b0465;
-        public static final int buttonPanel=0x7f0b0055;
-        public static final int cab_stub=0x7f0b008d;
-        public static final int calligraphy_tag_id=0x7f0b000e;
-        public static final int cancel_action=0x7f0b0472;
-        public static final int card_view=0x7f0b0480;
-        public static final int center=0x7f0b002e;
-        public static final int chatTextContainerLeft=0x7f0b02da;
-        public static final int chatTextContainerParent=0x7f0b02d9;
-        public static final int chatTextContainerRight=0x7f0b02dd;
-        public static final int chatTextTextLeft=0x7f0b02dc;
-        public static final int chatTextTextRight=0x7f0b02df;
-        public static final int chatTextUserContainerLeft=0x7f0b02db;
-        public static final int chatTextUserContainerRight=0x7f0b02de;
-        public static final int chat_compose_panel=0x7f0b0132;
-        public static final int checkbox=0x7f0b0057;
-        public static final int chronometer=0x7f0b0477;
-        public static final int collapseActionView=0x7f0b0025;
-        public static final int content=0x7f0b045d;
-        public static final int contentListView=0x7f0b0461;
-        public static final int contentListViewFrame=0x7f0b0460;
-        public static final int contentPanel=0x7f0b0050;
-        public static final int contentScrollView=0x7f0b045c;
-        public static final int contextMenuDelete=0x7f0b0493;
-        public static final int contextMenuRead=0x7f0b0491;
-        public static final int contextMenuSave=0x7f0b0495;
-        public static final int contextMenuUnread=0x7f0b0492;
-        public static final int contextMenuView=0x7f0b0494;
-        public static final int control=0x7f0b0462;
-        public static final int croutonViewGroup=0x7f0b02ac;
-        public static final int custom=0x7f0b0054;
-        public static final int customPanel=0x7f0b0053;
-        public static final int customViewFrame=0x7f0b045e;
-        public static final int decor_content_parent=0x7f0b005d;
-        public static final int default_activity_button=0x7f0b0048;
-        public static final int dialog=0x7f0b0029;
-        public static final int dialogBirthdayMessageEd=0x7f0b00d6;
-        public static final int dialogBirthdayMessageSendBtn=0x7f0b00d7;
-        public static final int dialogBirthdayMessageTv=0x7f0b00d5;
-        public static final int dialogProgressDownloadCancelBtn=0x7f0b00dd;
-        public static final int dialogProgressDownloadFactsTv=0x7f0b00dc;
-        public static final int dialogProgressDownloadIv=0x7f0b00d8;
-        public static final int dialogProgressDownloadNameTv=0x7f0b00d9;
-        public static final int dialogProgressDownloadProgressBar=0x7f0b00da;
-        public static final int dialogProgressDownloadProgressTv=0x7f0b00db;
-        public static final int dialogProgressNormalProgressWheel=0x7f0b00de;
-        public static final int dialogProgressNormalTv=0x7f0b00df;
-        public static final int dialogProgressWordIv=0x7f0b00e0;
-        public static final int dialogProgressWordTv=0x7f0b00e1;
-        public static final int dialogSettingsBirthdayNotifyAtRadioButton1=0x7f0b00e4;
-        public static final int dialogSettingsBirthdayNotifyAtRadioButton2=0x7f0b00e3;
-        public static final int dialogSettingsBirthdayNotifyAtRadioButton3=0x7f0b00e5;
-        public static final int dialogSettingsBirthdayNotifyAtRadioGroup=0x7f0b00e2;
-        public static final int disableHome=0x7f0b0019;
-        public static final int drawerItemIv=0x7f0b02e4;
-        public static final int drawerItemLayout=0x7f0b02e3;
-        public static final int drawerItemTitleTv=0x7f0b02e5;
-        public static final int drawerProfileCoverIv=0x7f0b02b2;
-        public static final int drawerProfileIv=0x7f0b02af;
-        public static final int drawerProfileLayout=0x7f0b02ae;
-        public static final int drawerRootLayout=0x7f0b02ad;
-        public static final int drawerSyncContentTv=0x7f0b02b7;
-        public static final int drawerSyncIv=0x7f0b02b5;
-        public static final int drawerSyncLayout=0x7f0b02b4;
-        public static final int drawerSyncTitleTv=0x7f0b02b6;
-        public static final int drawerUserEmailTv=0x7f0b02b1;
-        public static final int drawerUserNameTv=0x7f0b02b0;
-        public static final int drawer_layout=0x7f0b009a;
-        public static final int drawer_listview=0x7f0b02b3;
-        public static final int drawer_logo=0x7f0b0485;
-        public static final int dropdown=0x7f0b002a;
-        public static final int edit_query=0x7f0b0061;
-        public static final int end=0x7f0b002c;
-        public static final int end_padder=0x7f0b047c;
-        public static final int expand_activities_button=0x7f0b0046;
-        public static final int expanded_menu=0x7f0b0056;
-        public static final int ffwd=0x7f0b046b;
-        public static final int fragmentAboutBuildVersionLayout=0x7f0b024d;
-        public static final int fragmentAboutBuildVersionTv=0x7f0b024e;
-        public static final int fragmentAboutDetailWebView=0x7f0b00f0;
-        public static final int fragmentAboutFileStorageLayout=0x7f0b024f;
-        public static final int fragmentAboutFileStoragePercenetageAppTv=0x7f0b0252;
-        public static final int fragmentAboutFileStoragePercenetageDeviceTv=0x7f0b0253;
-        public static final int fragmentAboutFileStoragePercentageLayout=0x7f0b0251;
-        public static final int fragmentAboutFileStorageTv=0x7f0b0250;
-        public static final int fragmentAboutLogoIv=0x7f0b00e6;
-        public static final int fragmentAboutPrivacyPolicyTv=0x7f0b00f1;
-        public static final int fragmentAboutReportDetailTv=0x7f0b00ef;
-        public static final int fragmentAboutReportLayout=0x7f0b00ed;
-        public static final int fragmentAboutReportTv=0x7f0b00ee;
-        public static final int fragmentAboutSendFeedbackDetailTv=0x7f0b00ec;
-        public static final int fragmentAboutSendFeedbackLayout=0x7f0b00ea;
-        public static final int fragmentAboutSendFeedbackTv=0x7f0b00eb;
-        public static final int fragmentAboutVersionDetailTv=0x7f0b00e9;
-        public static final int fragmentAboutVersionLayout=0x7f0b00e7;
-        public static final int fragmentAboutVersionTv=0x7f0b00e8;
-        public static final int fragmentAnnounceRecyclerView=0x7f0b00f3;
-        public static final int fragmentAnnounceSwipeRefreshLayout=0x7f0b00f2;
-        public static final int fragmentAppFeedbackCategoryLayout=0x7f0b00f4;
-        public static final int fragmentAppFeedbackCategorySelectedTv=0x7f0b00f6;
-        public static final int fragmentAppFeedbackCategoryTv=0x7f0b00f5;
-        public static final int fragmentAppFeedbackIncludeLogsCheckBox=0x7f0b00fa;
-        public static final int fragmentAppFeedbackSubmitBtn=0x7f0b00fb;
-        public static final int fragmentAppFeedbackTextEt=0x7f0b00f9;
-        public static final int fragmentAppFeedbackTextProfileIv=0x7f0b00f8;
-        public static final int fragmentAppFeedbackTextlayout=0x7f0b00f7;
-        public static final int fragmentAudioDetailByLayout=0x7f0b0103;
-        public static final int fragmentAudioDetailByTv=0x7f0b0104;
-        public static final int fragmentAudioDetailFrameLayout=0x7f0b00fc;
-        public static final int fragmentAudioDetailImageView=0x7f0b00ff;
-        public static final int fragmentAudioDetailLanguageFlowLayout=0x7f0b010c;
-        public static final int fragmentAudioDetailLanguageHeaderTv=0x7f0b010b;
-        public static final int fragmentAudioDetailLanguageLayout=0x7f0b010a;
-        public static final int fragmentAudioDetailLikeTv=0x7f0b0105;
-        public static final int fragmentAudioDetailLinkIv=0x7f0b0108;
-        public static final int fragmentAudioDetailLinkTv=0x7f0b0109;
-        public static final int fragmentAudioDetailSeekBar=0x7f0b0100;
-        public static final int fragmentAudioDetailSeekBarLayout=0x7f0b00fe;
-        public static final int fragmentAudioDetailSeekBarTv=0x7f0b0101;
-        public static final int fragmentAudioDetailSummaryTv=0x7f0b010d;
-        public static final int fragmentAudioDetailTitleTv=0x7f0b0102;
-        public static final int fragmentAudioDetailViewSourceLayout=0x7f0b0107;
-        public static final int fragmentAudioDetailViewTv=0x7f0b0106;
-        public static final int fragmentAudioDetailVisualizerView=0x7f0b00fd;
-        public static final int fragmentAwardProfileActionLayout=0x7f0b0114;
-        public static final int fragmentAwardProfileCallIv=0x7f0b0116;
-        public static final int fragmentAwardProfileChatIv=0x7f0b0115;
-        public static final int fragmentAwardProfileCityTv=0x7f0b0110;
-        public static final int fragmentAwardProfileDateTv=0x7f0b0111;
-        public static final int fragmentAwardProfileDepartmentTv=0x7f0b0113;
-        public static final int fragmentAwardProfileEmailIv=0x7f0b0118;
-        public static final int fragmentAwardProfileImageIv=0x7f0b0112;
-        public static final int fragmentAwardProfileMessageIv=0x7f0b0117;
-        public static final int fragmentAwardProfileNameTv=0x7f0b010f;
-        public static final int fragmentAwardProfileRootLayout=0x7f0b010e;
-        public static final int fragmentBirthdayProfileActionLayout=0x7f0b0122;
-        public static final int fragmentBirthdayProfileAgeTv=0x7f0b0121;
-        public static final int fragmentBirthdayProfileCallIv=0x7f0b0124;
-        public static final int fragmentBirthdayProfileChatIv=0x7f0b0123;
-        public static final int fragmentBirthdayProfileCityTv=0x7f0b011b;
-        public static final int fragmentBirthdayProfileDateTv=0x7f0b011c;
-        public static final int fragmentBirthdayProfileDepartmentTv=0x7f0b011f;
-        public static final int fragmentBirthdayProfileEmailIv=0x7f0b0126;
-        public static final int fragmentBirthdayProfileImageIv=0x7f0b011d;
-        public static final int fragmentBirthdayProfileImageLoadingProgress=0x7f0b011e;
-        public static final int fragmentBirthdayProfileMessageIv=0x7f0b0125;
-        public static final int fragmentBirthdayProfileNameTv=0x7f0b011a;
-        public static final int fragmentBirthdayProfileRootLayout=0x7f0b0119;
-        public static final int fragmentBirthdayProfileSunSignTv=0x7f0b0120;
-        public static final int fragmentCaptureAttachedAnotherImageLayout=0x7f0b012d;
-        public static final int fragmentCaptureAttachedImageLayout=0x7f0b012a;
-        public static final int fragmentCaptureAttachedImagelayout=0x7f0b0129;
-        public static final int fragmentCaptureBrowseBtn=0x7f0b012e;
-        public static final int fragmentCaptureNoteCharacterTv=0x7f0b0128;
-        public static final int fragmentCaptureNoteEd=0x7f0b0127;
-        public static final int fragmentCaptureTakeAPicBtn=0x7f0b012f;
-        public static final int fragmentChatEmptyLayout=0x7f0b0130;
-        public static final int fragmentChatListView=0x7f0b0131;
-        public static final int fragmentChatMessageEv=0x7f0b0134;
-        public static final int fragmentChatSendIv=0x7f0b0133;
-        public static final int fragmentDocDetailByLayout=0x7f0b013a;
-        public static final int fragmentDocDetailByTv=0x7f0b013b;
-        public static final int fragmentDocDetailFileDetailIv=0x7f0b0138;
-        public static final int fragmentDocDetailFileNameIv=0x7f0b0137;
-        public static final int fragmentDocDetailImageIv=0x7f0b0136;
-        public static final int fragmentDocDetailLanguageFlowLayout=0x7f0b0143;
-        public static final int fragmentDocDetailLanguageHeaderTv=0x7f0b0142;
-        public static final int fragmentDocDetailLanguageLayout=0x7f0b0141;
-        public static final int fragmentDocDetailLikeTv=0x7f0b013c;
-        public static final int fragmentDocDetailLinkIv=0x7f0b013f;
-        public static final int fragmentDocDetailLinkTv=0x7f0b0140;
-        public static final int fragmentDocDetailRelativeLayout=0x7f0b0135;
-        public static final int fragmentDocDetailSummaryTv=0x7f0b0144;
-        public static final int fragmentDocDetailTitleTv=0x7f0b0139;
-        public static final int fragmentDocDetailViewSourceLayout=0x7f0b013e;
-        public static final int fragmentDocDetailViewTv=0x7f0b013d;
-        public static final int fragmentEmptyLayout=0x7f0b012c;
-        public static final int fragmentEventDetaiTotalAttendTextTv=0x7f0b0166;
-        public static final int fragmentEventDetaiTotalAttendTv=0x7f0b0165;
-        public static final int fragmentEventDetaiTotalGoingTextTv=0x7f0b0169;
-        public static final int fragmentEventDetaiTotalGoingTv=0x7f0b0168;
-        public static final int fragmentEventDetailAboutEventTv=0x7f0b016a;
-        public static final int fragmentEventDetailAttendLayout=0x7f0b0163;
-        public static final int fragmentEventDetailByLayout=0x7f0b014f;
-        public static final int fragmentEventDetailByTv=0x7f0b0150;
-        public static final int fragmentEventDetailDeclineBtn=0x7f0b0162;
-        public static final int fragmentEventDetailEventActionLayout=0x7f0b0160;
-        public static final int fragmentEventDetailEventAddToCalendarIv=0x7f0b014c;
-        public static final int fragmentEventDetailEventCoverFrameLayout=0x7f0b0146;
-        public static final int fragmentEventDetailEventCoverIv=0x7f0b0147;
-        public static final int fragmentEventDetailEventDateIv=0x7f0b0154;
-        public static final int fragmentEventDetailEventDateTextTv=0x7f0b0156;
-        public static final int fragmentEventDetailEventDateTv=0x7f0b0155;
-        public static final int fragmentEventDetailEventDayIv=0x7f0b0157;
-        public static final int fragmentEventDetailEventDayTillTv=0x7f0b0159;
-        public static final int fragmentEventDetailEventDayTv=0x7f0b0158;
-        public static final int fragmentEventDetailEventHoursIv=0x7f0b015a;
-        public static final int fragmentEventDetailEventHoursTextTv=0x7f0b015c;
-        public static final int fragmentEventDetailEventHoursTv=0x7f0b015b;
-        public static final int fragmentEventDetailEventLeftLayout=0x7f0b0148;
-        public static final int fragmentEventDetailEventLocationIv=0x7f0b015d;
-        public static final int fragmentEventDetailEventLocationTv=0x7f0b015e;
-        public static final int fragmentEventDetailEventLocationViewMapTv=0x7f0b015f;
-        public static final int fragmentEventDetailEventShareIv=0x7f0b014b;
-        public static final int fragmentEventDetailEventTimeLayout=0x7f0b0153;
-        public static final int fragmentEventDetailJoinBtn=0x7f0b0161;
-        public static final int fragmentEventDetailLeftNumberTv=0x7f0b0149;
-        public static final int fragmentEventDetailLeftTextTv=0x7f0b014a;
-        public static final int fragmentEventDetailLikeTv=0x7f0b0151;
-        public static final int fragmentEventDetailRootLayout=0x7f0b0145;
-        public static final int fragmentEventDetailSummaryTv=0x7f0b016b;
-        public static final int fragmentEventDetailTextLayout=0x7f0b014d;
-        public static final int fragmentEventDetailTitleTv=0x7f0b014e;
-        public static final int fragmentEventDetailTotalAttendLayout=0x7f0b0164;
-        public static final int fragmentEventDetailTotalInviteLayout=0x7f0b0167;
-        public static final int fragmentEventDetailViewTv=0x7f0b0152;
-        public static final int fragmentFeedbackMultipleCheckBox1=0x7f0b0176;
-        public static final int fragmentFeedbackMultipleCheckBox2=0x7f0b0177;
-        public static final int fragmentFeedbackMultipleCheckBox3=0x7f0b0178;
-        public static final int fragmentFeedbackMultipleCheckBox4=0x7f0b0179;
-        public static final int fragmentFeedbackMultipleCheckBox5=0x7f0b017a;
-        public static final int fragmentFeedbackMultipleCheckBox6=0x7f0b017b;
-        public static final int fragmentFeedbackMultipleCheckBox7=0x7f0b017c;
-        public static final int fragmentFeedbackMultipleCheckTitleTv=0x7f0b0175;
-        public static final int fragmentFeedbackNavigationLayout=0x7f0b0172;
-        public static final int fragmentFeedbackNextBtn=0x7f0b0174;
-        public static final int fragmentFeedbackPreviousBtn=0x7f0b0173;
-        public static final int fragmentFeedbackQuestionCirclePageIndicator=0x7f0b0170;
-        public static final int fragmentFeedbackQuestionHeaderLayout=0x7f0b016c;
-        public static final int fragmentFeedbackQuestionNumberTextTv=0x7f0b016d;
-        public static final int fragmentFeedbackQuestionPageCountTv=0x7f0b0171;
-        public static final int fragmentFeedbackQuestionViewPager=0x7f0b016f;
-        public static final int fragmentFeedbackQuestionViewPagerLayout=0x7f0b016e;
-        public static final int fragmentFeedbackRateRatingBar=0x7f0b017e;
-        public static final int fragmentFeedbackRateRatingTitleTv=0x7f0b017d;
-        public static final int fragmentFeedbackSelectionRadioButton1=0x7f0b0181;
-        public static final int fragmentFeedbackSelectionRadioButton2=0x7f0b0182;
-        public static final int fragmentFeedbackSelectionRadioButton3=0x7f0b0183;
-        public static final int fragmentFeedbackSelectionRadioButton4=0x7f0b0184;
-        public static final int fragmentFeedbackSelectionRadioButton5=0x7f0b0185;
-        public static final int fragmentFeedbackSelectionRadioButton6=0x7f0b0186;
-        public static final int fragmentFeedbackSelectionRadioButton7=0x7f0b0187;
-        public static final int fragmentFeedbackSelectionRadioGroup=0x7f0b0180;
-        public static final int fragmentFeedbackSelectiveRadioTitleTv=0x7f0b017f;
-        public static final int fragmentFeedbackSubjectiveEditText=0x7f0b0189;
-        public static final int fragmentFeedbackSubjectiveTextTitleTv=0x7f0b0188;
-        public static final int fragmentFileManagerListView=0x7f0b018a;
-        public static final int fragmentFileManagerSearchEmptyView=0x7f0b018b;
-        public static final int fragmentImageDetailByLayout=0x7f0b0192;
-        public static final int fragmentImageDetailByTv=0x7f0b0193;
-        public static final int fragmentImageDetailCirclePageIndicator=0x7f0b0190;
-        public static final int fragmentImageDetailFrameLayout=0x7f0b018c;
-        public static final int fragmentImageDetailLanguageFlowLayout=0x7f0b019b;
-        public static final int fragmentImageDetailLanguageHeaderTv=0x7f0b019a;
-        public static final int fragmentImageDetailLanguageLayout=0x7f0b0199;
-        public static final int fragmentImageDetailLikeTv=0x7f0b0194;
-        public static final int fragmentImageDetailLinkIv=0x7f0b0197;
-        public static final int fragmentImageDetailLinkTv=0x7f0b0198;
-        public static final int fragmentImageDetailNextIv=0x7f0b018e;
-        public static final int fragmentImageDetailPreviousIv=0x7f0b018d;
-        public static final int fragmentImageDetailSummaryTv=0x7f0b019c;
-        public static final int fragmentImageDetailTitleTv=0x7f0b0191;
-        public static final int fragmentImageDetailViewPager=0x7f0b018f;
-        public static final int fragmentImageDetailViewSourceLayout=0x7f0b0196;
-        public static final int fragmentImageDetailViewTv=0x7f0b0195;
-        public static final int fragmentImageFullScreenCirclePageIndicator=0x7f0b01a0;
-        public static final int fragmentImageFullScreenNextIv=0x7f0b019e;
-        public static final int fragmentImageFullScreenPreviousIv=0x7f0b019d;
-        public static final int fragmentImageFullScreenViewPager=0x7f0b019f;
-        public static final int fragmentImageView=0x7f0b01a1;
-        public static final int fragmentImageViewFullScreen=0x7f0b01a2;
-        public static final int fragmentInteractiveDetailByLayout=0x7f0b01a4;
-        public static final int fragmentInteractiveDetailByTv=0x7f0b01a5;
-        public static final int fragmentInteractiveDetailLikeTv=0x7f0b01a6;
-        public static final int fragmentInteractiveDetailLinkIv=0x7f0b01a9;
-        public static final int fragmentInteractiveDetailLinkTv=0x7f0b01aa;
-        public static final int fragmentInteractiveDetailSummaryTv=0x7f0b01ab;
-        public static final int fragmentInteractiveDetailTitleTv=0x7f0b01a3;
-        public static final int fragmentInteractiveDetailViewSourceLayout=0x7f0b01a8;
-        public static final int fragmentInteractiveDetailViewTv=0x7f0b01a7;
-        public static final int fragmentLiveStreamLinkIv=0x7f0b01b2;
-        public static final int fragmentLiveStreamLinkTv=0x7f0b01b3;
-        public static final int fragmentLiveStreamViewSourceLayout=0x7f0b01b1;
-        public static final int fragmentLiveStreamYouTubeByLayout=0x7f0b01ad;
-        public static final int fragmentLiveStreamYouTubeByTv=0x7f0b01ae;
-        public static final int fragmentLiveStreamYouTubeFrameLayout=0x7f0b00c7;
-        public static final int fragmentLiveStreamYouTubeLikeTv=0x7f0b01af;
-        public static final int fragmentLiveStreamYouTubePlayerView=0x7f0b00c8;
-        public static final int fragmentLiveStreamYouTubeSummaryTv=0x7f0b01b4;
-        public static final int fragmentLiveStreamYouTubeTitleTv=0x7f0b01ac;
-        public static final int fragmentLiveStreamYouTubeViewTv=0x7f0b01b0;
-        public static final int fragmentMobcastEmptyLayout=0x7f0b01b5;
-        public static final int fragmentNewsDetailByLayout=0x7f0b01b7;
-        public static final int fragmentNewsDetailByTv=0x7f0b01b8;
-        public static final int fragmentNewsDetailLinkIv=0x7f0b01bb;
-        public static final int fragmentNewsDetailLinkTv=0x7f0b01bc;
-        public static final int fragmentNewsDetailSummaryTv=0x7f0b01bd;
-        public static final int fragmentNewsDetailTitleTv=0x7f0b01b6;
-        public static final int fragmentNewsDetailViewSourceLayout=0x7f0b01ba;
-        public static final int fragmentNewsDetailViewTv=0x7f0b01b9;
-        public static final int fragmentPdfDetailByLayout=0x7f0b01c3;
-        public static final int fragmentPdfDetailByTv=0x7f0b01c4;
-        public static final int fragmentPdfDetailFileDetailIv=0x7f0b01c1;
-        public static final int fragmentPdfDetailFileNameIv=0x7f0b01c0;
-        public static final int fragmentPdfDetailImageIv=0x7f0b01bf;
-        public static final int fragmentPdfDetailLanguageFlowLayout=0x7f0b01cc;
-        public static final int fragmentPdfDetailLanguageHeaderTv=0x7f0b01cb;
-        public static final int fragmentPdfDetailLanguageLayout=0x7f0b01ca;
-        public static final int fragmentPdfDetailLikeTv=0x7f0b01c5;
-        public static final int fragmentPdfDetailLinkIv=0x7f0b01c8;
-        public static final int fragmentPdfDetailLinkTv=0x7f0b01c9;
-        public static final int fragmentPdfDetailRelativeLayout=0x7f0b01be;
-        public static final int fragmentPdfDetailSummaryTv=0x7f0b01cd;
-        public static final int fragmentPdfDetailTitleTv=0x7f0b01c2;
-        public static final int fragmentPdfDetailViewSourceLayout=0x7f0b01c7;
-        public static final int fragmentPdfDetailViewTv=0x7f0b01c6;
-        public static final int fragmentPptDetailByLayout=0x7f0b01d3;
-        public static final int fragmentPptDetailByTv=0x7f0b01d4;
-        public static final int fragmentPptDetailFileDetailIv=0x7f0b01d1;
-        public static final int fragmentPptDetailFileNameIv=0x7f0b01d0;
-        public static final int fragmentPptDetailImageIv=0x7f0b01cf;
-        public static final int fragmentPptDetailLanguageFlowLayout=0x7f0b01dc;
-        public static final int fragmentPptDetailLanguageHeaderTv=0x7f0b01db;
-        public static final int fragmentPptDetailLanguageLayout=0x7f0b01da;
-        public static final int fragmentPptDetailLikeTv=0x7f0b01d5;
-        public static final int fragmentPptDetailLinkIv=0x7f0b01d8;
-        public static final int fragmentPptDetailLinkTv=0x7f0b01d9;
-        public static final int fragmentPptDetailRelativeLayout=0x7f0b01ce;
-        public static final int fragmentPptDetailSummaryTv=0x7f0b01dd;
-        public static final int fragmentPptDetailTitleTv=0x7f0b01d2;
-        public static final int fragmentPptDetailViewSourceLayout=0x7f0b01d7;
-        public static final int fragmentPptDetailViewTv=0x7f0b01d6;
-        public static final int fragmentQuizMultipleCheckBox1=0x7f0b01ec;
-        public static final int fragmentQuizMultipleCheckBox2=0x7f0b01ed;
-        public static final int fragmentQuizMultipleCheckBox3=0x7f0b01ee;
-        public static final int fragmentQuizMultipleCheckBox4=0x7f0b01ef;
-        public static final int fragmentQuizMultipleCheckBox5=0x7f0b01f0;
-        public static final int fragmentQuizMultipleCheckBox6=0x7f0b01f1;
-        public static final int fragmentQuizMultipleCheckBox7=0x7f0b01f2;
-        public static final int fragmentQuizMultipleCheckTitleTv=0x7f0b01eb;
-        public static final int fragmentQuizNavigationLayout=0x7f0b01e8;
-        public static final int fragmentQuizNextBtn=0x7f0b01ea;
-        public static final int fragmentQuizPreviousBtn=0x7f0b01e9;
-        public static final int fragmentQuizQuestionCirclePageIndicator=0x7f0b01e6;
-        public static final int fragmentQuizQuestionNumberTextTv=0x7f0b01e3;
-        public static final int fragmentQuizQuestionPageCountTv=0x7f0b01e7;
-        public static final int fragmentQuizQuestionViewPager=0x7f0b01e5;
-        public static final int fragmentQuizQuestionViewPagerLayout=0x7f0b01e4;
-        public static final int fragmentQuizScoreCorrectAnswerTextTv=0x7f0b01fa;
-        public static final int fragmentQuizScoreCorrectAnswerTv=0x7f0b01f9;
-        public static final int fragmentQuizScoreGoofedUpAtTv=0x7f0b01fb;
-        public static final int fragmentQuizScoreLayout=0x7f0b01f6;
-        public static final int fragmentQuizScoreNavigationLayout=0x7f0b01fd;
-        public static final int fragmentQuizScoreNextBtn=0x7f0b0202;
-        public static final int fragmentQuizScorePreviousBtn=0x7f0b0201;
-        public static final int fragmentQuizScoreQuestionCirclePageIndicator=0x7f0b01ff;
-        public static final int fragmentQuizScoreQuestionNumberTextTv=0x7f0b0203;
-        public static final int fragmentQuizScoreQuestionPageCountTv=0x7f0b0200;
-        public static final int fragmentQuizScoreQuestionTitleTv=0x7f0b0204;
-        public static final int fragmentQuizScoreQuestionViewPager=0x7f0b01fe;
-        public static final int fragmentQuizScoreQuestionViewPagerLayout=0x7f0b01fc;
-        public static final int fragmentQuizScoreRootLayout=0x7f0b01f3;
-        public static final int fragmentQuizScoreTimeTakenInTv=0x7f0b01f8;
-        public static final int fragmentQuizScoreTimeTakenTv=0x7f0b01f7;
-        public static final int fragmentQuizScoreTotalScoreTextTv=0x7f0b01f5;
-        public static final int fragmentQuizScoreTotalScoreTv=0x7f0b01f4;
-        public static final int fragmentQuizSelectionRadioButton1=0x7f0b0207;
-        public static final int fragmentQuizSelectionRadioButton2=0x7f0b0208;
-        public static final int fragmentQuizSelectionRadioButton3=0x7f0b0209;
-        public static final int fragmentQuizSelectionRadioButton4=0x7f0b020a;
-        public static final int fragmentQuizSelectionRadioButton5=0x7f0b020b;
-        public static final int fragmentQuizSelectionRadioButton6=0x7f0b020c;
-        public static final int fragmentQuizSelectionRadioButton7=0x7f0b020d;
-        public static final int fragmentQuizSelectionRadioGroup=0x7f0b0206;
-        public static final int fragmentQuizSelectiveRadioTitleTv=0x7f0b0205;
-        public static final int fragmentQuizTimerCoverIv=0x7f0b01df;
-        public static final int fragmentQuizTimerLayout=0x7f0b01de;
-        public static final int fragmentQuizTimerProgressWheel=0x7f0b01e0;
-        public static final int fragmentQuizTimerSecondTextTv=0x7f0b01e2;
-        public static final int fragmentQuizTimerSecondTv=0x7f0b01e1;
-        public static final int fragmentReportCategoryLayout=0x7f0b0231;
-        public static final int fragmentReportCategorySelectedTv=0x7f0b0233;
-        public static final int fragmentReportCategoryTv=0x7f0b0232;
-        public static final int fragmentReportIncludeLogsCheckBox=0x7f0b0237;
-        public static final int fragmentReportSubmitBtn=0x7f0b0238;
-        public static final int fragmentReportTextEt=0x7f0b0236;
-        public static final int fragmentReportTextProfileIv=0x7f0b0235;
-        public static final int fragmentReportTextlayout=0x7f0b0234;
-        public static final int fragmentSettingsAboutHeader=0x7f0b024a;
-        public static final int fragmentSettingsGeneralHeader=0x7f0b0239;
-        public static final int fragmentSettingsGeneralLanguageLayout=0x7f0b023a;
-        public static final int fragmentSettingsGeneralLanguageSelectedTv=0x7f0b023c;
-        public static final int fragmentSettingsGeneralLanguageTv=0x7f0b023b;
-        public static final int fragmentSettingsNotificationAboutLayout=0x7f0b024b;
-        public static final int fragmentSettingsNotificationAboutTv=0x7f0b024c;
-        public static final int fragmentSettingsNotificationAnyDoCheckTextView=0x7f0b0249;
-        public static final int fragmentSettingsNotificationAnyDoNotificationLayout=0x7f0b0247;
-        public static final int fragmentSettingsNotificationAnyDoTv=0x7f0b0248;
-        public static final int fragmentSettingsNotificationBirthdayDownloadAndNotifyTv=0x7f0b0245;
-        public static final int fragmentSettingsNotificationBirthdayMuteCheckTextView=0x7f0b0243;
-        public static final int fragmentSettingsNotificationBirthdayMuteLayout=0x7f0b0241;
-        public static final int fragmentSettingsNotificationBirthdayMuteTv=0x7f0b0242;
-        public static final int fragmentSettingsNotificationBirthdayTimeLayout=0x7f0b023e;
-        public static final int fragmentSettingsNotificationBirthdayTimeSelectedTv=0x7f0b0240;
-        public static final int fragmentSettingsNotificationBirthdayTimeTv=0x7f0b023f;
-        public static final int fragmentSettingsNotificationDownloadAndNotifyCheckTextView=0x7f0b0246;
-        public static final int fragmentSettingsNotificationDownloadAndNotifyLayout=0x7f0b0244;
-        public static final int fragmentSettingsNotificationHeader=0x7f0b023d;
-        public static final int fragmentTextDetailByLayout=0x7f0b0255;
-        public static final int fragmentTextDetailByTv=0x7f0b0256;
-        public static final int fragmentTextDetailLikeTv=0x7f0b0257;
-        public static final int fragmentTextDetailLinkIv=0x7f0b025a;
-        public static final int fragmentTextDetailLinkTv=0x7f0b025b;
-        public static final int fragmentTextDetailSummaryTv=0x7f0b025c;
-        public static final int fragmentTextDetailTitleTv=0x7f0b0254;
-        public static final int fragmentTextDetailViewSourceLayout=0x7f0b0259;
-        public static final int fragmentTextDetailViewTv=0x7f0b0258;
-        public static final int fragmentTrainingEmptyLayout=0x7f0b025d;
-        public static final int fragmentTutorialBDetailIv=0x7f0b026e;
-        public static final int fragmentTutorialBFrameLayout=0x7f0b026b;
-        public static final int fragmentTutorialBFunctionalityTitleTv=0x7f0b026a;
-        public static final int fragmentTutorialBHeaderTitleTv=0x7f0b0269;
-        public static final int fragmentTutorialBLayout=0x7f0b0268;
-        public static final int fragmentTutorialBPointerIv=0x7f0b026f;
-        public static final int fragmentTutorialBScrollIv1=0x7f0b026c;
-        public static final int fragmentTutorialBScrollIv2=0x7f0b026d;
-        public static final int fragmentTutorialCFrameLayout=0x7f0b0273;
-        public static final int fragmentTutorialCFunctionalityTitleTv=0x7f0b0272;
-        public static final int fragmentTutorialCHeaderTitleTv=0x7f0b0271;
-        public static final int fragmentTutorialCLayout=0x7f0b0270;
-        public static final int fragmentTutorialCPointerIv=0x7f0b0276;
-        public static final int fragmentTutorialCScrollIv1=0x7f0b0274;
-        public static final int fragmentTutorialCShareIv=0x7f0b0275;
-        public static final int fragmentTutorialDrawerIv=0x7f0b0266;
-        public static final int fragmentTutorialFrameLayout=0x7f0b0261;
-        public static final int fragmentTutorialFunctionalityTitleTv=0x7f0b0260;
-        public static final int fragmentTutorialHeaderIv=0x7f0b0262;
-        public static final int fragmentTutorialHeaderTitleTv=0x7f0b025f;
-        public static final int fragmentTutorialLayout=0x7f0b025e;
-        public static final int fragmentTutorialPointerIv=0x7f0b0267;
-        public static final int fragmentTutorialSliderIv1=0x7f0b0263;
-        public static final int fragmentTutorialSliderIv2=0x7f0b0264;
-        public static final int fragmentTutorialSliderIv3=0x7f0b0265;
-        public static final int fragmentVideoDetailByLayout=0x7f0b0285;
-        public static final int fragmentVideoDetailByTv=0x7f0b0286;
-        public static final int fragmentVideoDetailDescLayout=0x7f0b027c;
-        public static final int fragmentVideoDetailDescShareImageView=0x7f0b027d;
-        public static final int fragmentVideoDetailDescTotalTextView=0x7f0b027e;
-        public static final int fragmentVideoDetailFrameLayout=0x7f0b0277;
-        public static final int fragmentVideoDetailLanguageFlowLayout=0x7f0b028e;
-        public static final int fragmentVideoDetailLanguageHeaderTv=0x7f0b028d;
-        public static final int fragmentVideoDetailLanguageLayout=0x7f0b028c;
-        public static final int fragmentVideoDetailLikeTv=0x7f0b0287;
-        public static final int fragmentVideoDetailLinkIv=0x7f0b028a;
-        public static final int fragmentVideoDetailLinkTv=0x7f0b028b;
-        public static final int fragmentVideoDetailMediaControllerCurrentPositionTv=0x7f0b0280;
-        public static final int fragmentVideoDetailMediaControllerFullScreenIv=0x7f0b0283;
-        public static final int fragmentVideoDetailMediaControllerLayout=0x7f0b027f;
-        public static final int fragmentVideoDetailMediaControllerSeekBar=0x7f0b0281;
-        public static final int fragmentVideoDetailMediaControllerTotalPositionTv=0x7f0b0282;
-        public static final int fragmentVideoDetailSummaryTv=0x7f0b028f;
-        public static final int fragmentVideoDetailTitleTv=0x7f0b0284;
-        public static final int fragmentVideoDetailVideoImageView=0x7f0b0279;
-        public static final int fragmentVideoDetailVideoPauseIv=0x7f0b027b;
-        public static final int fragmentVideoDetailVideoPlayIv=0x7f0b027a;
-        public static final int fragmentVideoDetailVideoView=0x7f0b0278;
-        public static final int fragmentVideoDetailViewSourceLayout=0x7f0b0289;
-        public static final int fragmentVideoDetailViewTv=0x7f0b0288;
-        public static final int fragmentVideoFullScreenMediaControllerCurrentPositionTv=0x7f0b0294;
-        public static final int fragmentVideoFullScreenMediaControllerFullScreenIv=0x7f0b0297;
-        public static final int fragmentVideoFullScreenMediaControllerLayout=0x7f0b0293;
-        public static final int fragmentVideoFullScreenMediaControllerSeekBar=0x7f0b0295;
-        public static final int fragmentVideoFullScreenMediaControllerTotalPositionTv=0x7f0b0296;
-        public static final int fragmentVideoFullScreenVideoPauseIv=0x7f0b0291;
-        public static final int fragmentVideoFullScreenVideoPlayIv=0x7f0b0292;
-        public static final int fragmentVideoFullScreenVideoView=0x7f0b0290;
-        public static final int fragmentWebViewProgressBar=0x7f0b0298;
-        public static final int fragmentWebViewWebView=0x7f0b0299;
-        public static final int fragmentWhatWeDoIv1=0x7f0b029a;
-        public static final int fragmentWhatWeDoIv2=0x7f0b029b;
-        public static final int fragmentXlsDetailByLayout=0x7f0b02a1;
-        public static final int fragmentXlsDetailByTv=0x7f0b02a2;
-        public static final int fragmentXlsDetailFileDetailIv=0x7f0b029f;
-        public static final int fragmentXlsDetailFileNameIv=0x7f0b029e;
-        public static final int fragmentXlsDetailImageIv=0x7f0b029d;
-        public static final int fragmentXlsDetailLanguageFlowLayout=0x7f0b02aa;
-        public static final int fragmentXlsDetailLanguageHeaderTv=0x7f0b02a9;
-        public static final int fragmentXlsDetailLanguageLayout=0x7f0b02a8;
-        public static final int fragmentXlsDetailLikeTv=0x7f0b02a3;
-        public static final int fragmentXlsDetailLinkIv=0x7f0b02a6;
-        public static final int fragmentXlsDetailLinkTv=0x7f0b02a7;
-        public static final int fragmentXlsDetailRelativeLayout=0x7f0b029c;
-        public static final int fragmentXlsDetailSummaryTv=0x7f0b02ab;
-        public static final int fragmentXlsDetailTitleTv=0x7f0b02a0;
-        public static final int fragmentXlsDetailViewSourceLayout=0x7f0b02a5;
-        public static final int fragmentXlsDetailViewTv=0x7f0b02a4;
-        public static final int fullscreen=0x7f0b0470;
-        public static final int header=0x7f0b00d4;
-        public static final int headerlayout=0x7f0b00d3;
-        public static final int home=0x7f0b0000;
-        public static final int homeAsUp=0x7f0b001a;
-        public static final int hybrid=0x7f0b0011;
-        public static final int icon=0x7f0b004a;
-        public static final int ifRoom=0x7f0b0026;
-        public static final int image=0x7f0b0047;
-        public static final int info=0x7f0b047b;
-        public static final int invisible=0x7f0b0040;
-        public static final int itemChipsLayoutIv=0x7f0b02e1;
-        public static final int itemChipsLayoutTv=0x7f0b02e2;
-        public static final int itemChipsRootLayout=0x7f0b02e0;
-        public static final int itemFooterProgressWheel=0x7f0b0457;
-        public static final int itemLanguageImageView=0x7f0b02e8;
-        public static final int itemLanguageTextView=0x7f0b02e7;
-        public static final int itemLanugageLayout=0x7f0b02e6;
-        public static final int itemRecyclerAwardCongratulatedIconIv=0x7f0b02f4;
-        public static final int itemRecyclerAwardCongratulatedLayout=0x7f0b02f3;
-        public static final int itemRecyclerAwardCongratulatedTv=0x7f0b02f5;
-        public static final int itemRecyclerAwardImageLoadingProgress=0x7f0b02ee;
-        public static final int itemRecyclerAwardInfoLayout=0x7f0b02eb;
-        public static final int itemRecyclerAwardIv=0x7f0b02ed;
-        public static final int itemRecyclerAwardIvLayout=0x7f0b02ec;
-        public static final int itemRecyclerAwardMessageIv=0x7f0b02f2;
-        public static final int itemRecyclerAwardName=0x7f0b02f0;
-        public static final int itemRecyclerAwardRootLayout=0x7f0b02e9;
-        public static final int itemRecyclerAwardWinnerName=0x7f0b02ef;
-        public static final int itemRecyclerBirthdayDepartment=0x7f0b02fb;
-        public static final int itemRecyclerBirthdayImageLoadingProgress=0x7f0b02f9;
-        public static final int itemRecyclerBirthdayIv=0x7f0b02f8;
-        public static final int itemRecyclerBirthdayIvLayout=0x7f0b02f7;
-        public static final int itemRecyclerBirthdayMessageIv=0x7f0b02fd;
-        public static final int itemRecyclerBirthdayName=0x7f0b02fa;
-        public static final int itemRecyclerBirthdayRootLayout=0x7f0b02f6;
-        public static final int itemRecyclerBirthdaySectionTv=0x7f0b02fe;
-        public static final int itemRecyclerBirthdayWishIv=0x7f0b02fc;
-        public static final int itemRecyclerCaptureDeleteIv=0x7f0b0300;
-        public static final int itemRecyclerCaptureNameTv=0x7f0b0302;
-        public static final int itemRecyclerCaptureRootLayout=0x7f0b02ff;
-        public static final int itemRecyclerCaptureSizeTv=0x7f0b0303;
-        public static final int itemRecyclerCaptureThumbnailIv=0x7f0b0301;
-        public static final int itemRecyclerChatIv=0x7f0b0306;
-        public static final int itemRecyclerChatMessageTv=0x7f0b0308;
-        public static final int itemRecyclerChatReadView=0x7f0b0305;
-        public static final int itemRecyclerChatRootLayout=0x7f0b0304;
-        public static final int itemRecyclerChatTitleTv=0x7f0b0307;
-        public static final int itemRecyclerCongratulateIv=0x7f0b02f1;
-        public static final int itemRecyclerEventByLayout=0x7f0b030e;
-        public static final int itemRecyclerEventByTv=0x7f0b030f;
-        public static final int itemRecyclerEventDetailAttendanceLayout=0x7f0b0315;
-        public static final int itemRecyclerEventDetailAttendanceTv=0x7f0b0316;
-        public static final int itemRecyclerEventDetailDaysLeftLayout=0x7f0b0313;
-        public static final int itemRecyclerEventDetailDaysLeftTv=0x7f0b0314;
-        public static final int itemRecyclerEventDetailIsGoingIv=0x7f0b0318;
-        public static final int itemRecyclerEventDetailIsGoingLayout=0x7f0b0317;
-        public static final int itemRecyclerEventDetailIsGoingTv=0x7f0b0319;
-        public static final int itemRecyclerEventDetailLayout=0x7f0b0312;
-        public static final int itemRecyclerEventIndicatorImageView=0x7f0b030c;
-        public static final int itemRecyclerEventLikeCountTv=0x7f0b0310;
-        public static final int itemRecyclerEventLineView=0x7f0b030b;
-        public static final int itemRecyclerEventReadView=0x7f0b030a;
-        public static final int itemRecyclerEventRootLayout=0x7f0b0309;
-        public static final int itemRecyclerEventTitleTv=0x7f0b030d;
-        public static final int itemRecyclerEventViewCountTv=0x7f0b0311;
-        public static final int itemRecyclerMISTextIndicatorImageView=0x7f0b031d;
-        public static final int itemRecyclerMISTextLineView=0x7f0b031c;
-        public static final int itemRecyclerMISTextReadView=0x7f0b031b;
-        public static final int itemRecyclerMISTextRootLayout=0x7f0b031a;
-        public static final int itemRecyclerMISTextSummaryTv=0x7f0b031f;
-        public static final int itemRecyclerMISTextTitleTv=0x7f0b031e;
-        public static final int itemRecyclerMobcastAudioByLayout=0x7f0b0325;
-        public static final int itemRecyclerMobcastAudioByTv=0x7f0b0326;
-        public static final int itemRecyclerMobcastAudioDetailFileInfoDetailTv=0x7f0b032e;
-        public static final int itemRecyclerMobcastAudioDetailFileInfoLayout=0x7f0b032c;
-        public static final int itemRecyclerMobcastAudioDetailFileInfoNameTv=0x7f0b032d;
-        public static final int itemRecyclerMobcastAudioDetailFileTypeIv=0x7f0b032b;
-        public static final int itemRecyclerMobcastAudioDetailLayout=0x7f0b032a;
-        public static final int itemRecyclerMobcastAudioIndicatorImageView=0x7f0b0323;
-        public static final int itemRecyclerMobcastAudioLikeCountTv=0x7f0b0327;
-        public static final int itemRecyclerMobcastAudioLineView=0x7f0b0322;
-        public static final int itemRecyclerMobcastAudioLinkTv=0x7f0b0329;
-        public static final int itemRecyclerMobcastAudioReadView=0x7f0b0321;
-        public static final int itemRecyclerMobcastAudioRootLayout=0x7f0b0320;
-        public static final int itemRecyclerMobcastAudioSummaryTv=0x7f0b032f;
-        public static final int itemRecyclerMobcastAudioTitleTv=0x7f0b0324;
-        public static final int itemRecyclerMobcastAudioViewCountTv=0x7f0b0328;
-        public static final int itemRecyclerMobcastDocByLayout=0x7f0b0335;
-        public static final int itemRecyclerMobcastDocByTv=0x7f0b0336;
-        public static final int itemRecyclerMobcastDocDetailFileInfoDetailTv=0x7f0b033e;
-        public static final int itemRecyclerMobcastDocDetailFileInfoLayout=0x7f0b033c;
-        public static final int itemRecyclerMobcastDocDetailFileInfoNameTv=0x7f0b033d;
-        public static final int itemRecyclerMobcastDocDetailFileTypeIv=0x7f0b033b;
-        public static final int itemRecyclerMobcastDocDetailLayout=0x7f0b033a;
-        public static final int itemRecyclerMobcastDocIndicatorImageView=0x7f0b0333;
-        public static final int itemRecyclerMobcastDocLikeCountTv=0x7f0b0337;
-        public static final int itemRecyclerMobcastDocLineView=0x7f0b0332;
-        public static final int itemRecyclerMobcastDocLinkTv=0x7f0b0339;
-        public static final int itemRecyclerMobcastDocReadView=0x7f0b0331;
-        public static final int itemRecyclerMobcastDocRootLayout=0x7f0b0330;
-        public static final int itemRecyclerMobcastDocTitleTv=0x7f0b0334;
-        public static final int itemRecyclerMobcastDocViewCountTv=0x7f0b0338;
-        public static final int itemRecyclerMobcastFeedbackByLayout=0x7f0b0344;
-        public static final int itemRecyclerMobcastFeedbackByTv=0x7f0b0345;
-        public static final int itemRecyclerMobcastFeedbackDetailLayout=0x7f0b0349;
-        public static final int itemRecyclerMobcastFeedbackDetailQuestionTv=0x7f0b034a;
-        public static final int itemRecyclerMobcastFeedbackIndicatorImageView=0x7f0b0342;
-        public static final int itemRecyclerMobcastFeedbackLikeCountTv=0x7f0b0346;
-        public static final int itemRecyclerMobcastFeedbackLineView=0x7f0b0341;
-        public static final int itemRecyclerMobcastFeedbackLinkTv=0x7f0b0348;
-        public static final int itemRecyclerMobcastFeedbackReadView=0x7f0b0340;
-        public static final int itemRecyclerMobcastFeedbackRootLayout=0x7f0b033f;
-        public static final int itemRecyclerMobcastFeedbackTitleTv=0x7f0b0343;
-        public static final int itemRecyclerMobcastFeedbackViewCountTv=0x7f0b0347;
-        public static final int itemRecyclerMobcastImageByLayout=0x7f0b0350;
-        public static final int itemRecyclerMobcastImageByTv=0x7f0b0351;
-        public static final int itemRecyclerMobcastImageIndicatorImageView=0x7f0b034e;
-        public static final int itemRecyclerMobcastImageLikeCountTv=0x7f0b0352;
-        public static final int itemRecyclerMobcastImageLineView=0x7f0b034d;
-        public static final int itemRecyclerMobcastImageLinkTv=0x7f0b0354;
-        public static final int itemRecyclerMobcastImageLoadingProgress=0x7f0b0357;
-        public static final int itemRecyclerMobcastImageMainImageIv=0x7f0b0356;
-        public static final int itemRecyclerMobcastImageReadView=0x7f0b034c;
-        public static final int itemRecyclerMobcastImageRootLayout=0x7f0b034b;
-        public static final int itemRecyclerMobcastImageTitleTv=0x7f0b034f;
-        public static final int itemRecyclerMobcastImageViewCountTv=0x7f0b0353;
-        public static final int itemRecyclerMobcastImageViewPagerLayout=0x7f0b0355;
-        public static final int itemRecyclerMobcastLiveByLayout=0x7f0b035d;
-        public static final int itemRecyclerMobcastLiveByTv=0x7f0b035e;
-        public static final int itemRecyclerMobcastLiveDurationTv=0x7f0b0365;
-        public static final int itemRecyclerMobcastLiveIndicatorImageView=0x7f0b035b;
-        public static final int itemRecyclerMobcastLiveLikeCountTv=0x7f0b035f;
-        public static final int itemRecyclerMobcastLiveLineView=0x7f0b035a;
-        public static final int itemRecyclerMobcastLiveLinkTv=0x7f0b0361;
-        public static final int itemRecyclerMobcastLivePlayImageIv=0x7f0b0364;
-        public static final int itemRecyclerMobcastLiveReadView=0x7f0b0359;
-        public static final int itemRecyclerMobcastLiveRootLayout=0x7f0b0358;
-        public static final int itemRecyclerMobcastLiveThumbnailImageIv=0x7f0b0363;
-        public static final int itemRecyclerMobcastLiveTitleTv=0x7f0b035c;
-        public static final int itemRecyclerMobcastLiveViewCountTv=0x7f0b0360;
-        public static final int itemRecyclerMobcastLiveViewLayout=0x7f0b0362;
-        public static final int itemRecyclerMobcastNewsByLayout=0x7f0b036b;
-        public static final int itemRecyclerMobcastNewsByTv=0x7f0b036c;
-        public static final int itemRecyclerMobcastNewsDetailLayout=0x7f0b036e;
-        public static final int itemRecyclerMobcastNewsDetailLinkTv=0x7f0b036f;
-        public static final int itemRecyclerMobcastNewsIndicatorImageView=0x7f0b0369;
-        public static final int itemRecyclerMobcastNewsLineView=0x7f0b0368;
-        public static final int itemRecyclerMobcastNewsReadView=0x7f0b0367;
-        public static final int itemRecyclerMobcastNewsRootLayout=0x7f0b0366;
-        public static final int itemRecyclerMobcastNewsTitleTv=0x7f0b036a;
-        public static final int itemRecyclerMobcastNewsViewCountTv=0x7f0b036d;
-        public static final int itemRecyclerMobcastPdfByLayout=0x7f0b0375;
-        public static final int itemRecyclerMobcastPdfByTv=0x7f0b0376;
-        public static final int itemRecyclerMobcastPdfDetailFileInfoDetailTv=0x7f0b037e;
-        public static final int itemRecyclerMobcastPdfDetailFileInfoLayout=0x7f0b037c;
-        public static final int itemRecyclerMobcastPdfDetailFileInfoNameTv=0x7f0b037d;
-        public static final int itemRecyclerMobcastPdfDetailFileTypeIv=0x7f0b037b;
-        public static final int itemRecyclerMobcastPdfDetailLayout=0x7f0b037a;
-        public static final int itemRecyclerMobcastPdfIndicatorImageView=0x7f0b0373;
-        public static final int itemRecyclerMobcastPdfLikeCountTv=0x7f0b0377;
-        public static final int itemRecyclerMobcastPdfLineView=0x7f0b0372;
-        public static final int itemRecyclerMobcastPdfLinkTv=0x7f0b0379;
-        public static final int itemRecyclerMobcastPdfReadView=0x7f0b0371;
-        public static final int itemRecyclerMobcastPdfRootLayout=0x7f0b0370;
-        public static final int itemRecyclerMobcastPdfTitleTv=0x7f0b0374;
-        public static final int itemRecyclerMobcastPdfViewCountTv=0x7f0b0378;
-        public static final int itemRecyclerMobcastPptByLayout=0x7f0b0384;
-        public static final int itemRecyclerMobcastPptByTv=0x7f0b0385;
-        public static final int itemRecyclerMobcastPptDetailFileInfoDetailTv=0x7f0b038d;
-        public static final int itemRecyclerMobcastPptDetailFileInfoLayout=0x7f0b038b;
-        public static final int itemRecyclerMobcastPptDetailFileInfoNameTv=0x7f0b038c;
-        public static final int itemRecyclerMobcastPptDetailFileTypeIv=0x7f0b038a;
-        public static final int itemRecyclerMobcastPptDetailLayout=0x7f0b0389;
-        public static final int itemRecyclerMobcastPptIndicatorImageView=0x7f0b0382;
-        public static final int itemRecyclerMobcastPptLikeCountTv=0x7f0b0386;
-        public static final int itemRecyclerMobcastPptLineView=0x7f0b0381;
-        public static final int itemRecyclerMobcastPptLinkTv=0x7f0b0388;
-        public static final int itemRecyclerMobcastPptReadView=0x7f0b0380;
-        public static final int itemRecyclerMobcastPptRootLayout=0x7f0b037f;
-        public static final int itemRecyclerMobcastPptTitleTv=0x7f0b0383;
-        public static final int itemRecyclerMobcastPptViewCountTv=0x7f0b0387;
-        public static final int itemRecyclerMobcastTextByLayout=0x7f0b0393;
-        public static final int itemRecyclerMobcastTextByTv=0x7f0b0394;
-        public static final int itemRecyclerMobcastTextIndicatorImageView=0x7f0b0391;
-        public static final int itemRecyclerMobcastTextLikeCountTv=0x7f0b0395;
-        public static final int itemRecyclerMobcastTextLineView=0x7f0b0390;
-        public static final int itemRecyclerMobcastTextLinkTv=0x7f0b0397;
-        public static final int itemRecyclerMobcastTextReadView=0x7f0b038f;
-        public static final int itemRecyclerMobcastTextRootLayout=0x7f0b038e;
-        public static final int itemRecyclerMobcastTextSummaryTv=0x7f0b0398;
-        public static final int itemRecyclerMobcastTextTitleTv=0x7f0b0392;
-        public static final int itemRecyclerMobcastTextViewCountTv=0x7f0b0396;
-        public static final int itemRecyclerMobcastVideoByLayout=0x7f0b039e;
-        public static final int itemRecyclerMobcastVideoByTv=0x7f0b039f;
-        public static final int itemRecyclerMobcastVideoDurationTv=0x7f0b03a7;
-        public static final int itemRecyclerMobcastVideoIndicatorImageView=0x7f0b039c;
-        public static final int itemRecyclerMobcastVideoLikeCountTv=0x7f0b03a0;
-        public static final int itemRecyclerMobcastVideoLineView=0x7f0b039b;
-        public static final int itemRecyclerMobcastVideoLinkTv=0x7f0b03a2;
-        public static final int itemRecyclerMobcastVideoLoadingProgress=0x7f0b03a6;
-        public static final int itemRecyclerMobcastVideoPlayImageIv=0x7f0b03a5;
-        public static final int itemRecyclerMobcastVideoReadView=0x7f0b039a;
-        public static final int itemRecyclerMobcastVideoRootLayout=0x7f0b0399;
-        public static final int itemRecyclerMobcastVideoThumbnailImageIv=0x7f0b03a4;
-        public static final int itemRecyclerMobcastVideoTitleTv=0x7f0b039d;
-        public static final int itemRecyclerMobcastVideoViewCountTv=0x7f0b03a1;
-        public static final int itemRecyclerMobcastVideoViewLayout=0x7f0b03a3;
-        public static final int itemRecyclerMobcastXlsByLayout=0x7f0b03ad;
-        public static final int itemRecyclerMobcastXlsByTv=0x7f0b03ae;
-        public static final int itemRecyclerMobcastXlsDetailFileInfoDetailTv=0x7f0b03b6;
-        public static final int itemRecyclerMobcastXlsDetailFileInfoLayout=0x7f0b03b4;
-        public static final int itemRecyclerMobcastXlsDetailFileInfoNameTv=0x7f0b03b5;
-        public static final int itemRecyclerMobcastXlsDetailFileTypeIv=0x7f0b03b3;
-        public static final int itemRecyclerMobcastXlsDetailLayout=0x7f0b03b2;
-        public static final int itemRecyclerMobcastXlsIndicatorImageView=0x7f0b03ab;
-        public static final int itemRecyclerMobcastXlsLikeCountTv=0x7f0b03af;
-        public static final int itemRecyclerMobcastXlsLineView=0x7f0b03aa;
-        public static final int itemRecyclerMobcastXlsLinkTv=0x7f0b03b1;
-        public static final int itemRecyclerMobcastXlsReadView=0x7f0b03a9;
-        public static final int itemRecyclerMobcastXlsRootLayout=0x7f0b03a8;
-        public static final int itemRecyclerMobcastXlsTitleTv=0x7f0b03ac;
-        public static final int itemRecyclerMobcastXlsViewCountTv=0x7f0b03b0;
-        public static final int itemRecyclerReadView=0x7f0b02ea;
-        public static final int itemRecyclerRecruitmentArrowIv=0x7f0b03bf;
-        public static final int itemRecyclerRecruitmentIndicatorDateTv=0x7f0b03bb;
-        public static final int itemRecyclerRecruitmentIndicatorImageView=0x7f0b03ba;
-        public static final int itemRecyclerRecruitmentIndicatorMonthTv=0x7f0b03bc;
-        public static final int itemRecyclerRecruitmentLineView=0x7f0b03b9;
-        public static final int itemRecyclerRecruitmentReadView=0x7f0b03b8;
-        public static final int itemRecyclerRecruitmentRootLayout=0x7f0b03b7;
-        public static final int itemRecyclerRecruitmentSummaryTv=0x7f0b03be;
-        public static final int itemRecyclerRecruitmentTitleTv=0x7f0b03bd;
-        public static final int itemRecyclerTrainingAudioByLayout=0x7f0b03c5;
-        public static final int itemRecyclerTrainingAudioByTv=0x7f0b03c6;
-        public static final int itemRecyclerTrainingAudioDetailFileInfoDetailTv=0x7f0b03ce;
-        public static final int itemRecyclerTrainingAudioDetailFileInfoLayout=0x7f0b03cc;
-        public static final int itemRecyclerTrainingAudioDetailFileInfoNameTv=0x7f0b03cd;
-        public static final int itemRecyclerTrainingAudioDetailFileTypeIv=0x7f0b03cb;
-        public static final int itemRecyclerTrainingAudioDetailLayout=0x7f0b03ca;
-        public static final int itemRecyclerTrainingAudioIndicatorImageView=0x7f0b03c3;
-        public static final int itemRecyclerTrainingAudioLikeCountTv=0x7f0b03c7;
-        public static final int itemRecyclerTrainingAudioLineView=0x7f0b03c2;
-        public static final int itemRecyclerTrainingAudioLinkTv=0x7f0b03c9;
-        public static final int itemRecyclerTrainingAudioReadView=0x7f0b03c1;
-        public static final int itemRecyclerTrainingAudioRootLayout=0x7f0b03c0;
-        public static final int itemRecyclerTrainingAudioSummaryTv=0x7f0b03cf;
-        public static final int itemRecyclerTrainingAudioTitleTv=0x7f0b03c4;
-        public static final int itemRecyclerTrainingAudioViewCountTv=0x7f0b03c8;
-        public static final int itemRecyclerTrainingDocByLayout=0x7f0b03d5;
-        public static final int itemRecyclerTrainingDocByTv=0x7f0b03d6;
-        public static final int itemRecyclerTrainingDocDetailFileInfoDetailTv=0x7f0b03de;
-        public static final int itemRecyclerTrainingDocDetailFileInfoLayout=0x7f0b03dc;
-        public static final int itemRecyclerTrainingDocDetailFileInfoNameTv=0x7f0b03dd;
-        public static final int itemRecyclerTrainingDocDetailFileTypeIv=0x7f0b03db;
-        public static final int itemRecyclerTrainingDocDetailLayout=0x7f0b03da;
-        public static final int itemRecyclerTrainingDocIndicatorImageView=0x7f0b03d3;
-        public static final int itemRecyclerTrainingDocLikeCountTv=0x7f0b03d7;
-        public static final int itemRecyclerTrainingDocLineView=0x7f0b03d2;
-        public static final int itemRecyclerTrainingDocLinkTv=0x7f0b03d9;
-        public static final int itemRecyclerTrainingDocReadView=0x7f0b03d1;
-        public static final int itemRecyclerTrainingDocRootLayout=0x7f0b03d0;
-        public static final int itemRecyclerTrainingDocTitleTv=0x7f0b03d4;
-        public static final int itemRecyclerTrainingDocViewCountTv=0x7f0b03d8;
-        public static final int itemRecyclerTrainingImageByLayout=0x7f0b03e4;
-        public static final int itemRecyclerTrainingImageByTv=0x7f0b03e5;
-        public static final int itemRecyclerTrainingImageIndicatorImageView=0x7f0b03e2;
-        public static final int itemRecyclerTrainingImageLikeCountTv=0x7f0b03e6;
-        public static final int itemRecyclerTrainingImageLineView=0x7f0b03e1;
-        public static final int itemRecyclerTrainingImageLinkTv=0x7f0b03e8;
-        public static final int itemRecyclerTrainingImageLoadingProgress=0x7f0b03eb;
-        public static final int itemRecyclerTrainingImageMainImageIv=0x7f0b03ea;
-        public static final int itemRecyclerTrainingImageReadView=0x7f0b03e0;
-        public static final int itemRecyclerTrainingImageRootLayout=0x7f0b03df;
-        public static final int itemRecyclerTrainingImageTitleTv=0x7f0b03e3;
-        public static final int itemRecyclerTrainingImageViewCountTv=0x7f0b03e7;
-        public static final int itemRecyclerTrainingImageViewPagerLayout=0x7f0b03e9;
-        public static final int itemRecyclerTrainingInteractiveByLayout=0x7f0b03f1;
-        public static final int itemRecyclerTrainingInteractiveByTv=0x7f0b03f2;
-        public static final int itemRecyclerTrainingInteractiveDetailLayout=0x7f0b03f5;
-        public static final int itemRecyclerTrainingInteractiveDetailLinkTv=0x7f0b03f6;
-        public static final int itemRecyclerTrainingInteractiveIndicatorImageView=0x7f0b03ef;
-        public static final int itemRecyclerTrainingInteractiveLikeCountTv=0x7f0b03f3;
-        public static final int itemRecyclerTrainingInteractiveLineView=0x7f0b03ee;
-        public static final int itemRecyclerTrainingInteractiveReadView=0x7f0b03ed;
-        public static final int itemRecyclerTrainingInteractiveRootLayout=0x7f0b03ec;
-        public static final int itemRecyclerTrainingInteractiveTitleTv=0x7f0b03f0;
-        public static final int itemRecyclerTrainingInteractiveViewCountTv=0x7f0b03f4;
-        public static final int itemRecyclerTrainingPdfByLayout=0x7f0b03fc;
-        public static final int itemRecyclerTrainingPdfByTv=0x7f0b03fd;
-        public static final int itemRecyclerTrainingPdfDetailFileInfoDetailTv=0x7f0b0405;
-        public static final int itemRecyclerTrainingPdfDetailFileInfoLayout=0x7f0b0403;
-        public static final int itemRecyclerTrainingPdfDetailFileInfoNameTv=0x7f0b0404;
-        public static final int itemRecyclerTrainingPdfDetailFileTypeIv=0x7f0b0402;
-        public static final int itemRecyclerTrainingPdfDetailLayout=0x7f0b0401;
-        public static final int itemRecyclerTrainingPdfIndicatorImageView=0x7f0b03fa;
-        public static final int itemRecyclerTrainingPdfLikeCountTv=0x7f0b03fe;
-        public static final int itemRecyclerTrainingPdfLineView=0x7f0b03f9;
-        public static final int itemRecyclerTrainingPdfLinkTv=0x7f0b0400;
-        public static final int itemRecyclerTrainingPdfReadView=0x7f0b03f8;
-        public static final int itemRecyclerTrainingPdfRootLayout=0x7f0b03f7;
-        public static final int itemRecyclerTrainingPdfTitleTv=0x7f0b03fb;
-        public static final int itemRecyclerTrainingPdfViewCountTv=0x7f0b03ff;
-        public static final int itemRecyclerTrainingPptByLayout=0x7f0b040b;
-        public static final int itemRecyclerTrainingPptByTv=0x7f0b040c;
-        public static final int itemRecyclerTrainingPptDetailFileInfoDetailTv=0x7f0b0414;
-        public static final int itemRecyclerTrainingPptDetailFileInfoLayout=0x7f0b0412;
-        public static final int itemRecyclerTrainingPptDetailFileInfoNameTv=0x7f0b0413;
-        public static final int itemRecyclerTrainingPptDetailFileTypeIv=0x7f0b0411;
-        public static final int itemRecyclerTrainingPptDetailLayout=0x7f0b0410;
-        public static final int itemRecyclerTrainingPptIndicatorImageView=0x7f0b0409;
-        public static final int itemRecyclerTrainingPptLikeCountTv=0x7f0b040d;
-        public static final int itemRecyclerTrainingPptLineView=0x7f0b0408;
-        public static final int itemRecyclerTrainingPptLinkTv=0x7f0b040f;
-        public static final int itemRecyclerTrainingPptReadView=0x7f0b0407;
-        public static final int itemRecyclerTrainingPptRootLayout=0x7f0b0406;
-        public static final int itemRecyclerTrainingPptTitleTv=0x7f0b040a;
-        public static final int itemRecyclerTrainingPptViewCountTv=0x7f0b040e;
-        public static final int itemRecyclerTrainingQuizAttemptedLayout=0x7f0b0423;
-        public static final int itemRecyclerTrainingQuizByLayout=0x7f0b041a;
-        public static final int itemRecyclerTrainingQuizByTv=0x7f0b041b;
-        public static final int itemRecyclerTrainingQuizDetailAttemptedTv=0x7f0b0424;
-        public static final int itemRecyclerTrainingQuizDetailLayout=0x7f0b041e;
-        public static final int itemRecyclerTrainingQuizDetailPointsTv=0x7f0b0426;
-        public static final int itemRecyclerTrainingQuizDetailQuestionTv=0x7f0b0420;
-        public static final int itemRecyclerTrainingQuizDetailTimeTv=0x7f0b0422;
-        public static final int itemRecyclerTrainingQuizIndicatorImageView=0x7f0b0418;
-        public static final int itemRecyclerTrainingQuizLikeCountTv=0x7f0b041c;
-        public static final int itemRecyclerTrainingQuizLineView=0x7f0b0417;
-        public static final int itemRecyclerTrainingQuizPointsLayout=0x7f0b0425;
-        public static final int itemRecyclerTrainingQuizQuestionLayout=0x7f0b041f;
-        public static final int itemRecyclerTrainingQuizReadView=0x7f0b0416;
-        public static final int itemRecyclerTrainingQuizRootLayout=0x7f0b0415;
-        public static final int itemRecyclerTrainingQuizTimeLayout=0x7f0b0421;
-        public static final int itemRecyclerTrainingQuizTitleTv=0x7f0b0419;
-        public static final int itemRecyclerTrainingQuizViewCountTv=0x7f0b041d;
-        public static final int itemRecyclerTrainingTextByLayout=0x7f0b042c;
-        public static final int itemRecyclerTrainingTextByTv=0x7f0b042d;
-        public static final int itemRecyclerTrainingTextIndicatorImageView=0x7f0b042a;
-        public static final int itemRecyclerTrainingTextLikeCountTv=0x7f0b042e;
-        public static final int itemRecyclerTrainingTextLineView=0x7f0b0429;
-        public static final int itemRecyclerTrainingTextLinkTv=0x7f0b0430;
-        public static final int itemRecyclerTrainingTextReadView=0x7f0b0428;
-        public static final int itemRecyclerTrainingTextRootLayout=0x7f0b0427;
-        public static final int itemRecyclerTrainingTextSummaryTv=0x7f0b0431;
-        public static final int itemRecyclerTrainingTextTitleTv=0x7f0b042b;
-        public static final int itemRecyclerTrainingTextViewCountTv=0x7f0b042f;
-        public static final int itemRecyclerTrainingVideoByLayout=0x7f0b0437;
-        public static final int itemRecyclerTrainingVideoByTv=0x7f0b0438;
-        public static final int itemRecyclerTrainingVideoDurationTv=0x7f0b0440;
-        public static final int itemRecyclerTrainingVideoIndicatorImageView=0x7f0b0435;
-        public static final int itemRecyclerTrainingVideoLikeCountTv=0x7f0b0439;
-        public static final int itemRecyclerTrainingVideoLineView=0x7f0b0434;
-        public static final int itemRecyclerTrainingVideoLinkTv=0x7f0b043b;
-        public static final int itemRecyclerTrainingVideoLoadingProgress=0x7f0b043e;
-        public static final int itemRecyclerTrainingVideoPlayImageIv=0x7f0b043f;
-        public static final int itemRecyclerTrainingVideoReadView=0x7f0b0433;
-        public static final int itemRecyclerTrainingVideoRootLayout=0x7f0b0432;
-        public static final int itemRecyclerTrainingVideoThumbnailImageIv=0x7f0b043d;
-        public static final int itemRecyclerTrainingVideoTitleTv=0x7f0b0436;
-        public static final int itemRecyclerTrainingVideoViewCountTv=0x7f0b043a;
-        public static final int itemRecyclerTrainingVideoViewLayout=0x7f0b043c;
-        public static final int itemRecyclerTrainingXlsByLayout=0x7f0b0446;
-        public static final int itemRecyclerTrainingXlsByTv=0x7f0b0447;
-        public static final int itemRecyclerTrainingXlsDetailFileInfoDetailTv=0x7f0b044f;
-        public static final int itemRecyclerTrainingXlsDetailFileInfoLayout=0x7f0b044d;
-        public static final int itemRecyclerTrainingXlsDetailFileInfoNameTv=0x7f0b044e;
-        public static final int itemRecyclerTrainingXlsDetailFileTypeIv=0x7f0b044c;
-        public static final int itemRecyclerTrainingXlsDetailLayout=0x7f0b044b;
-        public static final int itemRecyclerTrainingXlsIndicatorImageView=0x7f0b0444;
-        public static final int itemRecyclerTrainingXlsLikeCountTv=0x7f0b0448;
-        public static final int itemRecyclerTrainingXlsLineView=0x7f0b0443;
-        public static final int itemRecyclerTrainingXlsLinkTv=0x7f0b044a;
-        public static final int itemRecyclerTrainingXlsReadView=0x7f0b0442;
-        public static final int itemRecyclerTrainingXlsRootLayout=0x7f0b0441;
-        public static final int itemRecyclerTrainingXlsTitleTv=0x7f0b0445;
-        public static final int itemRecyclerTrainingXlsViewCountTv=0x7f0b0449;
-        public static final int itemSimpleLayout=0x7f0b0451;
-        public static final int itemSimpleTextView=0x7f0b0452;
-        public static final int itemSpinnerTextView=0x7f0b0453;
-        public static final int label=0x7f0b0466;
-        public static final int layoutDrawerSearchMotherSearchAllCheckbox=0x7f0b02bf;
-        public static final int layoutDrawerSearchMotherSearchAudioCheckbox=0x7f0b02c0;
-        public static final int layoutDrawerSearchMotherSearchBy=0x7f0b02b8;
-        public static final int layoutDrawerSearchMotherSearchByCheckbox=0x7f0b02c1;
-        public static final int layoutDrawerSearchMotherSearchByDivider=0x7f0b02b9;
-        public static final int layoutDrawerSearchMotherSearchDocCheckbox=0x7f0b02c2;
-        public static final int layoutDrawerSearchMotherSearchFeedbackCheckbox=0x7f0b02c3;
-        public static final int layoutDrawerSearchMotherSearchFor=0x7f0b02bd;
-        public static final int layoutDrawerSearchMotherSearchForDivider=0x7f0b02be;
-        public static final int layoutDrawerSearchMotherSearchForLayout=0x7f0b02bc;
-        public static final int layoutDrawerSearchMotherSearchImageCheckbox=0x7f0b02c4;
-        public static final int layoutDrawerSearchMotherSearchLiveStreamCheckbox=0x7f0b02c5;
-        public static final int layoutDrawerSearchMotherSearchLocalCheckbox=0x7f0b02ba;
-        public static final int layoutDrawerSearchMotherSearchQuizCheckbox=0x7f0b02c8;
-        public static final int layoutDrawerSearchMotherSearchTextCheckbox=0x7f0b02c6;
-        public static final int layoutDrawerSearchMotherSearchVideoCheckbox=0x7f0b02c7;
-        public static final int layoutDrawerSearchMotherSearchWebCheckbox=0x7f0b02bb;
-        public static final int layoutEmptyMessageTv=0x7f0b0455;
-        public static final int layoutEmptyRefreshBtn=0x7f0b0456;
-        public static final int layoutEmptyTitleTv=0x7f0b0454;
-        public static final int left=0x7f0b0032;
-        public static final int line1=0x7f0b0476;
-        public static final int line3=0x7f0b0479;
-        public static final int listMode=0x7f0b0017;
-        public static final int list_item=0x7f0b0049;
-        public static final int logo=0x7f0b0481;
-        public static final int mcab_toolbar=0x7f0b000f;
-        public static final int media_actions=0x7f0b0474;
-        public static final int mediacontroller_progress=0x7f0b046e;
-        public static final int mic=0x7f0b0483;
-        public static final int middle=0x7f0b002d;
-        public static final int minMax=0x7f0b045f;
-        public static final int multiply=0x7f0b001f;
-        public static final int never=0x7f0b0027;
-        public static final int next=0x7f0b046c;
-        public static final int none=0x7f0b0012;
-        public static final int normal=0x7f0b0013;
-        public static final int number_indicator_spinner_content=0x7f0b047d;
-        public static final int pager=0x7f0b0070;
-        public static final int parentPanel=0x7f0b004c;
-        public static final int pause=0x7f0b046a;
-        public static final int pb=0x7f0b0484;
-        public static final int prev=0x7f0b0468;
-        public static final int progress_circular=0x7f0b0007;
-        public static final int progress_horizontal=0x7f0b0008;
-        public static final int radio=0x7f0b0059;
-        public static final int results=0x7f0b0486;
-        public static final int rew=0x7f0b0469;
-        public static final int right=0x7f0b0033;
-        public static final int rootLayout=0x7f0b0088;
-        public static final int satellite=0x7f0b0014;
-        public static final int screen=0x7f0b0020;
-        public static final int scroll=0x7f0b0230;
-        public static final int scrollView=0x7f0b0051;
-        public static final int scroll_wo=0x7f0b012b;
-        public static final int search=0x7f0b0482;
-        public static final int searchEmptyLayout=0x7f0b0459;
-        public static final int searchProgressLayout=0x7f0b045a;
-        public static final int searchProgressLayoutTv=0x7f0b045b;
-        public static final int search_badge=0x7f0b0063;
-        public static final int search_bar=0x7f0b0062;
-        public static final int search_button=0x7f0b0064;
-        public static final int search_close_btn=0x7f0b0069;
-        public static final int search_edit_frame=0x7f0b0065;
-        public static final int search_go_btn=0x7f0b006b;
-        public static final int search_mag_icon=0x7f0b0066;
-        public static final int search_plate=0x7f0b0067;
-        public static final int search_root=0x7f0b047f;
-        public static final int search_src_text=0x7f0b0068;
-        public static final int search_voice_btn=0x7f0b006c;
-        public static final int searchbox=0x7f0b009b;
-        public static final int searchbox_rfl=0x7f0b047e;
-        public static final int sectionBirthdayHeader=0x7f0b0488;
-        public static final int select_dialog_listview=0x7f0b006d;
-        public static final int shape_bacground=0x7f0b0490;
-        public static final int shimmer_cw_0=0x7f0b0036;
-        public static final int shimmer_cw_180=0x7f0b0037;
-        public static final int shimmer_cw_270=0x7f0b0038;
-        public static final int shimmer_cw_90=0x7f0b0039;
-        public static final int shimmer_linear=0x7f0b003a;
-        public static final int shimmer_radial=0x7f0b003b;
-        public static final int shimmer_restart=0x7f0b0034;
-        public static final int shimmer_reverse=0x7f0b0035;
-        public static final int shortcut=0x7f0b0058;
-        public static final int showCustom=0x7f0b001b;
-        public static final int showHome=0x7f0b001c;
-        public static final int showTitle=0x7f0b001d;
-        public static final int sliding_tab_layout=0x7f0b006f;
-        public static final int sliding_tabs=0x7f0b0458;
-        public static final int snackBar=0x7f0b0487;
-        public static final int snackButton=0x7f0b000b;
+        public static final int TAG_BIRTHDAYUSERNAME=0x7f0c000c;
+        public static final int action0=0x7f0c0490;
+        public static final int actionItemCounter=0x7f0c02e8;
+        public static final int actionItemCounterPanelLayout=0x7f0c02e7;
+        public static final int actionItemLayout=0x7f0c02e6;
+        public static final int action_add_cal=0x7f0c04c1;
+        public static final int action_award=0x7f0c04c6;
+        public static final int action_bar=0x7f0c005f;
+        public static final int action_bar_activity_content=0x7f0c0003;
+        public static final int action_bar_container=0x7f0c005e;
+        public static final int action_bar_root=0x7f0c005a;
+        public static final int action_bar_spinner=0x7f0c0002;
+        public static final int action_bar_subtitle=0x7f0c0043;
+        public static final int action_bar_title=0x7f0c0042;
+        public static final int action_birthday=0x7f0c04c5;
+        public static final int action_capture_submit=0x7f0c04c0;
+        public static final int action_contact=0x7f0c04b9;
+        public static final int action_contact_share=0x7f0c04c8;
+        public static final int action_context_bar=0x7f0c0060;
+        public static final int action_delete=0x7f0c04ba;
+        public static final int action_divider=0x7f0c0494;
+        public static final int action_event=0x7f0c04c7;
+        public static final int action_help_faq=0x7f0c04c4;
+        public static final int action_help_how=0x7f0c04c2;
+        public static final int action_help_mobcast=0x7f0c04c3;
+        public static final int action_info=0x7f0c04bb;
+        public static final int action_menu_divider=0x7f0c0005;
+        public static final int action_menu_presenter=0x7f0c0006;
+        public static final int action_mode_bar=0x7f0c005c;
+        public static final int action_mode_bar_stub=0x7f0c005b;
+        public static final int action_mode_close_button=0x7f0c0044;
+        public static final int action_refresh=0x7f0c04bc;
+        public static final int action_refresh_actionable=0x7f0c04bd;
+        public static final int action_report=0x7f0c04bf;
+        public static final int action_search=0x7f0c04be;
+        public static final int action_share=0x7f0c04b8;
+        public static final int action_view_web=0x7f0c04c9;
+        public static final int activityAnyDoNotificationActivityLayout=0x7f0c0071;
+        public static final int activityCountrySelectFrameLayout=0x7f0c0073;
+        public static final int activityEditProfileAnswerEv=0x7f0c0085;
+        public static final int activityEditProfileAnswerLayout=0x7f0c0084;
+        public static final int activityEditProfileAnswerValidateIv=0x7f0c0086;
+        public static final int activityEditProfileBirthdayEv=0x7f0c0088;
+        public static final int activityEditProfileBirthdayLayout=0x7f0c0087;
+        public static final int activityEditProfileBirthdayValidateIv=0x7f0c0089;
+        public static final int activityEditProfileCircleImageView=0x7f0c0074;
+        public static final int activityEditProfileEmailEv=0x7f0c007c;
+        public static final int activityEditProfileEmailLayout=0x7f0c007b;
+        public static final int activityEditProfileEmailValidateIv=0x7f0c007d;
+        public static final int activityEditProfileEmployeeIdEv=0x7f0c007f;
+        public static final int activityEditProfileEmployeeIdLayout=0x7f0c007e;
+        public static final int activityEditProfileEmployeeIdValidateIv=0x7f0c0080;
+        public static final int activityEditProfileEmployeeQuestionEv=0x7f0c0082;
+        public static final int activityEditProfileEmployeeQuestionLayout=0x7f0c0081;
+        public static final int activityEditProfileEmployeeQuestionValidateIv=0x7f0c0083;
+        public static final int activityEditProfileNameEv=0x7f0c0079;
+        public static final int activityEditProfileNameLayout=0x7f0c0078;
+        public static final int activityEditProfileNameValidateIv=0x7f0c007a;
+        public static final int activityEditProfileNextBtn=0x7f0c008a;
+        public static final int activityEditProfileProgressWheel=0x7f0c0075;
+        public static final int activityEditProfileRemoveTv=0x7f0c0076;
+        public static final int activityEditProfileUploadAnotherIv=0x7f0c0077;
+        public static final int activityFacebookConcealDecryptBtn=0x7f0c008e;
+        public static final int activityFacebookConcealDecryptTv=0x7f0c008f;
+        public static final int activityFacebookConcealEncrptBtn=0x7f0c008c;
+        public static final int activityFacebookConcealEncryptTv=0x7f0c008d;
+        public static final int activityLoginAdminstration=0x7f0c009c;
+        public static final int activityLoginCirclePageIndicator=0x7f0c0094;
+        public static final int activityLoginCountryCodeTv=0x7f0c0097;
+        public static final int activityLoginIdEv=0x7f0c0098;
+        public static final int activityLoginLayout=0x7f0c0096;
+        public static final int activityLoginLogoIv=0x7f0c0092;
+        public static final int activityLoginNextBtn=0x7f0c009b;
+        public static final int activityLoginNextBtn1=0x7f0c009a;
+        public static final int activityLoginScrollViewLayout=0x7f0c0091;
+        public static final int activityLoginTv=0x7f0c0095;
+        public static final int activityLoginValidateIv=0x7f0c0099;
+        public static final int activityLoginViewPager=0x7f0c0093;
+        public static final int activityRecruitmentContactEmailLayout=0x7f0c0240;
+        public static final int activityRecruitmentContactMobileLayout=0x7f0c023e;
+        public static final int activityRecruitmentDetailCTCExpandLayout=0x7f0c0234;
+        public static final int activityRecruitmentDetailCTCIv=0x7f0c0236;
+        public static final int activityRecruitmentDetailCTCLabelTv=0x7f0c0235;
+        public static final int activityRecruitmentDetailCTCTv=0x7f0c0237;
+        public static final int activityRecruitmentDetailContactDesignationTv=0x7f0c023d;
+        public static final int activityRecruitmentDetailContactEmailTv=0x7f0c0241;
+        public static final int activityRecruitmentDetailContactExpandLayout=0x7f0c0238;
+        public static final int activityRecruitmentDetailContactIv=0x7f0c023a;
+        public static final int activityRecruitmentDetailContactLabelTv=0x7f0c0239;
+        public static final int activityRecruitmentDetailContactLayout=0x7f0c023b;
+        public static final int activityRecruitmentDetailContactMobileTv=0x7f0c023f;
+        public static final int activityRecruitmentDetailContactNameTv=0x7f0c023c;
+        public static final int activityRecruitmentDetailDesignationTv=0x7f0c0225;
+        public static final int activityRecruitmentDetailExpandLayout=0x7f0c0220;
+        public static final int activityRecruitmentDetailExperienceTv=0x7f0c0227;
+        public static final int activityRecruitmentDetailIv=0x7f0c0222;
+        public static final int activityRecruitmentDetailJobDescriptionExpandLayout=0x7f0c022c;
+        public static final int activityRecruitmentDetailJobDescriptionIv=0x7f0c022e;
+        public static final int activityRecruitmentDetailJobDescriptionLabelTv=0x7f0c022d;
+        public static final int activityRecruitmentDetailJobDescriptionTv=0x7f0c022f;
+        public static final int activityRecruitmentDetailLabelTv=0x7f0c0221;
+        public static final int activityRecruitmentDetailLayout=0x7f0c0223;
+        public static final int activityRecruitmentDetailLocationTv=0x7f0c0226;
+        public static final int activityRecruitmentDetailQualificationExpandLayout=0x7f0c0230;
+        public static final int activityRecruitmentDetailQualificationIv=0x7f0c0232;
+        public static final int activityRecruitmentDetailQualificationLabelTv=0x7f0c0231;
+        public static final int activityRecruitmentDetailQualificationTv=0x7f0c0233;
+        public static final int activityRecruitmentDetailSkillsExpandLayout=0x7f0c0228;
+        public static final int activityRecruitmentDetailSkillsIv=0x7f0c022a;
+        public static final int activityRecruitmentDetailSkillsLabelTv=0x7f0c0229;
+        public static final int activityRecruitmentDetailSkillsTv=0x7f0c022b;
+        public static final int activityRecruitmentDetailTitleTv=0x7f0c0224;
+        public static final int activitySetProfileBirthdayEv=0x7f0c00b3;
+        public static final int activitySetProfileBirthdayLayout=0x7f0c00b2;
+        public static final int activitySetProfileBirthdayValidateIv=0x7f0c00b4;
+        public static final int activitySetProfileCircleImageView=0x7f0c009f;
+        public static final int activitySetProfileEmailEv=0x7f0c00a7;
+        public static final int activitySetProfileEmailLayout=0x7f0c00a6;
+        public static final int activitySetProfileEmailValidateIv=0x7f0c00a8;
+        public static final int activitySetProfileEmployeeIdEv=0x7f0c00aa;
+        public static final int activitySetProfileEmployeeIdLayout=0x7f0c00a9;
+        public static final int activitySetProfileEmployeeIdValidateIv=0x7f0c00ab;
+        public static final int activitySetProfileFavouriteAnswerEv=0x7f0c00b0;
+        public static final int activitySetProfileFavouriteAnswerLayout=0x7f0c00af;
+        public static final int activitySetProfileFavouriteAnswerValidateIv=0x7f0c00b1;
+        public static final int activitySetProfileFavouriteQuestionEv=0x7f0c00ad;
+        public static final int activitySetProfileFavouriteQuestionLayout=0x7f0c00ac;
+        public static final int activitySetProfileFavouriteQuestionValidateIv=0x7f0c00ae;
+        public static final int activitySetProfileNameEv=0x7f0c00a4;
+        public static final int activitySetProfileNameLayout=0x7f0c00a3;
+        public static final int activitySetProfileNameValidateIv=0x7f0c00a5;
+        public static final int activitySetProfileNextBtn=0x7f0c00b5;
+        public static final int activitySetProfileProgressWheel=0x7f0c00a0;
+        public static final int activitySetProfileRemoveTv=0x7f0c00a1;
+        public static final int activitySetProfileSkipBtn=0x7f0c00b6;
+        public static final int activitySetProfileUploadAnotherIv=0x7f0c00a2;
+        public static final int activitySplashAppNameTv=0x7f0c00ba;
+        public static final int activitySplashLayout=0x7f0c00b7;
+        public static final int activitySplashLogoIv=0x7f0c00b8;
+        public static final int activitySplashShimmerLayout=0x7f0c00b9;
+        public static final int activityTutorialCirclePageIndicator=0x7f0c00bc;
+        public static final int activityTutorialNextIv=0x7f0c00bd;
+        public static final int activityTutorialPreviousIv=0x7f0c00be;
+        public static final int activityTutorialViewPager=0x7f0c00bb;
+        public static final int activityVerificationAdminstration=0x7f0c00c8;
+        public static final int activityVerificationAdminstrationTryAgain=0x7f0c00cc;
+        public static final int activityVerificationBtn=0x7f0c00c7;
+        public static final int activityVerificationCode1=0x7f0c00c3;
+        public static final int activityVerificationCode2=0x7f0c00c4;
+        public static final int activityVerificationCode3=0x7f0c00c5;
+        public static final int activityVerificationCode4=0x7f0c00c6;
+        public static final int activityVerificationLayout=0x7f0c00c2;
+        public static final int activityVerificationLogoIv=0x7f0c00c0;
+        public static final int activityVerificationRaiseTickedBtn=0x7f0c00cb;
+        public static final int activityVerificationResendBtn=0x7f0c00ca;
+        public static final int activityVerificationRetryTv=0x7f0c00c9;
+        public static final int activityVerificationTv=0x7f0c00c1;
+        public static final int activity_chooser_view_content=0x7f0c0045;
+        public static final int alertTitle=0x7f0c004f;
+        public static final int all=0x7f0c0030;
+        public static final int always=0x7f0c0024;
+        public static final int beginning=0x7f0c002b;
+        public static final int border=0x7f0c046e;
+        public static final int bottom=0x7f0c0031;
+        public static final int bottom_sheet_close=0x7f0c00d5;
+        public static final int bottom_sheet_frame=0x7f0c00d4;
+        public static final int bottom_sheet_gridview=0x7f0c00d1;
+        public static final int bottom_sheet_new=0x7f0c00d2;
+        public static final int bottom_sheet_read_count=0x7f0c00d3;
+        public static final int bottom_sheet_title=0x7f0c00d0;
+        public static final int bottom_sheet_title_image=0x7f0c00cf;
+        public static final int bottom_sheet_view=0x7f0c00d6;
+        public static final int bs_list_image=0x7f0c00d7;
+        public static final int bs_list_title=0x7f0c00d8;
+        public static final int bs_more=0x7f0c000d;
+        public static final int buttonDefaultNegative=0x7f0c0483;
+        public static final int buttonDefaultNeutral=0x7f0c0482;
+        public static final int buttonDefaultPositive=0x7f0c0484;
+        public static final int buttonPanel=0x7f0c0055;
+        public static final int cab_stub=0x7f0c0090;
+        public static final int calligraphy_tag_id=0x7f0c000e;
+        public static final int cancel_action=0x7f0c0491;
+        public static final int card_view=0x7f0c049f;
+        public static final int center=0x7f0c002e;
+        public static final int chatTextContainerLeft=0x7f0c02f7;
+        public static final int chatTextContainerParent=0x7f0c02f6;
+        public static final int chatTextContainerRight=0x7f0c02fa;
+        public static final int chatTextTextLeft=0x7f0c02f9;
+        public static final int chatTextTextRight=0x7f0c02fc;
+        public static final int chatTextUserContainerLeft=0x7f0c02f8;
+        public static final int chatTextUserContainerRight=0x7f0c02fb;
+        public static final int chat_compose_panel=0x7f0c013f;
+        public static final int checkbox=0x7f0c0057;
+        public static final int chronometer=0x7f0c0496;
+        public static final int collapseActionView=0x7f0c0025;
+        public static final int content=0x7f0c047c;
+        public static final int contentListView=0x7f0c0480;
+        public static final int contentListViewFrame=0x7f0c047f;
+        public static final int contentPanel=0x7f0c0050;
+        public static final int contentScrollView=0x7f0c047b;
+        public static final int content_box=0x7f0c04a8;
+        public static final int contextMenuDelete=0x7f0c04b5;
+        public static final int contextMenuRead=0x7f0c04b3;
+        public static final int contextMenuSave=0x7f0c04b7;
+        public static final int contextMenuUnread=0x7f0c04b4;
+        public static final int contextMenuView=0x7f0c04b6;
+        public static final int control=0x7f0c0481;
+        public static final int croutonViewGroup=0x7f0c02c9;
+        public static final int custom=0x7f0c0054;
+        public static final int customPanel=0x7f0c0053;
+        public static final int customViewFrame=0x7f0c047d;
+        public static final int decor_content_parent=0x7f0c005d;
+        public static final int default_activity_button=0x7f0c0048;
+        public static final int dialog=0x7f0c0029;
+        public static final int dialogBirthdayMessageEd=0x7f0c00dc;
+        public static final int dialogBirthdayMessageSendBtn=0x7f0c00dd;
+        public static final int dialogBirthdayMessageTv=0x7f0c00db;
+        public static final int dialogProgressDownloadCancelBtn=0x7f0c00e3;
+        public static final int dialogProgressDownloadFactsTv=0x7f0c00e2;
+        public static final int dialogProgressDownloadIv=0x7f0c00de;
+        public static final int dialogProgressDownloadNameTv=0x7f0c00df;
+        public static final int dialogProgressDownloadProgressBar=0x7f0c00e0;
+        public static final int dialogProgressDownloadProgressTv=0x7f0c00e1;
+        public static final int dialogProgressNormalProgressWheel=0x7f0c00e4;
+        public static final int dialogProgressNormalTv=0x7f0c00e5;
+        public static final int dialogProgressWordIv=0x7f0c00e6;
+        public static final int dialogProgressWordTv=0x7f0c00e7;
+        public static final int dialogSettingsBirthdayNotifyAtRadioButton1=0x7f0c00ea;
+        public static final int dialogSettingsBirthdayNotifyAtRadioButton2=0x7f0c00e9;
+        public static final int dialogSettingsBirthdayNotifyAtRadioButton3=0x7f0c00eb;
+        public static final int dialogSettingsBirthdayNotifyAtRadioGroup=0x7f0c00e8;
+        public static final int dialogSyncButton=0x7f0c00f1;
+        public static final int dialogSyncRadioButton1=0x7f0c00ed;
+        public static final int dialogSyncRadioButton2=0x7f0c00ee;
+        public static final int dialogSyncRadioButton3=0x7f0c00ef;
+        public static final int dialogSyncRadioButton4=0x7f0c00f0;
+        public static final int dialogSyncRadioGroup=0x7f0c00ec;
+        public static final int disableHome=0x7f0c0019;
+        public static final int drawerItemIv=0x7f0c0301;
+        public static final int drawerItemLayout=0x7f0c0300;
+        public static final int drawerItemReadCountTv=0x7f0c0302;
+        public static final int drawerItemTitleTv=0x7f0c0303;
+        public static final int drawerProfileCoverIv=0x7f0c02cf;
+        public static final int drawerProfileIv=0x7f0c02cc;
+        public static final int drawerProfileLayout=0x7f0c02cb;
+        public static final int drawerRootLayout=0x7f0c02ca;
+        public static final int drawerSyncContentTv=0x7f0c02d4;
+        public static final int drawerSyncIv=0x7f0c02d2;
+        public static final int drawerSyncLayout=0x7f0c02d1;
+        public static final int drawerSyncTitleTv=0x7f0c02d3;
+        public static final int drawerUserEmailTv=0x7f0c02ce;
+        public static final int drawerUserNameTv=0x7f0c02cd;
+        public static final int drawer_layout=0x7f0c009d;
+        public static final int drawer_listview=0x7f0c02d0;
+        public static final int drawer_logo=0x7f0c04a4;
+        public static final int dropdown=0x7f0c002a;
+        public static final int edit_query=0x7f0c0061;
+        public static final int end=0x7f0c002c;
+        public static final int end_padder=0x7f0c049b;
+        public static final int expand_activities_button=0x7f0c0046;
+        public static final int expanded_menu=0x7f0c0056;
+        public static final int ffwd=0x7f0c048a;
+        public static final int fragmentAboutBuildVersionLayout=0x7f0c0267;
+        public static final int fragmentAboutBuildVersionTv=0x7f0c0268;
+        public static final int fragmentAboutDetailWebView=0x7f0c00fc;
+        public static final int fragmentAboutFileStorageLayout=0x7f0c0269;
+        public static final int fragmentAboutFileStoragePercenetageAppTv=0x7f0c026c;
+        public static final int fragmentAboutFileStoragePercenetageDeviceTv=0x7f0c026d;
+        public static final int fragmentAboutFileStoragePercentageLayout=0x7f0c026b;
+        public static final int fragmentAboutFileStorageTv=0x7f0c026a;
+        public static final int fragmentAboutLogoIv=0x7f0c00f2;
+        public static final int fragmentAboutPrivacyPolicyTv=0x7f0c00fd;
+        public static final int fragmentAboutReportDetailTv=0x7f0c00fb;
+        public static final int fragmentAboutReportLayout=0x7f0c00f9;
+        public static final int fragmentAboutReportTv=0x7f0c00fa;
+        public static final int fragmentAboutSendFeedbackDetailTv=0x7f0c00f8;
+        public static final int fragmentAboutSendFeedbackLayout=0x7f0c00f6;
+        public static final int fragmentAboutSendFeedbackTv=0x7f0c00f7;
+        public static final int fragmentAboutVersionDetailTv=0x7f0c00f5;
+        public static final int fragmentAboutVersionLayout=0x7f0c00f3;
+        public static final int fragmentAboutVersionTv=0x7f0c00f4;
+        public static final int fragmentAnnounceRecyclerView=0x7f0c00ff;
+        public static final int fragmentAnnounceSwipeRefreshLayout=0x7f0c00fe;
+        public static final int fragmentAppFeedbackCategoryLayout=0x7f0c0100;
+        public static final int fragmentAppFeedbackCategorySelectedTv=0x7f0c0102;
+        public static final int fragmentAppFeedbackCategoryTv=0x7f0c0101;
+        public static final int fragmentAppFeedbackIncludeLogsCheckBox=0x7f0c0106;
+        public static final int fragmentAppFeedbackSubmitBtn=0x7f0c0107;
+        public static final int fragmentAppFeedbackTextEt=0x7f0c0105;
+        public static final int fragmentAppFeedbackTextProfileIv=0x7f0c0104;
+        public static final int fragmentAppFeedbackTextlayout=0x7f0c0103;
+        public static final int fragmentAudioDetailByLayout=0x7f0c0110;
+        public static final int fragmentAudioDetailByTv=0x7f0c0111;
+        public static final int fragmentAudioDetailDownloadBtn=0x7f0c010a;
+        public static final int fragmentAudioDetailFrameLayout=0x7f0c0108;
+        public static final int fragmentAudioDetailImageView=0x7f0c010c;
+        public static final int fragmentAudioDetailLanguageFlowLayout=0x7f0c0119;
+        public static final int fragmentAudioDetailLanguageHeaderTv=0x7f0c0118;
+        public static final int fragmentAudioDetailLanguageLayout=0x7f0c0117;
+        public static final int fragmentAudioDetailLikeTv=0x7f0c0112;
+        public static final int fragmentAudioDetailLinkIv=0x7f0c0115;
+        public static final int fragmentAudioDetailLinkTv=0x7f0c0116;
+        public static final int fragmentAudioDetailSeekBar=0x7f0c010d;
+        public static final int fragmentAudioDetailSeekBarLayout=0x7f0c010b;
+        public static final int fragmentAudioDetailSeekBarTv=0x7f0c010e;
+        public static final int fragmentAudioDetailSummaryTv=0x7f0c011a;
+        public static final int fragmentAudioDetailTitleTv=0x7f0c010f;
+        public static final int fragmentAudioDetailViewSourceLayout=0x7f0c0114;
+        public static final int fragmentAudioDetailViewTv=0x7f0c0113;
+        public static final int fragmentAudioDetailVisualizerView=0x7f0c0109;
+        public static final int fragmentAwardProfileActionLayout=0x7f0c0121;
+        public static final int fragmentAwardProfileCallIv=0x7f0c0123;
+        public static final int fragmentAwardProfileChatIv=0x7f0c0122;
+        public static final int fragmentAwardProfileCityTv=0x7f0c011d;
+        public static final int fragmentAwardProfileDateTv=0x7f0c011e;
+        public static final int fragmentAwardProfileDepartmentTv=0x7f0c0120;
+        public static final int fragmentAwardProfileEmailIv=0x7f0c0125;
+        public static final int fragmentAwardProfileImageIv=0x7f0c011f;
+        public static final int fragmentAwardProfileMessageIv=0x7f0c0124;
+        public static final int fragmentAwardProfileNameTv=0x7f0c011c;
+        public static final int fragmentAwardProfileRootLayout=0x7f0c011b;
+        public static final int fragmentBirthdayProfileActionLayout=0x7f0c012f;
+        public static final int fragmentBirthdayProfileAgeTv=0x7f0c012e;
+        public static final int fragmentBirthdayProfileCallIv=0x7f0c0131;
+        public static final int fragmentBirthdayProfileChatIv=0x7f0c0130;
+        public static final int fragmentBirthdayProfileCityTv=0x7f0c0128;
+        public static final int fragmentBirthdayProfileDateTv=0x7f0c0129;
+        public static final int fragmentBirthdayProfileDepartmentTv=0x7f0c012c;
+        public static final int fragmentBirthdayProfileEmailIv=0x7f0c0133;
+        public static final int fragmentBirthdayProfileImageIv=0x7f0c012a;
+        public static final int fragmentBirthdayProfileImageLoadingProgress=0x7f0c012b;
+        public static final int fragmentBirthdayProfileMessageIv=0x7f0c0132;
+        public static final int fragmentBirthdayProfileNameTv=0x7f0c0127;
+        public static final int fragmentBirthdayProfileRootLayout=0x7f0c0126;
+        public static final int fragmentBirthdayProfileSunSignTv=0x7f0c012d;
+        public static final int fragmentCaptureAttachedAnotherImageLayout=0x7f0c013a;
+        public static final int fragmentCaptureAttachedImageLayout=0x7f0c0137;
+        public static final int fragmentCaptureAttachedImagelayout=0x7f0c0136;
+        public static final int fragmentCaptureBrowseBtn=0x7f0c013b;
+        public static final int fragmentCaptureNoteCharacterTv=0x7f0c0135;
+        public static final int fragmentCaptureNoteEd=0x7f0c0134;
+        public static final int fragmentCaptureTakeAPicBtn=0x7f0c013c;
+        public static final int fragmentChatEmptyLayout=0x7f0c013d;
+        public static final int fragmentChatListView=0x7f0c013e;
+        public static final int fragmentChatMessageEv=0x7f0c0141;
+        public static final int fragmentChatSendIv=0x7f0c0140;
+        public static final int fragmentDocDetailByLayout=0x7f0c0148;
+        public static final int fragmentDocDetailByTv=0x7f0c0149;
+        public static final int fragmentDocDetailDownloadBtn=0x7f0c0146;
+        public static final int fragmentDocDetailFileDetailIv=0x7f0c0145;
+        public static final int fragmentDocDetailFileNameIv=0x7f0c0144;
+        public static final int fragmentDocDetailImageIv=0x7f0c0143;
+        public static final int fragmentDocDetailLanguageFlowLayout=0x7f0c0151;
+        public static final int fragmentDocDetailLanguageHeaderTv=0x7f0c0150;
+        public static final int fragmentDocDetailLanguageLayout=0x7f0c014f;
+        public static final int fragmentDocDetailLikeTv=0x7f0c014a;
+        public static final int fragmentDocDetailLinkIv=0x7f0c014d;
+        public static final int fragmentDocDetailLinkTv=0x7f0c014e;
+        public static final int fragmentDocDetailRelativeLayout=0x7f0c0142;
+        public static final int fragmentDocDetailSummaryTv=0x7f0c0152;
+        public static final int fragmentDocDetailTitleTv=0x7f0c0147;
+        public static final int fragmentDocDetailViewSourceLayout=0x7f0c014c;
+        public static final int fragmentDocDetailViewTv=0x7f0c014b;
+        public static final int fragmentEmptyLayout=0x7f0c0139;
+        public static final int fragmentEventDetaiTotalAttendTextTv=0x7f0c0174;
+        public static final int fragmentEventDetaiTotalAttendTv=0x7f0c0173;
+        public static final int fragmentEventDetaiTotalGoingTextTv=0x7f0c0177;
+        public static final int fragmentEventDetaiTotalGoingTv=0x7f0c0176;
+        public static final int fragmentEventDetailAboutEventTv=0x7f0c0178;
+        public static final int fragmentEventDetailAttendLayout=0x7f0c0171;
+        public static final int fragmentEventDetailByLayout=0x7f0c015d;
+        public static final int fragmentEventDetailByTv=0x7f0c015e;
+        public static final int fragmentEventDetailDeclineBtn=0x7f0c0170;
+        public static final int fragmentEventDetailEventActionLayout=0x7f0c016e;
+        public static final int fragmentEventDetailEventAddToCalendarIv=0x7f0c015a;
+        public static final int fragmentEventDetailEventCoverFrameLayout=0x7f0c0154;
+        public static final int fragmentEventDetailEventCoverIv=0x7f0c0155;
+        public static final int fragmentEventDetailEventDateIv=0x7f0c0162;
+        public static final int fragmentEventDetailEventDateTextTv=0x7f0c0164;
+        public static final int fragmentEventDetailEventDateTv=0x7f0c0163;
+        public static final int fragmentEventDetailEventDayIv=0x7f0c0165;
+        public static final int fragmentEventDetailEventDayTillTv=0x7f0c0167;
+        public static final int fragmentEventDetailEventDayTv=0x7f0c0166;
+        public static final int fragmentEventDetailEventHoursIv=0x7f0c0168;
+        public static final int fragmentEventDetailEventHoursTextTv=0x7f0c016a;
+        public static final int fragmentEventDetailEventHoursTv=0x7f0c0169;
+        public static final int fragmentEventDetailEventLeftLayout=0x7f0c0156;
+        public static final int fragmentEventDetailEventLocationIv=0x7f0c016b;
+        public static final int fragmentEventDetailEventLocationTv=0x7f0c016c;
+        public static final int fragmentEventDetailEventLocationViewMapTv=0x7f0c016d;
+        public static final int fragmentEventDetailEventShareIv=0x7f0c0159;
+        public static final int fragmentEventDetailEventTimeLayout=0x7f0c0161;
+        public static final int fragmentEventDetailJoinBtn=0x7f0c016f;
+        public static final int fragmentEventDetailLeftNumberTv=0x7f0c0157;
+        public static final int fragmentEventDetailLeftTextTv=0x7f0c0158;
+        public static final int fragmentEventDetailLikeTv=0x7f0c015f;
+        public static final int fragmentEventDetailRootLayout=0x7f0c0153;
+        public static final int fragmentEventDetailSummaryTv=0x7f0c0179;
+        public static final int fragmentEventDetailTextLayout=0x7f0c015b;
+        public static final int fragmentEventDetailTitleTv=0x7f0c015c;
+        public static final int fragmentEventDetailTotalAttendLayout=0x7f0c0172;
+        public static final int fragmentEventDetailTotalInviteLayout=0x7f0c0175;
+        public static final int fragmentEventDetailViewTv=0x7f0c0160;
+        public static final int fragmentFeedbackMultipleCheckBox1=0x7f0c0184;
+        public static final int fragmentFeedbackMultipleCheckBox2=0x7f0c0185;
+        public static final int fragmentFeedbackMultipleCheckBox3=0x7f0c0186;
+        public static final int fragmentFeedbackMultipleCheckBox4=0x7f0c0187;
+        public static final int fragmentFeedbackMultipleCheckBox5=0x7f0c0188;
+        public static final int fragmentFeedbackMultipleCheckBox6=0x7f0c0189;
+        public static final int fragmentFeedbackMultipleCheckBox7=0x7f0c018a;
+        public static final int fragmentFeedbackMultipleCheckTitleTv=0x7f0c0183;
+        public static final int fragmentFeedbackNavigationLayout=0x7f0c0180;
+        public static final int fragmentFeedbackNextBtn=0x7f0c0182;
+        public static final int fragmentFeedbackPreviousBtn=0x7f0c0181;
+        public static final int fragmentFeedbackQuestionCirclePageIndicator=0x7f0c017e;
+        public static final int fragmentFeedbackQuestionHeaderLayout=0x7f0c017a;
+        public static final int fragmentFeedbackQuestionNumberTextTv=0x7f0c017b;
+        public static final int fragmentFeedbackQuestionPageCountTv=0x7f0c017f;
+        public static final int fragmentFeedbackQuestionViewPager=0x7f0c017d;
+        public static final int fragmentFeedbackQuestionViewPagerLayout=0x7f0c017c;
+        public static final int fragmentFeedbackRateRatingBar=0x7f0c018c;
+        public static final int fragmentFeedbackRateRatingTitleTv=0x7f0c018b;
+        public static final int fragmentFeedbackSelectionRadioButton1=0x7f0c018f;
+        public static final int fragmentFeedbackSelectionRadioButton2=0x7f0c0190;
+        public static final int fragmentFeedbackSelectionRadioButton3=0x7f0c0191;
+        public static final int fragmentFeedbackSelectionRadioButton4=0x7f0c0192;
+        public static final int fragmentFeedbackSelectionRadioButton5=0x7f0c0193;
+        public static final int fragmentFeedbackSelectionRadioButton6=0x7f0c0194;
+        public static final int fragmentFeedbackSelectionRadioButton7=0x7f0c0195;
+        public static final int fragmentFeedbackSelectionRadioGroup=0x7f0c018e;
+        public static final int fragmentFeedbackSelectiveRadioTitleTv=0x7f0c018d;
+        public static final int fragmentFeedbackSubjectiveEditText=0x7f0c0197;
+        public static final int fragmentFeedbackSubjectiveTextTitleTv=0x7f0c0196;
+        public static final int fragmentFileManagerListView=0x7f0c0198;
+        public static final int fragmentFileManagerSearchEmptyView=0x7f0c0199;
+        public static final int fragmentImageDetailByLayout=0x7f0c01a1;
+        public static final int fragmentImageDetailByTv=0x7f0c01a2;
+        public static final int fragmentImageDetailCirclePageIndicator=0x7f0c019f;
+        public static final int fragmentImageDetailDownloadBtn=0x7f0c019b;
+        public static final int fragmentImageDetailFrameLayout=0x7f0c019a;
+        public static final int fragmentImageDetailLanguageFlowLayout=0x7f0c01aa;
+        public static final int fragmentImageDetailLanguageHeaderTv=0x7f0c01a9;
+        public static final int fragmentImageDetailLanguageLayout=0x7f0c01a8;
+        public static final int fragmentImageDetailLikeTv=0x7f0c01a3;
+        public static final int fragmentImageDetailLinkIv=0x7f0c01a6;
+        public static final int fragmentImageDetailLinkTv=0x7f0c01a7;
+        public static final int fragmentImageDetailNextIv=0x7f0c019d;
+        public static final int fragmentImageDetailPreviousIv=0x7f0c019c;
+        public static final int fragmentImageDetailSummaryTv=0x7f0c01ab;
+        public static final int fragmentImageDetailTitleTv=0x7f0c01a0;
+        public static final int fragmentImageDetailViewPager=0x7f0c019e;
+        public static final int fragmentImageDetailViewSourceLayout=0x7f0c01a5;
+        public static final int fragmentImageDetailViewTv=0x7f0c01a4;
+        public static final int fragmentImageFullScreenCirclePageIndicator=0x7f0c01af;
+        public static final int fragmentImageFullScreenNextIv=0x7f0c01ad;
+        public static final int fragmentImageFullScreenPreviousIv=0x7f0c01ac;
+        public static final int fragmentImageFullScreenViewPager=0x7f0c01ae;
+        public static final int fragmentImageView=0x7f0c01b0;
+        public static final int fragmentImageViewFullScreen=0x7f0c01b1;
+        public static final int fragmentInteractiveDetailByLayout=0x7f0c01b3;
+        public static final int fragmentInteractiveDetailByTv=0x7f0c01b4;
+        public static final int fragmentInteractiveDetailLikeTv=0x7f0c01b5;
+        public static final int fragmentInteractiveDetailLinkIv=0x7f0c01b8;
+        public static final int fragmentInteractiveDetailLinkTv=0x7f0c01b9;
+        public static final int fragmentInteractiveDetailSummaryTv=0x7f0c01ba;
+        public static final int fragmentInteractiveDetailTitleTv=0x7f0c01b2;
+        public static final int fragmentInteractiveDetailViewSourceLayout=0x7f0c01b7;
+        public static final int fragmentInteractiveDetailViewTv=0x7f0c01b6;
+        public static final int fragmentLiveStreamLinkIv=0x7f0c01c1;
+        public static final int fragmentLiveStreamLinkTv=0x7f0c01c2;
+        public static final int fragmentLiveStreamViewSourceLayout=0x7f0c01c0;
+        public static final int fragmentLiveStreamYouTubeByLayout=0x7f0c01bc;
+        public static final int fragmentLiveStreamYouTubeByTv=0x7f0c01bd;
+        public static final int fragmentLiveStreamYouTubeFrameLayout=0x7f0c00cd;
+        public static final int fragmentLiveStreamYouTubeLikeTv=0x7f0c01be;
+        public static final int fragmentLiveStreamYouTubePlayerView=0x7f0c00ce;
+        public static final int fragmentLiveStreamYouTubeSummaryTv=0x7f0c01c3;
+        public static final int fragmentLiveStreamYouTubeTitleTv=0x7f0c01bb;
+        public static final int fragmentLiveStreamYouTubeViewTv=0x7f0c01bf;
+        public static final int fragmentMobcastEmptyLayout=0x7f0c01c4;
+        public static final int fragmentMobcastNewAvailLayout=0x7f0c01c5;
+        public static final int fragmentNewsDetailByLayout=0x7f0c01c7;
+        public static final int fragmentNewsDetailByTv=0x7f0c01c8;
+        public static final int fragmentNewsDetailLinkIv=0x7f0c01cb;
+        public static final int fragmentNewsDetailLinkTv=0x7f0c01cc;
+        public static final int fragmentNewsDetailSummaryTv=0x7f0c01cd;
+        public static final int fragmentNewsDetailTitleTv=0x7f0c01c6;
+        public static final int fragmentNewsDetailViewSourceLayout=0x7f0c01ca;
+        public static final int fragmentNewsDetailViewTv=0x7f0c01c9;
+        public static final int fragmentPdfDetailByLayout=0x7f0c01d4;
+        public static final int fragmentPdfDetailByTv=0x7f0c01d5;
+        public static final int fragmentPdfDetailDownloadBtn=0x7f0c01d2;
+        public static final int fragmentPdfDetailFileDetailIv=0x7f0c01d1;
+        public static final int fragmentPdfDetailFileNameIv=0x7f0c01d0;
+        public static final int fragmentPdfDetailImageIv=0x7f0c01cf;
+        public static final int fragmentPdfDetailLanguageFlowLayout=0x7f0c01dd;
+        public static final int fragmentPdfDetailLanguageHeaderTv=0x7f0c01dc;
+        public static final int fragmentPdfDetailLanguageLayout=0x7f0c01db;
+        public static final int fragmentPdfDetailLikeTv=0x7f0c01d6;
+        public static final int fragmentPdfDetailLinkIv=0x7f0c01d9;
+        public static final int fragmentPdfDetailLinkTv=0x7f0c01da;
+        public static final int fragmentPdfDetailRelativeLayout=0x7f0c01ce;
+        public static final int fragmentPdfDetailSummaryTv=0x7f0c01de;
+        public static final int fragmentPdfDetailTitleTv=0x7f0c01d3;
+        public static final int fragmentPdfDetailViewSourceLayout=0x7f0c01d8;
+        public static final int fragmentPdfDetailViewTv=0x7f0c01d7;
+        public static final int fragmentPptDetailByLayout=0x7f0c01e5;
+        public static final int fragmentPptDetailByTv=0x7f0c01e6;
+        public static final int fragmentPptDetailDownloadBtn=0x7f0c01e3;
+        public static final int fragmentPptDetailFileDetailIv=0x7f0c01e2;
+        public static final int fragmentPptDetailFileNameIv=0x7f0c01e1;
+        public static final int fragmentPptDetailImageIv=0x7f0c01e0;
+        public static final int fragmentPptDetailLanguageFlowLayout=0x7f0c01ee;
+        public static final int fragmentPptDetailLanguageHeaderTv=0x7f0c01ed;
+        public static final int fragmentPptDetailLanguageLayout=0x7f0c01ec;
+        public static final int fragmentPptDetailLikeTv=0x7f0c01e7;
+        public static final int fragmentPptDetailLinkIv=0x7f0c01ea;
+        public static final int fragmentPptDetailLinkTv=0x7f0c01eb;
+        public static final int fragmentPptDetailRelativeLayout=0x7f0c01df;
+        public static final int fragmentPptDetailSummaryTv=0x7f0c01ef;
+        public static final int fragmentPptDetailTitleTv=0x7f0c01e4;
+        public static final int fragmentPptDetailViewSourceLayout=0x7f0c01e9;
+        public static final int fragmentPptDetailViewTv=0x7f0c01e8;
+        public static final int fragmentQuizMultipleCheckBox1=0x7f0c01fe;
+        public static final int fragmentQuizMultipleCheckBox2=0x7f0c01ff;
+        public static final int fragmentQuizMultipleCheckBox3=0x7f0c0200;
+        public static final int fragmentQuizMultipleCheckBox4=0x7f0c0201;
+        public static final int fragmentQuizMultipleCheckBox5=0x7f0c0202;
+        public static final int fragmentQuizMultipleCheckBox6=0x7f0c0203;
+        public static final int fragmentQuizMultipleCheckBox7=0x7f0c0204;
+        public static final int fragmentQuizMultipleCheckTitleTv=0x7f0c01fd;
+        public static final int fragmentQuizNavigationLayout=0x7f0c01fa;
+        public static final int fragmentQuizNextBtn=0x7f0c01fc;
+        public static final int fragmentQuizPreviousBtn=0x7f0c01fb;
+        public static final int fragmentQuizQuestionCirclePageIndicator=0x7f0c01f8;
+        public static final int fragmentQuizQuestionNumberTextTv=0x7f0c01f5;
+        public static final int fragmentQuizQuestionPageCountTv=0x7f0c01f9;
+        public static final int fragmentQuizQuestionViewPager=0x7f0c01f7;
+        public static final int fragmentQuizQuestionViewPagerLayout=0x7f0c01f6;
+        public static final int fragmentQuizScoreCorrectAnswerTextTv=0x7f0c020c;
+        public static final int fragmentQuizScoreCorrectAnswerTv=0x7f0c020b;
+        public static final int fragmentQuizScoreGoofedUpAtTv=0x7f0c020d;
+        public static final int fragmentQuizScoreLayout=0x7f0c0208;
+        public static final int fragmentQuizScoreNavigationLayout=0x7f0c020f;
+        public static final int fragmentQuizScoreNextBtn=0x7f0c0214;
+        public static final int fragmentQuizScorePreviousBtn=0x7f0c0213;
+        public static final int fragmentQuizScoreQuestionCirclePageIndicator=0x7f0c0211;
+        public static final int fragmentQuizScoreQuestionNumberTextTv=0x7f0c0215;
+        public static final int fragmentQuizScoreQuestionPageCountTv=0x7f0c0212;
+        public static final int fragmentQuizScoreQuestionTitleTv=0x7f0c0216;
+        public static final int fragmentQuizScoreQuestionViewPager=0x7f0c0210;
+        public static final int fragmentQuizScoreQuestionViewPagerLayout=0x7f0c020e;
+        public static final int fragmentQuizScoreRootLayout=0x7f0c0205;
+        public static final int fragmentQuizScoreTimeTakenInTv=0x7f0c020a;
+        public static final int fragmentQuizScoreTimeTakenTv=0x7f0c0209;
+        public static final int fragmentQuizScoreTotalScoreTextTv=0x7f0c0207;
+        public static final int fragmentQuizScoreTotalScoreTv=0x7f0c0206;
+        public static final int fragmentQuizSelectionRadioButton1=0x7f0c0219;
+        public static final int fragmentQuizSelectionRadioButton2=0x7f0c021a;
+        public static final int fragmentQuizSelectionRadioButton3=0x7f0c021b;
+        public static final int fragmentQuizSelectionRadioButton4=0x7f0c021c;
+        public static final int fragmentQuizSelectionRadioButton5=0x7f0c021d;
+        public static final int fragmentQuizSelectionRadioButton6=0x7f0c021e;
+        public static final int fragmentQuizSelectionRadioButton7=0x7f0c021f;
+        public static final int fragmentQuizSelectionRadioGroup=0x7f0c0218;
+        public static final int fragmentQuizSelectiveRadioTitleTv=0x7f0c0217;
+        public static final int fragmentQuizTimerCoverIv=0x7f0c01f1;
+        public static final int fragmentQuizTimerLayout=0x7f0c01f0;
+        public static final int fragmentQuizTimerProgressWheel=0x7f0c01f2;
+        public static final int fragmentQuizTimerSecondTextTv=0x7f0c01f4;
+        public static final int fragmentQuizTimerSecondTv=0x7f0c01f3;
+        public static final int fragmentReportCategoryLayout=0x7f0c0243;
+        public static final int fragmentReportCategorySelectedTv=0x7f0c0245;
+        public static final int fragmentReportCategoryTv=0x7f0c0244;
+        public static final int fragmentReportIncludeLogsCheckBox=0x7f0c0249;
+        public static final int fragmentReportSubmitBtn=0x7f0c024a;
+        public static final int fragmentReportTextEt=0x7f0c0248;
+        public static final int fragmentReportTextProfileIv=0x7f0c0247;
+        public static final int fragmentReportTextlayout=0x7f0c0246;
+        public static final int fragmentSettingsAboutHeader=0x7f0c0264;
+        public static final int fragmentSettingsGeneralHeader=0x7f0c024b;
+        public static final int fragmentSettingsGeneralLanguageLayout=0x7f0c024c;
+        public static final int fragmentSettingsGeneralLanguageSelectedTv=0x7f0c024e;
+        public static final int fragmentSettingsGeneralLanguageTv=0x7f0c024d;
+        public static final int fragmentSettingsNotificationAboutLayout=0x7f0c0265;
+        public static final int fragmentSettingsNotificationAboutTv=0x7f0c0266;
+        public static final int fragmentSettingsNotificationAnyDoCheckTextView=0x7f0c025b;
+        public static final int fragmentSettingsNotificationAnyDoNotificationLayout=0x7f0c0259;
+        public static final int fragmentSettingsNotificationAnyDoTv=0x7f0c025a;
+        public static final int fragmentSettingsNotificationBirthdayDownloadAndNotifyTv=0x7f0c0257;
+        public static final int fragmentSettingsNotificationBirthdayMuteCheckTextView=0x7f0c0255;
+        public static final int fragmentSettingsNotificationBirthdayMuteLayout=0x7f0c0253;
+        public static final int fragmentSettingsNotificationBirthdayMuteTv=0x7f0c0254;
+        public static final int fragmentSettingsNotificationBirthdayTimeLayout=0x7f0c0250;
+        public static final int fragmentSettingsNotificationBirthdayTimeSelectedTv=0x7f0c0252;
+        public static final int fragmentSettingsNotificationBirthdayTimeTv=0x7f0c0251;
+        public static final int fragmentSettingsNotificationDownloadAndNotifyCheckTextView=0x7f0c0258;
+        public static final int fragmentSettingsNotificationDownloadAndNotifyLayout=0x7f0c0256;
+        public static final int fragmentSettingsNotificationHeader=0x7f0c024f;
+        public static final int fragmentSettingsStyleHeader=0x7f0c0260;
+        public static final int fragmentSettingsStyleTextFontLayout=0x7f0c0261;
+        public static final int fragmentSettingsStyleTextFontSelectedTv=0x7f0c0263;
+        public static final int fragmentSettingsStyleTextFontTv=0x7f0c0262;
+        public static final int fragmentSettingsSyncFrequencyLayout=0x7f0c025d;
+        public static final int fragmentSettingsSyncFrequencySelectedTv=0x7f0c025f;
+        public static final int fragmentSettingsSyncHeader=0x7f0c025c;
+        public static final int fragmentSettingssyncFrequencyTv=0x7f0c025e;
+        public static final int fragmentTextDetailByLayout=0x7f0c026f;
+        public static final int fragmentTextDetailByTv=0x7f0c0270;
+        public static final int fragmentTextDetailLikeTv=0x7f0c0271;
+        public static final int fragmentTextDetailLinkIv=0x7f0c0274;
+        public static final int fragmentTextDetailLinkTv=0x7f0c0275;
+        public static final int fragmentTextDetailSummaryTv=0x7f0c0276;
+        public static final int fragmentTextDetailTitleTv=0x7f0c026e;
+        public static final int fragmentTextDetailViewSourceLayout=0x7f0c0273;
+        public static final int fragmentTextDetailViewTv=0x7f0c0272;
+        public static final int fragmentTrainingEmptyLayout=0x7f0c0277;
+        public static final int fragmentTrainingNewAvailLayout=0x7f0c0278;
+        public static final int fragmentTutorialBDetailIv=0x7f0c0289;
+        public static final int fragmentTutorialBFrameLayout=0x7f0c0286;
+        public static final int fragmentTutorialBFunctionalityTitleTv=0x7f0c0285;
+        public static final int fragmentTutorialBHeaderTitleTv=0x7f0c0284;
+        public static final int fragmentTutorialBLayout=0x7f0c0283;
+        public static final int fragmentTutorialBPointerIv=0x7f0c028a;
+        public static final int fragmentTutorialBScrollIv1=0x7f0c0287;
+        public static final int fragmentTutorialBScrollIv2=0x7f0c0288;
+        public static final int fragmentTutorialCFrameLayout=0x7f0c028e;
+        public static final int fragmentTutorialCFunctionalityTitleTv=0x7f0c028d;
+        public static final int fragmentTutorialCHeaderTitleTv=0x7f0c028c;
+        public static final int fragmentTutorialCLayout=0x7f0c028b;
+        public static final int fragmentTutorialCPointerIv=0x7f0c0291;
+        public static final int fragmentTutorialCScrollIv1=0x7f0c028f;
+        public static final int fragmentTutorialCShareIv=0x7f0c0290;
+        public static final int fragmentTutorialDrawerIv=0x7f0c0281;
+        public static final int fragmentTutorialFrameLayout=0x7f0c027c;
+        public static final int fragmentTutorialFunctionalityTitleTv=0x7f0c027b;
+        public static final int fragmentTutorialHeaderIv=0x7f0c027d;
+        public static final int fragmentTutorialHeaderTitleTv=0x7f0c027a;
+        public static final int fragmentTutorialLayout=0x7f0c0279;
+        public static final int fragmentTutorialPointerIv=0x7f0c0282;
+        public static final int fragmentTutorialSliderIv1=0x7f0c027e;
+        public static final int fragmentTutorialSliderIv2=0x7f0c027f;
+        public static final int fragmentTutorialSliderIv3=0x7f0c0280;
+        public static final int fragmentVideoDetailByLayout=0x7f0c02a1;
+        public static final int fragmentVideoDetailByTv=0x7f0c02a2;
+        public static final int fragmentVideoDetailDescLayout=0x7f0c0298;
+        public static final int fragmentVideoDetailDescShareImageView=0x7f0c0299;
+        public static final int fragmentVideoDetailDescTotalTextView=0x7f0c029a;
+        public static final int fragmentVideoDetailFrameLayout=0x7f0c0292;
+        public static final int fragmentVideoDetailLanguageFlowLayout=0x7f0c02aa;
+        public static final int fragmentVideoDetailLanguageHeaderTv=0x7f0c02a9;
+        public static final int fragmentVideoDetailLanguageLayout=0x7f0c02a8;
+        public static final int fragmentVideoDetailLikeTv=0x7f0c02a3;
+        public static final int fragmentVideoDetailLinkIv=0x7f0c02a6;
+        public static final int fragmentVideoDetailLinkTv=0x7f0c02a7;
+        public static final int fragmentVideoDetailMediaControllerCurrentPositionTv=0x7f0c029c;
+        public static final int fragmentVideoDetailMediaControllerFullScreenIv=0x7f0c029f;
+        public static final int fragmentVideoDetailMediaControllerLayout=0x7f0c029b;
+        public static final int fragmentVideoDetailMediaControllerSeekBar=0x7f0c029d;
+        public static final int fragmentVideoDetailMediaControllerTotalPositionTv=0x7f0c029e;
+        public static final int fragmentVideoDetailSummaryTv=0x7f0c02ab;
+        public static final int fragmentVideoDetailTitleTv=0x7f0c02a0;
+        public static final int fragmentVideoDetailVideoDownloadBtn=0x7f0c0297;
+        public static final int fragmentVideoDetailVideoImageView=0x7f0c0294;
+        public static final int fragmentVideoDetailVideoPauseIv=0x7f0c0296;
+        public static final int fragmentVideoDetailVideoPlayIv=0x7f0c0295;
+        public static final int fragmentVideoDetailVideoView=0x7f0c0293;
+        public static final int fragmentVideoDetailViewSourceLayout=0x7f0c02a5;
+        public static final int fragmentVideoDetailViewTv=0x7f0c02a4;
+        public static final int fragmentVideoFullScreenMediaControllerCurrentPositionTv=0x7f0c02b0;
+        public static final int fragmentVideoFullScreenMediaControllerFullScreenIv=0x7f0c02b3;
+        public static final int fragmentVideoFullScreenMediaControllerLayout=0x7f0c02af;
+        public static final int fragmentVideoFullScreenMediaControllerSeekBar=0x7f0c02b1;
+        public static final int fragmentVideoFullScreenMediaControllerTotalPositionTv=0x7f0c02b2;
+        public static final int fragmentVideoFullScreenVideoPauseIv=0x7f0c02ad;
+        public static final int fragmentVideoFullScreenVideoPlayIv=0x7f0c02ae;
+        public static final int fragmentVideoFullScreenVideoView=0x7f0c02ac;
+        public static final int fragmentWebViewProgressBar=0x7f0c02b4;
+        public static final int fragmentWebViewWebView=0x7f0c02b5;
+        public static final int fragmentWhatWeDoIv1=0x7f0c02b6;
+        public static final int fragmentWhatWeDoIv2=0x7f0c02b7;
+        public static final int fragmentXlsDetailByLayout=0x7f0c02be;
+        public static final int fragmentXlsDetailByTv=0x7f0c02bf;
+        public static final int fragmentXlsDetailDownloadBtn=0x7f0c02bc;
+        public static final int fragmentXlsDetailFileDetailIv=0x7f0c02bb;
+        public static final int fragmentXlsDetailFileNameIv=0x7f0c02ba;
+        public static final int fragmentXlsDetailImageIv=0x7f0c02b9;
+        public static final int fragmentXlsDetailLanguageFlowLayout=0x7f0c02c7;
+        public static final int fragmentXlsDetailLanguageHeaderTv=0x7f0c02c6;
+        public static final int fragmentXlsDetailLanguageLayout=0x7f0c02c5;
+        public static final int fragmentXlsDetailLikeTv=0x7f0c02c0;
+        public static final int fragmentXlsDetailLinkIv=0x7f0c02c3;
+        public static final int fragmentXlsDetailLinkTv=0x7f0c02c4;
+        public static final int fragmentXlsDetailRelativeLayout=0x7f0c02b8;
+        public static final int fragmentXlsDetailSummaryTv=0x7f0c02c8;
+        public static final int fragmentXlsDetailTitleTv=0x7f0c02bd;
+        public static final int fragmentXlsDetailViewSourceLayout=0x7f0c02c2;
+        public static final int fragmentXlsDetailViewTv=0x7f0c02c1;
+        public static final int fullscreen=0x7f0c048f;
+        public static final int header=0x7f0c00da;
+        public static final int headerlayout=0x7f0c00d9;
+        public static final int home=0x7f0c0000;
+        public static final int homeAsUp=0x7f0c001a;
+        public static final int hybrid=0x7f0c0011;
+        public static final int icon=0x7f0c004a;
+        public static final int ifRoom=0x7f0c0026;
+        public static final int image=0x7f0c0047;
+        public static final int info=0x7f0c049a;
+        public static final int invisible=0x7f0c0040;
+        public static final int itemChipsLayoutIv=0x7f0c02fe;
+        public static final int itemChipsLayoutTv=0x7f0c02ff;
+        public static final int itemChipsRootLayout=0x7f0c02fd;
+        public static final int itemFooterProgressWheel=0x7f0c0475;
+        public static final int itemLanguageImageView=0x7f0c0306;
+        public static final int itemLanguageTextView=0x7f0c0305;
+        public static final int itemLanugageLayout=0x7f0c0304;
+        public static final int itemRecyclerAwardCongratulatedIconIv=0x7f0c0312;
+        public static final int itemRecyclerAwardCongratulatedLayout=0x7f0c0311;
+        public static final int itemRecyclerAwardCongratulatedTv=0x7f0c0313;
+        public static final int itemRecyclerAwardImageLoadingProgress=0x7f0c030c;
+        public static final int itemRecyclerAwardInfoLayout=0x7f0c0309;
+        public static final int itemRecyclerAwardIv=0x7f0c030b;
+        public static final int itemRecyclerAwardIvLayout=0x7f0c030a;
+        public static final int itemRecyclerAwardMessageIv=0x7f0c0310;
+        public static final int itemRecyclerAwardName=0x7f0c030e;
+        public static final int itemRecyclerAwardRootLayout=0x7f0c0307;
+        public static final int itemRecyclerAwardWinnerName=0x7f0c030d;
+        public static final int itemRecyclerBirthdayDepartment=0x7f0c0319;
+        public static final int itemRecyclerBirthdayImageLoadingProgress=0x7f0c0317;
+        public static final int itemRecyclerBirthdayIv=0x7f0c0316;
+        public static final int itemRecyclerBirthdayIvLayout=0x7f0c0315;
+        public static final int itemRecyclerBirthdayMessageIv=0x7f0c031b;
+        public static final int itemRecyclerBirthdayName=0x7f0c0318;
+        public static final int itemRecyclerBirthdayRootLayout=0x7f0c0314;
+        public static final int itemRecyclerBirthdaySectionTv=0x7f0c031c;
+        public static final int itemRecyclerBirthdayWishIv=0x7f0c031a;
+        public static final int itemRecyclerCaptureDeleteIv=0x7f0c031e;
+        public static final int itemRecyclerCaptureNameTv=0x7f0c0320;
+        public static final int itemRecyclerCaptureRootLayout=0x7f0c031d;
+        public static final int itemRecyclerCaptureSizeTv=0x7f0c0321;
+        public static final int itemRecyclerCaptureThumbnailIv=0x7f0c031f;
+        public static final int itemRecyclerChatIv=0x7f0c0324;
+        public static final int itemRecyclerChatMessageTv=0x7f0c0326;
+        public static final int itemRecyclerChatReadView=0x7f0c0323;
+        public static final int itemRecyclerChatRootLayout=0x7f0c0322;
+        public static final int itemRecyclerChatTitleTv=0x7f0c0325;
+        public static final int itemRecyclerCongratulateIv=0x7f0c030f;
+        public static final int itemRecyclerEventByLayout=0x7f0c032c;
+        public static final int itemRecyclerEventByTv=0x7f0c032d;
+        public static final int itemRecyclerEventDetailAttendanceLayout=0x7f0c0333;
+        public static final int itemRecyclerEventDetailAttendanceTv=0x7f0c0334;
+        public static final int itemRecyclerEventDetailDaysLeftLayout=0x7f0c0331;
+        public static final int itemRecyclerEventDetailDaysLeftTv=0x7f0c0332;
+        public static final int itemRecyclerEventDetailIsGoingIv=0x7f0c0336;
+        public static final int itemRecyclerEventDetailIsGoingLayout=0x7f0c0335;
+        public static final int itemRecyclerEventDetailIsGoingTv=0x7f0c0337;
+        public static final int itemRecyclerEventDetailLayout=0x7f0c0330;
+        public static final int itemRecyclerEventIndicatorImageView=0x7f0c032a;
+        public static final int itemRecyclerEventLikeCountTv=0x7f0c032e;
+        public static final int itemRecyclerEventLineView=0x7f0c0329;
+        public static final int itemRecyclerEventReadView=0x7f0c0328;
+        public static final int itemRecyclerEventRootLayout=0x7f0c0327;
+        public static final int itemRecyclerEventTitleTv=0x7f0c032b;
+        public static final int itemRecyclerEventViewCountTv=0x7f0c032f;
+        public static final int itemRecyclerMISTextIndicatorImageView=0x7f0c033b;
+        public static final int itemRecyclerMISTextLineView=0x7f0c033a;
+        public static final int itemRecyclerMISTextReadView=0x7f0c0339;
+        public static final int itemRecyclerMISTextRootLayout=0x7f0c0338;
+        public static final int itemRecyclerMISTextSummaryTv=0x7f0c033d;
+        public static final int itemRecyclerMISTextTitleTv=0x7f0c033c;
+        public static final int itemRecyclerMobcastAudioByLayout=0x7f0c0343;
+        public static final int itemRecyclerMobcastAudioByTv=0x7f0c0344;
+        public static final int itemRecyclerMobcastAudioDetailFileInfoDetailTv=0x7f0c034c;
+        public static final int itemRecyclerMobcastAudioDetailFileInfoLayout=0x7f0c034a;
+        public static final int itemRecyclerMobcastAudioDetailFileInfoNameTv=0x7f0c034b;
+        public static final int itemRecyclerMobcastAudioDetailFileTypeIv=0x7f0c0349;
+        public static final int itemRecyclerMobcastAudioDetailLayout=0x7f0c0348;
+        public static final int itemRecyclerMobcastAudioIndicatorImageView=0x7f0c0341;
+        public static final int itemRecyclerMobcastAudioLikeCountTv=0x7f0c0345;
+        public static final int itemRecyclerMobcastAudioLineView=0x7f0c0340;
+        public static final int itemRecyclerMobcastAudioLinkTv=0x7f0c0347;
+        public static final int itemRecyclerMobcastAudioReadView=0x7f0c033f;
+        public static final int itemRecyclerMobcastAudioRootLayout=0x7f0c033e;
+        public static final int itemRecyclerMobcastAudioSummaryTv=0x7f0c034d;
+        public static final int itemRecyclerMobcastAudioTitleTv=0x7f0c0342;
+        public static final int itemRecyclerMobcastAudioViewCountTv=0x7f0c0346;
+        public static final int itemRecyclerMobcastDocByLayout=0x7f0c0353;
+        public static final int itemRecyclerMobcastDocByTv=0x7f0c0354;
+        public static final int itemRecyclerMobcastDocDetailFileInfoDetailTv=0x7f0c035c;
+        public static final int itemRecyclerMobcastDocDetailFileInfoLayout=0x7f0c035a;
+        public static final int itemRecyclerMobcastDocDetailFileInfoNameTv=0x7f0c035b;
+        public static final int itemRecyclerMobcastDocDetailFileTypeIv=0x7f0c0359;
+        public static final int itemRecyclerMobcastDocDetailLayout=0x7f0c0358;
+        public static final int itemRecyclerMobcastDocIndicatorImageView=0x7f0c0351;
+        public static final int itemRecyclerMobcastDocLikeCountTv=0x7f0c0355;
+        public static final int itemRecyclerMobcastDocLineView=0x7f0c0350;
+        public static final int itemRecyclerMobcastDocLinkTv=0x7f0c0357;
+        public static final int itemRecyclerMobcastDocReadView=0x7f0c034f;
+        public static final int itemRecyclerMobcastDocRootLayout=0x7f0c034e;
+        public static final int itemRecyclerMobcastDocTitleTv=0x7f0c0352;
+        public static final int itemRecyclerMobcastDocViewCountTv=0x7f0c0356;
+        public static final int itemRecyclerMobcastFeedbackByLayout=0x7f0c0362;
+        public static final int itemRecyclerMobcastFeedbackByTv=0x7f0c0363;
+        public static final int itemRecyclerMobcastFeedbackDetailLayout=0x7f0c0367;
+        public static final int itemRecyclerMobcastFeedbackDetailQuestionTv=0x7f0c0368;
+        public static final int itemRecyclerMobcastFeedbackIndicatorImageView=0x7f0c0360;
+        public static final int itemRecyclerMobcastFeedbackLikeCountTv=0x7f0c0364;
+        public static final int itemRecyclerMobcastFeedbackLineView=0x7f0c035f;
+        public static final int itemRecyclerMobcastFeedbackLinkTv=0x7f0c0366;
+        public static final int itemRecyclerMobcastFeedbackReadView=0x7f0c035e;
+        public static final int itemRecyclerMobcastFeedbackRootLayout=0x7f0c035d;
+        public static final int itemRecyclerMobcastFeedbackTitleTv=0x7f0c0361;
+        public static final int itemRecyclerMobcastFeedbackViewCountTv=0x7f0c0365;
+        public static final int itemRecyclerMobcastImageByLayout=0x7f0c036e;
+        public static final int itemRecyclerMobcastImageByTv=0x7f0c036f;
+        public static final int itemRecyclerMobcastImageIndicatorImageView=0x7f0c036c;
+        public static final int itemRecyclerMobcastImageLikeCountTv=0x7f0c0370;
+        public static final int itemRecyclerMobcastImageLineView=0x7f0c036b;
+        public static final int itemRecyclerMobcastImageLinkTv=0x7f0c0372;
+        public static final int itemRecyclerMobcastImageLoadingProgress=0x7f0c0375;
+        public static final int itemRecyclerMobcastImageMainImageIv=0x7f0c0374;
+        public static final int itemRecyclerMobcastImageReadView=0x7f0c036a;
+        public static final int itemRecyclerMobcastImageRootLayout=0x7f0c0369;
+        public static final int itemRecyclerMobcastImageTitleTv=0x7f0c036d;
+        public static final int itemRecyclerMobcastImageViewCountTv=0x7f0c0371;
+        public static final int itemRecyclerMobcastImageViewPagerLayout=0x7f0c0373;
+        public static final int itemRecyclerMobcastLiveByLayout=0x7f0c037b;
+        public static final int itemRecyclerMobcastLiveByTv=0x7f0c037c;
+        public static final int itemRecyclerMobcastLiveDurationTv=0x7f0c0383;
+        public static final int itemRecyclerMobcastLiveIndicatorImageView=0x7f0c0379;
+        public static final int itemRecyclerMobcastLiveLikeCountTv=0x7f0c037d;
+        public static final int itemRecyclerMobcastLiveLineView=0x7f0c0378;
+        public static final int itemRecyclerMobcastLiveLinkTv=0x7f0c037f;
+        public static final int itemRecyclerMobcastLivePlayImageIv=0x7f0c0382;
+        public static final int itemRecyclerMobcastLiveReadView=0x7f0c0377;
+        public static final int itemRecyclerMobcastLiveRootLayout=0x7f0c0376;
+        public static final int itemRecyclerMobcastLiveThumbnailImageIv=0x7f0c0381;
+        public static final int itemRecyclerMobcastLiveTitleTv=0x7f0c037a;
+        public static final int itemRecyclerMobcastLiveViewCountTv=0x7f0c037e;
+        public static final int itemRecyclerMobcastLiveViewLayout=0x7f0c0380;
+        public static final int itemRecyclerMobcastNewsByLayout=0x7f0c0389;
+        public static final int itemRecyclerMobcastNewsByTv=0x7f0c038a;
+        public static final int itemRecyclerMobcastNewsDetailLayout=0x7f0c038c;
+        public static final int itemRecyclerMobcastNewsDetailLinkTv=0x7f0c038d;
+        public static final int itemRecyclerMobcastNewsIndicatorImageView=0x7f0c0387;
+        public static final int itemRecyclerMobcastNewsLineView=0x7f0c0386;
+        public static final int itemRecyclerMobcastNewsReadView=0x7f0c0385;
+        public static final int itemRecyclerMobcastNewsRootLayout=0x7f0c0384;
+        public static final int itemRecyclerMobcastNewsTitleTv=0x7f0c0388;
+        public static final int itemRecyclerMobcastNewsViewCountTv=0x7f0c038b;
+        public static final int itemRecyclerMobcastPdfByLayout=0x7f0c0393;
+        public static final int itemRecyclerMobcastPdfByTv=0x7f0c0394;
+        public static final int itemRecyclerMobcastPdfDetailFileInfoDetailTv=0x7f0c039c;
+        public static final int itemRecyclerMobcastPdfDetailFileInfoLayout=0x7f0c039a;
+        public static final int itemRecyclerMobcastPdfDetailFileInfoNameTv=0x7f0c039b;
+        public static final int itemRecyclerMobcastPdfDetailFileTypeIv=0x7f0c0399;
+        public static final int itemRecyclerMobcastPdfDetailLayout=0x7f0c0398;
+        public static final int itemRecyclerMobcastPdfIndicatorImageView=0x7f0c0391;
+        public static final int itemRecyclerMobcastPdfLikeCountTv=0x7f0c0395;
+        public static final int itemRecyclerMobcastPdfLineView=0x7f0c0390;
+        public static final int itemRecyclerMobcastPdfLinkTv=0x7f0c0397;
+        public static final int itemRecyclerMobcastPdfReadView=0x7f0c038f;
+        public static final int itemRecyclerMobcastPdfRootLayout=0x7f0c038e;
+        public static final int itemRecyclerMobcastPdfTitleTv=0x7f0c0392;
+        public static final int itemRecyclerMobcastPdfViewCountTv=0x7f0c0396;
+        public static final int itemRecyclerMobcastPptByLayout=0x7f0c03a2;
+        public static final int itemRecyclerMobcastPptByTv=0x7f0c03a3;
+        public static final int itemRecyclerMobcastPptDetailFileInfoDetailTv=0x7f0c03ab;
+        public static final int itemRecyclerMobcastPptDetailFileInfoLayout=0x7f0c03a9;
+        public static final int itemRecyclerMobcastPptDetailFileInfoNameTv=0x7f0c03aa;
+        public static final int itemRecyclerMobcastPptDetailFileTypeIv=0x7f0c03a8;
+        public static final int itemRecyclerMobcastPptDetailLayout=0x7f0c03a7;
+        public static final int itemRecyclerMobcastPptIndicatorImageView=0x7f0c03a0;
+        public static final int itemRecyclerMobcastPptLikeCountTv=0x7f0c03a4;
+        public static final int itemRecyclerMobcastPptLineView=0x7f0c039f;
+        public static final int itemRecyclerMobcastPptLinkTv=0x7f0c03a6;
+        public static final int itemRecyclerMobcastPptReadView=0x7f0c039e;
+        public static final int itemRecyclerMobcastPptRootLayout=0x7f0c039d;
+        public static final int itemRecyclerMobcastPptTitleTv=0x7f0c03a1;
+        public static final int itemRecyclerMobcastPptViewCountTv=0x7f0c03a5;
+        public static final int itemRecyclerMobcastTextByLayout=0x7f0c03b1;
+        public static final int itemRecyclerMobcastTextByTv=0x7f0c03b2;
+        public static final int itemRecyclerMobcastTextIndicatorImageView=0x7f0c03af;
+        public static final int itemRecyclerMobcastTextLikeCountTv=0x7f0c03b3;
+        public static final int itemRecyclerMobcastTextLineView=0x7f0c03ae;
+        public static final int itemRecyclerMobcastTextLinkTv=0x7f0c03b5;
+        public static final int itemRecyclerMobcastTextReadView=0x7f0c03ad;
+        public static final int itemRecyclerMobcastTextRootLayout=0x7f0c03ac;
+        public static final int itemRecyclerMobcastTextSummaryTv=0x7f0c03b6;
+        public static final int itemRecyclerMobcastTextTitleTv=0x7f0c03b0;
+        public static final int itemRecyclerMobcastTextViewCountTv=0x7f0c03b4;
+        public static final int itemRecyclerMobcastVideoByLayout=0x7f0c03bc;
+        public static final int itemRecyclerMobcastVideoByTv=0x7f0c03bd;
+        public static final int itemRecyclerMobcastVideoDurationTv=0x7f0c03c5;
+        public static final int itemRecyclerMobcastVideoIndicatorImageView=0x7f0c03ba;
+        public static final int itemRecyclerMobcastVideoLikeCountTv=0x7f0c03be;
+        public static final int itemRecyclerMobcastVideoLineView=0x7f0c03b9;
+        public static final int itemRecyclerMobcastVideoLinkTv=0x7f0c03c0;
+        public static final int itemRecyclerMobcastVideoLoadingProgress=0x7f0c03c4;
+        public static final int itemRecyclerMobcastVideoPlayImageIv=0x7f0c03c3;
+        public static final int itemRecyclerMobcastVideoReadView=0x7f0c03b8;
+        public static final int itemRecyclerMobcastVideoRootLayout=0x7f0c03b7;
+        public static final int itemRecyclerMobcastVideoThumbnailImageIv=0x7f0c03c2;
+        public static final int itemRecyclerMobcastVideoTitleTv=0x7f0c03bb;
+        public static final int itemRecyclerMobcastVideoViewCountTv=0x7f0c03bf;
+        public static final int itemRecyclerMobcastVideoViewLayout=0x7f0c03c1;
+        public static final int itemRecyclerMobcastXlsByLayout=0x7f0c03cb;
+        public static final int itemRecyclerMobcastXlsByTv=0x7f0c03cc;
+        public static final int itemRecyclerMobcastXlsDetailFileInfoDetailTv=0x7f0c03d4;
+        public static final int itemRecyclerMobcastXlsDetailFileInfoLayout=0x7f0c03d2;
+        public static final int itemRecyclerMobcastXlsDetailFileInfoNameTv=0x7f0c03d3;
+        public static final int itemRecyclerMobcastXlsDetailFileTypeIv=0x7f0c03d1;
+        public static final int itemRecyclerMobcastXlsDetailLayout=0x7f0c03d0;
+        public static final int itemRecyclerMobcastXlsIndicatorImageView=0x7f0c03c9;
+        public static final int itemRecyclerMobcastXlsLikeCountTv=0x7f0c03cd;
+        public static final int itemRecyclerMobcastXlsLineView=0x7f0c03c8;
+        public static final int itemRecyclerMobcastXlsLinkTv=0x7f0c03cf;
+        public static final int itemRecyclerMobcastXlsReadView=0x7f0c03c7;
+        public static final int itemRecyclerMobcastXlsRootLayout=0x7f0c03c6;
+        public static final int itemRecyclerMobcastXlsTitleTv=0x7f0c03ca;
+        public static final int itemRecyclerMobcastXlsViewCountTv=0x7f0c03ce;
+        public static final int itemRecyclerReadView=0x7f0c0308;
+        public static final int itemRecyclerRecruitmentArrowIv=0x7f0c03dd;
+        public static final int itemRecyclerRecruitmentIndicatorDateTv=0x7f0c03d9;
+        public static final int itemRecyclerRecruitmentIndicatorImageView=0x7f0c03d8;
+        public static final int itemRecyclerRecruitmentIndicatorMonthTv=0x7f0c03da;
+        public static final int itemRecyclerRecruitmentLineView=0x7f0c03d7;
+        public static final int itemRecyclerRecruitmentReadView=0x7f0c03d6;
+        public static final int itemRecyclerRecruitmentRootLayout=0x7f0c03d5;
+        public static final int itemRecyclerRecruitmentSummaryTv=0x7f0c03dc;
+        public static final int itemRecyclerRecruitmentTitleTv=0x7f0c03db;
+        public static final int itemRecyclerTrainingAudioByLayout=0x7f0c03e3;
+        public static final int itemRecyclerTrainingAudioByTv=0x7f0c03e4;
+        public static final int itemRecyclerTrainingAudioDetailFileInfoDetailTv=0x7f0c03ec;
+        public static final int itemRecyclerTrainingAudioDetailFileInfoLayout=0x7f0c03ea;
+        public static final int itemRecyclerTrainingAudioDetailFileInfoNameTv=0x7f0c03eb;
+        public static final int itemRecyclerTrainingAudioDetailFileTypeIv=0x7f0c03e9;
+        public static final int itemRecyclerTrainingAudioDetailLayout=0x7f0c03e8;
+        public static final int itemRecyclerTrainingAudioIndicatorImageView=0x7f0c03e1;
+        public static final int itemRecyclerTrainingAudioLikeCountTv=0x7f0c03e5;
+        public static final int itemRecyclerTrainingAudioLineView=0x7f0c03e0;
+        public static final int itemRecyclerTrainingAudioLinkTv=0x7f0c03e7;
+        public static final int itemRecyclerTrainingAudioReadView=0x7f0c03df;
+        public static final int itemRecyclerTrainingAudioRootLayout=0x7f0c03de;
+        public static final int itemRecyclerTrainingAudioSummaryTv=0x7f0c03ed;
+        public static final int itemRecyclerTrainingAudioTitleTv=0x7f0c03e2;
+        public static final int itemRecyclerTrainingAudioViewCountTv=0x7f0c03e6;
+        public static final int itemRecyclerTrainingDocByLayout=0x7f0c03f3;
+        public static final int itemRecyclerTrainingDocByTv=0x7f0c03f4;
+        public static final int itemRecyclerTrainingDocDetailFileInfoDetailTv=0x7f0c03fc;
+        public static final int itemRecyclerTrainingDocDetailFileInfoLayout=0x7f0c03fa;
+        public static final int itemRecyclerTrainingDocDetailFileInfoNameTv=0x7f0c03fb;
+        public static final int itemRecyclerTrainingDocDetailFileTypeIv=0x7f0c03f9;
+        public static final int itemRecyclerTrainingDocDetailLayout=0x7f0c03f8;
+        public static final int itemRecyclerTrainingDocIndicatorImageView=0x7f0c03f1;
+        public static final int itemRecyclerTrainingDocLikeCountTv=0x7f0c03f5;
+        public static final int itemRecyclerTrainingDocLineView=0x7f0c03f0;
+        public static final int itemRecyclerTrainingDocLinkTv=0x7f0c03f7;
+        public static final int itemRecyclerTrainingDocReadView=0x7f0c03ef;
+        public static final int itemRecyclerTrainingDocRootLayout=0x7f0c03ee;
+        public static final int itemRecyclerTrainingDocTitleTv=0x7f0c03f2;
+        public static final int itemRecyclerTrainingDocViewCountTv=0x7f0c03f6;
+        public static final int itemRecyclerTrainingImageByLayout=0x7f0c0402;
+        public static final int itemRecyclerTrainingImageByTv=0x7f0c0403;
+        public static final int itemRecyclerTrainingImageIndicatorImageView=0x7f0c0400;
+        public static final int itemRecyclerTrainingImageLikeCountTv=0x7f0c0404;
+        public static final int itemRecyclerTrainingImageLineView=0x7f0c03ff;
+        public static final int itemRecyclerTrainingImageLinkTv=0x7f0c0406;
+        public static final int itemRecyclerTrainingImageLoadingProgress=0x7f0c0409;
+        public static final int itemRecyclerTrainingImageMainImageIv=0x7f0c0408;
+        public static final int itemRecyclerTrainingImageReadView=0x7f0c03fe;
+        public static final int itemRecyclerTrainingImageRootLayout=0x7f0c03fd;
+        public static final int itemRecyclerTrainingImageTitleTv=0x7f0c0401;
+        public static final int itemRecyclerTrainingImageViewCountTv=0x7f0c0405;
+        public static final int itemRecyclerTrainingImageViewPagerLayout=0x7f0c0407;
+        public static final int itemRecyclerTrainingInteractiveByLayout=0x7f0c040f;
+        public static final int itemRecyclerTrainingInteractiveByTv=0x7f0c0410;
+        public static final int itemRecyclerTrainingInteractiveDetailLayout=0x7f0c0413;
+        public static final int itemRecyclerTrainingInteractiveDetailLinkTv=0x7f0c0414;
+        public static final int itemRecyclerTrainingInteractiveIndicatorImageView=0x7f0c040d;
+        public static final int itemRecyclerTrainingInteractiveLikeCountTv=0x7f0c0411;
+        public static final int itemRecyclerTrainingInteractiveLineView=0x7f0c040c;
+        public static final int itemRecyclerTrainingInteractiveReadView=0x7f0c040b;
+        public static final int itemRecyclerTrainingInteractiveRootLayout=0x7f0c040a;
+        public static final int itemRecyclerTrainingInteractiveTitleTv=0x7f0c040e;
+        public static final int itemRecyclerTrainingInteractiveViewCountTv=0x7f0c0412;
+        public static final int itemRecyclerTrainingPdfByLayout=0x7f0c041a;
+        public static final int itemRecyclerTrainingPdfByTv=0x7f0c041b;
+        public static final int itemRecyclerTrainingPdfDetailFileInfoDetailTv=0x7f0c0423;
+        public static final int itemRecyclerTrainingPdfDetailFileInfoLayout=0x7f0c0421;
+        public static final int itemRecyclerTrainingPdfDetailFileInfoNameTv=0x7f0c0422;
+        public static final int itemRecyclerTrainingPdfDetailFileTypeIv=0x7f0c0420;
+        public static final int itemRecyclerTrainingPdfDetailLayout=0x7f0c041f;
+        public static final int itemRecyclerTrainingPdfIndicatorImageView=0x7f0c0418;
+        public static final int itemRecyclerTrainingPdfLikeCountTv=0x7f0c041c;
+        public static final int itemRecyclerTrainingPdfLineView=0x7f0c0417;
+        public static final int itemRecyclerTrainingPdfLinkTv=0x7f0c041e;
+        public static final int itemRecyclerTrainingPdfReadView=0x7f0c0416;
+        public static final int itemRecyclerTrainingPdfRootLayout=0x7f0c0415;
+        public static final int itemRecyclerTrainingPdfTitleTv=0x7f0c0419;
+        public static final int itemRecyclerTrainingPdfViewCountTv=0x7f0c041d;
+        public static final int itemRecyclerTrainingPptByLayout=0x7f0c0429;
+        public static final int itemRecyclerTrainingPptByTv=0x7f0c042a;
+        public static final int itemRecyclerTrainingPptDetailFileInfoDetailTv=0x7f0c0432;
+        public static final int itemRecyclerTrainingPptDetailFileInfoLayout=0x7f0c0430;
+        public static final int itemRecyclerTrainingPptDetailFileInfoNameTv=0x7f0c0431;
+        public static final int itemRecyclerTrainingPptDetailFileTypeIv=0x7f0c042f;
+        public static final int itemRecyclerTrainingPptDetailLayout=0x7f0c042e;
+        public static final int itemRecyclerTrainingPptIndicatorImageView=0x7f0c0427;
+        public static final int itemRecyclerTrainingPptLikeCountTv=0x7f0c042b;
+        public static final int itemRecyclerTrainingPptLineView=0x7f0c0426;
+        public static final int itemRecyclerTrainingPptLinkTv=0x7f0c042d;
+        public static final int itemRecyclerTrainingPptReadView=0x7f0c0425;
+        public static final int itemRecyclerTrainingPptRootLayout=0x7f0c0424;
+        public static final int itemRecyclerTrainingPptTitleTv=0x7f0c0428;
+        public static final int itemRecyclerTrainingPptViewCountTv=0x7f0c042c;
+        public static final int itemRecyclerTrainingQuizAttemptedLayout=0x7f0c0441;
+        public static final int itemRecyclerTrainingQuizByLayout=0x7f0c0438;
+        public static final int itemRecyclerTrainingQuizByTv=0x7f0c0439;
+        public static final int itemRecyclerTrainingQuizDetailAttemptedTv=0x7f0c0442;
+        public static final int itemRecyclerTrainingQuizDetailLayout=0x7f0c043c;
+        public static final int itemRecyclerTrainingQuizDetailPointsTv=0x7f0c0444;
+        public static final int itemRecyclerTrainingQuizDetailQuestionTv=0x7f0c043e;
+        public static final int itemRecyclerTrainingQuizDetailTimeTv=0x7f0c0440;
+        public static final int itemRecyclerTrainingQuizIndicatorImageView=0x7f0c0436;
+        public static final int itemRecyclerTrainingQuizLikeCountTv=0x7f0c043a;
+        public static final int itemRecyclerTrainingQuizLineView=0x7f0c0435;
+        public static final int itemRecyclerTrainingQuizPointsLayout=0x7f0c0443;
+        public static final int itemRecyclerTrainingQuizQuestionLayout=0x7f0c043d;
+        public static final int itemRecyclerTrainingQuizReadView=0x7f0c0434;
+        public static final int itemRecyclerTrainingQuizRootLayout=0x7f0c0433;
+        public static final int itemRecyclerTrainingQuizTimeLayout=0x7f0c043f;
+        public static final int itemRecyclerTrainingQuizTitleTv=0x7f0c0437;
+        public static final int itemRecyclerTrainingQuizViewCountTv=0x7f0c043b;
+        public static final int itemRecyclerTrainingTextByLayout=0x7f0c044a;
+        public static final int itemRecyclerTrainingTextByTv=0x7f0c044b;
+        public static final int itemRecyclerTrainingTextIndicatorImageView=0x7f0c0448;
+        public static final int itemRecyclerTrainingTextLikeCountTv=0x7f0c044c;
+        public static final int itemRecyclerTrainingTextLineView=0x7f0c0447;
+        public static final int itemRecyclerTrainingTextLinkTv=0x7f0c044e;
+        public static final int itemRecyclerTrainingTextReadView=0x7f0c0446;
+        public static final int itemRecyclerTrainingTextRootLayout=0x7f0c0445;
+        public static final int itemRecyclerTrainingTextSummaryTv=0x7f0c044f;
+        public static final int itemRecyclerTrainingTextTitleTv=0x7f0c0449;
+        public static final int itemRecyclerTrainingTextViewCountTv=0x7f0c044d;
+        public static final int itemRecyclerTrainingVideoByLayout=0x7f0c0455;
+        public static final int itemRecyclerTrainingVideoByTv=0x7f0c0456;
+        public static final int itemRecyclerTrainingVideoDurationTv=0x7f0c045e;
+        public static final int itemRecyclerTrainingVideoIndicatorImageView=0x7f0c0453;
+        public static final int itemRecyclerTrainingVideoLikeCountTv=0x7f0c0457;
+        public static final int itemRecyclerTrainingVideoLineView=0x7f0c0452;
+        public static final int itemRecyclerTrainingVideoLinkTv=0x7f0c0459;
+        public static final int itemRecyclerTrainingVideoLoadingProgress=0x7f0c045c;
+        public static final int itemRecyclerTrainingVideoPlayImageIv=0x7f0c045d;
+        public static final int itemRecyclerTrainingVideoReadView=0x7f0c0451;
+        public static final int itemRecyclerTrainingVideoRootLayout=0x7f0c0450;
+        public static final int itemRecyclerTrainingVideoThumbnailImageIv=0x7f0c045b;
+        public static final int itemRecyclerTrainingVideoTitleTv=0x7f0c0454;
+        public static final int itemRecyclerTrainingVideoViewCountTv=0x7f0c0458;
+        public static final int itemRecyclerTrainingVideoViewLayout=0x7f0c045a;
+        public static final int itemRecyclerTrainingXlsByLayout=0x7f0c0464;
+        public static final int itemRecyclerTrainingXlsByTv=0x7f0c0465;
+        public static final int itemRecyclerTrainingXlsDetailFileInfoDetailTv=0x7f0c046d;
+        public static final int itemRecyclerTrainingXlsDetailFileInfoLayout=0x7f0c046b;
+        public static final int itemRecyclerTrainingXlsDetailFileInfoNameTv=0x7f0c046c;
+        public static final int itemRecyclerTrainingXlsDetailFileTypeIv=0x7f0c046a;
+        public static final int itemRecyclerTrainingXlsDetailLayout=0x7f0c0469;
+        public static final int itemRecyclerTrainingXlsIndicatorImageView=0x7f0c0462;
+        public static final int itemRecyclerTrainingXlsLikeCountTv=0x7f0c0466;
+        public static final int itemRecyclerTrainingXlsLineView=0x7f0c0461;
+        public static final int itemRecyclerTrainingXlsLinkTv=0x7f0c0468;
+        public static final int itemRecyclerTrainingXlsReadView=0x7f0c0460;
+        public static final int itemRecyclerTrainingXlsRootLayout=0x7f0c045f;
+        public static final int itemRecyclerTrainingXlsTitleTv=0x7f0c0463;
+        public static final int itemRecyclerTrainingXlsViewCountTv=0x7f0c0467;
+        public static final int itemSimpleLayout=0x7f0c046f;
+        public static final int itemSimpleTextView=0x7f0c0470;
+        public static final int itemSpinnerTextView=0x7f0c0471;
+        public static final int label=0x7f0c0485;
+        public static final int layoutDrawerSearchMotherSearchAllCheckbox=0x7f0c02dc;
+        public static final int layoutDrawerSearchMotherSearchAudioCheckbox=0x7f0c02dd;
+        public static final int layoutDrawerSearchMotherSearchBy=0x7f0c02d5;
+        public static final int layoutDrawerSearchMotherSearchByCheckbox=0x7f0c02de;
+        public static final int layoutDrawerSearchMotherSearchByDivider=0x7f0c02d6;
+        public static final int layoutDrawerSearchMotherSearchDocCheckbox=0x7f0c02df;
+        public static final int layoutDrawerSearchMotherSearchFeedbackCheckbox=0x7f0c02e0;
+        public static final int layoutDrawerSearchMotherSearchFor=0x7f0c02da;
+        public static final int layoutDrawerSearchMotherSearchForDivider=0x7f0c02db;
+        public static final int layoutDrawerSearchMotherSearchForLayout=0x7f0c02d9;
+        public static final int layoutDrawerSearchMotherSearchImageCheckbox=0x7f0c02e1;
+        public static final int layoutDrawerSearchMotherSearchLiveStreamCheckbox=0x7f0c02e2;
+        public static final int layoutDrawerSearchMotherSearchLocalCheckbox=0x7f0c02d7;
+        public static final int layoutDrawerSearchMotherSearchQuizCheckbox=0x7f0c02e5;
+        public static final int layoutDrawerSearchMotherSearchTextCheckbox=0x7f0c02e3;
+        public static final int layoutDrawerSearchMotherSearchVideoCheckbox=0x7f0c02e4;
+        public static final int layoutDrawerSearchMotherSearchWebCheckbox=0x7f0c02d8;
+        public static final int layoutEmptyMessageTv=0x7f0c0473;
+        public static final int layoutEmptyRefreshBtn=0x7f0c0474;
+        public static final int layoutEmptyTitleTv=0x7f0c0472;
+        public static final int layoutNewBroadcastTv=0x7f0c047a;
+        public static final int left=0x7f0c0032;
+        public static final int line1=0x7f0c0495;
+        public static final int line3=0x7f0c0498;
+        public static final int listMode=0x7f0c0017;
+        public static final int list_item=0x7f0c0049;
+        public static final int logo=0x7f0c04a0;
+        public static final int mcab_toolbar=0x7f0c000f;
+        public static final int media_actions=0x7f0c0493;
+        public static final int mediacontroller_progress=0x7f0c048d;
+        public static final int mic=0x7f0c04a2;
+        public static final int middle=0x7f0c002d;
+        public static final int minMax=0x7f0c047e;
+        public static final int multiply=0x7f0c001f;
+        public static final int never=0x7f0c0027;
+        public static final int next=0x7f0c048b;
+        public static final int none=0x7f0c0012;
+        public static final int normal=0x7f0c0013;
+        public static final int number_indicator_spinner_content=0x7f0c049c;
+        public static final int pager=0x7f0c0070;
+        public static final int parentPanel=0x7f0c004c;
+        public static final int pause=0x7f0c0489;
+        public static final int pb=0x7f0c04a3;
+        public static final int prev=0x7f0c0487;
+        public static final int progress_circular=0x7f0c0007;
+        public static final int progress_horizontal=0x7f0c0008;
+        public static final int radio=0x7f0c0059;
+        public static final int results=0x7f0c04a5;
+        public static final int rew=0x7f0c0488;
+        public static final int right=0x7f0c0033;
+        public static final int rootLayout=0x7f0c008b;
+        public static final int satellite=0x7f0c0014;
+        public static final int screen=0x7f0c0020;
+        public static final int scroll=0x7f0c0242;
+        public static final int scrollView=0x7f0c0051;
+        public static final int scroll_wo=0x7f0c0138;
+        public static final int search=0x7f0c04a1;
+        public static final int searchEmptyLayout=0x7f0c0477;
+        public static final int searchProgressLayout=0x7f0c0478;
+        public static final int searchProgressLayoutTv=0x7f0c0479;
+        public static final int search_badge=0x7f0c0063;
+        public static final int search_bar=0x7f0c0062;
+        public static final int search_button=0x7f0c0064;
+        public static final int search_close_btn=0x7f0c0069;
+        public static final int search_edit_frame=0x7f0c0065;
+        public static final int search_go_btn=0x7f0c006b;
+        public static final int search_mag_icon=0x7f0c0066;
+        public static final int search_plate=0x7f0c0067;
+        public static final int search_root=0x7f0c049e;
+        public static final int search_src_text=0x7f0c0068;
+        public static final int search_voice_btn=0x7f0c006c;
+        public static final int searchbox=0x7f0c009e;
+        public static final int searchbox_rfl=0x7f0c049d;
+        public static final int sectionBirthdayHeader=0x7f0c04a7;
+        public static final int select_dialog_listview=0x7f0c006d;
+        public static final int shape_bacground=0x7f0c04b2;
+        public static final int shimmer_cw_0=0x7f0c0036;
+        public static final int shimmer_cw_180=0x7f0c0037;
+        public static final int shimmer_cw_270=0x7f0c0038;
+        public static final int shimmer_cw_90=0x7f0c0039;
+        public static final int shimmer_linear=0x7f0c003a;
+        public static final int shimmer_radial=0x7f0c003b;
+        public static final int shimmer_restart=0x7f0c0034;
+        public static final int shimmer_reverse=0x7f0c0035;
+        public static final int shortcut=0x7f0c0058;
+        public static final int showCustom=0x7f0c001b;
+        public static final int showHome=0x7f0c001c;
+        public static final int showTitle=0x7f0c001d;
+        public static final int sliding_tab_layout=0x7f0c006f;
+        public static final int sliding_tabs=0x7f0c0476;
+        public static final int snackBar=0x7f0c04a6;
+        public static final int snackButton=0x7f0c000b;
         /**  SnackBar 
          */
-        public static final int snackContainer=0x7f0b0009;
-        public static final int snackMessage=0x7f0b000a;
-        public static final int spb_interpolator_accelerate=0x7f0b003c;
-        public static final int spb_interpolator_acceleratedecelerate=0x7f0b003d;
-        public static final int spb_interpolator_decelerate=0x7f0b003e;
-        public static final int spb_interpolator_linear=0x7f0b003f;
-        public static final int split_action_bar=0x7f0b0004;
-        public static final int src_atop=0x7f0b0021;
-        public static final int src_in=0x7f0b0022;
-        public static final int src_over=0x7f0b0023;
-        public static final int start=0x7f0b002f;
-        public static final int status_bar_latest_event_content=0x7f0b0473;
-        public static final int submit_area=0x7f0b006a;
-        public static final int swipe=0x7f0b0489;
-        public static final int swipeRefreshLayout=0x7f0b0072;
-        public static final int tabMode=0x7f0b0018;
-        public static final int terrain=0x7f0b0015;
-        public static final int text=0x7f0b047a;
-        public static final int text2=0x7f0b0478;
-        public static final int textSpacerNoButtons=0x7f0b0052;
-        public static final int time=0x7f0b046f;
-        public static final int time_current=0x7f0b046d;
-        public static final int title=0x7f0b004b;
-        public static final int titleFrame=0x7f0b0467;
-        public static final int title_template=0x7f0b004e;
-        public static final int toolBarActionItemImageView=0x7f0b048b;
-        public static final int toolBarActionItemProgressWheel=0x7f0b048c;
-        public static final int toolBarActionItemRefresh=0x7f0b048a;
-        public static final int toolBarActionItemSubmit=0x7f0b048d;
-        public static final int toolBarActionSubmit=0x7f0b048e;
-        public static final int toolBarShadowLayout=0x7f0b048f;
-        public static final int toolbar=0x7f0b006e;
-        public static final int toolbarAwardIv=0x7f0b02d4;
-        public static final int toolbarAwardTv=0x7f0b02d5;
-        public static final int toolbarBackIv=0x7f0b02cc;
-        public static final int toolbarBirthdayIv=0x7f0b02d6;
-        public static final int toolbarBirthdayTv=0x7f0b02d7;
-        public static final int toolbarEv=0x7f0b02ce;
-        public static final int toolbarEventIv=0x7f0b02d2;
-        public static final int toolbarEventTv=0x7f0b02d3;
-        public static final int toolbarLayout=0x7f0b00b9;
-        public static final int toolbarOverflowIv=0x7f0b02d1;
-        public static final int toolbarSearch=0x7f0b02cf;
-        public static final int toolbarSearchClear=0x7f0b02d0;
-        public static final int toolbarSearchIv=0x7f0b02d8;
-        public static final int toolbarTitleTv=0x7f0b02cd;
-        public static final int topPanel=0x7f0b004d;
-        public static final int up=0x7f0b0001;
-        public static final int useLogo=0x7f0b001e;
-        public static final int view_offset_helper=0x7f0b0010;
-        public static final int visible=0x7f0b0041;
-        public static final int withText=0x7f0b0028;
-        public static final int wrap_content=0x7f0b0016;
+        public static final int snackContainer=0x7f0c0009;
+        public static final int snackMessage=0x7f0c000a;
+        public static final int spb_interpolator_accelerate=0x7f0c003c;
+        public static final int spb_interpolator_acceleratedecelerate=0x7f0c003d;
+        public static final int spb_interpolator_decelerate=0x7f0c003e;
+        public static final int spb_interpolator_linear=0x7f0c003f;
+        public static final int split_action_bar=0x7f0c0004;
+        public static final int src_atop=0x7f0c0021;
+        public static final int src_in=0x7f0c0022;
+        public static final int src_over=0x7f0c0023;
+        public static final int start=0x7f0c002f;
+        public static final int status_bar_latest_event_content=0x7f0c0492;
+        public static final int submit_area=0x7f0c006a;
+        public static final int swipe=0x7f0c04ab;
+        public static final int swipeRefreshLayout=0x7f0c0072;
+        public static final int tabMode=0x7f0c0018;
+        public static final int terrain=0x7f0c0015;
+        public static final int text=0x7f0c0499;
+        public static final int text2=0x7f0c0497;
+        public static final int textSpacerNoButtons=0x7f0c0052;
+        public static final int time=0x7f0c048e;
+        public static final int time_current=0x7f0c048c;
+        public static final int title=0x7f0c004b;
+        public static final int titleFrame=0x7f0c0486;
+        public static final int title_template=0x7f0c004e;
+        public static final int toolBarActionItemImageView=0x7f0c04ad;
+        public static final int toolBarActionItemProgressWheel=0x7f0c04ae;
+        public static final int toolBarActionItemRefresh=0x7f0c04ac;
+        public static final int toolBarActionItemSubmit=0x7f0c04af;
+        public static final int toolBarActionSubmit=0x7f0c04b0;
+        public static final int toolBarShadowLayout=0x7f0c04b1;
+        public static final int toolbar=0x7f0c006e;
+        public static final int toolbarAwardIv=0x7f0c02f1;
+        public static final int toolbarAwardTv=0x7f0c02f2;
+        public static final int toolbarBackIv=0x7f0c02e9;
+        public static final int toolbarBirthdayIv=0x7f0c02f3;
+        public static final int toolbarBirthdayTv=0x7f0c02f4;
+        public static final int toolbarEv=0x7f0c02eb;
+        public static final int toolbarEventIv=0x7f0c02ef;
+        public static final int toolbarEventTv=0x7f0c02f0;
+        public static final int toolbarLayout=0x7f0c00bf;
+        public static final int toolbarOverflowIv=0x7f0c02ee;
+        public static final int toolbarSearch=0x7f0c02ec;
+        public static final int toolbarSearchClear=0x7f0c02ed;
+        public static final int toolbarSearchIv=0x7f0c02f5;
+        public static final int toolbarTitleTv=0x7f0c02ea;
+        public static final int topPanel=0x7f0c004d;
+        public static final int tv_content=0x7f0c04a9;
+        public static final int tv_dismiss=0x7f0c04aa;
+        public static final int up=0x7f0c0001;
+        public static final int useLogo=0x7f0c001e;
+        public static final int view_offset_helper=0x7f0c0010;
+        public static final int visible=0x7f0c0041;
+        public static final int withText=0x7f0c0028;
+        public static final int wrap_content=0x7f0c0016;
     }
     public static final class integer {
-        public static final int abc_config_activityDefaultDur=0x7f0a0001;
+        public static final int abc_config_activityDefaultDur=0x7f0b0001;
         /**  The duration (in milliseconds) of the activity open/close and fragment open/close animations. 
          */
-        public static final int abc_config_activityShortDur=0x7f0a0000;
+        public static final int abc_config_activityShortDur=0x7f0b0000;
         /** 
          The maximum number of action buttons that should be permitted within
          an action bar/action mode. This will be used to determine how many
@@ -5691,25 +5749,25 @@ containing a value of this type.
          an action bar/action mode. This will be used to determine how many
          showAsAction="ifRoom" items can fit. "always" items can override this. 
          */
-        public static final int abc_max_action_buttons=0x7f0a0004;
+        public static final int abc_max_action_buttons=0x7f0b0004;
         /**  BottomSheet : Any.Do Notification 
          */
-        public static final int anydo_limit=0x7f0a0011;
-        public static final int bs_grid_colum=0x7f0a0009;
-        public static final int bs_initial_grid_row=0x7f0a000a;
-        public static final int bs_initial_list_row=0x7f0a000b;
-        public static final int cancel_button_image_alpha=0x7f0a0003;
-        public static final int default_circle_indicator_orientation=0x7f0a0007;
-        public static final int fragment_feedback_ratingbar_stars_count=0x7f0a0008;
+        public static final int anydo_limit=0x7f0b0011;
+        public static final int bs_grid_colum=0x7f0b0009;
+        public static final int bs_initial_grid_row=0x7f0b000a;
+        public static final int bs_initial_list_row=0x7f0b000b;
+        public static final int cancel_button_image_alpha=0x7f0b0003;
+        public static final int default_circle_indicator_orientation=0x7f0b0007;
+        public static final int fragment_feedback_ratingbar_stars_count=0x7f0b0008;
         /**  End current session if app sleeps for a period of time 
          */
-        public static final int ga_sessionTimeout=0x7f0a0005;
-        public static final int max_lines=0x7f0a000c;
-        public static final int refresh_time_detail=0x7f0a000d;
-        public static final int refresh_time_mother=0x7f0a000e;
-        public static final int snackbar_text_max_lines=0x7f0a0006;
-        public static final int spb_default_interpolator=0x7f0a0010;
-        public static final int spb_default_sections_count=0x7f0a000f;
+        public static final int ga_sessionTimeout=0x7f0b0005;
+        public static final int max_lines=0x7f0b000c;
+        public static final int refresh_time_detail=0x7f0b000d;
+        public static final int refresh_time_mother=0x7f0b000e;
+        public static final int snackbar_text_max_lines=0x7f0b0006;
+        public static final int spb_default_interpolator=0x7f0b0010;
+        public static final int spb_default_sections_count=0x7f0b000f;
         /** 
          Maximum numerical value that will be shown in a status bar
          notification icon or in the notification itself. Will be replaced
@@ -5717,7 +5775,7 @@ containing a value of this type.
          UI.
     
          */
-        public static final int status_bar_notification_info_maxnum=0x7f0a0002;
+        public static final int status_bar_notification_info_maxnum=0x7f0b0002;
     }
     public static final class layout {
         public static final int abc_action_bar_title_item=0x7f030000;
@@ -5804,1397 +5862,1438 @@ containing a value of this type.
         public static final int dialog_progress_normal=0x7f030051;
         public static final int dialog_progress_word=0x7f030052;
         public static final int dialog_settings_birthday_notify_at=0x7f030053;
-        public static final int fragment_about=0x7f030054;
-        public static final int fragment_annoucement=0x7f030055;
-        public static final int fragment_app_feedback=0x7f030056;
-        public static final int fragment_audio=0x7f030057;
-        public static final int fragment_award_profile=0x7f030058;
-        public static final int fragment_birthday_profile=0x7f030059;
-        public static final int fragment_capture=0x7f03005a;
-        public static final int fragment_chat=0x7f03005b;
-        public static final int fragment_chat_detail=0x7f03005c;
-        public static final int fragment_doc=0x7f03005d;
-        public static final int fragment_event_detail=0x7f03005e;
-        public static final int fragment_feedback=0x7f03005f;
-        public static final int fragment_feedback_multiple_check=0x7f030060;
-        public static final int fragment_feedback_rate_ratingbar=0x7f030061;
-        public static final int fragment_feedback_selective_radio=0x7f030062;
-        public static final int fragment_feedback_subjective_textview=0x7f030063;
-        public static final int fragment_filemanager=0x7f030064;
-        public static final int fragment_image=0x7f030065;
-        public static final int fragment_image_fullscreen=0x7f030066;
-        public static final int fragment_imageview=0x7f030067;
-        public static final int fragment_imageview_fullscreen=0x7f030068;
-        public static final int fragment_interactive=0x7f030069;
-        public static final int fragment_livestream_youtube=0x7f03006a;
-        public static final int fragment_mobcast=0x7f03006b;
-        public static final int fragment_news=0x7f03006c;
-        public static final int fragment_pdf=0x7f03006d;
-        public static final int fragment_ppt=0x7f03006e;
-        public static final int fragment_quiz=0x7f03006f;
-        public static final int fragment_quiz_multiple_check=0x7f030070;
-        public static final int fragment_quiz_score=0x7f030071;
-        public static final int fragment_quiz_score_view=0x7f030072;
-        public static final int fragment_quiz_selective_radio=0x7f030073;
-        public static final int fragment_recruitment_detail=0x7f030074;
-        public static final int fragment_recyclerview=0x7f030075;
-        public static final int fragment_recyclerview_wo_scrollbar=0x7f030076;
-        public static final int fragment_report=0x7f030077;
-        public static final int fragment_scrollview=0x7f030078;
-        public static final int fragment_settings=0x7f030079;
-        public static final int fragment_text=0x7f03007a;
-        public static final int fragment_training=0x7f03007b;
-        public static final int fragment_tutoriala=0x7f03007c;
-        public static final int fragment_tutorialb=0x7f03007d;
-        public static final int fragment_tutorialc=0x7f03007e;
-        public static final int fragment_video=0x7f03007f;
-        public static final int fragment_video_fullscreen=0x7f030080;
-        public static final int fragment_webview=0x7f030081;
-        public static final int fragment_whatwedo=0x7f030082;
-        public static final int fragment_xls=0x7f030083;
-        public static final int include_crouton_handle=0x7f030084;
-        public static final int include_crouton_handle_mother=0x7f030085;
-        public static final int include_layout_drawer=0x7f030086;
-        public static final int include_layout_drawer_search_mother=0x7f030087;
-        public static final int include_toolbar_action_layout=0x7f030088;
-        public static final int include_toolbar_country_select=0x7f030089;
-        public static final int include_toolbar_mother=0x7f03008a;
-        public static final int item_chat_text=0x7f03008b;
-        public static final int item_chips_layout=0x7f03008c;
-        public static final int item_drawer=0x7f03008d;
-        public static final int item_language=0x7f03008e;
-        public static final int item_recycler_award=0x7f03008f;
-        public static final int item_recycler_birthday=0x7f030090;
-        public static final int item_recycler_birthday_sections=0x7f030091;
-        public static final int item_recycler_capture=0x7f030092;
-        public static final int item_recycler_chat=0x7f030093;
-        public static final int item_recycler_event=0x7f030094;
-        public static final int item_recycler_mis_text=0x7f030095;
-        public static final int item_recycler_mobcast_audio=0x7f030096;
-        public static final int item_recycler_mobcast_doc=0x7f030097;
-        public static final int item_recycler_mobcast_feedback=0x7f030098;
-        public static final int item_recycler_mobcast_image=0x7f030099;
-        public static final int item_recycler_mobcast_livestream=0x7f03009a;
-        public static final int item_recycler_mobcast_news=0x7f03009b;
-        public static final int item_recycler_mobcast_pdf=0x7f03009c;
-        public static final int item_recycler_mobcast_ppt=0x7f03009d;
-        public static final int item_recycler_mobcast_text=0x7f03009e;
-        public static final int item_recycler_mobcast_video=0x7f03009f;
-        public static final int item_recycler_mobcast_xls=0x7f0300a0;
-        public static final int item_recycler_recruitment=0x7f0300a1;
-        public static final int item_recycler_training_audio=0x7f0300a2;
-        public static final int item_recycler_training_doc=0x7f0300a3;
-        public static final int item_recycler_training_image=0x7f0300a4;
-        public static final int item_recycler_training_interactive=0x7f0300a5;
-        public static final int item_recycler_training_pdf=0x7f0300a6;
-        public static final int item_recycler_training_ppt=0x7f0300a7;
-        public static final int item_recycler_training_quiz=0x7f0300a8;
-        public static final int item_recycler_training_text=0x7f0300a9;
-        public static final int item_recycler_training_video=0x7f0300aa;
-        public static final int item_recycler_training_xls=0x7f0300ab;
-        public static final int item_search_history=0x7f0300ac;
-        public static final int item_simple=0x7f0300ad;
-        public static final int item_spinner=0x7f0300ae;
-        public static final int layout_empty=0x7f0300af;
-        public static final int layout_footerview=0x7f0300b0;
-        public static final int layout_headview=0x7f0300b1;
-        public static final int layout_mother=0x7f0300b2;
-        public static final int layout_mother_search=0x7f0300b3;
-        public static final int mcab_toolbar=0x7f0300b4;
-        public static final int md_dialog_basic=0x7f0300b5;
-        public static final int md_dialog_custom=0x7f0300b6;
-        public static final int md_dialog_input=0x7f0300b7;
-        public static final int md_dialog_list=0x7f0300b8;
-        public static final int md_dialog_progress=0x7f0300b9;
-        public static final int md_dialog_progress_indeterminate=0x7f0300ba;
-        public static final int md_listitem=0x7f0300bb;
-        public static final int md_listitem_multichoice=0x7f0300bc;
-        public static final int md_listitem_singlechoice=0x7f0300bd;
-        public static final int md_simplelist_item=0x7f0300be;
-        public static final int md_stub_actionbuttons=0x7f0300bf;
-        public static final int md_stub_inputpref=0x7f0300c0;
-        public static final int md_stub_progress=0x7f0300c1;
-        public static final int md_stub_progress_indeterminate=0x7f0300c2;
-        public static final int md_stub_titleframe=0x7f0300c3;
-        public static final int media_controller=0x7f0300c4;
-        public static final int notification_media_action=0x7f0300c5;
-        public static final int notification_media_cancel_action=0x7f0300c6;
-        public static final int notification_template_big_media=0x7f0300c7;
-        public static final int notification_template_big_media_narrow=0x7f0300c8;
-        public static final int notification_template_lines=0x7f0300c9;
-        public static final int notification_template_media=0x7f0300ca;
-        public static final int notification_template_part_chronometer=0x7f0300cb;
-        public static final int notification_template_part_time=0x7f0300cc;
-        public static final int number_indicator_spinner=0x7f0300cd;
-        public static final int padding=0x7f0300ce;
-        public static final int play_search_container=0x7f0300cf;
-        public static final int pop_up_announcepager=0x7f0300d0;
-        public static final int sb__snack=0x7f0300d1;
-        public static final int sb__snack_container=0x7f0300d2;
-        public static final int section_layout_birthday_heading=0x7f0300d3;
-        public static final int select_dialog_item_material=0x7f0300d4;
-        public static final int select_dialog_multichoice_material=0x7f0300d5;
-        public static final int select_dialog_singlechoice_material=0x7f0300d6;
-        public static final int support_simple_spinner_dropdown_item=0x7f0300d7;
-        public static final int swipeback_layout=0x7f0300d8;
-        public static final int toolbar_actionitem_refresh=0x7f0300d9;
-        public static final int toolbar_actionitem_submit=0x7f0300da;
-        public static final int toolbar_announcement=0x7f0300db;
-        public static final int toolbar_country_search=0x7f0300dc;
-        public static final int toolbar_mother=0x7f0300dd;
-        public static final int toolbar_plain=0x7f0300de;
-        public static final int toolbar_plain_simple=0x7f0300df;
-        public static final int toolbar_shadow=0x7f0300e0;
+        public static final int dialog_settings_sync=0x7f030054;
+        public static final int fragment_about=0x7f030055;
+        public static final int fragment_annoucement=0x7f030056;
+        public static final int fragment_app_feedback=0x7f030057;
+        public static final int fragment_audio=0x7f030058;
+        public static final int fragment_award_profile=0x7f030059;
+        public static final int fragment_birthday_profile=0x7f03005a;
+        public static final int fragment_capture=0x7f03005b;
+        public static final int fragment_chat=0x7f03005c;
+        public static final int fragment_chat_detail=0x7f03005d;
+        public static final int fragment_doc=0x7f03005e;
+        public static final int fragment_event_detail=0x7f03005f;
+        public static final int fragment_feedback=0x7f030060;
+        public static final int fragment_feedback_multiple_check=0x7f030061;
+        public static final int fragment_feedback_rate_ratingbar=0x7f030062;
+        public static final int fragment_feedback_selective_radio=0x7f030063;
+        public static final int fragment_feedback_subjective_textview=0x7f030064;
+        public static final int fragment_filemanager=0x7f030065;
+        public static final int fragment_image=0x7f030066;
+        public static final int fragment_image_fullscreen=0x7f030067;
+        public static final int fragment_imageview=0x7f030068;
+        public static final int fragment_imageview_fullscreen=0x7f030069;
+        public static final int fragment_interactive=0x7f03006a;
+        public static final int fragment_livestream_youtube=0x7f03006b;
+        public static final int fragment_mobcast=0x7f03006c;
+        public static final int fragment_news=0x7f03006d;
+        public static final int fragment_pdf=0x7f03006e;
+        public static final int fragment_ppt=0x7f03006f;
+        public static final int fragment_quiz=0x7f030070;
+        public static final int fragment_quiz_multiple_check=0x7f030071;
+        public static final int fragment_quiz_score=0x7f030072;
+        public static final int fragment_quiz_score_view=0x7f030073;
+        public static final int fragment_quiz_selective_radio=0x7f030074;
+        public static final int fragment_recruitment_detail=0x7f030075;
+        public static final int fragment_recyclerview=0x7f030076;
+        public static final int fragment_recyclerview_wo_scrollbar=0x7f030077;
+        public static final int fragment_report=0x7f030078;
+        public static final int fragment_scrollview=0x7f030079;
+        public static final int fragment_settings=0x7f03007a;
+        public static final int fragment_text=0x7f03007b;
+        public static final int fragment_training=0x7f03007c;
+        public static final int fragment_tutoriala=0x7f03007d;
+        public static final int fragment_tutorialb=0x7f03007e;
+        public static final int fragment_tutorialc=0x7f03007f;
+        public static final int fragment_video=0x7f030080;
+        public static final int fragment_video_fullscreen=0x7f030081;
+        public static final int fragment_webview=0x7f030082;
+        public static final int fragment_whatwedo=0x7f030083;
+        public static final int fragment_xls=0x7f030084;
+        public static final int include_crouton_handle=0x7f030085;
+        public static final int include_crouton_handle_mother=0x7f030086;
+        public static final int include_layout_drawer=0x7f030087;
+        public static final int include_layout_drawer_search_mother=0x7f030088;
+        public static final int include_toolbar_action_layout=0x7f030089;
+        public static final int include_toolbar_country_select=0x7f03008a;
+        public static final int include_toolbar_mother=0x7f03008b;
+        public static final int item_chat_text=0x7f03008c;
+        public static final int item_chips_layout=0x7f03008d;
+        public static final int item_drawer=0x7f03008e;
+        public static final int item_language=0x7f03008f;
+        public static final int item_recycler_award=0x7f030090;
+        public static final int item_recycler_birthday=0x7f030091;
+        public static final int item_recycler_birthday_sections=0x7f030092;
+        public static final int item_recycler_capture=0x7f030093;
+        public static final int item_recycler_chat=0x7f030094;
+        public static final int item_recycler_event=0x7f030095;
+        public static final int item_recycler_mis_text=0x7f030096;
+        public static final int item_recycler_mobcast_audio=0x7f030097;
+        public static final int item_recycler_mobcast_doc=0x7f030098;
+        public static final int item_recycler_mobcast_feedback=0x7f030099;
+        public static final int item_recycler_mobcast_image=0x7f03009a;
+        public static final int item_recycler_mobcast_livestream=0x7f03009b;
+        public static final int item_recycler_mobcast_news=0x7f03009c;
+        public static final int item_recycler_mobcast_pdf=0x7f03009d;
+        public static final int item_recycler_mobcast_ppt=0x7f03009e;
+        public static final int item_recycler_mobcast_text=0x7f03009f;
+        public static final int item_recycler_mobcast_video=0x7f0300a0;
+        public static final int item_recycler_mobcast_xls=0x7f0300a1;
+        public static final int item_recycler_recruitment=0x7f0300a2;
+        public static final int item_recycler_training_audio=0x7f0300a3;
+        public static final int item_recycler_training_doc=0x7f0300a4;
+        public static final int item_recycler_training_image=0x7f0300a5;
+        public static final int item_recycler_training_interactive=0x7f0300a6;
+        public static final int item_recycler_training_pdf=0x7f0300a7;
+        public static final int item_recycler_training_ppt=0x7f0300a8;
+        public static final int item_recycler_training_quiz=0x7f0300a9;
+        public static final int item_recycler_training_text=0x7f0300aa;
+        public static final int item_recycler_training_video=0x7f0300ab;
+        public static final int item_recycler_training_xls=0x7f0300ac;
+        public static final int item_search_history=0x7f0300ad;
+        public static final int item_simple=0x7f0300ae;
+        public static final int item_spinner=0x7f0300af;
+        public static final int layout_empty=0x7f0300b0;
+        public static final int layout_footerview=0x7f0300b1;
+        public static final int layout_headview=0x7f0300b2;
+        public static final int layout_mother=0x7f0300b3;
+        public static final int layout_mother_search=0x7f0300b4;
+        public static final int layout_new_broadcast=0x7f0300b5;
+        public static final int mcab_toolbar=0x7f0300b6;
+        public static final int md_dialog_basic=0x7f0300b7;
+        public static final int md_dialog_custom=0x7f0300b8;
+        public static final int md_dialog_input=0x7f0300b9;
+        public static final int md_dialog_list=0x7f0300ba;
+        public static final int md_dialog_progress=0x7f0300bb;
+        public static final int md_dialog_progress_indeterminate=0x7f0300bc;
+        public static final int md_listitem=0x7f0300bd;
+        public static final int md_listitem_multichoice=0x7f0300be;
+        public static final int md_listitem_singlechoice=0x7f0300bf;
+        public static final int md_simplelist_item=0x7f0300c0;
+        public static final int md_stub_actionbuttons=0x7f0300c1;
+        public static final int md_stub_inputpref=0x7f0300c2;
+        public static final int md_stub_progress=0x7f0300c3;
+        public static final int md_stub_progress_indeterminate=0x7f0300c4;
+        public static final int md_stub_titleframe=0x7f0300c5;
+        public static final int media_controller=0x7f0300c6;
+        public static final int notification_media_action=0x7f0300c7;
+        public static final int notification_media_cancel_action=0x7f0300c8;
+        public static final int notification_template_big_media=0x7f0300c9;
+        public static final int notification_template_big_media_narrow=0x7f0300ca;
+        public static final int notification_template_lines=0x7f0300cb;
+        public static final int notification_template_media=0x7f0300cc;
+        public static final int notification_template_part_chronometer=0x7f0300cd;
+        public static final int notification_template_part_time=0x7f0300ce;
+        public static final int number_indicator_spinner=0x7f0300cf;
+        public static final int padding=0x7f0300d0;
+        public static final int play_search_container=0x7f0300d1;
+        public static final int pop_up_announcepager=0x7f0300d2;
+        public static final int sb__snack=0x7f0300d3;
+        public static final int sb__snack_container=0x7f0300d4;
+        public static final int section_layout_birthday_heading=0x7f0300d5;
+        public static final int select_dialog_item_material=0x7f0300d6;
+        public static final int select_dialog_multichoice_material=0x7f0300d7;
+        public static final int select_dialog_singlechoice_material=0x7f0300d8;
+        public static final int showcase_content=0x7f0300d9;
+        public static final int support_simple_spinner_dropdown_item=0x7f0300da;
+        public static final int swipeback_layout=0x7f0300db;
+        public static final int toolbar_actionitem_refresh=0x7f0300dc;
+        public static final int toolbar_actionitem_submit=0x7f0300dd;
+        public static final int toolbar_announcement=0x7f0300de;
+        public static final int toolbar_country_search=0x7f0300df;
+        public static final int toolbar_mother=0x7f0300e0;
+        public static final int toolbar_plain=0x7f0300e1;
+        public static final int toolbar_plain_simple=0x7f0300e2;
+        public static final int toolbar_shadow=0x7f0300e3;
     }
     public static final class menu {
-        public static final int context_menu_mobcast=0x7f0e0000;
-        public static final int context_menu_recruitment=0x7f0e0001;
-        public static final int context_menu_search=0x7f0e0002;
-        public static final int menu_about=0x7f0e0003;
-        public static final int menu_actionmode_file_manager_single=0x7f0e0004;
-        public static final int menu_anydo=0x7f0e0005;
-        public static final int menu_award=0x7f0e0006;
-        public static final int menu_birthday=0x7f0e0007;
-        public static final int menu_capture=0x7f0e0008;
-        public static final int menu_event=0x7f0e0009;
-        public static final int menu_event_detail=0x7f0e000a;
-        public static final int menu_file_storage=0x7f0e000b;
-        public static final int menu_help=0x7f0e000c;
-        public static final int menu_image_fullscreen=0x7f0e000d;
-        public static final int menu_mother=0x7f0e000e;
-        public static final int menu_profile=0x7f0e000f;
-        public static final int menu_quiz=0x7f0e0010;
-        public static final int menu_recruitment=0x7f0e0011;
-        public static final int menu_recruitment_detail=0x7f0e0012;
-        public static final int menu_search=0x7f0e0013;
-        public static final int menu_text_detail=0x7f0e0014;
-        public static final int menu_web=0x7f0e0015;
+        public static final int context_menu_mobcast=0x7f0f0000;
+        public static final int context_menu_recruitment=0x7f0f0001;
+        public static final int context_menu_search=0x7f0f0002;
+        public static final int menu_about=0x7f0f0003;
+        public static final int menu_actionmode_file_manager_single=0x7f0f0004;
+        public static final int menu_anydo=0x7f0f0005;
+        public static final int menu_award=0x7f0f0006;
+        public static final int menu_birthday=0x7f0f0007;
+        public static final int menu_capture=0x7f0f0008;
+        public static final int menu_event=0x7f0f0009;
+        public static final int menu_event_detail=0x7f0f000a;
+        public static final int menu_file_storage=0x7f0f000b;
+        public static final int menu_help=0x7f0f000c;
+        public static final int menu_image_fullscreen=0x7f0f000d;
+        public static final int menu_mother=0x7f0f000e;
+        public static final int menu_profile=0x7f0f000f;
+        public static final int menu_quiz=0x7f0f0010;
+        public static final int menu_recruitment=0x7f0f0011;
+        public static final int menu_recruitment_detail=0x7f0f0012;
+        public static final int menu_search=0x7f0f0013;
+        public static final int menu_text_detail=0x7f0f0014;
+        public static final int menu_web=0x7f0f0015;
+    }
+    public static final class raw {
+        public static final int notification_sound=0x7f060000;
     }
     public static final class string {
-        public static final int ALongTimeAgo=0x7f0700b5;
+        public static final int ALongTimeAgo=0x7f0800c1;
         /**  fragment_about 
  fragment_about 
          */
-        public static final int AboutActivityTitle=0x7f07016e;
-        public static final int AccessError=0x7f07019a;
+        public static final int AboutActivityTitle=0x7f080180;
+        public static final int AccessError=0x7f0801b7;
         /**  fragment_audio 
  fragment_audio 
          */
-        public static final int AudioDetailActivityTitle=0x7f070158;
+        public static final int AudioDetailActivityTitle=0x7f08016a;
         /**  activity_recycler_award 
  activity_recycler_award 
          */
-        public static final int AwardRecyclerActivityTitle=0x7f0700e9;
+        public static final int AwardRecyclerActivityTitle=0x7f0800f8;
         /**  fragment_birthday_profile 
  fragment_birthday_profile 
          */
-        public static final int BirthdayProfileActivityTitle=0x7f070165;
+        public static final int BirthdayProfileActivityTitle=0x7f080177;
         /**  activity recycler birthday 
  activity recycler birthday 
          */
-        public static final int BirthdayRecyclerActivityTitle=0x7f0700eb;
+        public static final int BirthdayRecyclerActivityTitle=0x7f0800fa;
         /**  activity_capture 
          */
-        public static final int CaptureActivityTitle=0x7f0700f0;
+        public static final int CaptureActivityTitle=0x7f080100;
         /**  item_simple 
  item_simple 
          */
-        public static final int CategoryActivityTitle=0x7f0701b0;
+        public static final int CategoryActivityTitle=0x7f0801cd;
         /**  activity_country_select 
  activity_country_select 
          */
-        public static final int CountrySelectActivityTitle=0x7f0700d5;
+        public static final int CountrySelectActivityTitle=0x7f0800e4;
         /**  fragment_doc 
  fragment_doc 
          */
-        public static final int DocDetailActivityTitle=0x7f07015e;
+        public static final int DocDetailActivityTitle=0x7f080170;
         /**  activity_edit_profile 
          */
-        public static final int EditProfileActivityTitle=0x7f0700ec;
-        public static final int EventDetailActivityTitle=0x7f070126;
+        public static final int EditProfileActivityTitle=0x7f0800fb;
+        public static final int EventDetailActivityTitle=0x7f080136;
         /**  activity_recycler_event 
  activity_recycler_event 
          */
-        public static final int EventRecyclerActivityTitle=0x7f0700ea;
-        public static final int ExternalStorage=0x7f0701a0;
+        public static final int EventRecyclerActivityTitle=0x7f0800f9;
+        public static final int ExternalStorage=0x7f0801bd;
         /**  fragment_feedback 
  fragment_feedback 
          */
-        public static final int FeedbackActivityTitle=0x7f070154;
-        public static final int FeedbackAppActivityTitle=0x7f07017f;
-        public static final int FileManagerActivityTitle=0x7f0701a6;
-        public static final int FileUploadLimit=0x7f07019c;
-        public static final int Folder=0x7f0701a3;
-        public static final int FreeOfTotal=0x7f070198;
-        public static final int GalleryInfo=0x7f0701a4;
-        public static final int GlobalSearch=0x7f0700b1;
+        public static final int FeedbackActivityTitle=0x7f080166;
+        public static final int FeedbackAppActivityTitle=0x7f080190;
+        public static final int FileManagerActivityTitle=0x7f0801c3;
+        public static final int FileUploadLimit=0x7f0801b9;
+        public static final int Folder=0x7f0801c0;
+        public static final int FreeOfTotal=0x7f0801b5;
+        public static final int GalleryInfo=0x7f0801c1;
+        public static final int GlobalSearch=0x7f0800bd;
         /**  fragment_image 
  fragment_image 
          */
-        public static final int ImageDetailActivityTitle=0x7f070156;
+        public static final int ImageDetailActivityTitle=0x7f080168;
         /**  fragment_interactive 
  fragment_interactive 
          */
-        public static final int InteractiveDetailActivityTitle=0x7f070164;
-        public static final int InternalStorage=0x7f07019f;
-        public static final int InviteFriends=0x7f0700b0;
+        public static final int InteractiveDetailActivityTitle=0x7f080176;
+        public static final int InternalStorage=0x7f0801bc;
+        public static final int InviteFriends=0x7f0800bc;
         /**  fragment_language 
  fragment_language 
          */
-        public static final int LanguageActivityTitle=0x7f070195;
-        public static final int LanguageCode=0x7f070065;
-        public static final int LanguageName=0x7f070063;
-        public static final int LanguageNameInEnglish=0x7f070064;
-        public static final int LastSeen=0x7f0700ae;
-        public static final int LastSeenDate=0x7f0700af;
-        public static final int Lately=0x7f0700b2;
-        public static final int LoginActivityTitle=0x7f0700ce;
+        public static final int LanguageActivityTitle=0x7f0801b2;
+        public static final int LanguageCode=0x7f080065;
+        public static final int LanguageName=0x7f080063;
+        public static final int LanguageNameInEnglish=0x7f080064;
+        public static final int LastSeen=0x7f0800ba;
+        public static final int LastSeenDate=0x7f0800bb;
+        public static final int Lately=0x7f0800be;
+        public static final int LoginActivityTitle=0x7f0800dd;
         /**  fragment_news 
  fragment_news 
          */
-        public static final int NewsDetailActivityTitle=0x7f070161;
-        public static final int NoFiles=0x7f07019b;
-        public static final int NoResult=0x7f0700d6;
-        public static final int NotMounted=0x7f07019d;
-        public static final int OK=0x7f0701a5;
-        public static final int Online=0x7f0700ad;
+        public static final int NewsDetailActivityTitle=0x7f080173;
+        public static final int NoFiles=0x7f0801b8;
+        public static final int NoResult=0x7f0800e5;
+        public static final int NotMounted=0x7f0801ba;
+        public static final int OK=0x7f0801c2;
+        public static final int Online=0x7f0800b9;
         /**  fragment_pdf 
  fragment_pdf 
          */
-        public static final int PdfDetailActivityTitle=0x7f07015d;
+        public static final int PdfDetailActivityTitle=0x7f08016f;
         /**  fragment_ppt 
  fragment_ppt 
          */
-        public static final int PptDetailActivityTitle=0x7f07015f;
-        public static final int QuizActivityTitle=0x7f07012f;
+        public static final int PptDetailActivityTitle=0x7f080171;
+        public static final int QuizActivityTitle=0x7f080141;
         /**  activity_recycler_recruitment 
          */
-        public static final int RecruitmentRecyclerActivityTitle=0x7f0700f1;
-        public static final int ReportActivityTitle=0x7f07017d;
-        public static final int SdCard=0x7f0701a2;
+        public static final int RecruitmentRecyclerActivityTitle=0x7f080101;
+        public static final int ReportActivityTitle=0x7f08018e;
+        public static final int SdCard=0x7f0801bf;
         /**  fragment_file_manager 
          */
-        public static final int SelectFile=0x7f070197;
-        public static final int SetProfileActivityTitle=0x7f0700e8;
-        public static final int SettingsActivityTitle=0x7f070191;
-        public static final int SystemRoot=0x7f0701a1;
+        public static final int SelectFile=0x7f0801b4;
+        public static final int SetProfileActivityTitle=0x7f0800f7;
+        public static final int SettingsActivityTitle=0x7f0801a9;
+        public static final int SystemRoot=0x7f0801be;
         /**  fragment_text 
  fragment_text 
          */
-        public static final int TextDetailActivityTitle=0x7f07015c;
-        public static final int TodayAt=0x7f0700ab;
-        public static final int UnknownError=0x7f070199;
-        public static final int UsbActive=0x7f07019e;
-        public static final int VerificationActivityTitle=0x7f0700e0;
+        public static final int TextDetailActivityTitle=0x7f08016e;
+        public static final int TodayAt=0x7f0800b7;
+        public static final int UnknownError=0x7f0801b6;
+        public static final int UsbActive=0x7f0801bb;
+        public static final int VerificationActivityTitle=0x7f0800ef;
         /**  fragment_video 
  fragment_video 
          */
-        public static final int VideoDetailActivityTitle=0x7f07015b;
+        public static final int VideoDetailActivityTitle=0x7f08016d;
         /**  fragment_webview 
  fragment_webview 
          */
-        public static final int WebViewActivity=0x7f070163;
-        public static final int WithinAMonth=0x7f0700b4;
-        public static final int WithinAWeek=0x7f0700b3;
+        public static final int WebViewActivity=0x7f080175;
+        public static final int WithinAMonth=0x7f0800c0;
+        public static final int WithinAWeek=0x7f0800bf;
         /**  fragment_xls 
  fragment_xls 
          */
-        public static final int XlsDetailActivityTitle=0x7f070160;
+        public static final int XlsDetailActivityTitle=0x7f080172;
         /**  Time 
  Time 
          */
-        public static final int Yesterday=0x7f0700aa;
-        public static final int YesterdayAt=0x7f0700ac;
+        public static final int Yesterday=0x7f0800b6;
+        public static final int YesterdayAt=0x7f0800b8;
         /**  fragment_livestream_youtube 
          */
-        public static final int YouTubeLiveStreamActivityTitle=0x7f070196;
+        public static final int YouTubeLiveStreamActivityTitle=0x7f0801b3;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
-        public static final int abc_action_bar_home_description=0x7f07001a;
+        public static final int abc_action_bar_home_description=0x7f08001a;
         /**  Formatting string for describing the action bar's title/home/up affordance.
          This is a single tappable "button" that includes the app icon, the Up indicator
          (usually a "<" chevron) and the window title text.
          %1$s is the title. %2$s is the description of what tapping/clicking the whole
          thing is going to do. 
          */
-        public static final int abc_action_bar_home_description_format=0x7f07001e;
+        public static final int abc_action_bar_home_description_format=0x7f08001e;
         /**  Just like action_bar_home_description_format, but this one will be used
          if the window is also providing subtitle text.
          %1$s is the title. %2$s is the subtitle. %3$s is the description of what
          tapping/clicking the whole thing is going to do. 
          */
-        public static final int abc_action_bar_home_subtitle_description_format=0x7f07001f;
+        public static final int abc_action_bar_home_subtitle_description_format=0x7f08001f;
         /**  Content description for the action bar "up" affordance. [CHAR LIMIT=NONE] 
          */
-        public static final int abc_action_bar_up_description=0x7f07001b;
+        public static final int abc_action_bar_up_description=0x7f08001b;
         /**  Content description for the action menu overflow button. [CHAR LIMIT=NONE] 
          */
-        public static final int abc_action_menu_overflow_description=0x7f07001c;
+        public static final int abc_action_menu_overflow_description=0x7f08001c;
         /**  Label for the "Done" button on the far left of action mode toolbars. 
          */
-        public static final int abc_action_mode_done=0x7f070019;
+        public static final int abc_action_mode_done=0x7f080019;
         /**  Title for a button to expand the list of activities in ActivityChooserView [CHAR LIMIT=25] 
          */
-        public static final int abc_activity_chooser_view_see_all=0x7f070027;
+        public static final int abc_activity_chooser_view_see_all=0x7f080027;
         /**  ActivityChooserView - accessibility support 
  Description of the shwoing of a popup window with activities to choose from. [CHAR LIMIT=NONE] 
          */
-        public static final int abc_activitychooserview_choose_application=0x7f070026;
+        public static final int abc_activitychooserview_choose_application=0x7f080026;
         /**  Default hint text for the system-wide search UI's text field. [CHAR LIMIT=30] 
          */
-        public static final int abc_search_hint=0x7f070021;
+        public static final int abc_search_hint=0x7f080021;
         /**  SearchView accessibility description for clear button [CHAR LIMIT=NONE] 
          */
-        public static final int abc_searchview_description_clear=0x7f070023;
+        public static final int abc_searchview_description_clear=0x7f080023;
         /**  SearchView accessibility description for search text field [CHAR LIMIT=NONE] 
          */
-        public static final int abc_searchview_description_query=0x7f070022;
+        public static final int abc_searchview_description_query=0x7f080022;
         /**  SearchView accessibility description for search button [CHAR LIMIT=NONE] 
          */
-        public static final int abc_searchview_description_search=0x7f070020;
+        public static final int abc_searchview_description_search=0x7f080020;
         /**  SearchView accessibility description for submit button [CHAR LIMIT=NONE] 
          */
-        public static final int abc_searchview_description_submit=0x7f070024;
+        public static final int abc_searchview_description_submit=0x7f080024;
         /**  SearchView accessibility description for voice button [CHAR LIMIT=NONE] 
          */
-        public static final int abc_searchview_description_voice=0x7f070025;
+        public static final int abc_searchview_description_voice=0x7f080025;
         /**  Description of the choose target button in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
-        public static final int abc_shareactionprovider_share_with=0x7f070029;
+        public static final int abc_shareactionprovider_share_with=0x7f080029;
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
-        public static final int abc_shareactionprovider_share_with_application=0x7f070028;
+        public static final int abc_shareactionprovider_share_with_application=0x7f080028;
         /**  Content description for the Toolbar icon used to collapse an expanded action mode. [CHAR LIMIT=NONE] 
          */
-        public static final int abc_toolbar_collapse_description=0x7f07001d;
-        public static final int accept=0x7f0700c4;
-        public static final int accepted=0x7f0700c2;
-        public static final int action_about=0x7f070099;
-        public static final int action_add_cal=0x7f0700a4;
-        public static final int action_app_feedback=0x7f07009a;
-        public static final int action_audio=0x7f070090;
-        public static final int action_award=0x7f07008a;
-        public static final int action_birthday=0x7f07008b;
-        public static final int action_contact=0x7f070086;
-        public static final int action_contact_share=0x7f07009f;
-        public static final int action_delete=0x7f07009c;
-        public static final int action_doc=0x7f070094;
-        public static final int action_event=0x7f070089;
-        public static final int action_feedback=0x7f07008d;
-        public static final int action_help_faq=0x7f0700a3;
-        public static final int action_help_mobcast=0x7f0700a1;
-        public static final int action_help_video=0x7f0700a2;
-        public static final int action_image=0x7f07008f;
-        public static final int action_info=0x7f07009d;
-        public static final int action_interactive=0x7f070098;
-        public static final int action_livestream_youtube=0x7f07009b;
-        public static final int action_news=0x7f070097;
-        public static final int action_pdf=0x7f070093;
-        public static final int action_ppt=0x7f070096;
-        public static final int action_quiz=0x7f07008c;
-        public static final int action_refresh=0x7f070084;
-        public static final int action_report=0x7f070085;
-        public static final int action_search=0x7f070088;
+        public static final int abc_toolbar_collapse_description=0x7f08001d;
+        public static final int accept=0x7f0800d0;
+        public static final int accepted=0x7f0800ce;
+        public static final int action_about=0x7f0800a5;
+        public static final int action_add_cal=0x7f0800b0;
+        public static final int action_app_feedback=0x7f0800a6;
+        public static final int action_audio=0x7f08009c;
+        public static final int action_award=0x7f080096;
+        public static final int action_birthday=0x7f080097;
+        public static final int action_contact=0x7f080092;
+        public static final int action_contact_share=0x7f0800ab;
+        public static final int action_delete=0x7f0800a8;
+        public static final int action_doc=0x7f0800a0;
+        public static final int action_event=0x7f080095;
+        public static final int action_feedback=0x7f080099;
+        public static final int action_help_faq=0x7f0800af;
+        public static final int action_help_mobcast=0x7f0800ad;
+        public static final int action_help_video=0x7f0800ae;
+        public static final int action_image=0x7f08009b;
+        public static final int action_info=0x7f0800a9;
+        public static final int action_interactive=0x7f0800a4;
+        public static final int action_livestream_youtube=0x7f0800a7;
+        public static final int action_news=0x7f0800a3;
+        public static final int action_pdf=0x7f08009f;
+        public static final int action_ppt=0x7f0800a2;
+        public static final int action_quiz=0x7f080098;
+        public static final int action_refresh=0x7f080090;
+        public static final int action_report=0x7f080091;
+        public static final int action_search=0x7f080094;
         /**  OverFlow : Action 
  OverFlow : Action 
          */
-        public static final int action_settings=0x7f070083;
-        public static final int action_share=0x7f07009e;
-        public static final int action_submit=0x7f0700a0;
-        public static final int action_text=0x7f070092;
-        public static final int action_video=0x7f070091;
-        public static final int action_view_web=0x7f070087;
-        public static final int action_xls=0x7f070095;
-        public static final int activity_edit_profile_answer=0x7f0700ef;
-        public static final int activity_edit_profile_question=0x7f0700ee;
-        public static final int activity_edit_profile_update_btn=0x7f0700ed;
-        public static final int api_connection_timeout=0x7f07006e;
-        public static final int api_unknown_error=0x7f07006f;
-        public static final int app_name=0x7f070060;
+        public static final int action_settings=0x7f08008f;
+        public static final int action_share=0x7f0800aa;
+        public static final int action_submit=0x7f0800ac;
+        public static final int action_text=0x7f08009e;
+        public static final int action_video=0x7f08009d;
+        public static final int action_view_web=0x7f080093;
+        public static final int action_xls=0x7f0800a1;
+        public static final int activity_edit_profile_answer=0x7f0800ff;
+        public static final int activity_edit_profile_birthday=0x7f0800fe;
+        public static final int activity_edit_profile_question=0x7f0800fd;
+        public static final int activity_edit_profile_update_btn=0x7f0800fc;
+        public static final int api_connection_timeout=0x7f08006f;
+        public static final int api_unknown_error=0x7f080070;
+        public static final int app_name=0x7f080060;
         /**  The class name to the ScrollingChildBehavior required for AppBarLayout 
  design support library 
          */
-        public static final int appbar_scrolling_view_behavior=0x7f07002b;
+        public static final int appbar_scrolling_view_behavior=0x7f08002b;
         /**   Title for notification shown when GooglePlayServices needs to be
         enabled for a application to work. [CHAR LIMIT=70] 
          */
-        public static final int auth_client_needs_enabling_title=0x7f070014;
+        public static final int auth_client_needs_enabling_title=0x7f080014;
         /**   Title for notification shown when GooglePlayServices needs to be
         installed for a application to work. [CHAR LIMIT=70] 
          */
-        public static final int auth_client_needs_installation_title=0x7f070015;
+        public static final int auth_client_needs_installation_title=0x7f080015;
         /**   Title for notification shown when GooglePlayServices needs to be
         udpated for a application to work. [CHAR LIMIT=70] 
          */
-        public static final int auth_client_needs_update_title=0x7f070016;
+        public static final int auth_client_needs_update_title=0x7f080016;
         /**   Title for notification shown when GooglePlayServices is unavailable [CHAR LIMIT=42] 
          */
-        public static final int auth_client_play_services_err_notification_msg=0x7f070017;
+        public static final int auth_client_play_services_err_notification_msg=0x7f080017;
         /**   Requested by string saying which app requested the notification. [CHAR LIMIT=42] 
          */
-        public static final int auth_client_requested_by_msg=0x7f070018;
+        public static final int auth_client_requested_by_msg=0x7f080018;
         /**   Title for notification shown when a bad version of GooglePlayServices
         has been installed and needs correction for an application to work.
         [CHAR LIMIT=70] 
          */
-        public static final int auth_client_using_bad_version_title=0x7f070013;
-        public static final int birthday_desc_message=0x7f070078;
-        public static final int birthday_title_message=0x7f070077;
+        public static final int auth_client_using_bad_version_title=0x7f080013;
+        public static final int birthday_desc_message=0x7f080079;
+        public static final int birthday_title_message=0x7f080078;
         /**  BottomSheet 
  BottomSheet 
          */
-        public static final int bs_more=0x7f0701fc;
-        public static final int button_cancel=0x7f0700cd;
-        public static final int button_decrypt=0x7f0700d0;
-        public static final int button_delete=0x7f070074;
+        public static final int bs_more=0x7f08021a;
+        public static final int button_cancel=0x7f0800dc;
+        public static final int button_decrypt=0x7f0800df;
+        public static final int button_delete=0x7f080075;
+        public static final int button_download=0x7f0800da;
+        public static final int button_download_str=0x7f0800db;
         /**  activity_facebook_conceal 
  activity_facebook_conceal 
          */
-        public static final int button_encrypt=0x7f0700cf;
-        public static final int button_next=0x7f0700cc;
-        public static final int button_previous=0x7f07012b;
-        public static final int button_raised_ticket=0x7f0700dc;
-        public static final int button_resend=0x7f0700db;
-        public static final int button_send=0x7f07012d;
-        public static final int button_submit=0x7f07012c;
-        public static final int button_verify=0x7f0700da;
-        public static final int capture_validation=0x7f07007b;
-        public static final int chatDate=0x7f0700b9;
-        public static final int chatFullDate=0x7f0700ba;
-        public static final int close=0x7f0700d1;
-        public static final int com_application_ui_activity_AboutActivity=0x7f07004d;
-        public static final int com_application_ui_activity_AnyDoNotificationActivity=0x7f07005b;
-        public static final int com_application_ui_activity_AudioDetailActivity=0x7f070041;
-        public static final int com_application_ui_activity_AwardProfileActivity=0x7f070037;
-        public static final int com_application_ui_activity_AwardRecyclerActivity=0x7f070036;
-        public static final int com_application_ui_activity_BirthdayProfileActivity=0x7f070039;
-        public static final int com_application_ui_activity_BirthdayRecyclerActivity=0x7f070038;
-        public static final int com_application_ui_activity_CaptureActivity=0x7f070056;
-        public static final int com_application_ui_activity_ChatDetailActivity=0x7f070055;
-        public static final int com_application_ui_activity_CountrySelectActivity=0x7f070034;
-        public static final int com_application_ui_activity_DocDetailActivity=0x7f070047;
-        public static final int com_application_ui_activity_EditProfileActivity=0x7f070033;
-        public static final int com_application_ui_activity_EventDetailActivity=0x7f07003e;
-        public static final int com_application_ui_activity_EventRecyclerActivity=0x7f07003a;
-        public static final int com_application_ui_activity_FeedbackActivity=0x7f07003d;
-        public static final int com_application_ui_activity_FeedbackAppActivity=0x7f07004e;
-        public static final int com_application_ui_activity_FileManagerActivity=0x7f070050;
-        public static final int com_application_ui_activity_ImageDetailActivity=0x7f07003f;
-        public static final int com_application_ui_activity_ImageFullScreenActivity=0x7f070040;
-        public static final int com_application_ui_activity_InteractiveDetailActivity=0x7f07004a;
-        public static final int com_application_ui_activity_LanguageActivity=0x7f07004f;
-        public static final int com_application_ui_activity_LoginActivity=0x7f070031;
-        public static final int com_application_ui_activity_MotherActivity=0x7f070059;
-        public static final int com_application_ui_activity_NewsDetailActivity=0x7f070049;
-        public static final int com_application_ui_activity_PdfDetailActivity=0x7f070046;
-        public static final int com_application_ui_activity_PptDetailActivity=0x7f070048;
-        public static final int com_application_ui_activity_QuizActivity=0x7f07003b;
-        public static final int com_application_ui_activity_QuizScoreActivity=0x7f07003c;
-        public static final int com_application_ui_activity_RecruitmentDetailActivity=0x7f070058;
-        public static final int com_application_ui_activity_RecruitmentRecyclerActivity=0x7f070057;
-        public static final int com_application_ui_activity_ReportActivity=0x7f07004c;
-        public static final int com_application_ui_activity_SearchActivity=0x7f070053;
-        public static final int com_application_ui_activity_SetProfileActivity=0x7f070032;
-        public static final int com_application_ui_activity_SettingsActivity=0x7f07005a;
-        public static final int com_application_ui_activity_SimpleRecyclerItemActivity=0x7f070051;
+        public static final int button_encrypt=0x7f0800de;
+        public static final int button_next=0x7f0800d9;
+        public static final int button_previous=0x7f08013d;
+        public static final int button_raised_ticket=0x7f0800eb;
+        public static final int button_resend=0x7f0800ea;
+        public static final int button_send=0x7f08013f;
+        public static final int button_submit=0x7f08013e;
+        public static final int button_verify=0x7f0800e9;
+        public static final int capture_validation=0x7f08007c;
+        public static final int chatDate=0x7f0800c5;
+        public static final int chatFullDate=0x7f0800c6;
+        public static final int close=0x7f0800e0;
+        public static final int com_application_ui_activity_AboutActivity=0x7f08004d;
+        public static final int com_application_ui_activity_AnyDoNotificationActivity=0x7f08005b;
+        public static final int com_application_ui_activity_AudioDetailActivity=0x7f080041;
+        public static final int com_application_ui_activity_AwardProfileActivity=0x7f080037;
+        public static final int com_application_ui_activity_AwardRecyclerActivity=0x7f080036;
+        public static final int com_application_ui_activity_BirthdayProfileActivity=0x7f080039;
+        public static final int com_application_ui_activity_BirthdayRecyclerActivity=0x7f080038;
+        public static final int com_application_ui_activity_CaptureActivity=0x7f080056;
+        public static final int com_application_ui_activity_ChatDetailActivity=0x7f080055;
+        public static final int com_application_ui_activity_CountrySelectActivity=0x7f080034;
+        public static final int com_application_ui_activity_DocDetailActivity=0x7f080047;
+        public static final int com_application_ui_activity_EditProfileActivity=0x7f080033;
+        public static final int com_application_ui_activity_EventDetailActivity=0x7f08003e;
+        public static final int com_application_ui_activity_EventRecyclerActivity=0x7f08003a;
+        public static final int com_application_ui_activity_FeedbackActivity=0x7f08003d;
+        public static final int com_application_ui_activity_FeedbackAppActivity=0x7f08004e;
+        public static final int com_application_ui_activity_FileManagerActivity=0x7f080050;
+        public static final int com_application_ui_activity_ImageDetailActivity=0x7f08003f;
+        public static final int com_application_ui_activity_ImageFullScreenActivity=0x7f080040;
+        public static final int com_application_ui_activity_InteractiveDetailActivity=0x7f08004a;
+        public static final int com_application_ui_activity_LanguageActivity=0x7f08004f;
+        public static final int com_application_ui_activity_LoginActivity=0x7f080031;
+        public static final int com_application_ui_activity_MotherActivity=0x7f080059;
+        public static final int com_application_ui_activity_NewsDetailActivity=0x7f080049;
+        public static final int com_application_ui_activity_PdfDetailActivity=0x7f080046;
+        public static final int com_application_ui_activity_PptDetailActivity=0x7f080048;
+        public static final int com_application_ui_activity_QuizActivity=0x7f08003b;
+        public static final int com_application_ui_activity_QuizScoreActivity=0x7f08003c;
+        public static final int com_application_ui_activity_RecruitmentDetailActivity=0x7f080058;
+        public static final int com_application_ui_activity_RecruitmentRecyclerActivity=0x7f080057;
+        public static final int com_application_ui_activity_ReportActivity=0x7f08004c;
+        public static final int com_application_ui_activity_SearchActivity=0x7f080053;
+        public static final int com_application_ui_activity_SetProfileActivity=0x7f080032;
+        public static final int com_application_ui_activity_SettingsActivity=0x7f08005a;
+        public static final int com_application_ui_activity_SimpleRecyclerItemActivity=0x7f080051;
         /**  Prevent data from appearing in reports. Useful for testing. 
  <bool name="ga_dryRun">false</bool> 
  <string name="ga_logLevel">verbose</string> 
  The screen names that will appear in reports 
          */
-        public static final int com_application_ui_activity_SplashActivity=0x7f070030;
-        public static final int com_application_ui_activity_TextDetailActivity=0x7f070045;
-        public static final int com_application_ui_activity_TutorialActivity=0x7f070052;
-        public static final int com_application_ui_activity_VerificationActivity=0x7f070035;
-        public static final int com_application_ui_activity_VideoDetailActivity=0x7f070042;
-        public static final int com_application_ui_activity_VideoFullScreenActivity=0x7f070043;
-        public static final int com_application_ui_activity_WebViewActivity=0x7f07004b;
-        public static final int com_application_ui_activity_YouTubeLiveFullScreenActivity=0x7f070054;
-        public static final int com_application_ui_activity_YouTubeLiveStreamActivity=0x7f070044;
-        public static final int com_application_ui_fragment_ChatRecyclerViewFragment=0x7f07005e;
-        public static final int com_application_ui_fragment_MobcastRecyclerViewFragment=0x7f07005c;
-        public static final int com_application_ui_fragment_TrainingRecyclerViewFragment=0x7f07005d;
+        public static final int com_application_ui_activity_SplashActivity=0x7f080030;
+        public static final int com_application_ui_activity_TextDetailActivity=0x7f080045;
+        public static final int com_application_ui_activity_TutorialActivity=0x7f080052;
+        public static final int com_application_ui_activity_VerificationActivity=0x7f080035;
+        public static final int com_application_ui_activity_VideoDetailActivity=0x7f080042;
+        public static final int com_application_ui_activity_VideoFullScreenActivity=0x7f080043;
+        public static final int com_application_ui_activity_WebViewActivity=0x7f08004b;
+        public static final int com_application_ui_activity_YouTubeLiveFullScreenActivity=0x7f080054;
+        public static final int com_application_ui_activity_YouTubeLiveStreamActivity=0x7f080044;
+        public static final int com_application_ui_fragment_ChatRecyclerViewFragment=0x7f08005e;
+        public static final int com_application_ui_fragment_MobcastRecyclerViewFragment=0x7f08005c;
+        public static final int com_application_ui_fragment_TrainingRecyclerViewFragment=0x7f08005d;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 
          */
-        public static final int common_google_play_services_enable_button=0x7f070006;
+        public static final int common_google_play_services_enable_button=0x7f080006;
         /**  Message in confirmation dialog informing user they need to enable
         Google Play services in application settings [CHAR LIMIT=NONE] 
          */
-        public static final int common_google_play_services_enable_text=0x7f070005;
+        public static final int common_google_play_services_enable_text=0x7f080005;
         /**  Title of confirmation dialog informing user they need to enable
         Google Play services in application settings [CHAR LIMIT=40] 
          */
-        public static final int common_google_play_services_enable_title=0x7f070004;
+        public static final int common_google_play_services_enable_title=0x7f080004;
         /**  Button in confirmation dialog for installing Google Play services [CHAR LIMIT=40] 
          */
-        public static final int common_google_play_services_install_button=0x7f070003;
+        public static final int common_google_play_services_install_button=0x7f080003;
         /**  (For phones) Message in confirmation dialog informing user that
         they need to install Google Play services (from Play Store) [CHAR LIMIT=NONE] 
          */
-        public static final int common_google_play_services_install_text_phone=0x7f070001;
+        public static final int common_google_play_services_install_text_phone=0x7f080001;
         /**  (For tablets) Message in confirmation dialog informing user that
         they need to install Google Play services (from Play Store) [CHAR LIMIT=NONE] 
          */
-        public static final int common_google_play_services_install_text_tablet=0x7f070002;
+        public static final int common_google_play_services_install_text_tablet=0x7f080002;
         /**  Title of confirmation dialog informing user that they need to install
         Google Play services (from Play Store) [CHAR LIMIT=40] 
          */
-        public static final int common_google_play_services_install_title=0x7f070000;
+        public static final int common_google_play_services_install_title=0x7f080000;
         /**  Message in confirmation dialog informing the user that they provided an invalid account. [CHAR LIMIT=NONE] 
          */
-        public static final int common_google_play_services_invalid_account_text=0x7f07000c;
+        public static final int common_google_play_services_invalid_account_text=0x7f08000c;
         /**  Title of confirmation dialog informing the user that they provided an invalid account. [CHAR LIMIT=40] 
          */
-        public static final int common_google_play_services_invalid_account_title=0x7f07000b;
+        public static final int common_google_play_services_invalid_account_title=0x7f08000b;
         /**  Message in confirmation dialog informing the user that a network error occurred. [CHAR LIMIT=NONE] 
          */
-        public static final int common_google_play_services_network_error_text=0x7f07000a;
+        public static final int common_google_play_services_network_error_text=0x7f08000a;
         /**  Title of confirmation dialog informing the user that a network error occurred. [CHAR LIMIT=40] 
          */
-        public static final int common_google_play_services_network_error_title=0x7f070009;
+        public static final int common_google_play_services_network_error_title=0x7f080009;
         /**  Message in confirmation dialog informing user there is an unknown issue in Google Play
         services [CHAR LIMIT=NONE] 
          */
-        public static final int common_google_play_services_unknown_issue=0x7f07000d;
+        public static final int common_google_play_services_unknown_issue=0x7f08000d;
         /**  Message in confirmation dialog informing user that Google Play services is not supported on their device [CHAR LIMIT=NONE] 
          */
-        public static final int common_google_play_services_unsupported_text=0x7f07000f;
+        public static final int common_google_play_services_unsupported_text=0x7f08000f;
         /**  Title of confirmation dialog informing user that Google Play services is not supported on their device [CHAR LIMIT=40] 
          */
-        public static final int common_google_play_services_unsupported_title=0x7f07000e;
+        public static final int common_google_play_services_unsupported_title=0x7f08000e;
         /**  Button in confirmation dialog for updating Google Play services [CHAR LIMIT=40] 
          */
-        public static final int common_google_play_services_update_button=0x7f070010;
+        public static final int common_google_play_services_update_button=0x7f080010;
         /**  Message in confirmation dialog informing user that they need to update
         Google Play services (from Play Store) [CHAR LIMIT=NONE] 
          */
-        public static final int common_google_play_services_update_text=0x7f070008;
+        public static final int common_google_play_services_update_text=0x7f080008;
         /**  Title of confirmation dialog informing user that they need to update
         Google Play services (from Play Store) [CHAR LIMIT=40] 
          */
-        public static final int common_google_play_services_update_title=0x7f070007;
+        public static final int common_google_play_services_update_title=0x7f080007;
         /**  Sign-in button text [CHAR LIMIT=15] 
          */
-        public static final int common_signin_button_text=0x7f070011;
+        public static final int common_signin_button_text=0x7f080011;
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
-        public static final int common_signin_button_text_long=0x7f070012;
-        public static final int congratulate_message=0x7f07007d;
-        public static final int congratulate_message_validation=0x7f07007f;
-        public static final int congratulated_action=0x7f0700c7;
-        public static final int congratulated_text=0x7f0700c6;
-        public static final int contact=0x7f0700f7;
+        public static final int common_signin_button_text_long=0x7f080012;
+        public static final int congratulate_message=0x7f080080;
+        public static final int congratulate_message_validation=0x7f080082;
+        public static final int congratulated_action=0x7f0800d3;
+        public static final int congratulated_text=0x7f0800d2;
+        public static final int contact=0x7f080107;
         /**  string formatters 
          */
-        public static final int content_by=0x7f0700bf;
-        public static final int content_delete_message=0x7f070073;
-        public static final int context_menu_delete=0x7f0700a7;
+        public static final int content_by=0x7f0800cb;
+        public static final int content_delete_message=0x7f080074;
+        public static final int context_menu_delete=0x7f0800b3;
         /**  Context Menu 
          */
-        public static final int context_menu_read=0x7f0700a5;
-        public static final int context_menu_save=0x7f0700a9;
-        public static final int context_menu_unread=0x7f0700a6;
-        public static final int context_menu_view=0x7f0700a8;
-        public static final int ctc=0x7f0700f6;
-        public static final int days_left=0x7f0700c0;
-        public static final int desc_activity_login_logo=0x7f0701fa;
-        public static final int desc_activity_login_validation=0x7f0701fb;
+        public static final int context_menu_read=0x7f0800b1;
+        public static final int context_menu_save=0x7f0800b5;
+        public static final int context_menu_unread=0x7f0800b2;
+        public static final int context_menu_view=0x7f0800b4;
+        public static final int ctc=0x7f080106;
+        public static final int days_left=0x7f0800cc;
+        public static final int desc_activity_login_logo=0x7f080218;
+        public static final int desc_activity_login_validation=0x7f080219;
         /**  ImageView Description 
  ImageView Description 
          */
-        public static final int desc_toolbar_plain_back=0x7f0701f9;
-        public static final int details=0x7f0700f2;
-        public static final int developer_message=0x7f070079;
-        public static final int dialog_birthday_award_title=0x7f0701f8;
-        public static final int dialog_birthday_message_negative=0x7f0701f6;
-        public static final int dialog_birthday_message_positive=0x7f0701f5;
+        public static final int desc_toolbar_plain_back=0x7f080217;
+        public static final int details=0x7f080102;
+        public static final int developer_message=0x7f08007a;
+        public static final int dialog_birthday_award_title=0x7f080216;
+        public static final int dialog_birthday_message_negative=0x7f080214;
+        public static final int dialog_birthday_message_positive=0x7f080213;
         /**  dialog_birthday_message 
  dialog_birthday_message 
          */
-        public static final int dialog_birthday_message_textview=0x7f0701f2;
-        public static final int dialog_birthday_message_title=0x7f0701f4;
-        public static final int dialog_birthday_wish_title=0x7f0701f7;
-        public static final int emptyAwardMessage=0x7f07020d;
-        public static final int emptyAwardTitle=0x7f07020c;
-        public static final int emptyBirthdayMessage=0x7f070213;
-        public static final int emptyBirthdayTitle=0x7f070212;
-        public static final int emptyCaptureMessage=0x7f070211;
-        public static final int emptyCaptureTitle=0x7f070210;
-        public static final int emptyChatMessage=0x7f07020f;
-        public static final int emptyChatTitle=0x7f07020e;
-        public static final int emptyEventMessage=0x7f07020b;
-        public static final int emptyEventTitle=0x7f07020a;
-        public static final int emptyMessage=0x7f070206;
-        public static final int emptyRecruitmentMessage=0x7f070215;
-        public static final int emptyRecruitmentTitle=0x7f070214;
-        public static final int emptyRefresh=0x7f070207;
-        public static final int emptyRefreshOnSearch=0x7f070216;
+        public static final int dialog_birthday_message_textview=0x7f080210;
+        public static final int dialog_birthday_message_title=0x7f080212;
+        public static final int dialog_birthday_wish_title=0x7f080215;
+        public static final int emptyAwardMessage=0x7f08022b;
+        public static final int emptyAwardTitle=0x7f08022a;
+        public static final int emptyBirthdayMessage=0x7f080231;
+        public static final int emptyBirthdayTitle=0x7f080230;
+        public static final int emptyCaptureMessage=0x7f08022f;
+        public static final int emptyCaptureTitle=0x7f08022e;
+        public static final int emptyChatMessage=0x7f08022d;
+        public static final int emptyChatTitle=0x7f08022c;
+        public static final int emptyEventMessage=0x7f080229;
+        public static final int emptyEventTitle=0x7f080228;
+        public static final int emptyMessage=0x7f080224;
+        public static final int emptyRecruitmentMessage=0x7f080233;
+        public static final int emptyRecruitmentTitle=0x7f080232;
+        public static final int emptyRefresh=0x7f080225;
+        public static final int emptyRefreshOnSearch=0x7f080234;
         /**  emptyMessages 
          */
-        public static final int emptyTitle=0x7f070205;
-        public static final int emptyTrainingMessage=0x7f070209;
-        public static final int emptyTrainingTitle=0x7f070208;
-        public static final int error_player=0x7f0701fe;
-        public static final int error_thumbnail_view=0x7f0701fd;
-        public static final int feedback_incomplete=0x7f07006c;
-        public static final int file_delete_message=0x7f070071;
-        public static final int file_not_available=0x7f07007c;
-        public static final int formatDateAtTime=0x7f0700be;
-        public static final int formatterDay12H=0x7f0700bd;
-        public static final int formatterDay24H=0x7f0700bc;
+        public static final int emptyTitle=0x7f080223;
+        public static final int emptyTrainingMessage=0x7f080227;
+        public static final int emptyTrainingTitle=0x7f080226;
+        public static final int error_player=0x7f08021c;
+        public static final int error_thumbnail_view=0x7f08021b;
+        public static final int feedback_incomplete=0x7f08006c;
+        public static final int file_app_not_found=0x7f08007f;
+        public static final int file_delete_message=0x7f080072;
+        public static final int file_download=0x7f08007e;
+        public static final int file_not_available=0x7f08007d;
+        public static final int formatDateAtTime=0x7f0800ca;
+        public static final int formatterDay12H=0x7f0800c9;
+        public static final int formatterDay24H=0x7f0800c8;
         /**  date formatters 
  date formatters 
          */
-        public static final int formatterMonth=0x7f0700b6;
-        public static final int formatterWeek=0x7f0700bb;
-        public static final int formatterYear=0x7f0700b7;
-        public static final int formatterYearMax=0x7f0700b8;
-        public static final int fragment_capture_another_heading=0x7f0701ab;
-        public static final int fragment_capture_attached_heading=0x7f0701ac;
-        public static final int fragment_capture_browse=0x7f0701ad;
-        public static final int fragment_capture_note_char_limit=0x7f0701aa;
+        public static final int formatterMonth=0x7f0800c2;
+        public static final int formatterWeek=0x7f0800c7;
+        public static final int formatterYear=0x7f0800c3;
+        public static final int formatterYearMax=0x7f0800c4;
+        public static final int fragment_capture_another_heading=0x7f0801c8;
+        public static final int fragment_capture_attached_heading=0x7f0801c9;
+        public static final int fragment_capture_browse=0x7f0801ca;
+        public static final int fragment_capture_note_char_limit=0x7f0801c7;
         /**  fragment_capture 
          */
-        public static final int fragment_capture_note_hint=0x7f0701a9;
-        public static final int fragment_capture_submit=0x7f0701ae;
-        public static final int fragment_capture_takeapic=0x7f0701af;
-        public static final int fragment_event_detail_about=0x7f070125;
-        public static final int fragment_event_detail_button_decline=0x7f070120;
-        public static final int fragment_event_detail_button_join=0x7f07011f;
-        public static final int fragment_event_detail_going=0x7f070124;
-        public static final int fragment_event_detail_invite=0x7f070123;
-        public static final int fragment_feedback_thank_you_header=0x7f070155;
-        public static final int fragment_image_language_header=0x7f070157;
-        public static final int fragment_quizscore_thank_you_header=0x7f07013b;
-        public static final int fragment_quiztimes_up_header=0x7f07013c;
-        public static final int fragment_tutorial_functionality=0x7f0701a8;
+        public static final int fragment_capture_note_hint=0x7f0801c6;
+        public static final int fragment_capture_submit=0x7f0801cb;
+        public static final int fragment_capture_takeapic=0x7f0801cc;
+        public static final int fragment_event_add_error=0x7f080138;
+        public static final int fragment_event_added=0x7f080137;
+        public static final int fragment_event_detail_about=0x7f080135;
+        public static final int fragment_event_detail_button_decline=0x7f080130;
+        public static final int fragment_event_detail_button_join=0x7f08012f;
+        public static final int fragment_event_detail_going=0x7f080134;
+        public static final int fragment_event_detail_invite=0x7f080133;
+        public static final int fragment_feedback_thank_you_header=0x7f080167;
+        public static final int fragment_image_language_header=0x7f080169;
+        public static final int fragment_quizscore_thank_you_header=0x7f08014d;
+        public static final int fragment_quiztimes_up_header=0x7f08014e;
+        public static final int fragment_tutorial_functionality=0x7f0801c5;
         /**  fragment_tutorial 
          */
-        public static final int fragment_tutorial_header=0x7f0701a7;
-        public static final int ga_appName=0x7f07002f;
-        public static final int ga_appVersion=0x7f07002e;
-        public static final int ga_sampleFrequency=0x7f07002d;
+        public static final int fragment_tutorial_header=0x7f0801c4;
+        public static final int ga_appName=0x7f08002f;
+        public static final int ga_appVersion=0x7f08002e;
+        public static final int ga_sampleFrequency=0x7f08002d;
         /**  The property id associated with this analytics tracker 
+     UA-49815183-4 
          */
-        public static final int ga_trackingId=0x7f07002c;
-        public static final int going=0x7f0700c1;
-        public static final int hint_country_search=0x7f0700d7;
-        public static final int hint_dialog_birthday_message_edittext=0x7f0701f3;
-        public static final int hint_email_id=0x7f0700e4;
-        public static final int hint_employee_id=0x7f0700e6;
+        public static final int ga_trackingId=0x7f08002c;
+        public static final int going=0x7f0800cd;
+        public static final int hint_country_search=0x7f0800e6;
+        public static final int hint_dialog_birthday_message_edittext=0x7f080211;
+        public static final int hint_email_id=0x7f0800f3;
+        public static final int hint_employee_id=0x7f0800f5;
         /**  fragment_feedback_subjective 
  fragment_feedback_subjective 
          */
-        public static final int hint_feedback_subjective_message_edittext=0x7f070142;
-        public static final int hint_login_id=0x7f0700cb;
-        public static final int hint_name=0x7f0700e5;
-        public static final int hint_verification_code=0x7f0700d9;
-        public static final int internet_unavailable=0x7f070067;
-        public static final int item_recycler_mobcast_feedback_question=0x7f0701e1;
-        public static final int item_recycler_training_quiz_points=0x7f0701e5;
-        public static final int jobdescription=0x7f0700f4;
-        public static final int layout_drawer_search_mother_search_all=0x7f070115;
-        public static final int layout_drawer_search_mother_search_audio=0x7f070112;
+        public static final int hint_feedback_subjective_message_edittext=0x7f080154;
+        public static final int hint_login_id=0x7f0800d8;
+        public static final int hint_name=0x7f0800f4;
+        public static final int hint_verification_code=0x7f0800e8;
+        public static final int internet_unavailable=0x7f080067;
+        public static final int item_recycler_mobcast_feedback_question=0x7f0801fe;
+        public static final int item_recycler_training_quiz_points=0x7f080202;
+        public static final int jobdescription=0x7f080104;
+        public static final int layout_drawer_search_mother_search_all=0x7f080125;
+        public static final int layout_drawer_search_mother_search_audio=0x7f080122;
         /**  layout_drawer_search_mother 
          */
-        public static final int layout_drawer_search_mother_search_by=0x7f070109;
-        public static final int layout_drawer_search_mother_search_by_text=0x7f070114;
-        public static final int layout_drawer_search_mother_search_doc=0x7f070113;
-        public static final int layout_drawer_search_mother_search_feedback=0x7f07010f;
-        public static final int layout_drawer_search_mother_search_for=0x7f07010c;
-        public static final int layout_drawer_search_mother_search_image=0x7f07010e;
-        public static final int layout_drawer_search_mother_search_livestream=0x7f070116;
-        public static final int layout_drawer_search_mother_search_local=0x7f07010a;
-        public static final int layout_drawer_search_mother_search_quiz=0x7f070110;
-        public static final int layout_drawer_search_mother_search_text=0x7f070111;
-        public static final int layout_drawer_search_mother_search_video=0x7f07010d;
-        public static final int layout_drawer_search_mother_search_web=0x7f07010b;
-        /**      <string name="layout_mother_chat">CHAT</string> 
+        public static final int layout_drawer_search_mother_search_by=0x7f080119;
+        public static final int layout_drawer_search_mother_search_by_text=0x7f080124;
+        public static final int layout_drawer_search_mother_search_doc=0x7f080123;
+        public static final int layout_drawer_search_mother_search_feedback=0x7f08011f;
+        public static final int layout_drawer_search_mother_search_for=0x7f08011c;
+        public static final int layout_drawer_search_mother_search_image=0x7f08011e;
+        public static final int layout_drawer_search_mother_search_livestream=0x7f080126;
+        public static final int layout_drawer_search_mother_search_local=0x7f08011a;
+        public static final int layout_drawer_search_mother_search_quiz=0x7f080120;
+        public static final int layout_drawer_search_mother_search_text=0x7f080121;
+        public static final int layout_drawer_search_mother_search_video=0x7f08011d;
+        public static final int layout_drawer_search_mother_search_web=0x7f08011b;
+        /**      <string name="layout_mother_mobcast">CK BULLETIN</string> 
          */
-        public static final int layout_mother_chat=0x7f070107;
+        public static final int layout_mother_chat=0x7f080117;
         /**  layout_mother 
-     <string name="layout_mother_mobcast">MOBCAST</string> 
  layout_mother 
          */
-        public static final int layout_mother_mobcast=0x7f070106;
-        public static final int layout_mother_training=0x7f070108;
+        public static final int layout_mother_mobcast=0x7f080116;
+        /**      <string name="layout_mother_chat">MIS</string> 
+         */
+        public static final int layout_mother_training=0x7f080118;
         /**  loadingMessages 
          */
-        public static final int loadingLogin=0x7f0701ff;
-        public static final int loadingMessage=0x7f070204;
-        public static final int loadingRefresh=0x7f070200;
-        public static final int loadingSubmit=0x7f070203;
-        public static final int loadingUpdate=0x7f070202;
-        public static final int loadingVerify=0x7f070201;
-        public static final int logging_out=0x7f070082;
-        public static final int logout_content_message=0x7f070081;
-        public static final int logout_title_message=0x7f070072;
-        public static final int maybe=0x7f0700c3;
-        public static final int new_notifications=0x7f0700d3;
-        public static final int notgoing=0x7f0700c5;
-        public static final int notification_title=0x7f0700d4;
-        public static final int package_name=0x7f070061;
-        public static final int qualification=0x7f0700f5;
-        public static final int quiz_incomplete=0x7f07006d;
-        public static final int raise_ticket_info=0x7f0700e1;
-        public static final int relogin_message=0x7f070069;
-        public static final int relogin_title=0x7f070068;
-        public static final int sample_about_detail=0x7f070175;
-        public static final int sample_about_detail_1=0x7f070176;
-        public static final int sample_about_privacy_policy=0x7f070177;
-        public static final int sample_about_report_problem=0x7f070173;
-        public static final int sample_about_report_problem_detail=0x7f070174;
-        public static final int sample_about_send_feedback=0x7f070171;
-        public static final int sample_about_send_feedback_detail=0x7f070172;
+        public static final int loadingLogin=0x7f08021d;
+        public static final int loadingMessage=0x7f080222;
+        public static final int loadingRefresh=0x7f08021e;
+        public static final int loadingSubmit=0x7f080221;
+        public static final int loadingUpdate=0x7f080220;
+        public static final int loadingVerify=0x7f08021f;
+        public static final int logging_out=0x7f080085;
+        public static final int logout_content_message=0x7f080084;
+        public static final int logout_title_message=0x7f080073;
+        public static final int maybe=0x7f0800cf;
+        public static final int new_mobcast_avail=0x7f08008d;
+        public static final int new_notifications=0x7f0800e2;
+        public static final int new_training_avail=0x7f08008e;
+        public static final int notgoing=0x7f0800d1;
+        public static final int notification_title=0x7f0800e3;
+        public static final int package_name=0x7f080061;
+        public static final int qualification=0x7f080105;
+        public static final int quiz_incomplete=0x7f08006e;
+        public static final int raise_ticket_info=0x7f0800f0;
+        public static final int relogin_message=0x7f080069;
+        public static final int relogin_title=0x7f080068;
+        public static final int resend_otp=0x7f08006d;
+        public static final int sample_about_detail=0x7f080187;
+        public static final int sample_about_detail_1=0x7f080235;
+        /**      <string name="sample_about_detail_1">Vestibulum eu bibendum nisi vel finibus leo Versitbulum est enim eleifend ac posuere vel tempor sed turpis Nulla sagittis porta ante a luctus Quisque ultricies semper libero nec cursus massa efficiur id</string> 
+         */
+        public static final int sample_about_privacy_policy=0x7f080188;
+        public static final int sample_about_report_problem=0x7f080185;
+        public static final int sample_about_report_problem_detail=0x7f080186;
+        public static final int sample_about_send_feedback=0x7f080183;
+        public static final int sample_about_send_feedback_detail=0x7f080184;
         /**  fragment_about 
  fragment_about 
          */
-        public static final int sample_about_version=0x7f07016f;
-        public static final int sample_about_version_detail=0x7f070170;
+        public static final int sample_about_version=0x7f080181;
+        public static final int sample_about_version_detail=0x7f080182;
         /**  fragment_app_feedback 
  fragment_app_feedback 
          */
-        public static final int sample_app_feedback_hint=0x7f07017e;
-        public static final int sample_audio_detail_seekbar=0x7f070159;
+        public static final int sample_app_feedback_hint=0x7f08018f;
+        public static final int sample_audio_detail_seekbar=0x7f08016b;
         /**  <string name="sample_award_name">AWARD FOR BEST SALES OF THE WEEK</string> 
          */
-        public static final int sample_award_name=0x7f0700fc;
-        public static final int sample_birthday_department=0x7f0700ff;
+        public static final int sample_award_name=0x7f08010c;
+        public static final int sample_birthday_department=0x7f08010f;
         /**  item_recycler_birthday 
  item_recycler_birthday 
          */
-        public static final int sample_birthday_name=0x7f0700fe;
-        public static final int sample_event_attend_count=0x7f070121;
-        public static final int sample_event_attend_going_count=0x7f070122;
-        public static final int sample_event_by=0x7f070101;
+        public static final int sample_birthday_name=0x7f08010e;
+        public static final int sample_event_attend_count=0x7f080131;
+        public static final int sample_event_attend_going_count=0x7f080132;
+        public static final int sample_event_by=0x7f080111;
         /**  fragment_event_detail 
  fragment_event_detail 
          */
-        public static final int sample_event_date=0x7f070117;
-        public static final int sample_event_day=0x7f070119;
-        public static final int sample_event_hours=0x7f07011a;
-        public static final int sample_event_hours_text=0x7f07011c;
-        public static final int sample_event_left_number=0x7f070103;
-        public static final int sample_event_left_string=0x7f070104;
+        public static final int sample_event_date=0x7f080127;
+        public static final int sample_event_day=0x7f080129;
+        public static final int sample_event_hours=0x7f08012a;
+        public static final int sample_event_hours_text=0x7f08012c;
+        public static final int sample_event_left_number=0x7f080113;
+        public static final int sample_event_left_string=0x7f080114;
         /**  <string name="sample_event_location_text">Conference Room, Head Office, Bandra, Mumbai, Maharastra, India</string> 
          */
-        public static final int sample_event_location_text=0x7f07011d;
-        public static final int sample_event_month=0x7f070118;
+        public static final int sample_event_location_text=0x7f08012d;
+        public static final int sample_event_month=0x7f080128;
         /**  <string name="sample_event_summary">Lorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more\nLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more\nLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more</string> 
  <string name="sample_event_summary">Content: Officials said with Chillr, HDFC Bank customers can transfer money to any person in India, once they download the app and register. The app is widely accessible as it works on Android and iOS operating syatems and will soon be launched for Windows phones as well.</string> 
          */
-        public static final int sample_event_summary=0x7f070105;
-        public static final int sample_event_till=0x7f07011b;
+        public static final int sample_event_summary=0x7f080115;
+        public static final int sample_event_till=0x7f08012b;
         /**  item_recycler_event 
  <string name="sample_event_title">SUNDAY - 8TH MARCH 15  WOMEN DAYS SPECIAL</string> 
  <string name="sample_event_title">Announcing launch of Chillr</string> 
  item_recycler_event 
          */
-        public static final int sample_event_title=0x7f070100;
-        public static final int sample_event_view=0x7f070102;
-        public static final int sample_event_view_map=0x7f07011e;
-        public static final int sample_feedback_multiple_title=0x7f070143;
-        public static final int sample_feedback_multiple_title_a=0x7f070146;
-        public static final int sample_feedback_rating_title=0x7f070147;
-        public static final int sample_feedback_selective_title=0x7f070145;
-        public static final int sample_feedback_subjective_title=0x7f070144;
-        public static final int sample_fragment_birthday_profile_age=0x7f07016b;
-        public static final int sample_fragment_birthday_profile_city=0x7f070167;
-        public static final int sample_fragment_birthday_profile_date=0x7f070168;
-        public static final int sample_fragment_birthday_profile_department=0x7f070169;
-        public static final int sample_fragment_birthday_profile_name=0x7f070166;
-        public static final int sample_fragment_birthday_profile_send_sms=0x7f07016d;
-        public static final int sample_fragment_birthday_profile_send_wishes=0x7f07016c;
-        public static final int sample_fragment_birthday_profile_sun_sign=0x7f07016a;
-        public static final int sample_fragment_settings_about_build_version_text=0x7f07018b;
-        public static final int sample_fragment_settings_about_file_storage_text=0x7f07018c;
-        public static final int sample_fragment_settings_about_text=0x7f07018a;
-        public static final int sample_fragment_settings_dialog_birthday_notify_1=0x7f070192;
-        public static final int sample_fragment_settings_dialog_birthday_notify_2=0x7f070193;
-        public static final int sample_fragment_settings_dialog_birthday_notify_3=0x7f070194;
-        public static final int sample_fragment_settings_dialog_language_negative=0x7f07018f;
-        public static final int sample_fragment_settings_dialog_language_positive=0x7f07018e;
-        public static final int sample_fragment_settings_dialog_language_title=0x7f07018d;
-        public static final int sample_fragment_settings_dialog_traffic_title=0x7f070190;
-        public static final int sample_fragment_settings_general_language_header=0x7f070181;
-        public static final int sample_fragment_settings_general_language_text=0x7f070182;
-        public static final int sample_fragment_settings_header_about=0x7f070189;
+        public static final int sample_event_title=0x7f080110;
+        public static final int sample_event_view=0x7f080112;
+        public static final int sample_event_view_map=0x7f08012e;
+        public static final int sample_feedback_multiple_title=0x7f080155;
+        public static final int sample_feedback_multiple_title_a=0x7f080158;
+        public static final int sample_feedback_rating_title=0x7f080159;
+        public static final int sample_feedback_selective_title=0x7f080157;
+        public static final int sample_feedback_subjective_title=0x7f080156;
+        public static final int sample_fragment_birthday_profile_age=0x7f08017d;
+        public static final int sample_fragment_birthday_profile_city=0x7f080179;
+        public static final int sample_fragment_birthday_profile_date=0x7f08017a;
+        public static final int sample_fragment_birthday_profile_department=0x7f08017b;
+        public static final int sample_fragment_birthday_profile_name=0x7f080178;
+        public static final int sample_fragment_birthday_profile_send_sms=0x7f08017f;
+        public static final int sample_fragment_birthday_profile_send_wishes=0x7f08017e;
+        public static final int sample_fragment_birthday_profile_sun_sign=0x7f08017c;
+        public static final int sample_fragment_settings_about_build_version_text=0x7f0801a3;
+        public static final int sample_fragment_settings_about_file_storage_text=0x7f0801a4;
+        public static final int sample_fragment_settings_about_text=0x7f0801a2;
+        public static final int sample_fragment_settings_dialog_birthday_notify_1=0x7f0801aa;
+        public static final int sample_fragment_settings_dialog_birthday_notify_2=0x7f0801ab;
+        public static final int sample_fragment_settings_dialog_birthday_notify_3=0x7f0801ac;
+        public static final int sample_fragment_settings_dialog_language_negative=0x7f0801a7;
+        public static final int sample_fragment_settings_dialog_language_positive=0x7f0801a6;
+        public static final int sample_fragment_settings_dialog_language_title=0x7f0801a5;
+        public static final int sample_fragment_settings_dialog_sync_freq1=0x7f0801ae;
+        public static final int sample_fragment_settings_dialog_sync_freq2=0x7f0801af;
+        public static final int sample_fragment_settings_dialog_sync_freq3=0x7f0801b0;
+        public static final int sample_fragment_settings_dialog_sync_freq4=0x7f0801b1;
+        public static final int sample_fragment_settings_dialog_sync_title=0x7f0801ad;
+        public static final int sample_fragment_settings_dialog_traffic_title=0x7f0801a8;
+        public static final int sample_fragment_settings_general_language_header=0x7f080192;
+        public static final int sample_fragment_settings_general_language_text=0x7f080193;
+        public static final int sample_fragment_settings_header_about=0x7f0801a1;
         /**  fragment_settings 
  fragment_settings 
          */
-        public static final int sample_fragment_settings_header_general=0x7f070180;
-        public static final int sample_fragment_settings_header_notification=0x7f070184;
-        public static final int sample_fragment_settings_notification_anydo=0x7f070188;
-        public static final int sample_fragment_settings_notification_birthday_mute=0x7f070186;
-        public static final int sample_fragment_settings_notification_birthday_time=0x7f070185;
-        public static final int sample_fragment_settings_notification_birthday_time_text=0x7f070183;
-        public static final int sample_fragment_settings_notification_download_notify=0x7f070187;
-        public static final int sample_item_recycler_event_detail_attendance=0x7f0701b2;
+        public static final int sample_fragment_settings_header_general=0x7f080191;
+        public static final int sample_fragment_settings_header_notification=0x7f080195;
+        public static final int sample_fragment_settings_notification_anydo=0x7f080199;
+        public static final int sample_fragment_settings_notification_birthday_mute=0x7f080197;
+        public static final int sample_fragment_settings_notification_birthday_time=0x7f080196;
+        public static final int sample_fragment_settings_notification_birthday_time_text=0x7f080194;
+        public static final int sample_fragment_settings_notification_download_notify=0x7f080198;
+        public static final int sample_fragment_settings_style_notification=0x7f08019d;
+        public static final int sample_fragment_settings_style_textfont=0x7f08019e;
+        public static final int sample_fragment_settings_style_textfont_default=0x7f0801a0;
+        public static final int sample_fragment_settings_style_textfont_selected=0x7f08019f;
+        public static final int sample_fragment_settings_sync_frequency=0x7f08019b;
+        public static final int sample_fragment_settings_sync_frquency_text=0x7f08019c;
+        public static final int sample_fragment_settings_sync_notification=0x7f08019a;
+        public static final int sample_item_recycler_event_detail_attendance=0x7f0801cf;
         /**  item_recycler_event 
  item_recycler_event 
          */
-        public static final int sample_item_recycler_event_detail_days_left=0x7f0701b1;
-        public static final int sample_item_recycler_event_detail_is_going=0x7f0701b3;
-        public static final int sample_item_recycler_mobcast_audio_by=0x7f0701c1;
-        public static final int sample_item_recycler_mobcast_audio_file_info=0x7f0701c5;
-        /**      <string name="sample_item_recycler_mobcast_audio_summary">The worst is behind us says HDFC Bank\'s Aditya Puri! He says the Government is working on unclogging many projects. Here he is speaking exclusively to ET NOW about Modi magic.</string> 
+        public static final int sample_item_recycler_event_detail_days_left=0x7f0801ce;
+        public static final int sample_item_recycler_event_detail_is_going=0x7f0801d0;
+        public static final int sample_item_recycler_mobcast_audio_by=0x7f0801de;
+        public static final int sample_item_recycler_mobcast_audio_file_info=0x7f0801e2;
+        /**  <string name="sample_item_recycler_mobcast_audio_summary">The worst is behind us says HDFC Bank\'s Aditya Puri! He says the Government is working on unclogging many projects. Here he is speaking exclusively to ET NOW about Modi magic.</string> 
          */
-        public static final int sample_item_recycler_mobcast_audio_file_name=0x7f0701c4;
-        public static final int sample_item_recycler_mobcast_audio_summary=0x7f0701c3;
+        public static final int sample_item_recycler_mobcast_audio_file_name=0x7f0801e1;
+        public static final int sample_item_recycler_mobcast_audio_summary=0x7f0801e0;
         /**  item_recycler_mobcast_audio 
  <string name="sample_item_recycler_mobcast_audio_title">SUSPENDISSE DIFNISSIM MAGNA EU VEHICULA CONVALLIS MASSA DUI FERMENTUM TORTOR NON VENENTIS DOLOR ELIT IN PURUS</string> 
  item_recycler_mobcast_audio 
          */
-        public static final int sample_item_recycler_mobcast_audio_title=0x7f0701c0;
-        public static final int sample_item_recycler_mobcast_audio_view_count=0x7f0701c2;
-        public static final int sample_item_recycler_mobcast_doc_by=0x7f0701ce;
-        public static final int sample_item_recycler_mobcast_doc_desc=0x7f0701cd;
-        public static final int sample_item_recycler_mobcast_doc_file_info=0x7f0701d1;
-        public static final int sample_item_recycler_mobcast_doc_file_name=0x7f0701d0;
+        public static final int sample_item_recycler_mobcast_audio_title=0x7f0801dd;
+        public static final int sample_item_recycler_mobcast_audio_view_count=0x7f0801df;
+        public static final int sample_item_recycler_mobcast_doc_by=0x7f0801eb;
+        public static final int sample_item_recycler_mobcast_doc_desc=0x7f0801ea;
+        public static final int sample_item_recycler_mobcast_doc_file_info=0x7f0801ee;
+        public static final int sample_item_recycler_mobcast_doc_file_name=0x7f0801ed;
         /**  item_recycler_mobcast_doc 
  <string name="sample_item_recycler_mobcast_doc_title">PELLENTESQUE VEHICULA DAPIBUS</string> 
  item_recycler_mobcast_doc 
          */
-        public static final int sample_item_recycler_mobcast_doc_title=0x7f0701cc;
-        public static final int sample_item_recycler_mobcast_doc_view_count=0x7f0701cf;
-        public static final int sample_item_recycler_mobcast_feedback_by=0x7f0701de;
-        public static final int sample_item_recycler_mobcast_feedback_count=0x7f0701df;
-        public static final int sample_item_recycler_mobcast_feedback_question=0x7f0701e0;
+        public static final int sample_item_recycler_mobcast_doc_title=0x7f0801e9;
+        public static final int sample_item_recycler_mobcast_doc_view_count=0x7f0801ec;
+        public static final int sample_item_recycler_mobcast_feedback_by=0x7f0801fb;
+        public static final int sample_item_recycler_mobcast_feedback_count=0x7f0801fc;
+        public static final int sample_item_recycler_mobcast_feedback_question=0x7f0801fd;
         /**  item_recycler_mobcast_feedback 
  <string name="sample_item_recycler_mobcast_feedback_title">HDFC Bank Quiz</string> 
  item_recycler_mobcast_feedback 
          */
-        public static final int sample_item_recycler_mobcast_feedback_title=0x7f0701dd;
-        public static final int sample_item_recycler_mobcast_image_by=0x7f0701b9;
-        public static final int sample_item_recycler_mobcast_image_detail=0x7f0701bb;
+        public static final int sample_item_recycler_mobcast_feedback_title=0x7f0801fa;
+        public static final int sample_item_recycler_mobcast_image_by=0x7f0801d6;
+        public static final int sample_item_recycler_mobcast_image_detail=0x7f0801d8;
         /**  item_recycler_mobcast_image 
  <string name="sample_item_recycler_mobcast_image_title">SUSPENDISSE CONVALLIS SED ORCI A ELEMENTUM</string> 
  item_recycler_mobcast_image 
          */
-        public static final int sample_item_recycler_mobcast_image_title=0x7f0701b8;
-        public static final int sample_item_recycler_mobcast_image_view_count=0x7f0701ba;
+        public static final int sample_item_recycler_mobcast_image_title=0x7f0801d5;
+        public static final int sample_item_recycler_mobcast_image_view_count=0x7f0801d7;
         /**  item_reycler_mobcast_news 
  item_reycler_mobcast_news 
          */
-        public static final int sample_item_recycler_mobcast_news_link=0x7f0701e6;
-        public static final int sample_item_recycler_mobcast_pdf_by=0x7f0701c8;
+        public static final int sample_item_recycler_mobcast_news_link=0x7f080203;
+        public static final int sample_item_recycler_mobcast_pdf_by=0x7f0801e5;
         /**  <string name="sample_item_recycler_mobcast_pdf_desc">HDFC Bank has been named the Strongest Bank in India in the Asian Banker 500 (AB 500) Strongest Bank by Balance Sheet Ranking 2014. The announcement was made at a recognition ceremony held in conjunction with SWIFT’s SIBOS convention at the Boston Convention and Exhibition Centre from 29 September to 2 October 2014 in Boston, USA.The AB 500 ranking is the most comprehensive annual evaluation that captures the quality and sustainability of the balance sheets of banks in the region. It tracks the relative financial strengths of banks in response to their respective market conditions, based on a common scorecard.</string> 
          */
-        public static final int sample_item_recycler_mobcast_pdf_desc=0x7f0701c7;
-        public static final int sample_item_recycler_mobcast_pdf_file_info=0x7f0701cb;
-        public static final int sample_item_recycler_mobcast_pdf_file_name=0x7f0701ca;
+        public static final int sample_item_recycler_mobcast_pdf_desc=0x7f0801e4;
+        public static final int sample_item_recycler_mobcast_pdf_file_info=0x7f0801e8;
+        public static final int sample_item_recycler_mobcast_pdf_file_name=0x7f0801e7;
         /**  item_recycler_mobcast_pdf 
  <string name="sample_item_recycler_mobcast_pdf_title">DONEC TEMPOR SED MASSA TEMPOR MAXIMUS PORTA IN SCELERISQUE NON FEUGIAT LEO INTERDUM VITA</string> 
  <string name="sample_item_recycler_mobcast_pdf_title">HDFC Bank has been named the Strongest Bank in India in the Asian Banker 500 (AB 500)</string> 
  item_recycler_mobcast_pdf 
          */
-        public static final int sample_item_recycler_mobcast_pdf_title=0x7f0701c6;
-        public static final int sample_item_recycler_mobcast_pdf_view_count=0x7f0701c9;
-        public static final int sample_item_recycler_mobcast_ppt_by=0x7f0701d9;
-        public static final int sample_item_recycler_mobcast_ppt_file_info=0x7f0701dc;
-        public static final int sample_item_recycler_mobcast_ppt_file_name=0x7f0701db;
+        public static final int sample_item_recycler_mobcast_pdf_title=0x7f0801e3;
+        public static final int sample_item_recycler_mobcast_pdf_view_count=0x7f0801e6;
+        public static final int sample_item_recycler_mobcast_ppt_by=0x7f0801f6;
+        public static final int sample_item_recycler_mobcast_ppt_file_info=0x7f0801f9;
+        public static final int sample_item_recycler_mobcast_ppt_file_name=0x7f0801f8;
         /**  item_recycler_mobcast_ppt 
  item_recycler_mobcast_ppt 
          */
-        public static final int sample_item_recycler_mobcast_ppt_title=0x7f0701d8;
-        public static final int sample_item_recycler_mobcast_ppt_view_count=0x7f0701da;
-        public static final int sample_item_recycler_mobcast_text_by=0x7f0701b5;
+        public static final int sample_item_recycler_mobcast_ppt_title=0x7f0801f5;
+        public static final int sample_item_recycler_mobcast_ppt_view_count=0x7f0801f7;
+        public static final int sample_item_recycler_mobcast_text_by=0x7f0801d2;
         /**  <string name="sample_item_recycler_mobcast_text_summary">Proin ac risus eu metus confimentim viverra. Donce ut neque sed elit tincidunt condimentum. Read More</string> 
          */
-        public static final int sample_item_recycler_mobcast_text_summary=0x7f0701b7;
+        public static final int sample_item_recycler_mobcast_text_summary=0x7f0801d4;
         /**  item_recycler_mobcast_text 
  <string name="sample_item_recycler_mobcast_text_title">ALIQUAM AC ENIM IN NIBH ULLAMCORPER AUCTOR AC A DOLOR</string> 
  item_recycler_mobcast_text 
          */
-        public static final int sample_item_recycler_mobcast_text_title=0x7f0701b4;
-        public static final int sample_item_recycler_mobcast_text_view_count=0x7f0701b6;
-        public static final int sample_item_recycler_mobcast_video_by=0x7f0701be;
+        public static final int sample_item_recycler_mobcast_text_title=0x7f0801d1;
+        public static final int sample_item_recycler_mobcast_text_view_count=0x7f0801d3;
+        public static final int sample_item_recycler_mobcast_video_by=0x7f0801db;
         /**  <string name="sample_item_recycler_mobcast_video_desc">We are Everywhere You Go </string> 
          */
-        public static final int sample_item_recycler_mobcast_video_desc=0x7f0701bd;
+        public static final int sample_item_recycler_mobcast_video_desc=0x7f0801da;
         /**  item_recycler_mobcast_video 
  <string name="sample_item_recycler_mobcast_video_title">PRAESENT SED LEO IN SEM VENENATI</string> 
  <string name="sample_item_recycler_mobcast_video_title">HDFC Bank Commercial </string> 
  item_recycler_mobcast_video 
          */
-        public static final int sample_item_recycler_mobcast_video_title=0x7f0701bc;
-        public static final int sample_item_recycler_mobcast_video_view_count=0x7f0701bf;
-        public static final int sample_item_recycler_mobcast_xls_by=0x7f0701d4;
-        public static final int sample_item_recycler_mobcast_xls_desc=0x7f0701d3;
-        public static final int sample_item_recycler_mobcast_xls_file_info=0x7f0701d7;
-        public static final int sample_item_recycler_mobcast_xls_file_name=0x7f0701d6;
+        public static final int sample_item_recycler_mobcast_video_title=0x7f0801d9;
+        public static final int sample_item_recycler_mobcast_video_view_count=0x7f0801dc;
+        public static final int sample_item_recycler_mobcast_xls_by=0x7f0801f1;
+        public static final int sample_item_recycler_mobcast_xls_desc=0x7f0801f0;
+        public static final int sample_item_recycler_mobcast_xls_file_info=0x7f0801f4;
+        public static final int sample_item_recycler_mobcast_xls_file_name=0x7f0801f3;
         /**  item_recycler_mobcast_xls 
  <string name="sample_item_recycler_mobcast_xls_title">QUISQUE TINCIDUNT LIBERO SEM ID LACINIA ODIO FERMENTUM SIT AMET</string> 
  item_recycler_mobcast_xls 
          */
-        public static final int sample_item_recycler_mobcast_xls_title=0x7f0701d2;
-        public static final int sample_item_recycler_mobcast_xls_view_count=0x7f0701d5;
+        public static final int sample_item_recycler_mobcast_xls_title=0x7f0801ef;
+        public static final int sample_item_recycler_mobcast_xls_view_count=0x7f0801f2;
         /**  item_recycler_training_audio 
          */
-        public static final int sample_item_recycler_training_audio_title=0x7f0701eb;
-        public static final int sample_item_recycler_training_image_desc=0x7f0701e8;
+        public static final int sample_item_recycler_training_audio_title=0x7f080208;
+        public static final int sample_item_recycler_training_image_desc=0x7f080205;
         /**  item_recycler_training_image 
  <string name="sample_item_recycler_training_image_title">Indian Business Icons 2015: Aditya Puri, Managing Director, HDFC Bank</string> 
          */
-        public static final int sample_item_recycler_training_image_title=0x7f0701e7;
-        public static final int sample_item_recycler_training_question_attempted=0x7f0701e3;
-        public static final int sample_item_recycler_training_question_score=0x7f0701e4;
+        public static final int sample_item_recycler_training_image_title=0x7f080204;
+        public static final int sample_item_recycler_training_question_attempted=0x7f080200;
+        public static final int sample_item_recycler_training_question_score=0x7f080201;
         /**  item_recylcer_training_quiz 
  item_recylcer_training_quiz 
          */
-        public static final int sample_item_recycler_training_question_time=0x7f0701e2;
+        public static final int sample_item_recycler_training_question_time=0x7f0801ff;
         /**  <string name="sample_item_recycler_training_text_desc">HDFC Bank is morphing into a full-scale digital bank and is also exploring opportunities in the semi-urban and rural areas, says MD and CEO Aditya Puri. Edited excerpts of an interview with Business Today </string> 
          */
-        public static final int sample_item_recycler_training_text_desc=0x7f0701ea;
+        public static final int sample_item_recycler_training_text_desc=0x7f080207;
         /**  item_recycler_training_text 
  <string name="sample_item_recycler_training_text_title">Essence of banking is in taking calculated risk, says HDFC Bank CEO Aditya Puri</string> 
          */
-        public static final int sample_item_recycler_training_text_title=0x7f0701e9;
-        public static final int sample_live_detail_seekbar=0x7f07015a;
-        public static final int sample_news_detail_link=0x7f070162;
-        public static final int sample_question_header_box=0x7f07012e;
-        public static final int sample_quiz_header_number_text=0x7f070129;
-        public static final int sample_quiz_multiple_check_group_a=0x7f070148;
-        public static final int sample_quiz_multiple_check_group_aa=0x7f07014c;
-        public static final int sample_quiz_multiple_check_group_ab=0x7f07014d;
-        public static final int sample_quiz_multiple_check_group_ac=0x7f07014e;
-        public static final int sample_quiz_multiple_check_group_ad=0x7f07014f;
-        public static final int sample_quiz_multiple_check_group_b=0x7f070149;
-        public static final int sample_quiz_multiple_check_group_c=0x7f07014a;
-        public static final int sample_quiz_multiple_check_group_d=0x7f07014b;
-        public static final int sample_quiz_pager_counter=0x7f07012a;
-        public static final int sample_quiz_score=0x7f070134;
-        public static final int sample_quiz_score_correct_answer=0x7f07013a;
-        public static final int sample_quiz_score_correct_answer_text=0x7f070136;
-        public static final int sample_quiz_score_correct_answer_tv=0x7f070135;
-        public static final int sample_quiz_score_goofed_up=0x7f070138;
-        public static final int sample_quiz_score_goofed_up_at=0x7f070139;
-        public static final int sample_quiz_score_header_score=0x7f070131;
+        public static final int sample_item_recycler_training_text_title=0x7f080206;
+        public static final int sample_live_detail_seekbar=0x7f08016c;
+        public static final int sample_news_detail_link=0x7f080174;
+        public static final int sample_question_header_box=0x7f080140;
+        public static final int sample_quiz_header_number_text=0x7f08013b;
+        public static final int sample_quiz_multiple_check_group_a=0x7f08015a;
+        public static final int sample_quiz_multiple_check_group_aa=0x7f08015e;
+        public static final int sample_quiz_multiple_check_group_ab=0x7f08015f;
+        public static final int sample_quiz_multiple_check_group_ac=0x7f080160;
+        public static final int sample_quiz_multiple_check_group_ad=0x7f080161;
+        public static final int sample_quiz_multiple_check_group_b=0x7f08015b;
+        public static final int sample_quiz_multiple_check_group_c=0x7f08015c;
+        public static final int sample_quiz_multiple_check_group_d=0x7f08015d;
+        public static final int sample_quiz_pager_counter=0x7f08013c;
+        public static final int sample_quiz_score=0x7f080146;
+        public static final int sample_quiz_score_correct_answer=0x7f08014c;
+        public static final int sample_quiz_score_correct_answer_text=0x7f080148;
+        public static final int sample_quiz_score_correct_answer_tv=0x7f080147;
+        public static final int sample_quiz_score_goofed_up=0x7f08014a;
+        public static final int sample_quiz_score_goofed_up_at=0x7f08014b;
+        public static final int sample_quiz_score_header_score=0x7f080143;
         /**  fragment_quiz_score 
  fragment_quiz_score 
          */
-        public static final int sample_quiz_score_header_time_taken=0x7f070130;
-        public static final int sample_quiz_score_statement=0x7f070137;
-        public static final int sample_quiz_score_time_taken=0x7f070132;
-        public static final int sample_quiz_score_time_taken_sec=0x7f070133;
-        public static final int sample_quiz_selective_radio_group_a=0x7f07013e;
-        public static final int sample_quiz_selective_radio_group_aa=0x7f070150;
-        public static final int sample_quiz_selective_radio_group_ab=0x7f070151;
-        public static final int sample_quiz_selective_radio_group_ac=0x7f070152;
-        public static final int sample_quiz_selective_radio_group_ad=0x7f070153;
-        public static final int sample_quiz_selective_radio_group_b=0x7f07013f;
-        public static final int sample_quiz_selective_radio_group_c=0x7f070140;
-        public static final int sample_quiz_selective_radio_group_d=0x7f070141;
+        public static final int sample_quiz_score_header_time_taken=0x7f080142;
+        public static final int sample_quiz_score_statement=0x7f080149;
+        public static final int sample_quiz_score_time_taken=0x7f080144;
+        public static final int sample_quiz_score_time_taken_sec=0x7f080145;
+        public static final int sample_quiz_selective_radio_group_a=0x7f080150;
+        public static final int sample_quiz_selective_radio_group_aa=0x7f080162;
+        public static final int sample_quiz_selective_radio_group_ab=0x7f080163;
+        public static final int sample_quiz_selective_radio_group_ac=0x7f080164;
+        public static final int sample_quiz_selective_radio_group_ad=0x7f080165;
+        public static final int sample_quiz_selective_radio_group_b=0x7f080151;
+        public static final int sample_quiz_selective_radio_group_c=0x7f080152;
+        public static final int sample_quiz_selective_radio_group_d=0x7f080153;
         /**  fragment_quiz_selective_radio 
  <string name="sample_quiz_selective_radio_title">INDICATOR OF MUNLIER LC KIDS?</string> 
  fragment_quiz_selective_radio 
          */
-        public static final int sample_quiz_selective_radio_title=0x7f07013d;
+        public static final int sample_quiz_selective_radio_title=0x7f08014f;
         /**  fragment_quiz 
  fragment_quiz 
          */
-        public static final int sample_quiz_timer_seconds=0x7f070127;
-        public static final int sample_quiz_timer_seconds_text=0x7f070128;
-        public static final int sample_recruitment_job_experience=0x7f0700fa;
-        public static final int sample_recruitment_job_location=0x7f0700f9;
-        public static final int sample_recruitment_job_title=0x7f0700f8;
+        public static final int sample_quiz_timer_seconds=0x7f080139;
+        public static final int sample_quiz_timer_seconds_text=0x7f08013a;
+        public static final int sample_recruitment_job_experience=0x7f08010a;
+        public static final int sample_recruitment_job_location=0x7f080109;
+        public static final int sample_recruitment_job_title=0x7f080108;
         /**  fragment_report 
  fragment_report 
          */
-        public static final int sample_report_category_header=0x7f070178;
-        public static final int sample_report_category_hint=0x7f07017c;
-        public static final int sample_report_category_include_logs=0x7f07017a;
-        public static final int sample_report_category_submit=0x7f07017b;
-        public static final int sample_report_category_text=0x7f070179;
+        public static final int sample_report_category_header=0x7f080189;
+        public static final int sample_report_category_hint=0x7f08018d;
+        public static final int sample_report_category_include_logs=0x7f08018b;
+        public static final int sample_report_category_submit=0x7f08018c;
+        public static final int sample_report_category_text=0x7f08018a;
         /**  section_layout_birthday_header 
  section_layout_birthday_header 
          */
-        public static final int sample_section_layout_birthday_header=0x7f0701ec;
+        public static final int sample_section_layout_birthday_header=0x7f080209;
         /**  <string name="sample_winner_designation">Country Head-Operations, HDFC bank</string> 
          */
-        public static final int sample_winner_designation=0x7f0700fd;
+        public static final int sample_winner_designation=0x7f08010d;
         /**  item_recycler_award 
  <string name="sample_winner_name">MR. BHAVESH ZAVERI</string> 
  item_recycler_award 
          */
-        public static final int sample_winner_name=0x7f0700fb;
-        public static final int save_message=0x7f07007e;
-        public static final int search_hint=0x7f07008e;
-        public static final int share_advertisement=0x7f070070;
-        public static final int skills=0x7f0700f3;
-        public static final int spb_default_speed=0x7f07005f;
-        public static final int speak_now=0x7f070066;
+        public static final int sample_winner_name=0x7f08010b;
+        public static final int save_message=0x7f080081;
+        public static final int search_hint=0x7f08009a;
+        public static final int share_advertisement=0x7f080071;
+        public static final int showcase_content1=0x7f080086;
+        public static final int showcase_content2=0x7f080087;
+        public static final int showcase_content3=0x7f080088;
+        public static final int showcase_content4=0x7f080089;
+        public static final int showcase_content5=0x7f08008a;
+        public static final int showcase_gotit=0x7f08008b;
+        public static final int showcase_next=0x7f08008c;
+        public static final int skills=0x7f080103;
+        public static final int spb_default_speed=0x7f08005f;
+        public static final int speak_now=0x7f080066;
         /**  Text to use when the number in a notification info is too large
          (greater than status_bar_notification_info_maxnum, defined in
          values/config.xml) and must be truncated. May need to be localized
          for most appropriate textual indicator of "more than X".
          [CHAR LIMIT=4] 
          */
-        public static final int status_bar_notification_info_overflow=0x7f07002a;
-        public static final int sync_failed=0x7f07006a;
-        public static final int sync_passed=0x7f07006b;
-        public static final int textview_help=0x7f0701f1;
+        public static final int status_bar_notification_info_overflow=0x7f08002a;
+        public static final int sync_failed=0x7f08006a;
+        public static final int sync_passed=0x7f08006b;
+        public static final int textview_help=0x7f08020f;
         /**  include_layout_drawer 
  include_layout_drawer 
          */
-        public static final int textview_last_sync=0x7f0701ed;
-        public static final int textview_last_sync_content=0x7f0701f0;
+        public static final int textview_last_sync=0x7f08020a;
+        public static final int textview_last_sync_content=0x7f08020e;
         /**  activity_login 
  activity_login 
          */
-        public static final int textview_login=0x7f0700c8;
-        public static final int textview_login_administration=0x7f0700ca;
-        public static final int textview_login_countrycode=0x7f0700c9;
-        public static final int textview_profile_email=0x7f0701ef;
-        public static final int textview_profile_name=0x7f0701ee;
-        public static final int textview_skip=0x7f0700e7;
+        public static final int textview_login=0x7f0800d4;
+        public static final int textview_login_administration=0x7f0800d7;
+        public static final int textview_login_countrycode=0x7f0800d6;
+        public static final int textview_newbroadcast=0x7f0800d5;
+        public static final int textview_profile_email=0x7f08020d;
+        public static final int textview_profile_name=0x7f08020c;
+        public static final int textview_skip=0x7f0800f6;
+        public static final int textview_unread=0x7f08020b;
         /**  activity_set_login 
  activity_set_login 
          */
-        public static final int textview_upload_another=0x7f0700e2;
-        public static final int textview_upload_remove=0x7f0700e3;
+        public static final int textview_upload_another=0x7f0800f1;
+        public static final int textview_upload_remove=0x7f0800f2;
         /**  activity_verification 
  activity_verification 
          */
-        public static final int textview_verification=0x7f0700d8;
-        public static final int textview_verify_administration=0x7f0700dd;
-        public static final int textview_verify_administration_tryagain=0x7f0700de;
-        public static final int toolbar_background=0x7f070062;
-        public static final int update=0x7f07007a;
-        public static final int update_delete_message=0x7f070076;
-        public static final int update_title_message=0x7f070075;
-        public static final int validate_verfication_code_empty=0x7f0700df;
-        public static final int view=0x7f0700d2;
-        public static final int wished_message_validation=0x7f070080;
+        public static final int textview_verification=0x7f0800e7;
+        public static final int textview_verify_administration=0x7f0800ec;
+        public static final int textview_verify_administration_tryagain=0x7f0800ed;
+        public static final int toolbar_background=0x7f080062;
+        public static final int update=0x7f08007b;
+        public static final int update_delete_message=0x7f080077;
+        public static final int update_title_message=0x7f080076;
+        public static final int validate_verfication_code_empty=0x7f0800ee;
+        public static final int view=0x7f0800e1;
+        public static final int wished_message_validation=0x7f080083;
     }
     public static final class style {
-        public static final int AlertDialog_AppCompat=0x7f0c0040;
-        public static final int AlertDialog_AppCompat_Light=0x7f0c0041;
-        public static final int Animation_AppCompat_Dialog=0x7f0c0046;
-        public static final int Animation_AppCompat_DropDownUp=0x7f0c0047;
-        public static final int AppBaseTheme=0x7f0c0126;
+        public static final int AlertDialog_AppCompat=0x7f0d0040;
+        public static final int AlertDialog_AppCompat_Light=0x7f0d0041;
+        public static final int Animation_AppCompat_Dialog=0x7f0d0046;
+        public static final int Animation_AppCompat_DropDownUp=0x7f0d0047;
+        public static final int AppBaseTheme=0x7f0d0126;
         /**  Application theme. 
  Application theme. 
  Application theme. 
  Application theme. 
          */
-        public static final int AppTheme=0x7f0c0124;
-        public static final int AudioSeekBar=0x7f0c0144;
-        public static final int Base_AlertDialog_AppCompat=0x7f0c00c4;
-        public static final int Base_AlertDialog_AppCompat_Light=0x7f0c00c5;
-        public static final int Base_Animation_AppCompat_Dialog=0x7f0c00c0;
-        public static final int Base_Animation_AppCompat_DropDownUp=0x7f0c00c3;
-        public static final int Base_DialogWindowTitle_AppCompat=0x7f0c00bf;
-        public static final int Base_DialogWindowTitleBackground_AppCompat=0x7f0c00be;
-        public static final int Base_TextAppearance_AppCompat=0x7f0c00c8;
-        public static final int Base_TextAppearance_AppCompat_Body1=0x7f0c00d3;
-        public static final int Base_TextAppearance_AppCompat_Body2=0x7f0c00d2;
-        public static final int Base_TextAppearance_AppCompat_Button=0x7f0c00d6;
-        public static final int Base_TextAppearance_AppCompat_Caption=0x7f0c00d4;
-        public static final int Base_TextAppearance_AppCompat_Display1=0x7f0c00cc;
-        public static final int Base_TextAppearance_AppCompat_Display2=0x7f0c00cb;
-        public static final int Base_TextAppearance_AppCompat_Display3=0x7f0c00ca;
-        public static final int Base_TextAppearance_AppCompat_Display4=0x7f0c00c9;
-        public static final int Base_TextAppearance_AppCompat_Headline=0x7f0c00cd;
+        public static final int AppTheme=0x7f0d0124;
+        public static final int AudioSeekBar=0x7f0d0144;
+        public static final int Base_AlertDialog_AppCompat=0x7f0d00c4;
+        public static final int Base_AlertDialog_AppCompat_Light=0x7f0d00c5;
+        public static final int Base_Animation_AppCompat_Dialog=0x7f0d00c0;
+        public static final int Base_Animation_AppCompat_DropDownUp=0x7f0d00c3;
+        public static final int Base_DialogWindowTitle_AppCompat=0x7f0d00bf;
+        public static final int Base_DialogWindowTitleBackground_AppCompat=0x7f0d00be;
+        public static final int Base_TextAppearance_AppCompat=0x7f0d00c8;
+        public static final int Base_TextAppearance_AppCompat_Body1=0x7f0d00d3;
+        public static final int Base_TextAppearance_AppCompat_Body2=0x7f0d00d2;
+        public static final int Base_TextAppearance_AppCompat_Button=0x7f0d00d6;
+        public static final int Base_TextAppearance_AppCompat_Caption=0x7f0d00d4;
+        public static final int Base_TextAppearance_AppCompat_Display1=0x7f0d00cc;
+        public static final int Base_TextAppearance_AppCompat_Display2=0x7f0d00cb;
+        public static final int Base_TextAppearance_AppCompat_Display3=0x7f0d00ca;
+        public static final int Base_TextAppearance_AppCompat_Display4=0x7f0d00c9;
+        public static final int Base_TextAppearance_AppCompat_Headline=0x7f0d00cd;
         /**  Deprecated text styles 
  Deprecated text styles 
  Now deprecated styles 
          */
-        public static final int Base_TextAppearance_AppCompat_Inverse=0x7f0c00d7;
-        public static final int Base_TextAppearance_AppCompat_Large=0x7f0c00d8;
-        public static final int Base_TextAppearance_AppCompat_Large_Inverse=0x7f0c00d9;
-        public static final int Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Large=0x7f0c009f;
-        public static final int Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Small=0x7f0c00a0;
-        public static final int Base_TextAppearance_AppCompat_Medium=0x7f0c00da;
-        public static final int Base_TextAppearance_AppCompat_Medium_Inverse=0x7f0c00db;
-        public static final int Base_TextAppearance_AppCompat_Menu=0x7f0c00d5;
-        public static final int Base_TextAppearance_AppCompat_SearchResult=0x7f0c00a1;
-        public static final int Base_TextAppearance_AppCompat_SearchResult_Subtitle=0x7f0c00a3;
+        public static final int Base_TextAppearance_AppCompat_Inverse=0x7f0d00d7;
+        public static final int Base_TextAppearance_AppCompat_Large=0x7f0d00d8;
+        public static final int Base_TextAppearance_AppCompat_Large_Inverse=0x7f0d00d9;
+        public static final int Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Large=0x7f0d009f;
+        public static final int Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Small=0x7f0d00a0;
+        public static final int Base_TextAppearance_AppCompat_Medium=0x7f0d00da;
+        public static final int Base_TextAppearance_AppCompat_Medium_Inverse=0x7f0d00db;
+        public static final int Base_TextAppearance_AppCompat_Menu=0x7f0d00d5;
+        public static final int Base_TextAppearance_AppCompat_SearchResult=0x7f0d00a1;
+        public static final int Base_TextAppearance_AppCompat_SearchResult_Subtitle=0x7f0d00a3;
         /**  Search View result styles 
          */
-        public static final int Base_TextAppearance_AppCompat_SearchResult_Title=0x7f0c00a2;
-        public static final int Base_TextAppearance_AppCompat_Small=0x7f0c00dc;
-        public static final int Base_TextAppearance_AppCompat_Small_Inverse=0x7f0c00dd;
-        public static final int Base_TextAppearance_AppCompat_Subhead=0x7f0c00d0;
-        public static final int Base_TextAppearance_AppCompat_Subhead_Inverse=0x7f0c00d1;
-        public static final int Base_TextAppearance_AppCompat_Title=0x7f0c00ce;
-        public static final int Base_TextAppearance_AppCompat_Title_Inverse=0x7f0c00cf;
-        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Menu=0x7f0c0088;
-        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle=0x7f0c008a;
-        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse=0x7f0c008c;
-        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Title=0x7f0c0089;
-        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse=0x7f0c008b;
-        public static final int Base_TextAppearance_AppCompat_Widget_ActionMode_Subtitle=0x7f0c0087;
-        public static final int Base_TextAppearance_AppCompat_Widget_ActionMode_Title=0x7f0c0086;
-        public static final int Base_TextAppearance_AppCompat_Widget_DropDownItem=0x7f0c0095;
-        public static final int Base_TextAppearance_AppCompat_Widget_PopupMenu_Large=0x7f0c009d;
-        public static final int Base_TextAppearance_AppCompat_Widget_PopupMenu_Small=0x7f0c009e;
-        public static final int Base_TextAppearance_AppCompat_Widget_Switch=0x7f0c00b5;
-        public static final int Base_TextAppearance_AppCompat_Widget_TextView_SpinnerItem=0x7f0c00bd;
-        public static final int Base_TextAppearance_Widget_AppCompat_ExpandedMenu_Item=0x7f0c0096;
-        public static final int Base_TextAppearance_Widget_AppCompat_Toolbar_Subtitle=0x7f0c00ab;
-        public static final int Base_TextAppearance_Widget_AppCompat_Toolbar_Title=0x7f0c00aa;
-        public static final int Base_Theme_AppCompat=0x7f0c0103;
+        public static final int Base_TextAppearance_AppCompat_SearchResult_Title=0x7f0d00a2;
+        public static final int Base_TextAppearance_AppCompat_Small=0x7f0d00dc;
+        public static final int Base_TextAppearance_AppCompat_Small_Inverse=0x7f0d00dd;
+        public static final int Base_TextAppearance_AppCompat_Subhead=0x7f0d00d0;
+        public static final int Base_TextAppearance_AppCompat_Subhead_Inverse=0x7f0d00d1;
+        public static final int Base_TextAppearance_AppCompat_Title=0x7f0d00ce;
+        public static final int Base_TextAppearance_AppCompat_Title_Inverse=0x7f0d00cf;
+        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Menu=0x7f0d0088;
+        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle=0x7f0d008a;
+        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse=0x7f0d008c;
+        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Title=0x7f0d0089;
+        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse=0x7f0d008b;
+        public static final int Base_TextAppearance_AppCompat_Widget_ActionMode_Subtitle=0x7f0d0087;
+        public static final int Base_TextAppearance_AppCompat_Widget_ActionMode_Title=0x7f0d0086;
+        public static final int Base_TextAppearance_AppCompat_Widget_DropDownItem=0x7f0d0095;
+        public static final int Base_TextAppearance_AppCompat_Widget_PopupMenu_Large=0x7f0d009d;
+        public static final int Base_TextAppearance_AppCompat_Widget_PopupMenu_Small=0x7f0d009e;
+        public static final int Base_TextAppearance_AppCompat_Widget_Switch=0x7f0d00b5;
+        public static final int Base_TextAppearance_AppCompat_Widget_TextView_SpinnerItem=0x7f0d00bd;
+        public static final int Base_TextAppearance_Widget_AppCompat_ExpandedMenu_Item=0x7f0d0096;
+        public static final int Base_TextAppearance_Widget_AppCompat_Toolbar_Subtitle=0x7f0d00ab;
+        public static final int Base_TextAppearance_Widget_AppCompat_Toolbar_Title=0x7f0d00aa;
+        public static final int Base_Theme_AppCompat=0x7f0d0103;
         /**  Menu/item attributes 
          */
-        public static final int Base_Theme_AppCompat_CompactMenu=0x7f0c0106;
-        public static final int Base_Theme_AppCompat_Dialog=0x7f0c0109;
-        public static final int Base_Theme_AppCompat_Dialog_Alert=0x7f0c010b;
-        public static final int Base_Theme_AppCompat_Dialog_FixedSize=0x7f0c010f;
-        public static final int Base_Theme_AppCompat_Dialog_MinWidth=0x7f0c010d;
+        public static final int Base_Theme_AppCompat_CompactMenu=0x7f0d0106;
+        public static final int Base_Theme_AppCompat_Dialog=0x7f0d0109;
+        public static final int Base_Theme_AppCompat_Dialog_Alert=0x7f0d010b;
+        public static final int Base_Theme_AppCompat_Dialog_FixedSize=0x7f0d010f;
+        public static final int Base_Theme_AppCompat_Dialog_MinWidth=0x7f0d010d;
         /**  We're not large, so redirect to Theme.AppCompat 
          */
-        public static final int Base_Theme_AppCompat_DialogWhenLarge=0x7f0c0111;
-        public static final int Base_Theme_AppCompat_Light=0x7f0c0104;
-        public static final int Base_Theme_AppCompat_Light_DarkActionBar=0x7f0c0105;
-        public static final int Base_Theme_AppCompat_Light_Dialog=0x7f0c010a;
-        public static final int Base_Theme_AppCompat_Light_Dialog_Alert=0x7f0c010c;
-        public static final int Base_Theme_AppCompat_Light_Dialog_FixedSize=0x7f0c0110;
-        public static final int Base_Theme_AppCompat_Light_Dialog_MinWidth=0x7f0c010e;
-        public static final int Base_Theme_AppCompat_Light_DialogWhenLarge=0x7f0c0112;
+        public static final int Base_Theme_AppCompat_DialogWhenLarge=0x7f0d0111;
+        public static final int Base_Theme_AppCompat_Light=0x7f0d0104;
+        public static final int Base_Theme_AppCompat_Light_DarkActionBar=0x7f0d0105;
+        public static final int Base_Theme_AppCompat_Light_Dialog=0x7f0d010a;
+        public static final int Base_Theme_AppCompat_Light_Dialog_Alert=0x7f0d010c;
+        public static final int Base_Theme_AppCompat_Light_Dialog_FixedSize=0x7f0d0110;
+        public static final int Base_Theme_AppCompat_Light_Dialog_MinWidth=0x7f0d010e;
+        public static final int Base_Theme_AppCompat_Light_DialogWhenLarge=0x7f0d0112;
         /**  Overlay themes 
          */
-        public static final int Base_ThemeOverlay_AppCompat=0x7f0c0113;
-        public static final int Base_ThemeOverlay_AppCompat_ActionBar=0x7f0c0118;
-        public static final int Base_ThemeOverlay_AppCompat_Dark=0x7f0c0117;
-        public static final int Base_ThemeOverlay_AppCompat_Dark_ActionBar=0x7f0c0119;
-        public static final int Base_ThemeOverlay_AppCompat_Light=0x7f0c0116;
-        public static final int Base_V11_Theme_AppCompat_Dialog=0x7f0c011c;
-        public static final int Base_V11_Theme_AppCompat_Light_Dialog=0x7f0c011d;
-        public static final int Base_V12_Widget_AppCompat_AutoCompleteTextView=0x7f0c00c7;
-        public static final int Base_V12_Widget_AppCompat_EditText=0x7f0c00c6;
-        public static final int Base_V21_Theme_AppCompat=0x7f0c0120;
-        public static final int Base_V21_Theme_AppCompat_Dialog=0x7f0c0122;
-        public static final int Base_V21_Theme_AppCompat_Light=0x7f0c0121;
-        public static final int Base_V21_Theme_AppCompat_Light_Dialog=0x7f0c0123;
+        public static final int Base_ThemeOverlay_AppCompat=0x7f0d0113;
+        public static final int Base_ThemeOverlay_AppCompat_ActionBar=0x7f0d0118;
+        public static final int Base_ThemeOverlay_AppCompat_Dark=0x7f0d0117;
+        public static final int Base_ThemeOverlay_AppCompat_Dark_ActionBar=0x7f0d0119;
+        public static final int Base_ThemeOverlay_AppCompat_Light=0x7f0d0116;
+        public static final int Base_V11_Theme_AppCompat_Dialog=0x7f0d011c;
+        public static final int Base_V11_Theme_AppCompat_Light_Dialog=0x7f0d011d;
+        public static final int Base_V12_Widget_AppCompat_AutoCompleteTextView=0x7f0d00c7;
+        public static final int Base_V12_Widget_AppCompat_EditText=0x7f0d00c6;
+        public static final int Base_V21_Theme_AppCompat=0x7f0d0120;
+        public static final int Base_V21_Theme_AppCompat_Dialog=0x7f0d0122;
+        public static final int Base_V21_Theme_AppCompat_Light=0x7f0d0121;
+        public static final int Base_V21_Theme_AppCompat_Light_Dialog=0x7f0d0123;
         /**  Base platform-dependent theme providing an action bar in a dark-themed activity. 
          */
-        public static final int Base_V7_Theme_AppCompat=0x7f0c0101;
-        public static final int Base_V7_Theme_AppCompat_Dialog=0x7f0c0107;
+        public static final int Base_V7_Theme_AppCompat=0x7f0d0101;
+        public static final int Base_V7_Theme_AppCompat_Dialog=0x7f0d0107;
         /**  Base platform-dependent theme providing an action bar in a light-themed activity. 
          */
-        public static final int Base_V7_Theme_AppCompat_Light=0x7f0c0102;
-        public static final int Base_V7_Theme_AppCompat_Light_Dialog=0x7f0c0108;
-        public static final int Base_V7_Widget_AppCompat_AutoCompleteTextView=0x7f0c00a5;
-        public static final int Base_V7_Widget_AppCompat_EditText=0x7f0c00af;
-        public static final int Base_Widget_AppCompat_ActionBar=0x7f0c0077;
-        public static final int Base_Widget_AppCompat_ActionBar_Solid=0x7f0c0079;
-        public static final int Base_Widget_AppCompat_ActionBar_TabBar=0x7f0c007e;
-        public static final int Base_Widget_AppCompat_ActionBar_TabText=0x7f0c0082;
-        public static final int Base_Widget_AppCompat_ActionBar_TabView=0x7f0c0080;
+        public static final int Base_V7_Theme_AppCompat_Light=0x7f0d0102;
+        public static final int Base_V7_Theme_AppCompat_Light_Dialog=0x7f0d0108;
+        public static final int Base_V7_Widget_AppCompat_AutoCompleteTextView=0x7f0d00a5;
+        public static final int Base_V7_Widget_AppCompat_EditText=0x7f0d00af;
+        public static final int Base_Widget_AppCompat_ActionBar=0x7f0d0077;
+        public static final int Base_Widget_AppCompat_ActionBar_Solid=0x7f0d0079;
+        public static final int Base_Widget_AppCompat_ActionBar_TabBar=0x7f0d007e;
+        public static final int Base_Widget_AppCompat_ActionBar_TabText=0x7f0d0082;
+        public static final int Base_Widget_AppCompat_ActionBar_TabView=0x7f0d0080;
         /**  Action Button Styles 
          */
-        public static final int Base_Widget_AppCompat_ActionButton=0x7f0c007b;
-        public static final int Base_Widget_AppCompat_ActionButton_CloseMode=0x7f0c007c;
-        public static final int Base_Widget_AppCompat_ActionButton_Overflow=0x7f0c007d;
-        public static final int Base_Widget_AppCompat_ActionMode=0x7f0c0085;
-        public static final int Base_Widget_AppCompat_ActivityChooserView=0x7f0c00a6;
-        public static final int Base_Widget_AppCompat_AutoCompleteTextView=0x7f0c00a4;
+        public static final int Base_Widget_AppCompat_ActionButton=0x7f0d007b;
+        public static final int Base_Widget_AppCompat_ActionButton_CloseMode=0x7f0d007c;
+        public static final int Base_Widget_AppCompat_ActionButton_Overflow=0x7f0d007d;
+        public static final int Base_Widget_AppCompat_ActionMode=0x7f0d0085;
+        public static final int Base_Widget_AppCompat_ActivityChooserView=0x7f0d00a6;
+        public static final int Base_Widget_AppCompat_AutoCompleteTextView=0x7f0d00a4;
         /**  Bordered ink button 
          */
-        public static final int Base_Widget_AppCompat_Button=0x7f0c00b7;
+        public static final int Base_Widget_AppCompat_Button=0x7f0d00b7;
         /**  Borderless ink button 
          */
-        public static final int Base_Widget_AppCompat_Button_Borderless=0x7f0c00b9;
+        public static final int Base_Widget_AppCompat_Button_Borderless=0x7f0d00b9;
         /**  Colored borderless ink button 
          */
-        public static final int Base_Widget_AppCompat_Button_Borderless_Colored=0x7f0c00ba;
-        public static final int Base_Widget_AppCompat_Button_ButtonBar_AlertDialog=0x7f0c00bb;
+        public static final int Base_Widget_AppCompat_Button_Borderless_Colored=0x7f0d00ba;
+        public static final int Base_Widget_AppCompat_Button_ButtonBar_AlertDialog=0x7f0d00bb;
         /**  Small bordered ink button 
          */
-        public static final int Base_Widget_AppCompat_Button_Small=0x7f0c00b8;
-        public static final int Base_Widget_AppCompat_ButtonBar=0x7f0c00c1;
-        public static final int Base_Widget_AppCompat_ButtonBar_AlertDialog=0x7f0c00c2;
-        public static final int Base_Widget_AppCompat_CompoundButton_CheckBox=0x7f0c00b2;
-        public static final int Base_Widget_AppCompat_CompoundButton_RadioButton=0x7f0c00b3;
-        public static final int Base_Widget_AppCompat_CompoundButton_Switch=0x7f0c00b4;
+        public static final int Base_Widget_AppCompat_Button_Small=0x7f0d00b8;
+        public static final int Base_Widget_AppCompat_ButtonBar=0x7f0d00c1;
+        public static final int Base_Widget_AppCompat_ButtonBar_AlertDialog=0x7f0d00c2;
+        public static final int Base_Widget_AppCompat_CompoundButton_CheckBox=0x7f0d00b2;
+        public static final int Base_Widget_AppCompat_CompoundButton_RadioButton=0x7f0d00b3;
+        public static final int Base_Widget_AppCompat_CompoundButton_Switch=0x7f0d00b4;
         /**  contains values used in all dpis except hdpi and xxhdpi 
          */
-        public static final int Base_Widget_AppCompat_DrawerArrowToggle=0x7f0c00b1;
+        public static final int Base_Widget_AppCompat_DrawerArrowToggle=0x7f0d00b1;
         /**  contains values used in all dpis 
          */
-        public static final int Base_Widget_AppCompat_DrawerArrowToggle_Common=0x7f0c00b0;
-        public static final int Base_Widget_AppCompat_DropDownItem_Spinner=0x7f0c0092;
-        public static final int Base_Widget_AppCompat_EditText=0x7f0c00ae;
-        public static final int Base_Widget_AppCompat_Light_ActionBar=0x7f0c0078;
-        public static final int Base_Widget_AppCompat_Light_ActionBar_Solid=0x7f0c007a;
-        public static final int Base_Widget_AppCompat_Light_ActionBar_TabBar=0x7f0c007f;
-        public static final int Base_Widget_AppCompat_Light_ActionBar_TabText=0x7f0c0083;
-        public static final int Base_Widget_AppCompat_Light_ActionBar_TabText_Inverse=0x7f0c0084;
-        public static final int Base_Widget_AppCompat_Light_ActionBar_TabView=0x7f0c0081;
-        public static final int Base_Widget_AppCompat_Light_PopupMenu=0x7f0c009c;
-        public static final int Base_Widget_AppCompat_Light_PopupMenu_Overflow=0x7f0c009a;
+        public static final int Base_Widget_AppCompat_DrawerArrowToggle_Common=0x7f0d00b0;
+        public static final int Base_Widget_AppCompat_DropDownItem_Spinner=0x7f0d0092;
+        public static final int Base_Widget_AppCompat_EditText=0x7f0d00ae;
+        public static final int Base_Widget_AppCompat_Light_ActionBar=0x7f0d0078;
+        public static final int Base_Widget_AppCompat_Light_ActionBar_Solid=0x7f0d007a;
+        public static final int Base_Widget_AppCompat_Light_ActionBar_TabBar=0x7f0d007f;
+        public static final int Base_Widget_AppCompat_Light_ActionBar_TabText=0x7f0d0083;
+        public static final int Base_Widget_AppCompat_Light_ActionBar_TabText_Inverse=0x7f0d0084;
+        public static final int Base_Widget_AppCompat_Light_ActionBar_TabView=0x7f0d0081;
+        public static final int Base_Widget_AppCompat_Light_PopupMenu=0x7f0d009c;
+        public static final int Base_Widget_AppCompat_Light_PopupMenu_Overflow=0x7f0d009a;
         /**  Popup Menu 
          */
-        public static final int Base_Widget_AppCompat_ListPopupWindow=0x7f0c0098;
-        public static final int Base_Widget_AppCompat_ListView=0x7f0c0093;
+        public static final int Base_Widget_AppCompat_ListPopupWindow=0x7f0d0098;
+        public static final int Base_Widget_AppCompat_ListView=0x7f0d0093;
         /**  Spinner Widgets 
          */
-        public static final int Base_Widget_AppCompat_ListView_DropDown=0x7f0c0094;
-        public static final int Base_Widget_AppCompat_ListView_Menu=0x7f0c0097;
-        public static final int Base_Widget_AppCompat_PopupMenu=0x7f0c009b;
-        public static final int Base_Widget_AppCompat_PopupMenu_Overflow=0x7f0c0099;
-        public static final int Base_Widget_AppCompat_PopupWindow=0x7f0c00a7;
-        public static final int Base_Widget_AppCompat_ProgressBar=0x7f0c008e;
+        public static final int Base_Widget_AppCompat_ListView_DropDown=0x7f0d0094;
+        public static final int Base_Widget_AppCompat_ListView_Menu=0x7f0d0097;
+        public static final int Base_Widget_AppCompat_PopupMenu=0x7f0d009b;
+        public static final int Base_Widget_AppCompat_PopupMenu_Overflow=0x7f0d0099;
+        public static final int Base_Widget_AppCompat_PopupWindow=0x7f0d00a7;
+        public static final int Base_Widget_AppCompat_ProgressBar=0x7f0d008e;
         /**  Progress Bar 
  Progress Bar 
          */
-        public static final int Base_Widget_AppCompat_ProgressBar_Horizontal=0x7f0c008d;
-        public static final int Base_Widget_AppCompat_RatingBar=0x7f0c00b6;
-        public static final int Base_Widget_AppCompat_SearchView=0x7f0c00ac;
-        public static final int Base_Widget_AppCompat_SearchView_ActionBar=0x7f0c00ad;
+        public static final int Base_Widget_AppCompat_ProgressBar_Horizontal=0x7f0d008d;
+        public static final int Base_Widget_AppCompat_RatingBar=0x7f0d00b6;
+        public static final int Base_Widget_AppCompat_SearchView=0x7f0d00ac;
+        public static final int Base_Widget_AppCompat_SearchView_ActionBar=0x7f0d00ad;
         /**  Spinner Widgets 
          */
-        public static final int Base_Widget_AppCompat_Spinner=0x7f0c008f;
-        public static final int Base_Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0c0091;
-        public static final int Base_Widget_AppCompat_Spinner_Underlined=0x7f0c0090;
-        public static final int Base_Widget_AppCompat_TextView_SpinnerItem=0x7f0c00bc;
-        public static final int Base_Widget_AppCompat_Toolbar=0x7f0c00a8;
+        public static final int Base_Widget_AppCompat_Spinner=0x7f0d008f;
+        public static final int Base_Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0d0091;
+        public static final int Base_Widget_AppCompat_Spinner_Underlined=0x7f0d0090;
+        public static final int Base_Widget_AppCompat_TextView_SpinnerItem=0x7f0d00bc;
+        public static final int Base_Widget_AppCompat_Toolbar=0x7f0d00a8;
         /** 
         Widget.AppCompat.Toolbar style is purposely ommitted. This is because the support
         Toolbar implementation is used on ALL platforms and relies on the unbundled attrs.
         The supporting Toolbar styles below only use basic attrs so work fine.
     
          */
-        public static final int Base_Widget_AppCompat_Toolbar_Button_Navigation=0x7f0c00a9;
+        public static final int Base_Widget_AppCompat_Toolbar_Button_Navigation=0x7f0d00a9;
         /**  BottomSheet 
          */
-        public static final int BottomSheet=0x7f0c012e;
-        public static final int BottomSheet_Animation=0x7f0c0142;
-        public static final int BottomSheet_Dialog=0x7f0c012f;
-        public static final int BottomSheet_Dialog_Dark=0x7f0c0130;
-        public static final int BottomSheet_Grid=0x7f0c0140;
-        public static final int BottomSheet_GridItem=0x7f0c0141;
-        public static final int BottomSheet_GridItemImage=0x7f0c013e;
-        public static final int BottomSheet_GridItemTitle=0x7f0c013f;
-        public static final int BottomSheet_Icon=0x7f0c0137;
-        public static final int BottomSheet_List=0x7f0c0138;
-        public static final int BottomSheet_List_Dark=0x7f0c0139;
-        public static final int BottomSheet_ListDivider=0x7f0c013d;
-        public static final int BottomSheet_ListItem=0x7f0c013a;
-        public static final int BottomSheet_ListItemImage=0x7f0c013b;
-        public static final int BottomSheet_ListItemTitle=0x7f0c013c;
-        public static final int BottomSheet_Title=0x7f0c0136;
-        public static final int BottomSheet_TopDivider=0x7f0c0143;
+        public static final int BottomSheet=0x7f0d012e;
+        public static final int BottomSheet_Animation=0x7f0d0142;
+        public static final int BottomSheet_Dialog=0x7f0d012f;
+        public static final int BottomSheet_Dialog_Dark=0x7f0d0130;
+        public static final int BottomSheet_Grid=0x7f0d0140;
+        public static final int BottomSheet_GridItem=0x7f0d0141;
+        public static final int BottomSheet_GridItemImage=0x7f0d013e;
+        public static final int BottomSheet_GridItemTitle=0x7f0d013f;
+        public static final int BottomSheet_Icon=0x7f0d0137;
+        public static final int BottomSheet_List=0x7f0d0138;
+        public static final int BottomSheet_List_Dark=0x7f0d0139;
+        public static final int BottomSheet_ListDivider=0x7f0d013d;
+        public static final int BottomSheet_ListItem=0x7f0d013a;
+        public static final int BottomSheet_ListItemImage=0x7f0d013b;
+        public static final int BottomSheet_ListItemTitle=0x7f0d013c;
+        public static final int BottomSheet_Title=0x7f0d0136;
+        public static final int BottomSheet_TopDivider=0x7f0d0143;
         /**  DiscreetSeekBar 
          */
-        public static final int CustomFloaterTextAppearance=0x7f0c0145;
-        public static final int DefaultIndicatorTextAppearance=0x7f0c0147;
-        public static final int DefaultSeekBar=0x7f0c0146;
-        public static final int MD_ActionButton=0x7f0c012a;
-        public static final int MD_ActionButton_Text=0x7f0c012b;
-        public static final int MD_ActionButtonStacked=0x7f0c0129;
-        public static final int MD_Dark=0x7f0c0128;
+        public static final int CustomFloaterTextAppearance=0x7f0d0145;
+        public static final int DefaultIndicatorTextAppearance=0x7f0d0147;
+        public static final int DefaultSeekBar=0x7f0d0146;
+        public static final int MD_ActionButton=0x7f0d012a;
+        public static final int MD_ActionButton_Text=0x7f0d012b;
+        public static final int MD_ActionButtonStacked=0x7f0d0129;
+        public static final int MD_Dark=0x7f0d0128;
         /**  Material Dialog L 
          */
-        public static final int MD_Light=0x7f0c0127;
-        public static final int MD_WindowAnimation=0x7f0c012c;
-        public static final int MobcastProgressDialog=0x7f0c014b;
+        public static final int MD_Light=0x7f0d0127;
+        public static final int MD_WindowAnimation=0x7f0d012c;
+        public static final int MobcastProgressDialog=0x7f0d014b;
         /**  Number ProgressBar 
          */
-        public static final int NumberProgressBar_Grace_Yellow=0x7f0c014c;
-        public static final int Platform_AppCompat=0x7f0c00ff;
-        public static final int Platform_AppCompat_Light=0x7f0c0100;
-        public static final int Platform_ThemeOverlay_AppCompat_Dark=0x7f0c0114;
-        public static final int Platform_ThemeOverlay_AppCompat_Light=0x7f0c0115;
-        public static final int Platform_V11_AppCompat=0x7f0c011a;
-        public static final int Platform_V11_AppCompat_Light=0x7f0c011b;
-        public static final int Platform_V14_AppCompat=0x7f0c011e;
-        public static final int Platform_V14_AppCompat_Light=0x7f0c011f;
-        public static final int PocketProgressBar=0x7f0c014a;
-        public static final int RtlOverlay_DialogWindowTitle_AppCompat=0x7f0c00eb;
-        public static final int RtlOverlay_Widget_AppCompat_ActionBar_TitleItem=0x7f0c00e4;
-        public static final int RtlOverlay_Widget_AppCompat_ActionButton_Overflow=0x7f0c00e5;
-        public static final int RtlOverlay_Widget_AppCompat_DialogTitle_Icon=0x7f0c00ea;
-        public static final int RtlOverlay_Widget_AppCompat_PopupMenuItem=0x7f0c00e6;
-        public static final int RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup=0x7f0c00e7;
-        public static final int RtlOverlay_Widget_AppCompat_PopupMenuItem_Text=0x7f0c00e8;
-        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown=0x7f0c00df;
-        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Icon1=0x7f0c00e1;
-        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Icon2=0x7f0c00e2;
-        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Query=0x7f0c00e0;
-        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Text=0x7f0c00e3;
-        public static final int RtlOverlay_Widget_AppCompat_SearchView_MagIcon=0x7f0c00de;
-        public static final int RtlOverlay_Widget_AppCompat_Toolbar_Button_Navigation=0x7f0c00e9;
+        public static final int NumberProgressBar_Grace_Yellow=0x7f0d014c;
+        public static final int Platform_AppCompat=0x7f0d00ff;
+        public static final int Platform_AppCompat_Light=0x7f0d0100;
+        public static final int Platform_ThemeOverlay_AppCompat_Dark=0x7f0d0114;
+        public static final int Platform_ThemeOverlay_AppCompat_Light=0x7f0d0115;
+        public static final int Platform_V11_AppCompat=0x7f0d011a;
+        public static final int Platform_V11_AppCompat_Light=0x7f0d011b;
+        public static final int Platform_V14_AppCompat=0x7f0d011e;
+        public static final int Platform_V14_AppCompat_Light=0x7f0d011f;
+        public static final int PocketProgressBar=0x7f0d014a;
+        public static final int RtlOverlay_DialogWindowTitle_AppCompat=0x7f0d00eb;
+        public static final int RtlOverlay_Widget_AppCompat_ActionBar_TitleItem=0x7f0d00e4;
+        public static final int RtlOverlay_Widget_AppCompat_ActionButton_Overflow=0x7f0d00e5;
+        public static final int RtlOverlay_Widget_AppCompat_DialogTitle_Icon=0x7f0d00ea;
+        public static final int RtlOverlay_Widget_AppCompat_PopupMenuItem=0x7f0d00e6;
+        public static final int RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup=0x7f0d00e7;
+        public static final int RtlOverlay_Widget_AppCompat_PopupMenuItem_Text=0x7f0d00e8;
+        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown=0x7f0d00df;
+        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Icon1=0x7f0d00e1;
+        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Icon2=0x7f0d00e2;
+        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Query=0x7f0d00e0;
+        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Text=0x7f0d00e3;
+        public static final int RtlOverlay_Widget_AppCompat_SearchView_MagIcon=0x7f0d00de;
+        public static final int RtlOverlay_Widget_AppCompat_Toolbar_Button_Navigation=0x7f0d00e9;
         /**  SmoothProgressBar 
          */
-        public static final int SPB=0x7f0c0148;
-        public static final int SmoothProgressBar=0x7f0c0149;
+        public static final int SPB=0x7f0d0148;
+        public static final int SmoothProgressBar=0x7f0d0149;
         /**  Snack Bar 
          */
-        public static final int SnackBar=0x7f0c014d;
-        public static final int SnackBar_Button=0x7f0c0151;
-        public static final int SnackBar_Container=0x7f0c014f;
-        public static final int SnackBar_Message=0x7f0c0150;
-        public static final int SnackBar_SnackBar=0x7f0c014e;
+        public static final int SnackBar=0x7f0d014d;
+        public static final int SnackBar_Button=0x7f0d0151;
+        public static final int SnackBar_Container=0x7f0d014f;
+        public static final int SnackBar_Message=0x7f0d0150;
+        public static final int SnackBar_SnackBar=0x7f0d014e;
         /**  Swipe Back Layout 
          */
-        public static final int SwipeBackLayout=0x7f0c012d;
-        public static final int Text=0x7f0c0131;
-        public static final int Text_Headline=0x7f0c0132;
-        public static final int Text_Hint=0x7f0c0134;
-        public static final int Text_Subhead=0x7f0c0135;
-        public static final int Text_Title=0x7f0c0133;
-        public static final int TextAppearance_AppCompat=0x7f0c0048;
-        public static final int TextAppearance_AppCompat_Body1=0x7f0c0053;
-        public static final int TextAppearance_AppCompat_Body2=0x7f0c0052;
-        public static final int TextAppearance_AppCompat_Button=0x7f0c005d;
-        public static final int TextAppearance_AppCompat_Caption=0x7f0c0054;
-        public static final int TextAppearance_AppCompat_Display1=0x7f0c004c;
-        public static final int TextAppearance_AppCompat_Display2=0x7f0c004b;
-        public static final int TextAppearance_AppCompat_Display3=0x7f0c004a;
-        public static final int TextAppearance_AppCompat_Display4=0x7f0c0049;
-        public static final int TextAppearance_AppCompat_Headline=0x7f0c004d;
-        public static final int TextAppearance_AppCompat_Inverse=0x7f0c0056;
-        public static final int TextAppearance_AppCompat_Large=0x7f0c0057;
-        public static final int TextAppearance_AppCompat_Large_Inverse=0x7f0c0058;
-        public static final int TextAppearance_AppCompat_Light_SearchResult_Subtitle=0x7f0c0064;
-        public static final int TextAppearance_AppCompat_Light_SearchResult_Title=0x7f0c0063;
-        public static final int TextAppearance_AppCompat_Light_Widget_PopupMenu_Large=0x7f0c002b;
-        public static final int TextAppearance_AppCompat_Light_Widget_PopupMenu_Small=0x7f0c002c;
-        public static final int TextAppearance_AppCompat_Medium=0x7f0c0059;
-        public static final int TextAppearance_AppCompat_Medium_Inverse=0x7f0c005a;
-        public static final int TextAppearance_AppCompat_Menu=0x7f0c0055;
-        public static final int TextAppearance_AppCompat_SearchResult_Subtitle=0x7f0c002e;
-        public static final int TextAppearance_AppCompat_SearchResult_Title=0x7f0c002d;
-        public static final int TextAppearance_AppCompat_Small=0x7f0c005b;
-        public static final int TextAppearance_AppCompat_Small_Inverse=0x7f0c005c;
-        public static final int TextAppearance_AppCompat_Subhead=0x7f0c0050;
-        public static final int TextAppearance_AppCompat_Subhead_Inverse=0x7f0c0051;
-        public static final int TextAppearance_AppCompat_Title=0x7f0c004e;
-        public static final int TextAppearance_AppCompat_Title_Inverse=0x7f0c004f;
-        public static final int TextAppearance_AppCompat_Widget_ActionBar_Menu=0x7f0c0015;
-        public static final int TextAppearance_AppCompat_Widget_ActionBar_Subtitle=0x7f0c0005;
-        public static final int TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse=0x7f0c0007;
-        public static final int TextAppearance_AppCompat_Widget_ActionBar_Title=0x7f0c0004;
-        public static final int TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse=0x7f0c0006;
-        public static final int TextAppearance_AppCompat_Widget_ActionMode_Subtitle=0x7f0c0018;
-        public static final int TextAppearance_AppCompat_Widget_ActionMode_Subtitle_Inverse=0x7f0c0067;
-        public static final int TextAppearance_AppCompat_Widget_ActionMode_Title=0x7f0c0017;
-        public static final int TextAppearance_AppCompat_Widget_ActionMode_Title_Inverse=0x7f0c0066;
-        public static final int TextAppearance_AppCompat_Widget_DropDownItem=0x7f0c0019;
-        public static final int TextAppearance_AppCompat_Widget_PopupMenu_Large=0x7f0c0029;
-        public static final int TextAppearance_AppCompat_Widget_PopupMenu_Small=0x7f0c002a;
-        public static final int TextAppearance_AppCompat_Widget_Switch=0x7f0c005e;
-        public static final int TextAppearance_AppCompat_Widget_TextView_SpinnerItem=0x7f0c005f;
+        public static final int SwipeBackLayout=0x7f0d012d;
+        public static final int Text=0x7f0d0131;
+        public static final int Text_Headline=0x7f0d0132;
+        public static final int Text_Hint=0x7f0d0134;
+        public static final int Text_Subhead=0x7f0d0135;
+        public static final int Text_Title=0x7f0d0133;
+        public static final int TextAppearance_AppCompat=0x7f0d0048;
+        public static final int TextAppearance_AppCompat_Body1=0x7f0d0053;
+        public static final int TextAppearance_AppCompat_Body2=0x7f0d0052;
+        public static final int TextAppearance_AppCompat_Button=0x7f0d005d;
+        public static final int TextAppearance_AppCompat_Caption=0x7f0d0054;
+        public static final int TextAppearance_AppCompat_Display1=0x7f0d004c;
+        public static final int TextAppearance_AppCompat_Display2=0x7f0d004b;
+        public static final int TextAppearance_AppCompat_Display3=0x7f0d004a;
+        public static final int TextAppearance_AppCompat_Display4=0x7f0d0049;
+        public static final int TextAppearance_AppCompat_Headline=0x7f0d004d;
+        public static final int TextAppearance_AppCompat_Inverse=0x7f0d0056;
+        public static final int TextAppearance_AppCompat_Large=0x7f0d0057;
+        public static final int TextAppearance_AppCompat_Large_Inverse=0x7f0d0058;
+        public static final int TextAppearance_AppCompat_Light_SearchResult_Subtitle=0x7f0d0064;
+        public static final int TextAppearance_AppCompat_Light_SearchResult_Title=0x7f0d0063;
+        public static final int TextAppearance_AppCompat_Light_Widget_PopupMenu_Large=0x7f0d002b;
+        public static final int TextAppearance_AppCompat_Light_Widget_PopupMenu_Small=0x7f0d002c;
+        public static final int TextAppearance_AppCompat_Medium=0x7f0d0059;
+        public static final int TextAppearance_AppCompat_Medium_Inverse=0x7f0d005a;
+        public static final int TextAppearance_AppCompat_Menu=0x7f0d0055;
+        public static final int TextAppearance_AppCompat_SearchResult_Subtitle=0x7f0d002e;
+        public static final int TextAppearance_AppCompat_SearchResult_Title=0x7f0d002d;
+        public static final int TextAppearance_AppCompat_Small=0x7f0d005b;
+        public static final int TextAppearance_AppCompat_Small_Inverse=0x7f0d005c;
+        public static final int TextAppearance_AppCompat_Subhead=0x7f0d0050;
+        public static final int TextAppearance_AppCompat_Subhead_Inverse=0x7f0d0051;
+        public static final int TextAppearance_AppCompat_Title=0x7f0d004e;
+        public static final int TextAppearance_AppCompat_Title_Inverse=0x7f0d004f;
+        public static final int TextAppearance_AppCompat_Widget_ActionBar_Menu=0x7f0d0015;
+        public static final int TextAppearance_AppCompat_Widget_ActionBar_Subtitle=0x7f0d0005;
+        public static final int TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse=0x7f0d0007;
+        public static final int TextAppearance_AppCompat_Widget_ActionBar_Title=0x7f0d0004;
+        public static final int TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse=0x7f0d0006;
+        public static final int TextAppearance_AppCompat_Widget_ActionMode_Subtitle=0x7f0d0018;
+        public static final int TextAppearance_AppCompat_Widget_ActionMode_Subtitle_Inverse=0x7f0d0067;
+        public static final int TextAppearance_AppCompat_Widget_ActionMode_Title=0x7f0d0017;
+        public static final int TextAppearance_AppCompat_Widget_ActionMode_Title_Inverse=0x7f0d0066;
+        public static final int TextAppearance_AppCompat_Widget_DropDownItem=0x7f0d0019;
+        public static final int TextAppearance_AppCompat_Widget_PopupMenu_Large=0x7f0d0029;
+        public static final int TextAppearance_AppCompat_Widget_PopupMenu_Small=0x7f0d002a;
+        public static final int TextAppearance_AppCompat_Widget_Switch=0x7f0d005e;
+        public static final int TextAppearance_AppCompat_Widget_TextView_SpinnerItem=0x7f0d005f;
         /** 
          These styles didn't exist on v7. Since we only use the media template in later versions
          (ICS+), just define it here and use the correct references in values/v14
     
  Use platform styles 
          */
-        public static final int TextAppearance_StatusBar_EventContent=0x7f0c0072;
-        public static final int TextAppearance_StatusBar_EventContent_Info=0x7f0c0075;
+        public static final int TextAppearance_StatusBar_EventContent=0x7f0d0072;
+        public static final int TextAppearance_StatusBar_EventContent_Info=0x7f0d0075;
         /**  Use own styles for which platform styles are not public 
          */
-        public static final int TextAppearance_StatusBar_EventContent_Line2=0x7f0c0074;
-        public static final int TextAppearance_StatusBar_EventContent_Time=0x7f0c0076;
-        public static final int TextAppearance_StatusBar_EventContent_Title=0x7f0c0073;
-        public static final int TextAppearance_Widget_AppCompat_ExpandedMenu_Item=0x7f0c0021;
-        public static final int TextAppearance_Widget_AppCompat_Toolbar_Subtitle=0x7f0c0045;
-        public static final int TextAppearance_Widget_AppCompat_Toolbar_Title=0x7f0c0044;
+        public static final int TextAppearance_StatusBar_EventContent_Line2=0x7f0d0074;
+        public static final int TextAppearance_StatusBar_EventContent_Time=0x7f0d0076;
+        public static final int TextAppearance_StatusBar_EventContent_Title=0x7f0d0073;
+        public static final int TextAppearance_Widget_AppCompat_ExpandedMenu_Item=0x7f0d0021;
+        public static final int TextAppearance_Widget_AppCompat_Toolbar_Subtitle=0x7f0d0045;
+        public static final int TextAppearance_Widget_AppCompat_Toolbar_Title=0x7f0d0044;
         /**  Themes in the "Theme.AppCompat" family will contain an action bar by default.
          If Holo themes are available on the current platform version they will be used.
          A limited Holo-styled action bar will be provided on platform versions older
@@ -7205,130 +7304,130 @@ containing a value of this type.
          "Theme.Base" theme. 
  Platform-independent theme providing an action bar in a dark-themed activity. 
          */
-        public static final int Theme_AppCompat=0x7f0c00ec;
+        public static final int Theme_AppCompat=0x7f0d00ec;
         /**  Menu/item attributes 
          */
-        public static final int Theme_AppCompat_CompactMenu=0x7f0c00f9;
-        public static final int Theme_AppCompat_Dialog=0x7f0c00f3;
+        public static final int Theme_AppCompat_CompactMenu=0x7f0d00f9;
+        public static final int Theme_AppCompat_Dialog=0x7f0d00f3;
         /**  Material theme for alert dialog windows, which is used by the AlertDialog class.
          This is basically a dialog but sets the background to empty so it can do
          two-tone backgrounds. For applications targeting Honeycomb or newer, this is the default
          AlertDialog theme. 
          */
-        public static final int Theme_AppCompat_Dialog_Alert=0x7f0c00f5;
+        public static final int Theme_AppCompat_Dialog_Alert=0x7f0d00f5;
         /**  Variant of Theme.AppCompat.Dialog that has a nice minimum width for
          a regular dialog. 
          */
-        public static final int Theme_AppCompat_Dialog_MinWidth=0x7f0c00f7;
-        public static final int Theme_AppCompat_DialogWhenLarge=0x7f0c00f1;
+        public static final int Theme_AppCompat_Dialog_MinWidth=0x7f0d00f7;
+        public static final int Theme_AppCompat_DialogWhenLarge=0x7f0d00f1;
         /**  Platform-independent theme providing an action bar in a light-themed activity. 
          */
-        public static final int Theme_AppCompat_Light=0x7f0c00ed;
+        public static final int Theme_AppCompat_Light=0x7f0d00ed;
         /**  Platform-independent theme providing an action bar in a dark-themed activity. 
          */
-        public static final int Theme_AppCompat_Light_DarkActionBar=0x7f0c00ee;
-        public static final int Theme_AppCompat_Light_Dialog=0x7f0c00f4;
-        public static final int Theme_AppCompat_Light_Dialog_Alert=0x7f0c00f6;
-        public static final int Theme_AppCompat_Light_Dialog_MinWidth=0x7f0c00f8;
-        public static final int Theme_AppCompat_Light_DialogWhenLarge=0x7f0c00f2;
-        public static final int Theme_AppCompat_Light_NoActionBar=0x7f0c00f0;
-        public static final int Theme_AppCompat_NoActionBar=0x7f0c00ef;
-        public static final int Theme_AppCompat_Translucent=0x7f0c0125;
-        public static final int ThemeOverlay_AppCompat=0x7f0c00fa;
+        public static final int Theme_AppCompat_Light_DarkActionBar=0x7f0d00ee;
+        public static final int Theme_AppCompat_Light_Dialog=0x7f0d00f4;
+        public static final int Theme_AppCompat_Light_Dialog_Alert=0x7f0d00f6;
+        public static final int Theme_AppCompat_Light_Dialog_MinWidth=0x7f0d00f8;
+        public static final int Theme_AppCompat_Light_DialogWhenLarge=0x7f0d00f2;
+        public static final int Theme_AppCompat_Light_NoActionBar=0x7f0d00f0;
+        public static final int Theme_AppCompat_NoActionBar=0x7f0d00ef;
+        public static final int Theme_AppCompat_Translucent=0x7f0d0125;
+        public static final int ThemeOverlay_AppCompat=0x7f0d00fa;
         /**  Theme overlay that replaces the normal control color, which by default is the same as the
          secondary text color, with the primary text color. 
          */
-        public static final int ThemeOverlay_AppCompat_ActionBar=0x7f0c00fd;
+        public static final int ThemeOverlay_AppCompat_ActionBar=0x7f0d00fd;
         /**  Theme overlay that replaces colors with their dark versions but preserves
          the value of colorAccent, colorPrimary and its variants. 
          */
-        public static final int ThemeOverlay_AppCompat_Dark=0x7f0c00fc;
+        public static final int ThemeOverlay_AppCompat_Dark=0x7f0d00fc;
         /**  Theme overlay that replaces colors with their dark versions and replaces the normal
          control color, which by default is the same as the secondary text color, with the primary
          text color. 
          */
-        public static final int ThemeOverlay_AppCompat_Dark_ActionBar=0x7f0c00fe;
+        public static final int ThemeOverlay_AppCompat_Dark_ActionBar=0x7f0d00fe;
         /**  Theme overlay that replaces colors with their light versions but preserves
          the value of colorAccent, colorPrimary and its variants. 
          */
-        public static final int ThemeOverlay_AppCompat_Light=0x7f0c00fb;
+        public static final int ThemeOverlay_AppCompat_Light=0x7f0d00fb;
         /** 
          Styles in here can be extended for customisation in your application. Each utilises
          one of the.styles. If Holo themes are available on the current platform version
          they will be used instead of the compat styles.
     
          */
-        public static final int Widget_AppCompat_ActionBar=0x7f0c0000;
-        public static final int Widget_AppCompat_ActionBar_Solid=0x7f0c0002;
-        public static final int Widget_AppCompat_ActionBar_TabBar=0x7f0c000d;
-        public static final int Widget_AppCompat_ActionBar_TabText=0x7f0c0011;
-        public static final int Widget_AppCompat_ActionBar_TabView=0x7f0c000f;
-        public static final int Widget_AppCompat_ActionButton=0x7f0c000a;
-        public static final int Widget_AppCompat_ActionButton_CloseMode=0x7f0c000b;
-        public static final int Widget_AppCompat_ActionButton_Overflow=0x7f0c000c;
-        public static final int Widget_AppCompat_ActionMode=0x7f0c0016;
-        public static final int Widget_AppCompat_ActivityChooserView=0x7f0c0030;
-        public static final int Widget_AppCompat_AutoCompleteTextView=0x7f0c002f;
-        public static final int Widget_AppCompat_Button=0x7f0c0038;
-        public static final int Widget_AppCompat_Button_Borderless=0x7f0c003a;
-        public static final int Widget_AppCompat_Button_Borderless_Colored=0x7f0c003b;
-        public static final int Widget_AppCompat_Button_ButtonBar_AlertDialog=0x7f0c003c;
-        public static final int Widget_AppCompat_Button_Small=0x7f0c0039;
-        public static final int Widget_AppCompat_ButtonBar=0x7f0c003d;
-        public static final int Widget_AppCompat_ButtonBar_AlertDialog=0x7f0c003e;
-        public static final int Widget_AppCompat_CompoundButton_CheckBox=0x7f0c0035;
-        public static final int Widget_AppCompat_CompoundButton_RadioButton=0x7f0c0036;
-        public static final int Widget_AppCompat_CompoundButton_Switch=0x7f0c0034;
-        public static final int Widget_AppCompat_DrawerArrowToggle=0x7f0c0012;
+        public static final int Widget_AppCompat_ActionBar=0x7f0d0000;
+        public static final int Widget_AppCompat_ActionBar_Solid=0x7f0d0002;
+        public static final int Widget_AppCompat_ActionBar_TabBar=0x7f0d000d;
+        public static final int Widget_AppCompat_ActionBar_TabText=0x7f0d0011;
+        public static final int Widget_AppCompat_ActionBar_TabView=0x7f0d000f;
+        public static final int Widget_AppCompat_ActionButton=0x7f0d000a;
+        public static final int Widget_AppCompat_ActionButton_CloseMode=0x7f0d000b;
+        public static final int Widget_AppCompat_ActionButton_Overflow=0x7f0d000c;
+        public static final int Widget_AppCompat_ActionMode=0x7f0d0016;
+        public static final int Widget_AppCompat_ActivityChooserView=0x7f0d0030;
+        public static final int Widget_AppCompat_AutoCompleteTextView=0x7f0d002f;
+        public static final int Widget_AppCompat_Button=0x7f0d0038;
+        public static final int Widget_AppCompat_Button_Borderless=0x7f0d003a;
+        public static final int Widget_AppCompat_Button_Borderless_Colored=0x7f0d003b;
+        public static final int Widget_AppCompat_Button_ButtonBar_AlertDialog=0x7f0d003c;
+        public static final int Widget_AppCompat_Button_Small=0x7f0d0039;
+        public static final int Widget_AppCompat_ButtonBar=0x7f0d003d;
+        public static final int Widget_AppCompat_ButtonBar_AlertDialog=0x7f0d003e;
+        public static final int Widget_AppCompat_CompoundButton_CheckBox=0x7f0d0035;
+        public static final int Widget_AppCompat_CompoundButton_RadioButton=0x7f0d0036;
+        public static final int Widget_AppCompat_CompoundButton_Switch=0x7f0d0034;
+        public static final int Widget_AppCompat_DrawerArrowToggle=0x7f0d0012;
         /**  This style has an extra indirection to properly set RTL attributes. See styles_rtl.xml 
          */
-        public static final int Widget_AppCompat_DropDownItem_Spinner=0x7f0c001e;
-        public static final int Widget_AppCompat_EditText=0x7f0c0033;
-        public static final int Widget_AppCompat_Light_ActionBar=0x7f0c0001;
-        public static final int Widget_AppCompat_Light_ActionBar_Solid=0x7f0c0003;
+        public static final int Widget_AppCompat_DropDownItem_Spinner=0x7f0d001e;
+        public static final int Widget_AppCompat_EditText=0x7f0d0033;
+        public static final int Widget_AppCompat_Light_ActionBar=0x7f0d0001;
+        public static final int Widget_AppCompat_Light_ActionBar_Solid=0x7f0d0003;
         /**  The following themes are deprecated. 
          */
-        public static final int Widget_AppCompat_Light_ActionBar_Solid_Inverse=0x7f0c0060;
-        public static final int Widget_AppCompat_Light_ActionBar_TabBar=0x7f0c000e;
-        public static final int Widget_AppCompat_Light_ActionBar_TabBar_Inverse=0x7f0c0061;
-        public static final int Widget_AppCompat_Light_ActionBar_TabText=0x7f0c0013;
-        public static final int Widget_AppCompat_Light_ActionBar_TabText_Inverse=0x7f0c0014;
-        public static final int Widget_AppCompat_Light_ActionBar_TabView=0x7f0c0010;
-        public static final int Widget_AppCompat_Light_ActionBar_TabView_Inverse=0x7f0c0062;
-        public static final int Widget_AppCompat_Light_ActionButton=0x7f0c006a;
-        public static final int Widget_AppCompat_Light_ActionButton_CloseMode=0x7f0c006c;
-        public static final int Widget_AppCompat_Light_ActionButton_Overflow=0x7f0c006b;
-        public static final int Widget_AppCompat_Light_ActionMode_Inverse=0x7f0c0065;
-        public static final int Widget_AppCompat_Light_ActivityChooserView=0x7f0c0071;
-        public static final int Widget_AppCompat_Light_AutoCompleteTextView=0x7f0c0070;
-        public static final int Widget_AppCompat_Light_DropDownItem_Spinner=0x7f0c0068;
-        public static final int Widget_AppCompat_Light_ListPopupWindow=0x7f0c006f;
-        public static final int Widget_AppCompat_Light_ListView_DropDown=0x7f0c006e;
-        public static final int Widget_AppCompat_Light_PopupMenu=0x7f0c0026;
-        public static final int Widget_AppCompat_Light_PopupMenu_Overflow=0x7f0c0024;
-        public static final int Widget_AppCompat_Light_SearchView=0x7f0c0069;
-        public static final int Widget_AppCompat_Light_Spinner_DropDown_ActionBar=0x7f0c006d;
-        public static final int Widget_AppCompat_ListPopupWindow=0x7f0c0022;
-        public static final int Widget_AppCompat_ListView=0x7f0c001f;
-        public static final int Widget_AppCompat_ListView_DropDown=0x7f0c0020;
-        public static final int Widget_AppCompat_ListView_Menu=0x7f0c0027;
-        public static final int Widget_AppCompat_PopupMenu=0x7f0c0025;
-        public static final int Widget_AppCompat_PopupMenu_Overflow=0x7f0c0023;
-        public static final int Widget_AppCompat_PopupWindow=0x7f0c0028;
-        public static final int Widget_AppCompat_ProgressBar=0x7f0c0009;
-        public static final int Widget_AppCompat_ProgressBar_Horizontal=0x7f0c0008;
-        public static final int Widget_AppCompat_RatingBar=0x7f0c0037;
-        public static final int Widget_AppCompat_SearchView=0x7f0c0031;
-        public static final int Widget_AppCompat_SearchView_ActionBar=0x7f0c0032;
-        public static final int Widget_AppCompat_Spinner=0x7f0c001a;
-        public static final int Widget_AppCompat_Spinner_DropDown=0x7f0c001c;
-        public static final int Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0c001d;
-        public static final int Widget_AppCompat_Spinner_Underlined=0x7f0c001b;
-        public static final int Widget_AppCompat_TextView_SpinnerItem=0x7f0c003f;
+        public static final int Widget_AppCompat_Light_ActionBar_Solid_Inverse=0x7f0d0060;
+        public static final int Widget_AppCompat_Light_ActionBar_TabBar=0x7f0d000e;
+        public static final int Widget_AppCompat_Light_ActionBar_TabBar_Inverse=0x7f0d0061;
+        public static final int Widget_AppCompat_Light_ActionBar_TabText=0x7f0d0013;
+        public static final int Widget_AppCompat_Light_ActionBar_TabText_Inverse=0x7f0d0014;
+        public static final int Widget_AppCompat_Light_ActionBar_TabView=0x7f0d0010;
+        public static final int Widget_AppCompat_Light_ActionBar_TabView_Inverse=0x7f0d0062;
+        public static final int Widget_AppCompat_Light_ActionButton=0x7f0d006a;
+        public static final int Widget_AppCompat_Light_ActionButton_CloseMode=0x7f0d006c;
+        public static final int Widget_AppCompat_Light_ActionButton_Overflow=0x7f0d006b;
+        public static final int Widget_AppCompat_Light_ActionMode_Inverse=0x7f0d0065;
+        public static final int Widget_AppCompat_Light_ActivityChooserView=0x7f0d0071;
+        public static final int Widget_AppCompat_Light_AutoCompleteTextView=0x7f0d0070;
+        public static final int Widget_AppCompat_Light_DropDownItem_Spinner=0x7f0d0068;
+        public static final int Widget_AppCompat_Light_ListPopupWindow=0x7f0d006f;
+        public static final int Widget_AppCompat_Light_ListView_DropDown=0x7f0d006e;
+        public static final int Widget_AppCompat_Light_PopupMenu=0x7f0d0026;
+        public static final int Widget_AppCompat_Light_PopupMenu_Overflow=0x7f0d0024;
+        public static final int Widget_AppCompat_Light_SearchView=0x7f0d0069;
+        public static final int Widget_AppCompat_Light_Spinner_DropDown_ActionBar=0x7f0d006d;
+        public static final int Widget_AppCompat_ListPopupWindow=0x7f0d0022;
+        public static final int Widget_AppCompat_ListView=0x7f0d001f;
+        public static final int Widget_AppCompat_ListView_DropDown=0x7f0d0020;
+        public static final int Widget_AppCompat_ListView_Menu=0x7f0d0027;
+        public static final int Widget_AppCompat_PopupMenu=0x7f0d0025;
+        public static final int Widget_AppCompat_PopupMenu_Overflow=0x7f0d0023;
+        public static final int Widget_AppCompat_PopupWindow=0x7f0d0028;
+        public static final int Widget_AppCompat_ProgressBar=0x7f0d0009;
+        public static final int Widget_AppCompat_ProgressBar_Horizontal=0x7f0d0008;
+        public static final int Widget_AppCompat_RatingBar=0x7f0d0037;
+        public static final int Widget_AppCompat_SearchView=0x7f0d0031;
+        public static final int Widget_AppCompat_SearchView_ActionBar=0x7f0d0032;
+        public static final int Widget_AppCompat_Spinner=0x7f0d001a;
+        public static final int Widget_AppCompat_Spinner_DropDown=0x7f0d001c;
+        public static final int Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0d001d;
+        public static final int Widget_AppCompat_Spinner_Underlined=0x7f0d001b;
+        public static final int Widget_AppCompat_TextView_SpinnerItem=0x7f0d003f;
         /**  Toolbar 
          */
-        public static final int Widget_AppCompat_Toolbar=0x7f0c0042;
-        public static final int Widget_AppCompat_Toolbar_Button_Navigation=0x7f0c0043;
+        public static final int Widget_AppCompat_Toolbar=0x7f0d0042;
+        public static final int Widget_AppCompat_Toolbar_Button_Navigation=0x7f0d0043;
     }
     public static final class xml {
         public static final int searchable=0x7f050000;

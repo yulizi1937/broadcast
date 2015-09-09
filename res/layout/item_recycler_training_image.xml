@@ -78,14 +78,14 @@
             <RelativeLayout
                 android:id="@+id/itemRecyclerTrainingImageByLayout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/event_by_layout_size"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/item_recycler_mobcast_text_content_title_margin_top"
                 android:orientation="horizontal" >
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/itemRecyclerTrainingImageByTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="left|center"
@@ -93,7 +93,7 @@
                     android:background="@drawable/shape_by_orange_fill"
                     android:gravity="left|center"
                     android:padding="4dp"
-                    android:singleLine="true"
+                    android:singleLine="false"
                     android:text="@string/sample_item_recycler_mobcast_text_by"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/event_by_textview_size"
@@ -102,7 +102,7 @@
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/itemRecyclerTrainingImageLikeCountTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="right|center"
@@ -118,7 +118,7 @@
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/itemRecyclerTrainingImageViewCountTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_toLeftOf="@id/itemRecyclerTrainingImageLikeCountTv"
@@ -134,7 +134,7 @@
                 <ImageView
                     android:id="@+id/itemRecyclerTrainingImageLinkTv"
                     android:layout_width="@dimen/event_link_width"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_toLeftOf="@id/itemRecyclerTrainingImageViewCountTv"

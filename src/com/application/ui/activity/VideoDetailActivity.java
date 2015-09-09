@@ -20,6 +20,7 @@ import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -87,6 +88,8 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mVideoSummaryTextTv;
 	private AppCompatTextView mVideoDescTotalTv;
 	private AppCompatTextView mLanguageHeaderTv;
+	
+	private AppCompatButton mVideoDownloadBtn;
 
 	private VideoView mVideoView;
 
@@ -145,6 +148,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	private String mContentTime;
 	private boolean mContentIsSharing;
 	private boolean mContentIsLike;
+	private String mContentFileDuration;
 	private String mContentFileSize;
 	private boolean mContentIsRead;
 	
@@ -160,6 +164,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_video_detail);
+		setSecurity();
 		initToolBar();
 		initUi();
 		getIntentData();
@@ -310,6 +315,8 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		mLanguageLinearLayout = (LinearLayout) findViewById(R.id.fragmentVideoDetailLanguageLayout);
 		mLanguageFlowLayout = (FlowLayout) findViewById(R.id.fragmentVideoDetailLanguageFlowLayout);
 		mLanguageHeaderTv = (AppCompatTextView) findViewById(R.id.fragmentVideoDetailLanguageHeaderTv);
+		
+		mVideoDownloadBtn = (AppCompatButton)findViewById(R.id.fragmentVideoDetailVideoDownloadBtn);
 
 		mVideoTitleTv = (AppCompatTextView) findViewById(R.id.fragmentVideoDetailTitleTv);
 
@@ -404,6 +411,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 					if(Boolean.parseBoolean(mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_IS_DEFAULT)))){
 						mContentFilePath = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH));
 						mContentFileLink = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LINK));
+						mContentFileDuration = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_DURATION));
 						mContentLanguage = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_LANG));
 						mContentFileSize = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_SIZE));
 						mContentFileThumbLink = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_LINK));
@@ -446,6 +454,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 						mContentFilePath = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PATH));
 						mContentFileLink = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LINK));
 						mContentLanguage = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LANG));
+						mContentFileDuration = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_DURATION));
 						mContentFileSize = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_SIZE));
 						mContentFileThumbLink = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_THUMBNAIL_LINK));
 						mContentFileThumbPath = mCursorFile.getString(mCursorFile.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_THUMBNAIL_PATH));
@@ -494,6 +503,9 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 				if(!TextUtils.isEmpty(mContentFilePath)){
 					initVideoPlayer(mContentFilePath);	
 					mVideoPlayIv.setEnabled(true);
+				}else{
+					mVideoDownloadBtn.setVisibility(View.VISIBLE);
+					AndroidUtilities.showSnackBar(VideoDetailActivity.this, getResources().getString(R.string.file_download));
 				}
 			}else{
 				downloadFileInBackground();
@@ -501,6 +513,12 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 			
 			if(checkIfFileExists(mContentFileThumbPath)){
 				mVideoCoverIv.setImageURI(Uri.parse(mContentFileThumbPath));
+			}
+			
+			if(!TextUtils.isEmpty(mContentFileDuration)){
+				mVideoDescTotalTv.setText(mContentFileDuration);
+			}else{
+				mVideoDescTotalTv.setVisibility(View.GONE);
 			}
 			
 			updateReadInDb();
@@ -719,21 +737,25 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if(!isVideoPause){
-					mProgress = 0;
-					UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, "");
-					playVideo();
-					mReportStart = System.currentTimeMillis();
+				if(checkIfFileExists(mContentFilePath)){
+					if(!isVideoPause){
+						mProgress = 0;
+						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, "");
+						playVideo();
+						mReportStart = System.currentTimeMillis();
+					}else{
+						mVideoView.requestFocus();
+						mVideoView.seekTo(ApplicationLoader.getPreferences().getVideoViewPosition());
+						mVideoView.start();
+						mVideoPlayIv.setVisibility(View.GONE);
+						mVideoMediaControllerFrameLayout.setVisibility(View.VISIBLE);
+						mVideoPauseIv.setVisibility(View.VISIBLE);
+//						runOnSeekBarThread();
+						mThreadSafe.unpause();
+						mReportStart = System.currentTimeMillis();
+					}					
 				}else{
-					mVideoView.requestFocus();
-					mVideoView.seekTo(ApplicationLoader.getPreferences().getVideoViewPosition());
-					mVideoView.start();
-					mVideoPlayIv.setVisibility(View.GONE);
-					mVideoMediaControllerFrameLayout.setVisibility(View.VISIBLE);
-					mVideoPauseIv.setVisibility(View.VISIBLE);
-//					runOnSeekBarThread();
-					mThreadSafe.unpause();
-					mReportStart = System.currentTimeMillis();
+					downloadFileInBackground();
 				}
 			}
 		});
@@ -817,6 +839,14 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 					FileLog.e(TAG, e.toString());
 				}
 				
+			}
+		});
+		
+		mVideoDownloadBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				downloadFileInBackground();
 			}
 		});
 	}
@@ -978,6 +1008,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 						mContentFileLink, mContentFilePath,
 						AppConstants.TYPE.VIDEO, Long.parseLong(mContentFileSize), TAG);
 				mDownloadAsyncTask.execute();
+				mVideoDownloadBtn.setVisibility(View.VISIBLE);
 				mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
 					@Override
 					public void onPostExecute(boolean isDownloaded) {
@@ -987,6 +1018,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 							if(!TextUtils.isEmpty(mContentFilePath)){
 								initVideoPlayer(mContentFilePath);
 								mVideoPlayIv.setEnabled(true);
+								mVideoDownloadBtn.setVisibility(View.GONE);
 								Utilities.downloadQueue.postRunnable(new Runnable() {
 									@Override
 									public void run() {
@@ -994,7 +1026,10 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 										Utilities.downloadFile(AppConstants.TYPE.VIDEO, true, false, mContentFileThumbLink, Utilities.getFileName(mContentFileThumbLink));
 									}
 								});
-							}	
+							}else{
+								mVideoDownloadBtn.setVisibility(View.VISIBLE);
+								AndroidUtilities.showSnackBar(VideoDetailActivity.this, getResources().getString(R.string.file_download));
+							}
 						}
 					}
 				});
@@ -1147,6 +1182,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 
 	private void setMaterialRippleView() {
 		try {
+			setMaterialRippleOnView(mVideoDownloadBtn);
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}

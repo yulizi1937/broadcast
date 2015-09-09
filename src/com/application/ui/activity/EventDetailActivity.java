@@ -8,16 +8,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 import android.support.v4.view.MenuItemCompat;
@@ -43,10 +45,11 @@ import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.DownloadAsyncTask;
-import com.application.utils.FetchActionAsyncTask;
 import com.application.utils.DownloadAsyncTask.OnPostExecuteListener;
+import com.application.utils.FetchActionAsyncTask;
 import com.application.utils.FetchActionAsyncTask.OnPostExecuteTaskListener;
 import com.application.utils.FileLog;
+import com.application.utils.Style;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -129,6 +132,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_detail);
+		setSecurity();
 		initToolBar();
 		initUi();
 		getIntentData();
@@ -140,7 +144,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		decryptFileOnResume();
+//		decryptFileOnResume();
 	}
 	
 	
@@ -149,7 +153,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		deleteDecryptedFile();
+//		deleteDecryptedFile();
 	}
 
 	@Override
@@ -370,6 +374,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 				mEventAttendDeclineBtn.setText(getResources().getString(R.string.fragment_event_detail_button_decline));
 				mEventAttendDeclineBtn.setBackgroundResource(R.drawable.shape_button_orange_border);
 				mEventAttendDeclineBtn.setTextColor(getResources().getColor(R.color.orange));
+				addEventToCalendarDirectly();
 			}
 		});
 		
@@ -540,7 +545,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 			mEventAttendGoingNumberTv.setText(mContentEventGoing);
 			
 			if (checkIfFileExists(mContentFilePath)) {
-				mContentFilePath = Utilities.fbConcealDecryptFile(TAG,new File(mContentFilePath));
+//				mContentFilePath = Utilities.fbConcealDecryptFile(TAG,new File(mContentFilePath));
 				mEventCoverIv.setImageURI(Uri.parse(mContentFilePath));
 			} else {
 				downloadFileInBackground();
@@ -582,6 +587,47 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 		startActivity(mCalIntent);
 	}
 	
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH) 
+	private void addEventToCalendarDirectly(){
+		 try{
+			 ContentValues values = new ContentValues();
+			 Date mFromTime = null;
+				Date mToTime = null;
+				try {
+					mFromTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(mContentEventDate + " " +mContentEventFromTime);
+					mToTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(mContentEventDate + " "+mContentEventToTime);
+					values.put(CalendarContract.Events.DTSTART, mFromTime.getTime());
+					values.put(CalendarContract.Events.DTEND,mToTime.getTime());
+					values.put(CalendarContract.Events.EVENT_LOCATION,mContentEventVenue);
+					values.put(CalendarContract.Events.ALL_DAY, false);
+					values.put(CalendarContract.Events.STATUS, 1);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		     values.put(CalendarContract.Events.TITLE, mContentTitle);
+		     values.put(CalendarContract.Events.DESCRIPTION, mContentDesc);
+		     TimeZone timeZone = TimeZone.getDefault();
+		     values.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
+		        // default calendar
+		     values.put(CalendarContract.Events.CALENDAR_ID, 1);
+//		     values.put(CalendarContract.Events.RRULE, "FREQ=DAILY;");
+		        //for one hour
+//		     values.put(CalendarContract.Events.DURATION, "+P1H");
+		     
+		     values.put(CalendarContract.Events.HAS_ALARM, 1);
+		        // insert event to calendar
+		     Uri mUri = getContentResolver().insert(CalendarContract.Events.CONTENT_URI, values);
+		     if(Utilities.checkWhetherInsertedOrNot(TAG, mUri)){
+		    	 AndroidUtilities.showSnackBar(EventDetailActivity.this, getResources().getString(R.string.fragment_event_added));
+		     }else{
+		    	 AndroidUtilities.showSnackBar(EventDetailActivity.this, getResources().getString(R.string.fragment_event_add_error));
+		     }
+		 }catch(Exception e){
+			 FileLog.e(TAG, e.toString());
+		 }
+	}
+	
 	
 	@SuppressLint({ "SimpleDateFormat", "DefaultLocale" }) private void setDataToUiAccCurrentDate(){
 		try{
@@ -606,7 +652,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 	private void downloadFileInBackground() {
 		try{
 			DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
-					EventDetailActivity.this, false, true, mContentFileLink,
+					EventDetailActivity.this, false, false, mContentFileLink,
 					mContentFilePath, AppConstants.TYPE.IMAGE,
 					Long.parseLong(mContentFileSize), TAG);
 			mDownloadAsyncTask.execute();
@@ -616,7 +662,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 						public void onPostExecute(boolean isDownloaded) {
 							// TODO Auto-generated method stub
 							if (isDownloaded) {
-								mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
+//								mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
 								if(checkIfFileExists(mContentFilePath)){
 									mEventCoverIv.setImageURI(Uri.parse(mContentFilePath));
 								}

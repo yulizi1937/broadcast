@@ -14,7 +14,7 @@
     ripple:mrl_rippleOverlay="true"
     tools:ignore="RtlHardcoded" >
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/drawerItemLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,10 +25,29 @@
             android:id="@+id/drawerItemIv"
             android:layout_width="@dimen/drawer_item_image_width"
             android:layout_height="@dimen/drawer_item_image_width"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:scaleType="centerInside"
             android:src="@drawable/ic_home_sync"
             tools:ignore="ContentDescription" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/drawerItemReadCountTv"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/shape_toolbar_unread_counter"
+            android:gravity="center"
+            android:text="@string/textview_unread"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/drawer_item_profile_email_text_size"
+            android:visibility="gone"
+            tools:ignore="RtlHardcoded" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/drawerItemTitleTv"
@@ -36,11 +55,14 @@
             android:layout_height="match_parent"
             android:layout_gravity="left|center"
             android:layout_marginLeft="16dp"
+            android:layout_marginRight="40dp"
+            android:layout_toRightOf="@id/drawerItemIv"
             android:gravity="left|center"
+            android:singleLine="true"
             android:text="@string/textview_last_sync"
             android:textColor="@color/toolbar_background"
             android:textSize="@dimen/drawer_item_last_sync_text_size"
             tools:ignore="RtlHardcoded" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </com.application.ui.view.MaterialRippleLayout>

@@ -66,13 +66,14 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 	private Intent mIntent;
 	private int mPosition;
 	private String mContentFilePath[];
-	private ArrayList<String> mContentDecryptedFilePath = new ArrayList<>();
+//	private ArrayList<String> mContentDecryptedFilePath = new ArrayList<>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_image_fullscreen);
+		setSecurity();
 		setSystemBarTint();
 		initToolBar();
 		initUi();
@@ -84,16 +85,16 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		decryptFileOnResume();
-		if(mContentDecryptedFilePath.size()> 0){
+//		decryptFileOnResume();
+//		if(mContentDecryptedFilePath.size()> 0){
 			setImageViewPager();
-		}
+//		}
 	}
 	
 	@Override
 	protected void onPause() {
 		super.onPause();
-		deleteDecryptedFile();
+//		deleteDecryptedFile();
 	}
 	
 	@Override
@@ -185,8 +186,8 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 
 	private void setImageViewPager() {
 //		mArrayListString = Arrays.asList(mContentFilePath);
-		mAdapter = new ImageFullScreenPagerAdapter(getSupportFragmentManager(),
-				mContentDecryptedFilePath, mPosition);
+//		mAdapter = new ImageFullScreenPagerAdapter(getSupportFragmentManager(),mContentDecryptedFilePath, mPosition);
+		mAdapter = new ImageFullScreenPagerAdapter(getSupportFragmentManager(),Arrays.asList(mContentFilePath), mPosition);
 		mImageViewPager.setAdapter(mAdapter);
 		mImageCirclePageIndicator.setViewPager(mImageViewPager);
 	}
@@ -219,7 +220,7 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 	}
 
 	
-	private void decryptFileOnResume(){
+	/*private void decryptFileOnResume(){
 		try{
 			if(mContentFilePath!=null && mContentFilePath.length > 0){
 				mContentDecryptedFilePath.clear();
@@ -249,7 +250,7 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
-	}
+	}*/
 	
 	@Override
 	@Deprecated

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="app_name">CK Mobcast</string>
+    <string name="app_name">Mobcast</string>
     <string name="package_name">com.mobcast</string>
     <string name="toolbar_background">#254E7A</string>
     <string name="LanguageName">English</string>
@@ -14,6 +14,7 @@
     <string name="sync_failed">Failed as internet not avail at </string>
     <string name="sync_passed">Synced at </string>
     <string name="feedback_incomplete">Please fill the feedback properly!</string>
+    <string name="resend_otp">We have sent another OTP</string>
     <string name="quiz_incomplete">Please fill the quiz properly!</string>
     <string name="api_connection_timeout">Server not responding!</string>
     <string name="api_unknown_error">Please try again in few minutes!</string>
@@ -30,12 +31,25 @@
     <string name="update">Update</string>
     <string name="capture_validation">Please add images!</string>
     <string name="file_not_available">File not available. Please press back and open it again! Make sure internet is available</string>
+    <string name="file_download">Please download again! By Clicking Download</string>
+    <string name="file_app_not_found">Please install application which can open these file!</string>
     <string name="congratulate_message">You just congratulated </string>
     <string name="save_message">Saved locally!</string>
     <string name="congratulate_message_validation">You already congratulated  </string>
     <string name="wished_message_validation">You already wished  </string>
     <string name="logout_content_message">Logging out will delete all your content from the app and files too.</string>
     <string name="logging_out" tools:ignore="TypographyEllipsis">Logging Out...</string>
+    
+    <string name="showcase_content1" tools:ignore="TypographyEllipsis">Update your profile, application settings and many more...</string>
+    <string name="showcase_content2" tools:ignore="TypographyEllipsis">Up to date with your organization events, meet ups and many more...</string>
+    <string name="showcase_content3">Showcase Content3</string>
+    <string name="showcase_content4">Showcase Content4</string>
+    <string name="showcase_content5">Showcase Content5</string>
+    <string name="showcase_gotit">Got it</string>
+    <string name="showcase_next">Next</string>
+    
+    <string name="new_mobcast_avail">New Mobcast</string>
+    <string name="new_training_avail">New Training</string>
 
     <!-- OverFlow : Action -->
     <string name="action_settings">Settings</string>
@@ -72,7 +86,7 @@
     <string name="action_help_video">How to use?</string>
     <string name="action_help_faq">FAQ</string>
     <string name="action_add_cal">Add to calendar</string>
-    
+
     <!-- Context Menu -->
     <string name="context_menu_read">Mark as Read</string>
     <string name="context_menu_unread">Mark as Unread</string>
@@ -117,10 +131,13 @@
     <string name="congratulated_action"> Say Congrats!</string>
     <!-- activity_login -->
     <string name="textview_login">Please enter your Mobile Number</string>
+    <string name="textview_newbroadcast">New Broadcast</string>
     <string name="textview_login_countrycode">+91</string>
     <string name="textview_login_administration">Contact your administration if you cannot login</string>
     <string name="hint_login_id">98201</string>
     <string name="button_next">NEXT</string>
+    <string name="button_download">Download</string>
+    <string name="button_download_str">Download</string>
     <string name="button_cancel" tools:ignore="ButtonCase">CANCEL</string>
     <string name="LoginActivityTitle">Your Phone Number</string>
 
@@ -171,11 +188,12 @@
     <string name="EditProfileActivityTitle">Profile</string>
     <string name="activity_edit_profile_update_btn">Update</string>
     <string name="activity_edit_profile_question">Your Favourite Question</string>
+    <string name="activity_edit_profile_birthday">Date of Birth</string>
     <string name="activity_edit_profile_answer">Your answer to your Favourite Question</string>
-    
+
     <!-- activity_capture -->
     <string name="CaptureActivityTitle">Capture</string>
-    
+
     <!-- activity_recycler_recruitment -->
     <string name="RecruitmentRecyclerActivityTitle">Recruitment</string>
     <string name="details">DETAILS</string>
@@ -213,10 +231,10 @@
     <string name="sample_event_summary">Nielsen’s Consumer 360 is a global events series that brings you innovative thought leaders and industry experts who share exclusive insights to help you develop business solutions fueled with punch and ingenuity. Learn to drive successful outcomes from well-respected trailblazers who will share their cutting edge strategies and results. Explore uncommon ideas across the consumer spectrum to help you harness the power of people today and then delve into industry-specific discussions focused on your needs.</string>
 
     <!-- layout_mother -->
-<!--     <string name="layout_mother_mobcast">MOBCAST</string> -->
-    <string name="layout_mother_mobcast">CK BULLETIN</string>
-<!--     <string name="layout_mother_chat">CHAT</string> -->
-    <string name="layout_mother_chat">MIS</string>
+    <string name="layout_mother_mobcast">MOBCAST</string>
+<!--     <string name="layout_mother_mobcast">CK BULLETIN</string> -->
+    <string name="layout_mother_chat">CHAT</string>
+<!--     <string name="layout_mother_chat">MIS</string> -->
     <string name="layout_mother_training">TRAINING</string>
 
     <!-- layout_drawer_search_mother -->
@@ -253,6 +271,8 @@
     <string name="fragment_event_detail_going">Going</string>
     <string name="fragment_event_detail_about">ABOUT THE EVENT</string>
     <string name="EventDetailActivityTitle">Event</string>
+    <string name="fragment_event_added">Event added to Calendar</string>
+    <string name="fragment_event_add_error">Event cant be added to Calendar</string>
 
     <!-- fragment_quiz -->
     <string name="sample_quiz_timer_seconds">86400</string>
@@ -318,7 +338,7 @@
 
     <!-- fragment_audio -->
     <string name="AudioDetailActivityTitle">Audio</string>
-    <string name="sample_audio_detail_seekbar">3:48</string>
+    <string name="sample_audio_detail_seekbar">0:00</string>
     <string name="sample_live_detail_seekbar">LIVE</string>
 
     <!-- fragment_video -->
@@ -370,8 +390,8 @@
     <string name="sample_about_send_feedback_detail">TELL US WHAT YOU THINK</string>
     <string name="sample_about_report_problem">REPORT A PROBLEM</string>
     <string name="sample_about_report_problem_detail">LET US KNOW ABOUT A BUG OR PROBLEM</string>
-    <string name="sample_about_detail">Lorm ipsum dolor sit amer cosectetur adipiscing elit Nulla ut leo nec lectus tempor aliquet sit amet tempus risus Mauris venenatis velit auctor mauris placerat ac feugiat neque tincidunt</string>
-    <string name="sample_about_detail_1">Vestibulum eu bibendum nisi vel finibus leo Versitbulum est enim eleifend ac posuere vel tempor sed turpis Nulla sagittis porta ante a luctus Quisque ultricies semper libero nec cursus massa efficiur id</string>
+    <string name="sample_about_detail">MobCast is the EASIEST and the MOST EFFECTIVE way to broadcast rich content on mobile devices.Enterprises and other entities can leverage this patent pending technology to communicate and build lasting relationship with their customers , employees and other stakeholders.The platform smartly identifies and distinguishes smartphones from feature phones and correspondingly publishes the communication with the application or as an SMS.Built by a team of award winning mobile experts, its notably the only platform of its kind and starts a new and revolutionary chapter in the field of group communication.</string>
+<!--     <string name="sample_about_detail_1">Vestibulum eu bibendum nisi vel finibus leo Versitbulum est enim eleifend ac posuere vel tempor sed turpis Nulla sagittis porta ante a luctus Quisque ultricies semper libero nec cursus massa efficiur id</string> -->
     <string name="sample_about_privacy_policy"><![CDATA[<u>]]>PRIVACY POLICY<![CDATA[<u>]]></string>
 
     <!-- fragment_report -->
@@ -435,9 +455,16 @@
     <string name="sample_fragment_settings_notification_birthday_mute">Mute birthday notification</string>
     <string name="sample_fragment_settings_notification_download_notify">Download and Notify</string>
     <string name="sample_fragment_settings_notification_anydo">Custom Notification</string>
+    <string name="sample_fragment_settings_sync_notification">Sync</string>
+    <string name="sample_fragment_settings_sync_frequency">Sync Frequency</string>
+    <string name="sample_fragment_settings_sync_frquency_text">15 mins</string>
+    <string name="sample_fragment_settings_style_notification">Style</string>
+    <string name="sample_fragment_settings_style_textfont">Text Style</string>
+    <string name="sample_fragment_settings_style_textfont_selected">Custom</string>
+    <string name="sample_fragment_settings_style_textfont_default">Default</string>
     <string name="sample_fragment_settings_header_about">About</string>
     <string name="sample_fragment_settings_about_text">About Mobcast</string>
-    <string name="sample_fragment_settings_about_build_version_text">Build Version\n v2.0.1(1)</string>
+    <string name="sample_fragment_settings_about_build_version_text">Build Version</string>
     <string name="sample_fragment_settings_about_file_storage_text">App Storage</string>
     <string name="sample_fragment_settings_dialog_language_title">Are you sure want to change Application Language to </string>
     <string name="sample_fragment_settings_dialog_language_positive">OK</string>
@@ -447,6 +474,11 @@
     <string name="sample_fragment_settings_dialog_birthday_notify_1">09:00 am</string>
     <string name="sample_fragment_settings_dialog_birthday_notify_2">12:00 pm</string>
     <string name="sample_fragment_settings_dialog_birthday_notify_3">03:00 pm</string>
+    <string name="sample_fragment_settings_dialog_sync_title">Choose sync frequency</string>
+    <string name="sample_fragment_settings_dialog_sync_freq1">Every 15 mins</string>
+    <string name="sample_fragment_settings_dialog_sync_freq2">Every 30 mins</string>
+    <string name="sample_fragment_settings_dialog_sync_freq3">Every 60 mins</string>
+    <string name="sample_fragment_settings_dialog_sync_freq4">Every 4 hours</string>
 
     <string-array name="langugae_array">
         <item>English</item>
@@ -491,7 +523,7 @@
     <!-- fragment_tutorial -->
     <string name="fragment_tutorial_header">See more photos</string>
     <string name="fragment_tutorial_functionality">pinch to zoom</string>
-    
+
     <!-- fragment_capture -->
     <string name="fragment_capture_note_hint">Note</string>
     <string name="fragment_capture_note_char_limit">0/500</string>
@@ -540,9 +572,9 @@ The inaugural set of “Preferred Platform Partners” includes BrightRoll, Doub
     <string name="sample_item_recycler_mobcast_audio_by">BY: TECHNOLOGY TEAM - YESTERDAY</string>
     <string name="sample_item_recycler_mobcast_audio_view_count">290</string>
     <string name="sample_item_recycler_mobcast_audio_summary">Lorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec, condimentum magna. Read More</string>
-<!--     <string name="sample_item_recycler_mobcast_audio_summary">The worst is behind us says HDFC Bank\'s Aditya Puri! He says the Government is working on unclogging many projects. Here he is speaking exclusively to ET NOW about Modi magic.</string> -->
+    <!-- <string name="sample_item_recycler_mobcast_audio_summary">The worst is behind us says HDFC Bank\'s Aditya Puri! He says the Government is working on unclogging many projects. Here he is speaking exclusively to ET NOW about Modi magic.</string> -->
     <string name="sample_item_recycler_mobcast_audio_file_name">ADITYA_PURI.MP3</string>
-    <string name="sample_item_recycler_mobcast_audio_file_info">3:48</string>
+    <string name="sample_item_recycler_mobcast_audio_file_info">0:00</string>
 
     <!-- item_recycler_mobcast_pdf -->
     <!-- <string name="sample_item_recycler_mobcast_pdf_title">DONEC TEMPOR SED MASSA TEMPOR MAXIMUS PORTA IN SCELERISQUE NON FEUGIAT LEO INTERDUM VITA</string> -->
@@ -587,7 +619,6 @@ The inaugural set of “Preferred Platform Partners” includes BrightRoll, Doub
     <string name="sample_item_recycler_mobcast_feedback_count">1.5K</string>
     <string name="sample_item_recycler_mobcast_feedback_question">2 Questions</string>
     <string name="item_recycler_mobcast_feedback_question">Questions</string>
-    
 
     <!-- item_recylcer_training_quiz -->
     <string name="sample_item_recycler_training_question_time">00 mins</string>
@@ -619,6 +650,7 @@ Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic 
 
     <!-- include_layout_drawer -->
     <string name="textview_last_sync">Last Sync : </string>
+    <string name="textview_unread">100</string>
     <string name="textview_profile_name">Ryan Gosling</string>
     <string name="textview_profile_email">abc@mobcast.in</string>
     <string name="textview_last_sync_content">Failed as internet was not available at 26 MAY 4:10 PM </string>
@@ -626,7 +658,7 @@ Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic 
 
     <string-array name="drawer_array">
         <item>Profile</item>
-        <item>My Office – Attendance &amp; PJP</item>
+<!--         <item>My Office – Attendance &amp; PJP</item> -->
         <item>Capture</item>
         <item>Recruitment</item>
         <item>Settings</item>

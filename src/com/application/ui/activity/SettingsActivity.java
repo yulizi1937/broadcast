@@ -23,10 +23,15 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,7 +57,6 @@ import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.GAServiceManager;
 import com.mobcast.R;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -77,6 +81,8 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mNotificationBirthdayMuteTv;
 	private AppCompatTextView mNotificationDownloadAndNotifyTv;
 	private AppCompatTextView mNotificationAnyDoTv;
+	private AppCompatTextView mSyncFrequencyTv;
+	private AppCompatTextView mStyleTextFontTv;
 	private AppCompatTextView mAboutTv;
 	private AppCompatTextView mAboutBuildVersionTv;
 	private AppCompatTextView mFileStorageTv;
@@ -90,6 +96,8 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	private LinearLayout mGeneralLangugageLayout;
 	private LinearLayout mNotificationBirthdayTimeLayout;
 	private LinearLayout mFileStorageAppLayout;
+	private LinearLayout mSyncFrequencyLayout;
+	private LinearLayout mStyleTextFontLayout;
 	
 	private RelativeLayout mNotificationBirthdayMuteLayout;
 	private RelativeLayout mNotificationDownloadAndNotifyLayout;
@@ -103,8 +111,10 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	private String mDescription;
 	
 	private boolean isAppLanguage = false;
+	private boolean isSyncFrequency = false;
 	private boolean isBirthdayTime = false;
 	private boolean isBirthdayMute = false;
+	private boolean isStyleTextFont = false;
 	private boolean isCustomNotification = false;
 	private boolean isDownloadAndNotify = false;
 			
@@ -115,6 +125,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
+		setSecurity();
 		initToolBar();
 		initUi();
 		setUiListener();
@@ -165,6 +176,8 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		mNotificationBirthdayMuteTv = (AppCompatTextView) findViewById(R.id.fragmentSettingsNotificationBirthdayMuteTv);
 		mNotificationDownloadAndNotifyTv = (AppCompatTextView) findViewById(R.id.fragmentSettingsNotificationBirthdayDownloadAndNotifyTv);
 		mNotificationAnyDoTv = (AppCompatTextView) findViewById(R.id.fragmentSettingsNotificationAnyDoTv);
+		mSyncFrequencyTv = (AppCompatTextView) findViewById(R.id.fragmentSettingsSyncFrequencySelectedTv);
+		mStyleTextFontTv = (AppCompatTextView) findViewById(R.id.fragmentSettingsStyleTextFontSelectedTv);
 		mAboutTv = (AppCompatTextView) findViewById(R.id.fragmentSettingsNotificationAboutTv);
 		mAboutBuildVersionTv = (AppCompatTextView) findViewById(R.id.fragmentAboutBuildVersionTv);
 		mFileStorageTv = (AppCompatTextView) findViewById(R.id.fragmentAboutFileStorageTv);
@@ -179,6 +192,8 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		mGeneralLangugageLayout = (LinearLayout) findViewById(R.id.fragmentSettingsGeneralLanguageLayout);
 		mNotificationBirthdayTimeLayout = (LinearLayout) findViewById(R.id.fragmentSettingsNotificationBirthdayTimeLayout);
 		mFileStorageAppLayout = (LinearLayout)findViewById(R.id.fragmentAboutFileStoragePercentageLayout);
+		mSyncFrequencyLayout = (LinearLayout)findViewById(R.id.fragmentSettingsSyncFrequencyLayout);
+		mStyleTextFontLayout = (LinearLayout)findViewById(R.id.fragmentSettingsStyleTextFontLayout);
 		
 		mNotificationBirthdayMuteLayout = (RelativeLayout) findViewById(R.id.fragmentSettingsNotificationBirthdayMuteLayout);
 		mNotificationDownloadAndNotifyLayout = (RelativeLayout) findViewById(R.id.fragmentSettingsNotificationDownloadAndNotifyLayout);
@@ -232,11 +247,25 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			mNotificationAnyDoCheckBox.setChecked(false);
 		}
 		
+		if(ApplicationLoader.getPreferences().isBirthdayNotificationMute()){
+			mNotificationBirthdayMuteCheckBox.setChecked(true);
+		}else{
+			mNotificationBirthdayMuteCheckBox.setChecked(false);
+		}
+		
 		if(ApplicationLoader.getPreferences().getDownloadAndNotify()){
 			mNotificationDownloadAndNotifyCheckBox.setChecked(true);
 		}else{
 			mNotificationDownloadAndNotifyCheckBox.setChecked(false);
 		}
+		
+		if(ApplicationLoader.getPreferences().getSyncFrequency()!=60*4){
+			mSyncFrequencyTv.setText(ApplicationLoader.getPreferences().getSyncFrequency() + " mins");
+		}else{
+			mSyncFrequencyTv.setText("4 hours");
+		}
+		
+		mAboutBuildVersionTv.setText(getResources().getString(R.string.sample_fragment_settings_about_build_version_text) + "\n v"+Utilities.getApplicationVersion() + " ( "+ Utilities.getApplicationVersionCode() + " ) ");
 	}
 
 	private void setUiListener() {
@@ -264,7 +293,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 						showBirthdayMuteListDialog();
 					}
 				});
-
+		
 		mNotificationBirthdayMuteLayout
 				.setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -289,6 +318,22 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				mNotificationAnyDoCheckBox.performClick();
+			}
+		});
+		
+		mSyncFrequencyLayout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				showSyncFrequencyDialog();
+			}
+		});
+		
+		mStyleTextFontLayout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				showStyleTextFontDialog();
 			}
 		});
 		
@@ -317,7 +362,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				if(!ApplicationLoader.getPreferences().isDeveloperMode()){
+				/*if(!ApplicationLoader.getPreferences().isDeveloperMode()){
 					if(isDeveloperMode >=3){
 						ApplicationLoader.getPreferences().setDeveloperMode(true);
 						Utilities.showCrouton(SettingsActivity.this, mCroutonViewGroup, getResources().getString(R.string.developer_message), Style.INFO);
@@ -326,7 +371,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 					}
 				}else{//Developer Mode
 					showTrafficDialog();
-				}
+				}*/
 			}
 		});
 	}
@@ -415,6 +460,76 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			}
 		});
 	}
+	
+	private void showSyncFrequencyDialog() {
+		final MaterialDialog mMaterialDialog = new MaterialDialog.Builder(SettingsActivity.this)
+				.title(getResources().getString(R.string.sample_fragment_settings_dialog_sync_title))
+				.titleColor(Utilities.getAppColor())
+				.customView(R.layout.dialog_settings_sync, true)
+				.cancelable(true).show();
+
+		View mView = mMaterialDialog.getCustomView();
+		final RadioGroup mSyncRadioGroup = (RadioGroup) mView.findViewById(R.id.dialogSyncRadioGroup);
+		final AppCompatRadioButton mSyncRadioButton1 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton1);
+		final AppCompatRadioButton mSyncRadioButton2 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton2);
+		final AppCompatRadioButton mSyncRadioButton3 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton3);
+		final AppCompatRadioButton mSyncRadioButton4 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton4);
+		final AppCompatButton mSyncSubmitBtn = (AppCompatButton) mView.findViewById(R.id.dialogSyncButton);
+		try {
+			setMaterialRippleWithGrayOnView(mSyncSubmitBtn);
+			if(ApplicationLoader.getPreferences().getSyncFrequency()==15){
+				mSyncRadioButton1.setChecked(true);
+			}else if(ApplicationLoader.getPreferences().getSyncFrequency()==30){
+				mSyncRadioButton2.setChecked(true);
+			}else if(ApplicationLoader.getPreferences().getSyncFrequency()==60){
+				mSyncRadioButton3.setChecked(true);
+			} else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*4){
+				mSyncRadioButton4.setChecked(true);
+			}  
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		mSyncSubmitBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				int mSyncFreq = -1;
+				switch(mSyncRadioGroup.getCheckedRadioButtonId()){
+				case R.id.dialogSyncRadioButton1:
+					mSyncFreq = 15;
+					break;
+				case R.id.dialogSyncRadioButton2:
+					mSyncFreq = 30;
+					break;
+				case R.id.dialogSyncRadioButton3:
+					mSyncFreq = 60;
+					break;
+				case R.id.dialogSyncRadioButton4:
+					mSyncFreq = 60*4;
+					break;
+				}
+				applySyncFrequency(mSyncFreq);
+				mMaterialDialog.dismiss();
+				setDataFromPreferences();
+			}
+		});
+	}
+	
+	private void applySyncFrequency(int mSyncFreq){
+		try{
+			if(mSyncFreq!=-1){
+				ApplicationLoader.getPreferences().setSyncFrequency(mSyncFreq);	
+				ApplicationLoader.cancelSyncServiceAlarm();
+				ApplicationLoader.setSyncServiceAlarm();
+				mSubCategory = "syncFrequency";
+     		    mDescription = String.valueOf(ApplicationLoader.getPreferences().getSyncFrequency());
+     		    isSyncFrequency = true;
+     		    updateAppSettingsToApi();
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
 
 	private void showLanguageConfirmationDialog(final int position, final String[] values){
 		MaterialDialog mMaterialDialog = new MaterialDialog.Builder(SettingsActivity.this)
@@ -458,6 +573,64 @@ public class SettingsActivity extends SwipeBackBaseActivity {
         .show();
 	}
 	
+	
+	private void showStyleTextFontDialog() {
+		final MaterialDialog mMaterialDialog = new MaterialDialog.Builder(SettingsActivity.this)
+				.title(getResources().getString(R.string.sample_fragment_settings_dialog_sync_title))
+				.titleColor(Utilities.getAppColor())
+				.customView(R.layout.dialog_settings_sync, true)
+				.cancelable(true).show();
+
+		View mView = mMaterialDialog.getCustomView();
+		final RadioGroup mSyncRadioGroup = (RadioGroup) mView.findViewById(R.id.dialogSyncRadioGroup);
+		final AppCompatRadioButton mSyncRadioButton1 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton1);
+		final AppCompatRadioButton mSyncRadioButton2 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton2);
+		final AppCompatRadioButton mSyncRadioButton3 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton3);
+		final AppCompatRadioButton mSyncRadioButton4 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton4);
+		final AppCompatButton mSyncSubmitBtn = (AppCompatButton) mView.findViewById(R.id.dialogSyncButton);
+		try {
+			mSyncRadioButton1.setText(getResources().getString(R.string.sample_fragment_settings_style_textfont_selected));
+			mSyncRadioButton2.setText(getResources().getString(R.string.sample_fragment_settings_style_textfont_default));
+			setMaterialRippleWithGrayOnView(mSyncSubmitBtn);
+			if(ApplicationLoader.getPreferences().isAppCustomTextFont()){
+				mSyncRadioButton1.setChecked(true);
+			}else{
+				mSyncRadioButton2.setChecked(false);
+			}  
+			
+			mSyncRadioButton3.setVisibility(View.GONE);
+			mSyncRadioButton4.setVisibility(View.GONE);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		mSyncSubmitBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				boolean isCustomFont = false;
+				switch(mSyncRadioGroup.getCheckedRadioButtonId()){
+				case R.id.dialogSyncRadioButton1:
+					isCustomFont = true;
+					break;
+				case R.id.dialogSyncRadioButton2:
+					isCustomFont = false;
+					break;
+				}
+				applyStyleTextFont(isCustomFont);
+				mMaterialDialog.dismiss();
+				setDataFromPreferences();
+			}
+		});
+	}
+	
+	private void applyStyleTextFont(boolean isCustomFont){
+		ApplicationLoader.getPreferences().setAppCustomTextFont(isCustomFont);
+		mSubCategory = "style";
+		mDescription = isCustomFont ? "custom" : "default";
+		isStyleTextFont = true;
+		updateAppSettingsToApi();
+	}
+	
 
 	private void setMaterialRippleView() {
 		try {
@@ -465,6 +638,8 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			setMaterialRippleWithGrayOnView(mNotificationBirthdayTimeLayout);
 			setMaterialRippleWithGrayOnView(mNotificationBirthdayMuteLayout);
 			setMaterialRippleWithGrayOnView(mNotificationDownloadAndNotifyLayout);
+			setMaterialRippleWithGrayOnView(mSyncFrequencyLayout);
+			setMaterialRippleWithGrayOnView(mStyleTextFontLayout);
 			setMaterialRippleWithGrayOnView(mAboutLayout);
 			setMaterialRippleWithGrayOnView(mAboutBuildVersionLayout);
 			setMaterialRippleWithGrayOnView(mFileStorageLayout);
@@ -677,6 +852,17 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 							mNotificationDownloadAndNotifyCheckBox.setChecked(false);
 						}
 						isDownloadAndNotify = false;
+					}else if(isSyncFrequency){
+						isSyncFrequency = false;
+					}else if(isStyleTextFont){
+						isStyleTextFont = false;
+						Utilities.stageQueue.postRunnable(new Runnable() {
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								System.exit(0);
+							}
+						});
 					}
 				}
 			}

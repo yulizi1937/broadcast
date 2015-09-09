@@ -61,6 +61,7 @@ public class InteractiveDetailActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_interactive_detail);
+		setSecurity();
 		initToolBar();
 		initUi();
 		initUiWithData();

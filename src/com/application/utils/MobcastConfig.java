@@ -10,7 +10,7 @@ package com.application.utils;
 public class MobcastConfig {
 	
 	public interface BUILD{
-		public static final int VERIFICATION_TIMER_OUT = 120;//in seconds
+		public static final int VERIFICATION_TIMER_OUT = 60;//in seconds
 	}
 
 }

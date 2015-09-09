@@ -128,6 +128,7 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_file_manager);
+		setSecurity();
 		initToolBar();
 		initReceivers();
 		initUi();

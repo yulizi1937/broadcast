@@ -278,6 +278,25 @@ public class LoginActivity extends AppCompatActivity {
 				AndroidUtilities.enterWindowAnimation(LoginActivity.this);
 			}
 		});
+		
+		mAdminTv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				try{
+					if(!TextUtils.isEmpty(mLoginIdEt.getText().toString())){
+						Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",AppConstants.mSupportEmail, null));
+						emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Suport : Unable to Login | " + getResources().getString(R.string.app_name));
+						emailIntent.putExtra(Intent.EXTRA_TEXT, "Please help me to login \n User Credentails: \n" + mLoginIdEt.getText().toString() + "\n" +  Utilities.getDeviceMfg() + "\n" + Utilities.getDeviceName());
+						startActivity(Intent.createChooser(emailIntent, "Send email"));
+					}else{
+						AndroidUtilities.showSnackBar(LoginActivity.this, "Please enter your username!");
+					}
+				}catch(Exception e){
+					FileLog.e(TAG, e.toString());
+				}
+			}
+		});
 	}
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB) private void doCheckApiUserExists(){
@@ -424,7 +443,7 @@ public class LoginActivity extends AppCompatActivity {
 			try {
 				userId = getUserMobileFromImPrintedSIM();
 				if (TextUtils.isEmpty(userId)) {
-					userId = getUserMobileFromWhatsAppAPI();
+//					userId = getUserMobileFromWhatsAppAPI();
 				}
 				if (!TextUtils.isEmpty(userId)) {
 					mLoginIdEt.setText(userId.subSequence(userId.length() - 10,
@@ -541,6 +560,7 @@ public class LoginActivity extends AppCompatActivity {
 						VerificationActivity.class);
 				mIntent.putExtra(AppConstants.INTENTCONSTANTS.USERNAME, mLoginIdEt.getText().toString());
 				mIntent.putExtra(AppConstants.INTENTCONSTANTS.OTP, parseDataFromOTP(mResponseFromApi));
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.COUNTRYCODE, mCountryCodeTv.getText().toString());
 				startActivity(mIntent);
 				AndroidUtilities.enterWindowAnimation(LoginActivity.this);
 			}

@@ -3,12 +3,12 @@
  */
 package com.application.ui.activity;
 
-import java.io.File;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.database.Cursor;
@@ -19,6 +19,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -33,6 +34,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.WindowManager.LayoutParams;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,6 +50,9 @@ import com.application.ui.view.RoundedBackgroundSpan;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
+import com.application.utils.FetchActionAsyncTask;
+import com.application.utils.FetchActionAsyncTask.OnPostExecuteTaskListener;
+import com.application.utils.BuildVars;
 import com.application.utils.FileLog;
 import com.application.utils.NotificationHandle;
 import com.application.utils.NotificationsController;
@@ -85,11 +90,16 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 	private View mContentLayout;
 	private FrameLayout mActivityLayout;
 	
+	private Handler mHandler = new Handler();
+	private int delayInStartMillis = 10000;
+	private int delayInBtnMillis = 30000;
+	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_anydo_notification);
+		setSecurity();
 		mActivityLayout = (FrameLayout)findViewById(R.id.activityAnyDoNotificationActivityLayout);
 		getIntentData();
 	}
@@ -129,6 +139,7 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		setSystemBarTint(0);
 		setUiListener();
 		updateReportToApi();
+		refreshUserActivityWithApi();
 	}
 	
 	private int getLayoutFromType(int mType) {
@@ -220,9 +231,22 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 			}).listener(new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
+					finish();
 				}
 			}).build();
 			
+			mBottomSheetAnyDo.setCancelable(true);
+			mBottomSheetAnyDo.setCanceledOnSwipeDown(true);
+			mBottomSheetAnyDo.setCanceledOnTouchOutside(true);
+			mBottomSheetAnyDo.setOnCancelListener(new OnCancelListener() {
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					// TODO Auto-generated method stub
+					FileLog.e(TAG, "Cancelled");
+					removeRepeatableRunnable();
+					finish();
+				}
+			});
 			return mBottomSheetAnyDo;
 		}
 	}
@@ -235,6 +259,116 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 	private void updateReportToApi(){
 		UserReport.updateUserReportApi(String.valueOf(mId), mCategory, AppConstants.REPORT.ANYDO, "");
 	}
+	
+	private void refreshUserActivityWithApi(){
+		try{
+			if(mType == AppConstants.TYPE.TEXT || mType == AppConstants.TYPE.IMAGE
+					|| mType == AppConstants.TYPE.AUDIO || mType == AppConstants.TYPE.VIDEO
+					|| mType == AppConstants.TYPE.PDF   || mType == AppConstants.TYPE.PPT
+					|| mType == AppConstants.TYPE.XLS   || mType == AppConstants.TYPE.DOC){
+					
+					mHandler.postDelayed(repeatableRunnable, delayInStartMillis);	
+				}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private Runnable repeatableRunnable = new Runnable() {
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			try{
+				syncUserActivityDataWithApi();
+				mHandler.postDelayed(repeatableRunnable, delayInBtnMillis);
+			}catch(Exception e){
+				FileLog.e(TAG, e.toString());
+			}
+		}
+	};
+	
+	private void syncUserActivityDataWithApi(){
+		FetchActionAsyncTask mFetchActionAsyncTask = new FetchActionAsyncTask(AnyDoNotificationActivity.this, String.valueOf(mId), mCategory, TAG);
+		mFetchActionAsyncTask.execute();
+		mFetchActionAsyncTask.setOnPostExecuteListener(new OnPostExecuteTaskListener() {
+			@Override
+			public void onPostExecute(String mViewCount, String mLikeCount) {
+				// TODO Auto-generated method stub
+				updateUserActivityToDBAndUi(mViewCount, mLikeCount);
+			}
+		});
+	}
+	
+	private void updateUserActivityToDBAndUi(String mViewCount, String mLikeCount){
+		try{
+			if(mContentLayout==null){
+				mContentLayout = mBottomSheetAnyDo.getContentView();
+			}
+			updateUserActivityToDB(mLikeCount, mViewCount);
+			switch(mType){
+			case AppConstants.TYPE.TEXT:
+				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastTextLikeCountTv)).setText(mLikeCount);
+				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastTextViewCountTv)).setText(mViewCount);
+				break;
+			case AppConstants.TYPE.IMAGE:
+				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastImageLikeCountTv)).setText(mLikeCount);
+				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastImageViewCountTv)).setText(mViewCount);
+				break;
+			case AppConstants.TYPE.AUDIO:
+				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastAudioLikeCountTv)).setText(mLikeCount);
+				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastAudioViewCountTv)).setText(mViewCount);
+				break;
+			case AppConstants.TYPE.VIDEO:
+				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoLikeCountTv)).setText(mLikeCount);
+				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoViewCountTv)).setText(mViewCount);
+				break;
+			case AppConstants.TYPE.PDF:
+				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastPdfLikeCountTv)).setText(mLikeCount);
+				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastPdfViewCountTv)).setText(mViewCount);
+				break;
+			case AppConstants.TYPE.DOC:
+				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastDocLikeCountTv)).setText(mLikeCount);
+				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastDocViewCountTv)).setText(mViewCount);
+				break;
+			case AppConstants.TYPE.PPT:
+				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastPptLikeCountTv)).setText(mLikeCount);
+				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastPptViewCountTv)).setText(mViewCount);
+				break;
+			case AppConstants.TYPE.XLS:
+				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastXlsLikeCountTv)).setText(mLikeCount);
+				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastXlsViewCountTv)).setText(mViewCount);
+				break;
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void updateUserActivityToDB(String mLikeCount , String mViewCount){
+		try{
+			ContentValues mValues = new ContentValues();
+			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+				mValues.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, mLikeCount);
+				mValues.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT, mViewCount);
+				getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, mValues, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{String.valueOf(mId)});
+			}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+				mValues.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, mLikeCount);
+				mValues.put(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT, mViewCount);
+				getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, mValues, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{String.valueOf(mId)});
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void removeRepeatableRunnable(){
+		try{
+			mHandler.removeCallbacks(repeatableRunnable);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
 	
 	private void setMaterialRippleView(){
 		try{
@@ -260,6 +394,7 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
+					removeRepeatableRunnable();
 					Intent mIntent = new NotificationHandle(ApplicationLoader.getApplication().getApplicationContext(), mId, mCategory, mType).getIntent();
 					startActivity(mIntent);
 					NotificationsController.getInstance().dismissNotification();
@@ -273,6 +408,7 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 				@Override
 				public void onClick(View view) {
 					// TODO Auto-generated method stub
+					removeRepeatableRunnable();
 					Intent mIntent = new NotificationHandle(ApplicationLoader.getApplication().getApplicationContext(), mId, mCategory, mType).getIntent();
 					startActivity(mIntent);
 					NotificationsController.getInstance().dismissNotification();
@@ -286,6 +422,7 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
+					removeRepeatableRunnable();
 					if(mBottomSheetAnyDo!=null)
 						mBottomSheetAnyDo.dismiss();
 					finish();
@@ -297,6 +434,7 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
+				removeRepeatableRunnable();
 				finish();
 			}
 		});
@@ -406,8 +544,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		AppCompatTextView mTitleTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastTextTitleTv);
 		AppCompatTextView mByTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastTextByTv);
 		AppCompatTextView mSummaryTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastTextSummaryTv);
-		mContentLayout.findViewById(R.id.itemRecyclerMobcastTextLikeCountTv).setVisibility(View.GONE);
-		mContentLayout.findViewById(R.id.itemRecyclerMobcastTextViewCountTv).setVisibility(View.GONE);
+		AppCompatTextView mLikeCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastTextLikeCountTv);
+		AppCompatTextView mViewCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastTextViewCountTv);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastTextLinkTv).setVisibility(View.GONE);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastTextReadView).setVisibility(View.GONE);
 		
@@ -419,6 +557,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 				mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE)));
 				mSummaryTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DESC)));
 				mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME))));
+				mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO)));
+				mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT)));
 			}
 		}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
 			mCursor = getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, null, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{String.valueOf(mId)}, null);
@@ -427,6 +567,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 				mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE)));
 				mSummaryTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DESC)));
 				mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TIME))));
+				mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO)));
+				mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT)));
 			}
 		}
 		
@@ -442,8 +584,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		final ImageView mPlayImageView = (ImageView)mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoPlayImageIv);
 		final ProgressWheel mProgressWheel = (ProgressWheel)mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoLoadingProgress);
 		AppCompatTextView mDurationTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoDurationTv);
-		mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoLikeCountTv).setVisibility(View.GONE);
-		mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoViewCountTv).setVisibility(View.GONE);
+		AppCompatTextView mLikeCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoLikeCountTv);
+		AppCompatTextView mViewCountTv  = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoViewCountTv);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoLinkTv).setVisibility(View.GONE);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoReadView).setVisibility(View.GONE);
 		
@@ -458,6 +600,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 				mCursor.moveToFirst();
 				mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE)));
 				mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME))));
+				mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO)));
+				mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT)));
 			}
 			
 			mDurationTv.setVisibility(View.GONE);
@@ -483,6 +627,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 				mCursor.moveToFirst();
 				mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE)));
 				mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TIME))));
+				mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO)));
+				mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT)));
 			}
 			
 			mDurationTv.setVisibility(View.GONE);
@@ -558,8 +704,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		AppCompatTextView mByTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastImageByTv);
 		final ImageView mCoverImageView = (ImageView)mContentLayout.findViewById(R.id.itemRecyclerMobcastImageMainImageIv);
 		final ProgressWheel mProgressWheel = (ProgressWheel)mContentLayout.findViewById(R.id.itemRecyclerMobcastImageLoadingProgress);
-		mContentLayout.findViewById(R.id.itemRecyclerMobcastImageLikeCountTv).setVisibility(View.GONE);
-		mContentLayout.findViewById(R.id.itemRecyclerMobcastImageViewCountTv).setVisibility(View.GONE);
+		AppCompatTextView mLikeCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastImageLikeCountTv);
+		AppCompatTextView mViewCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastImageViewCountTv);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastImageLinkTv).setVisibility(View.GONE);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastImageReadView).setVisibility(View.GONE);
 		
@@ -574,6 +720,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 				mCursor.moveToFirst();
 				mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE)));
 				mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME))));
+				mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO)));
+				mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT)));
 			}
 			
 			Cursor mCursorFileInfo = getContentResolver().query(DBConstant.Mobcast_File_Columns.CONTENT_URI, null, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{String.valueOf(mId)}, DBConstant.Mobcast_File_Columns.COLUMN_ID + " ASC");
@@ -605,6 +753,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 				mCursor.moveToFirst();
 				mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE)));
 				mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TIME))));
+				mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO)));
+				mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT)));
 			}
 			
 			Cursor mCursorFileInfo = getContentResolver().query(DBConstant.Training_File_Columns.CONTENT_URI, null, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID + "=?", new String[]{String.valueOf(mId)}, DBConstant.Training_File_Columns.COLUMN_ID + " ASC");
@@ -677,8 +827,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		AppCompatTextView mDescTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastAudioSummaryTv);
 		AppCompatTextView mNameTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastAudioDetailFileInfoNameTv);
 		
-		mContentLayout.findViewById(R.id.itemRecyclerMobcastAudioLikeCountTv).setVisibility(View.GONE);
-		mContentLayout.findViewById(R.id.itemRecyclerMobcastAudioViewCountTv).setVisibility(View.GONE);
+		AppCompatTextView mLikeCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastAudioLikeCountTv);
+		AppCompatTextView mViewCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastAudioViewCountTv);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastAudioLinkTv).setVisibility(View.GONE);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastAudioReadView).setVisibility(View.GONE);
 		
@@ -691,6 +841,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 				mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE)));
 				mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME))));
 				mDescTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DESC)));
+				mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO)));
+				mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT)));
 			}
 			
 			Cursor mCursorFileInfo = getContentResolver().query(DBConstant.Mobcast_File_Columns.CONTENT_URI, null, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{String.valueOf(mId)}, DBConstant.Mobcast_File_Columns.COLUMN_ID + " ASC");
@@ -715,6 +867,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 				mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE)));
 				mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TIME))));
 				mDescTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DESC)));
+				mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO)));
+				mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT)));
 			}
 			
 			Cursor mCursorFileInfo = getContentResolver().query(DBConstant.Training_File_Columns.CONTENT_URI, null, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID + "=?", new String[]{String.valueOf(mId)}, DBConstant.Training_File_Columns.COLUMN_ID + " ASC");
@@ -744,8 +898,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		AppCompatTextView mByTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastPdfByTv);
 		AppCompatTextView mNameTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastPdfDetailFileInfoNameTv);
 		
-		mContentLayout.findViewById(R.id.itemRecyclerMobcastPdfLikeCountTv).setVisibility(View.GONE);
-		mContentLayout.findViewById(R.id.itemRecyclerMobcastPdfViewCountTv).setVisibility(View.GONE);
+		AppCompatTextView mLikeCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastPdfLikeCountTv);
+		AppCompatTextView mViewCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastPdfViewCountTv);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastPdfLinkTv).setVisibility(View.GONE);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastPdfReadView).setVisibility(View.GONE);
 		
@@ -757,6 +911,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 				mCursor.moveToFirst();
 				mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE)));
 				mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME))));
+				mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO)));
+				mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT)));
 			}
 			
 			Cursor mCursorFileInfo = getContentResolver().query(DBConstant.Mobcast_File_Columns.CONTENT_URI, null, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{String.valueOf(mId)}, DBConstant.Mobcast_File_Columns.COLUMN_ID + " ASC");
@@ -780,6 +936,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 				mCursor.moveToFirst();
 				mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE)));
 				mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TIME))));
+				mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO)));
+				mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT)));
 			}
 			
 			Cursor mCursorFileInfo = getContentResolver().query(DBConstant.Training_File_Columns.CONTENT_URI, null, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID + "=?", new String[]{String.valueOf(mId)}, DBConstant.Training_File_Columns.COLUMN_ID + " ASC");
@@ -810,8 +968,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		AppCompatTextView mByTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastPptByTv);
 		AppCompatTextView mNameTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastPptDetailFileInfoNameTv);
 		
-		mContentLayout.findViewById(R.id.itemRecyclerMobcastPptLikeCountTv).setVisibility(View.GONE);
-		mContentLayout.findViewById(R.id.itemRecyclerMobcastPptViewCountTv).setVisibility(View.GONE);
+		AppCompatTextView mLikeCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastPptLikeCountTv);
+		AppCompatTextView mViewCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastPptViewCountTv);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastPptLinkTv).setVisibility(View.GONE);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastPptReadView).setVisibility(View.GONE);
 		
@@ -823,6 +981,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 				mCursor.moveToFirst();
 				mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE)));
 				mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME))));
+				mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO)));
+				mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT)));
 			}
 			
 			Cursor mCursorFileInfo = getContentResolver().query(DBConstant.Mobcast_File_Columns.CONTENT_URI, null, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{String.valueOf(mId)}, DBConstant.Mobcast_File_Columns.COLUMN_ID + " ASC");
@@ -846,6 +1006,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 					mCursor.moveToFirst();
 					mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE)));
 					mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TIME))));
+					mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO)));
+					mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT)));
 				}
 				
 				Cursor mCursorFileInfo = getContentResolver().query(DBConstant.Training_File_Columns.CONTENT_URI, null, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID + "=?", new String[]{String.valueOf(mId)}, DBConstant.Training_File_Columns.COLUMN_ID + " ASC");
@@ -875,8 +1037,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		AppCompatTextView mByTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastDocByTv);
 		AppCompatTextView mNameTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastDocDetailFileInfoNameTv);
 		
-		mContentLayout.findViewById(R.id.itemRecyclerMobcastDocLikeCountTv).setVisibility(View.GONE);
-		mContentLayout.findViewById(R.id.itemRecyclerMobcastDocViewCountTv).setVisibility(View.GONE);
+		AppCompatTextView mLikeCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastDocLikeCountTv);
+		AppCompatTextView mViewCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastDocViewCountTv);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastDocLinkTv).setVisibility(View.GONE);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastDocReadView).setVisibility(View.GONE);
 		
@@ -888,6 +1050,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 				mCursor.moveToFirst();
 				mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE)));
 				mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME))));
+				mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO)));
+				mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT)));
 			}
 			
 			Cursor mCursorFileInfo = getContentResolver().query(DBConstant.Mobcast_File_Columns.CONTENT_URI, null, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{String.valueOf(mId)}, DBConstant.Mobcast_File_Columns.COLUMN_ID + " ASC");
@@ -911,6 +1075,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 					mCursor.moveToFirst();
 					mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE)));
 					mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TIME))));
+					mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO)));
+					mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT)));
 				}
 				
 				Cursor mCursorFileInfo = getContentResolver().query(DBConstant.Training_File_Columns.CONTENT_URI, null, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID + "=?", new String[]{String.valueOf(mId)}, DBConstant.Training_File_Columns.COLUMN_ID + " ASC");
@@ -941,8 +1107,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		AppCompatTextView mByTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastXlsByTv);
 		AppCompatTextView mNameTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastXlsDetailFileInfoNameTv);
 		
-		mContentLayout.findViewById(R.id.itemRecyclerMobcastXlsLikeCountTv).setVisibility(View.GONE);
-		mContentLayout.findViewById(R.id.itemRecyclerMobcastXlsViewCountTv).setVisibility(View.GONE);
+		AppCompatTextView mLikeCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastXlsLikeCountTv);
+		AppCompatTextView mViewCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastXlsViewCountTv);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastXlsLinkTv).setVisibility(View.GONE);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastXlsReadView).setVisibility(View.GONE);
 		
@@ -954,6 +1120,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 				mCursor.moveToFirst();
 				mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE)));
 				mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME))));
+				mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO)));
+				mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT)));
 			}
 			
 			Cursor mCursorFileInfo = getContentResolver().query(DBConstant.Mobcast_File_Columns.CONTENT_URI, null, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{String.valueOf(mId)}, DBConstant.Mobcast_File_Columns.COLUMN_ID + " ASC");
@@ -977,6 +1145,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 					mCursor.moveToFirst();
 					mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE)));
 					mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TIME))));
+					mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO)));
+					mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT)));
 				}
 				
 				Cursor mCursorFileInfo = getContentResolver().query(DBConstant.Training_File_Columns.CONTENT_URI, null, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID + "=?", new String[]{String.valueOf(mId)}, DBConstant.Training_File_Columns.COLUMN_ID + " ASC");
@@ -1197,6 +1367,20 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		
 		if(mCursor!=null)
 			mCursor.close();
+	}
+	
+	/**
+	 * Security : Couldn't capture ScreenShot
+	 * 
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
+	private void setSecurity() {
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			if (!BuildVars.DEBUG_SCREENSHOT) {
+				getWindow().setFlags(LayoutParams.FLAG_SECURE,
+						LayoutParams.FLAG_SECURE);
+			}
+		}
 	}
 	
 	/**

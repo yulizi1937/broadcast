@@ -78,7 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="16dp"
                     android:gravity="center"
                     android:orientation="vertical" >
 
@@ -132,6 +132,7 @@
                             android:gravity="start|center"
                             android:hint="@string/hint_login_id"
                             android:inputType="phone"
+                            android:imeOptions="actionDone"
                             android:paddingEnd="1dp"
                             android:paddingLeft="4dp"
                             android:paddingRight="1dp"
@@ -182,6 +183,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="4dp"
                         android:gravity="center"
+                        android:padding="4dp"
                         android:text="@string/textview_login_administration"
                         android:textColor="@color/editbox_color"
                         android:textSize="@dimen/login_admin_size" />

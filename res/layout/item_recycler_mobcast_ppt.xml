@@ -76,14 +76,14 @@
             <RelativeLayout
                 android:id="@+id/itemRecyclerMobcastPptByLayout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/event_by_layout_size"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/item_recycler_mobcast_text_content_title_margin_top"
                 android:orientation="horizontal" >
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/itemRecyclerMobcastPptByTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="left|center"
@@ -91,7 +91,7 @@
                     android:background="@drawable/shape_by_orange_fill"
                     android:gravity="left|center"
                     android:padding="4dp"
-                    android:singleLine="true"
+                    android:singleLine="false"
                     android:text="@string/sample_item_recycler_mobcast_text_by"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/event_by_textview_size"
@@ -100,7 +100,7 @@
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/itemRecyclerMobcastPptLikeCountTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="right|center"
@@ -116,7 +116,7 @@
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/itemRecyclerMobcastPptViewCountTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_toLeftOf="@id/itemRecyclerMobcastPptLikeCountTv"
@@ -132,7 +132,7 @@
                 <ImageView
                     android:id="@+id/itemRecyclerMobcastPptLinkTv"
                     android:layout_width="@dimen/event_link_width"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_toLeftOf="@id/itemRecyclerMobcastPptViewCountTv"
@@ -189,6 +189,7 @@
                         android:layout_gravity="top|center"
                         android:layout_weight="4"
                         android:gravity="left|top"
+                        android:visibility="invisible"
                         android:paddingBottom="2dp"
                         android:text="@string/sample_item_recycler_mobcast_ppt_file_info"
                         android:textColor="@color/item_recycler_mobcast_doc_color"

@@ -7,6 +7,7 @@ package com.application.ui.activity;
  * @author Vikalp Patel(VikalpPatelCE)
  *
  */
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,6 +17,8 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.MatrixCursor;
@@ -38,6 +41,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -85,6 +89,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 	private AppCompatEditText mEmployeeIdEv;
 	private AppCompatEditText mQuestionEv;
 	private AppCompatEditText mAnswerEv;
+	private AppCompatEditText mDOBEv;
 	
 	private AppCompatButton mUpdateBtn;
 
@@ -94,6 +99,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 	private ImageView mEmployeeValidateIv;
 	private ImageView mQuestionValidateIv;
 	private ImageView mAnswerValidateIv;
+	private ImageView mDOBIv;
 	private ImageView mToolBarDrawer;
 	
 	private LinearLayout mNameLayout;
@@ -101,6 +107,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 	private LinearLayout mEmployeeIdLayout;
 	private LinearLayout mQuestionLayout;
 	private LinearLayout mAnswerLayout;
+	private LinearLayout mDOBLayout;
 	
 	private FrameLayout mCroutonViewGroup;
 	
@@ -108,6 +115,10 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 	private CircleImageView mProfileCirleIv;
 	
 	private ImageLoader mImageLoader;
+	
+	private int mDay;
+	private int mMonth;
+	private int mYear;
 	
 	private String mPicturePath;
 	
@@ -123,6 +134,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_profile);
+		setSecurity();
 		initUi();
 		initToolBar();
 		setUiListener();
@@ -185,6 +197,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 		mEmployeeIdEv = (AppCompatEditText)findViewById(R.id.activityEditProfileEmployeeIdEv);
 		mQuestionEv = (AppCompatEditText)findViewById(R.id.activityEditProfileEmployeeQuestionEv);
 		mAnswerEv = (AppCompatEditText)findViewById(R.id.activityEditProfileAnswerEv);
+		mDOBEv= (AppCompatEditText)findViewById(R.id.activityEditProfileBirthdayEv);
 		
 		mUpdateBtn = (AppCompatButton)findViewById(R.id.activityEditProfileNextBtn);
 		
@@ -193,6 +206,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 		mEmployeeValidateIv = (ImageView)findViewById(R.id.activityEditProfileEmployeeIdValidateIv);
 		mQuestionValidateIv = (ImageView)findViewById(R.id.activityEditProfileEmployeeQuestionValidateIv);
 		mAnswerValidateIv= (ImageView)findViewById(R.id.activityEditProfileAnswerValidateIv);
+		mDOBIv = (ImageView)findViewById(R.id.activityEditProfileBirthdayValidateIv);
 		
 		mProgressWheel = (ProgressWheel)findViewById(R.id.activityEditProfileProgressWheel);
 		
@@ -203,6 +217,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 		mEmployeeIdLayout = (LinearLayout)findViewById(R.id.activityEditProfileEmployeeIdLayout);
 		mQuestionLayout = (LinearLayout)findViewById(R.id.activityEditProfileEmployeeQuestionLayout);
 		mAnswerLayout = (LinearLayout)findViewById(R.id.activityEditProfileAnswerLayout);
+		mDOBLayout= (LinearLayout)findViewById(R.id.activityEditProfileBirthdayLayout);
 		
 		mCroutonViewGroup = (FrameLayout)findViewById(R.id.croutonViewGroup);
 	}
@@ -228,6 +243,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 			mNameEv.setText(ApplicationLoader.getPreferences().getUserDisplayName());
 			mEmailEv.setText(ApplicationLoader.getPreferences().getUserEmailAddress());
 			mEmployeeIdEv.setText(ApplicationLoader.getPreferences().getUserEmployeeId());
+			mDOBEv.setText(ApplicationLoader.getPreferences().getUserBirthdate());
 			mQuestionEv.setText(ApplicationLoader.getPreferences().getUserFavouriteQuestion());
 			mAnswerEv.setText(ApplicationLoader.getPreferences().getUserFavouriteAnswer());
 			
@@ -280,6 +296,18 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				getPhotoFromGallery();
+			}
+		});
+		
+		mDOBEv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				final Calendar c = Calendar.getInstance();
+				mYear = c.get(Calendar.YEAR);
+				mMonth = c.get(Calendar.MONTH);
+				mDay = c.get(Calendar.DAY_OF_MONTH);
+				showDialog(0);
 			}
 		});
 		
@@ -375,6 +403,26 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 							.getDrawable(R.drawable.shape_editbox_selected));
 				} else {
 					mAnswerLayout.setBackgroundDrawable(getResources()
+							.getDrawable(R.drawable.shape_editbox_normal));
+				}
+			}
+		});
+		
+		mDOBEv.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			@SuppressWarnings("deprecation")
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				// TODO Auto-generated method stub
+				if (hasFocus) {
+					mDOBLayout.setBackgroundDrawable(getResources()
+							.getDrawable(R.drawable.shape_editbox_selected));
+					final Calendar c = Calendar.getInstance();
+					mYear = c.get(Calendar.YEAR);
+					mMonth = c.get(Calendar.MONTH);
+					mDay = c.get(Calendar.DAY_OF_MONTH);
+					showDialog(0);
+				} else {
+					mDOBLayout.setBackgroundDrawable(getResources()
 							.getDrawable(R.drawable.shape_editbox_normal));
 				}
 			}
@@ -492,6 +540,32 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 			}
 		});
 	}
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case 0:
+		   // set date picker as current date
+			return new DatePickerDialog(this, datePickerListener, mYear,
+					mMonth, mDay);
+		}
+		return null;
+	}
+
+	private DatePickerDialog.OnDateSetListener datePickerListener 
+                = new DatePickerDialog.OnDateSetListener() {
+
+		// when dialog box is closed, below method will be called.
+		public void onDateSet(DatePicker view, int selectedYear,int selectedMonth, int selectedDay) {
+			mYear = selectedYear;
+			mMonth = selectedMonth;
+			mDay = selectedDay;
+			// set selected date into textview
+			mDOBEv.setText(new StringBuilder().append(mYear).append("-").append(mMonth + 1).append("-").append(mDay));
+			// set selected date into datepicker also
+
+		}
+	};
 	
 	private void validateName(CharSequence mCharsequence){
 		mNameValidateIv.setImageResource(R.drawable.ic_text_process);
@@ -618,7 +692,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 		try {
 			JSONObject jsonObj = JSONRequestBuilder.getPostUserProfile(mNameEv
 					.getText().toString(), mEmailEv.getText().toString(),
-					mEmployeeIdEv.getText().toString(), mPicturePath, mQuestionEv.getText().toString(), mAnswerEv.getText().toString());
+					mEmployeeIdEv.getText().toString(), mPicturePath, mQuestionEv.getText().toString(), mAnswerEv.getText().toString()," ");
 			if(BuildVars.USE_OKHTTP){
 				return RetroFitClient
 						.postJSON(new OkHttpClient(),AppConstants.API.API_UPDATE_USER, jsonObj.toString(), TAG);

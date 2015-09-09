@@ -70,6 +70,7 @@ public class SplashActivity extends AppCompatActivity {
 		// TODO Auto-generated method stub
 		setFullScreen();
 		super.onCreate(savedInstanceState);
+		setSecurity();
 		setContentView(R.layout.activity_splash);
 		setSecurity();
 		initUi();

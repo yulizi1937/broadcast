@@ -28,6 +28,7 @@ import com.application.ui.view.ProgressWheel;
 import com.application.ui.view.SmoothProgressBar;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.FileLog;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 
@@ -60,6 +61,7 @@ public class WebViewActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_webview);
+		setSecurity();
 		initToolBar();
 		initUi();
 		getIntentData();
@@ -158,10 +160,22 @@ public class WebViewActivity extends SwipeBackBaseActivity {
 		mSmoothProgressBar = (SmoothProgressBar)findViewById(R.id.fragmentWebViewProgressBar);
 	}
 	
-	private void initWebViewClient(){
+	@SuppressLint("NewApi") private void initWebViewClient(){
 		mWebView.setWebChromeClient(new MyWebViewChromeClient());
 		mWebView.setWebViewClient(new MyWebViewClient());
-		mWebView.getSettings().setBuiltInZoomControls(true);
+		try{
+			if(AndroidUtilities.isAboveHoneyComb()){
+				mWebView.getSettings().setBuiltInZoomControls(true);
+				mWebView.getSettings().setDisplayZoomControls(false);
+				mWebView.getSettings().setJavaScriptEnabled(true);
+				mWebView.getSettings().setSupportZoom(true);
+				mWebView.getSettings().setDomStorageEnabled(true);
+				mWebView.getSettings().setSaveFormData(true);
+				mWebView.getSettings().setSavePassword(true);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
     	mWebView.loadUrl(mUrl);
     	setToolBarOption();
 	}

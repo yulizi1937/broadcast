@@ -22,6 +22,7 @@ import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -86,6 +87,8 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mAudioSummaryTextTv;
 	private AppCompatTextView mLanguageHeaderTv;
 	
+	private AppCompatButton mAudioDownloadBtn;
+	
 	private AppCompatTextView mAudioControllerCurrentDurationTv;
 	
 	private VisualizerView mVisualizerView;
@@ -147,6 +150,7 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_audio_detail);
+		setSecurity();
 		initToolBar();
 		initUi();
 		getIntentData();
@@ -160,13 +164,13 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		decryptFileOnResume();
+//		decryptFileOnResume();
 	}
 
 	@Override
 	protected void onPause() {
 		cleanUp();
-		deleteDecryptedFile();
+//		deleteDecryptedFile();
 		super.onPause();
 	}
 
@@ -282,6 +286,8 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 		mLanguageLinearLayout = (LinearLayout) findViewById(R.id.fragmentAudioDetailLanguageLayout);
 		mLanguageFlowLayout = (FlowLayout) findViewById(R.id.fragmentAudioDetailLanguageFlowLayout);
 		mLanguageHeaderTv = (AppCompatTextView) findViewById(R.id.fragmentAudioDetailLanguageHeaderTv);
+		
+		mAudioDownloadBtn =  (AppCompatButton)findViewById(R.id.fragmentAudioDetailDownloadBtn);
 		
 		mAudioTitleTv = (AppCompatTextView)findViewById(R.id.fragmentAudioDetailTitleTv);
 		
@@ -447,11 +453,14 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 			}
 			
 			if(checkIfFileExists(mContentFilePath)){
-				mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
+//				mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
 				if(!TextUtils.isEmpty(mContentFilePath)){
 					initMediaPlayer(mContentFilePath);
 					mPlayIv.setEnabled(true);
 					mDiscreteSeekBar.setEnabled(true);
+				}else{
+					mAudioDownloadBtn.setVisibility(View.VISIBLE);
+					AndroidUtilities.showSnackBar(AudioDetailActivity.this, getResources().getString(R.string.file_download));
 				}
 			}else{
 				downloadFileInBackground();
@@ -475,21 +484,26 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 		mDiscreteSeekBar.setEnabled(false);
 		if(Utilities.isInternetConnected()){
 			DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
-					AudioDetailActivity.this, false, true,
+					AudioDetailActivity.this, false, false,
 					mContentFileLink, mContentFilePath,
 					AppConstants.TYPE.AUDIO, Long.parseLong(mContentFileSize), TAG);
 			mDownloadAsyncTask.execute();
+			mAudioDownloadBtn.setVisibility(View.VISIBLE);
 			mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
 				@Override
 				public void onPostExecute(boolean isDownloaded) {
 					// TODO Auto-generated method stub
 					if(isDownloaded){
-						mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
+//						mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
 						if(!TextUtils.isEmpty(mContentFilePath)){
 							initMediaPlayer(mContentFilePath);
 							mPlayIv.setEnabled(true);
 							mDiscreteSeekBar.setEnabled(true);
-						}	
+							mAudioDownloadBtn.setVisibility(View.GONE);
+						}else{
+							mAudioDownloadBtn.setVisibility(View.VISIBLE);
+							AndroidUtilities.showSnackBar(AudioDetailActivity.this, getResources().getString(R.string.file_download));
+						}
 					}
 				}
 			});	
@@ -647,30 +661,34 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, "");
-				if(!isPlaying){
-					Log.i(TAG, "play");
-					mPlayIv.setImageResource(R.drawable.ic_pause_audio);
-					isPlaying = true;
-					int mPosition = ApplicationLoader.getPreferences().getAudioPlayPosition();
-					if(mPosition!=-1){
-						mPlayer.seekTo(ApplicationLoader.getPreferences().getAudioPlayPosition());
-						mThreadSafe.unpause();
+				if(checkIfFileExists(mContentFilePath)){
+					UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, "");
+					if(!isPlaying){
+						Log.i(TAG, "play");
+						mPlayIv.setImageResource(R.drawable.ic_pause_audio);
+						isPlaying = true;
+						int mPosition = ApplicationLoader.getPreferences().getAudioPlayPosition();
+						if(mPosition!=-1){
+							mPlayer.seekTo(ApplicationLoader.getPreferences().getAudioPlayPosition());
+							mThreadSafe.unpause();
+						}else{
+							runOnSeekBarThread();
+						}
+						mPlayer.start();
+						mReportStart = System.currentTimeMillis();
 					}else{
-						runOnSeekBarThread();
+						Log.i(TAG, "pause");
+						mPlayIv.setImageResource(R.drawable.ic_play_audio);
+						ApplicationLoader.getPreferences().setAudioPlayPosition(mPlayer.getCurrentPosition());
+						isPlaying = false;
+						mPlayer.pause();
+						mThreadSafe.pause();
+						mReportStop = System.currentTimeMillis();
+						mReportDuration += mReportStop - mReportStart;
+						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, Utilities.getTimeFromMilliSeconds(mReportDuration));
 					}
-					mPlayer.start();
-					mReportStart = System.currentTimeMillis();
 				}else{
-					Log.i(TAG, "pause");
-					mPlayIv.setImageResource(R.drawable.ic_play_audio);
-					ApplicationLoader.getPreferences().setAudioPlayPosition(mPlayer.getCurrentPosition());
-					isPlaying = false;
-					mPlayer.pause();
-					mThreadSafe.pause();
-					mReportStop = System.currentTimeMillis();
-					mReportDuration += mReportStop - mReportStart;
-					UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, Utilities.getTimeFromMilliSeconds(mReportDuration));
+					downloadFileInBackground();
 				}
 			}
 		});
@@ -713,6 +731,14 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 					FileLog.e(TAG, e.toString());
 				}
 				
+			}
+		});
+		
+		mAudioDownloadBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				downloadFileInBackground();
 			}
 		});
 	}
@@ -1012,6 +1038,7 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 
 	private void setMaterialRippleView() {
 		try {
+			setMaterialRippleOnView(mAudioDownloadBtn);
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}

@@ -126,8 +126,11 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_recycler_award);
+		setSecurity();
 		initToolBar();
 		initUi();
+		setMaterialRippleView();
+		syncDataWithApi();
 	}
 
 	@Override
@@ -136,6 +139,17 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		super.onResume();
 		checkReadFromDBAndUpdateToObj();
 		setUiListener();
+		Utilities.showBadgeNotification(AwardRecyclerActivity.this);
+	}
+	
+	private void syncDataWithApi(){
+		try{
+			if (mArrayListAward != null && mArrayListAward.size() > 0) {
+				refreshFeedFromApi(true, true, 0,true);	
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 
 	@SuppressLint("NewApi")
@@ -199,7 +213,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
 		if (!mLoadMore) {
 			mLoadMore = true;
-			refreshFeedFromApi(true, true, 0);
+			refreshFeedFromApi(true, true, 0,false);
 		}
 	}
 
@@ -207,7 +221,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		setRecyclerAdapterListener();
 		setRecyclerScrollListener();
 		setSwipeRefreshListener();
-		setMaterialRippleView();
+//		setMaterialRippleView();
 		setClickListener();
 	}
 
@@ -224,7 +238,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				refreshFeedFromApi(true, true, AppConstants.BULK);
+				refreshFeedFromApi(true, true, AppConstants.BULK,false);
 			}
 		});
 	}
@@ -237,21 +251,21 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 				// TODO Auto-generated method stub
 				mToolBarMenuRefresh.setVisibility(View.GONE);
 				mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
-				refreshFeedFromApi(true, true, 0);
+				refreshFeedFromApi(true, true, 0,false);
 			}
 		});
 	}
 
 	@SuppressLint("NewApi")
 	private void refreshFeedFromApi(boolean isRefreshFeed, boolean sortByAsc,
-			int limit) {// sortByAsc:true-> new data //sortByAsc:false->Old Data
+			int limit, boolean isAutoRefresh) {// sortByAsc:true-> new data //sortByAsc:false->Old Data //isAutoRefresh: true-> onResume ? false-> onPullToRefresh;
 		if (Utilities.isInternetConnected()) {
 			if (AndroidUtilities.isAboveIceCreamSandWich()) {
-				new AsyncRefreshTask(isRefreshFeed, sortByAsc, limit)
+				new AsyncRefreshTask(isRefreshFeed, sortByAsc, limit, isAutoRefresh)
 						.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
 								null, null, null);
 			} else {
-				new AsyncRefreshTask(isRefreshFeed, sortByAsc, limit).execute();
+				new AsyncRefreshTask(isRefreshFeed, sortByAsc, limit, isAutoRefresh).execute();
 			}
 		}
 	}
@@ -552,7 +566,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 					if (!mLoadMore) {
 						if (mVisibleItemCount + mFirstVisibleItem >= mTotalItemCount) {
 							mLoadMore = true;
-							refreshFeedFromApi(true, false, AppConstants.BULK);
+							refreshFeedFromApi(true, false, AppConstants.BULK,false);
 						}
 					}
 				}
@@ -898,6 +912,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 			UserReport.updateUserReportApi(mAwardId,
 					AppConstants.INTENTCONSTANTS.AWARD,
 					AppConstants.REPORT.READ, "");
+			Utilities.showBadgeNotification(AwardRecyclerActivity.this);
 		} catch (Exception e) {
 			FileLog.e(TAG, e.toString());
 		}
@@ -912,6 +927,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 					new String[] { mArrayListAward.get(mPosition).getmId() });
 			mArrayListAward.get(mPosition).setRead(false);
 			mRecyclerView.getAdapter().notifyItemChanged(mPosition);
+			Utilities.showBadgeNotification(AwardRecyclerActivity.this);
 		} catch (Exception e) {
 			FileLog.e(TAG, e.toString());
 		}
@@ -928,6 +944,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 			} else {
 				mRecyclerView.getAdapter().notifyDataSetChanged();
 			}
+			Utilities.showBadgeNotification(AwardRecyclerActivity.this);
 		} catch (Exception e) {
 			FileLog.e(TAG, e.toString());
 		}
@@ -1094,13 +1111,15 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		private MobcastProgressDialog mProgressDialog;
 		private boolean isRefreshFeed = true;
 		private boolean sortByAsc = false;
+		private boolean isAutoRefresh = false;
 		private int limit;
 
 		public AsyncRefreshTask(boolean isRefreshFeed, boolean sortByAsc,
-				int limit) {
+				int limit, boolean isAutoRefresh) {
 			this.isRefreshFeed = isRefreshFeed;
 			this.sortByAsc = sortByAsc;
 			this.limit = limit;
+			this.isAutoRefresh = isAutoRefresh;
 		}
 
 		@Override
@@ -1158,12 +1177,16 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 				parseDataFromApi(mResponseFromApi, !sortByAsc);
 			}else{
 				if(sortByAsc){
-					AndroidUtilities.showSnackBar(AwardRecyclerActivity.this, Utilities.getErrorMessageFromApi(mResponseFromApi));
+					if(!isAutoRefresh){
+						AndroidUtilities.showSnackBar(AwardRecyclerActivity.this, Utilities.getErrorMessageFromApi(mResponseFromApi));
+					}else{//show new awards available
+						
+					}
 				}
 			}
 			
 			if(sortByAsc){
-				refreshFeedActionFromApi();
+				refreshFeedActionFromApi(isAutoRefresh);
 			}
 
 			if (mProgressDialog != null) {
@@ -1312,11 +1335,13 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 	 * Async : Refresh Feed Like + Read count
 	 */
 	
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB) private void refreshFeedActionFromApi(){
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB) private void refreshFeedActionFromApi(boolean isAutoRefresh){
 		try{
 			if(Utilities.isInternetConnected()){
-				if(!mSwipeRefreshLayout.isRefreshing()){
-					mSwipeRefreshLayout.setRefreshing(true);
+				if(!isAutoRefresh){
+					if(!mSwipeRefreshLayout.isRefreshing()){
+						mSwipeRefreshLayout.setRefreshing(true);
+					}
 				}
 				FetchFeedActionAsyncTask mFetchFeedActionAsyncTask = new FetchFeedActionAsyncTask(AwardRecyclerActivity.this, AppConstants.INTENTCONSTANTS.AWARD, JSONRequestBuilder.getPostFetchFeedAction(AppConstants.INTENTCONSTANTS.AWARD), TAG);
 				if(AndroidUtilities.isAboveIceCreamSandWich()){

@@ -660,6 +660,10 @@ public class AndroidUtilities {
 		return false;
 	}
 	
+	public static boolean isAppStyleCustomFont() {
+		return ApplicationLoader.getPreferences().isAppCustomTextFont();
+	}
+	
 	public static long getFolderSize(String mFolderPath){
 		if(new File(mFolderPath).exists()){
 			if(new File(mFolderPath).isDirectory()){

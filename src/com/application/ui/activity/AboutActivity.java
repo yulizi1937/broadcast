@@ -63,6 +63,7 @@ public class AboutActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_about);
+		setSecurity();
 		initToolBar();
 		initUi();
 		setUiListener();

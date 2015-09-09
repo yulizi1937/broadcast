@@ -8,18 +8,28 @@ package com.application.utils;
  *
  */
 public class BuildVars {
-	/*
-	 * DEBUGGING PURPOSE
+	/**
+	 * BUILD PURPOSE : All must be false
 	 */
 	public static final boolean DEBUG = true;
 	public static final boolean DEBUG_VERSION = true;
-	public static final boolean DEBUG_SCREENSHOT = true;
-	public static final boolean DEBUG_SMS = false;
+	public static final boolean DEBUG_SCREENSHOT = false;
+
+	
+	/**
+	 * DEBUG : DEVELOPER : OKHTTP, STETHO(CHROME PLUGIN) : All must be false for Production Build
+	 */
 	public static final boolean DEBUG_OKHTTP = true;
 	public static final boolean DEBUG_STETHO = true;
 	public static final boolean DEBUG_API = true;
+	
+	
+	/**
+	 * DEBUG : OTP, CRASH, DESIGN, SMS
+	 */
+	public static final boolean DEBUG_SMS = false;
 	public static final boolean DEBUG_DESIGN = false;
-	public static final boolean DEBUG_OTP = true;
+	public static final boolean DEBUG_OTP = false;
 	public static final boolean DEBUG_CRASH_EMAIL = false;
 	
 	/**
@@ -28,9 +38,9 @@ public class BuildVars {
 	public static final boolean IS_GRID = true;
 	
 	/**
-	 * Sync
+	 * Sync 
 	 */
-	public static final boolean IS_AUTOSYNC = false;
+	public static final boolean IS_AUTOSYNC = true;
 	
 	/**
 	 * Network Preferences

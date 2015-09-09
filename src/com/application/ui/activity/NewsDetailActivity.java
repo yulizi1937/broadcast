@@ -61,6 +61,7 @@ public class NewsDetailActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_news_detail);
+		setSecurity();
 		initToolBar();
 		initUi();
 		initUiWithData();

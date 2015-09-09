@@ -89,6 +89,7 @@ public class ReportActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_report);
+		setSecurity();
 		initToolBar();
 		initUi();
 		setUiListener();

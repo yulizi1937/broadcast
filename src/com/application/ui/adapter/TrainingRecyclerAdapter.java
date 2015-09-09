@@ -33,6 +33,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.application.beans.Training;
+import com.application.ui.adapter.MobcastRecyclerAdapter.AudioViewHolder;
+import com.application.ui.adapter.MobcastRecyclerAdapter.VideoViewHolder;
 import com.application.ui.view.FlexibleDividerDecoration;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AppConstants;
@@ -921,13 +923,13 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 			((VideoViewHolder)viewHolder).mTrainingVideoViewCountTv.setText(mObj.getmViewCount());
 			((VideoViewHolder)viewHolder).mTrainingVideoLikeCountTv.setText(mObj.getmLikeCount());
 			if(!mObj.isRead()){
-				((VideoViewHolder)viewHolder).mTrainingVideoIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_video_focused));
+				((VideoViewHolder)viewHolder).mTrainingVideoIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_live_stream_focused));
 				((VideoViewHolder)viewHolder).mTrainingVideoIndicatorIv.setBackgroundColor(mContext.getResources().getColor(R.color.unread_background));
 				((VideoViewHolder)viewHolder).mTrainingVideoTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
 				((VideoViewHolder)viewHolder).mTrainingVideoReadView.setVisibility(View.VISIBLE);
 				((VideoViewHolder)viewHolder).mTrainingVideoRootLayout.setBackgroundResource(R.color.unread_background);
 			}else{
-				((VideoViewHolder)viewHolder).mTrainingVideoIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_video_normal));
+				((VideoViewHolder)viewHolder).mTrainingVideoIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_live_stream_normal));
 				((VideoViewHolder)viewHolder).mTrainingVideoIndicatorIv.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
 				((VideoViewHolder)viewHolder).mTrainingVideoTitleTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
 				((VideoViewHolder)viewHolder).mTrainingVideoReadView.setVisibility(View.GONE);
@@ -944,6 +946,10 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 			
 			if(TextUtils.isEmpty(mObj.getmLink())){
 				((VideoViewHolder)viewHolder).mTrainingVideoLinkTv.setVisibility(View.GONE);
+			}
+			
+			if(!TextUtils.isEmpty(mObj.getmFileInfo().get(0).getmDuration())){
+				((VideoViewHolder)viewHolder).mTrainingVideoViewDurationTv.setText(mObj.getmFileInfo().get(0).getmDuration());
 			}
 			
 			final String mThumbnailPath = mObj.getmFileInfo().get(0).getmThumbnailPath();
@@ -1139,6 +1145,10 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 				((AudioViewHolder)viewHolder).mTrainingAudioLinkTv.setVisibility(View.GONE);
 			}
 			
+			if(!TextUtils.isEmpty(mObj.getmFileInfo().get(0).getmDuration())){
+				((AudioViewHolder)viewHolder).mTrainingAudioViewDurationTv.setText(mObj.getmFileInfo().get(0).getmDuration());
+			}
+			
 			((AudioViewHolder)viewHolder).mTrainingAudioSummaryTv.setText(mObj.getmDescription());
 			((AudioViewHolder)viewHolder).mTrainingAudioViewFileNameTv.setText(mObj.getmFileInfo().get(0).getmFileName());
 //			((AudioViewHolder)viewHolder).mTrainingAudioViewDurationTv.setText(mObj.getmFileInfo().get(0).getmPages());
@@ -1157,13 +1167,13 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 			((PdfViewHolder)viewHolder).mTrainingPdfViewCountTv.setText(mObj.getmViewCount());
 			((PdfViewHolder)viewHolder).mTrainingPdfLikeCountTv.setText(mObj.getmLikeCount());
 			if(!mObj.isRead()){
-				((PdfViewHolder)viewHolder).mTrainingPdfIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_ppt_focused));
+				((PdfViewHolder)viewHolder).mTrainingPdfIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_pdf_focused));
 				((PdfViewHolder)viewHolder).mTrainingPdfIndicatorIv.setBackgroundColor(mContext.getResources().getColor(R.color.unread_background));
 				((PdfViewHolder)viewHolder).mTrainingPdfTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
 				((PdfViewHolder)viewHolder).mTrainingPdfReadView.setVisibility(View.VISIBLE);
 				((PdfViewHolder)viewHolder).mTrainingPdfRootLayout.setBackgroundResource(R.color.unread_background);
 			}else{
-				((PdfViewHolder)viewHolder).mTrainingPdfIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_ppt_normal));
+				((PdfViewHolder)viewHolder).mTrainingPdfIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_pdf_normal));
 				((PdfViewHolder)viewHolder).mTrainingPdfIndicatorIv.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
 				((PdfViewHolder)viewHolder).mTrainingPdfTitleTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
 				((PdfViewHolder)viewHolder).mTrainingPdfReadView.setVisibility(View.GONE);

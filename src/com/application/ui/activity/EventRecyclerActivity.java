@@ -122,8 +122,11 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_recycler_event);
+		setSecurity();
 		initToolBar();
 		initUi();
+		setMaterialRippleView();
+		syncDataWithApi();
 	}
 	
 	
@@ -134,6 +137,17 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 		super.onResume();
 		checkReadFromDBAndUpdateToObj();
 		setUiListener();
+		Utilities.showBadgeNotification(EventRecyclerActivity.this);
+	}
+	
+	private void syncDataWithApi(){
+		try{
+			if (mArrayListEvent != null && mArrayListEvent.size() > 0) {
+				refreshFeedFromApi(true, true, 0,true);	
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	@SuppressLint("NewApi") @Override
@@ -189,7 +203,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
 		if (!mLoadMore) {
             	mLoadMore = true;
-            	refreshFeedFromApi(true, true, 0);
+            	refreshFeedFromApi(true, true, 0,false);
         }
 	}
 
@@ -197,7 +211,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 		setRecyclerAdapterListener();
 		setRecyclerScrollListener();
 		setSwipeRefreshListener();
-		setMaterialRippleView();
+//		setMaterialRippleView();
 		setClickListener();
 	}
 
@@ -214,7 +228,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				refreshFeedFromApi(true, true, AppConstants.BULK);
+				refreshFeedFromApi(true, true, AppConstants.BULK,true);
 			}
 		});
 	}
@@ -227,18 +241,18 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 				// TODO Auto-generated method stub
 				mToolBarMenuRefresh.setVisibility(View.GONE);
 				mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
-				refreshFeedFromApi(true, true, 0);
+				refreshFeedFromApi(true, true, 0,false);
 			}
 		});
 	}
 	
 	@SuppressLint("NewApi") 
-	private void refreshFeedFromApi(boolean isRefreshFeed, boolean sortByAsc, int limit){//sortByAsc:true-> new data //sortByAsc:false->Old Data
+	private void refreshFeedFromApi(boolean isRefreshFeed, boolean sortByAsc, int limit, boolean isAutoRefresh){//sortByAsc:true-> new data //sortByAsc:false->Old Data //isAutoRefresh : true->onResume ? false -> onPullToRefresh;
 		if(Utilities.isInternetConnected()){
 			if(AndroidUtilities.isAboveIceCreamSandWich()){
-				new AsyncRefreshTask(isRefreshFeed,sortByAsc,limit).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+				new AsyncRefreshTask(isRefreshFeed,sortByAsc,limit, isAutoRefresh).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
 			}else{
-				new AsyncRefreshTask(isRefreshFeed,sortByAsc,limit).execute();
+				new AsyncRefreshTask(isRefreshFeed,sortByAsc,limit, isAutoRefresh).execute();
 			}
 		}
 	}
@@ -391,7 +405,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 			        if (!mLoadMore) {
 						if (mVisibleItemCount + mFirstVisibleItem >= mTotalItemCount) {
 			            	mLoadMore = true;
-				            refreshFeedFromApi(true, false, AppConstants.BULK);
+				            refreshFeedFromApi(true, false, AppConstants.BULK,false);
 			            }
 			        }
 				}
@@ -691,6 +705,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
        	 mArrayListEvent.get(mPosition).setRead(true);
        	 mRecyclerView.getAdapter().notifyItemChanged(mPosition);
        	 UserReport.updateUserReportApi(mEventId, AppConstants.INTENTCONSTANTS.EVENT, AppConstants.REPORT.READ, "");
+       	Utilities.showBadgeNotification(EventRecyclerActivity.this);
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -703,6 +718,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 		 getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, values, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mArrayListEvent.get(mPosition).getmId()});
 		 mArrayListEvent.get(mPosition).setRead(false);
        	 mRecyclerView.getAdapter().notifyItemChanged(mPosition);
+       	Utilities.showBadgeNotification(EventRecyclerActivity.this);
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -717,6 +733,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
        	 }else{
        		mRecyclerView.getAdapter().notifyDataSetChanged();
        	 }
+       	Utilities.showBadgeNotification(EventRecyclerActivity.this);
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -865,12 +882,14 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 		private MobcastProgressDialog mProgressDialog;
 		private boolean isRefreshFeed = true;
 		private boolean sortByAsc =false;
+		private boolean isAutoRefresh = false;
 		private int limit;
 
-		public AsyncRefreshTask(boolean isRefreshFeed, boolean sortByAsc,int limit){
+		public AsyncRefreshTask(boolean isRefreshFeed, boolean sortByAsc,int limit, boolean isAutoRefresh){
 			this.isRefreshFeed = isRefreshFeed;
 			this.sortByAsc = sortByAsc;
 			this.limit = limit;
+			this.isAutoRefresh = isAutoRefresh;
 		}
 		@Override
 		protected void onPreExecute() {
@@ -924,12 +943,16 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 				parseDataFromApi(mResponseFromApi, !sortByAsc);
 			}else{
 				if(sortByAsc){
-					AndroidUtilities.showSnackBar(EventRecyclerActivity.this, Utilities.getErrorMessageFromApi(mResponseFromApi));
+					if(!isAutoRefresh){
+						AndroidUtilities.showSnackBar(EventRecyclerActivity.this, Utilities.getErrorMessageFromApi(mResponseFromApi));
+					}else{//show new events available
+						
+					}
 				}
 			}
 			
 			if(sortByAsc){
-				refreshFeedActionFromApi();
+				refreshFeedActionFromApi(isAutoRefresh);
 			}
 
 			if(mProgressDialog!=null){
@@ -948,11 +971,13 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 	 * Async : Refresh Feed Like + Read count
 	 */
 	
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB) private void refreshFeedActionFromApi(){
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB) private void refreshFeedActionFromApi(boolean isAutoRefresh){
 		try{
 			if(Utilities.isInternetConnected()){
-				if(!mSwipeRefreshLayout.isRefreshing()){
-					mSwipeRefreshLayout.setRefreshing(true);
+				if(!isAutoRefresh){
+					if(!mSwipeRefreshLayout.isRefreshing()){
+						mSwipeRefreshLayout.setRefreshing(true);
+					}
 				}
 				FetchFeedActionAsyncTask mFetchFeedActionAsyncTask = new FetchFeedActionAsyncTask(EventRecyclerActivity.this, AppConstants.INTENTCONSTANTS.EVENT, JSONRequestBuilder.getPostFetchFeedAction(AppConstants.INTENTCONSTANTS.EVENT), TAG);
 				if(AndroidUtilities.isAboveIceCreamSandWich()){

@@ -18,6 +18,7 @@ import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -82,6 +83,8 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mPdfFileNameTv;
 	private AppCompatTextView mPdfFileInfoTv;
 	private AppCompatTextView mLanguageHeaderTv;
+	
+	private AppCompatButton mPdfDownloadBtn;
 
 	private ImageView mPdfFileIv;
 
@@ -128,6 +131,7 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pdf_detail);
+		setSecurity();
 		initToolBar();
 		initUi();
 		initUiWithData();
@@ -251,6 +255,8 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 		mLanguageLinearLayout = (LinearLayout) findViewById(R.id.fragmentPdfDetailLanguageLayout);
 		mLanguageFlowLayout = (FlowLayout) findViewById(R.id.fragmentPdfDetailLanguageFlowLayout);
 		mLanguageHeaderTv = (AppCompatTextView) findViewById(R.id.fragmentPdfDetailLanguageHeaderTv);
+		
+		mPdfDownloadBtn = (AppCompatButton)findViewById(R.id.fragmentPdfDetailDownloadBtn);
 
 		mPdfTitleTv = (AppCompatTextView) findViewById(R.id.fragmentPdfDetailTitleTv);
 
@@ -451,21 +457,33 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void downloadFileInBackground(){
-		DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
-				PdfDetailActivity.this, false, false,
-				mContentFileLink, mContentFilePath,
-				AppConstants.TYPE.PDF, Long.parseLong(mContentFileSize), TAG);
-		mDownloadAsyncTask.execute();
-		mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
-			@Override
-			public void onPostExecute(boolean isDownloaded) {
-				// TODO Auto-generated method stub
-				if(isDownloaded){
-					if(checkIfFileExists(mContentFilePath)){
-					}	
+		if(Utilities.isInternetConnected()){
+			DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
+					PdfDetailActivity.this, false, false,
+					mContentFileLink, mContentFilePath,
+					AppConstants.TYPE.PDF, Long.parseLong(mContentFileSize), TAG);
+			mDownloadAsyncTask.execute();
+			mPdfDownloadBtn.setVisibility(View.VISIBLE);
+			mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
+				@Override
+				public void onPostExecute(boolean isDownloaded) {
+					// TODO Auto-generated method stub
+					if(isDownloaded){
+						if(checkIfFileExists(mContentFilePath)){
+							mPdfDownloadBtn.setVisibility(View.GONE);
+						}else{
+							mPdfDownloadBtn.setVisibility(View.VISIBLE);
+							AndroidUtilities.showSnackBar(PdfDetailActivity.this, getResources().getString(R.string.file_download));
+						}
+					}else{
+						mPdfDownloadBtn.setVisibility(View.VISIBLE);
+						AndroidUtilities.showSnackBar(PdfDetailActivity.this, getResources().getString(R.string.file_download));
+					}
 				}
-			}
-		});
+			});	
+		}else{
+			Utilities.showCrouton(PdfDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.file_not_available), Style.ALERT);
+		}
 	}
 
 	private void updateReadInDb(){
@@ -555,6 +573,14 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 				
 			}
 		});
+		
+		mPdfDownloadBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				downloadFileInBackground();
+			}
+		});
 	}
 	
 	private void openPDFFromApps(){
@@ -567,10 +593,12 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 				startActivity(intent);
 				AndroidUtilities.enterWindowAnimation(PdfDetailActivity.this);
 			}else{
-				Utilities.showCrouton(PdfDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.file_not_available), Style.ALERT);
+				mPdfDownloadBtn.setVisibility(View.VISIBLE);
+				AndroidUtilities.showSnackBar(PdfDetailActivity.this, getResources().getString(R.string.file_download));
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
+			AndroidUtilities.showSnackBar(PdfDetailActivity.this, getResources().getString(R.string.file_app_not_found));
 		}
 	}
 	
@@ -760,6 +788,7 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 
 	private void setMaterialRippleView() {
 		try {
+			setMaterialRippleOnView(mPdfDownloadBtn);
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}

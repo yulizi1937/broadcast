@@ -48,6 +48,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.application.beans.MotherHeader;
@@ -58,6 +59,9 @@ import com.application.ui.fragment.IActivityCommunicator;
 import com.application.ui.fragment.IFragmentCommunicator;
 import com.application.ui.materialdialog.MaterialDialog;
 import com.application.ui.service.SyncService;
+import com.application.ui.showcaseview.MaterialShowcaseSequence;
+import com.application.ui.showcaseview.MaterialShowcaseView;
+import com.application.ui.showcaseview.ShowcaseConfig;
 import com.application.ui.view.CircleImageView;
 import com.application.ui.view.DrawerArrowDrawable;
 import com.application.ui.view.MobcastProgressDialog;
@@ -81,7 +85,6 @@ import com.application.utils.Scrollable;
 import com.application.utils.Style;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.GAServiceManager;
 import com.mobcast.R;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
@@ -116,6 +119,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	private LinearLayout mDrawerSyncLayout;
 
 	private DrawerArrowDrawable drawerArrowDrawable;
+	private DrawerArrayAdapter mDrawerAdapter;
 	private float offset;
 	private boolean flipped;
 	private Resources mResources;
@@ -125,6 +129,8 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	private View mHeaderView;
 	private View mToolbarView;
 
+	private MenuItem menuItemEvent;
+	
 	private FrameLayout mCroutonViewGroup;
 
 	private SlidingTabLayout mSlidingTabLayout;
@@ -146,6 +152,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mother);
+		setSecurity();
 		initToolBar();
 		initUi();
 		setSlidingTabPagerAdapter();
@@ -173,6 +180,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		registerReceiver(mSyncBroadCastReceiver, new IntentFilter(SyncService.BROADCAST_ACTION));
 		notifySlidingTabLayoutChange();
 		supportInvalidateOptionsMenu();
+		Utilities.showBadgeNotification(MotherActivity.this);
 	}
 
 
@@ -182,17 +190,16 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		// TODO Auto-generated method stub
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_mother, menu);
-
-		MenuItem menuItemEvent = menu.findItem(R.id.action_event);
-		menuItemEvent.setIcon(buildCounterDrawable(getUnreadOfEvent(),
+		menuItemEvent = menu.findItem(R.id.action_event);
+		menuItemEvent.setIcon(buildCounterDrawable(Utilities.getUnreadOfEvent(MotherActivity.this),
 				R.drawable.ic_toolbar_event));
 
 		MenuItem menuItemAward = menu.findItem(R.id.action_award);
-		menuItemAward.setIcon(buildCounterDrawable(getUnreadOfAward(),
+		menuItemAward.setIcon(buildCounterDrawable(Utilities.getUnreadOfAward(MotherActivity.this),
 				R.drawable.ic_toolbar_award));
 
 		MenuItem menuItemBirthday = menu.findItem(R.id.action_birthday);
-		menuItemBirthday.setIcon(buildCounterDrawable(getUnreadOfBirthday(),
+		menuItemBirthday.setIcon(buildCounterDrawable(Utilities.getUnreadOfBirthday(MotherActivity.this),
 				R.drawable.ic_toolbar_birthday));
 		/*if (AndroidUtilities.isAboveHoneyComb()) {
 			MenuItem searchItem = menu.findItem(R.id.action_search);
@@ -219,10 +226,10 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 			case 0:
 				mIntentSearch.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.MOBCAST);
 				break;
-			case 1:
+			/*case 2:
 				mIntentSearch.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.CHAT);
-				break;
-			case 2:
+				break;*/
+			case 1:
 				mIntentSearch.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.TRAINING);
 				break;
 			}
@@ -387,15 +394,24 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	
 	private void notifySlidingTabLayoutChange(){
 		
-		mArrayListMotherHeader.get(0).setmIsUnread(getUnreadOfMobcast() > 0 ? true : false);
-		mArrayListMotherHeader.get(2).setmIsUnread(getUnreadOfTraining() > 0 ? true : false);
+		mArrayListMotherHeader.get(0).setmIsUnread(Utilities.getUnreadOfMobcast(MotherActivity.this) > 0 ? true : false);
+		mArrayListMotherHeader.get(1).setmIsUnread(Utilities.getUnreadOfTraining(MotherActivity.this) > 0 ? true : false);
 		
-		mArrayListMotherHeader.get(0).setmUnreadCount(String.valueOf(getUnreadOfMobcast()));
-		mArrayListMotherHeader.get(2).setmUnreadCount(String.valueOf(getUnreadOfTraining()));
+		mArrayListMotherHeader.get(0).setmUnreadCount(String.valueOf(Utilities.getUnreadOfMobcast(MotherActivity.this)));
+		mArrayListMotherHeader.get(1).setmUnreadCount(String.valueOf(Utilities.getUnreadOfTraining(MotherActivity.this)));
 		
 		mPagerAdapter.notifyDataSetChanged(mArrayListMotherHeader);
 		
 		mSlidingTabLayout.notifyDataSetChanged(mPager);
+		notifyDrawerUnreadCount();
+	}
+	
+	private void notifyDrawerUnreadCount(){
+		try{
+			mDrawerAdapter.notifyDataSetChanged();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	private void notifyFragmentWithIdAndCategory(int mId, String mCategory){
@@ -448,7 +464,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		mArrayListMotherHeader = new ArrayList<MotherHeader>();
 
 		MotherHeader obj1 = new MotherHeader();
-		int mUnreadCountMobcast = getUnreadOfMobcast();
+		int mUnreadCountMobcast = Utilities.getUnreadOfMobcast(MotherActivity.this);
 		if(mUnreadCountMobcast > 0){
 			obj1.setmIsUnread(true);
 		}else{
@@ -458,14 +474,14 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		obj1.setmUnreadCount(String.valueOf(mUnreadCountMobcast));
 		mArrayListMotherHeader.add(obj1);
 
-		MotherHeader obj2 = new MotherHeader();
+/*		MotherHeader obj2 = new MotherHeader();
 		obj2.setmIsUnread(false);
 		obj2.setmTitle(getResources().getString(R.string.layout_mother_chat));
 		obj2.setmUnreadCount("0");
-		mArrayListMotherHeader.add(obj2);
+		mArrayListMotherHeader.add(obj2);*/
 
 		MotherHeader obj3 = new MotherHeader();
-		int mUnreadCountTraining = getUnreadOfTraining();
+		int mUnreadCountTraining = Utilities.getUnreadOfTraining(MotherActivity.this);
 		if(mUnreadCountTraining > 0){
 			obj3.setmIsUnread(true);
 		}else{
@@ -478,62 +494,6 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		return mArrayListMotherHeader;
 	}
 	
-	private int getUnreadOfMobcast(){
-		Cursor mCursor = getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ + "=?", new String[]{"false"}, null);
-		if(mCursor!=null && mCursor.getCount() > 0){
-			return mCursor.getCount();
-		}
-		if(mCursor!=null){
-			mCursor.close();
-		}
-		return 0;
-		
-	}
-	
-	private int getUnreadOfTraining(){
-		Cursor mCursor = getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, null, DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ + "=?", new String[]{"false"}, null);
-		if(mCursor!=null && mCursor.getCount() > 0){
-			return mCursor.getCount();
-		}
-		if(mCursor!=null){
-			mCursor.close();
-		}
-		return 0;
-	}
-	
-	private int getUnreadOfEvent(){
-		Cursor mCursor = getContentResolver().query(DBConstant.Event_Columns.CONTENT_URI, null, DBConstant.Event_Columns.COLUMN_EVENT_IS_READ + "=?", new String[]{"false"}, null);
-		if(mCursor!=null && mCursor.getCount() > 0){
-			return mCursor.getCount();
-		}
-		if(mCursor!=null){
-			mCursor.close();
-		}
-		return 0;
-	}
-	
-	private int getUnreadOfAward(){
-		Cursor mCursor = getContentResolver().query(DBConstant.Award_Columns.CONTENT_URI, null, DBConstant.Award_Columns.COLUMN_AWARD_IS_READ + "=?", new String[]{"false"}, null);
-		if(mCursor!=null && mCursor.getCount() > 0){
-			return mCursor.getCount();
-		}
-		if(mCursor!=null){
-			mCursor.close();
-		}
-		return 0;
-	}
-	
-	private int getUnreadOfBirthday(){
-		Cursor mCursor = getContentResolver().query(DBConstant.Birthday_Columns.CONTENT_URI, null, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_READ + "=?" + " OR " + DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_READ + "=?" , new String[]{"false","0"}, null);
-		if(mCursor!=null && mCursor.getCount() > 0){
-			return mCursor.getCount();
-		}
-		if(mCursor!=null){
-			mCursor.close();
-		}
-		return 0;
-	}
-
 	@Override
 	public void onScrollChanged(int scrollY, boolean firstScroll,
 			boolean dragging) {
@@ -702,7 +662,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		propagateToolbarState(false);
 	}
 	
-	/*
+	/**
 	 * Activity-Fragment : Communicator
 	 */
 	@Override
@@ -711,6 +671,48 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		notifySlidingTabLayoutChange();
 	}
 	
+	/**
+	 * ShowCaseView
+	 */
+	
+	private void showCaseView(){
+		startSequenceShowCaseView(2000, 250);
+	}
+	
+	private void startSequenceShowCaseView(int mDelay, int mSequenceDelay){
+		try{
+	        ShowcaseConfig config = new ShowcaseConfig();
+	        config.setDelay(mDelay); // half second between each showcase view
+
+	        MaterialShowcaseSequence mSequence = new MaterialShowcaseSequence(MotherActivity.this);
+
+	        MaterialShowcaseView mSequenceItem1 = new MaterialShowcaseView.Builder(MotherActivity.this)
+	        .setTarget(mToolBar.getChildAt(0))
+	        .setDismissText(getResources().getString(R.string.showcase_next))
+	        .setContentText(getResources().getString(R.string.showcase_content1))
+	        .setContentTextColor(getResources().getColor(R.color.white))
+	        .setMaskColour(getResources().getColor(R.color.mobcast_red))
+	        .setDelay(mSequenceDelay) // optional but starting animations immediately in onCreate can make them choppy
+	        .show();
+	        
+	        MaterialShowcaseView mSequenceItem2 = new MaterialShowcaseView.Builder(MotherActivity.this)
+	        .setTarget(getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.action_award))
+	        .setDismissText(getResources().getString(R.string.showcase_gotit))
+	        .setContentText(getResources().getString(R.string.showcase_content2))
+	        .setContentTextColor(getResources().getColor(R.color.white))
+	        .setMaskColour(getResources().getColor(R.color.mobcast_green))
+	        .setDelay(mSequenceDelay) // optional but starting animations immediately in onCreate can make them choppy
+	        .show();
+	        
+	        mSequence.addSequenceItem(mSequenceItem1);
+	        mSequence.addSequenceItem(mSequenceItem2);
+	        
+	        mSequence.setConfig(config);
+	        mSequence.start();
+		}catch(Exception e){
+			FileLog.e("showCaseView", e.toString());
+		}
+	}
 	
 	/**
 	 * Log Out
@@ -855,6 +857,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		}
 	}
 	
+	
 	private void showUpdateAvailConfirmationMaterialDialog(){
 		MaterialDialog mMaterialDialog = new MaterialDialog.Builder(MotherActivity.this)
         .title(getResources().getString(R.string.update_title_message))
@@ -901,14 +904,15 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		
 		String[] mDrawerItemArray = getResources().getStringArray(
 				R.array.drawer_array);
-		int[] mDrawableResId = new int[] { R.drawable.ic_drawer_profile,R.drawable.ic_drawer_myoffice,
+		int[] mDrawableResId = new int[] { R.drawable.ic_drawer_profile,/*R.drawable.ic_drawer_myoffice,*/
 				R.drawable.ic_drawer_capture, R.drawable.ic_drawer_recruitment,
 				R.drawable.ic_drawer_settings, R.drawable.ic_drawer_help,
 				R.drawable.ic_drawer_report, R.drawable.ic_drawer_feedback,
 				R.drawable.ic_drawer_logout, R.drawable.ic_drawer_about };
 
-		mDrawerList.setAdapter(new DrawerArrayAdapter(MotherActivity.this,
-				mDrawerItemArray, mDrawableResId));
+		mDrawerAdapter = new DrawerArrayAdapter(MotherActivity.this,
+				mDrawerItemArray, mDrawableResId);
+		mDrawerList.setAdapter(mDrawerAdapter);
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 		
 		setDrawerProfileInfo(mDrawerUserNameTv, mDrawerUserEmailTv, mDrawerProfileIv, mDrawerProfileCoverIv);
@@ -1002,37 +1006,37 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 			case 0:
 				drawerIntent = new Intent(MotherActivity.this, EditProfileActivity.class);
 				break;
-			case 1:
+			/*case 1:
 				if(!Utilities.openApp(MotherActivity.this, "in.jts.myapp")){
 					Intent mBrowserIntent = new Intent(Intent.ACTION_VIEW);
 					mBrowserIntent.setData(Uri.parse("http://www.jajo.in/myovp11.apk"));
 					startActivity(mBrowserIntent);
 					AndroidUtilities.enterWindowAnimation(MotherActivity.this);	
 				}
-				return;
-			case 2:
+				return;*/
+			case 1:
 				drawerIntent = new Intent(MotherActivity.this, CaptureActivity.class);
 				break;
-			case 3:
+			case 2:
 				drawerIntent = new Intent(MotherActivity.this, RecruitmentRecyclerActivity.class);
 				break;
-			case 4:
+			case 3:
 				drawerIntent = new Intent(MotherActivity.this, SettingsActivity.class);
 				break;
-			case 5:
+			case 4:
 				drawerIntent = new Intent(MotherActivity.this, TutorialActivity.class);
 				drawerIntent.putExtra(AppConstants.INTENTCONSTANTS.HELP, true);
 				break;
-			case 6:
+			case 5:
 				drawerIntent = new Intent(MotherActivity.this, ReportActivity.class);
 				break;
-			case 7:
+			case 6:
 				drawerIntent = new Intent(MotherActivity.this, FeedbackAppActivity.class);
 				break;
-			case 8:
+			case 7:
 				showLogOutConfirmationMaterialDialog();
 				break;
-			case 9:
+			case 8:
 				drawerIntent = new Intent(MotherActivity.this, AboutActivity.class);
 				break;
 			default:
@@ -1071,7 +1075,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 			View rowView = inflater
 					.inflate(R.layout.item_drawer, parent, false);
 
-			LinearLayout mDrawerItemLayout = (LinearLayout) rowView
+			RelativeLayout mDrawerItemLayout = (RelativeLayout) rowView
 					.findViewById(R.id.drawerItemLayout);
 
 			AppCompatTextView mDrawerItemTextView = (AppCompatTextView) rowView
@@ -1079,10 +1083,22 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 
 			ImageView mDrawerItemImageView = (ImageView) rowView
 					.findViewById(R.id.drawerItemIv);
+			AppCompatTextView mDrawerItemUnreadTextView = (AppCompatTextView)rowView.findViewById(R.id.drawerItemReadCountTv);
 
 			mDrawerItemTextView.setText(values[position]);
 			mDrawerItemImageView.setImageDrawable(getResources().getDrawable(
 					drawableResId[position]));
+			
+			if (position != AppConstants.DRAWER_RECRUITMENT_POS) {
+				mDrawerItemUnreadTextView.setVisibility(View.GONE);
+			}else{
+				if(!(ApplicationLoader.getPreferences().getUnreadRecruitment()<=0)){
+					mDrawerItemUnreadTextView.setVisibility(View.VISIBLE);
+					mDrawerItemUnreadTextView.setText(String.valueOf(ApplicationLoader.getPreferences().getUnreadRecruitment()));
+				}else{
+					mDrawerItemUnreadTextView.setVisibility(View.GONE);
+				}
+			}
 
 			return rowView;
 		}

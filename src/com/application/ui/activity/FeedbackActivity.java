@@ -98,6 +98,7 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_feedback);
+		setSecurity();
 		initToolBar();
 		initUi();
 		setUiListener();

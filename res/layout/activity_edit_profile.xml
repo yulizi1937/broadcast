@@ -20,6 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -106,6 +107,7 @@
                         android:hint="@string/hint_name"
                         android:inputType="text"
                         android:paddingEnd="1dp"
+                        android:imeOptions="actionNext"
                         android:paddingLeft="4dp"
                         android:paddingRight="1dp"
                         android:paddingStart="4dp"
@@ -144,6 +146,7 @@
                         android:hint="@string/hint_email_id"
                         android:inputType="textEmailAddress"
                         android:paddingEnd="1dp"
+                        android:imeOptions="actionNext"
                         android:paddingLeft="4dp"
                         android:paddingRight="1dp"
                         android:paddingStart="4dp"
@@ -182,6 +185,7 @@
                         android:hint="@string/hint_employee_id"
                         android:inputType="text"
                         android:paddingEnd="1dp"
+                        android:imeOptions="actionNext"
                         android:paddingLeft="4dp"
                         android:paddingRight="1dp"
                         android:paddingStart="4dp"
@@ -206,6 +210,7 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/shape_editbox_normal"
                     android:clickable="true"
+                    android:visibility="gone"
                     android:orientation="horizontal"
                     android:padding="1dp" >
 
@@ -221,6 +226,7 @@
                         android:inputType="text"
                         android:paddingEnd="1dp"
                         android:paddingLeft="4dp"
+                        android:imeOptions="actionDone"
                         android:paddingRight="1dp"
                         android:paddingStart="4dp"
                         android:textSize="@dimen/login_edittext_size" />
@@ -244,6 +250,7 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/shape_editbox_normal"
                     android:clickable="true"
+                    android:visibility="gone"
                     android:orientation="horizontal"
                     android:padding="1dp" >
 
@@ -265,6 +272,46 @@
 
                     <ImageView
                         android:id="@+id/activityEditProfileAnswerValidateIv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/white"
+                        android:contentDescription="@string/desc_activity_login_validation"
+                        android:scaleType="center" />
+                </LinearLayout>
+                
+                 <LinearLayout
+                    android:id="@+id/activityEditProfileBirthdayLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/login_editbox_height"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_editbox_normal"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:padding="1dp"
+                    android:visibility="visible" >
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/activityEditProfileBirthdayEv"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start|center"
+                        android:layout_weight="9"
+                        android:background="@android:color/white"
+                        android:editable="false"
+                        android:gravity="start|center"
+                        android:hint="@string/activity_edit_profile_birthday"
+                        android:inputType="text"
+                        android:paddingEnd="1dp"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="1dp"
+                        android:paddingStart="4dp"
+                        android:textSize="@dimen/login_edittext_size" />
+
+                    <ImageView
+                        android:id="@+id/activityEditProfileBirthdayValidateIv"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"

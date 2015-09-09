@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -80,6 +81,8 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mPptFileNameTv;
 	private AppCompatTextView mPptFileInfoTv;
 	private AppCompatTextView mLanguageHeaderTv;
+	
+	private AppCompatButton mPptDownloadBtn;
 
 	private AppCompatTextView mPptNewsLinkTv;
 
@@ -126,6 +129,7 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ppt_detail);
+		setSecurity();
 		initToolBar();
 		initUi();
 		initUiWithData();
@@ -249,6 +253,8 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 		mLanguageLinearLayout = (LinearLayout) findViewById(R.id.fragmentPptDetailLanguageLayout);
 		mLanguageFlowLayout = (FlowLayout) findViewById(R.id.fragmentPptDetailLanguageFlowLayout);
 		mLanguageHeaderTv = (AppCompatTextView) findViewById(R.id.fragmentPptDetailLanguageHeaderTv);
+		
+		mPptDownloadBtn = (AppCompatButton)findViewById(R.id.fragmentPptDetailDownloadBtn);
 
 		mPptTitleTv = (AppCompatTextView) findViewById(R.id.fragmentPptDetailTitleTv);
 
@@ -450,21 +456,33 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void downloadFileInBackground(){
-		DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
-				PptDetailActivity.this, false, false,
-				mContentFileLink, mContentFilePath,
-				AppConstants.TYPE.PPT, Long.parseLong(mContentFileSize), TAG);
-		mDownloadAsyncTask.execute();
-		mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
-			@Override
-			public void onPostExecute(boolean isDownloaded) {
-				// TODO Auto-generated method stub
-				if(isDownloaded){
-					if(checkIfFileExists(mContentFilePath)){
-					}	
+		if(Utilities.isInternetConnected()){
+			DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
+					PptDetailActivity.this, false, false,
+					mContentFileLink, mContentFilePath,
+					AppConstants.TYPE.PPT, Long.parseLong(mContentFileSize), TAG);
+			mDownloadAsyncTask.execute();
+			mPptDownloadBtn.setVisibility(View.VISIBLE);	
+			mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
+				@Override
+				public void onPostExecute(boolean isDownloaded) {
+					// TODO Auto-generated method stub
+					if(isDownloaded){
+						if(checkIfFileExists(mContentFilePath)){
+							mPptDownloadBtn.setVisibility(View.GONE);
+						}else{
+							mPptDownloadBtn.setVisibility(View.VISIBLE);
+							AndroidUtilities.showSnackBar(PptDetailActivity.this, getResources().getString(R.string.file_download));
+						}
+					}else{
+						mPptDownloadBtn.setVisibility(View.VISIBLE);
+						AndroidUtilities.showSnackBar(PptDetailActivity.this, getResources().getString(R.string.file_download));
+					}
 				}
-			}
-		});
+			});
+		}else{
+			Utilities.showCrouton(PptDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.file_not_available), Style.ALERT);
+		}
 	}
 
 	private void updateReadInDb(){
@@ -552,6 +570,14 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 				
 			}
 		});
+		
+		mPptDownloadBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				downloadFileInBackground();
+			}
+		});
 	}
 	
 	private void openPptFromApps(){
@@ -566,10 +592,12 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 				startActivity(intent);
 				AndroidUtilities.enterWindowAnimation(PptDetailActivity.this);
 			}else{
-				Utilities.showCrouton(PptDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.file_not_available), Style.ALERT);
+				mPptDownloadBtn.setVisibility(View.VISIBLE);
+				AndroidUtilities.showSnackBar(PptDetailActivity.this, getResources().getString(R.string.file_download));	
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
+			AndroidUtilities.showSnackBar(PptDetailActivity.this, getResources().getString(R.string.file_app_not_found));
 		}
 	}
 	
@@ -760,6 +788,7 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 
 	private void setMaterialRippleView() {
 		try {
+			setMaterialRippleOnView(mPptDownloadBtn);
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}

@@ -112,13 +112,13 @@ public abstract class BaseFragment extends Fragment {
 	protected void setMaterialRippleWithGrayOnView(View mView) {
 		MaterialRippleLayout.on(mView).rippleColor(Color.parseColor("#aaaaaa"))
 				.rippleAlpha(0.2f).rippleHover(true).rippleOverlay(true)
-				.rippleBackground(Color.parseColor("#00000000")).create();
+				.rippleBackground(Color.parseColor("#000000")).create();
 	}
 
 	protected void setMaterialRippleOnView(View mView) {
 		MaterialRippleLayout.on(mView).rippleColor(Color.parseColor("#ffffff"))
 				.rippleAlpha(0.2f).rippleHover(true).rippleOverlay(true)
-				.rippleBackground(Color.parseColor("#00000000")).create();
+				.rippleBackground(Color.parseColor("#000000")).create();
 	}
 
 }

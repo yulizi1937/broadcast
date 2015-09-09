@@ -11,6 +11,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -85,6 +86,7 @@ public class VerificationActivity extends AppCompatActivity {
 
 	private String OTP;
 	private String mUserName;
+	private String mCountryCode;
 	private String mOTP;
 
 	/*
@@ -173,6 +175,7 @@ public class VerificationActivity extends AppCompatActivity {
 		try{
 			mOTP = getIntent().getStringExtra(AppConstants.INTENTCONSTANTS.OTP);
 			mUserName = getIntent().getStringExtra(AppConstants.INTENTCONSTANTS.USERNAME);
+			mCountryCode = getIntent().getStringExtra(AppConstants.INTENTCONSTANTS.COUNTRYCODE);
 			if(BuildVars.DEBUG_OTP){
 //				Utilities.showCrouton(VerificationActivity.this	, mCroutonViewGroup, mOTP, Style.INFO);
 			}
@@ -416,6 +419,20 @@ public class VerificationActivity extends AppCompatActivity {
 				mTimerTv.setVisibility(View.VISIBLE);
 				initTimer();
 				isResendClicked = true;
+				if (Utilities.isInternetConnected()) {
+					if (AndroidUtilities.isAboveIceCreamSandWich()) {
+						new AsyncVerifyTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+					} else {
+						new AsyncVerifyTask().execute();
+					}
+				} else {
+					Utilities.showCrouton(
+							VerificationActivity.this,
+							mCroutonViewGroup,
+							getResources().getString(
+									R.string.internet_unavailable),
+							Style.ALERT);
+				}
 			}
 		});
 
@@ -423,12 +440,18 @@ public class VerificationActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Utilities.showCrouton(VerificationActivity.this,
-						mCroutonViewGroup,
-						getResources().getString(R.string.raise_ticket_info)
-								+ " "
-								+ ApplicationLoader.getPreferences()
-										.getUserName(), Style.INFO);
+				try{
+					if(!TextUtils.isEmpty(mUserName)){
+						Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",AppConstants.mSupportEmail, null));
+						emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Suport : Unable to Login | " + getResources().getString(R.string.app_name));
+						emailIntent.putExtra(Intent.EXTRA_TEXT, "Please help me to login \n User Credentails: \n" + mUserName + "\n" +  Utilities.getDeviceMfg() + "\n" + Utilities.getDeviceName());
+						startActivity(Intent.createChooser(emailIntent, "Send email"));
+					}else{
+						AndroidUtilities.showSnackBar(VerificationActivity.this, "Please enter your username!");
+					}
+				}catch(Exception e){
+					FileLog.e(TAG, e.toString());
+				}
 			}
 		});
 	}
@@ -478,6 +501,31 @@ public class VerificationActivity extends AppCompatActivity {
 		return null;
 	}
 	
+	private String apiRequestOTPAgain() {
+			try {
+					JSONObject jsonObj = JSONRequestBuilder.getPostLoginData(mUserName, mCountryCode);
+					if(BuildVars.USE_OKHTTP){
+						return RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_LOGIN, jsonObj.toString(), TAG);	
+					}else{
+						return RestClient.postJSON(AppConstants.API.API_LOGIN, jsonObj, TAG);	
+					}	
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				FileLog.e(TAG, e.toString());
+			}
+			return null;
+	}
+	
+	private void parseDataFromOTP(String mResponseFromApi){
+		try{
+			JSONObject mJSONObj = new JSONObject(mResponseFromApi);
+			mJSONObj.getString("otp");
+			AndroidUtilities.showSnackBar(VerificationActivity.this, getResources().getString(R.string.resend_otp));
+			isResendClicked = false;
+		}catch(Exception e){
+		}
+	}
+	
 	private void parseDataFromApi(String mResponseFromApi){
 		try{
 			JSONObject  mJSONObject = new JSONObject(mResponseFromApi);
@@ -490,6 +538,7 @@ public class VerificationActivity extends AppCompatActivity {
 			String mProfileImage = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.profileImage);
 			String mFavouriteQuestion = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.favouriteQuestion);
 			String mFavouriteAnswer = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.favouriteAnswer);
+			String mBirthDate = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.birthdate);
 			
 			if(!TextUtils.isEmpty(name)){
 				ApplicationLoader.getPreferences().setUserDisplayName(name);
@@ -515,9 +564,14 @@ public class VerificationActivity extends AppCompatActivity {
 				ApplicationLoader.getPreferences().setUserFavouriteQuestion(mFavouriteQuestion);
 			}
 			
+			if(!TextUtils.isEmpty(mBirthDate)){
+				ApplicationLoader.getPreferences().setUserBirthdate(mBirthDate);
+			}
+			
 			if(BuildVars.IS_AUTOSYNC){
 				ApplicationLoader.setSyncServiceAlarm();
 			}
+			
 			
 			Intent mIntent = new Intent(VerificationActivity.this, SetProfileActivity.class);
 			mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -540,6 +594,7 @@ public class VerificationActivity extends AppCompatActivity {
 		private boolean isSuccess = true;
 		private String mErrorMessage = "";
 		private MobcastProgressDialog mProgressDialog;
+		private boolean isResendOTP = false;
 
 		@Override
 		protected void onPreExecute() {
@@ -554,7 +609,9 @@ public class VerificationActivity extends AppCompatActivity {
 		protected Void doInBackground(Void... params) {
 			// TODO Auto-generated method stub
 			try{
-				mResponseFromApi = apiVerifyUser();
+				isResendOTP = isResendClicked; 
+				mResponseFromApi = !isResendClicked ? apiVerifyUser()
+						: apiRequestOTPAgain();
 				isSuccess = Utilities.isSuccessFromApi(mResponseFromApi);
 			}catch(Exception e){
 				FileLog.e(TAG, e.toString());
@@ -574,7 +631,12 @@ public class VerificationActivity extends AppCompatActivity {
 				mProgressDialog.dismiss();
 			}
 			if (isSuccess) {
-				parseDataFromApi(mResponseFromApi);
+				if(isResendOTP){
+					parseDataFromOTP(mResponseFromApi);
+				}else{
+					parseDataFromApi(mResponseFromApi);
+				}
+				
 			} else {
 				mErrorMessage = Utilities
 						.getErrorMessageFromApi(mResponseFromApi);

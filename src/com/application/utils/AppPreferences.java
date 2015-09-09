@@ -242,6 +242,17 @@ public class AppPreferences {
 		return flag;
 	}
 	
+	public void setUserBirthdate(String str) {
+		editor = sharedPreferences.edit();
+		editor.putString("userBirthdate", str);
+		editor.commit();
+	}
+
+	public String getUserBirthdate() {
+		String flag = sharedPreferences.getString("userBirthdate", null);
+		return flag;
+	}
+	
 	/*
 	 * PREFERENCES : DEVICE DETAILS
 	 */
@@ -377,6 +388,29 @@ public class AppPreferences {
 		boolean mDeveloperMode= sharedPreferences.getBoolean("mDeveloperMode",false);
 		return mDeveloperMode;
 	}
+	
+	public void setSyncFrequency(int mSyncFrequency) {
+		editor = sharedPreferences.edit();
+		editor.putInt("mSyncFrequency", mSyncFrequency);
+		editor.commit();
+	}
+
+	public int getSyncFrequency() {
+		int mSyncFrequency= sharedPreferences.getInt("mSyncFrequency",15);
+		return mSyncFrequency;
+	}
+	
+	public void setAppCustomTextFont(boolean isAppCustomTextFont) {
+		editor = sharedPreferences.edit();
+		editor.putBoolean("isAppCustomTextFont", isAppCustomTextFont);
+		editor.commit();
+	}
+
+	public boolean isAppCustomTextFont() {
+		boolean isAppCustomTextFont= sharedPreferences.getBoolean("isAppCustomTextFont",true);
+		return isAppCustomTextFont;
+	}
+	
 	
 	/*
 	 * RecyclerView : Save Position 
@@ -531,7 +565,22 @@ public class AppPreferences {
 		return mLastIdBirthday;
 	}
 	
-	/*
+	/**
+	 * Drawer
+	 */
+
+	public void setUnreadRecruitment(int mUnreadRecruitment) {
+		editor = sharedPreferences.edit();
+		editor.putInt("mUnreadRecruitment", mUnreadRecruitment);
+		editor.commit();
+	}
+
+	public int getUnreadRecruitment() {
+		int mUnreadRecruitment= sharedPreferences.getInt("mUnreadRecruitment",0);
+		return mUnreadRecruitment;
+	}
+	
+	/**
 	 * Sync 
 	 */
 	public void setSyncAlarmService(boolean value) {
@@ -551,7 +600,7 @@ public class AppPreferences {
 	}
 
 	public String getLastSyncTimeStampMessage() {
-		String mLastSyncTimeStampMessage= sharedPreferences.getString("mLastSyncTimeStampMessage","Failed due to unknown error!");
+		String mLastSyncTimeStampMessage= sharedPreferences.getString("mLastSyncTimeStampMessage","Sync will be done automatically!");
 		return mLastSyncTimeStampMessage;
 	}
 	

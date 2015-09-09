@@ -21,6 +21,26 @@
                 android:id="@+id/fragmentAudioDetailVisualizerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/fragmentAudioDetailDownloadBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/download_btn_height"
+                android:layout_gravity="right|bottom"
+                android:layout_marginBottom="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/shape_button_download"
+                android:gravity="center"
+                android:minWidth="@dimen/download_btn_width"
+                android:paddingLeft="@dimen/download_btn_padding_left"
+                android:paddingRight="@dimen/download_btn_padding_right"
+                android:paddingTop="@dimen/download_btn_padding_top"
+                android:paddingBottom="@dimen/download_btn_padding_bottom"
+                android:text="@string/button_download_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/download_btn_text_size"
+                android:visibility="gone"
+                tools:ignore="RtlHardcoded" />
         </FrameLayout>
 
         <FrameLayout
@@ -40,7 +60,7 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_play_audio"
                 tools:ignore="ContentDescription,RtlHardcoded" />
-            
+
             <com.application.ui.view.DiscreteSeekBar
                 android:id="@+id/fragmentAudioDetailSeekBar"
                 android:layout_width="match_parent"

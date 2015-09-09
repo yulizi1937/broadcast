@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -81,6 +82,8 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mDocFileNameTv;
 	private AppCompatTextView mDocFileInfoTv;
 	private AppCompatTextView mLanguageHeaderTv;
+	
+	private AppCompatButton mDocDownloadBtn;
 
 	private ImageView mDocFileIv;
 	
@@ -127,6 +130,7 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_doc_detail);
+		setSecurity();
 		initToolBar();
 		initUi();
 		initUiWithData();
@@ -250,6 +254,8 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 		mLanguageLinearLayout = (LinearLayout) findViewById(R.id.fragmentDocDetailLanguageLayout);
 		mLanguageFlowLayout = (FlowLayout) findViewById(R.id.fragmentDocDetailLanguageFlowLayout);
 		mLanguageHeaderTv = (AppCompatTextView) findViewById(R.id.fragmentDocDetailLanguageHeaderTv);
+		
+		mDocDownloadBtn = (AppCompatButton)findViewById(R.id.fragmentDocDetailDownloadBtn);
 
 		mDocTitleTv = (AppCompatTextView) findViewById(R.id.fragmentDocDetailTitleTv);
 
@@ -453,21 +459,33 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void downloadFileInBackground(){
-		DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
-				DocDetailActivity.this, false, false,
-				mContentFileLink, mContentFilePath,
-				AppConstants.TYPE.DOC, Long.parseLong(mContentFileSize), TAG);
-		mDownloadAsyncTask.execute();
-		mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
-			@Override
-			public void onPostExecute(boolean isDownloaded) {
-				// TODO Auto-generated method stub
-				if(isDownloaded){
-					if(checkIfFileExists(mContentFilePath)){
-					}	
+		if(Utilities.isInternetConnected()){
+			DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
+					DocDetailActivity.this, false, false,
+					mContentFileLink, mContentFilePath,
+					AppConstants.TYPE.DOC, Long.parseLong(mContentFileSize), TAG);
+			mDownloadAsyncTask.execute();
+			mDocDownloadBtn.setVisibility(View.VISIBLE);
+			mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
+				@Override
+				public void onPostExecute(boolean isDownloaded) {
+					// TODO Auto-generated method stub
+					if(isDownloaded){
+						if(checkIfFileExists(mContentFilePath)){
+							mDocDownloadBtn.setVisibility(View.GONE);
+						}else{
+							mDocDownloadBtn.setVisibility(View.VISIBLE);
+							AndroidUtilities.showSnackBar(DocDetailActivity.this, getResources().getString(R.string.file_download));
+						}
+					}else{
+						mDocDownloadBtn.setVisibility(View.VISIBLE);
+						AndroidUtilities.showSnackBar(DocDetailActivity.this, getResources().getString(R.string.file_download));
+					}
 				}
-			}
-		});
+			});
+		}else{
+			Utilities.showCrouton(DocDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.file_not_available), Style.ALERT);
+		}
 	}
 
 	private void updateReadInDb(){
@@ -554,6 +572,14 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 				
 			}
 		});
+		
+		mDocDownloadBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				downloadFileInBackground();
+			}
+		});
 	}
 	
 	
@@ -569,10 +595,12 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 				startActivity(intent);
 				AndroidUtilities.enterWindowAnimation(DocDetailActivity.this);
 			}else{
-				Utilities.showCrouton(DocDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.file_not_available), Style.ALERT);
+				mDocDownloadBtn.setVisibility(View.VISIBLE);
+				AndroidUtilities.showSnackBar(DocDetailActivity.this, getResources().getString(R.string.file_download));
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
+			AndroidUtilities.showSnackBar(DocDetailActivity.this, getResources().getString(R.string.file_app_not_found));
 		}
 	}
 	
@@ -761,6 +789,7 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 
 	private void setMaterialRippleView() {
 		try {
+			setMaterialRippleOnView(mDocDownloadBtn);
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}

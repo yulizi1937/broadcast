@@ -3,6 +3,7 @@
  */
 package com.application.ui.activity;
 
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,6 +12,8 @@ import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -29,8 +32,10 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.TextureView;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
+import android.widget.DatePicker;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -77,6 +82,7 @@ public class SetProfileActivity extends AppCompatActivity{
 	private AppCompatEditText mEmployeeIdEv;
 	private AppCompatEditText mFavouriteQuestionEv;
 	private AppCompatEditText mFavouriteAnswerEv;
+	private AppCompatEditText mDOBEv;
 	
 	private AppCompatButton mNextBtn;
 	
@@ -85,6 +91,7 @@ public class SetProfileActivity extends AppCompatActivity{
 	private ImageView mEmployeeIdIv;
 	private ImageView mFavouriteQuestionIv;
 	private ImageView mFavouriteAnswerIv;
+	private ImageView mDOBIv;
 	private ImageView mToolBarDrawer;
 	private ImageView mUploadAnotherIv;
 	
@@ -93,6 +100,7 @@ public class SetProfileActivity extends AppCompatActivity{
 	private LinearLayout mEmployeeIdLayout;
 	private LinearLayout mFavouriteQuestionLayout;
 	private LinearLayout mFavouriteAnswerLayout;
+	private LinearLayout mDOBLayout;
 	
 	private FrameLayout mCroutonViewGroup;
 	
@@ -102,6 +110,10 @@ public class SetProfileActivity extends AppCompatActivity{
 	private String mPicturePath;
 	
 	private ImageLoader mImageLoader;
+	
+	private int mDay;
+	private int mMonth;
+	private int mYear;
 	
 	private boolean isValidName = false;
 	private boolean isValidEmail = false;
@@ -143,6 +155,7 @@ public class SetProfileActivity extends AppCompatActivity{
 		mEmployeeIdEv = (AppCompatEditText)findViewById(R.id.activitySetProfileEmployeeIdEv);
 		mFavouriteQuestionEv = (AppCompatEditText)findViewById(R.id.activitySetProfileFavouriteQuestionEv);
 		mFavouriteAnswerEv= (AppCompatEditText)findViewById(R.id.activitySetProfileFavouriteAnswerEv);
+		mDOBEv= (AppCompatEditText)findViewById(R.id.activitySetProfileBirthdayEv);
 		
 		mNextBtn = (AppCompatButton)findViewById(R.id.activitySetProfileNextBtn);
 		
@@ -151,6 +164,7 @@ public class SetProfileActivity extends AppCompatActivity{
 		mEmployeeIdIv = (ImageView)findViewById(R.id.activitySetProfileEmployeeIdValidateIv);
 		mFavouriteQuestionIv = (ImageView)findViewById(R.id.activitySetProfileFavouriteQuestionValidateIv);
 		mFavouriteAnswerIv = (ImageView)findViewById(R.id.activitySetProfileFavouriteAnswerValidateIv);
+		mDOBIv = (ImageView)findViewById(R.id.activitySetProfileBirthdayValidateIv);
 		
 		mProgressWheel = (ProgressWheel)findViewById(R.id.activitySetProfileProgressWheel);
 		
@@ -161,6 +175,7 @@ public class SetProfileActivity extends AppCompatActivity{
 		mEmployeeIdLayout= (LinearLayout)findViewById(R.id.activitySetProfileEmployeeIdLayout);
 		mFavouriteQuestionLayout= (LinearLayout)findViewById(R.id.activitySetProfileFavouriteQuestionLayout);
 		mFavouriteAnswerLayout= (LinearLayout)findViewById(R.id.activitySetProfileFavouriteAnswerLayout);
+		mDOBLayout= (LinearLayout)findViewById(R.id.activitySetProfileBirthdayLayout);
 		
 		mCroutonViewGroup = (FrameLayout)findViewById(R.id.croutonViewGroup);
 	}
@@ -185,6 +200,7 @@ public class SetProfileActivity extends AppCompatActivity{
 		mNameEv.setText(ApplicationLoader.getPreferences().getUserDisplayName());
 		mEmailEv.setText(ApplicationLoader.getPreferences().getUserEmailAddress());
 		mEmployeeIdEv.setText(ApplicationLoader.getPreferences().getUserEmployeeId());
+		mDOBEv.setText(ApplicationLoader.getPreferences().getUserBirthdate());
 		mFavouriteQuestionEv.setText(ApplicationLoader.getPreferences().getUserFavouriteQuestion());
 		mFavouriteAnswerEv.setText(ApplicationLoader.getPreferences().getUserFavouriteAnswer());
 		
@@ -229,6 +245,26 @@ public class SetProfileActivity extends AppCompatActivity{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				getPhotoFromGallery();
+			}
+		});
+		
+		mRemoveTv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				mProfileCirleIv.setImageResource(R.drawable.ic_sample_picture);
+			}
+		});
+		
+		mDOBEv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				final Calendar c = Calendar.getInstance();
+				mYear = c.get(Calendar.YEAR);
+				mMonth = c.get(Calendar.MONTH);
+				mDay = c.get(Calendar.DAY_OF_MONTH);
+				showDialog(0);
 			}
 		});
 		
@@ -352,6 +388,26 @@ public class SetProfileActivity extends AppCompatActivity{
 				}
 			}
 		});
+		
+		mDOBEv.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			@SuppressWarnings("deprecation")
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				// TODO Auto-generated method stub
+				if (hasFocus) {
+					mDOBLayout.setBackgroundDrawable(getResources()
+							.getDrawable(R.drawable.shape_editbox_selected));
+					final Calendar c = Calendar.getInstance();
+					mYear = c.get(Calendar.YEAR);
+					mMonth = c.get(Calendar.MONTH);
+					mDay = c.get(Calendar.DAY_OF_MONTH);
+					showDialog(0);
+				} else {
+					mDOBLayout.setBackgroundDrawable(getResources()
+							.getDrawable(R.drawable.shape_editbox_normal));
+				}
+			}
+		});
 	}
 	
 	private void setTextWatcher(){
@@ -465,6 +521,32 @@ public class SetProfileActivity extends AppCompatActivity{
 			}
 		});
 	}
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case 0:
+		   // set date picker as current date
+			return new DatePickerDialog(this, datePickerListener, mYear,
+					mMonth, mDay);
+		}
+		return null;
+	}
+
+	private DatePickerDialog.OnDateSetListener datePickerListener 
+                = new DatePickerDialog.OnDateSetListener() {
+
+		// when dialog box is closed, below method will be called.
+		public void onDateSet(DatePicker view, int selectedYear,int selectedMonth, int selectedDay) {
+			mYear = selectedYear;
+			mMonth = selectedMonth;
+			mDay = selectedDay;
+			// set selected date into textview
+			mDOBEv.setText(new StringBuilder().append(mYear).append("-").append(mMonth + 1).append("-").append(mDay));
+			// set selected date into datepicker also
+
+		}
+	};
 	
 	private void validateName(CharSequence mCharsequence){
 		mNameValidateIv.setImageResource(R.drawable.ic_text_process);
@@ -613,7 +695,7 @@ public class SetProfileActivity extends AppCompatActivity{
 		try {
 			JSONObject jsonObj = JSONRequestBuilder.getPostUserProfile(mNameEv
 					.getText().toString(), mEmailEv.getText().toString(),
-					mEmployeeIdEv.getText().toString(), mPicturePath, mFavouriteQuestionEv.getText().toString(), mFavouriteAnswerEv.getText().toString());
+					mEmployeeIdEv.getText().toString(), mPicturePath, mFavouriteQuestionEv.getText().toString(), mFavouriteAnswerEv.getText().toString(), !TextUtils.isEmpty(mDOBEv.getText().toString())? mDOBEv.getText().toString(): " ");
 			if(BuildVars.USE_OKHTTP){
 				return RetroFitClient
 						.postJSON(new OkHttpClient(),AppConstants.API.API_UPDATE_USER, jsonObj.toString(), TAG);
@@ -636,6 +718,7 @@ public class SetProfileActivity extends AppCompatActivity{
 			String name = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.name);
 			String emailAddress = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.emailAddress);
 			String employeeId =  mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.employeeId);
+			String mBirthDate = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.birthdate);
 			String mFavouriteQuestion = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.favouriteQuestion);
 			String mFavouriteAnswer = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.favouriteAnswer);
 			if(!TextUtils.isEmpty(mProfileImage)){
@@ -661,6 +744,10 @@ public class SetProfileActivity extends AppCompatActivity{
 			
 			if(!TextUtils.isEmpty(mFavouriteQuestion)){
 				ApplicationLoader.getPreferences().setUserFavouriteQuestion(mFavouriteQuestion);
+			}
+			
+			if(!TextUtils.isEmpty(mBirthDate)){
+				ApplicationLoader.getPreferences().setUserBirthdate(mBirthDate);
 			}
 			
 			Intent mIntent = new Intent(SetProfileActivity.this, MotherActivity.class);

@@ -41,6 +41,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.FrameLayout;
 
 import com.application.beans.Mobcast;
@@ -99,6 +102,12 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 	private AppCompatTextView mEmptyMessageTextView;
 
 	private AppCompatButton mEmptyRefreshBtn;
+	
+	private FrameLayout mNewAvailFrameLayout;
+	private AppCompatTextView mNewAvailBubbleTextView;
+	
+	private Animation mAnimSlideInUp;
+	private Animation mAnimSlideOutUp;
 
 	private View headerView;
 
@@ -151,6 +160,10 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 		mEmptyRefreshBtn = (AppCompatButton) view
 				.findViewById(R.id.layoutEmptyRefreshBtn);
 		
+		mNewAvailFrameLayout = (FrameLayout) view.findViewById(R.id.fragmentTrainingNewAvailLayout);
+
+		mNewAvailBubbleTextView = (AppCompatTextView) view.findViewById(R.id.layoutNewBroadcastTv);
+		
 		isToApplyGridOrNot();
 		
 		mGridLayoutManager = new GridLayoutManager(mParentActivity, mGridColumn);
@@ -162,7 +175,8 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 //		setRecyclerAdapter();
 
 		setSwipeRefreshLayoutCustomisation();
-		
+		setMaterialRippleView();
+		syncDataWithApi();		
 		return view;
 	}
 
@@ -179,8 +193,18 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 		setRecyclerAdapterListener();
 		setRecyclerScrollListener();
 		setSwipeRefreshListener();
-		setMaterialRippleView();
+//		setMaterialRippleView();
 		setClickListener();
+	}
+	
+	private void syncDataWithApi(){
+		try{
+			if (mArrayListTraining != null && mArrayListTraining.size() > 0) {
+				refreshFeedFromApi(true, true, 0, true);	
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 
 	private void setEmptyData() {
@@ -198,6 +222,77 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 		mRecyclerView.setVisibility(View.GONE);
 		mEmptyFrameLayout.setVisibility(View.VISIBLE);
 	}
+	
+	private void setNewAvailBubbleLayout(){
+		try{
+			mAnimSlideInUp = AnimationUtils.loadAnimation(getActivity(),R.anim.slide_in_down);
+			mAnimSlideOutUp = AnimationUtils.loadAnimation(getActivity(),R.anim.slide_out_up);
+			
+			mNewAvailBubbleTextView.setText(getResources().getString(R.string.new_training_avail));
+			
+			mAnimSlideOutUp.setAnimationListener(new AnimationListener() {
+				@Override
+				public void onAnimationStart(Animation animation) {
+					// TODO Auto-generated method stub
+				}
+				
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					// TODO Auto-generated method stub
+					mNewAvailFrameLayout.setVisibility(View.GONE);
+				}
+			});
+			
+			mAnimSlideInUp.setAnimationListener(new AnimationListener() {
+				@Override
+				public void onAnimationStart(Animation animation) {
+					// TODO Auto-generated method stub
+					mNewAvailFrameLayout.setVisibility(View.VISIBLE);
+				}
+				
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					// TODO Auto-generated method stub
+					AndroidUtilities.runOnUIThread(new Runnable() {
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							mNewAvailFrameLayout.startAnimation(mAnimSlideOutUp);
+						}
+					}, AppConstants.BUBBLESTAY);
+				}
+			});
+			
+			mNewAvailFrameLayout.startAnimation(mAnimSlideInUp);
+			
+			mNewAvailFrameLayout.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					// TODO Auto-generated method stub
+					try{
+						mNewAvailFrameLayout.startAnimation(mAnimSlideOutUp);
+						mRecyclerView.smoothScrollToPosition(1);
+					}catch(Exception e){
+						FileLog.e(TAG, e.toString());
+					}
+				}
+			});
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
 
 	private void setMaterialRippleView() {
 		try {
@@ -212,7 +307,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				refreshFeedFromApi(true, true, AppConstants.BULK);
+				refreshFeedFromApi(true, true, AppConstants.BULK,false);
 			}
 		});
 	}
@@ -224,7 +319,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 				Color.parseColor(AppConstants.COLOR.MOBCAST_PURPLE),
 				Color.parseColor(AppConstants.COLOR.MOBCAST_GREEN),
 				Color.parseColor(AppConstants.COLOR.MOBCAST_BLUE));
-		mSwipeRefreshLayout.setProgressViewOffset(false, 80, 140);
+		mSwipeRefreshLayout.setProgressViewOffset(false, 100, 180);
 	}
 
 	private void setRecyclerScrollListener() {
@@ -253,7 +348,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 			        if (!mLoadMore) {
 						if (mVisibleItemCount + mFirstVisibleItem >= mTotalItemCount) {
 			            	mLoadMore = true;
-				            refreshFeedFromApi(true, false, AppConstants.BULK);
+				            refreshFeedFromApi(true, false, AppConstants.BULK,false);
 			            }
 			        }
 				}
@@ -290,19 +385,19 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 			public void onRefresh() {
 				// TODO Auto-generated method stub
 				if (mArrayListTraining != null && mArrayListTraining.size() > 0) {
-					refreshFeedFromApi(true, true, 0);	
+					refreshFeedFromApi(true, true, 0,false);	
 				}
 			}
 		});
 	}
 	
 	@SuppressLint("NewApi") 
-	private void refreshFeedFromApi(boolean isRefreshFeed, boolean sortByAsc, int limit){//sortByAsc:true-> new data //sortByAsc:false->Old Data
+	private void refreshFeedFromApi(boolean isRefreshFeed, boolean sortByAsc, int limit, boolean isAutoRefresh){//sortByAsc:true-> new data //sortByAsc:false->Old Data //isAutoRefresh: true-> onResume ? false->onPulloRefresh
 		if(Utilities.isInternetConnected()){
 			if(AndroidUtilities.isAboveIceCreamSandWich()){
-				new AsyncRefreshTask(isRefreshFeed,sortByAsc,limit).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+				new AsyncRefreshTask(isRefreshFeed,sortByAsc,limit, isAutoRefresh).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
 			}else{
-				new AsyncRefreshTask(isRefreshFeed,sortByAsc,limit).execute();
+				new AsyncRefreshTask(isRefreshFeed,sortByAsc,limit, isAutoRefresh).execute();
 			}
 		}
 	}
@@ -824,6 +919,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
        	 mRecyclerView.getAdapter().notifyItemChanged(mPosition+1);
        	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.TRAINING);
        	 UserReport.updateUserReportApi(mTrainingId, AppConstants.INTENTCONSTANTS.TRAINING, AppConstants.REPORT.READ, "");
+       	Utilities.showBadgeNotification(getActivity());
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -837,6 +933,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 		 mArrayListTraining.get(mPosition).setRead(false);
        	 mRecyclerView.getAdapter().notifyItemChanged(mPosition+1);
        	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.TRAINING);
+       	Utilities.showBadgeNotification(getActivity());
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -852,7 +949,8 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
        	 }else{
        		mRecyclerView.getAdapter().notifyDataSetChanged();
        	 }
-       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.TRAINING);			
+       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.TRAINING);	
+       	Utilities.showBadgeNotification(getActivity());
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -1060,12 +1158,15 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 		private MobcastProgressDialog mProgressDialog;
 		private boolean isRefreshFeed = true;
 		private boolean sortByAsc =false;
+		private boolean isAutoRefresh = false;
 		private int limit;
+		
 
-		public AsyncRefreshTask(boolean isRefreshFeed, boolean sortByAsc,int limit){
+		public AsyncRefreshTask(boolean isRefreshFeed, boolean sortByAsc,int limit, boolean isAutoRefresh){
 			this.isRefreshFeed = isRefreshFeed;
 			this.sortByAsc = sortByAsc;
 			this.limit = limit;
+			this.isAutoRefresh = isAutoRefresh;
 		}
 		@Override
 		protected void onPreExecute() {
@@ -1117,14 +1218,21 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 			
 			if (isSuccess) {
 				parseDataFromApi(mResponseFromApi, !sortByAsc);
+				if(sortByAsc){
+					if(isAutoRefresh){
+						setNewAvailBubbleLayout();
+					}
+				}
 			}else{
 				if(sortByAsc){
-					AndroidUtilities.showSnackBar(getActivity(), Utilities.getErrorMessageFromApi(mResponseFromApi));
+					if(!isAutoRefresh){
+						AndroidUtilities.showSnackBar(getActivity(), Utilities.getErrorMessageFromApi(mResponseFromApi));	
+					}
 				}
 			}
 			
 			if(sortByAsc){
-				refreshFeedActionFromApi();
+				refreshFeedActionFromApi(isAutoRefresh);
 			}
 
 			if(mProgressDialog!=null){
@@ -1145,11 +1253,13 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 	 * Async : Refresh Feed Like + Read count
 	 */
 	
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB) private void refreshFeedActionFromApi(){
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB) private void refreshFeedActionFromApi(boolean isAutoRefresh){
 		try{
 			if(Utilities.isInternetConnected()){
-				if(!mSwipeRefreshLayout.isRefreshing()){
-					mSwipeRefreshLayout.setRefreshing(true);
+				if(!isAutoRefresh){
+					if(!mSwipeRefreshLayout.isRefreshing()){
+						mSwipeRefreshLayout.setRefreshing(true);
+					}
 				}
 				FetchFeedActionAsyncTask mFetchFeedActionAsyncTask = new FetchFeedActionAsyncTask(mParentActivity, AppConstants.INTENTCONSTANTS.TRAINING, JSONRequestBuilder.getPostFetchFeedAction(AppConstants.INTENTCONSTANTS.TRAINING), TAG);
 				if(AndroidUtilities.isAboveIceCreamSandWich()){

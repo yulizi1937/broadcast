@@ -115,9 +115,11 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_recycler_birthday);
+		setSecurity();
 		initToolBar();
 		initUi();
 		syncDataWithApi();
+		setMaterialRippleView();
 	}
 	
 	
@@ -128,6 +130,7 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 		super.onResume();
 		checkReadFromDBAndUpdateToObj();
 		setUiListener();
+		Utilities.showBadgeNotification(BirthdayRecyclerActivity.this);
 	}
 
 	@Override
@@ -260,7 +263,7 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 	private void setUiListener(){
 		setRecyclerAdapterListener();
 		setSwipeRefreshListener();
-		setMaterialRippleView();
+//		setMaterialRippleView();
 		setClickListener();
 	}
 	

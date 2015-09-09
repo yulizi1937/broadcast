@@ -3,7 +3,6 @@
  */
 package com.application.ui.activity;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
@@ -17,6 +16,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -41,13 +41,14 @@ import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.DownloadAsyncTask;
+import com.application.utils.Style;
 import com.application.utils.DownloadAsyncTask.OnPostExecuteListener;
 import com.application.utils.FetchActionAsyncTask;
 import com.application.utils.FetchActionAsyncTask.OnPostExecuteTaskListener;
 import com.application.utils.FileLog;
-import com.application.utils.Style;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
+import com.facebook.stetho.common.Util;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 
@@ -77,6 +78,8 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mImageLikeTv;
 	private AppCompatTextView mImageSummaryTextTv;
 	private AppCompatTextView mLanguageHeaderTv;
+	
+	private AppCompatButton mImageDownloadBtn;
 
 	private ViewPager mImageViewPager;
 	private CirclePageIndicator mImageCirclePageIndicator;
@@ -117,7 +120,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 	
 	private ArrayList<String> mContentFileLink = new ArrayList<>();
 	private ArrayList<String> mContentFilePath = new ArrayList<>();
-	private ArrayList<String> mContentDecryptedFilePath = new ArrayList<>();
+//	private ArrayList<String> mContentDecryptedFilePath = new ArrayList<>();
 
 
 	private ArrayList<String> mContentLanguageList = new ArrayList<>();
@@ -129,6 +132,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_image_detail);
+		setSecurity();
 		initToolBar();
 		initUi();
 		getIntentData();
@@ -141,13 +145,13 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		decryptFileOnResume();
+//		decryptFileOnResume();
 	}
 	
 	@Override
 	protected void onPause() {
 		super.onPause();
-		deleteDecryptedFile();
+//		deleteDecryptedFile();
 	}
 
 	  
@@ -246,6 +250,8 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 		mLanguageLinearLayout = (LinearLayout) findViewById(R.id.fragmentImageDetailLanguageLayout);
 		mLanguageFlowLayout = (FlowLayout) findViewById(R.id.fragmentImageDetailLanguageFlowLayout);
 		mLanguageHeaderTv = (AppCompatTextView) findViewById(R.id.fragmentImageDetailLanguageHeaderTv);
+		
+		mImageDownloadBtn = (AppCompatButton)findViewById(R.id.fragmentImageDetailDownloadBtn);
 
 		mImageTitleTv = (AppCompatTextView) findViewById(R.id.fragmentImageDetailTitleTv);
 		mImageByTv = (AppCompatTextView) findViewById(R.id.fragmentImageDetailByTv);
@@ -424,9 +430,9 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 			boolean isDownloadedAndExists = true;
 			for (int i = 0; i < mContentFilePath.size(); i++) {
 				if (checkIfFileExists(mContentFilePath.get(i))) {
-					mContentDecryptedFilePath.add(Utilities.fbConcealDecryptFile(TAG,
-							new File(mContentFilePath.get(i))));
-					if (!TextUtils.isEmpty(mContentDecryptedFilePath.get(i))) {
+//					mContentDecryptedFilePath.add(Utilities.fbConcealDecryptFile(TAG,new File(mContentFilePath.get(i))));
+//					if (!TextUtils.isEmpty(mContentDecryptedFilePath.get(i))) {
+						if (!TextUtils.isEmpty(mContentFilePath.get(i))) {
 						isDownloadedAndExists &= true;
 					}else{
 						isDownloadedAndExists &= false;
@@ -437,7 +443,8 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 			}
 			
 			if(isDownloadedAndExists){
-				setImageViewPager(mContentDecryptedFilePath);
+//				setImageViewPager(mContentDecryptedFilePath);
+				setImageViewPager(mContentFilePath);
 			}
 
 			if (checkIfFileExists(mContentFileThumbPath)) {
@@ -456,27 +463,41 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 
 	private void downloadFileInBackground(final int position) {
 		try{
-			DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
-					ImageDetailActivity.this, false, true,
-					mContentFileLink.get(position), mContentFilePath.get(position),
-					AppConstants.TYPE.IMAGE, Long.parseLong(mContentFileSize), TAG);
-			mDownloadAsyncTask.execute();
-			mDownloadAsyncTask
-					.setOnPostExecuteListener(new OnPostExecuteListener() {
-						@Override
-						public void onPostExecute(boolean isDownloaded) {
-							// TODO Auto-generated method stub
-							if (isDownloaded) {
-								mContentDecryptedFilePath.add(Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath.get(position))));
-								if (!TextUtils.isEmpty(mContentDecryptedFilePath.get(position))) {
-									if(mContentFilePath.size()-1 == position){
-										setImageViewPager(mContentDecryptedFilePath);
-										downloadThumbnailInBackground();
+			if(Utilities.isInternetConnected()){
+				DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
+						ImageDetailActivity.this, false, false,
+						mContentFileLink.get(position), mContentFilePath.get(position),
+						AppConstants.TYPE.IMAGE, Long.parseLong(mContentFileSize), TAG);
+				mDownloadAsyncTask.execute();
+				mImageDownloadBtn.setVisibility(View.VISIBLE);
+				mDownloadAsyncTask
+						.setOnPostExecuteListener(new OnPostExecuteListener() {
+							@Override
+							public void onPostExecute(boolean isDownloaded) {
+								// TODO Auto-generated method stub
+								if (isDownloaded) {
+//									mContentDecryptedFilePath.add(Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath.get(position))));
+//									if (!TextUtils.isEmpty(mContentDecryptedFilePath.get(position))) {
+										if (!TextUtils.isEmpty(mContentFilePath.get(position))) {
+										if(mContentFilePath.size()-1 == position){
+//											setImageViewPager(mContentDecryptedFilePath);
+											setImageViewPager(mContentFilePath);
+											mImageDownloadBtn.setVisibility(View.GONE);
+											downloadThumbnailInBackground();
+										}
+									}else{
+										mImageDownloadBtn.setVisibility(View.VISIBLE);
+										AndroidUtilities.showSnackBar(ImageDetailActivity.this, getResources().getString(R.string.file_download));
 									}
+								}else{
+									mImageDownloadBtn.setVisibility(View.VISIBLE);
+									AndroidUtilities.showSnackBar(ImageDetailActivity.this, getResources().getString(R.string.file_download));
 								}
 							}
-						}
-					});
+						});
+			}else{
+				Utilities.showCrouton(ImageDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.file_not_available), Style.ALERT);
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -573,6 +594,14 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 				
 			}
 		});
+		
+		mImageDownloadBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				setIntentDataToUi();
+			}
+		});
 	}
 	
 	@SuppressLint("NewApi") 
@@ -633,14 +662,18 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 	}
 
 	private void setImageViewPager(ArrayList<String> mContentFilePath) {
-		mArrayListString = new ArrayList<String>();
-		for (int i = 0; i < mContentFilePath.size(); i++) {
-			mArrayListString.add(mContentFilePath.get(i));
+		try{
+			mArrayListString = new ArrayList<String>();
+			for (int i = 0; i < mContentFilePath.size(); i++) {
+				mArrayListString.add(mContentFilePath.get(i));
+			}
+			mAdapter = new ImageDetailPagerAdapter(getSupportFragmentManager(),
+					mArrayListString);
+			mImageViewPager.setAdapter(mAdapter);
+			mImageCirclePageIndicator.setViewPager(mImageViewPager);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
-		mAdapter = new ImageDetailPagerAdapter(getSupportFragmentManager(),
-				mArrayListString);
-		mImageViewPager.setAdapter(mAdapter);
-		mImageCirclePageIndicator.setViewPager(mImageViewPager);
 	}
 
 	private void setLanguageChipsLayout(
@@ -667,7 +700,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 		}
 	}
 
-	private void decryptFileOnResume(){
+	/*private void decryptFileOnResume(){
 		try{
 			if(mContentFilePathList!=null && mContentFilePathList.size() > 0){
 				mContentDecryptedFilePath.clear();
@@ -695,7 +728,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
-	}
+	}*/
 	
 	@Override
 	@Deprecated
@@ -714,6 +747,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 
 	private void setMaterialRippleView() {
 		try {
+			setMaterialRippleOnView(mImageDownloadBtn);
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}

@@ -79,6 +79,7 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_quiz_score);
+		setSecurity();
 		initToolBar();
 		initUi();
 		setUiListener();
