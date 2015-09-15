@@ -50,6 +50,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.widget.ImageView.ScaleType;
 
 import com.application.beans.MotherHeader;
 import com.application.sqlite.DBConstant;
@@ -128,9 +129,12 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	private Toolbar mToolBar;
 	private View mHeaderView;
 	private View mToolbarView;
-
-	private MenuItem menuItemEvent;
 	
+	private View mMenuAwardView;
+	private View mMenuBirthdayView;
+	private View mMenuEventView;
+	private View mMenuSearchView;
+
 	private FrameLayout mCroutonViewGroup;
 
 	private SlidingTabLayout mSlidingTabLayout;
@@ -160,6 +164,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		propagateToolbarState(toolbarIsShown());
 		setDrawerLayout();
 		apiCheckVersionUpdate();
+		showCaseView();
 	}
 
 	@Override
@@ -190,7 +195,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		// TODO Auto-generated method stub
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_mother, menu);
-		menuItemEvent = menu.findItem(R.id.action_event);
+		MenuItem menuItemEvent = menu.findItem(R.id.action_event);
 		menuItemEvent.setIcon(buildCounterDrawable(Utilities.getUnreadOfEvent(MotherActivity.this),
 				R.drawable.ic_toolbar_event));
 
@@ -676,18 +681,29 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	 */
 	
 	private void showCaseView(){
-		startSequenceShowCaseView(2000, 250);
+		if(!ApplicationLoader.getPreferences().isAppShowCaseViewMother()){
+			AndroidUtilities.runOnUIThread(new Runnable() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					mMenuAwardView = getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.action_award);
+					mMenuSearchView = getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.action_search);
+					mMenuBirthdayView = getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.action_birthday);
+					mMenuEventView = getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.action_event);
+					ApplicationLoader.getPreferences().setAppShowCaseViewMother(true);
+					if (mMenuAwardView != null && mMenuBirthdayView != null
+							&& mMenuEventView != null && mMenuSearchView != null) {
+						startSequenceShowCaseView(2000, 250);
+					}
+				}
+			}, 1000);
+		}
 	}
 	
 	private void startSequenceShowCaseView(int mDelay, int mSequenceDelay){
 		try{
-	        ShowcaseConfig config = new ShowcaseConfig();
-	        config.setDelay(mDelay); // half second between each showcase view
-
-	        MaterialShowcaseSequence mSequence = new MaterialShowcaseSequence(MotherActivity.this);
-
-	        MaterialShowcaseView mSequenceItem1 = new MaterialShowcaseView.Builder(MotherActivity.this)
-	        .setTarget(mToolBar.getChildAt(0))
+	        MaterialShowcaseView.Builder mMaterialShowcaseViewBuilder1 = new MaterialShowcaseView.Builder(MotherActivity.this);
+	        final MaterialShowcaseView mShowCaseView1 = mMaterialShowcaseViewBuilder1.setTarget(mToolBar.getChildAt(0))
 	        .setDismissText(getResources().getString(R.string.showcase_next))
 	        .setContentText(getResources().getString(R.string.showcase_content1))
 	        .setContentTextColor(getResources().getColor(R.color.white))
@@ -695,20 +711,79 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	        .setDelay(mSequenceDelay) // optional but starting animations immediately in onCreate can make them choppy
 	        .show();
 	        
-	        MaterialShowcaseView mSequenceItem2 = new MaterialShowcaseView.Builder(MotherActivity.this)
-	        .setTarget(getWindow().getDecorView().findViewById(android.R.id.content).findViewById(R.id.action_award))
-	        .setDismissText(getResources().getString(R.string.showcase_gotit))
-	        .setContentText(getResources().getString(R.string.showcase_content2))
-	        .setContentTextColor(getResources().getColor(R.color.white))
-	        .setMaskColour(getResources().getColor(R.color.mobcast_green))
-	        .setDelay(mSequenceDelay) // optional but starting animations immediately in onCreate can make them choppy
-	        .show();
-	        
-	        mSequence.addSequenceItem(mSequenceItem1);
-	        mSequence.addSequenceItem(mSequenceItem2);
-	        
-	        mSequence.setConfig(config);
-	        mSequence.start();
+	        mMaterialShowcaseViewBuilder1.getDismissTextView().setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View view) {
+					// TODO Auto-generated method stub
+					mShowCaseView1.hide();
+					 MaterialShowcaseView.Builder mMaterialShowcaseViewBuilder2 = new MaterialShowcaseView.Builder(MotherActivity.this);
+				        final MaterialShowcaseView mShowCaseView2 = mMaterialShowcaseViewBuilder2.setTarget(mMenuEventView)
+				        .setDismissText(getResources().getString(R.string.showcase_next))
+				        .setContentText(getResources().getString(R.string.showcase_content2))
+				        .setContentTextColor(getResources().getColor(R.color.black_shade_light))
+				        .setMaskColour(getResources().getColor(R.color.mobcast_yellow))
+				        .setDelay(250) // optional but starting animations immediately in onCreate can make them choppy
+				        .show();
+				        
+				        mMaterialShowcaseViewBuilder2.getDismissTextView().setOnClickListener(new View.OnClickListener() {
+							
+							@Override
+							public void onClick(View v) {
+								// TODO Auto-generated method stub
+								mShowCaseView2.hide();
+								 MaterialShowcaseView.Builder mMaterialShowcaseViewBuilder3 = new MaterialShowcaseView.Builder(MotherActivity.this);
+							        final MaterialShowcaseView mShowCaseView3 = mMaterialShowcaseViewBuilder3.setTarget(mMenuAwardView)
+							        .setDismissText(getResources().getString(R.string.showcase_next))
+							        .setContentText(getResources().getString(R.string.showcase_content3))
+							        .setContentTextColor(getResources().getColor(R.color.white))
+							        .setMaskColour(getResources().getColor(R.color.mobcast_purple))
+							        .setDelay(250) // optional but starting animations immediately in onCreate can make them choppy
+							        .show();
+							        
+							        mMaterialShowcaseViewBuilder3.getDismissTextView().setOnClickListener(new View.OnClickListener() {
+										@Override
+										public void onClick(View v) {
+											// TODO Auto-generated method stub
+											mShowCaseView3.hide();
+											MaterialShowcaseView.Builder mMaterialShowcaseViewBuilder4 = new MaterialShowcaseView.Builder(MotherActivity.this);
+									        final MaterialShowcaseView mShowCaseView4 = mMaterialShowcaseViewBuilder4.setTarget(mMenuBirthdayView)
+									        .setDismissText(getResources().getString(R.string.showcase_next))
+									        .setContentText(getResources().getString(R.string.showcase_content4))
+									        .setContentTextColor(getResources().getColor(R.color.white))
+									        .setMaskColour(getResources().getColor(R.color.mobcast_green))
+									        .setDelay(250) // optional but starting animations immediately in onCreate can make them choppy
+									        .show();
+									        
+									        mMaterialShowcaseViewBuilder4.getDismissTextView().setOnClickListener(new View.OnClickListener() {
+												@Override
+												public void onClick(View v) {
+													// TODO Auto-generated method stub
+													mShowCaseView4.hide();
+													MaterialShowcaseView.Builder mMaterialShowcaseViewBuilder5 = new MaterialShowcaseView.Builder(MotherActivity.this);
+											        final MaterialShowcaseView mShowCaseView5 = mMaterialShowcaseViewBuilder5.setTarget(mMenuSearchView)
+											        .setDismissText(getResources().getString(R.string.showcase_gotit))
+											        .setContentText(getResources().getString(R.string.showcase_content5))
+											        .setContentTextColor(getResources().getColor(R.color.white))
+											        .setMaskColour(getResources().getColor(R.color.mobcast_blue))
+											        .setDelay(250) // optional but starting animations immediately in onCreate can make them choppy
+											        .show();
+											        
+											        mMaterialShowcaseViewBuilder5.getDismissTextView().setOnClickListener(new View.OnClickListener() {
+														@Override
+														public void onClick(View v) {
+															// TODO Auto-generated method stub
+															mShowCaseView5.hide();
+														}
+													});
+												}
+											});
+										}
+									});
+							}
+						});
+				}
+			});
 		}catch(Exception e){
 			FileLog.e("showCaseView", e.toString());
 		}

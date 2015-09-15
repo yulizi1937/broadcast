@@ -425,6 +425,25 @@ public class JSONRequestBuilder {
 		return stringBuffer;
 	}
 	
+	
+	public static JSONObject getPostIssueData(String mUserName, String mIssue) {
+		JSONObject stringBuffer = new JSONObject();
+		try {
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, mUserName);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.deviceMfg, Utilities.getDeviceMfg());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.deviceName, Utilities.getDeviceName());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.deviceOs, Utilities.getSDKVersion());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.appVersion, Utilities.getApplicationVersion());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.deviceId, Utilities.getDeviceId());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.deviceType, AppConstants.deviceType);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, AppConstants.INTENTCONSTANTS.ISSUE);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.issue, mIssue);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		return stringBuffer;
+	}
+	
 	public static JSONObject getErrorMessageFromStatusCode(String mResponseCode, String mResponseMessage){
 		JSONObject stringBuffer = new JSONObject();
 		try {

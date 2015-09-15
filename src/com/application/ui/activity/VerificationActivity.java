@@ -49,6 +49,7 @@ import com.application.utils.MobcastConfig;
 import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
+import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.facebook.stetho.common.Util;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -173,9 +174,12 @@ public class VerificationActivity extends AppCompatActivity {
 	
 	private void getIntentData(){
 		try{
-			mOTP = getIntent().getStringExtra(AppConstants.INTENTCONSTANTS.OTP);
 			mUserName = getIntent().getStringExtra(AppConstants.INTENTCONSTANTS.USERNAME);
+			if(mUserName==null){
+				mUserName = ApplicationLoader.getPreferences().getUserName();
+			}
 			mCountryCode = getIntent().getStringExtra(AppConstants.INTENTCONSTANTS.COUNTRYCODE);
+			mOTP = getIntent().getStringExtra(AppConstants.INTENTCONSTANTS.OTP);
 			if(BuildVars.DEBUG_OTP){
 //				Utilities.showCrouton(VerificationActivity.this	, mCroutonViewGroup, mOTP, Style.INFO);
 			}
@@ -250,10 +254,11 @@ public class VerificationActivity extends AppCompatActivity {
 			if (secs < 1 && mins == 0) {
 				mHandler.removeCallbacks(updateTimerThread);
 				mTimerTv.setVisibility(View.GONE);
-				mReSendBtn.setVisibility(View.VISIBLE);
 				if (isResendClicked) {
 					mRaisedTicket.setVisibility(View.VISIBLE);
 					mReSendBtn.setVisibility(View.GONE);
+				}else{
+					mReSendBtn.setVisibility(View.VISIBLE);					
 				}
 			}
 			mTimerTv.setText("" + mins + ":" + String.format("%02d", secs));
@@ -402,6 +407,7 @@ public class VerificationActivity extends AppCompatActivity {
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
 				ApplicationLoader.getPreferences().setUserName(null);
+				ApplicationLoader.getPreferences().setAttemptedToLoginDidntReceiveOTP(false);
 				Intent mIntent = new Intent(VerificationActivity.this,
 						LoginActivity.class);
 				mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -417,8 +423,8 @@ public class VerificationActivity extends AppCompatActivity {
 				mTimerStartFrom = MobcastConfig.BUILD.VERIFICATION_TIMER_OUT;
 				mReSendBtn.setVisibility(View.GONE);
 				mTimerTv.setVisibility(View.VISIBLE);
-				initTimer();
 				isResendClicked = true;
+				initTimer();
 				if (Utilities.isInternetConnected()) {
 					if (AndroidUtilities.isAboveIceCreamSandWich()) {
 						new AsyncVerifyTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
@@ -442,6 +448,7 @@ public class VerificationActivity extends AppCompatActivity {
 				// TODO Auto-generated method stub
 				try{
 					if(!TextUtils.isEmpty(mUserName)){
+						UserReport.updateUserIssueApi(AppConstants.INTENTCONSTANTS.OTP, mUserName);
 						Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",AppConstants.mSupportEmail, null));
 						emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Suport : Unable to Login | " + getResources().getString(R.string.app_name));
 						emailIntent.putExtra(Intent.EXTRA_TEXT, "Please help me to login \n User Credentails: \n" + mUserName + "\n" +  Utilities.getDeviceMfg() + "\n" + Utilities.getDeviceName());
@@ -454,6 +461,7 @@ public class VerificationActivity extends AppCompatActivity {
 				}
 			}
 		});
+		
 	}
 
 	/**
@@ -521,7 +529,7 @@ public class VerificationActivity extends AppCompatActivity {
 			JSONObject mJSONObj = new JSONObject(mResponseFromApi);
 			mJSONObj.getString("otp");
 			AndroidUtilities.showSnackBar(VerificationActivity.this, getResources().getString(R.string.resend_otp));
-			isResendClicked = false;
+			isResendClicked = true;
 		}catch(Exception e){
 		}
 	}
@@ -572,7 +580,7 @@ public class VerificationActivity extends AppCompatActivity {
 				ApplicationLoader.setSyncServiceAlarm();
 			}
 			
-			
+			ApplicationLoader.getPreferences().setAttemptedToLoginDidntReceiveOTP(true);
 			Intent mIntent = new Intent(VerificationActivity.this, SetProfileActivity.class);
 			mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(mIntent);
@@ -601,7 +609,11 @@ public class VerificationActivity extends AppCompatActivity {
 			// TODO Auto-generated method stub
 			super.onPreExecute();
 			mProgressDialog = new MobcastProgressDialog(VerificationActivity.this);
-			mProgressDialog.setMessage(ApplicationLoader.getApplication().getResources().getString(R.string.loadingVerify));
+			if(!isResendClicked){
+				mProgressDialog.setMessage(ApplicationLoader.getApplication().getResources().getString(R.string.loadingVerify));	
+			}else{
+				mProgressDialog.setMessage(ApplicationLoader.getApplication().getResources().getString(R.string.loadingRequest));				
+			}
 			mProgressDialog.show();
 		}
 

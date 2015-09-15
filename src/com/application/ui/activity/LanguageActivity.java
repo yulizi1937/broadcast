@@ -132,21 +132,23 @@ public class LanguageActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void setRecyclerAdapterListener(){
-		mAdapter.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(View view, int position) {
-				// TODO Auto-generated method stub
-				switch(view.getId()){
-				case R.id.itemLanugageLayout:
-					Intent mIntent = new Intent();
-					mIntent.putExtra(AppConstants.INTENTCONSTANTS.LANGUAGE, mListLanguage.get(position).getmLanguage());
-					mIntent.putExtra(AppConstants.INTENTCONSTANTS.LANGUAGECODE, mListLanguage.get(position).getmLanguageCode());
-					setResult(Activity.RESULT_OK, mIntent);
-					finish();
-					break;
+		if(mAdapter!=null){
+			mAdapter.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(View view, int position) {
+					// TODO Auto-generated method stub
+					switch(view.getId()){
+					case R.id.itemLanugageLayout:
+						Intent mIntent = new Intent();
+						mIntent.putExtra(AppConstants.INTENTCONSTANTS.LANGUAGE, mListLanguage.get(position).getmLanguage());
+						mIntent.putExtra(AppConstants.INTENTCONSTANTS.LANGUAGECODE, mListLanguage.get(position).getmLanguageCode());
+						setResult(Activity.RESULT_OK, mIntent);
+						finish();
+						break;
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 	
 	private ArrayList<Language> getListLanguage(){

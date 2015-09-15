@@ -88,7 +88,7 @@
                     android:layout_weight="1"
                     android:gravity="left|center"
                     android:text="@string/sample_winner_name"
-                    android:textColor="@color/textview_login_color"
+                    android:textColor="@color/item_description_color"
                     android:textSize="@dimen/award_winner_textview_size"
                     android:textStyle="bold" />
 

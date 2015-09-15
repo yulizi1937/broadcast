@@ -11,17 +11,17 @@ public class BuildVars {
 	/**
 	 * BUILD PURPOSE : All must be false
 	 */
-	public static final boolean DEBUG = true;
-	public static final boolean DEBUG_VERSION = true;
+	public static final boolean DEBUG = false;
+	public static final boolean DEBUG_VERSION = false;
 	public static final boolean DEBUG_SCREENSHOT = false;
 
 	
 	/**
 	 * DEBUG : DEVELOPER : OKHTTP, STETHO(CHROME PLUGIN) : All must be false for Production Build
 	 */
-	public static final boolean DEBUG_OKHTTP = true;
-	public static final boolean DEBUG_STETHO = true;
-	public static final boolean DEBUG_API = true;
+	public static final boolean DEBUG_OKHTTP = false;
+	public static final boolean DEBUG_STETHO = false;
+	public static final boolean DEBUG_API = false;
 	
 	
 	/**

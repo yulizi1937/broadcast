@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -56,13 +57,13 @@ public class SplashActivity extends AppCompatActivity {
 
 	private ValueAnimator animatorPdf;
 
-	private RelativeLayout mLayout;
+	private FrameLayout mLayout;
 
 	private ShimmerFrameLayout mShimmerFrameLayout;
 
 	private int mWidth;
 	private int mHeight;
-	
+
 	private int mDelay = 3000;
 
 	@Override
@@ -99,7 +100,7 @@ public class SplashActivity extends AppCompatActivity {
 
 		mShimmerFrameLayout = (ShimmerFrameLayout) findViewById(R.id.activitySplashShimmerLayout);
 
-		mLayout = (RelativeLayout) findViewById(R.id.activitySplashLayout);
+		mLayout = (FrameLayout) findViewById(R.id.activitySplashLayout);
 
 		addLayoutListener();
 
@@ -107,8 +108,8 @@ public class SplashActivity extends AppCompatActivity {
 	}
 
 	private void addShimmerAnimation() {
-//		mShimmerFrameLayout.setDuration(2000);
-//		mShimmerFrameLayout.setAngle(ShimmerFrameLayout.MaskAngle.CW_90);
+		// mShimmerFrameLayout.setDuration(2000);
+		// mShimmerFrameLayout.setAngle(ShimmerFrameLayout.MaskAngle.CW_90);
 	}
 
 	private void addLayoutListener() {
@@ -129,7 +130,7 @@ public class SplashActivity extends AppCompatActivity {
 				&& ApplicationLoader.getPreferences().getUserName() != null) {
 			mDelay = 1000;
 		}
-		
+
 		AndroidUtilities.runOnUIThread(new Runnable() {
 			@Override
 			public void run() {
@@ -137,23 +138,32 @@ public class SplashActivity extends AppCompatActivity {
 				if (ApplicationLoader.getPreferences().getAccessToken() != null
 						&& ApplicationLoader.getPreferences().getUserName() != null) {
 					Intent mIntent = new Intent(SplashActivity.this,
-							MotherActivity.class);					
+							MotherActivity.class);
 					startActivity(mIntent);
 					AndroidUtilities.enterWindowAnimation(SplashActivity.this);
 					finish();
-				}else{
-					Intent mIntent = new Intent(SplashActivity.this,
-							LoginActivity.class);
-					startActivity(mIntent);
-					AndroidUtilities.enterWindowAnimation(SplashActivity.this);
-					finish();
+				} else {
+					if(!ApplicationLoader.getPreferences().isAttemptedToLoginDidntReceiveOTP()){
+						Intent mIntent = new Intent(SplashActivity.this,
+								LoginActivity.class);
+						startActivity(mIntent);
+						AndroidUtilities.enterWindowAnimation(SplashActivity.this);
+						finish();
+					}else{
+						Intent mIntent = new Intent(SplashActivity.this,
+								VerificationActivity.class);
+						startActivity(mIntent);
+						AndroidUtilities.enterWindowAnimation(SplashActivity.this);
+						finish();
+					}
 				}
 			}
 		}, mDelay);
 	}
 
 	private void setAnimation() {
-		mAnimRotate = AnimationUtils.loadAnimation(this, R.anim.rotate_infinite);
+		mAnimRotate = AnimationUtils
+				.loadAnimation(this, R.anim.rotate_infinite);
 		mAppLogoIv.startAnimation(mAnimRotate);
 
 		/*
@@ -218,33 +228,33 @@ public class SplashActivity extends AppCompatActivity {
 					WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
 	}
-	
+
 	@Override
-    protected void attachBaseContext(Context newBase) {
-        try{
-        	if(AndroidUtilities.isAppLanguageIsEnglish()){
-        		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-        	}else{
-        		super.attachBaseContext(newBase);
-        	}
-        }catch(Exception e){
-        	FileLog.e(TAG, e.toString());
-        }
-    }
-	
+	protected void attachBaseContext(Context newBase) {
+		try {
+			if (AndroidUtilities.isAppLanguageIsEnglish()) {
+				super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+			} else {
+				super.attachBaseContext(newBase);
+			}
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+	}
+
 	/**
 	 * Google Analytics
 	 */
-	 @Override
-	  public void onStart() {
-	    super.onStart();
-	    EasyTracker.getInstance(this).activityStart(this);
-	  }
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
 
-	  @Override
-	  public void onStop() {
-	    super.onStop();
-	    EasyTracker.getInstance(this).activityStop(this);
-	  }
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
+	}
 
 }

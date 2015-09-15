@@ -109,7 +109,7 @@
                     android:gravity="right|center"
                     android:paddingRight="4dp"
                     android:text="@string/sample_item_recycler_mobcast_text_view_count"
-                    android:textColor="@color/toolbar_background"
+                    android:textColor="@color/item_activity_color"
                     android:textSize="@dimen/event_view_textview_size"
                     tools:ignore="RtlSymmetry" />
 
@@ -125,7 +125,7 @@
                     android:gravity="center"
                     android:paddingRight="4dp"
                     android:text="@string/sample_item_recycler_mobcast_text_view_count"
-                    android:textColor="@color/toolbar_background"
+                    android:textColor="@color/item_activity_color"
                     android:textSize="@dimen/event_view_textview_size"
                     tools:ignore="RtlSymmetry" />
 
@@ -153,7 +153,7 @@
                 android:gravity="left|center"
                 android:maxLines="2"
                 android:text="@string/sample_item_recycler_training_text_desc"
-                android:textColor="@color/toolbar_background"
+                android:textColor="@color/item_description_color"
                 android:textSize="@dimen/event_summary_textview_size" />
         </LinearLayout>
     </FrameLayout>

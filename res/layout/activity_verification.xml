@@ -218,6 +218,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="4dp"
                     android:gravity="center"
+                    android:padding="7dp"
                     android:text="@string/textview_verify_administration_tryagain"
                     android:textColor="@color/editbox_color"
                     android:textSize="@dimen/login_admin_size" />

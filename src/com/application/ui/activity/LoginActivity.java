@@ -59,6 +59,7 @@ import com.application.utils.JSONRequestBuilder;
 import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
+import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gms.common.ConnectionResult;
@@ -285,6 +286,7 @@ public class LoginActivity extends AppCompatActivity {
 				// TODO Auto-generated method stub
 				try{
 					if(!TextUtils.isEmpty(mLoginIdEt.getText().toString())){
+						UserReport.updateUserIssueApi(AppConstants.INTENTCONSTANTS.LOGIN, mLoginIdEt.getText().toString());
 						Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",AppConstants.mSupportEmail, null));
 						emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Suport : Unable to Login | " + getResources().getString(R.string.app_name));
 						emailIntent.putExtra(Intent.EXTRA_TEXT, "Please help me to login \n User Credentails: \n" + mLoginIdEt.getText().toString() + "\n" +  Utilities.getDeviceMfg() + "\n" + Utilities.getDeviceName());
@@ -562,7 +564,10 @@ public class LoginActivity extends AppCompatActivity {
 				mIntent.putExtra(AppConstants.INTENTCONSTANTS.OTP, parseDataFromOTP(mResponseFromApi));
 				mIntent.putExtra(AppConstants.INTENTCONSTANTS.COUNTRYCODE, mCountryCodeTv.getText().toString());
 				startActivity(mIntent);
+				ApplicationLoader.getPreferences().setAttemptedToLoginDidntReceiveOTP(true);
+				ApplicationLoader.getPreferences().setUserName(mLoginIdEt.getText().toString());
 				AndroidUtilities.enterWindowAnimation(LoginActivity.this);
+				finish();
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());

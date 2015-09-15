@@ -289,6 +289,7 @@ public class PptDetailActivity extends SwipeBackBaseActivity {
 						getDataFromDBForMobcast(mCursor);
 					}else{
 						mCursor = getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, null, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId}, DBConstant.Training_Columns.COLUMN_TRAINING_ID + " DESC");
+						getDataFromDBForTraining(mCursor);
 					}
 					if(mCursor!=null){
 						mCursor.close();

@@ -11,12 +11,18 @@
     <!-- <color name="toolbar_background_statusbar">#ff193655</color> -->
 
 
+    <!-- Textcolor -->
+    <color name="item_title_color">#ff254E7A</color>
+    <color name="item_description_color">#ff254E7A</color>
+    <color name="item_activity_color">#ff254E7A</color>
+    <color name="item_filename_color">#ff254E7A</color>
+
     <!-- mobcast_logo_colors -->
-    <color name="mobcast_red">#9AFFFFFF</color>
-    <color name="mobcast_yellow">#ffFFCD00</color>
-    <color name="mobcast_purple">#FF8F46AD</color>
-    <color name="mobcast_green">#FF02B86B</color>
-    <color name="mobcast_blue">#FF008CED</color>
+    <color name="mobcast_red">#bdFD3F1F</color>
+    <color name="mobcast_yellow">#bdFFCD00</color>
+    <color name="mobcast_purple">#bd8F46AD</color>
+    <color name="mobcast_green">#bd02B86B</color>
+    <color name="mobcast_blue">#bd008CED</color>
 
     <!-- #ff193655 #ff2B5E93 -->
     <color name="slidingtablayout_text_default">#ff92a6bc</color>
@@ -29,6 +35,7 @@
     <color name="green">#26A95D</color>
     <color name="background_unread">#DDE7EE</color>
     <color name="tutorial">#1F000000</color>
+    <color name="tutorial_dark">#2F000000</color>
     <color name="chattext_background">#EBF0F3</color>
     <color name="progress_dialog_background">#F4F4F4</color>
     <color name="gray">#AAAAAA</color>

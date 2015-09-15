@@ -232,7 +232,6 @@
     <string name="sample_about_report_problem">समस्या के बारे में बताएं</string>
     <string name="sample_about_report_problem_detail">अमेरिका एक बग या समस्या के बारे में बताने</string>
     <string name="sample_about_detail">Lorm ipsum dolor sit amer cosectetur adipiscing elit Nulla ut leo nec lectus tempor aliquet sit amet tempus risus Mauris venenatis velit auctor mauris placerat ac feugiat neque tincidunt</string>
-    <string name="sample_about_detail_1">Vestibulum eu bibendum nisi vel finibus leo Versitbulum est enim eleifend ac posuere vel tempor sed turpis Nulla sagittis porta ante a luctus Quisque ultricies semper libero nec cursus massa efficiur id</string>
     <string name="sample_about_privacy_policy"><![CDATA[<u>]]>गोपनीयता नीति<![CDATA[<u>]]></string>
 
     <!-- fragment_report -->

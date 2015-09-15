@@ -573,83 +573,87 @@ public class QuizActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void businessLogicOfQuizScore(){
-		mArrayListQuizScorePagerInfo = new ArrayList<>();
-		for(int i = 0 ;i < mArrayListQuizPagerInfo.size() ;i++){
-			QuizScorePagerInfo mQuizScorePagerInfo = new QuizScorePagerInfo();
-			Cursor mCursor = getContentResolver().query(DBConstant.Training_Quiz_Columns.CONTENT_URI, null, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ID + "=?" +" AND " + DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QID + "=?", new String[]{mArrayListQuizPagerInfo.get(i).getmQuizId(), mArrayListQuizPagerInfo.get(i).getmQuizQId()}, DBConstant.Training_Quiz_Columns.COLUMN_ID + " ASC");
-			if(mCursor!=null &&mCursor.getCount() > 0){
-				mCursor.moveToFirst();
-				String mAnswer = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ANSWER));
-				int mPoints  = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION_POINTS)));
-				String mQueType = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_TYPE));
-				String mQueId = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QID));
-				String mCorrectAnswer = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_CORRECT_OPTION));
-				if(!TextUtils.isEmpty(mAnswer) && !TextUtils.isEmpty(mCorrectAnswer)){
-					if(mQueType.equalsIgnoreCase("selective")){
-						if(mAnswer.equalsIgnoreCase(mCorrectAnswer)){
-							mQuizScore+=mPoints;
-						}else{
-							mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
-							mQuizScorePagerInfo.setmQuestionId(mQueId);
-						}
-					}else{
-						if (mAnswer.length() > 1) {
-							if (mCorrectAnswer.length() < 1) {
+		try{
+			mArrayListQuizScorePagerInfo = new ArrayList<>();
+			for(int i = 0 ;i < mArrayListQuizPagerInfo.size() ;i++){
+				QuizScorePagerInfo mQuizScorePagerInfo = new QuizScorePagerInfo();
+				Cursor mCursor = getContentResolver().query(DBConstant.Training_Quiz_Columns.CONTENT_URI, null, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ID + "=?" +" AND " + DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QID + "=?", new String[]{mArrayListQuizPagerInfo.get(i).getmQuizId(), mArrayListQuizPagerInfo.get(i).getmQuizQId()}, DBConstant.Training_Quiz_Columns.COLUMN_ID + " ASC");
+				if(mCursor!=null &&mCursor.getCount() > 0){
+					mCursor.moveToFirst();
+					String mAnswer = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ANSWER));
+					int mPoints  = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION_POINTS)));
+					String mQueType = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_TYPE));
+					String mQueId = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QID));
+					String mCorrectAnswer = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_CORRECT_OPTION));
+					if(!TextUtils.isEmpty(mAnswer) && !TextUtils.isEmpty(mCorrectAnswer)){
+						if(mQueType.equalsIgnoreCase("selective")){
+							if(mAnswer.equalsIgnoreCase(mCorrectAnswer)){
+								mQuizScore+=mPoints;
+							}else{
 								mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
 								mQuizScorePagerInfo.setmQuestionId(mQueId);
-							}else{
-								String mCorrectAnswerArr1[] = mCorrectAnswer.split(",");
-								String mAnswerArr[] = mAnswer.split(",");
-								for (int j = 0; j < mCorrectAnswerArr1.length; j++) {
-									for (int l = 0; l < mAnswerArr.length; l++) {
-										if(mAnswerArr[l].equalsIgnoreCase(mCorrectAnswerArr1[j])){
-											mQuizScore += mPoints/mCorrectAnswerArr1.length;
+							}
+						}else{
+							if (mAnswer.length() > 1) {
+								if (mCorrectAnswer.length() < 1) {
+									mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
+									mQuizScorePagerInfo.setmQuestionId(mQueId);
+								}else{
+									String mCorrectAnswerArr1[] = mCorrectAnswer.split(",");
+									String mAnswerArr[] = mAnswer.split(",");
+									for (int j = 0; j < mCorrectAnswerArr1.length; j++) {
+										for (int l = 0; l < mAnswerArr.length; l++) {
+											if(mAnswerArr[l].equalsIgnoreCase(mCorrectAnswerArr1[j])){
+												mQuizScore += mPoints/mCorrectAnswerArr1.length;
+											}
 										}
 									}
-								}
-								
-								if(mAnswerArr.length > mCorrectAnswerArr1.length){//negative marking
-									int mNumberExtraOption = mAnswerArr.length - mCorrectAnswerArr1.length;
-									mQuizScore = mQuizScore - (mPoints/mNumberExtraOption);
-									mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
-									mQuizScorePagerInfo.setmQuestionId(mQueId);
-								}else if(mAnswerArr.length < mCorrectAnswerArr1.length){
-									int mNumberExtraOption = mCorrectAnswerArr1.length - mAnswerArr.length;
-									mQuizScore = mQuizScore - (mPoints/mNumberExtraOption);
-									mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
-									mQuizScorePagerInfo.setmQuestionId(mQueId);
-								}
-							}
-						}else{
-							if(mCorrectAnswer.length()<1){
-								if(mAnswer.equalsIgnoreCase(mCorrectAnswer)){
-									mQuizScore+=mPoints;
-								}else{
-									mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
-									mQuizScorePagerInfo.setmQuestionId(mQueId);
-								}
-							}else{
-								String [] mCorrectAnswerArr = mCorrectAnswer.split(",");
-								for (int k = 0; k < mCorrectAnswerArr.length; k++) {
-									if(mAnswer.equalsIgnoreCase(mCorrectAnswerArr[k])){
-										mQuizScore+=mPoints;
+									
+									if(mAnswerArr.length > mCorrectAnswerArr1.length){//negative marking
+										int mNumberExtraOption = mAnswerArr.length - mCorrectAnswerArr1.length;
+										mQuizScore = mQuizScore - (mPoints/mNumberExtraOption);
+										mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
+										mQuizScorePagerInfo.setmQuestionId(mQueId);
+									}else if(mAnswerArr.length < mCorrectAnswerArr1.length){
+										int mNumberExtraOption = mCorrectAnswerArr1.length - mAnswerArr.length;
+										mQuizScore = mQuizScore - (mPoints/mNumberExtraOption);
+										mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
+										mQuizScorePagerInfo.setmQuestionId(mQueId);
 									}
 								}
-								mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
-								mQuizScorePagerInfo.setmQuestionId(mQueId);
-							}
-						}						
+							}else{
+								if(mCorrectAnswer.length()<=1){
+									if(mAnswer.equalsIgnoreCase(mCorrectAnswer)){
+										mQuizScore+=mPoints;
+									}else{
+										mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
+										mQuizScorePagerInfo.setmQuestionId(mQueId);
+									}
+								}else{
+									String [] mCorrectAnswerArr = mCorrectAnswer.split(",");
+									for (int k = 0; k < mCorrectAnswerArr.length; k++) {
+										if(mAnswer.equalsIgnoreCase(mCorrectAnswerArr[k])){
+											mQuizScore+=mPoints;
+										}
+									}
+									mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
+									mQuizScorePagerInfo.setmQuestionId(mQueId);
+								}
+							}						
+						}
 					}
 				}
+				
+				if(mCursor!=null)
+					mCursor.close();
+				
+				if(!TextUtils.isEmpty(mQuizScorePagerInfo.getmQuestionNo())){
+					mArrayListQuizScorePagerInfo.add(mQuizScorePagerInfo);	
+				}
+				
 			}
-			
-			if(mCursor!=null)
-				mCursor.close();
-			
-			if(!TextUtils.isEmpty(mQuizScorePagerInfo.getmQuestionNo())){
-				mArrayListQuizScorePagerInfo.add(mQuizScorePagerInfo);	
-			}
-			
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 	

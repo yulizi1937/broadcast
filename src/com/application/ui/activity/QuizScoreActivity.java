@@ -122,8 +122,8 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 
 		mQuizScoreTimeTakenTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreTimeTakenTv);
 		mQuizScoreTimeTakenTextTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreTimeTakenInTv);
-		mQuizScoreTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreTotalScoreTv);
-		mQuizScoreStatementTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreTotalScoreTextTv);
+		mQuizScoreTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreTotalScoreTextTv);
+		mQuizScoreStatementTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreTotalScoreTv);
 		mQuizScoreCorrectAnswerTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreCorrectAnswerTv);
 		mQuizScoreStatementCorrectAnswerTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreCorrectAnswerTextTv);
 		mQuizScoreGoofedUpAtTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreGoofedUpAtTv);
@@ -175,7 +175,7 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 		}
 		
 		if(mArrayListQuizScorePagerInfo!=null && mArrayListQuizScorePagerInfo.size() > 0){
-			mQuizScoreCorrectAnswerTv.setText(Integer.parseInt(mTotalQuestions) - Integer.parseInt(mIncorrectQuestions) + "/" + mTotalQuestions);
+			mQuizScoreCorrectAnswerTv.setText(mIncorrectQuestions + "/" + mTotalQuestions);
 		}else{
 			mQuizScoreCorrectAnswerTv.setText(mTotalQuestions+ "/" + mTotalQuestions);
 		}

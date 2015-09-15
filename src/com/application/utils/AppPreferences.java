@@ -71,6 +71,16 @@ public class AppPreferences {
 		return sharedPreferences.getBoolean("isToByPassOTP", true);
 	}
 	
+	public void setAttemptedToLoginDidntReceiveOTP(boolean flag) {
+		editor = sharedPreferences.edit();
+		editor.putBoolean("isAttemptedToLoginDidntReceiveOTP", flag);
+		editor.commit();
+	}
+
+	public boolean isAttemptedToLoginDidntReceiveOTP() {
+		return sharedPreferences.getBoolean("isAttemptedToLoginDidntReceiveOTP", false);
+	}
+	
 	/*
 	 * PREFERENCES : APPLICATION DETAILS
 	 */
@@ -409,6 +419,17 @@ public class AppPreferences {
 	public boolean isAppCustomTextFont() {
 		boolean isAppCustomTextFont= sharedPreferences.getBoolean("isAppCustomTextFont",true);
 		return isAppCustomTextFont;
+	}
+	
+	public void setAppShowCaseViewMother(boolean isAppShowCaseViewMother) {
+		editor = sharedPreferences.edit();
+		editor.putBoolean("isAppShowCaseViewMother", isAppShowCaseViewMother);
+		editor.commit();
+	}
+
+	public boolean isAppShowCaseViewMother() {
+		boolean isAppShowCaseViewMother= sharedPreferences.getBoolean("isAppShowCaseViewMother",false);
+		return isAppShowCaseViewMother;
 	}
 	
 	

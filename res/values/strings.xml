@@ -42,11 +42,11 @@
     
     <string name="showcase_content1" tools:ignore="TypographyEllipsis">Update your profile, application settings and many more...</string>
     <string name="showcase_content2" tools:ignore="TypographyEllipsis">Up to date with your organization events, meet ups and many more...</string>
-    <string name="showcase_content3">Showcase Content3</string>
-    <string name="showcase_content4">Showcase Content4</string>
-    <string name="showcase_content5">Showcase Content5</string>
-    <string name="showcase_gotit">Got it</string>
-    <string name="showcase_next">Next</string>
+    <string name="showcase_content3" tools:ignore="TypographyEllipsis">Up to date with your organization rewards, success and many more...</string>
+    <string name="showcase_content4" tools:ignore="TypographyEllipsis">Up to date with your colleagues birthday, wish em and many more...</string>
+    <string name="showcase_content5" tools:ignore="TypographyEllipsis">Search content easily throughtout the application ...</string>
+    <string name="showcase_gotit">GOT IT</string>
+    <string name="showcase_next">NEXT</string>
     
     <string name="new_mobcast_avail">New Mobcast</string>
     <string name="new_training_avail">New Training</string>
@@ -159,7 +159,7 @@
     <string name="hint_verification_code">0</string>
     <string name="button_verify">VERIFY</string>
     <string name="button_resend">RE-SEND</string>
-    <string name="button_raised_ticket">RAISED TICKET</string>
+    <string name="button_raised_ticket">Contact Support</string>
     <string name="textview_verify_administration">Didn\'t receive one? Get another</string>
     <string name="textview_verify_administration_tryagain">Entered wrong number? Try again</string>
     <string name="validate_verfication_code_empty">Please fill up the OTP correctly</string>
@@ -391,7 +391,6 @@
     <string name="sample_about_report_problem">REPORT A PROBLEM</string>
     <string name="sample_about_report_problem_detail">LET US KNOW ABOUT A BUG OR PROBLEM</string>
     <string name="sample_about_detail">MobCast is the EASIEST and the MOST EFFECTIVE way to broadcast rich content on mobile devices.Enterprises and other entities can leverage this patent pending technology to communicate and build lasting relationship with their customers , employees and other stakeholders.The platform smartly identifies and distinguishes smartphones from feature phones and correspondingly publishes the communication with the application or as an SMS.Built by a team of award winning mobile experts, its notably the only platform of its kind and starts a new and revolutionary chapter in the field of group communication.</string>
-<!--     <string name="sample_about_detail_1">Vestibulum eu bibendum nisi vel finibus leo Versitbulum est enim eleifend ac posuere vel tempor sed turpis Nulla sagittis porta ante a luctus Quisque ultricies semper libero nec cursus massa efficiur id</string> -->
     <string name="sample_about_privacy_policy"><![CDATA[<u>]]>PRIVACY POLICY<![CDATA[<u>]]></string>
 
     <!-- fragment_report -->
@@ -695,6 +694,7 @@ Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic 
     <string name="loadingLogin" tools:ignore="TypographyEllipsis">Signing In...</string>
     <string name="loadingRefresh" tools:ignore="TypographyEllipsis">Refreshing...</string>
     <string name="loadingVerify" tools:ignore="TypographyEllipsis">Verifying...</string>
+    <string name="loadingRequest" tools:ignore="TypographyEllipsis">Requesting...</string>
     <string name="loadingUpdate" tools:ignore="TypographyEllipsis">Updating...</string>
     <string name="loadingSubmit" tools:ignore="TypographyEllipsis">Submitting...</string>
     <string name="loadingMessage" tools:ignore="TypographyEllipsis">Sending message...</string>

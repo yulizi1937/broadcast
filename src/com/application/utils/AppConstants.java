@@ -59,6 +59,7 @@ public class AppConstants {
 		public static final String API_SUBMIT_REF           = API_URL + "submitRecruitmentReference";
 		public static final String API_SEND_CHAT            = API_URL + "sendChatMessage";
 		public static final String API_SEARCH               = API_URL + "search";
+		public static final String API_SUBMIT_ISSUE         = API_URL + "submitAppIssue";
 	}
 	
 	public interface API_KEY_PARAMETER{
@@ -98,6 +99,7 @@ public class AppConstants {
 		public static final String birthdate               = "birthDate";
 		public static final String countryCode             = "countryCode";
 		public static final String category                = "category";
+		public static final String issue                   = "issue";
 		public static final String uniqueId                = "uniqueId";
 		public static final String description             = "description";
 		public static final String company                 = "company";
@@ -437,6 +439,7 @@ public class AppConstants {
 		public static final String AWARD            = "award";
 		public static final String EVENT            = "event";
 		public static final String BIRTHDAY         = "birthday";
+		public static final String ISSUE            = "issue";
 		public static final String REMOTECONTENTDELETE= "remoteContentDelete";
 		public static final String REMOTEWIPE       = "remoteWipe";
 		public static final String REMOTELOGOUT     = "remoteLogout";
@@ -445,6 +448,7 @@ public class AppConstants {
 		public static final String REMOTESUSPEND    = "remoteSuspend";
 		public static final String RECRUITMENT      = "recruitment";
 		public static final String RELOGIN          = "relogin";
+		public static final String LOGIN            = "login";
 		public static final String OBJECT           = "object";
 		public static final String POSITION         = "position";
 		public static final String POINTS           = "points";

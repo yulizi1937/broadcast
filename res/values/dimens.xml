@@ -20,7 +20,7 @@
     <dimen name="login_textview_size">14sp</dimen>
     <dimen name="login_edittext_size">18sp</dimen>
     <dimen name="login_countrycode_size">16sp</dimen>
-    <dimen name="login_admin_size">8sp</dimen>
+    <dimen name="login_admin_size">14sp</dimen>
     <dimen name="login_editbox_height">40dp</dimen>
     <dimen name="login_btn_next_width">200dp</dimen>
     <dimen name="login_btn_next_height">40dp</dimen>
@@ -155,7 +155,7 @@
     <dimen name="fragment_quiz_score_header_text_size">12sp</dimen>
     <dimen name="fragment_quiz_score_text_size">20sp</dimen>
     <dimen name="fragment_quiz_score_total_text_size">24sp</dimen>
-    <dimen name="fragment_quiz_score_text_detail_size">10sp</dimen>
+    <dimen name="fragment_quiz_score_text_detail_size">6sp</dimen>
     <dimen name="fragment_quiz_score_statement_text_size">12sp</dimen>
     <dimen name="fragment_quiz_score_goofed_up_text_size">10sp</dimen>
     <dimen name="fragment_quiz_score_goofed_up_at_text_size">7sp</dimen>

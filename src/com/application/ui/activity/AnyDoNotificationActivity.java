@@ -219,7 +219,7 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 			mBottomSheetAnyDo = new BottomSheetAnyDo.Builder(this, mId,
 					mCategory, mLayoutId)
 			.icon(getRoundedBitmap(R.drawable.ic_launcher))
-			.title("Notifications")
+			.title(getResources().getString(R.string.app_name))
 			.sheet(R.menu.menu_anydo).limit(R.integer.anydo_limit)
 			.setOnDismissListener(new OnDismissListener() {
 				@Override

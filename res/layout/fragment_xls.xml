@@ -46,10 +46,10 @@
                     android:layout_marginTop="8dp"
                     android:paddingTop="2dp"
                     android:text="@string/sample_item_recycler_mobcast_xls_file_name"
-                    android:textColor="@color/toolbar_background"
+                    android:textColor="@color/item_filename_color"
                     android:textSize="@dimen/item_recycler_mobcast_audio_view_detail_file_type_name_text_size"
                     android:textStyle="bold"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/fragmentXlsDetailFileDetailIv"
@@ -58,6 +58,7 @@
                     android:layout_below="@id/fragmentXlsDetailFileNameIv"
                     android:layout_centerHorizontal="true"
                     android:paddingTop="2dp"
+                    android:visibility="invisible"
                     android:text="@string/sample_item_recycler_mobcast_xls_file_info"
                     android:textColor="@color/item_recycler_mobcast_xls_color"
                     android:textSize="@dimen/item_recycler_mobcast_audio_view_detail_file_type_detail_text_size"
@@ -99,7 +100,7 @@
                 android:layout_gravity="top"
                 android:gravity="start|center"
                 android:text="@string/sample_item_recycler_mobcast_xls_title"
-                android:textColor="@color/toolbar_background"
+                android:textColor="@color/item_title_color"
                 android:textSize="@dimen/event_title_textview_size"
                 android:textStyle="bold" />
 
@@ -139,7 +140,7 @@
                     android:gravity="right|center"
                     android:paddingRight="4dp"
                     android:text="@string/sample_item_recycler_mobcast_text_view_count"
-                    android:textColor="@color/toolbar_background"
+                    android:textColor="@color/item_activity_color"
                     android:textSize="@dimen/event_view_textview_size"
                     tools:ignore="RtlSymmetry,RtlHardcoded" />
 
@@ -155,7 +156,7 @@
                     android:gravity="center"
                     android:paddingRight="4dp"
                     android:text="@string/sample_item_recycler_mobcast_text_view_count"
-                    android:textColor="@color/toolbar_background"
+                    android:textColor="@color/item_activity_color"
                     android:textSize="@dimen/event_view_textview_size"
                     tools:ignore="RtlSymmetry,RtlHardcoded" />
             </RelativeLayout>
@@ -237,7 +238,7 @@
                 android:layout_marginTop="@dimen/fragment_detail_title_by_content_margin_top"
                 android:gravity="start|center"
                 android:text="@string/sample_item_recycler_mobcast_xls_desc"
-                android:textColor="@color/toolbar_background"
+                android:textColor="@color/item_description_color"
                 android:textSize="@dimen/event_detail_event_summary_size" />
         </LinearLayout>
     </LinearLayout>
