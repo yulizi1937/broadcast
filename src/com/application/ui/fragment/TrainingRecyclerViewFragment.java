@@ -31,7 +31,6 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.text.SpannableString;
@@ -42,11 +41,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
-import com.application.beans.Mobcast;
 import com.application.beans.Training;
 import com.application.beans.TrainingFileInfo;
 import com.application.sqlite.DBConstant;
@@ -75,6 +73,7 @@ import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.BuildVars;
 import com.application.utils.FetchFeedActionAsyncTask;
+import com.application.utils.FetchFeedActionAsyncTask.OnPostExecuteFeedActionTaskListener;
 import com.application.utils.FileLog;
 import com.application.utils.JSONRequestBuilder;
 import com.application.utils.ObservableScrollViewCallbacks;
@@ -83,13 +82,11 @@ import com.application.utils.RetroFitClient;
 import com.application.utils.ScrollUtils;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
-import com.application.utils.FetchFeedActionAsyncTask.OnPostExecuteFeedActionTaskListener;
 import com.mobcast.R;
 import com.squareup.okhttp.OkHttpClient;
 
 public class TrainingRecyclerViewFragment extends BaseFragment implements IFragmentCommunicator{
-	private static final String TAG = TrainingRecyclerViewFragment.class
-			.getSimpleName();
+	private static final String TAG = TrainingRecyclerViewFragment.class.getSimpleName();
 	public static final String ARG_INITIAL_POSITION = "ARG_INITIAL_POSITION";
 
 	private IActivityCommunicator mActivityCommunicator;
@@ -187,6 +184,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 		checkReadFromDBAndUpdateToObj();
 		setUiListener();
 		ApplicationLoader.trackScreenViewV3(ApplicationLoader.getApplication().getResources().getString(R.string.com_application_ui_fragment_TrainingRecyclerViewFragment));
+		checkForNewTrainingDataAvail();
 	}
 
 	private void setUiListener() {
@@ -523,11 +521,16 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 					int mTotalPoints = 0;
 					ArrayList<TrainingFileInfo> mTrainingQuizInfoList = new ArrayList<>();
 					TrainingFileInfo quizObj = new TrainingFileInfo();
-					quizObj.setmPages(mCursorQuizInfo.getCount() + " " + getResources().getString(R.string.item_recycler_mobcast_feedback_question));
+					if(mCursorQuizInfo.getCount() == 1){
+						quizObj.setmPages(mCursorQuizInfo.getCount() + " " + getResources().getString(R.string.item_recycler_mobcast_feedback_question));
+					}else{
+						quizObj.setmPages(mCursorQuizInfo.getCount() + " " + getResources().getString(R.string.item_recycler_mobcast_feedback_questions));
+					}
 					try{
 						String []mTime = Utilities.convertTimeFromSecsTo(Long.parseLong(mCursorQuizInfo.getString(mCursorQuizInfo.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_DURATION)))).split(" ");
 						quizObj.setmDuration(mTime[0]+" "+ mTime[1]);
-						
+						quizObj.setmFileIsDefault(mCursorQuizInfo.getString(mCursorQuizInfo.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ATTEMPT)));
+						quizObj.setmAttempts(mCursorQuizInfo.getString(mCursorQuizInfo.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ATTEMPT_COUNT)));
 						do{
 							mTotalPoints+=Integer.parseInt(mCursorQuizInfo.getString(mCursorQuizInfo.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION_POINTS)));
 						}while(mCursorQuizInfo.moveToNext());
@@ -640,12 +643,24 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 						AndroidUtilities.enterWindowAnimation(mParentActivity);
 						break;
 					case R.id.itemRecyclerTrainingQuizRootLayout:
-						Intent mIntentFeedback = new Intent(mParentActivity,QuizActivity.class);
-						mIntentFeedback.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.TRAINING);
-						mIntentFeedback.putExtra(AppConstants.INTENTCONSTANTS.ID, mArrayListTraining.get(position).getmId());
-						saveViewPosition(position);
-						startActivity(mIntentFeedback);
-						AndroidUtilities.enterWindowAnimation(mParentActivity);
+						boolean quizSingleAttemptAndRead = false;
+						if(Boolean.parseBoolean(mArrayListTraining.get(position).getmFileInfo().get(0).getmFileIsDefault())){
+							if(mArrayListTraining.get(position).isRead()){
+								quizSingleAttemptAndRead = true;
+							}
+						}
+						
+						if(!quizSingleAttemptAndRead){
+							Intent mIntentFeedback = new Intent(mParentActivity,QuizActivity.class);
+							mIntentFeedback.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.TRAINING);
+							mIntentFeedback.putExtra(AppConstants.INTENTCONSTANTS.ID, mArrayListTraining.get(position).getmId());
+							saveViewPosition(position);
+							startActivity(mIntentFeedback);
+							AndroidUtilities.enterWindowAnimation(mParentActivity);
+						}else{
+							AndroidUtilities.showSnackBar(getActivity(), getActivity().getResources().getString(R.string.quiz_attempted));
+						}
+						
 						break;
 					case R.id.itemRecyclerTrainingAudioRootLayout:
 						Intent mIntentAudio = new Intent(mParentActivity,AudioDetailActivity.class);
@@ -683,6 +698,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 						Intent mIntentDoc = new Intent(mParentActivity,DocDetailActivity.class);
 						mIntentDoc.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.TRAINING);
 						mIntentDoc.putExtra(AppConstants.INTENTCONSTANTS.ID, mArrayListTraining.get(position).getmId());
+						saveViewPosition(position);
 						startActivity(mIntentDoc);
 						AndroidUtilities.enterWindowAnimation(mParentActivity);
 						break;
@@ -719,6 +735,17 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 		ApplicationLoader.getPreferences().setViewIdTraining(String.valueOf(position));
 	}
 	
+	private void checkForNewTrainingDataAvail(){
+		try{
+			if(ApplicationLoader.getPreferences().isRefreshTrainingWithNewDataAvail()){
+				ApplicationLoader.getPreferences().setRefreshTrainingWithNewDataAvail(false);
+				passDataToFragment(-1, AppConstants.INTENTCONSTANTS.TRAINING);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
 	private void checkReadFromDBAndUpdateToObj(){
 		int position = Integer.parseInt(ApplicationLoader.getPreferences().getViewIdTraining());
 //		position-=1;
@@ -743,6 +770,10 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 					mArrayListTraining.get(position).setmViewCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT)));
 					isToNotify = true;
 					
+					if(mArrayListTraining.get(position).getmFileType().equalsIgnoreCase(AppConstants.TRAINING.QUIZ)){
+						mArrayListTraining.get(position).getmFileInfo().get(0).setmAttempts(String.valueOf(Integer.parseInt(mArrayListTraining.get(position).getmFileInfo().get(0).getmAttempts()) + 1));
+					}
+					
 					if(isToNotify){
 						mRecyclerView.getAdapter().notifyDataSetChanged();
 					}
@@ -763,17 +794,22 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 		if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
 			Cursor mCursor = null;
 			boolean isToAddOldData = false;
+			boolean isFromBroadCastReceiver = false;
 			if(mId == -786){
 				mCursor = mContext.getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, null, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "<?", new String[]{mArrayListTraining.get(mArrayListTraining.size()-1).getmId()}, DBConstant.Training_Columns.COLUMN_TRAINING_ID + " DESC");
 				isToAddOldData = true;
 			}else{
 				mCursor = mContext.getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, null, null, null, DBConstant.Training_Columns.COLUMN_TRAINING_ID + " DESC");
+				if(mId ==-1){
+					isFromBroadCastReceiver = true;
+					setNewAvailBubbleLayout();
+				}
 			}
 			if(mCursor!=null && mCursor.getCount() > 0){
 				mSwipeRefreshLayout.setEnabled(true);
 				mSwipeRefreshLayout.setRefreshing(true);
 				mCursor.moveToFirst();
-				addTrainingObjectListFromDBToBeans(mCursor, false, isToAddOldData);
+				addTrainingObjectListFromDBToBeans(mCursor, isFromBroadCastReceiver, isToAddOldData);
 				AndroidUtilities.runOnUIThread(new Runnable() {
 					@Override
 					public void run() {
@@ -850,16 +886,19 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
          SpannableString mSpannabledUnRead = new SpannableString(getResources().getString(R.string.context_menu_unread));
          SpannableString mSpannabledDelete = new SpannableString(getResources().getString(R.string.context_menu_delete));
          SpannableString mSpannabledView = new SpannableString(getResources().getString(R.string.context_menu_view));
+         SpannableString mSpannabledLike = new SpannableString(getResources().getString(R.string.context_menu_like));
          
          mSpannabledRead.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledRead.length(), 0);
          mSpannabledUnRead.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledUnRead.length(), 0);
          mSpannabledDelete.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledDelete.length(), 0);
          mSpannabledView.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledView.length(), 0);
+         mSpannabledLike.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledLike.length(), 0);
          
          menu.getItem(0).setTitle(mSpannabledRead);
          menu.getItem(1).setTitle(mSpannabledUnRead);
-         menu.getItem(2).setTitle(mSpannabledDelete);
-         menu.getItem(3).setTitle(mSpannabledView);
+         menu.getItem(2).setTitle(mSpannabledLike);
+         menu.getItem(3).setTitle(mSpannabledDelete);
+         menu.getItem(4).setTitle(mSpannabledView);
          
          /**
           * Read
@@ -883,10 +922,22 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
              }
          });
          
+         
+         /**
+          * Like
+          */
+         menu.getItem(2).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+             @Override
+             public boolean onMenuItemClick(MenuItem item) {
+            	 contextMenuLike(mPosition);
+                 return true;
+             }
+         });
+         
          /**
           * Delete
           */
-         menu.getItem(2).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+         menu.getItem(3).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
              @Override
              public boolean onMenuItemClick(MenuItem item) {
             	 showDeleteConfirmationDialog(mPosition, mTitle);
@@ -898,7 +949,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
          /**
           * View
           */
-         menu.getItem(3).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+         menu.getItem(4).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
              @Override
              public boolean onMenuItemClick(MenuItem item) {
             	 contextMenuView(mPosition, mView);
@@ -912,14 +963,18 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 	private void contextMenuMarkAsRead(int mPosition){
 		try{
 		 ContentValues values = new ContentValues();
-		 String mTrainingId = mArrayListTraining.get(mPosition).getmId();
-		 values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, "true");
-		 getActivity().getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mTrainingId});	
-       	 mArrayListTraining.get(mPosition).setRead(true);
-       	 mRecyclerView.getAdapter().notifyItemChanged(mPosition+1);
-       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.TRAINING);
-       	 UserReport.updateUserReportApi(mTrainingId, AppConstants.INTENTCONSTANTS.TRAINING, AppConstants.REPORT.READ, "");
-       	Utilities.showBadgeNotification(getActivity());
+		 if(!mArrayListTraining.get(mPosition).getmFileType().equalsIgnoreCase(AppConstants.TRAINING.QUIZ)){
+			 String mTrainingId = mArrayListTraining.get(mPosition).getmId();
+			 values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, "true");
+			 getActivity().getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mTrainingId});	
+	       	 mArrayListTraining.get(mPosition).setRead(true);
+	       	 mRecyclerView.getAdapter().notifyItemChanged(mPosition+1);
+	       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.TRAINING);
+	       	 UserReport.updateUserReportApi(mTrainingId, AppConstants.INTENTCONSTANTS.TRAINING, AppConstants.REPORT.READ, "");
+	       	Utilities.showBadgeNotification(getActivity());
+		 }else{
+			 AndroidUtilities.showSnackBar(getActivity(), getActivity().getResources().getString(R.string.quiz_read));
+		 }
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -927,13 +982,17 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 	
 	private void contextMenuMarkAsUnRead(int mPosition){
 		try{
-		 ContentValues values = new ContentValues();
-	     values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, "false");
-		 getActivity().getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mArrayListTraining.get(mPosition).getmId()});
-		 mArrayListTraining.get(mPosition).setRead(false);
-       	 mRecyclerView.getAdapter().notifyItemChanged(mPosition+1);
-       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.TRAINING);
-       	Utilities.showBadgeNotification(getActivity());
+		 if(!mArrayListTraining.get(mPosition).getmFileType().equalsIgnoreCase(AppConstants.TRAINING.QUIZ)){
+			 ContentValues values = new ContentValues();
+		     values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, "false");
+			 getActivity().getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mArrayListTraining.get(mPosition).getmId()});
+			 mArrayListTraining.get(mPosition).setRead(false);
+	       	 mRecyclerView.getAdapter().notifyItemChanged(mPosition+1);
+	       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.TRAINING);
+	       	Utilities.showBadgeNotification(getActivity());
+		 }else{
+			 AndroidUtilities.showSnackBar(getActivity(), getActivity().getResources().getString(R.string.quiz_unread));
+		 }
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -959,6 +1018,24 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 	private void contextMenuView(int mPosition , View mView){
 		try{
 			mView.performClick();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void contextMenuLike(int mPosition){
+		try{
+			 if(!mArrayListTraining.get(mPosition).isLike()){
+				 String mTrainingId = mArrayListTraining.get(mPosition).getmId();
+				 ContentValues values = new ContentValues();
+			     values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE, "true");
+				 getActivity().getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mTrainingId});
+				 mArrayListTraining.get(mPosition).setLike(true);
+				 mArrayListTraining.get(mPosition).setmLikeCount(String.valueOf(Integer.parseInt(mArrayListTraining.get(mPosition).getmLikeCount())+1));
+		       	 mRecyclerView.getAdapter().notifyItemChanged(mPosition+1);
+		       	UserReport.updateUserReportApi(mTrainingId, AppConstants.INTENTCONSTANTS.TRAINING, AppConstants.REPORT.LIKE, "");
+		       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.TRAINING);
+			 }
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -1123,6 +1200,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_TYPE, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizQueType));
 								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizQueTitle));
 								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_CORRECT_OPTION, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizCorrectAnswer));
+								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ATTEMPT, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.isSingleAttempt));
 								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION_POINTS, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizScore));
 								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_DURATION, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizDuration));
 								valuesQuizInfo.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_1, mJSONQuizObj.getString(AppConstants.API_KEY_PARAMETER.trainingQuizOption1));

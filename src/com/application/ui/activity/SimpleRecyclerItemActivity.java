@@ -24,6 +24,7 @@ import com.application.ui.view.ObservableRecyclerView;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.FileLog;
+import com.application.utils.ThemeUtils;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
@@ -56,6 +57,7 @@ public class SimpleRecyclerItemActivity extends SwipeBackBaseActivity {
 		getIntentData();
 		initToolBar();
 		initUi();
+		applyTheme();
 	}
 
 	@Override
@@ -107,6 +109,14 @@ public class SimpleRecyclerItemActivity extends SwipeBackBaseActivity {
 	}
 
 	private void setOnClickListener() {
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(SimpleRecyclerItemActivity.this).applyThemeCountrySelect(SimpleRecyclerItemActivity.this, SimpleRecyclerItemActivity.this, mToolBar);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	private void setRecycleAdapter(){

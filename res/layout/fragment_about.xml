@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/sample_about_version"
-                android:textColor="@drawable/selector_text_view_about"
+                android:textColor="@color/drawer_item_title"
                 android:textSize="@dimen/fragment_about_version_text"
                 android:textStyle="bold"
                 tools:ignore="RtlHardcoded" />
@@ -46,7 +46,7 @@
                 android:layout_marginTop="@dimen/fragment_about_version_detail_text_margin_top"
                 android:gravity="center"
                 android:text="@string/sample_about_version_detail"
-                android:textColor="@drawable/selector_text_view_about"
+                android:textColor="@color/drawer_item_title"
                 android:textSize="@dimen/fragment_about_version_detail_text"
                 tools:ignore="RtlHardcoded" />
         </LinearLayout>
@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/sample_about_send_feedback"
-                    android:textColor="@drawable/selector_text_view_about"
+                    android:textColor="@color/drawer_item_title"
                     android:textSize="@dimen/fragment_about_version_text"
                     android:textStyle="bold"
                     tools:ignore="RtlHardcoded" />
@@ -87,7 +87,7 @@
                     android:layout_marginTop="@dimen/fragment_about_version_detail_text_margin_top"
                     android:gravity="center"
                     android:text="@string/sample_about_send_feedback_detail"
-                    android:textColor="@drawable/selector_text_view_about"
+                    android:textColor="@color/drawer_item_title"
                     android:textSize="@dimen/fragment_about_version_detail_text"
                     tools:ignore="RtlHardcoded" />
             </LinearLayout>
@@ -117,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/sample_about_report_problem"
-                    android:textColor="@drawable/selector_text_view_about"
+                    android:textColor="@color/drawer_item_title"
                     android:textSize="@dimen/fragment_about_version_text"
                     android:textStyle="bold"
                     tools:ignore="RtlHardcoded" />
@@ -129,7 +129,7 @@
                     android:layout_marginTop="@dimen/fragment_about_version_detail_text_margin_top"
                     android:gravity="center"
                     android:text="@string/sample_about_report_problem_detail"
-                    android:textColor="@drawable/selector_text_view_about"
+                    android:textColor="@color/drawer_item_title"
                     android:textSize="@dimen/fragment_about_version_detail_text"
                     tools:ignore="RtlHardcoded" />
             </LinearLayout>
@@ -150,7 +150,7 @@
             android:layout_marginTop="@dimen/fragment_about_version_layout_margin_top"
             android:gravity="center"
             android:text="@string/sample_about_privacy_policy"
-            android:textColor="@drawable/selector_text_view_about"
+            android:textColor="@color/drawer_item_title"
             android:textSize="@dimen/fragment_about_version_text"
             android:textStyle="bold"
             tools:ignore="RtlHardcoded" />

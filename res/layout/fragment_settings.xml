@@ -26,13 +26,13 @@
                 android:layout_gravity="start|center"
                 android:gravity="start|center"
                 android:text="@string/sample_fragment_settings_header_general"
-                android:textColor="@color/toolbar_background"
+                android:textColor="@color/drawer_item_title"
                 android:textSize="@dimen/fragment_settings_header_text_size" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/toolbar_background" />
+                android:background="@color/drawer_item_title" />
 
             <LinearLayout
                 android:id="@+id/fragmentSettingsGeneralLanguageLayout"
@@ -62,7 +62,7 @@
                     android:layout_weight="1"
                     android:gravity="end|center"
                     android:text="@string/sample_fragment_settings_general_language_text"
-                    android:textColor="@color/toolbar_background"
+                    android:textColor="@color/drawer_item_title"
                     android:textSize="@dimen/fragment_settings_title_text_size" />
             </LinearLayout>
         </LinearLayout>
@@ -82,13 +82,13 @@
                 android:layout_gravity="start|center"
                 android:gravity="start|center"
                 android:text="@string/sample_fragment_settings_header_notification"
-                android:textColor="@color/toolbar_background"
+                android:textColor="@color/drawer_item_title"
                 android:textSize="@dimen/fragment_settings_header_text_size" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/toolbar_background" />
+                android:background="@color/drawer_item_title" />
 
             <!-- android:layout_height="@dimen/fragment_settings_relativelayout_height" -->
 
@@ -255,13 +255,13 @@
                 android:layout_gravity="start|center"
                 android:gravity="start|center"
                 android:text="@string/sample_fragment_settings_sync_notification"
-                android:textColor="@color/toolbar_background"
+                android:textColor="@color/drawer_item_title"
                 android:textSize="@dimen/fragment_settings_header_text_size" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/toolbar_background" />
+                android:background="@color/drawer_item_title" />
 
             <LinearLayout
                 android:id="@+id/fragmentSettingsSyncFrequencyLayout"
@@ -291,7 +291,7 @@
                     android:layout_weight="1"
                     android:gravity="end|center"
                     android:text="@string/sample_fragment_settings_sync_frquency_text"
-                    android:textColor="@color/toolbar_background"
+                    android:textColor="@color/drawer_item_title"
                     android:textSize="@dimen/fragment_settings_title_text_size" />
             </LinearLayout>
         </LinearLayout>
@@ -302,8 +302,8 @@
             android:layout_marginTop="16dp"
             android:background="@android:color/white"
             android:orientation="vertical"
-            android:visibility="gone"
-            android:padding="@dimen/fragment_settings_card_margin_top" >
+            android:padding="@dimen/fragment_settings_card_margin_top"
+            android:visibility="visible" >
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/fragmentSettingsStyleHeader"
@@ -312,22 +312,56 @@
                 android:layout_gravity="start|center"
                 android:gravity="start|center"
                 android:text="@string/sample_fragment_settings_style_notification"
-                android:textColor="@color/toolbar_background"
+                android:textColor="@color/drawer_item_title"
                 android:textSize="@dimen/fragment_settings_header_text_size" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/toolbar_background" />
+                android:background="@color/drawer_item_title" />
 
             <LinearLayout
-                android:id="@+id/fragmentSettingsStyleTextFontLayout"
+                android:id="@+id/fragmentSettingsStyleAppThemeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/fragment_settings_relativelayout_height"
                 android:clickable="true"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/fragment_settings_layout_padding_top_bottom"
-                android:paddingTop="@dimen/fragment_settings_layout_padding_top_bottom" >
+                android:paddingTop="@dimen/fragment_settings_layout_padding_top_bottom"
+                android:visibility="visible" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/fragmentSettingsStyleAppThemeTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="2"
+                    android:gravity="start|center"
+                    android:text="@string/sample_fragment_settings_style_themeapp"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/fragment_settings_title_text_size" />
+
+                <View
+                    android:id="@+id/fragmentSettingsStyleAppThemeSelectedTv"
+                    android:layout_width="0dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="end|center"
+                    android:layout_weight="0.2"
+                    android:background="@color/toolbar_background"
+                    android:gravity="end|center"
+                    android:textColor="@color/toolbar_background"
+                    android:textSize="@dimen/fragment_settings_title_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fragmentSettingsStyleTextFontLayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/fragment_settings_layout_padding_top_bottom"
+                android:paddingTop="@dimen/fragment_settings_layout_padding_top_bottom"
+                android:visibility="gone" >
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/fragmentSettingsStyleTextFontTv"
@@ -368,13 +402,13 @@
                 android:layout_gravity="start|center"
                 android:gravity="start|center"
                 android:text="@string/sample_fragment_settings_header_about"
-                android:textColor="@color/toolbar_background"
+                android:textColor="@color/drawer_item_title"
                 android:textSize="@dimen/fragment_settings_header_text_size" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/toolbar_background" />
+                android:background="@color/drawer_item_title" />
 
             <RelativeLayout
                 android:id="@+id/fragmentSettingsNotificationAboutLayout"

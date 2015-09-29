@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     ripple:mrl_rippleAlpha="0.1"
-    ripple:mrl_rippleBackground="@color/toolbar_background"
+    ripple:mrl_rippleBackground="@android:color/transparent"
     ripple:mrl_rippleColor="@android:color/darker_gray"
     ripple:mrl_rippleHover="true"
     ripple:mrl_rippleOverlay="true" >

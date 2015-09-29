@@ -34,6 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.application.utils.AndroidUtilities;
+import com.application.utils.ThemeUtils;
 import com.mobcast.R;
 
 /**

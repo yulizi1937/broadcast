@@ -3,6 +3,8 @@
  */
 package com.application.ui.view;
 
+import com.application.utils.ApplicationLoader;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -28,10 +30,34 @@ public class RoundedBackgroundSpan extends ReplacementSpan {
 		// TODO Auto-generated method stub
 		RectF rect = new RectF(x, top,
 				x + MeasureText(paint, text, start, end), bottom);
-		paint.setColor(Color.parseColor("#FF0000"));//background color
+		
+		switch(ApplicationLoader.getPreferences().getAppTheme()){
+		case 0:
+			paint.setColor(Color.parseColor("#FE9915"));//text color
+			break;
+		case 1:
+			paint.setColor(Color.parseColor("#FF4081"));//text color
+			break;
+		case 2:
+			paint.setColor(Color.parseColor("#2196F3"));//text color
+			break;
+		case 3:
+			paint.setColor(Color.parseColor("#3F51B5"));//text color
+			break;
+		case 4:
+			paint.setColor(Color.parseColor("#FF9800"));//text color
+			break;
+		case 5:
+			paint.setColor(Color.parseColor("#FF5722"));//text color
+			break;
+		default:
+			paint.setColor(Color.parseColor("#FF0000"));//background color	
+			break;
+		}
 		canvas.drawRoundRect(rect, 3, 3, paint);
 //		canvas.drawCircle(rect.right, rect.left, 7, paint);
-		paint.setColor(Color.parseColor("#FFFFFF"));//text color
+		
+		paint.setColor(Color.parseColor("#FFFFFF"));// text color
 		canvas.drawText(text, start, end, x, y, paint);
 	}
 

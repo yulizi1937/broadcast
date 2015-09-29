@@ -56,6 +56,7 @@ import com.application.utils.JSONRequestBuilder;
 import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
+import com.application.utils.ThemeUtils;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
@@ -77,6 +78,8 @@ public class SetProfileActivity extends AppCompatActivity{
 	private AppCompatTextView mSkipTv;
 	
 	private TextView mToolBarTitleTv;
+	
+	private Toolbar mToolbar;
 	
 	private AppCompatEditText mNameEv;
 	private AppCompatEditText mEmailEv;
@@ -104,6 +107,7 @@ public class SetProfileActivity extends AppCompatActivity{
 	private LinearLayout mDOBLayout;
 	
 	private FrameLayout mCroutonViewGroup;
+	private FrameLayout mProfileImageLayout;
 	
 	private ProgressWheel mProgressWheel;
 	private CircleImageView mProfileCirleIv;
@@ -129,6 +133,7 @@ public class SetProfileActivity extends AppCompatActivity{
 		setSecurity();
 		initUi();
 		initToolBar();
+		applyTheme();
 		setUiListener();
 		setDataFromPreferences();
 	}
@@ -179,10 +184,12 @@ public class SetProfileActivity extends AppCompatActivity{
 		mDOBLayout= (LinearLayout)findViewById(R.id.activitySetProfileBirthdayLayout);
 		
 		mCroutonViewGroup = (FrameLayout)findViewById(R.id.croutonViewGroup);
+		mProfileImageLayout = (FrameLayout)findViewById(R.id.activitySetProfileImageLayout);
 	}
 	
 	private void initToolBar() {
-		setSupportActionBar((Toolbar) findViewById(R.id.toolbarLayout));
+		mToolbar = (Toolbar) findViewById(R.id.toolbarLayout);
+		setSupportActionBar(mToolbar);
 		mToolBarTitleTv = (TextView)findViewById(R.id.toolbarTitleTv);
     	mToolBarDrawer = (ImageView)findViewById(R.id.toolbarBackIv);
     	
@@ -195,6 +202,14 @@ public class SetProfileActivity extends AppCompatActivity{
 		setTextWatcher();
 		setMaterialRippleView();
 		setClickListener();
+	}
+	
+	private void applyTheme() {
+		try {
+			ThemeUtils.getInstance(SetProfileActivity.this).applyThemeSetProfile(SetProfileActivity.this,SetProfileActivity.this, mToolbar,mProfileImageLayout);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	private void setDataFromPreferences(){
@@ -321,8 +336,7 @@ public class SetProfileActivity extends AppCompatActivity{
 			public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
 				if (hasFocus) {
-					mNameLayout.setBackgroundDrawable(getResources()
-							.getDrawable(R.drawable.shape_editbox_selected));
+					ThemeUtils.getInstance(SetProfileActivity.this).applyThemeEditText(SetProfileActivity.this, SetProfileActivity.this, mNameLayout);
 				} else {
 					mNameLayout.setBackgroundDrawable(getResources()
 							.getDrawable(R.drawable.shape_editbox_normal));
@@ -336,8 +350,7 @@ public class SetProfileActivity extends AppCompatActivity{
 			public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
 				if (hasFocus) {
-					mEmployeeIdLayout.setBackgroundDrawable(getResources()
-							.getDrawable(R.drawable.shape_editbox_selected));
+					ThemeUtils.getInstance(SetProfileActivity.this).applyThemeEditText(SetProfileActivity.this, SetProfileActivity.this, mEmployeeIdLayout);
 				} else {
 					mEmployeeIdLayout.setBackgroundDrawable(getResources()
 							.getDrawable(R.drawable.shape_editbox_normal));
@@ -351,8 +364,7 @@ public class SetProfileActivity extends AppCompatActivity{
 			public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
 				if (hasFocus) {
-					mEmailLayout.setBackgroundDrawable(getResources()
-							.getDrawable(R.drawable.shape_editbox_selected));
+					ThemeUtils.getInstance(SetProfileActivity.this).applyThemeEditText(SetProfileActivity.this, SetProfileActivity.this, mEmailLayout);
 				} else {
 					mEmailLayout.setBackgroundDrawable(getResources()
 							.getDrawable(R.drawable.shape_editbox_normal));
@@ -366,8 +378,7 @@ public class SetProfileActivity extends AppCompatActivity{
 			public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
 				if (hasFocus) {
-					mFavouriteQuestionLayout.setBackgroundDrawable(getResources()
-							.getDrawable(R.drawable.shape_editbox_selected));
+					ThemeUtils.getInstance(SetProfileActivity.this).applyThemeEditText(SetProfileActivity.this, SetProfileActivity.this, mFavouriteQuestionLayout);
 				} else {
 					mFavouriteQuestionLayout.setBackgroundDrawable(getResources()
 							.getDrawable(R.drawable.shape_editbox_normal));
@@ -381,8 +392,7 @@ public class SetProfileActivity extends AppCompatActivity{
 			public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
 				if (hasFocus) {
-					mFavouriteAnswerLayout.setBackgroundDrawable(getResources()
-							.getDrawable(R.drawable.shape_editbox_selected));
+					ThemeUtils.getInstance(SetProfileActivity.this).applyThemeEditText(SetProfileActivity.this, SetProfileActivity.this, mFavouriteAnswerLayout);
 				} else {
 					mFavouriteAnswerLayout.setBackgroundDrawable(getResources()
 							.getDrawable(R.drawable.shape_editbox_normal));
@@ -396,8 +406,7 @@ public class SetProfileActivity extends AppCompatActivity{
 			public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
 				if (hasFocus) {
-					mDOBLayout.setBackgroundDrawable(getResources()
-							.getDrawable(R.drawable.shape_editbox_selected));
+					ThemeUtils.getInstance(SetProfileActivity.this).applyThemeEditText(SetProfileActivity.this, SetProfileActivity.this, mDOBLayout);
 					final Calendar c = Calendar.getInstance();
 					mYear = c.get(Calendar.YEAR);
 					mMonth = c.get(Calendar.MONTH);
@@ -629,7 +638,7 @@ public class SetProfileActivity extends AppCompatActivity{
 	@SuppressWarnings("deprecation")
 	private void setUiOfNextAccordingly(){
 		if(isValidName && isValidEmail /*&& isValidEmployeeId*/){
-			mNextBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_button_pressed));
+			ThemeUtils.getInstance(SetProfileActivity.this).applyThemeButton(SetProfileActivity.this, SetProfileActivity.this, mNextBtn);
 			isValid = true;
 		}else{
 			mNextBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_button_normal));

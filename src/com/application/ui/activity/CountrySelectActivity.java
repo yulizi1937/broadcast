@@ -35,6 +35,7 @@ import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.SectionsListView;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.LocaleController;
+import com.application.utils.ThemeUtils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 
@@ -81,6 +82,7 @@ public class CountrySelectActivity extends SwipeBackBaseActivity {
 		setSecurity();
 		initUi();
 		initToolBar();
+		ThemeUtils.getInstance(CountrySelectActivity.this).applyThemeCountrySelect(CountrySelectActivity.this, CountrySelectActivity.this, mToolBar);
 		initListView();
 		setUiListener();
 		setMaterialRippleView();

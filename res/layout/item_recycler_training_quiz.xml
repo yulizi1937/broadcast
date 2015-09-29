@@ -24,7 +24,7 @@
             android:layout_width="@dimen/award_read_strip_width"
             android:layout_height="match_parent"
             android:layout_gravity="left|center"
-            android:background="@color/unread_highlight"
+            android:background="@color/item_unread_strip_color"
             android:visibility="visible"
             tools:ignore="RtlHardcoded" />
 
@@ -109,9 +109,9 @@
                     android:gravity="right|center"
                     android:paddingRight="4dp"
                     android:text="@string/sample_item_recycler_mobcast_text_view_count"
-                    android:textColor="@color/toolbar_background"
+                    android:textColor="@color/drawer_item_title"
                     android:textSize="@dimen/event_view_textview_size"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     tools:ignore="RtlSymmetry" />
 
                 <android.support.v7.widget.AppCompatTextView
@@ -126,9 +126,9 @@
                     android:gravity="center"
                     android:paddingRight="4dp"
                     android:text="@string/sample_item_recycler_mobcast_text_view_count"
-                    android:textColor="@color/toolbar_background"
+                    android:textColor="@color/drawer_item_title"
                     android:textSize="@dimen/event_view_textview_size"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     tools:ignore="RtlSymmetry" />
             </RelativeLayout>
 
@@ -168,7 +168,7 @@
                         android:layout_marginLeft="@dimen/item_recycler_mobcast_feedback_view_detail_text_margin_left"
                         android:gravity="left|center"
                         android:text="@string/sample_item_recycler_mobcast_feedback_question"
-                        android:textColor="@color/text_highlight"
+                        android:textColor="@color/item_text_info"
                         android:textSize="@dimen/item_recycler_mobcast_feedback_view_detail_text_size"
                         android:textStyle="bold" />
                 </RelativeLayout>
@@ -198,7 +198,7 @@
                         android:layout_marginLeft="@dimen/item_recycler_mobcast_feedback_view_detail_text_margin_left"
                         android:gravity="left|center"
                         android:text="@string/sample_item_recycler_training_question_time"
-                        android:textColor="@color/text_highlight"
+                        android:textColor="@color/item_text_info"
                         android:textSize="@dimen/item_recycler_mobcast_feedback_view_detail_text_size"
                         android:textStyle="bold" />
                 </RelativeLayout>
@@ -228,7 +228,7 @@
                         android:layout_marginLeft="@dimen/item_recycler_mobcast_feedback_view_detail_text_margin_left"
                         android:gravity="left|center"
                         android:text="@string/sample_item_recycler_training_question_attempted"
-                        android:textColor="@color/text_highlight"
+                        android:textColor="@color/item_text_info"
                         android:textSize="@dimen/item_recycler_mobcast_feedback_view_detail_text_size"
                         android:textStyle="bold" />
                 </RelativeLayout>
@@ -258,7 +258,7 @@
                         android:layout_marginLeft="@dimen/item_recycler_mobcast_feedback_view_detail_text_margin_left"
                         android:gravity="left|center"
                         android:text="@string/sample_item_recycler_training_question_score"
-                        android:textColor="@color/text_highlight"
+                        android:textColor="@color/item_text_info"
                         android:textSize="@dimen/item_recycler_mobcast_feedback_view_detail_text_size"
                         android:textStyle="bold" />
                 </RelativeLayout>

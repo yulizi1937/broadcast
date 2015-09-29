@@ -36,6 +36,7 @@ import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.FetchActionAsyncTask;
 import com.application.utils.FileLog;
+import com.application.utils.ThemeUtils;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.application.utils.FetchActionAsyncTask.OnPostExecuteTaskListener;
@@ -77,6 +78,7 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 	private YouTubePlayer youTubePlayer;
 
 	private boolean isShareOptionEnable = false;
+	private boolean isContentLiked = false;
 	
 	private Intent mIntent;
 	private String mId;
@@ -111,6 +113,7 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 		initUiWithData();
 		getIntentData();
 		setUiListener();
+		applyTheme();
 	}
 
 	@Override
@@ -118,13 +121,35 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 		// TODO Auto-generated method stub
 		super.onResume();
 	}
+
 	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		try{
+			if (isShareOptionEnable) {
+				menu.findItem(R.id.action_share).setVisible(true);
+			} else {
+				menu.findItem(R.id.action_share).setVisible(false);
+			}
+			
+			if (isContentLiked) {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_liked);
+			} else {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_like);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return super.onPrepareOptionsMenu(menu);
+	}
+
 	@SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_event_detail, menu);
+		inflater.inflate(R.menu.menu_text_detail, menu);
 		return true;
 	}
 
@@ -134,6 +159,9 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 		switch (item.getItemId()) {
 		case R.id.action_refresh_actionable:
 			toolBarRefresh();
+			return true;
+		case R.id.action_like:
+			mVideoLikeTv.performClick();
 			return true;
 		case android.R.id.home:
 			finish();
@@ -244,6 +272,14 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 		mLiveStreamNewsLinkTv.setText(Html.fromHtml(getResources().getString(R.string.sample_news_detail_link)));
 	}
 	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(YouTubeLiveStreamActivity.this).applyThemeWithBy(YouTubeLiveStreamActivity.this, YouTubeLiveStreamActivity.this, mToolBar, mVideoByTv);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
 	private void getIntentData(){
 		mIntent = getIntent();
 		try{
@@ -295,6 +331,8 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 				mCursorFileInfo.close();
 			}
 			
+			isContentLiked = mContentIsLike;
+			
 			isShareOptionEnable = mContentIsSharing;
 			setIntentDataToUi();
 		}
@@ -330,7 +368,7 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 		}
 	}
 	
-	private void setIntentDataToUi(){
+	@SuppressLint("NewApi") private void setIntentDataToUi(){
 		try{
 			mVideoTitleTv.setText(mContentTitle);
 			mVideoSummaryTextTv.setText(mContentDesc);
@@ -364,6 +402,7 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 			if(!mContentIsRead){
 				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.READ, "");
 			}
+			invalidateOptionsMenu();
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -413,7 +452,7 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 		setOnClickListener();
 	}
 
-	private void setOnClickListener() {
+	@SuppressLint("NewApi") private void setOnClickListener() {
 		mLiveStreamNewsLinkLayout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -438,10 +477,12 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 							values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, String.valueOf(Integer.parseInt(mContentLikeCount)+1));
 							getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, values, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
 						}
+						isContentLiked = true;
 						mVideoLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
 						mVideoLikeTv.setText(String.valueOf(Integer.parseInt(mContentLikeCount)+1));
 						mVideoLikeTv.setTextColor(getResources().getColor(R.color.red));
 						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LIKE, "");
+						invalidateOptionsMenu();
 					}
 				}catch(Exception e){
 					FileLog.e(TAG, e.toString());

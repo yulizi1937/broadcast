@@ -42,6 +42,7 @@ import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.DownloadAsyncTask;
 import com.application.utils.Style;
+import com.application.utils.ThemeUtils;
 import com.application.utils.DownloadAsyncTask.OnPostExecuteListener;
 import com.application.utils.FetchActionAsyncTask;
 import com.application.utils.FetchActionAsyncTask.OnPostExecuteTaskListener;
@@ -98,6 +99,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 
 	private boolean isTraining = false;// HDFC
 	private boolean isShareOptionEnable = true;
+	private boolean isContentLiked = false;
 
 	private Intent mIntent;
 	private String mId;
@@ -139,6 +141,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 		initUiWithData();
 		setUiListener();
 		setSwipeRefreshLayoutCustomisation();
+		applyTheme();
 	}
 
 	@Override
@@ -195,6 +198,12 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 			} else {
 				menu.findItem(R.id.action_share).setVisible(false);
 			}
+			
+			if (isContentLiked) {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_liked);
+			} else {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_like);
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -211,6 +220,9 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 		case android.R.id.home:
 			finish();
 			AndroidUtilities.exitWindowAnimation(ImageDetailActivity.this);
+			return true;
+		case R.id.action_like:
+			mImageLikeTv.performClick();
 			return true;
 		case R.id.action_share:
 			showDialog(0);
@@ -275,6 +287,14 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 		mImageNewsLinkTv.setText(Html.fromHtml(getResources().getString(
 				R.string.sample_news_detail_link)));
 
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(ImageDetailActivity.this).applyThemeWithBy(ImageDetailActivity.this, ImageDetailActivity.this, mToolBar, mImageByTv);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 
 	private void getIntentData() {
@@ -418,6 +438,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 			if(mContentIsLike){
 				mImageLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
 				mImageLikeTv.setTextColor(getResources().getColor(R.color.red));
+				isContentLiked = true;
 			}
 			
 			if (mContentLanguageList != null && mContentLanguageList.size() > 1) {
@@ -583,10 +604,12 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 							values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, String.valueOf(Integer.parseInt(mContentLikeCount)+1));
 							getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 						}
+						isContentLiked = true;
 						mImageLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
 						mImageLikeTv.setText(String.valueOf(Integer.parseInt(mContentLikeCount)+1));
 						mImageLikeTv.setTextColor(getResources().getColor(R.color.red));
 						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LIKE, "");
+						supportInvalidateOptionsMenu();
 					}
 				}catch(Exception e){
 					FileLog.e(TAG, e.toString());

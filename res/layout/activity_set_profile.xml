@@ -38,6 +38,7 @@
                     android:background="@color/background_application" >
 
                     <FrameLayout
+                        android:id="@+id/activitySetProfileImageLayout"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/edit_profile_framelayout_inner_height"
                         android:background="@color/toolbar_background"
@@ -344,7 +345,7 @@
                     android:layout_marginTop="7dp"
                     android:gravity="center"
                     android:text="@string/textview_skip"
-                    android:textColor="@color/editbox_color"
+                    android:textColor="@color/drawer_item_title"
                     android:textSize="@dimen/set_profile_skip_size" />
             </LinearLayout>
         </LinearLayout>

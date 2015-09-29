@@ -81,11 +81,11 @@
 
         <ImageView
             android:id="@+id/fragmentVideoFullScreenMediaControllerFullScreenIv"
-            android:layout_width="48dp"
-            android:layout_height="match_parent"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="end|center"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_apicontrol_fullscreen_off"
+            android:src="@drawable/ic_exit_fullscreen"
             tools:ignore="ContentDescription" />
     </FrameLayout>
 

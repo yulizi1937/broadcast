@@ -34,6 +34,7 @@ import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.FetchActionAsyncTask;
+import com.application.utils.ThemeUtils;
 import com.application.utils.FetchActionAsyncTask.OnPostExecuteTaskListener;
 import com.application.utils.FileLog;
 import com.application.utils.UserReport;
@@ -71,6 +72,7 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 	private LinearLayout mTextNewsLinkLayout;
 
 	private boolean isShareOptionEnable = true;
+	private boolean isContentLiked = false;
 	
 	private Intent mIntent;
 	private String mId;
@@ -102,6 +104,7 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 		setUiListener();
 		setAnimation();
 		setSwipeRefreshLayoutCustomisation();
+		applyTheme();
 	}
 
 	@Override
@@ -118,6 +121,12 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 				menu.findItem(R.id.action_share).setVisible(true);
 			} else {
 				menu.findItem(R.id.action_share).setVisible(false);
+			}
+			
+			if (isContentLiked) {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_liked);
+			} else {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_like);
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
@@ -170,6 +179,9 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 				startActivity(mIntent);
 			}
 			return true;
+		case R.id.action_like:
+			mTextLikeTv.performClick();
+			return true;
 		case R.id.action_share:
 			showDialog(0);
 			return true;
@@ -218,6 +230,14 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 		
 		mTextNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentTextDetailViewSourceLayout);
 		
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(TextDetailActivity.this).applyThemeWithBy(TextDetailActivity.this, TextDetailActivity.this, mToolBar, mTextByTv);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	private void getIntentData(){
@@ -310,6 +330,7 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 			if(mContentIsLike){
 				mTextLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
 				mTextLikeTv.setTextColor(getResources().getColor(R.color.red));
+				isContentLiked = true;
 			}
 			
 			updateReadInDb();
@@ -395,10 +416,12 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 							values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, String.valueOf(Integer.parseInt(mContentLikeCount)+1));
 							getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 						}
+						isContentLiked = true;
 						mTextLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
 						mTextLikeTv.setText(String.valueOf(Integer.parseInt(mContentLikeCount)+1));
 						mTextLikeTv.setTextColor(getResources().getColor(R.color.red));
 						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LIKE, "");
+						supportInvalidateOptionsMenu();
 					}
 				}catch(Exception e){
 					FileLog.e(TAG, e.toString());

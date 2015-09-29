@@ -351,6 +351,8 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ID +" INTEGER ," );
 		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_QUESTION +" TEXT ," );
 		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_TYPE +" TEXT ," );
+		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ATTEMPT +" NUMBER DEFAULT 0," );
+		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ATTEMPT_COUNT +" NUMBER DEFAULT 0," );
 		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ANSWER +" TEXT ," );
 		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_1 +" TEXT ," );
 		strBuilderMobcastFeedback.append(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_2 +" TEXT ," );
@@ -375,6 +377,8 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ID +" INTEGER ," );
 		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION +" TEXT ," );
 		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_TYPE +" TEXT ," );
+		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ATTEMPT +" NUMBER DEFAULT 0," );
+		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ATTEMPT_COUNT +" NUMBER DEFAULT 0," );
 		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ANSWER +" TEXT ," );
 		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_1 +" TEXT ," );
 		strBuilderTrainingQuiz.append(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_2 +" TEXT ," );
@@ -554,9 +558,10 @@ public class ApplicationDB extends ContentProvider{
 	/* VERSION      DATABASE_VERSION      MODIFIED            BY
 	 * ----------------------------------------------------------------
 	 * V 0.0.1             1              16/05/15        VIKALP PATEL
+	 * V 2.0.3             2              16/09/15        VIKALP PATEL : ALTER : ADDED ATTEMPT & ATTEMPT COUNT : FEEDBACK & QUIZ
 	 * -----------------------------------------------------------------
 	 */
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 		
 	OpenHelper openHelper;
 
@@ -1099,6 +1104,8 @@ public class ApplicationDB extends ContentProvider{
 		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ANSWER, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ANSWER);
 		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_TYPE, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_TYPE);
 		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_QID, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_QID);
+		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ATTEMPT, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ATTEMPT);
+		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ATTEMPT_COUNT, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_ATTEMPT_COUNT);
 		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_1, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_1);
 		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_2, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_2);
 		mobcastFeedbackProjectionMap.put(DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_3, DBConstant.Mobcast_Feedback_Columns.COLUMN_MOBCAST_FEEDBACK_OPTION_3);
@@ -1114,6 +1121,8 @@ public class ApplicationDB extends ContentProvider{
 		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ANSWER, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ANSWER);
 		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_TYPE, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_TYPE);
 		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QID, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QID);
+		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ATTEMPT, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ATTEMPT);
+		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ATTEMPT_COUNT, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ATTEMPT_COUNT);
 		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_1, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_1);
 		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_2, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_2);
 		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_3, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_OPTION_3);

@@ -180,7 +180,7 @@
                     android:layout_marginTop="7dp"
                     android:gravity="center"
                     android:text="@string/textview_verify_administration"
-                    android:textColor="@color/editbox_color"
+                    android:textColor="@color/drawer_item_title"
                     android:textSize="@dimen/verification_retry_size" />
                 
                 <android.support.v7.widget.AppCompatButton
@@ -220,7 +220,7 @@
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="@string/textview_verify_administration_tryagain"
-                    android:textColor="@color/editbox_color"
+                    android:textColor="@color/drawer_item_title"
                     android:textSize="@dimen/login_admin_size" />
             </LinearLayout>
         </LinearLayout>

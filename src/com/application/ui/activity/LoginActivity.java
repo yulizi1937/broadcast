@@ -3,6 +3,7 @@
  */
 package com.application.ui.activity;
 
+import java.lang.reflect.Field;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,9 +41,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.application.ui.adapter.WhatWeDoPagerAdapter;
@@ -59,6 +64,7 @@ import com.application.utils.JSONRequestBuilder;
 import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
+import com.application.utils.ThemeUtils;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -111,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
 	
 	private Handler mHandler = new Handler();
 	private changePagerRunnable mRunnable = new changePagerRunnable();
-	private int mRunnableTimer = 4000;
+	private int mRunnableTimer = 7000;
 	
 	private GoogleCloudMessaging gcm;
 	private String regid;
@@ -130,7 +136,9 @@ public class LoginActivity extends AppCompatActivity {
 		setSecurity();
 		initUi();
 //		initToolBar();
+		applyTheme();
 		initViewPager();
+		setViewPagerScroller();
 		setAutomatePager();
 		setUiListener();
 		tryToGetUserId();
@@ -181,10 +189,63 @@ public class LoginActivity extends AppCompatActivity {
 				R.string.LoginActivityTitle));
 	}
 	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(LoginActivity.this).applyThemeLogin(LoginActivity.this, LoginActivity.this,mLoginTitleTv, mAdminTv, mCountryCodeTv);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
 	private void initViewPager(){
 		mAdapter = new WhatWeDoPagerAdapter(getSupportFragmentManager());
 		mViewPager.setAdapter(mAdapter);
 		mCirclerPagerIndicator.setViewPager(mViewPager);
+	}
+	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB) public class FixedSpeedScroller extends Scroller {
+
+	    private int mDuration = 5000;
+
+	    public FixedSpeedScroller(Context context) {
+	        super(context);
+	    }
+
+	    public FixedSpeedScroller(Context context, Interpolator interpolator) {
+	        super(context, interpolator);
+	    }
+
+	    public FixedSpeedScroller(Context context, Interpolator interpolator, boolean flywheel) {
+	        super(context, interpolator, flywheel);
+	    }
+
+
+	    @Override
+	    public void startScroll(int startX, int startY, int dx, int dy, int duration) {
+	        // Ignore received duration, use fixed one instead
+	        super.startScroll(startX, startY, dx, dy, mDuration);
+	    }
+
+	    @Override
+	    public void startScroll(int startX, int startY, int dx, int dy) {
+	        // Ignore received duration, use fixed one instead
+	        super.startScroll(startX, startY, dx, dy, mDuration);
+	    }
+	}
+	
+	private void setViewPagerScroller() {
+		try {
+			if(AndroidUtilities.isAboveHoneyComb()){
+				Field mScroller;
+				mScroller = ViewPager.class.getDeclaredField("mScroller");
+				mScroller.setAccessible(true);
+				FixedSpeedScroller scroller = new FixedSpeedScroller(mViewPager.getContext(), new DecelerateInterpolator(2.0f));
+//				scroller.setFixedDuration(5000);
+				mScroller.set(mViewPager, scroller);
+			}
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	private void setAutomatePager(){
@@ -338,7 +399,12 @@ public class LoginActivity extends AppCompatActivity {
 		public void run() {
 			// TODO Auto-generated method stub
 			changeCurrentPager();
-			mHandler.postDelayed(mRunnable, mRunnableTimer);
+			if(mViewPager.getCurrentItem()!=4){
+				mHandler.postDelayed(mRunnable, mRunnableTimer);	
+			}else{
+				mHandler.removeCallbacks(mRunnable);
+			}
+			
 		}
 		
 	}
@@ -395,10 +461,8 @@ public class LoginActivity extends AppCompatActivity {
 	@SuppressWarnings("deprecation")
 	private void setUiOfNextAccordingly() {
 		if (isValidLoginId) {
-			mNextBtn.setBackgroundDrawable(getResources().getDrawable(
-					R.drawable.shape_button_pressed));
-			mNextBtn1.setBackgroundDrawable(getResources().getDrawable(
-					R.drawable.shape_button_pressed));
+			ThemeUtils.getInstance(LoginActivity.this).applyThemeButton(LoginActivity.this, LoginActivity.this, mNextBtn);
+			ThemeUtils.getInstance(LoginActivity.this).applyThemeButton(LoginActivity.this, LoginActivity.this, mNextBtn1);
 		} else {
 			mNextBtn.setBackgroundDrawable(getResources().getDrawable(
 					R.drawable.shape_button_normal));

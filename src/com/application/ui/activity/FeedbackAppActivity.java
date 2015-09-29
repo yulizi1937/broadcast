@@ -40,6 +40,7 @@ import com.application.utils.JSONRequestBuilder;
 import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
+import com.application.utils.ThemeUtils;
 import com.application.utils.Utilities;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -89,6 +90,7 @@ public class FeedbackAppActivity extends SwipeBackBaseActivity {
 		setUiListener();
 		setDataFromPreferences();
 		setAnimation();
+		applyTheme();
 	}
 
 	@Override
@@ -154,6 +156,14 @@ public class FeedbackAppActivity extends SwipeBackBaseActivity {
 		setOnClickListener();
 		setTextWatcher();
 		setMaterialRippleView();
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(FeedbackAppActivity.this).applyThemeCountrySelect(FeedbackAppActivity.this, FeedbackAppActivity.this, mToolBar);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 
 	@SuppressLint("NewApi") private void setOnClickListener() {
@@ -274,8 +284,7 @@ public class FeedbackAppActivity extends SwipeBackBaseActivity {
 	@SuppressWarnings("deprecation")
 	private void setUiOfSubmitAccordingly() {
 		if (isValidSubmit) {
-			mAppFeedbackSubmitBtn.setBackgroundDrawable(getResources()
-					.getDrawable(R.drawable.shape_button_pressed));
+			ThemeUtils.getInstance(FeedbackAppActivity.this).applyThemeButton(FeedbackAppActivity.this, FeedbackAppActivity.this, mAppFeedbackSubmitBtn);
 		} else {
 			mAppFeedbackSubmitBtn.setBackgroundDrawable(getResources()
 					.getDrawable(R.drawable.shape_button_normal));

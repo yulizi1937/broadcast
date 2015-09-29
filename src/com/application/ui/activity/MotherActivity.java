@@ -84,6 +84,7 @@ import com.application.utils.ScrollState;
 import com.application.utils.ScrollUtils;
 import com.application.utils.Scrollable;
 import com.application.utils.Style;
+import com.application.utils.ThemeUtils;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
@@ -109,6 +110,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 
+	private FrameLayout mDrawerProfileBgLayout;
 	private CircleImageView mDrawerProfileIv;
 	private ImageView mDrawerProfileCoverIv;
 	private AppCompatTextView mDrawerUserNameTv;
@@ -149,6 +151,8 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	public IFragmentCommunicator mFragmentCommunicator;
 	
 	private ImageLoader mImageLoader;
+	
+	private int whichTheme = 0;
 
 	private static final String TAG = MotherActivity.class.getSimpleName();
 
@@ -163,8 +167,10 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		setUiListener();
 		propagateToolbarState(toolbarIsShown());
 		setDrawerLayout();
+		applyTheme();
 		apiCheckVersionUpdate();
 		showCaseView();
+		whichTheme = ApplicationLoader.getPreferences().getAppTheme();
 	}
 
 	@Override
@@ -186,6 +192,8 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		notifySlidingTabLayoutChange();
 		supportInvalidateOptionsMenu();
 		Utilities.showBadgeNotification(MotherActivity.this);
+		checkAppVersionOnResume();
+		checkMobcastForNewDataAvail();
 	}
 
 
@@ -196,28 +204,26 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_mother, menu);
 		MenuItem menuItemEvent = menu.findItem(R.id.action_event);
-		menuItemEvent.setIcon(buildCounterDrawable(Utilities.getUnreadOfEvent(MotherActivity.this),
-				R.drawable.ic_toolbar_event));
-
 		MenuItem menuItemAward = menu.findItem(R.id.action_award);
-		menuItemAward.setIcon(buildCounterDrawable(Utilities.getUnreadOfAward(MotherActivity.this),
-				R.drawable.ic_toolbar_award));
-
 		MenuItem menuItemBirthday = menu.findItem(R.id.action_birthday);
-		menuItemBirthday.setIcon(buildCounterDrawable(Utilities.getUnreadOfBirthday(MotherActivity.this),
-				R.drawable.ic_toolbar_birthday));
-		/*if (AndroidUtilities.isAboveHoneyComb()) {
-			MenuItem searchItem = menu.findItem(R.id.action_search);
-			SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-			SearchView searchView = null;
-			if (searchItem != null) {
-				searchView = (SearchView) searchItem.getActionView();
+		
+		try{
+			if(Utilities.getUnreadOfEvent(MotherActivity.this) != 0){
+				menuItemEvent.setIcon(buildCounterDrawableWithPNG(AppConstants.TYPE.EVENT, whichTheme));
 			}
-			if (searchView != null) {
-				searchView.setSearchableInfo(searchManager
-						.getSearchableInfo(getComponentName()));
+			if(Utilities.getUnreadOfAward(MotherActivity.this) != 0){
+				menuItemAward.setIcon(buildCounterDrawableWithPNG(AppConstants.TYPE.AWARD, whichTheme));
 			}
-		}*/
+			if(Utilities.getUnreadOfBirthday(MotherActivity.this) != 0){
+				menuItemBirthday.setIcon(buildCounterDrawableWithPNG(AppConstants.TYPE.BIRTHDAY, whichTheme));
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+			menuItemEvent.setIcon(buildCounterDrawable(Utilities.getUnreadOfEvent(MotherActivity.this),R.drawable.ic_toolbar_event));
+			menuItemAward.setIcon(buildCounterDrawable(Utilities.getUnreadOfAward(MotherActivity.this),R.drawable.ic_toolbar_award));
+			menuItemBirthday.setIcon(buildCounterDrawable(Utilities.getUnreadOfBirthday(MotherActivity.this),R.drawable.ic_toolbar_birthday));
+		}
+		
 		return true;
 	}
 
@@ -334,26 +340,38 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 					}
 				});
 	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(MotherActivity.this).applyThemeMother(MotherActivity.this, MotherActivity.this, mToolBar, mSlidingTabLayout);
+			ThemeUtils.getInstance(MotherActivity.this).applyThemeDrawer(MotherActivity.this, MotherActivity.this, mDrawerProfileBgLayout, mDrawerUserNameTv);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
 
 	private BroadcastReceiver mBroadCastReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent mIntent) {
-				String mCategory = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY);
+				refreshMotherActivity(mIntent);
+		}
+	};
+	
+	private void refreshMotherActivity(Intent mIntent){
+		try{
+			String mCategory = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY);
 			if (mCategory
 					.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)
 					|| mCategory
 							.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)) {
 					notifySlidingTabLayoutChange();
-				notifyFragmentWithIdAndCategory(
-						mIntent.getIntExtra(AppConstants.INTENTCONSTANTS.ID, -1),
-						mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY));
+			notifyFragmentWithIdAndCategory(mIntent.getIntExtra(AppConstants.INTENTCONSTANTS.ID, -1), mCategory);
 				}
-			try {
-			} catch (Exception e) {
-				Log.i(TAG, e.toString());
-			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
-	};
+	}
 	
 	private BroadcastReceiver mSyncBroadCastReceiver = new BroadcastReceiver() {
 		@Override
@@ -363,6 +381,8 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 				mDrawerSyncLayout.setClickable(true);
 				mDrawerSyncIv.clearAnimation();
 				mDrawerSyncTv.setText(ApplicationLoader.getPreferences().getLastSyncTimeStampMessage());
+				ApplicationLoader.getPreferences().setRefreshMobcastWithNewDataAvail(true);
+				ApplicationLoader.getPreferences().setRefreshTrainingWithNewDataAvail(true);
 				onResume();
 				/*int mCurrentPosition = mPager.getCurrentItem();
 				int mLastPosition = mArrayListMotherHeader.size();
@@ -423,6 +443,96 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		if (mId != -1) {
 			mFragmentCommunicator.passDataToFragment(mId, mCategory);
 		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	private Drawable buildCounterDrawableWithPNG(int mType, int whichTheme){
+		Drawable mDrawable = null;
+		try{
+			Resources mResources = getResources();
+			switch(mType){
+			case AppConstants.TYPE.BIRTHDAY:
+				switch (whichTheme) {
+				case 0:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_birthday_unread_dblue);
+					break;
+				case 1:
+					mDrawable =mResources.getDrawable(R.drawable.ic_toolbar_birthday_unread_purple);
+					break;
+				case 2:
+					mDrawable =mResources.getDrawable(R.drawable.ic_toolbar_birthday_unread_green);
+					break;
+				case 3:
+					mDrawable =mResources.getDrawable(R.drawable.ic_toolbar_birthday_unread_pink);
+					break;
+				case 4:
+					mDrawable =mResources.getDrawable(R.drawable.ic_toolbar_birthday_unread_dblue);
+					break;
+				case 5:
+					mDrawable =mResources.getDrawable(R.drawable.ic_toolbar_birthday_unread_brown);
+					break;
+				default:
+					mDrawable =mResources.getDrawable(R.drawable.ic_toolbar_birthday_unread_dblue);
+					break;
+				}
+
+				break;
+			case AppConstants.TYPE.AWARD:
+				switch (whichTheme) {
+				case 0:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_award_unread_dblue);
+					break;
+				case 1:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_award_unread_purple);
+					break;
+				case 2:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_award_unread_green);
+					break;
+				case 3:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_award_unread_pink);
+					break;
+				case 4:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_award_unread_dblue);
+					break;
+				case 5:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_award_unread_brown);
+					break;
+				default:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_award_unread_dblue);
+					break;
+				}
+				break;
+			case AppConstants.TYPE.EVENT:
+				switch (whichTheme) {
+				case 0:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_event_unread_dblue);
+					break;
+				case 1:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_event_unread_purple);
+					break;
+				case 2:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_event_unread_green);
+					break;
+				case 3:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_event_unread_pink);
+					break;
+				case 4:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_event_unread_dblue);
+					break;
+				case 5:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_event_unread_brown);
+					break;
+				default:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_event_unread_dblue);
+					break;
+				}
+
+				break;
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return mDrawable;
 	}
 	
 	@SuppressLint("InflateParams")
@@ -831,6 +941,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 					Utilities.deleteTables();
 					Utilities.deleteAppFolder(new File(AppConstants.FOLDER.BUILD_FOLDER));
 					ApplicationLoader.cancelSyncServiceAlarm();
+					Utilities.showBadgeNotification(MotherActivity.this);
 				}else{
 					mErrorMessage = Utilities.getErrorMessageFromApi(mResponseFromApi);
 				}
@@ -893,6 +1004,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
         .show();
 	}
 	
+	
 	/**
 	 * Check Version Update
 	 */
@@ -900,6 +1012,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB) 
 	private void apiCheckVersionUpdate(){
 		try{
+			ApplicationLoader.getPreferences().setAppUpdateAvail(false);
 			if(Utilities.isInternetConnected()){
 				CheckVersionUpdateAsyncTask mCheckVersionUpdateAsyncTask = new CheckVersionUpdateAsyncTask();
 				if (AndroidUtilities.isAboveHoneyComb()) {
@@ -911,24 +1024,53 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 					@Override
 					public void onPostExecute(String mResponseFromApi) {
 						// TODO Auto-generated method stub
-						if(Utilities.isSuccessFromApi(mResponseFromApi)){
-							try {
-								JSONObject mJSONObj = new JSONObject(mResponseFromApi);
-								if(mJSONObj.getBoolean(AppConstants.API_KEY_PARAMETER.updateAvailable)){
-									showUpdateAvailConfirmationMaterialDialog();
+						try{
+							if(Utilities.isSuccessFromApi(mResponseFromApi)){
+								try {
+									JSONObject mJSONObj = new JSONObject(mResponseFromApi);
+									if(mJSONObj.getBoolean(AppConstants.API_KEY_PARAMETER.updateAvailable)){
+										ApplicationLoader.getPreferences().setAppUpdateAvail(true);
+										showUpdateAvailConfirmationMaterialDialog();
+									}
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									FileLog.e(TAG, e.toString());
+								}catch(Exception e){
+									FileLog.e(TAG, e.toString());
 								}
-							} catch (JSONException e) {
-								// TODO Auto-generated catch block
-								FileLog.e(TAG, e.toString());
-							}catch(Exception e){
-								FileLog.e(TAG, e.toString());
 							}
+						}catch(Exception e){
+							FileLog.e(TAG, e.toString());
 						}
 					}
 				});
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void checkMobcastForNewDataAvail(){
+		try{
+			if(ApplicationLoader.getPreferences().isRefreshMobcastWithNewDataAvail()){
+				Intent mIntent = new Intent();
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.MOBCAST);
+				refreshMotherActivity(mIntent);
+			}
+			
+			if(ApplicationLoader.getPreferences().isRefreshTrainingWithNewDataAvail()){
+				Intent mTrainIntent = new Intent();
+				mTrainIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.TRAINING);
+				refreshMotherActivity(mTrainIntent);				
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void checkAppVersionOnResume(){
+		if(ApplicationLoader.getPreferences().isAppUpdateAvail()){
+			showUpdateAvailConfirmationMaterialDialog();
 		}
 	}
 	
@@ -965,6 +1107,8 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		mDrawerList = (ListView) findViewById(R.id.drawer_listview);
 
 		mScrimInsetsFrameLayout = (ScrimInsetsFrameLayout) findViewById(R.id.drawerRootLayout);
+		
+		mDrawerProfileBgLayout = (FrameLayout)findViewById(R.id.drawerProfileBgLayout);
 
 		mDrawerProfileIv = (CircleImageView) findViewById(R.id.drawerProfileIv);
 		mDrawerProfileCoverIv = (ImageView) findViewById(R.id.drawerProfileCoverIv);
@@ -991,7 +1135,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 		
 		setDrawerProfileInfo(mDrawerUserNameTv, mDrawerUserEmailTv, mDrawerProfileIv, mDrawerProfileCoverIv);
-
+		
 		drawerArrowDrawable = new DrawerArrowDrawable(mResources);
 		drawerArrowDrawable.setStrokeColor(mResources
 				.getColor(android.R.color.white));

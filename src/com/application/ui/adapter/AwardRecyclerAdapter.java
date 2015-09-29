@@ -19,24 +19,24 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
 
 import com.application.beans.Award;
-import com.application.ui.adapter.MobcastRecyclerAdapter.ImageViewHolder;
-import com.application.ui.adapter.MobcastRecyclerAdapter.OnItemLongClickListener;
 import com.application.ui.view.CircleImageView;
 import com.application.ui.view.DontPressWithParentImageView;
+import com.application.ui.view.FlexibleDividerDecoration;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.FileLog;
+import com.application.utils.ThemeUtils;
 import com.application.utils.Utilities;
 import com.mobcast.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-public class AwardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AwardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  implements FlexibleDividerDecoration.VisibilityProvider {
 	@SuppressWarnings("unused")
 	private static final String TAG = AwardRecyclerAdapter.class
 			.getSimpleName();
@@ -51,6 +51,7 @@ public class AwardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 	public OnItemClickListenerA mItemClickListener;
 	public OnItemLongClickListenerA mItemLongClickListener;
 	private ImageLoader mImageLoader;
+	private int mWhichTheme = 0;
 
 	public AwardRecyclerAdapter(Context mContext,
 			ArrayList<Award> mArrayListAward) {
@@ -58,6 +59,7 @@ public class AwardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 		this.mArrayListAward = mArrayListAward;
 		mInflater = LayoutInflater.from(mContext);
 		mImageLoader = ApplicationLoader.getUILImageLoader();
+		mWhichTheme = ApplicationLoader.getPreferences().getAppTheme();
 	}
 
 	public void addAwardObjList(ArrayList<Award> mListAward) {
@@ -121,7 +123,7 @@ public class AwardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 		ProgressWheel mProgressWheel;
 		DontPressWithParentImageView mCongratulateIv;
 		DontPressWithParentImageView mMessageIv;
-		RelativeLayout mRootLayout;
+		FrameLayout mRootLayout;
 		View mReadStripView;
 
 		public AwardViewHolder(View view) {
@@ -143,7 +145,7 @@ public class AwardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 			mMessageIv = (DontPressWithParentImageView) view
 					.findViewById(R.id.itemRecyclerAwardMessageIv);
 
-			mRootLayout = (RelativeLayout) view
+			mRootLayout = (FrameLayout) view
 					.findViewById(R.id.itemRecyclerAwardRootLayout);
 
 			mReadStripView = (View) view.findViewById(R.id.itemRecyclerReadView);
@@ -207,14 +209,15 @@ public class AwardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 			((AwardViewHolder)viewHolder).mAwardNameTv.setText(mObj.getmRecognition());
 			((AwardViewHolder)viewHolder).mWinnerNameTv.setText(mObj.getmName());
 			if(!mObj.isRead()){
-				((AwardViewHolder)viewHolder).mWinnerNameTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
-				((AwardViewHolder)viewHolder).mReadStripView.setVisibility(View.VISIBLE);
-				((AwardViewHolder)viewHolder).mRootLayout.setBackgroundResource(R.color.unread_background);
+//				((AwardViewHolder)viewHolder).mWinnerNameTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
+//				((AwardViewHolder)viewHolder).mReadStripView.setVisibility(View.VISIBLE);
+//				((AwardViewHolder)viewHolder).mRootLayout.setBackgroundResource(R.color.unread_background);
 			}else{
-				((AwardViewHolder)viewHolder).mWinnerNameTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
-				((AwardViewHolder)viewHolder).mReadStripView.setVisibility(View.GONE);
-				((AwardViewHolder)viewHolder).mRootLayout.setBackgroundResource(R.color.white);
+//				((AwardViewHolder)viewHolder).mWinnerNameTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
+//				((AwardViewHolder)viewHolder).mReadStripView.setVisibility(View.GONE);
+//				((AwardViewHolder)viewHolder).mRootLayout.setBackgroundResource(R.color.white);
 			}
+			
 			
 			if(mObj.isCongratulated()){
 				((AwardViewHolder)viewHolder).mCongratulateIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_award_cong_selected));
@@ -225,6 +228,14 @@ public class AwardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 			if(!TextUtils.isEmpty(mObj.getmCongratulatedCount())){
 				((AwardViewHolder)viewHolder).mCongratulatedTv.setText(mObj.getmCongratulatedCount() + " "+mContext.getResources().getString(R.string.congratulated_text));
 			}
+			
+			ThemeUtils.applyThemeItemAward(mContext, mWhichTheme,
+					((AwardViewHolder) viewHolder).mReadStripView,
+					((AwardViewHolder) viewHolder).mRootLayout,
+					((AwardViewHolder) viewHolder).mWinnerNameTv,
+					((AwardViewHolder) viewHolder).mCongratulateIv,
+					((AwardViewHolder) viewHolder).mMessageIv, mObj.isRead(),
+					mObj.isCongratulated());
 			
 			try{
 			final String mThumbnailPath = mObj.getmThumbPath();
@@ -269,5 +280,18 @@ public class AwardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.application.ui.view.FlexibleDividerDecoration.VisibilityProvider#
+	 * shouldHideDivider(int, android.support.v7.widget.RecyclerView)
+	 */
+	@Override
+	public boolean shouldHideDivider(int position, RecyclerView parent) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

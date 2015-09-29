@@ -43,7 +43,7 @@
                 android:gravity="end|center"
                 android:paddingLeft="2dp"
                 android:text="@string/sample_report_category_text"
-                android:textColor="@color/toolbar_background"
+                android:textColor="@color/drawer_item_title"
                 android:textSize="@dimen/fragment_report_category_text"
                 android:textStyle="normal"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
@@ -80,7 +80,7 @@
                 android:minLines="5"
                 android:padding="4dp"
                 android:singleLine="false"
-                android:textColorHint="@color/toolbar_background"
+                android:textColorHint="@color/drawer_item_title"
                 android:textSize="@dimen/login_edittext_size" />
         </LinearLayout>
 

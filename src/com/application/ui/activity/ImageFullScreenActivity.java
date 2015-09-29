@@ -3,8 +3,6 @@
  */
 package com.application.ui.activity;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,7 +30,6 @@ import com.application.ui.view.CirclePageIndicator;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.FileLog;
-import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -106,6 +103,7 @@ public class ImageFullScreenActivity extends SwipeBackBaseActivity {
 		}else{
 			menu.findItem(R.id.action_share).setVisible(false);
 			menu.findItem(R.id.action_refresh_actionable).setVisible(false);
+			menu.findItem(R.id.action_like).setVisible(false);
 		}
 		return super.onPrepareOptionsPanel(view, menu);
 	}

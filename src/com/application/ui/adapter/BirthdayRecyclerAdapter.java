@@ -26,10 +26,12 @@ import com.application.beans.Award;
 import com.application.beans.Birthday;
 import com.application.ui.adapter.AwardRecyclerAdapter.AwardViewHolder;
 import com.application.ui.view.CircleImageView;
+import com.application.ui.view.DontPressWithParentImageView;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.FileLog;
+import com.application.utils.ThemeUtils;
 import com.application.utils.Utilities;
 import com.mobcast.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -48,6 +50,7 @@ public class BirthdayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 	private ArrayList<Birthday> mArrayListBirthday;
 	OnItemClickListener mItemClickListener;
 	private ImageLoader mImageLoader;
+	private int whichTheme = 0;
 
 	public BirthdayRecyclerAdapter(Context mContext,
 			ArrayList<Birthday> mArrayListBirthday) {
@@ -55,6 +58,7 @@ public class BirthdayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 		this.mArrayListBirthday = mArrayListBirthday;
 		mInflater = LayoutInflater.from(mContext);
 		mImageLoader = ApplicationLoader.getUILImageLoader();
+		whichTheme = ApplicationLoader.getPreferences().getAppTheme();
 	}
 	
 	public void addBirthdayObjList(ArrayList<Birthday> mListBirthday) {
@@ -113,8 +117,8 @@ public class BirthdayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 		AppCompatTextView birthdayNameTv;
 		AppCompatTextView birthdayDepartmentTv;
 		CircleImageView birthdayUserIv;
-		ImageView sendWishIv;
-		ImageView sendMessageIv;
+		DontPressWithParentImageView sendWishIv;
+		DontPressWithParentImageView sendMessageIv;
 		FrameLayout rootLayout;
 		ProgressWheel mProgressWheel;
 		View readStripView;
@@ -128,9 +132,9 @@ public class BirthdayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 			
 			mProgressWheel = (ProgressWheel) view.findViewById(R.id.itemRecyclerBirthdayImageLoadingProgress);
 
-			sendMessageIv = (ImageView) view.findViewById(R.id.itemRecyclerBirthdayMessageIv);
+			sendMessageIv = (DontPressWithParentImageView) view.findViewById(R.id.itemRecyclerBirthdayMessageIv);
 			
-			sendWishIv = (ImageView) view.findViewById(R.id.itemRecyclerBirthdayWishIv);
+			sendWishIv = (DontPressWithParentImageView) view.findViewById(R.id.itemRecyclerBirthdayWishIv);
 
 			rootLayout = (FrameLayout) view.findViewById(R.id.itemRecyclerBirthdayRootLayout);
 			
@@ -172,15 +176,6 @@ public class BirthdayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 			Birthday mObj = mArrayListBirthday.get(position);
 			((BirthdayViewHolder)viewHolder).birthdayNameTv.setText(mObj.getmBirthdayUserName());
 			((BirthdayViewHolder)viewHolder).birthdayDepartmentTv.setText(mObj.getmBirthdayUserDep());
-			if(!mObj.isRead()){
-				((BirthdayViewHolder)viewHolder).birthdayNameTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
-				((BirthdayViewHolder)viewHolder).readStripView.setVisibility(View.VISIBLE);
-				((BirthdayViewHolder)viewHolder).rootLayout.setBackgroundResource(R.color.unread_background);
-			}else{
-				((BirthdayViewHolder)viewHolder).birthdayNameTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
-				((BirthdayViewHolder)viewHolder).readStripView.setVisibility(View.GONE);
-				((BirthdayViewHolder)viewHolder).rootLayout.setBackgroundResource(R.color.white);
-			}
 			
 			if(mObj.isWished()){
 				((BirthdayViewHolder)viewHolder).sendWishIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_birthday_wish_focused));
@@ -194,6 +189,13 @@ public class BirthdayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 				((BirthdayViewHolder)viewHolder).sendMessageIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_birthday_message_normal));
 			}
 			
+			ThemeUtils.applyThemeItemBirthday(mContext, whichTheme,
+					((BirthdayViewHolder) viewHolder).readStripView,
+					((BirthdayViewHolder) viewHolder).rootLayout,
+					((BirthdayViewHolder) viewHolder).birthdayNameTv,
+					((BirthdayViewHolder) viewHolder).sendWishIv,
+					((BirthdayViewHolder) viewHolder).sendMessageIv,
+					mObj.isRead(), mObj.isWished());
 			
 			try{
 			final String mThumbnailPath = mObj.getmBirthdayUserImage();
@@ -241,6 +243,7 @@ public class BirthdayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 		try{
 			Birthday mObj = mArrayListBirthday.get(position);
 			((SectionViewHolder)viewHolder).headerTv.setText(mObj.getmEmployeeId());
+			ThemeUtils.applyThemeItemBirthdaySection(mContext, ((SectionViewHolder)viewHolder).headerTv, whichTheme);
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

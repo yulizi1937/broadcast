@@ -71,6 +71,7 @@ import com.application.utils.FileLog;
 import com.application.utils.JSONRequestBuilder;
 import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
+import com.application.utils.ThemeUtils;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -127,6 +128,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 		initUi();
 		setMaterialRippleView();
 		syncDataWithApi();
+		applyTheme();
 	}
 	
 	
@@ -219,6 +221,14 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 		try {
 			setMaterialRippleOnView(mEmptyRefreshBtn);
 		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(EventRecyclerActivity.this).applyThemeCapture(EventRecyclerActivity.this, EventRecyclerActivity.this, mToolBar);
+		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
 	}
@@ -637,16 +647,19 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
          SpannableString mSpannabledUnRead = new SpannableString(getResources().getString(R.string.context_menu_unread));
          SpannableString mSpannabledDelete = new SpannableString(getResources().getString(R.string.context_menu_delete));
          SpannableString mSpannabledView = new SpannableString(getResources().getString(R.string.context_menu_view));
+         SpannableString mSpannabledLike = new SpannableString(getResources().getString(R.string.context_menu_like));
          
          mSpannabledRead.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledRead.length(), 0);
          mSpannabledUnRead.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledUnRead.length(), 0);
          mSpannabledDelete.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledDelete.length(), 0);
          mSpannabledView.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledView.length(), 0);
+         mSpannabledLike.setSpan(new ForegroundColorSpan(Color.GRAY), 0, mSpannabledLike.length(), 0);
          
          menu.getItem(0).setTitle(mSpannabledRead);
          menu.getItem(1).setTitle(mSpannabledUnRead);
-         menu.getItem(2).setTitle(mSpannabledDelete);
-         menu.getItem(3).setTitle(mSpannabledView);
+         menu.getItem(2).setTitle(mSpannabledLike);
+         menu.getItem(3).setTitle(mSpannabledDelete);
+         menu.getItem(4).setTitle(mSpannabledView);
          
          /**
           * Read
@@ -671,9 +684,20 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
          });
          
          /**
-          * Delete
+          * Like
           */
          menu.getItem(2).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+             @Override
+             public boolean onMenuItemClick(MenuItem item) {
+            	 contextMenuLike(mPosition);
+                 return true;
+             }
+         });
+         
+         /**
+          * Delete
+          */
+         menu.getItem(3).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
              @Override
              public boolean onMenuItemClick(MenuItem item) {
             	 showDeleteConfirmationDialog(mPosition, mTitle);
@@ -685,7 +709,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
          /**
           * View
           */
-         menu.getItem(3).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+         menu.getItem(4).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
              @Override
              public boolean onMenuItemClick(MenuItem item) {
             	 contextMenuView(mPosition, mView);
@@ -746,6 +770,24 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 			FileLog.e(TAG, e.toString());
 		}
 	}
+	
+	private void contextMenuLike(int mPosition){
+		try{
+			 if(!mArrayListEvent.get(mPosition).isLike()){
+				 String mEventId = mArrayListEvent.get(mPosition).getmId();
+				 ContentValues values = new ContentValues();
+			     values.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_LIKE, "true");
+				 getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, values, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mEventId});
+				 mArrayListEvent.get(mPosition).setLike(true);
+				 mArrayListEvent.get(mPosition).setmLikeCount(String.valueOf(Integer.parseInt(mArrayListEvent.get(mPosition).getmLikeCount())+1));
+		       	 mRecyclerView.getAdapter().notifyItemChanged(mPosition);
+		       	 UserReport.updateUserReportApi(mEventId, AppConstants.INTENTCONSTANTS.EVENT, AppConstants.REPORT.LIKE, "");
+			 }
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
 	
 	private void showDeleteConfirmationDialog(final int mPosition, String mTitle){
 		MaterialDialog mMaterialDialog = new MaterialDialog.Builder(EventRecyclerActivity.this)

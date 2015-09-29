@@ -42,6 +42,7 @@ import com.application.utils.JSONRequestBuilder;
 import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
+import com.application.utils.ThemeUtils;
 import com.application.utils.Utilities;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -96,6 +97,7 @@ public class ReportActivity extends SwipeBackBaseActivity {
 		setDataFromPreferences();
 		setAnimation();
 		getIntentData();
+		applyTheme();
 	}
 
 	@Override
@@ -153,6 +155,14 @@ public class ReportActivity extends SwipeBackBaseActivity {
 					.playOn(mReportProfileCircleImageView);
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
+		}
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(ReportActivity.this).applyThemeCountrySelect(ReportActivity.this, ReportActivity.this, mToolBar);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 
@@ -300,8 +310,7 @@ public class ReportActivity extends SwipeBackBaseActivity {
 	@SuppressWarnings("deprecation")
 	private void setUiOfSubmitAccordingly() {
 		if (isValidSubmit) {
-			mReportSubmitBtn.setBackgroundDrawable(getResources().getDrawable(
-					R.drawable.shape_button_pressed));
+			ThemeUtils.getInstance(ReportActivity.this).applyThemeButton(ReportActivity.this, ReportActivity.this, mReportSubmitBtn);
 		} else {
 			mReportSubmitBtn.setBackgroundDrawable(getResources().getDrawable(
 					R.drawable.shape_button_normal));

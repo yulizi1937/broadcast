@@ -11,10 +11,12 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
@@ -27,6 +29,7 @@ import com.application.ui.view.DiscreteSeekBar.OnProgressChangeListener;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
+import com.application.utils.BuildVars;
 import com.application.utils.FileLog;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
@@ -37,7 +40,7 @@ import com.mobcast.R;
  * @author Vikalp Patel(VikalpPatelCE)
  * 
  */
-public class VideoFullScreenActivity extends SwipeBackBaseActivity {
+public class VideoFullScreenActivity extends AppCompatActivity {
 	private static final String TAG = VideoFullScreenActivity.class
 			.getSimpleName();
 
@@ -134,9 +137,11 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-		super.onBackPressed();
 		saveVideoViewPosition();
+		onPause();
 		mThreadSafe.pause();
+		AndroidUtilities.exitWindowAnimation(VideoFullScreenActivity.this);
+		super.onBackPressed();
 	}
 	
 	@Override
@@ -301,6 +306,7 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 	}
 
 	private void cleanUp() {
+		mVideoView.pause();
 	}
 
 	/**
@@ -356,6 +362,15 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 				}
 			}
 		});
+		
+		mVideoFullScreenIv.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				onBackPressed();
+			}
+		});
 	}
 
 	private void setOnTouchListener() {
@@ -373,14 +388,14 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 		if (mVideoView.isPlaying()) {
 			mVideoMediaControllerFrameLayout.startAnimation(mAnimFadeIn);
 			mVideoMediaControllerFrameLayout.setVisibility(View.VISIBLE);
-			AndroidUtilities.runOnUIThread(new Runnable() {
+			/*AndroidUtilities.runOnUIThread(new Runnable() {
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
 					mVideoMediaControllerFrameLayout
 							.startAnimation(mAnimFadeOut);
 				}
-			}, 3000);
+			}, 3000);*/
 		}
 	}
 
@@ -453,6 +468,15 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void setSecurity() {
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			if (!BuildVars.DEBUG_SCREENSHOT) {
+				getWindow().setFlags(LayoutParams.FLAG_SECURE,
+						LayoutParams.FLAG_SECURE);
+			}
 		}
 	}
 	

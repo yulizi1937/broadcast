@@ -24,7 +24,7 @@
             android:layout_width="@dimen/award_read_strip_width"
             android:layout_height="match_parent"
             android:layout_gravity="left|center"
-            android:background="@color/unread_highlight"
+            android:background="@color/item_unread_strip_color"
             android:visibility="visible"
             tools:ignore="RtlHardcoded" />
 
@@ -165,7 +165,7 @@
                         android:layout_marginLeft="@dimen/item_recycler_mobcast_feedback_view_detail_text_margin_left"
                         android:gravity="left|center"
                         android:text="@string/sample_item_recycler_event_detail_days_left"
-                        android:textColor="@color/text_highlight"
+                        android:textColor="@color/item_text_info"
                         android:textSize="@dimen/item_recycler_mobcast_feedback_view_detail_text_size"
                         android:textStyle="bold" />
                 </RelativeLayout>
@@ -195,7 +195,7 @@
                         android:layout_marginLeft="@dimen/item_recycler_mobcast_feedback_view_detail_text_margin_left"
                         android:gravity="left|center"
                         android:text="@string/sample_item_recycler_event_detail_attendance"
-                        android:textColor="@color/text_highlight"
+                        android:textColor="@color/item_text_info"
                         android:textSize="@dimen/item_recycler_mobcast_feedback_view_detail_text_size"
                         android:textStyle="bold" />
                 </RelativeLayout>

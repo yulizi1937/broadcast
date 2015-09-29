@@ -30,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.TextureView;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -51,6 +52,7 @@ import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.DownloadAsyncTask;
+import com.application.utils.ThemeUtils;
 import com.application.utils.DownloadAsyncTask.OnPostExecuteListener;
 import com.application.utils.FetchActionAsyncTask;
 import com.application.utils.FetchActionAsyncTask.OnPostExecuteTaskListener;
@@ -129,6 +131,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	private PauseControl  mThreadSafe = new PauseControl();
 
 	private boolean isShareOptionEnable = true;
+	private boolean isContentLiked = false;
 	
 	private Intent mIntent;
 	private String mId;
@@ -173,14 +176,15 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		setUiListener();
 		setSwipeRefreshLayoutCustomisation();
 		ApplicationLoader.getPreferences().setVideoViewPosition(-1);
+		applyTheme();
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
-		super.onResume();
 		decryptFileOnResume();
 		resumeVideoFromFullScreen();
+		super.onResume();
 	}
 	
 	@Override
@@ -204,6 +208,12 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 				menu.findItem(R.id.action_share).setVisible(true);
 			} else {
 				menu.findItem(R.id.action_share).setVisible(false);
+			}
+			
+			if (isContentLiked) {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_liked);
+			} else {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_like);
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
@@ -255,6 +265,9 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 				Intent mIntent = new Intent(VideoDetailActivity.this, MotherActivity.class);
 				startActivity(mIntent);
 			}
+			return true;
+		case R.id.action_like:
+			mVideoLikeTv.performClick();
 			return true;
 		case R.id.action_share:
 			showDialog(0);
@@ -348,6 +361,14 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		mVideoNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentVideoDetailViewSourceLayout);
 
 		mVideoPlayIv.setEnabled(false);
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(VideoDetailActivity.this).applyThemeWithBy(VideoDetailActivity.this, VideoDetailActivity.this, mToolBar, mVideoByTv);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 
 	private void getIntentData(){
@@ -490,6 +511,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 			if(mContentIsLike){
 				mVideoLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
 				mVideoLikeTv.setTextColor(getResources().getColor(R.color.red));
+				isContentLiked = true;
 			}
 			
 			if(mContentLanguageList!=null && mContentLanguageList.size() > 1){
@@ -501,6 +523,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 			if(checkIfFileExists(mContentFilePath)){
 				mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
 				if(!TextUtils.isEmpty(mContentFilePath)){
+					mVideoDownloadBtn.setVisibility(View.GONE);
 					initVideoPlayer(mContentFilePath);	
 					mVideoPlayIv.setEnabled(true);
 				}else{
@@ -701,6 +724,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	}
 
 	private void cleanUp() {
+		mVideoView.pause();
 	}
 
 	/**
@@ -830,10 +854,12 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 							values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, String.valueOf(Integer.parseInt(mContentLikeCount)+1));
 							getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 						}
+						isContentLiked = true;
 						mVideoLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
 						mVideoLikeTv.setText(String.valueOf(Integer.parseInt(mContentLikeCount)+1));
 						mVideoLikeTv.setTextColor(getResources().getColor(R.color.red));
 						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LIKE, "");
+						supportInvalidateOptionsMenu();
 					}
 				}catch(Exception e){
 					FileLog.e(TAG, e.toString());
@@ -955,14 +981,14 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		if (mVideoView.isPlaying()) {
 			mVideoMediaControllerFrameLayout.startAnimation(mAnimFadeIn);
 			mVideoMediaControllerFrameLayout.setVisibility(View.VISIBLE);
-			AndroidUtilities.runOnUIThread(new Runnable() {
+			/*AndroidUtilities.runOnUIThread(new Runnable() {
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
 					mVideoMediaControllerFrameLayout
 							.startAnimation(mAnimFadeOut);
 				}
-			}, 3000);
+			}, 3000);*/
 		}
 	}
 
@@ -1003,6 +1029,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		try{
 			mVideoPlayIv.setEnabled(false);
 			if(Utilities.isInternetConnected()){
+				checkContentFilePath();
 				DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
 						VideoDetailActivity.this, false, true,
 						mContentFileLink, mContentFilePath,
@@ -1045,6 +1072,42 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		mContentFileLink = mContentFileLinkList.get(mPosition);
 		mContentFilePath = mContentFilePathList.get(mPosition);
 		mContentFileSize = mContentFileSizeList.get(mPosition);
+	}
+	
+	private void checkContentFilePath(){
+		try{
+			if(TextUtils.isEmpty(mContentFilePath)){
+				if(!TextUtils.isEmpty(mId) && !TextUtils.isEmpty(mCategory)){
+					Cursor mCursor;
+					if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+						mCursor = getContentResolver().query(DBConstant.Mobcast_File_Columns.CONTENT_URI, null, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID+"=?", new String[]{mId}, DBConstant.Mobcast_File_Columns.COLUMN_ID + " ASC");
+						if(mCursor.getCount()  >0){
+								mCursor.moveToFirst();
+								do {
+									if(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_IS_DEFAULT)))){
+										mContentFilePath = mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH));
+									}
+								} while (mCursor.moveToNext());
+						}
+					}else{
+						mCursor = getContentResolver().query(DBConstant.Training_File_Columns.CONTENT_URI, null, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID+"=?", new String[]{mId}, DBConstant.Training_File_Columns.COLUMN_ID + " ASC");
+						if(mCursor.getCount()  >0){
+								mCursor.moveToFirst();
+								do {
+									if(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_IS_DEFAULT)))){
+										mContentFilePath = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PATH));
+									}
+								} while (mCursor.moveToNext());
+						}
+					}
+					if(mCursor!=null){
+						mCursor.close();
+					}
+				}
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	private void updateLanguageChip(){
@@ -1137,6 +1200,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		mVideoPlayIv.setVisibility(View.GONE);
 		mVideoView.requestFocus();
 		mVideoView.start();
+		mVideoDownloadBtn.setVisibility(View.GONE);
 	}
 	
 	private void decryptFileOnResume(){

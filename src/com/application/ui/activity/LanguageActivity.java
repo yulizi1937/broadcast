@@ -29,6 +29,7 @@ import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.FileLog;
+import com.application.utils.ThemeUtils;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
@@ -58,6 +59,7 @@ public class LanguageActivity extends SwipeBackBaseActivity {
 		setSecurity();
 		initToolBar();
 		initUi();
+		applyTheme();
 	}
 
 	@Override
@@ -111,6 +113,14 @@ public class LanguageActivity extends SwipeBackBaseActivity {
 	private void setUiListener() {
 		setOnClickListener();
 		setRecyclerAdapterListener();
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(LanguageActivity.this).applyThemeCountrySelect(LanguageActivity.this, LanguageActivity.this, mToolBar);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 
 	private void setOnClickListener() {

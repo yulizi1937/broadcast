@@ -51,6 +51,7 @@ import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.FileLog;
 import com.application.utils.LocaleController;
+import com.application.utils.ThemeUtils;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
@@ -132,7 +133,7 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 		initToolBar();
 		initReceivers();
 		initUi();
-
+		applyTheme();
 	}
 
 	@SuppressLint("NewApi")
@@ -263,6 +264,14 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 
 		emptyView = (TextView) findViewById(R.id.fragmentFileManagerSearchEmptyView);
 		initFileManager();
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(FileManagerActivity.this).applyThemeCountrySelect(FileManagerActivity.this, FileManagerActivity.this, mToolBar);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 
 	private void initFileManager() {

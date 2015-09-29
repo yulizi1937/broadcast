@@ -19,13 +19,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.application.sqlite.DBConstant;
-import com.application.ui.adapter.MobcastRecyclerAdapter.ImageViewHolder;
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.CircleImageView;
 import com.application.ui.view.ProgressWheel;
@@ -33,6 +32,7 @@ import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.FileLog;
+import com.application.utils.ThemeUtils;
 import com.application.utils.Utilities;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -58,6 +58,8 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 	private FrameLayout mCroutonViewGroup;
 
 	private FrameLayout mBirthdayProfileFrameLayout;
+	
+	private LinearLayout mBirthdayProfileLinearLayout;
 
 	private CircleImageView mBirthdayProfileCircleImageView;
 
@@ -73,6 +75,7 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mBirthdayProfileSunSignTv;
 	private AppCompatTextView mBirthdayProfileAgeTv;
 	private AppCompatTextView mBirthdayProfileDepTv;
+	private AppCompatTextView mBirthdayProfileCityTv;
 	
 	private ImageLoader mImageLoader;
 	
@@ -105,6 +108,7 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		getIntentData();
 		setUiListener();
 		setAnimation();
+		applyTheme();
 	}
 
 	@Override
@@ -161,6 +165,8 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		mCroutonViewGroup = (FrameLayout) findViewById(R.id.croutonViewGroup);
 
 		mBirthdayProfileFrameLayout = (FrameLayout) findViewById(R.id.fragmentBirthdayProfileRootLayout);
+		
+		mBirthdayProfileLinearLayout = (LinearLayout) findViewById(R.id.fragmentBirthdayProfileLinearLayout);
 
 		mBirthdayProfileCircleImageView = (CircleImageView) findViewById(R.id.fragmentBirthdayProfileImageIv);
 		
@@ -171,11 +177,21 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		mBirthdayProfileSunSignTv = (AppCompatTextView) findViewById(R.id.fragmentBirthdayProfileSunSignTv);
 		mBirthdayProfileAgeTv = (AppCompatTextView) findViewById(R.id.fragmentBirthdayProfileAgeTv);
 		mBirthdayProfileDepTv = (AppCompatTextView) findViewById(R.id.fragmentBirthdayProfileDepartmentTv);
+		
+		mBirthdayProfileCityTv = (AppCompatTextView) findViewById(R.id.fragmentBirthdayProfileCityTv);
 
 		mBirthdayProfileActionCallIv = (ImageView) findViewById(R.id.fragmentBirthdayProfileCallIv);
 		mBirthdayProfileActionChatIv = (ImageView) findViewById(R.id.fragmentBirthdayProfileChatIv);
 		mBirthdayProfileActionMsgIv = (ImageView) findViewById(R.id.fragmentBirthdayProfileMessageIv);
 		mBirthdayProfileActionEmailIv = (ImageView) findViewById(R.id.fragmentBirthdayProfileEmailIv);
+	}
+	
+	public void applyTheme(){
+		try{
+			ThemeUtils.getInstance(BirthdayProfileActivity.this).applyThemeAwardProfile(BirthdayProfileActivity.this, BirthdayProfileActivity.this, mToolBar, mBirthdayProfileLinearLayout, mBirthdayProfileNameTv, mBirthdayProfileCityTv, mBirthdayProfileDepTv);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	private void getIntentData(){
@@ -309,7 +325,7 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		}
 		
 		if(!TextUtils.isEmpty(mContentCity)){
-			
+			mBirthdayProfileCityTv.setText(mContentCity);
 		}
 		
 		if(TextUtils.isEmpty(mContentAge)){

@@ -410,6 +410,28 @@ public class AppPreferences {
 		return mSyncFrequency;
 	}
 	
+	public void setAppTheme(int AppTheme) {
+		editor = sharedPreferences.edit();
+		editor.putInt("AppTheme", AppTheme);
+		editor.commit();
+	}
+
+	public int getAppTheme() {
+		int AppTheme= sharedPreferences.getInt("AppTheme",1);
+		return AppTheme;
+	}
+	
+	public void setTAppTheme(int TAppTheme) {
+		editor = sharedPreferences.edit();
+		editor.putInt("TAppTheme", TAppTheme);
+		editor.commit();
+	}
+
+	public int getTAppTheme() {
+		int TAppTheme= sharedPreferences.getInt("TAppTheme",1);
+		return TAppTheme;
+	}
+	
 	public void setAppCustomTextFont(boolean isAppCustomTextFont) {
 		editor = sharedPreferences.edit();
 		editor.putBoolean("isAppCustomTextFont", isAppCustomTextFont);
@@ -432,8 +454,19 @@ public class AppPreferences {
 		return isAppShowCaseViewMother;
 	}
 	
+	public void setAppUpdateAvail(boolean mAppUpdateAvail) {
+		editor = sharedPreferences.edit();
+		editor.putBoolean("mAppUpdateAvail", mAppUpdateAvail);
+		editor.commit();
+	}
+
+	public boolean isAppUpdateAvail() {
+		boolean mAppUpdateAvail= sharedPreferences.getBoolean("mAppUpdateAvail",false);
+		return mAppUpdateAvail;
+	}
 	
-	/*
+	
+	/**
 	 * RecyclerView : Save Position 
 	 */
 
@@ -527,7 +560,7 @@ public class AppPreferences {
 		return mAudioPlayPosition;
 	}
 
-	/*
+	/**
 	 * Last id : Mobcast, Training, Event, Award & Birthday
 	 */
 
@@ -587,6 +620,32 @@ public class AppPreferences {
 	}
 	
 	/**
+	 * Broadcast receiver
+	 */
+	
+	public void setRefreshMobcastWithNewDataAvail(boolean mRefreshMobcastWithNewDataAvail) {
+		editor = sharedPreferences.edit();
+		editor.putBoolean("mRefreshMobcastWithNewDataAvail", mRefreshMobcastWithNewDataAvail);
+		editor.commit();
+	}
+
+	public boolean isRefreshMobcastWithNewDataAvail() {
+		boolean mRefreshMobcastWithNewDataAvail= sharedPreferences.getBoolean("mRefreshMobcastWithNewDataAvail",false);
+		return mRefreshMobcastWithNewDataAvail;
+	}
+	
+	public void setRefreshTrainingWithNewDataAvail(boolean mRefreshTrainingWithNewDataAvail) {
+		editor = sharedPreferences.edit();
+		editor.putBoolean("mRefreshTrainingWithNewDataAvail", mRefreshTrainingWithNewDataAvail);
+		editor.commit();
+	}
+
+	public boolean isRefreshTrainingWithNewDataAvail() {
+		boolean mRefreshTrainingWithNewDataAvail= sharedPreferences.getBoolean("mRefreshTrainingWithNewDataAvail",false);
+		return mRefreshTrainingWithNewDataAvail;
+	}
+	
+	/**
 	 * Drawer
 	 */
 
@@ -625,7 +684,7 @@ public class AppPreferences {
 		return mLastSyncTimeStampMessage;
 	}
 	
-	/*
+	/**
 	 * Chat
 	 */
 	public void setChatOppositePerson(String mChatOppositePerson) {
@@ -661,7 +720,7 @@ public class AppPreferences {
 		return mChatTo;
 	}
 	
-	/*
+	/**
 	 * clear Preferences
 	 */
 	

@@ -19,6 +19,13 @@
         app:showAsAction="always"/>
     
     <item
+        android:id="@+id/action_like"
+        android:icon="@drawable/ic_like"
+        android:orderInCategory="100"
+        android:title="@string/action_like"
+        app:showAsAction="always"/>
+    
+    <item
         android:id="@+id/action_add_cal"
         android:icon="@drawable/ic_event_add_cal"
         android:orderInCategory="100"

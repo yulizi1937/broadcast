@@ -48,6 +48,7 @@ import com.application.utils.FetchActionAsyncTask.OnPostExecuteTaskListener;
 import com.application.utils.FetchActionAsyncTask;
 import com.application.utils.FileLog;
 import com.application.utils.Style;
+import com.application.utils.ThemeUtils;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.daimajia.androidanimations.library.Techniques;
@@ -95,6 +96,7 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 	private RelativeLayout mPdfFileLayout;
 
 	private boolean isShareOptionEnable = false;
+	private boolean isContentLiked = false;
 	
 	private Intent mIntent;
 	private String mId;
@@ -139,6 +141,7 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 		setUiListener();
 		setAnimation();
 		setSwipeRefreshLayoutCustomisation();
+		applyTheme();
 	}
 
 	@Override
@@ -155,6 +158,12 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 				menu.findItem(R.id.action_share).setVisible(true);
 			} else {
 				menu.findItem(R.id.action_share).setVisible(false);
+			}
+			
+			if (isContentLiked) {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_liked);
+			} else {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_like);
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
@@ -206,6 +215,9 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 				Intent mIntent = new Intent(PdfDetailActivity.this, MotherActivity.class);
 				startActivity(mIntent);
 			}
+			return true;
+		case R.id.action_like:
+			mPdfLikeTv.performClick();
 			return true;
 		case R.id.action_share:
 			showDialog(0);
@@ -275,6 +287,14 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 
 		mPdfNewsLinkLayout = (LinearLayout) findViewById(R.id.fragmentPdfDetailViewSourceLayout);
 		
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(PdfDetailActivity.this).applyThemeWithBy(PdfDetailActivity.this, PdfDetailActivity.this, mToolBar, mPdfByTv);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 
@@ -430,6 +450,7 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 			if(mContentIsLike){
 				mPdfLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
 				mPdfLikeTv.setTextColor(getResources().getColor(R.color.red));
+				isContentLiked = true;
 			}
 			
 			if(mContentLanguageList!=null && mContentLanguageList.size() > 1){
@@ -457,32 +478,36 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void downloadFileInBackground(){
-		if(Utilities.isInternetConnected()){
-			DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
-					PdfDetailActivity.this, false, false,
-					mContentFileLink, mContentFilePath,
-					AppConstants.TYPE.PDF, Long.parseLong(mContentFileSize), TAG);
-			mDownloadAsyncTask.execute();
-			mPdfDownloadBtn.setVisibility(View.VISIBLE);
-			mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
-				@Override
-				public void onPostExecute(boolean isDownloaded) {
-					// TODO Auto-generated method stub
-					if(isDownloaded){
-						if(checkIfFileExists(mContentFilePath)){
-							mPdfDownloadBtn.setVisibility(View.GONE);
+		try{
+			if(Utilities.isInternetConnected()){
+				DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
+						PdfDetailActivity.this, false, false,
+						mContentFileLink, mContentFilePath,
+						AppConstants.TYPE.PDF, Long.parseLong(mContentFileSize), TAG);
+				mDownloadAsyncTask.execute();
+				mPdfDownloadBtn.setVisibility(View.VISIBLE);
+				mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
+					@Override
+					public void onPostExecute(boolean isDownloaded) {
+						// TODO Auto-generated method stub
+						if(isDownloaded){
+							if(checkIfFileExists(mContentFilePath)){
+								mPdfDownloadBtn.setVisibility(View.GONE);
+							}else{
+								mPdfDownloadBtn.setVisibility(View.VISIBLE);
+								AndroidUtilities.showSnackBar(PdfDetailActivity.this, getResources().getString(R.string.file_download));
+							}
 						}else{
 							mPdfDownloadBtn.setVisibility(View.VISIBLE);
 							AndroidUtilities.showSnackBar(PdfDetailActivity.this, getResources().getString(R.string.file_download));
 						}
-					}else{
-						mPdfDownloadBtn.setVisibility(View.VISIBLE);
-						AndroidUtilities.showSnackBar(PdfDetailActivity.this, getResources().getString(R.string.file_download));
 					}
-				}
-			});	
-		}else{
-			Utilities.showCrouton(PdfDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.file_not_available), Style.ALERT);
+				});	
+			}else{
+				Utilities.showCrouton(PdfDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.file_not_available), Style.ALERT);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 
@@ -562,10 +587,12 @@ public class PdfDetailActivity extends SwipeBackBaseActivity {
 							values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, String.valueOf(Integer.parseInt(mContentLikeCount)+1));
 							getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 						}
+						isContentLiked = true;
 						mPdfLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
 						mPdfLikeTv.setText(String.valueOf(Integer.parseInt(mContentLikeCount)+1));
 						mPdfLikeTv.setTextColor(getResources().getColor(R.color.red));
 						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LIKE, "");
+						supportInvalidateOptionsMenu();
 					}
 				}catch(Exception e){
 					FileLog.e(TAG, e.toString());

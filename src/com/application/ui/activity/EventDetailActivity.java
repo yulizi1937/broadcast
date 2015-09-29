@@ -45,11 +45,11 @@ import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.DownloadAsyncTask;
+import com.application.utils.ThemeUtils;
 import com.application.utils.DownloadAsyncTask.OnPostExecuteListener;
 import com.application.utils.FetchActionAsyncTask;
 import com.application.utils.FetchActionAsyncTask.OnPostExecuteTaskListener;
 import com.application.utils.FileLog;
-import com.application.utils.Style;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -99,6 +99,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 	private ImageView mEventCoverIv;
 	
 	private boolean isShareOptionEnable = true;
+	private boolean isContentLiked = false;
 	
 	private Intent mIntent;
 	private String mId;
@@ -138,6 +139,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 		getIntentData();
 		setUiListener();
 		setSwipeRefreshLayoutCustomisation();
+		applyTheme();
 	}
 
 	@Override
@@ -164,6 +166,12 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 				menu.findItem(R.id.action_share).setVisible(true);
 			} else {
 				menu.findItem(R.id.action_share).setVisible(false);
+			}
+			
+			if (isContentLiked) {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_liked);
+			} else {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_like);
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
@@ -215,6 +223,9 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 				Intent mIntent = new Intent(EventDetailActivity.this, MotherActivity.class);
 				startActivity(mIntent);
 			}
+			return true;
+		case R.id.action_like:
+			mEventLikeTv.performClick();
 			return true;
 		case R.id.action_add_cal:
 			addEventToCalendar();
@@ -291,6 +302,14 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 		mToolBar.setNavigationIcon(R.drawable.ic_back_shadow);
 		setSupportActionBar(mToolBar);
 	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(EventDetailActivity.this).applyThemeWithBy(EventDetailActivity.this, EventDetailActivity.this, mToolBar, mEventByTv);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
 
 	private void setUiListener() {
 		setMaterialRippleView();
@@ -350,10 +369,12 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 							values.put(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO, String.valueOf(Integer.parseInt(mContentLikeCount)+1));
 							getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, values, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId});
 						}
+						isContentLiked = true;
 						mEventLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
 						mEventLikeTv.setText(String.valueOf(Integer.parseInt(mContentLikeCount)+1));
 						mEventLikeTv.setTextColor(getResources().getColor(R.color.red));
 						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LIKE, "");
+						supportInvalidateOptionsMenu();
 					}
 				}catch(Exception e){
 					FileLog.e(TAG, e.toString());
@@ -499,6 +520,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 			mContentFilePath =  mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_FILE_PATH));
 			mContentFileSize =  mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_FILE_SIZE));
 			isShareOptionEnable = mContentIsSharing;
+			isContentLiked = mContentIsLike;
 			setIntentDataToUi();
 		}
 	}

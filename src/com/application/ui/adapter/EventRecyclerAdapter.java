@@ -24,7 +24,9 @@ import com.application.ui.adapter.MobcastRecyclerAdapter.OnItemLongClickListener
 import com.application.ui.view.FlexibleDividerDecoration;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AppConstants;
+import com.application.utils.ApplicationLoader;
 import com.application.utils.FileLog;
+import com.application.utils.ThemeUtils;
 import com.mobcast.R;
 
 public class EventRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements FlexibleDividerDecoration.VisibilityProvider {
@@ -39,12 +41,14 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 	private ArrayList<Event> mArrayListEvent;
 	public OnItemClickListenerE mItemClickListener;
 	public OnItemLongClickListenerE mItemLongClickListener;
+	private int mWhichTheme = 0;
 
 	public EventRecyclerAdapter(Context mContext,
 			ArrayList<Event> mArrayListEvent) {
 		this.mContext = mContext;
 		this.mArrayListEvent = mArrayListEvent;
 		mInflater = LayoutInflater.from(mContext);
+		mWhichTheme = ApplicationLoader.getPreferences().getAppTheme();
 	}
 	
 	 public void addEventObjList(ArrayList<Event> mListEvent){
@@ -102,6 +106,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 		FrameLayout mEventRootLayout;
 
 		View mReadStripView;
+		View mTimeLineView;
 
 		AppCompatTextView mEventTitleTv;
 		AppCompatTextView mEventViewCountTv;
@@ -130,6 +135,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 			mEventRootLayout = (FrameLayout) view.findViewById(R.id.itemRecyclerEventRootLayout);
 
 			mReadStripView = (View) view.findViewById(R.id.itemRecyclerEventReadView);
+			mTimeLineView = (View) view.findViewById(R.id.itemRecyclerEventLineView);
 
 			mEventRootLayout.setOnClickListener(this);
 			mEventRootLayout.setOnLongClickListener(this);
@@ -193,16 +199,8 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 			((EventViewHolder)viewHolder).mEventDaysHoursLeftTextTv.setText(mObj.getmDaysLeft());
 			if(!mObj.isRead()){
 				((EventViewHolder)viewHolder).mEventTextIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_event_focused));
-				((EventViewHolder)viewHolder).mEventTextIndicatorIv.setBackgroundColor(mContext.getResources().getColor(R.color.unread_background));
-				((EventViewHolder)viewHolder).mEventTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
-				((EventViewHolder)viewHolder).mReadStripView.setVisibility(View.VISIBLE);
-				((EventViewHolder)viewHolder).mEventRootLayout.setBackgroundResource(R.color.unread_background);
 			}else{
 				((EventViewHolder)viewHolder).mEventTextIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_event_normal));
-				((EventViewHolder)viewHolder).mEventTextIndicatorIv.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
-				((EventViewHolder)viewHolder).mEventTitleTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
-				((EventViewHolder)viewHolder).mReadStripView.setVisibility(View.GONE);
-				((EventViewHolder)viewHolder).mEventRootLayout.setBackgroundResource(R.color.white);
 			}
 			
 			if(!mObj.isLike()){
@@ -222,10 +220,12 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 				((EventViewHolder)viewHolder).mEventIsGoingTextTv.setText(mContext.getResources().getString(R.string.accepted));
 				((EventViewHolder)viewHolder).mEventIsGoingTextIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_event_accepted));				
 			}else{
-				((EventViewHolder)viewHolder).mEventIsGoingTextTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
+				((EventViewHolder)viewHolder).mEventIsGoingTextTv.setTextColor(mContext.getResources().getColor(R.color.drawer_item_title));
 				((EventViewHolder)viewHolder).mEventIsGoingTextTv.setText(mContext.getResources().getString(R.string.maybe));
 				((EventViewHolder)viewHolder).mEventIsGoingTextIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_item_feedback_question));
 			}
+			
+			ThemeUtils.applyThemeItemEvent(mContext, mWhichTheme, ((EventViewHolder)viewHolder).mReadStripView, ((EventViewHolder)viewHolder).mTimeLineView, ((EventViewHolder)viewHolder).mEventRootLayout, ((EventViewHolder)viewHolder).mEventTitleTv, ((EventViewHolder)viewHolder).mEventByTv, ((EventViewHolder)viewHolder).mEventTextIndicatorIv, mObj.isRead());
 			
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());

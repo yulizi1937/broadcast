@@ -108,7 +108,8 @@
                             android:layout_width="0px"
                             android:layout_height="0px"
                             android:focusable="true"
-                            android:focusableInTouchMode="true" />
+                            android:focusableInTouchMode="true"
+                            tools:ignore="UselessLeaf" />
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/activityLoginCountryCodeTv"
@@ -119,7 +120,7 @@
                             android:background="@color/edittext_login_background"
                             android:gravity="center"
                             android:text="@string/textview_login_countrycode"
-                            android:textColor="@color/textview_login_color"
+                            android:textColor="@android:color/white"
                             android:textSize="@dimen/login_countrycode_size" />
 
                         <android.support.v7.widget.AppCompatEditText

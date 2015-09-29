@@ -47,6 +47,7 @@ import com.application.utils.FetchActionAsyncTask.OnPostExecuteTaskListener;
 import com.application.utils.FetchActionAsyncTask;
 import com.application.utils.FileLog;
 import com.application.utils.Style;
+import com.application.utils.ThemeUtils;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.daimajia.androidanimations.library.Techniques;
@@ -94,6 +95,7 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 	private RelativeLayout mDocFileLayout;
 
 	private boolean isShareOptionEnable = true;
+	private boolean isContentLiked = false;
 	
 	private Intent mIntent;
 	private String mId;
@@ -138,6 +140,7 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 		setUiListener();
 		setAnimation();
 		setSwipeRefreshLayoutCustomisation();
+		applyTheme();
 	}
 
 	@Override
@@ -154,6 +157,12 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 				menu.findItem(R.id.action_share).setVisible(true);
 			} else {
 				menu.findItem(R.id.action_share).setVisible(false);
+			}
+			
+			if (isContentLiked) {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_liked);
+			} else {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_like);
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
@@ -205,6 +214,9 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 				Intent mIntent = new Intent(DocDetailActivity.this, MotherActivity.class);
 				startActivity(mIntent);
 			}
+			return true;
+		case R.id.action_like:
+			mDocLikeTv.performClick();
 			return true;
 		case R.id.action_share:
 			showDialog(0);
@@ -276,6 +288,14 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 		
 	}
 	
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(DocDetailActivity.this).applyThemeWithBy(DocDetailActivity.this, DocDetailActivity.this, mToolBar, mDocByTv);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
 	
 	private void getIntentData(){
 		mIntent = getIntent();
@@ -429,6 +449,7 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 			if(mContentIsLike){
 				mDocLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
 				mDocLikeTv.setTextColor(getResources().getColor(R.color.red));
+				isContentLiked = true;
 			}
 			
 			if(mContentLanguageList!=null && mContentLanguageList.size() > 1){
@@ -459,32 +480,36 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void downloadFileInBackground(){
-		if(Utilities.isInternetConnected()){
-			DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
-					DocDetailActivity.this, false, false,
-					mContentFileLink, mContentFilePath,
-					AppConstants.TYPE.DOC, Long.parseLong(mContentFileSize), TAG);
-			mDownloadAsyncTask.execute();
-			mDocDownloadBtn.setVisibility(View.VISIBLE);
-			mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
-				@Override
-				public void onPostExecute(boolean isDownloaded) {
-					// TODO Auto-generated method stub
-					if(isDownloaded){
-						if(checkIfFileExists(mContentFilePath)){
-							mDocDownloadBtn.setVisibility(View.GONE);
+		try{
+			if(Utilities.isInternetConnected()){
+				DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
+						DocDetailActivity.this, false, false,
+						mContentFileLink, mContentFilePath,
+						AppConstants.TYPE.DOC, Long.parseLong(mContentFileSize), TAG);
+				mDownloadAsyncTask.execute();
+				mDocDownloadBtn.setVisibility(View.VISIBLE);
+				mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
+					@Override
+					public void onPostExecute(boolean isDownloaded) {
+						// TODO Auto-generated method stub
+						if(isDownloaded){
+							if(checkIfFileExists(mContentFilePath)){
+								mDocDownloadBtn.setVisibility(View.GONE);
+							}else{
+								mDocDownloadBtn.setVisibility(View.VISIBLE);
+								AndroidUtilities.showSnackBar(DocDetailActivity.this, getResources().getString(R.string.file_download));
+							}
 						}else{
 							mDocDownloadBtn.setVisibility(View.VISIBLE);
 							AndroidUtilities.showSnackBar(DocDetailActivity.this, getResources().getString(R.string.file_download));
 						}
-					}else{
-						mDocDownloadBtn.setVisibility(View.VISIBLE);
-						AndroidUtilities.showSnackBar(DocDetailActivity.this, getResources().getString(R.string.file_download));
 					}
-				}
-			});
-		}else{
-			Utilities.showCrouton(DocDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.file_not_available), Style.ALERT);
+				});
+			}else{
+				Utilities.showCrouton(DocDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.file_not_available), Style.ALERT);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 
@@ -561,10 +586,12 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 							values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, String.valueOf(Integer.parseInt(mContentLikeCount)+1));
 							getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 						}
+						isContentLiked = true;
 						mDocLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
 						mDocLikeTv.setText(String.valueOf(Integer.parseInt(mContentLikeCount)+1));
 						mDocLikeTv.setTextColor(getResources().getColor(R.color.red));
 						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LIKE, "");
+						supportInvalidateOptionsMenu();
 					}
 				}catch(Exception e){
 					FileLog.e(TAG, e.toString());

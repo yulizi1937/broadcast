@@ -15,6 +15,9 @@ import android.view.ViewGroup;
 
 import com.application.beans.QuizScorePagerInfo;
 import com.application.sqlite.DBConstant;
+import com.application.ui.activity.QuizActivity;
+import com.application.utils.FileLog;
+import com.application.utils.ThemeUtils;
 import com.mobcast.R;
 
 /**
@@ -27,6 +30,9 @@ public class QuizScoreFragment extends Fragment {
 	private AppCompatTextView mQuizScoreQuestionTitleTv;
 	private AppCompatTextView mQuizScoreQuestionNumberTv;
 	private AppCompatTextView mQuizScoreQuestionCorrectAnswerTv;
+	
+	private View mQuizScoreLineView;
+	
 	private QuizScorePagerInfo mQuizScorePagerInfo;
 	
 	private String mQuestionTitle;
@@ -52,6 +58,8 @@ public class QuizScoreFragment extends Fragment {
 		mQuizScoreQuestionNumberTv = (AppCompatTextView)view.findViewById(R.id.fragmentQuizScoreQuestionNumberTextTv);
 		mQuizScoreQuestionCorrectAnswerTv = (AppCompatTextView)view.findViewById(R.id.fragmentQuizScoreCorrectAnswerTv);
 		
+		mQuizScoreLineView = (View)view.findViewById(R.id.fragmentQuizScoreLineView);
+		
 		return view;
 	}
 
@@ -59,7 +67,18 @@ public class QuizScoreFragment extends Fragment {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		applyTheme();
 		getDataFromDB();
+	}
+	
+	private void applyTheme() {
+		try {
+			ThemeUtils.getInstance(getActivity()).applyThemeQuizScore(
+					getActivity(), getActivity(), 
+					mQuizScoreQuestionNumberTv, mQuizScoreLineView);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	private void getDataFromDB(){

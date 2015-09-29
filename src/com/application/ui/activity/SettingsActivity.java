@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -23,15 +24,14 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
-import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,9 +43,14 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.application.beans.Theme;
+import com.application.ui.adapter.SimpleThemeRecyclerAdapter;
+import com.application.ui.adapter.SimpleThemeRecyclerAdapter.OnItemClickListener;
 import com.application.ui.materialdialog.MaterialDialog;
 import com.application.ui.view.MobcastProgressDialog;
+import com.application.ui.view.ObservableRecyclerView;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
@@ -55,6 +60,7 @@ import com.application.utils.JSONRequestBuilder;
 import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
+import com.application.utils.ThemeUtils;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
@@ -98,6 +104,9 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	private LinearLayout mFileStorageAppLayout;
 	private LinearLayout mSyncFrequencyLayout;
 	private LinearLayout mStyleTextFontLayout;
+	private LinearLayout mStyleThemeAppLayout;
+	
+	private View mStyleThemeAppView;
 	
 	private RelativeLayout mNotificationBirthdayMuteLayout;
 	private RelativeLayout mNotificationDownloadAndNotifyLayout;
@@ -105,6 +114,8 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	private RelativeLayout mAboutLayout;
 	private RelativeLayout mAboutBuildVersionLayout;
 	private RelativeLayout mFileStorageLayout;
+	
+	private SimpleThemeRecyclerAdapter mThemeAdapter;
 	
 	private String mCategory = "settings";
 	private String mSubCategory;
@@ -115,6 +126,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	private boolean isBirthdayTime = false;
 	private boolean isBirthdayMute = false;
 	private boolean isStyleTextFont = false;
+	private boolean isStyleAppTheme = false;
 	private boolean isCustomNotification = false;
 	private boolean isDownloadAndNotify = false;
 			
@@ -130,6 +142,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		initUi();
 		setUiListener();
 		setAnimation();
+		applyTheme();
 		if(!BuildVars.DEBUG_DESIGN){
 			setAppStorage();
 		}
@@ -194,6 +207,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		mFileStorageAppLayout = (LinearLayout)findViewById(R.id.fragmentAboutFileStoragePercentageLayout);
 		mSyncFrequencyLayout = (LinearLayout)findViewById(R.id.fragmentSettingsSyncFrequencyLayout);
 		mStyleTextFontLayout = (LinearLayout)findViewById(R.id.fragmentSettingsStyleTextFontLayout);
+		mStyleThemeAppLayout = (LinearLayout)findViewById(R.id.fragmentSettingsStyleAppThemeLayout);
 		
 		mNotificationBirthdayMuteLayout = (RelativeLayout) findViewById(R.id.fragmentSettingsNotificationBirthdayMuteLayout);
 		mNotificationDownloadAndNotifyLayout = (RelativeLayout) findViewById(R.id.fragmentSettingsNotificationDownloadAndNotifyLayout);
@@ -201,6 +215,8 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		mAboutLayout = (RelativeLayout) findViewById(R.id.fragmentSettingsNotificationAboutLayout);
 		mAboutBuildVersionLayout = (RelativeLayout) findViewById(R.id.fragmentAboutBuildVersionLayout);
 		mFileStorageLayout = (RelativeLayout)findViewById(R.id.fragmentAboutFileStorageLayout);
+		
+		mStyleThemeAppView = (View)findViewById(R.id.fragmentSettingsStyleAppThemeSelectedTv);
 		
 		setDataFromPreferences();
 	}
@@ -222,6 +238,14 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		try {
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
+		}
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(SettingsActivity.this).applyThemeCountrySelect(SettingsActivity.this, SettingsActivity.this, mToolBar);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 	
@@ -265,6 +289,29 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			mSyncFrequencyTv.setText("4 hours");
 		}
 		
+		switch (ApplicationLoader.getPreferences().getAppTheme()) {
+		case 0:
+			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_dblue));
+			break;
+		case 1:
+			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_purple));
+			break;
+		case 2:
+			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_green));
+			break;
+		case 3:
+			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_pink));
+			break;
+		case 4:
+			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_teal));
+			break;
+		case 5:
+			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_brown));
+			break;
+		default:
+			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_dblue));
+			break;
+		}
 		mAboutBuildVersionTv.setText(getResources().getString(R.string.sample_fragment_settings_about_build_version_text) + "\n v"+Utilities.getApplicationVersion() + " ( "+ Utilities.getApplicationVersionCode() + " ) ");
 	}
 
@@ -355,6 +402,15 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 				Intent mIntent = new Intent(SettingsActivity.this, FileManagerActivity.class);
 				startActivity(mIntent);
 				AndroidUtilities.enterWindowAnimation(SettingsActivity.this);
+			}
+		});
+		
+		mStyleThemeAppLayout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+//				showStyleAppThemeDialog();
+				showStyleAppThemeListDialog();
 			}
 		});
 		
@@ -631,6 +687,136 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		updateAppSettingsToApi();
 	}
 	
+	private void showStyleAppThemeListDialog() {
+		/*final MaterialDialog mMaterialDialog = new MaterialDialog.Builder(SettingsActivity.this)
+				.title(getResources().getString(R.string.sample_fragment_settings_dialog_theme_title))
+				.titleColor(Utilities.getAppColor())
+				.customView(R.layout.dialog_theme_list, true)
+				.cancelable(true).show();*/
+		
+		final AppCompatDialog  mMateriaLDialog= new AppCompatDialog(SettingsActivity.this);
+		mMateriaLDialog.setContentView(R.layout.dialog_theme_list);
+		mMateriaLDialog.getWindow().setLayout(Utilities.dpToPx(320, getResources()), Utilities.dpToPx(500, getResources()));
+		mMateriaLDialog.show();
+
+//		View mView = mMaterialDialog.getCustomView();
+		ObservableRecyclerView mRecyclerView = (ObservableRecyclerView)mMateriaLDialog.findViewById(R.id.dialogThemeListRecyclerView);
+		final TextView mSubmitBtn = (TextView) mMateriaLDialog.findViewById(R.id.dialogThemeListSubmitTv);
+		GridLayoutManager mGridLayoutManager = new GridLayoutManager(SettingsActivity.this, 2);
+		mRecyclerView.setLayoutManager(mGridLayoutManager);
+		try {
+			final ArrayList<Theme> mListTheme = Utilities.getThemeList();
+			mThemeAdapter = new SimpleThemeRecyclerAdapter(SettingsActivity.this, mListTheme);
+			
+			mRecyclerView.setAdapter(mThemeAdapter);
+			
+			mThemeAdapter.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(View view, int position) {
+					// TODO Auto-generated method stub
+					ApplicationLoader.getPreferences().setTAppTheme(position);
+					for(int i = 0 ; i < mListTheme.size() ; i++){
+						mListTheme.get(i).setSelected(false);
+					}
+					mListTheme.get(position).setSelected(true);
+					mThemeAdapter.notifyDataSetChanged();
+				}
+			});
+			
+			
+			mSubmitBtn.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					// TODO Auto-generated method stub
+					int whichTheme = ApplicationLoader.getPreferences().getTAppTheme();
+					applyStyleThemeApp(whichTheme);
+					mMateriaLDialog.dismiss();
+					setDataFromPreferences();
+				}
+			});
+			
+			setMaterialRippleWithGrayOnView(mSubmitBtn);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	
+	
+	
+	private void showStyleAppThemeDialog() {
+		final MaterialDialog mMaterialDialog = new MaterialDialog.Builder(SettingsActivity.this)
+				.title(getResources().getString(R.string.sample_fragment_settings_dialog_theme_title))
+				.titleColor(Utilities.getAppColor())
+				.customView(R.layout.dialog_settings_sync, true)
+				.cancelable(true).show();
+
+		View mView = mMaterialDialog.getCustomView();
+		final RadioGroup mSyncRadioGroup = (RadioGroup) mView.findViewById(R.id.dialogSyncRadioGroup);
+		final AppCompatRadioButton mSyncRadioButton1 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton1);
+		final AppCompatRadioButton mSyncRadioButton2 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton2);
+		final AppCompatRadioButton mSyncRadioButton3 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton3);
+		final AppCompatRadioButton mSyncRadioButton4 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton4);
+		final AppCompatButton mSyncSubmitBtn = (AppCompatButton) mView.findViewById(R.id.dialogSyncButton);
+		try {
+			mSyncRadioButton1.setText(getResources().getString(R.string.sample_fragment_settings_style_apptheme_dblue));
+			mSyncRadioButton2.setText(getResources().getString(R.string.sample_fragment_settings_style_apptheme_purple));
+			mSyncRadioButton3.setText(getResources().getString(R.string.sample_fragment_settings_style_apptheme_green));
+			setMaterialRippleWithGrayOnView(mSyncSubmitBtn);
+			if (ApplicationLoader.getPreferences().getAppTheme() == 0) {
+				mSyncRadioButton1.setChecked(true);
+			} else if (ApplicationLoader.getPreferences().getAppTheme() == 1) {
+				mSyncRadioButton2.setChecked(true);
+			} else {
+				mSyncRadioButton3.setChecked(true);
+			}
+			mSyncRadioButton4.setVisibility(View.GONE);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		mSyncSubmitBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				int whichTheme = 0;
+				switch(mSyncRadioGroup.getCheckedRadioButtonId()){
+				case R.id.dialogSyncRadioButton1:
+					whichTheme = 0;
+					break;
+				case R.id.dialogSyncRadioButton2:
+					whichTheme = 1;
+					break;
+				case R.id.dialogSyncRadioButton3:
+					whichTheme = 2;
+					break;
+				}
+				applyStyleThemeApp(whichTheme);
+				mMaterialDialog.dismiss();
+				setDataFromPreferences();
+			}
+		});
+	}
+	
+	private void applyStyleThemeApp(int whichTheme){
+		ApplicationLoader.getPreferences().setAppTheme(whichTheme);
+		mSubCategory = "style";
+		if(whichTheme==0){
+			mDescription = "dblue";
+		}else if(whichTheme==1){
+			mDescription = "purple";
+		}else if(whichTheme==2){
+			mDescription = "green";
+		}else if(whichTheme==3){
+			mDescription = "pink";
+		}else if(whichTheme==4){
+			mDescription = "teal";
+		}else if(whichTheme==5){
+			mDescription = "brown";
+		}
+		isStyleAppTheme= true;
+		updateAppSettingsToApi();
+	}
+	
 
 	private void setMaterialRippleView() {
 		try {
@@ -640,6 +826,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			setMaterialRippleWithGrayOnView(mNotificationDownloadAndNotifyLayout);
 			setMaterialRippleWithGrayOnView(mSyncFrequencyLayout);
 			setMaterialRippleWithGrayOnView(mStyleTextFontLayout);
+			setMaterialRippleWithGrayOnView(mStyleThemeAppLayout);
 			setMaterialRippleWithGrayOnView(mAboutLayout);
 			setMaterialRippleWithGrayOnView(mAboutBuildVersionLayout);
 			setMaterialRippleWithGrayOnView(mFileStorageLayout);
@@ -856,6 +1043,15 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 						isSyncFrequency = false;
 					}else if(isStyleTextFont){
 						isStyleTextFont = false;
+						Utilities.stageQueue.postRunnable(new Runnable() {
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								System.exit(0);
+							}
+						});
+					}else if(isStyleAppTheme){
+						isStyleAppTheme = false;
 						Utilities.stageQueue.postRunnable(new Runnable() {
 							@Override
 							public void run() {

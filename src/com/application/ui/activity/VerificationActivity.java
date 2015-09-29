@@ -49,6 +49,7 @@ import com.application.utils.MobcastConfig;
 import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
+import com.application.utils.ThemeUtils;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.facebook.stetho.common.Util;
@@ -69,8 +70,11 @@ public class VerificationActivity extends AppCompatActivity {
 	private AppCompatEditText mVerificationCode3;
 	private AppCompatEditText mVerificationCode4;
 
+	private AppCompatTextView mVerificationTv;
 	private AppCompatTextView mTimerTv;
 	private AppCompatTextView mEnteredAgainTv;
+	
+	private Toolbar mToolbar;
 
 	private TextView mToolBarTitleTv;
 
@@ -106,6 +110,7 @@ public class VerificationActivity extends AppCompatActivity {
 		setSecurity();
 		initUi();
 		initToolBar();
+		applyTheme();
 		setUiListener();
 		initTimer();
 		getIntentData();
@@ -144,10 +149,13 @@ public class VerificationActivity extends AppCompatActivity {
 		mVerificationCode3 = (AppCompatEditText) findViewById(R.id.activityVerificationCode3);
 		mVerificationCode4 = (AppCompatEditText) findViewById(R.id.activityVerificationCode4);
 
+		
+		
 		mNextBtn = (AppCompatButton) findViewById(R.id.activityVerificationBtn);
 		mReSendBtn = (AppCompatButton) findViewById(R.id.activityVerificationResendBtn);
 		mRaisedTicket = (AppCompatButton) findViewById(R.id.activityVerificationRaiseTickedBtn);
 
+		mVerificationTv = (AppCompatTextView) findViewById(R.id.activityVerificationTv);
 		mTimerTv = (AppCompatTextView) findViewById(R.id.activityVerificationRetryTv);
 		mEnteredAgainTv = (AppCompatTextView) findViewById(R.id.activityVerificationAdminstrationTryAgain);
 
@@ -155,13 +163,25 @@ public class VerificationActivity extends AppCompatActivity {
 	}
 
 	private void initToolBar() {
-		setSupportActionBar((Toolbar) findViewById(R.id.toolbarLayout));
+		mToolbar = (Toolbar) findViewById(R.id.toolbarLayout);
+		setSupportActionBar(mToolbar);
 		mToolBarTitleTv = (TextView) findViewById(R.id.toolbarTitleTv);
 		mToolBarDrawer = (ImageView) findViewById(R.id.toolbarBackIv);
 
 		mToolBarDrawer.setVisibility(View.GONE);
 		mToolBarTitleTv.setText(getResources().getString(
 				R.string.VerificationActivityTitle));
+	}
+	
+	private void applyTheme() {
+		try {
+			ThemeUtils.getInstance(VerificationActivity.this)
+					.applyThemeVerification(VerificationActivity.this,
+							VerificationActivity.this, mToolbar,
+							mVerificationTv);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
 	}
 
 	private void initTimer() {
@@ -332,8 +352,7 @@ public class VerificationActivity extends AppCompatActivity {
 	@SuppressWarnings("deprecation")
 	private void setUiOfVerifyAccordingly() {
 		if (isValidVerificationCode) {
-			mNextBtn.setBackgroundDrawable(getResources().getDrawable(
-					R.drawable.shape_button_pressed));
+			ThemeUtils.getInstance(VerificationActivity.this).applyThemeButton(VerificationActivity.this, VerificationActivity.this, mNextBtn);
 		} else {
 			mNextBtn.setBackgroundDrawable(getResources().getDrawable(
 					R.drawable.shape_button_normal));

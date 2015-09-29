@@ -67,6 +67,7 @@ import com.application.utils.JSONRequestBuilder;
 import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
+import com.application.utils.ThemeUtils;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -120,6 +121,7 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 		initUi();
 		syncDataWithApi();
 		setMaterialRippleView();
+		applyTheme();
 	}
 	
 	
@@ -269,6 +271,14 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 	
 	private void syncDataWithApi(){
 		refreshFeedFromApi(true, true, 0);
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(BirthdayRecyclerActivity.this).applyThemeCapture(BirthdayRecyclerActivity.this, BirthdayRecyclerActivity.this, mToolBar);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	private void setMaterialRippleView() {

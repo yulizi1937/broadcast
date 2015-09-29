@@ -61,6 +61,7 @@ import com.application.utils.JSONRequestBuilder;
 import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
+import com.application.utils.ThemeUtils;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
@@ -110,6 +111,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 	private LinearLayout mDOBLayout;
 	
 	private FrameLayout mCroutonViewGroup;
+	private FrameLayout mProfileImageLayout;
 	
 	private ProgressWheel mProgressWheel;
 	private CircleImageView mProfileCirleIv;
@@ -137,6 +139,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 		setSecurity();
 		initUi();
 		initToolBar();
+		applyTheme();
 		setUiListener();
 		setDataFromPreferences();
 	}
@@ -220,6 +223,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 		mDOBLayout= (LinearLayout)findViewById(R.id.activityEditProfileBirthdayLayout);
 		
 		mCroutonViewGroup = (FrameLayout)findViewById(R.id.croutonViewGroup);
+		mProfileImageLayout = (FrameLayout)findViewById(R.id.activityEditProfileImageLayout);
 	}
 	
 	private void initToolBar() {
@@ -235,6 +239,17 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 		setTextWatcher();
 		setMaterialRippleView();
 		setClickListener();
+	}
+	
+	private void applyTheme() {
+		try {
+			ThemeUtils.getInstance(EditProfileActivity.this)
+					.applyThemeSetProfile(EditProfileActivity.this,
+							EditProfileActivity.this, mToolBar,
+							mProfileImageLayout);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 
@@ -338,8 +353,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 			public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
 				if (hasFocus) {
-					mNameLayout.setBackgroundDrawable(getResources()
-							.getDrawable(R.drawable.shape_editbox_selected));
+					ThemeUtils.getInstance(EditProfileActivity.this).applyThemeEditText(EditProfileActivity.this, EditProfileActivity.this, mNameLayout);
 				} else {
 					mNameLayout.setBackgroundDrawable(getResources()
 							.getDrawable(R.drawable.shape_editbox_normal));
@@ -354,8 +368,8 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 			public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
 				if (hasFocus) {
-					mEmailLayout.setBackgroundDrawable(getResources()
-							.getDrawable(R.drawable.shape_editbox_selected));
+					ThemeUtils.getInstance(EditProfileActivity.this).applyThemeEditText(EditProfileActivity.this, EditProfileActivity.this, mEmailLayout);
+
 				} else {
 					mEmailLayout.setBackgroundDrawable(getResources()
 							.getDrawable(R.drawable.shape_editbox_normal));
@@ -369,8 +383,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 			public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
 				if (hasFocus) {
-					mEmployeeIdLayout.setBackgroundDrawable(getResources()
-							.getDrawable(R.drawable.shape_editbox_selected));
+					ThemeUtils.getInstance(EditProfileActivity.this).applyThemeEditText(EditProfileActivity.this, EditProfileActivity.this, mEmployeeIdLayout);
 				} else {
 					mEmployeeIdLayout.setBackgroundDrawable(getResources()
 							.getDrawable(R.drawable.shape_editbox_normal));
@@ -384,8 +397,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 			public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
 				if (hasFocus) {
-					mQuestionLayout.setBackgroundDrawable(getResources()
-							.getDrawable(R.drawable.shape_editbox_selected));
+					ThemeUtils.getInstance(EditProfileActivity.this).applyThemeEditText(EditProfileActivity.this, EditProfileActivity.this, mQuestionLayout);
 				} else {
 					mQuestionLayout.setBackgroundDrawable(getResources()
 							.getDrawable(R.drawable.shape_editbox_normal));
@@ -399,8 +411,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 			public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
 				if (hasFocus) {
-					mAnswerLayout.setBackgroundDrawable(getResources()
-							.getDrawable(R.drawable.shape_editbox_selected));
+					ThemeUtils.getInstance(EditProfileActivity.this).applyThemeEditText(EditProfileActivity.this, EditProfileActivity.this, mAnswerLayout);
 				} else {
 					mAnswerLayout.setBackgroundDrawable(getResources()
 							.getDrawable(R.drawable.shape_editbox_normal));
@@ -414,8 +425,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 			public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
 				if (hasFocus) {
-					mDOBLayout.setBackgroundDrawable(getResources()
-							.getDrawable(R.drawable.shape_editbox_selected));
+					ThemeUtils.getInstance(EditProfileActivity.this).applyThemeEditText(EditProfileActivity.this, EditProfileActivity.this, mDOBLayout);
 					final Calendar c = Calendar.getInstance();
 					mYear = c.get(Calendar.YEAR);
 					mMonth = c.get(Calendar.MONTH);
@@ -648,7 +658,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 	private void setUiOfNextAccordingly(){
 		if(isValidName && isValidEmail){
 			isValid = true;
-			mUpdateBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_button_pressed));
+			ThemeUtils.getInstance(EditProfileActivity.this).applyThemeButton(EditProfileActivity.this, EditProfileActivity.this, mUpdateBtn);
 		}else{
 			isValid = false;
 			mUpdateBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_button_normal));

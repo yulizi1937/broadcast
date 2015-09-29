@@ -23,6 +23,8 @@ import android.widget.LinearLayout;
 import com.application.ui.view.BottomSheet;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.FileLog;
+import com.application.utils.ThemeUtils;
 import com.application.utils.UserReport;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -68,6 +70,7 @@ public class AboutActivity extends SwipeBackBaseActivity {
 		initUi();
 		setUiListener();
 		setAnimation();
+		applyTheme();
 	}
 
 	@Override
@@ -143,7 +146,7 @@ public class AboutActivity extends SwipeBackBaseActivity {
 
 	private void setWebViewData() {
 		String text = getResources().getString(R.string.sample_about_detail);
-		String htmlText = "<html><body style=\"text-align:justify\"><font size=\"1\" color=\"#254E7A\"> %s </font></body></Html>";
+		String htmlText = "<html><body style=\"text-align:justify\"><font size=\"1\" color=\"#545454\"> %s </font></body></Html>";
 		mAboutWebView.loadData(String.format(htmlText, text), "text/html",
 				"utf-8");
 	}
@@ -165,6 +168,14 @@ public class AboutActivity extends SwipeBackBaseActivity {
 			YoYo.with(Techniques.Shake).duration(2000).playOn(mAboutLogoIv);
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
+		}
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(AboutActivity.this).applyThemeCountrySelect(AboutActivity.this, AboutActivity.this, mToolBar);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 

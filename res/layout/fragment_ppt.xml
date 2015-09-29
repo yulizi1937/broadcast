@@ -34,7 +34,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/fragment_pdf_image_margin_top"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_item_doc"
+                    android:src="@drawable/ic_item_ppt"
                     tools:ignore="ContentDescription" />
 
                 <android.support.v7.widget.AppCompatTextView

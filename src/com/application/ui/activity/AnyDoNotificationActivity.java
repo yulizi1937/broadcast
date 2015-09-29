@@ -37,6 +37,7 @@ import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.application.sqlite.DBConstant;
@@ -56,6 +57,7 @@ import com.application.utils.BuildVars;
 import com.application.utils.FileLog;
 import com.application.utils.NotificationHandle;
 import com.application.utils.NotificationsController;
+import com.application.utils.ThemeUtils;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -87,6 +89,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 	private int mLayoutId;
 	private Intent mIntent;
 	
+	private int whichTheme = 0;
+	
 	private View mContentLayout;
 	private FrameLayout mActivityLayout;
 	
@@ -101,6 +105,7 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_anydo_notification);
 		setSecurity();
 		mActivityLayout = (FrameLayout)findViewById(R.id.activityAnyDoNotificationActivityLayout);
+		whichTheme = ApplicationLoader.getPreferences().getAppTheme();
 		getIntentData();
 	}
 	
@@ -388,7 +393,7 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 	private void setOnClickListener(){
 		mTextViewTv = mBottomSheetAnyDo.getTextViewTv();
 		mTextCloseTv = mBottomSheetAnyDo.getTextCloseTv();
-		
+		ThemeUtils.applyThemeAnyDOCloseView(mTextCloseTv, mTextViewTv, whichTheme, AnyDoNotificationActivity.this);
 		if (mTextViewTv != null) {
 			mTextViewTv.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -546,9 +551,12 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		AppCompatTextView mSummaryTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastTextSummaryTv);
 		AppCompatTextView mLikeCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastTextLikeCountTv);
 		AppCompatTextView mViewCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastTextViewCountTv);
+		ImageView mImageView = (ImageView)mContentLayout.findViewById(R.id.itemRecyclerMobcastTextIndicatorImageView);
+		View mTimeLineView = (View)mContentLayout.findViewById(R.id.itemRecyclerMobcastTextLineView);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastTextLinkTv).setVisibility(View.GONE);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastTextReadView).setVisibility(View.GONE);
 		
+		ThemeUtils.applyThemeAnyDOBy(mByTv, mImageView, mTimeLineView, AppConstants.TYPE.TEXT, whichTheme, AnyDoNotificationActivity.this);
 		Cursor mCursor = null;
 		if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
 			mCursor = getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{String.valueOf(mId)}, null);
@@ -586,8 +594,12 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		AppCompatTextView mDurationTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoDurationTv);
 		AppCompatTextView mLikeCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoLikeCountTv);
 		AppCompatTextView mViewCountTv  = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoViewCountTv);
+		ImageView mImageView = (ImageView)mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoIndicatorImageView);
+		View mTimeLineView = (View)mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoLineView);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoLinkTv).setVisibility(View.GONE);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoReadView).setVisibility(View.GONE);
+		
+		ThemeUtils.applyThemeAnyDOBy(mByTv, mImageView, mTimeLineView, AppConstants.TYPE.VIDEO, whichTheme, AnyDoNotificationActivity.this);
 		
 		ImageLoader mImageLoader = ApplicationLoader.getUILImageLoader();
 		
@@ -706,8 +718,12 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		final ProgressWheel mProgressWheel = (ProgressWheel)mContentLayout.findViewById(R.id.itemRecyclerMobcastImageLoadingProgress);
 		AppCompatTextView mLikeCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastImageLikeCountTv);
 		AppCompatTextView mViewCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastImageViewCountTv);
+		ImageView mImageView = (ImageView)mContentLayout.findViewById(R.id.itemRecyclerMobcastImageIndicatorImageView);
+		View mTimeLineView = (View)mContentLayout.findViewById(R.id.itemRecyclerMobcastImageLineView);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastImageLinkTv).setVisibility(View.GONE);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastImageReadView).setVisibility(View.GONE);
+		
+		ThemeUtils.applyThemeAnyDOBy(mByTv, mImageView, mTimeLineView, AppConstants.TYPE.IMAGE, whichTheme, AnyDoNotificationActivity.this);
 		
 		ImageLoader mImageLoader = ApplicationLoader.getUILImageLoader();
 		
@@ -829,8 +845,14 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		
 		AppCompatTextView mLikeCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastAudioLikeCountTv);
 		AppCompatTextView mViewCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastAudioViewCountTv);
+		
+		ImageView mImageView = (ImageView)mContentLayout.findViewById(R.id.itemRecyclerMobcastAudioIndicatorImageView);
+		View mTimeLineView = (View)mContentLayout.findViewById(R.id.itemRecyclerMobcastAudioLineView);
+		
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastAudioLinkTv).setVisibility(View.GONE);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastAudioReadView).setVisibility(View.GONE);
+		
+		ThemeUtils.applyThemeAnyDOBy(mByTv, mImageView, mTimeLineView, AppConstants.TYPE.AUDIO, whichTheme, AnyDoNotificationActivity.this);
 		
 		Cursor mCursor = null;
 		
@@ -900,8 +922,14 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		
 		AppCompatTextView mLikeCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastPdfLikeCountTv);
 		AppCompatTextView mViewCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastPdfViewCountTv);
+		
+		ImageView mImageView = (ImageView)mContentLayout.findViewById(R.id.itemRecyclerMobcastPdfIndicatorImageView);
+		View mTimeLineView = (View)mContentLayout.findViewById(R.id.itemRecyclerMobcastPdfLineView);
+		
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastPdfLinkTv).setVisibility(View.GONE);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastPdfReadView).setVisibility(View.GONE);
+		
+		ThemeUtils.applyThemeAnyDOBy(mByTv, mImageView, mTimeLineView, AppConstants.TYPE.PDF, whichTheme, AnyDoNotificationActivity.this);
 		
 		Cursor mCursor = null;
 		
@@ -970,8 +998,15 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		
 		AppCompatTextView mLikeCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastPptLikeCountTv);
 		AppCompatTextView mViewCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastPptViewCountTv);
+		
+		ImageView mImageView = (ImageView)mContentLayout.findViewById(R.id.itemRecyclerMobcastPptIndicatorImageView);
+		
+		View mTimeLineView = (View)mContentLayout.findViewById(R.id.itemRecyclerMobcastPptLineView);
+		
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastPptLinkTv).setVisibility(View.GONE);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastPptReadView).setVisibility(View.GONE);
+		
+		ThemeUtils.applyThemeAnyDOBy(mByTv, mImageView, mTimeLineView, AppConstants.TYPE.PPT, whichTheme, AnyDoNotificationActivity.this);
 		
 		Cursor mCursor = null;
 		
@@ -1039,12 +1074,18 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		
 		AppCompatTextView mLikeCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastDocLikeCountTv);
 		AppCompatTextView mViewCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastDocViewCountTv);
+		
+		ImageView mImageView = (ImageView)mContentLayout.findViewById(R.id.itemRecyclerMobcastDocIndicatorImageView);
+		View mTimeLineView = (View)mContentLayout.findViewById(R.id.itemRecyclerMobcastDocLineView);
+		
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastDocLinkTv).setVisibility(View.GONE);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastDocReadView).setVisibility(View.GONE);
 		
+		ThemeUtils.applyThemeAnyDOBy(mByTv, mImageView, mTimeLineView, AppConstants.TYPE.DOC, whichTheme, AnyDoNotificationActivity.this);
+		
 		Cursor mCursor = null;
 		
-		if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.CATEGORY)){
+		if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
 			 mCursor = getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{String.valueOf(mId)}, null);
 			if(mCursor!=null && mCursor.getCount() > 0){
 				mCursor.moveToFirst();
@@ -1109,8 +1150,14 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		
 		AppCompatTextView mLikeCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastXlsLikeCountTv);
 		AppCompatTextView mViewCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastXlsViewCountTv);
+		
+		ImageView mImageView = (ImageView)mContentLayout.findViewById(R.id.itemRecyclerMobcastXlsIndicatorImageView);
+		View mTimeLineView = (View)mContentLayout.findViewById(R.id.itemRecyclerMobcastXlsLineView);
+		
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastXlsLinkTv).setVisibility(View.GONE);
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastXlsReadView).setVisibility(View.GONE);
+		
+		ThemeUtils.applyThemeAnyDOBy(mByTv, mImageView, mTimeLineView, AppConstants.TYPE.XLS, whichTheme, AnyDoNotificationActivity.this);
 		
 		Cursor mCursor = null;
 		
@@ -1179,6 +1226,11 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoReadView).setVisibility(View.GONE);
 		AppCompatTextView mDurationTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoDurationTv);
 		
+		ImageView mImageView = (ImageView)mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoIndicatorImageView);
+		View mTimeLineView = (View)mContentLayout.findViewById(R.id.itemRecyclerMobcastVideoLineView);
+		
+		ThemeUtils.applyThemeAnyDOBy(mByTv, mImageView, mTimeLineView, AppConstants.TYPE.STREAM, whichTheme, AnyDoNotificationActivity.this);
+		
 		Cursor mCursor = null;
 		
 		if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
@@ -1212,6 +1264,11 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		mContentLayout.findViewById(R.id.itemRecyclerMobcastFeedbackLinkTv).setVisibility(View.GONE);
 		AppCompatTextView mQuestionTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastFeedbackDetailQuestionTv);
 		
+		ImageView mImageView = (ImageView)mContentLayout.findViewById(R.id.itemRecyclerMobcastFeedbackIndicatorImageView);
+		View mTimeLineView = (View)mContentLayout.findViewById(R.id.itemRecyclerMobcastFeedbackLineView);
+		
+		ThemeUtils.applyThemeAnyDOBy(mByTv, mImageView, mTimeLineView, AppConstants.TYPE.FEEDBACK, whichTheme, AnyDoNotificationActivity.this);
+		
 		Cursor mCursor = getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{String.valueOf(mId)}, null);
 		if(mCursor!=null && mCursor.getCount() > 0){
 			mCursor.moveToFirst();
@@ -1242,6 +1299,11 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		AppCompatTextView mQuestionTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerTrainingQuizDetailQuestionTv);
 		AppCompatTextView mTimeTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerTrainingQuizDetailTimeTv);
 		AppCompatTextView mTotalPointsTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerTrainingQuizDetailPointsTv);
+		
+		ImageView mImageView = (ImageView)mContentLayout.findViewById(R.id.itemRecyclerTrainingQuizIndicatorImageView);
+		View mTimeLineView = (View)mContentLayout.findViewById(R.id.itemRecyclerTrainingQuizLineView);
+		
+		ThemeUtils.applyThemeAnyDOBy(mByTv, mImageView, mTimeLineView, AppConstants.TYPE.QUIZ, whichTheme, AnyDoNotificationActivity.this);
 		
 		Cursor mCursor = getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, null, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{String.valueOf(mId)}, null);
 		if(mCursor!=null && mCursor.getCount() > 0){
@@ -1284,6 +1346,10 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		AppCompatTextView mDaysLeftTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerEventDetailDaysLeftTv);
 		AppCompatTextView mAttendTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerEventDetailAttendanceTv);
 		
+		ImageView mImageView = (ImageView)mContentLayout.findViewById(R.id.itemRecyclerEventIndicatorImageView);
+		View mTimeLineView = (View)mContentLayout.findViewById(R.id.itemRecyclerEventLineView);
+		
+		ThemeUtils.applyThemeAnyDOBy(mByTv, mImageView, mTimeLineView, AppConstants.TYPE.EVENT, whichTheme, AnyDoNotificationActivity.this);
 		
 		Cursor mCursor = getContentResolver().query(DBConstant.Event_Columns.CONTENT_URI, null, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{String.valueOf(mId)}, null);
 		if(mCursor!=null && mCursor.getCount() > 0){
@@ -1308,9 +1374,9 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		mContentLayout.findViewById(R.id.itemRecyclerAwardMessageIv).setVisibility(View.GONE);
 		mContentLayout.findViewById(R.id.itemRecyclerReadView).setVisibility(View.GONE);
 		AppCompatTextView mCongratulatedCount = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerAwardCongratulatedTv);
+		
 		String mContentFileThumbPath = null;
 		String mContentFileThumbLink = null;
-		
 		ImageLoader mImageLoader = ApplicationLoader.getUILImageLoader();
 		
 		Cursor mCursor = getContentResolver().query(DBConstant.Award_Columns.CONTENT_URI, null, DBConstant.Award_Columns.COLUMN_AWARD_ID + "=?", new String[]{String.valueOf(mId)}, null);

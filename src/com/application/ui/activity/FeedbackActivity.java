@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -40,9 +41,11 @@ import com.application.utils.ApplicationLoader;
 import com.application.utils.BuildVars;
 import com.application.utils.FileLog;
 import com.application.utils.JSONRequestBuilder;
+import com.application.utils.NotificationsController;
 import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
+import com.application.utils.ThemeUtils;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -64,6 +67,10 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 
 	private AppCompatButton mFeedbackNavigationNextBtn;
 	private AppCompatButton mFeedbackNavigationPrevBtn;
+	
+	private AppCompatTextView mFeedbackDescriptionTv;
+	
+	private View mFeedbackLineView;
 
 	private CirclePageIndicator mFeedbackCirclePageIndicator;
 
@@ -76,6 +83,8 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 	private ArrayList<FeedbackPagerInfo> mArrayListFeedbackPagerInfo;
 
 	private boolean isCirclePagerIndicatorEnable = false;
+	
+	private boolean isContentLiked = false;
 	
 	private Intent mIntent;
 	private String mId;
@@ -103,12 +112,29 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 		initUi();
 		setUiListener();
 		getIntentData();
+		applyTheme();
+		NotificationsController.getInstance().dismissNotification();
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+	}
+	
+	@Override
+	protected boolean onPrepareOptionsPanel(View view, Menu menu) {
+		// TODO Auto-generated method stub
+		try{
+			if (isContentLiked) {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_liked);
+			} else {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_like);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return super.onPrepareOptionsPanel(view, menu);
 	}
 
 	@SuppressLint("NewApi")
@@ -131,6 +157,9 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 				Intent mIntent = new Intent(FeedbackActivity.this, MotherActivity.class);
 				startActivity(mIntent);
 			}
+			return true;
+		case R.id.action_like:
+			actionLikeFeedback();
 			return true;
 		case R.id.action_report:
 			Intent mIntent  = new Intent(FeedbackActivity.this, ReportActivity.class);
@@ -158,6 +187,10 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 
 		mFeedbackQuestionHeaderTv = (AppCompatTextView) findViewById(R.id.fragmentFeedbackQuestionNumberTextTv);
 		mFeedbackQuestionPagerCounterTv = (AppCompatTextView) findViewById(R.id.fragmentFeedbackQuestionPageCountTv);
+		
+		mFeedbackDescriptionTv = (AppCompatTextView) findViewById(R.id.fragmentFeedbackDescriptionTv);
+		
+		mFeedbackLineView = (View)findViewById(R.id.fragmentFeedbackQuestionLineView);
 
 		mFeedbackNavigationNextBtn = (AppCompatButton) findViewById(R.id.fragmentFeedbackNextBtn);
 		mFeedbackNavigationPrevBtn = (AppCompatButton) findViewById(R.id.fragmentFeedbackPreviousBtn);
@@ -183,6 +216,14 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 	private void setUiListener() {
 		setMaterialRippleView();
 		setOnClickListener();
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(FeedbackActivity.this).applyThemeFeedback(FeedbackActivity.this, FeedbackActivity.this, mToolBar,mFeedbackQuestionHeaderTv, mFeedbackLineView);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	private void getIntentData(){
@@ -256,16 +297,42 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 		}
 	}
 	
+	private void actionLikeFeedback(){
+		try{
+			if(!mContentIsLike){
+				if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+					ContentValues values = new ContentValues();
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE, "true");
+					values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, String.valueOf(Integer.parseInt(mContentLikeCount)+1));
+					getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, values, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+				}
+				isContentLiked = true;
+				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LIKE, "");
+				supportInvalidateOptionsMenu();
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
 	private void setIntentDataToUi(){
 		try{
 			mToolBar.setTitle(mContentTitle);
-			mToolBar.setSubtitle(mContentDesc);
+//			mToolBar.setSubtitle(mContentDesc);
+			
+			if(!TextUtils.isEmpty(mContentDesc)){
+				mFeedbackDescriptionTv.setText(mContentDesc);
+			}
 			
 			setFeedbackViewPager();
-			updateReadInDb();
+//			updateReadInDb();
 			if(!mContentIsRead){
 				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.READ, "");
 			}
+			if(mContentIsLike){
+				isContentLiked = true;
+			}
+			supportInvalidateOptionsMenu();
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -519,6 +586,7 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 
 	private void parseDataFromApi(String mResponseFromApi) {
 		if(Utilities.isSuccessFromApi(mResponseFromApi)){
+			updateReadInDb();
 			showFeedbackThankYouDialog();
 		}
 	}

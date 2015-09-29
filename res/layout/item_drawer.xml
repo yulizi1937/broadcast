@@ -60,7 +60,7 @@
             android:gravity="left|center"
             android:singleLine="true"
             android:text="@string/textview_last_sync"
-            android:textColor="@color/toolbar_background"
+            android:textColor="@color/drawer_item_title"
             android:textSize="@dimen/drawer_item_last_sync_text_size"
             tools:ignore="RtlHardcoded" />
     </RelativeLayout>

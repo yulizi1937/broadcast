@@ -37,6 +37,7 @@
                     android:background="@color/background_application" >
 
                     <FrameLayout
+                        android:id="@+id/activityEditProfileImageLayout"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/edit_profile_framelayout_inner_height"
                         android:background="@color/toolbar_background" >

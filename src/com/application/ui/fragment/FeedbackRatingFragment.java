@@ -108,11 +108,11 @@ public class FeedbackRatingFragment extends Fragment {
 	
 	
 	private void uiChangeOnRatingChangedListener(AppCompatRatingBar mRatingBar, float mRating){
-		if(mRating > 0){
+		/*if(mRating > 0){
 			mRatingBar.setBackgroundColor(Utilities.getAppHighlightedColor());
 		}else{
 			mRatingBar.setBackgroundColor(getResources().getColor(android.R.color.white));
-		}
+		}*/
 		saveValueInDB();
 	}
 	

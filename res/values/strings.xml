@@ -14,17 +14,24 @@
     <string name="sync_failed">Failed as internet not avail at </string>
     <string name="sync_passed">Synced at </string>
     <string name="feedback_incomplete">Please fill the feedback properly!</string>
+    <string name="feedback_attempted">You already attempted feedback!</string>
+    <string name="feedback_unread">You cannot mark as unread!</string>
+    <string name="feedback_read">You cannot mark as read!</string>
     <string name="resend_otp">We have sent another OTP</string>
     <string name="quiz_incomplete">Please fill the quiz properly!</string>
+    <string name="quiz_attempted">You already attempted quiz!</string>
+    <string name="attempt">attempt</string>
+    <string name="quiz_unread">You cannot mark it as unread!</string>
+    <string name="quiz_read">You cannot mark it as read!</string>
     <string name="api_connection_timeout">Server not responding!</string>
     <string name="api_unknown_error">Please try again in few minutes!</string>
-    <string name="share_advertisement">Share via Mobcast Application \n visit us at : www.mobcast.in</string>
+    <string name="share_advertisement">Share via Mobcast \n visit us at : www.mobcast.in</string>
     <string name="file_delete_message">Are you sure want to delete these files?</string>
     <string name="logout_title_message">Are you sure want to Log Out?</string>
     <string name="content_delete_message">Are you sure want to delete </string>
     <string name="button_delete">Delete</string>
     <string name="update_title_message">A New Update is Available!</string>
-    <string name="update_delete_message">These version is no longer supported. Please update the application.</string>
+    <string name="update_delete_message">We made our application better than a previous one. Please update the application.</string>
     <string name="birthday_title_message">Wish Happy Birthday!</string>
     <string name="birthday_desc_message">Many of your colleagues having birthday today!</string>
     <string name="developer_message">You are developer! Please click it one more time.</string>
@@ -43,12 +50,14 @@
     <string name="showcase_content1" tools:ignore="TypographyEllipsis">Update your profile, application settings and many more...</string>
     <string name="showcase_content2" tools:ignore="TypographyEllipsis">Up to date with your organization events, meet ups and many more...</string>
     <string name="showcase_content3" tools:ignore="TypographyEllipsis">Up to date with your organization rewards, success and many more...</string>
-    <string name="showcase_content4" tools:ignore="TypographyEllipsis">Up to date with your colleagues birthday, wish em and many more...</string>
-    <string name="showcase_content5" tools:ignore="TypographyEllipsis">Search content easily throughtout the application ...</string>
+    <string name="showcase_content4" tools:ignore="TypographyEllipsis">Up to date with your colleagues birthday, wish them and many more...</string>
+    <string name="showcase_content5" tools:ignore="TypographyEllipsis">Search content easily throughout the application ...</string>
     <string name="showcase_gotit">GOT IT</string>
     <string name="showcase_next">NEXT</string>
     
     <string name="new_mobcast_avail">New Mobcast</string>
+    <string name="new_">New</string>
+    <string name="unread">unread</string>
     <string name="new_training_avail">New Training</string>
 
     <!-- OverFlow : Action -->
@@ -80,6 +89,7 @@
     <string name="action_delete">Delete</string>
     <string name="action_info">Info</string>
     <string name="action_share">Share</string>
+    <string name="action_like">Like</string>
     <string name="action_contact_share">Share Contact From Phonebook</string>
     <string name="action_submit">Submit</string>
     <string name="action_help_mobcast">About Mobcast</string>
@@ -92,6 +102,8 @@
     <string name="context_menu_unread">Mark as Unread</string>
     <string name="context_menu_delete">Delete</string>
     <string name="context_menu_view">View</string>
+    <string name="context_menu_like">Like</string>
+    <string name="context_menu_congrat">Congrats</string>
     <string name="context_menu_save">Save</string>
 
     <!-- Time -->
@@ -127,6 +139,7 @@
     <string name="maybe"> May be</string>
     <string name="accept"> Accept</string>
     <string name="notgoing"> Decline</string>
+    <string name="addtocalendar"> Calendar</string>
     <string name="congratulated_text"> people congratulated!</string>
     <string name="congratulated_action"> Say Congrats!</string>
     <!-- activity_login -->
@@ -281,6 +294,7 @@
     <string name="sample_quiz_pager_counter">12/60</string>
     <string name="button_previous">PREVIOUS</string>
     <string name="button_submit">SUBMIT</string>
+    <string name="button_apply">APPLY</string>
     <string name="button_send">SEND</string>
     <string name="sample_question_header_box">QUESTION</string>
     <string name="QuizActivityTitle">Quiz</string>
@@ -458,6 +472,10 @@
     <string name="sample_fragment_settings_sync_frequency">Sync Frequency</string>
     <string name="sample_fragment_settings_sync_frquency_text">15 mins</string>
     <string name="sample_fragment_settings_style_notification">Style</string>
+    <string name="sample_fragment_settings_style_themeapp">Theme App</string>
+    <string name="sample_fragment_settings_style_apptheme_dblue">Dark Blue - Orange</string>
+    <string name="sample_fragment_settings_style_apptheme_purple">Purple - Pink</string>
+    <string name="sample_fragment_settings_style_apptheme_green">Green - Yellow</string>
     <string name="sample_fragment_settings_style_textfont">Text Style</string>
     <string name="sample_fragment_settings_style_textfont_selected">Custom</string>
     <string name="sample_fragment_settings_style_textfont_default">Default</string>
@@ -478,6 +496,7 @@
     <string name="sample_fragment_settings_dialog_sync_freq2">Every 30 mins</string>
     <string name="sample_fragment_settings_dialog_sync_freq3">Every 60 mins</string>
     <string name="sample_fragment_settings_dialog_sync_freq4">Every 4 hours</string>
+    <string name="sample_fragment_settings_dialog_theme_title">Choose app theme</string>
 
     <string-array name="langugae_array">
         <item>English</item>
@@ -544,7 +563,7 @@
     <!-- <string name="sample_item_recycler_mobcast_text_title">ALIQUAM AC ENIM IN NIBH ULLAMCORPER AUCTOR AC A DOLOR</string> -->
     <string name="sample_item_recycler_mobcast_text_title">HDFC Bank wins Best Private Banking Services for Super affluent clients for 5 years in a row at Euromoney Awards</string>
     <string name="sample_item_recycler_mobcast_text_by">BY: HR TEAM - February 13, 2015</string>
-    <string name="sample_item_recycler_mobcast_text_view_count">21K+</string>
+    <string name="sample_item_recycler_mobcast_text_view_count">0</string>
     <!-- <string name="sample_item_recycler_mobcast_text_summary">Proin ac risus eu metus confimentim viverra. Donce ut neque sed elit tincidunt condimentum. Read More</string> -->
     <string name="sample_item_recycler_mobcast_text_summary">HDFC Bank has once again been recognized for excellence in India in the 2015 Euromoney Private Banking and Wealth Management Survey. HDFC Bank was adjudged as having the Best Private Banking Services in India for a fifth consecutive year in the Net-worth-specific services category for Super affluent clients (US$ 1 million to US$ 5 million). HDFC Bank also ranked first in the Asset Management category of the survey.</string>
 
@@ -617,13 +636,16 @@ The inaugural set of “Preferred Platform Partners” includes BrightRoll, Doub
     <string name="sample_item_recycler_mobcast_feedback_by">BY: HR TEAM - A YEAR AGO</string>
     <string name="sample_item_recycler_mobcast_feedback_count">1.5K</string>
     <string name="sample_item_recycler_mobcast_feedback_question">2 Questions</string>
-    <string name="item_recycler_mobcast_feedback_question">Questions</string>
+    <string name="item_recycler_mobcast_feedback_question">Question</string>
+    <string name="item_recycler_mobcast_feedback_questions">Questions</string>
 
     <!-- item_recylcer_training_quiz -->
-    <string name="sample_item_recycler_training_question_time">00 mins</string>
-    <string name="sample_item_recycler_training_question_attempted">00 attempts</string>
-    <string name="sample_item_recycler_training_question_score">00 pts</string>
+    <string name="sample_item_recycler_training_question_time">0 min</string>
+    <string name="sample_item_recycler_training_question_attempted">0 attempt</string>
+    <string name="sample_item_recycler_training_question_score">0 pt</string>
     <string name="item_recycler_training_quiz_points">pts</string>
+    <string name="item_recycler_training_quiz_attempt">attempt</string>
+    <string name="item_recycler_training_quiz_attempts">attempt</string>
 
     <!-- item_reycler_mobcast_news -->
     <string name="sample_item_recycler_mobcast_news_link">http://www.google.com/</string>

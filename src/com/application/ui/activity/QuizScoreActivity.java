@@ -28,6 +28,8 @@ import com.application.ui.materialdialog.MaterialDialog;
 import com.application.ui.view.CirclePageIndicator;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.FileLog;
+import com.application.utils.ThemeUtils;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
@@ -41,6 +43,8 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 	private Toolbar mToolBar;
 
 	private FrameLayout mCroutonViewGroup;
+	
+	private FrameLayout mQuizScoreLayout;
 
 	private AppCompatButton mQuizScoreNavigationNextBtn;
 	private AppCompatButton mQuizScoreNavigationPrevBtn;
@@ -84,6 +88,7 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 		initUi();
 		setUiListener();
 		getIntentData();
+		applyTheme();
 	}
 
 	@Override
@@ -97,7 +102,7 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_quiz, menu);
+		inflater.inflate(R.menu.menu_profile, menu);
 		return true;
 	}
 
@@ -116,14 +121,16 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 
 	private void initUi() {
 		mCroutonViewGroup = (FrameLayout) findViewById(R.id.croutonViewGroup);
+		
+		mQuizScoreLayout = (FrameLayout) findViewById(R.id.fragmentQuizScoreRootLayout);
 
 		mQuizScoreNavigationNextBtn = (AppCompatButton) findViewById(R.id.fragmentQuizScoreNextBtn);
 		mQuizScoreNavigationPrevBtn = (AppCompatButton) findViewById(R.id.fragmentQuizScorePreviousBtn);
 
 		mQuizScoreTimeTakenTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreTimeTakenTv);
 		mQuizScoreTimeTakenTextTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreTimeTakenInTv);
-		mQuizScoreTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreTotalScoreTextTv);
-		mQuizScoreStatementTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreTotalScoreTv);
+		mQuizScoreTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreTotalScoreTv);
+		mQuizScoreStatementTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreTotalScoreTextTv);
 		mQuizScoreCorrectAnswerTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreCorrectAnswerTv);
 		mQuizScoreStatementCorrectAnswerTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreCorrectAnswerTextTv);
 		mQuizScoreGoofedUpAtTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreGoofedUpAtTv);
@@ -148,6 +155,15 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 	private void setUiListener() {
 		setMaterialRippleView();
 		setOnClickListener();
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(QuizScoreActivity.this).applyThemeCountrySelect(QuizScoreActivity.this, QuizScoreActivity.this, mToolBar);
+			ThemeUtils.getInstance(QuizScoreActivity.this).applyThemeSplash(QuizScoreActivity.this, QuizScoreActivity.this, mQuizScoreLayout);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	private void getIntentData(){

@@ -30,7 +30,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -94,6 +93,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.application.beans.Theme;
 import com.application.sqlite.DBConstant;
 import com.mobcast.R;
 import com.squareup.okhttp.OkHttpClient;
@@ -796,11 +796,7 @@ public class Utilities {
 	
 	public static String convertTimeFromSecsTo(long milliSeconds){
 		if(milliSeconds >= 60){
-			if(milliSeconds >= 60*60){
-				return milliSeconds/60*60 + " hours";
-			}else{
-				return milliSeconds/60 + " mins";
-			}
+			return (milliSeconds/60) + " mins";
 		}else{
 			return milliSeconds + " sec";
 		}
@@ -1126,6 +1122,10 @@ public class Utilities {
 			return AppConstants.TYPE.FEEDBACK;
 		}else if(mType.toLowerCase().equalsIgnoreCase("quiz")){
 			return AppConstants.TYPE.QUIZ;
+		}else if(mType.toLowerCase().equalsIgnoreCase("award")){
+			return AppConstants.TYPE.AWARD;
+		}else if(mType.toLowerCase().equalsIgnoreCase("event")){
+			return AppConstants.TYPE.EVENT;
 		}else{
 			return AppConstants.TYPE.OTHER;	
 		}
@@ -1627,6 +1627,25 @@ public class Utilities {
 
 		return outBitmap;
 
+	}
+	
+	public static ArrayList<Theme> getThemeList(){
+		ArrayList<Theme> mList = new ArrayList<>();
+		int i = ApplicationLoader.getPreferences().getAppTheme();
+		Theme Obj1 = new Theme("#ff254E7A", i==0?true:false);
+		Theme Obj2 = new Theme("#ff3F51B5", i==1?true:false);
+		Theme Obj3 = new Theme("#ff4CB050", i==2?true:false);
+		Theme Obj4 = new Theme("#ffE91E63", i==3?true:false);
+		Theme Obj5 = new Theme("#ff009688", i==4?true:false);
+		Theme Obj6 = new Theme("#ff795548", i==5?true:false);
+		
+		mList.add(Obj1);
+		mList.add(Obj2);
+		mList.add(Obj3);
+		mList.add(Obj4);
+		mList.add(Obj5);
+		mList.add(Obj6);
+		return mList;
 	}
 	
 	public static void deleteAppFolder(File fileOrDirectory) {

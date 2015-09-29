@@ -30,6 +30,7 @@ import com.application.utils.AndroidUtilities;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.BuildVars;
 import com.application.utils.FileLog;
+import com.application.utils.ThemeUtils;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
@@ -75,7 +76,7 @@ public class SplashActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_splash);
 		setSecurity();
 		initUi();
-		setSystemBarTint();
+		applyTheme();
 		setAnimation();
 		redirectToScreen();
 	}
@@ -105,6 +106,14 @@ public class SplashActivity extends AppCompatActivity {
 		addLayoutListener();
 
 		addShimmerAnimation();
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(SplashActivity.this).applyThemeSplash(SplashActivity.this, SplashActivity.this, mLayout);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 
 	private void addShimmerAnimation() {
@@ -192,24 +201,6 @@ public class SplashActivity extends AppCompatActivity {
 					}
 
 				});
-	}
-
-	@SuppressLint("NewApi")
-	private void setSystemBarTint() {
-		try {
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				Window window = getWindow();
-				window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-				window.setStatusBarColor(Color.parseColor("#254E7A"));
-			} else {
-				mTintManager = new SystemBarTintManager(SplashActivity.this);
-				// enable status bar tint
-				mTintManager.setStatusBarTintEnabled(true);
-				mTintManager.setStatusBarTintColor(Color.parseColor("#254E7A"));
-			}
-		} catch (Exception e) {
-			Log.i(TAG, e.toString());
-		}
 	}
 
 	private void setSecurity() {

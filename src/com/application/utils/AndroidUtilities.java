@@ -17,6 +17,8 @@ import org.apache.commons.io.FileUtils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -38,9 +40,11 @@ import android.widget.AbsListView;
 import android.widget.EdgeEffect;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.application.ui.view.SnackBar;
+import com.application.widget.WidgetProvider;
 import com.mobcast.R;
 
 @SuppressLint("NewApi")
@@ -706,6 +710,17 @@ public class AndroidUtilities {
 		    .withTextColorId(R.color.sb__snack_text_color)
 		    .withDuration(SnackBar.SHORT_SNACK)
 		    .show();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	public static void updateAppWidget(){
+		try{
+			Context mContext = ApplicationLoader.getApplication();
+			RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_layout);
+			ComponentName thisWidget = new ComponentName(mContext,WidgetProvider.class);
+			AppWidgetManager.getInstance(mContext).updateAppWidget(thisWidget,remoteViews);
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

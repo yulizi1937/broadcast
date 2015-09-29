@@ -74,6 +74,7 @@ import com.application.utils.JSONRequestBuilder;
 import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
+import com.application.utils.ThemeUtils;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -131,6 +132,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		initUi();
 		setMaterialRippleView();
 		syncDataWithApi();
+		applyTheme();
 	}
 
 	@Override
@@ -223,6 +225,14 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		setSwipeRefreshListener();
 //		setMaterialRippleView();
 		setClickListener();
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(AwardRecyclerActivity.this).applyThemeCapture(AwardRecyclerActivity.this, AwardRecyclerActivity.this, mToolBar);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 
 	private void setMaterialRippleView() {
@@ -324,23 +334,31 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 			mRecyclerView.setAdapter(mAdapter);
 		}
 		mRecyclerView
-				.addItemDecoration(new HorizontalDividerItemDecoration.Builder(
+				.addItemDecoration(/*new HorizontalDividerItemDecoration.Builder(
 						this)
 						.color(Utilities.getDividerColor())
 						.marginResId(
 								R.dimen.fragment_recyclerview_award_left_margin,
 								R.dimen.fragment_recyclerview_award_right_margin)
-						.build());
+						.build()*/
+						new HorizontalDividerItemDecoration.Builder(this).color(Utilities.getDividerColor())
+								.sizeResId(R.dimen.fragment_recyclerview_divider)
+								.visibilityProvider(mAdapter).build());
+		
+		
 		
 		if(isGrid){
 			mRecyclerView
-			.addItemDecoration(new VerticalDividerItemDecoration.Builder(
+			.addItemDecoration(/*new VerticalDividerItemDecoration.Builder(
 					this)
 					.color(Utilities.getDividerColor())
 					.marginResId(
 							R.dimen.fragment_recyclerview_award_left_margin,
 							R.dimen.fragment_recyclerview_award_right_margin)
-					.build());	
+					.build()*/
+					new VerticalDividerItemDecoration.Builder(this).color(Utilities.getDividerColor())
+							.sizeResId(R.dimen.fragment_recyclerview_divider)
+							.visibilityProvider(mAdapter).build());	
 		}
 	}
 
@@ -821,7 +839,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		BottomSheet mBottomSheet;
 		mBottomSheet = new BottomSheet.Builder(AwardRecyclerActivity.this)
 				.icon(Utilities.getRoundedBitmapForContextMenu(mType))
-				.title(mTitle).sheet(R.menu.context_menu_mobcast).build();
+				.title(mTitle).sheet(R.menu.context_menu_award).build();
 		final Menu menu = mBottomSheet.getMenu();
 
 		SpannableString mSpannabledRead = new SpannableString(getResources()

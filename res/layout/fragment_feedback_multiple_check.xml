@@ -42,13 +42,13 @@
                 android:checked="false"
                 android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
                 android:text="@string/sample_quiz_multiple_check_group_aa"
-                android:textColor="@color/toolbar_background"
+                android:textColor="@color/drawer_item_title"
                 android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/toolbar_background" />
+                android:background="@color/drawer_item_title" />
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/fragmentFeedbackMultipleCheckBox2"
@@ -57,13 +57,13 @@
                 android:checked="false"
                 android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
                 android:text="@string/sample_quiz_multiple_check_group_ab"
-                android:textColor="@color/toolbar_background"
+                android:textColor="@color/drawer_item_title"
                 android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/toolbar_background" />
+                android:background="@color/drawer_item_title" />
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/fragmentFeedbackMultipleCheckBox3"
@@ -72,14 +72,14 @@
                 android:checked="false"
                 android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
                 android:text="@string/sample_quiz_multiple_check_group_ac"
-                android:textColor="@color/toolbar_background"
+                android:textColor="@color/drawer_item_title"
                 android:textSize="@dimen/fragment_quiz_selective_quiz_option_size"
                 android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/toolbar_background" />
+                android:background="@color/drawer_item_title" />
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/fragmentFeedbackMultipleCheckBox4"
@@ -88,14 +88,14 @@
                 android:checked="false"
                 android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
                 android:text="@string/sample_quiz_multiple_check_group_ad"
-                android:textColor="@color/toolbar_background"
+                android:textColor="@color/drawer_item_title"
                 android:textSize="@dimen/fragment_quiz_selective_quiz_option_size"
                 android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/toolbar_background" />
+                android:background="@color/drawer_item_title" />
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/fragmentFeedbackMultipleCheckBox5"
@@ -104,14 +104,14 @@
                 android:checked="false"
                 android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
                 android:text="@string/sample_quiz_multiple_check_group_ad"
-                android:textColor="@color/toolbar_background"
+                android:textColor="@color/drawer_item_title"
                 android:textSize="@dimen/fragment_quiz_selective_quiz_option_size"
                 android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/toolbar_background" />
+                android:background="@color/drawer_item_title" />
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/fragmentFeedbackMultipleCheckBox6"
@@ -120,14 +120,14 @@
                 android:checked="false"
                 android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
                 android:text="@string/sample_quiz_multiple_check_group_ad"
-                android:textColor="@color/toolbar_background"
+                android:textColor="@color/drawer_item_title"
                 android:textSize="@dimen/fragment_quiz_selective_quiz_option_size"
                 android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/toolbar_background" />
+                android:background="@color/drawer_item_title" />
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/fragmentFeedbackMultipleCheckBox7"
@@ -136,7 +136,7 @@
                 android:checked="false"
                 android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
                 android:text="@string/sample_quiz_multiple_check_group_ad"
-                android:textColor="@color/toolbar_background"
+                android:textColor="@color/drawer_item_title"
                 android:textSize="@dimen/fragment_quiz_selective_quiz_option_size"
                 android:visibility="gone" />
         </LinearLayout>

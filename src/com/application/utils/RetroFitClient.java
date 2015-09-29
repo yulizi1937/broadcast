@@ -33,8 +33,8 @@ public class RetroFitClient {
 			if(BuildVars.DEBUG_STETHO){
 				okHttpClient.networkInterceptors().add(new StethoInterceptor());
 			}
-			okHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
-			okHttpClient.setReadTimeout(30, TimeUnit.SECONDS);
+			okHttpClient.setConnectTimeout(120, TimeUnit.SECONDS);
+			okHttpClient.setReadTimeout(120, TimeUnit.SECONDS);
 			RequestBody body = RequestBody.create(
 					AppConstants.API.API_CONTENTTYPE, json);
 			Request request = new Request.Builder().url(url).post(body).build();

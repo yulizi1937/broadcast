@@ -1,31 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- #254E7A -->
+    <color name="drawer_name">#FF4282</color>
+    <color name="drawer_item_title">#545454</color>
+
+    <!-- Theme.Default -->
     <color name="background_tab_pressed">#6633B5E5</color>
     <color name="toolbar_background">#ff254E7A</color>
     <color name="toolbar_background_statusbar">#ff193655</color>
+    <color name="item_title_color_default">#ff000000</color>
+    <color name="item_description_color">#ff545454</color>
+    <color name="item_activity_color">#ff545454</color>
+    <color name="item_filename_color">#ff545454</color>
+    <color name="item_by_color">#FE9915</color>
+    <color name="item_text_info">#545454</color>
+    <color name="item_unread_strip_color">#00AFF0</color>
+    <color name="item_recycler_mobcast_timeline_color">#FE9915</color>
+    <color name="slidingtablayout_text_default">#99ffffff</color>
+    <color name="slidingtablayout_text_focused">#ffffffff</color>
+    <color name="editbox_color">#577995</color>
+    <color name="textview_login_color">#577995</color>
+    <color name="edittext_login_background">#F1F5F8</color>
 
-    <!-- <color name="background_tab_pressed">#6633B5E5</color> -->
-    <!-- <color name="toolbar_background">#ff3fb637</color> -->
-    <!-- <color name="toolbar_background_statusbar">#ff193655</color> -->
+    <!-- Theme.DarkBlue -->
+    <color name="toolbar_background_dblue">#ff254E7A</color>
+    <color name="toolbar_background_statusbar_dblue">#ff193655</color>
+    <color name="item_unread_strip_color_dlue">#00AFF0</color>
+    <color name="item_title_color">#ff000000</color>
+    <color name="edittext_login_background_dblue">#F1F5F8</color>
+    <color name="textview_login_color_dblue">#577995</color>
+    <color name="editbox_color_dblue">#577995</color>
+    <color name="unread_background_dblue">#F1F5F8</color>
 
+    <!-- Theme.Purple -->
+    <color name="toolbar_background_purple">#ff3F51B5</color>
+    <color name="toolbar_background_statusbar_purple">#ff313FA0</color>
+    <color name="item_activity_color_purple">#ff636363</color>
+    <color name="item_filename_color_purple">#ff3F51B5</color>
+    <color name="item_by_color_purple">#FF4081</color>
+    <color name="item_text_info_purple">#636363</color>
+    <color name="item_unread_strip_color_purple">#3F51B5</color>
+    <color name="item_recycler_mobcast_timeline_color_purple">#3F51B5</color>
+    <color name="slidingtablayout_text_default_purple">#99ffffff</color>
+    <color name="slidingtablayout_text_focused_purple">#ffffffff</color>
+    <color name="editbox_color_purple">#3F51B5</color>
+    <color name="textview_login_color_purple">#3F51B5</color>
+    <color name="edittext_login_background_purple">#FF4081</color>
+    <color name="unread_background_purple">#E1BEE7</color>
 
-    <!-- Textcolor -->
-    <color name="item_title_color">#ff254E7A</color>
-    <color name="item_description_color">#ff254E7A</color>
-    <color name="item_activity_color">#ff254E7A</color>
-    <color name="item_filename_color">#ff254E7A</color>
+    <!-- Theme.Green -->
+    <color name="toolbar_background_green">#ff4CAF50</color>
+    <color name="toolbar_background_statusbar_green">#ff1C5E20</color>
+    <color name="item_by_color_green">#2196F3</color>
+    <color name="item_unread_strip_color_green">#4CAF50</color>
+    <color name="item_recycler_mobcast_timeline_color_green">#00AFF0</color>
+    <color name="slidingtablayout_text_default_green">#99ffffff</color>
+    <color name="slidingtablayout_text_focused_green">#ffffffff</color>
+    <color name="edittext_login_background_green">#F1F5F8</color>
+    <color name="textview_login_color_green">#577995</color>
+    <color name="editbox_color_green">#577995</color>
+    <color name="unread_background_green">#C8E6C9</color>
+    
+    <!-- Theme.Pink -->
+    <color name="toolbar_background_pink">#ffE91E63</color>
+    <color name="toolbar_background_statusbar_pink">#ffba184f</color>
+    <color name="item_activity_color_pink">#ff636363</color>
+    <color name="item_filename_color_pink">#ff3F51B5</color>
+    <color name="item_by_color_pink">#3F51B5</color>
+    <color name="item_text_info_pink">#636363</color>
+    <color name="item_unread_strip_color_pink">#E91E63</color>
+    <color name="item_recycler_mobcast_timeline_color_pink">#3F51B5</color>
+    <color name="slidingtablayout_text_default_pink">#99ffffff</color>
+    <color name="slidingtablayout_text_focused_pink">#ffffffff</color>
+    <color name="editbox_color_pink">#3F51B5</color>
+    <color name="textview_login_color_pink">#3F51B5</color>
+    <color name="edittext_login_background_pink">#FF4282</color>
+    <color name="unread_background_pink">#E1BEE7</color>
+    
+    <!-- Theme.Teal -->
+    <color name="toolbar_background_teal">#ff009688</color>
+    <color name="toolbar_background_statusbar_teal">#ff00796B</color>
+    <color name="item_activity_color_teal">#ff636363</color>
+    <color name="item_filename_color_teal">#ff3F51B5</color>
+    <color name="item_by_color_teal">#FF9800</color>
+    <color name="item_text_info_teal">#636363</color>
+    <color name="item_unread_strip_color_teal">#009688</color>
+    <color name="item_recycler_mobcast_timeline_color_teal">#FF9800</color>
+    <color name="editbox_color_teal">#009688</color>
+    <color name="textview_login_color_teal">#009688</color>
+    <color name="edittext_login_background_teal">#FF9800</color>
+    <color name="unread_background_teal">#B2DFDB</color>
+    
+    <!-- Theme.Brown -->
+    <color name="toolbar_background_brown">#ff795548</color>
+    <color name="toolbar_background_statusbar_brown">#ff5D4037</color>
+    <color name="item_activity_color_brown">#ff636363</color>
+    <color name="item_filename_color_brown">#ff3F51B5</color>
+    <color name="item_by_color_brown">#FF5722</color>
+    <color name="item_text_info_brown">#636363</color>
+    <color name="item_unread_strip_color_brown">#795548</color>
+    <color name="item_recycler_mobcast_timeline_color_brown">#FF5722</color>
+    <color name="editbox_color_brown">#795548</color>
+    <color name="textview_login_color_brown">#795548</color>
+    <color name="edittext_login_background_brown">#FF9800</color>
+    <color name="unread_background_brown">#D7CCC8</color>
+    
+    <!-- Default -->
 
-    <!-- mobcast_logo_colors -->
+    <color name="item_event_by">#FE9915</color>
+    <color name="item_text_highlight">#00AFF0</color>
+    <color name="item_recycler_mobcast_pdf_color">#F5696C</color>
+    <color name="item_recycler_mobcast_doc_color">#1CDCFF</color>
+    <color name="item_recycler_mobcast_xls_color">#26A95D</color>
+    <color name="item_recycler_mobcast_feedback_detail_background_color">#FBFBFB</color>
+
     <color name="mobcast_red">#bdFD3F1F</color>
     <color name="mobcast_yellow">#bdFFCD00</color>
     <color name="mobcast_purple">#bd8F46AD</color>
     <color name="mobcast_green">#bd02B86B</color>
     <color name="mobcast_blue">#bd008CED</color>
-
-    <!-- #ff193655 #ff2B5E93 -->
-    <color name="slidingtablayout_text_default">#ff92a6bc</color>
     <color name="background_application">#FFFFFFFF</color>
     <color name="unread_highlight">#00AFF0</color>
     <color name="unread_background">#F1F5F8</color>
@@ -54,11 +147,6 @@
     <color name="item_image">#34495E</color>
     <color name="item_video">#F1C40F</color>
 
-    <!-- activity_login -->
-    <color name="editbox_color">#577995</color>
-    <color name="textview_login_color">#577995</color>
-    <color name="edittext_login_background">#F1F5F8</color>
-
     <!-- dialog_birthday_message -->
     <color name="dialog_birthday_message_textview_color">#ff2B5E93</color>
 
@@ -76,23 +164,6 @@
     <color name="md_material_blue_600">#1E88E5</color>
     <color name="md_material_blue_800">#1565C0</color>
     <color name="md_edittext_error">#DD2C00</color>
-
-    <!-- item_recycler_event -->
-    <color name="item_event_by">#FE9915</color>
-    <color name="item_text_highlight">#00AFF0</color>
-
-    <!-- item_recycler_mobcast_pdf -->
-    <color name="item_recycler_mobcast_pdf_color">#F5696C</color>
-    <color name="item_recycler_mobcast_timeline_color">#FE9915</color>
-
-    <!-- item_recycler_mobcast_doc -->
-    <color name="item_recycler_mobcast_doc_color">#1CDCFF</color>
-
-    <!-- item_recycler_mobcast_xls -->
-    <color name="item_recycler_mobcast_xls_color">#26A95D</color>
-
-    <!-- item_recycler_mobcast_feedback -->
-    <color name="item_recycler_mobcast_feedback_detail_background_color">#FBFBFB</color>
 
     <!-- CirclePageIndicator -->
     <color name="vpi__background_holo_dark">#ff000000</color>

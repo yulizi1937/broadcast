@@ -44,9 +44,11 @@ import com.application.utils.ApplicationLoader;
 import com.application.utils.BuildVars;
 import com.application.utils.FileLog;
 import com.application.utils.JSONRequestBuilder;
+import com.application.utils.NotificationsController;
 import com.application.utils.RestClient;
 import com.application.utils.RetroFitClient;
 import com.application.utils.Style;
+import com.application.utils.ThemeUtils;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -72,7 +74,11 @@ public class QuizActivity extends SwipeBackBaseActivity {
 
 	private AppCompatTextView mQuizQuestionHeaderTv;
 	private AppCompatTextView mQuizQuestionPagerCounterTv;
+	
+	private View mQuizLineView;
 
+	private AppCompatTextView mQuizDescriptionTv;
+	
 	private AppCompatButton mQuizNavigationNextBtn;
 	private AppCompatButton mQuizNavigationPrevBtn;
 
@@ -94,6 +100,8 @@ public class QuizActivity extends SwipeBackBaseActivity {
 	private ArrayList<QuizScorePagerInfo> mArrayListQuizScorePagerInfo;
 
 	private boolean isCirclePagerIndicatorEnable = false;
+	
+	private boolean isContentLiked = false;
 	
 	private Intent mIntent;
 	private String mId;
@@ -124,12 +132,29 @@ public class QuizActivity extends SwipeBackBaseActivity {
 		initUi();
 		setUiListener();
 		getIntentData();
+		applyTheme();
+		NotificationsController.getInstance().dismissNotification();
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+	}
+	
+	@Override
+	protected boolean onPrepareOptionsPanel(View view, Menu menu) {
+		// TODO Auto-generated method stub
+		try{
+			if (isContentLiked) {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_liked);
+			} else {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_like);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return super.onPrepareOptionsPanel(view, menu);
 	}
 
 	@SuppressLint("NewApi")
@@ -152,6 +177,9 @@ public class QuizActivity extends SwipeBackBaseActivity {
 				Intent mIntent = new Intent(QuizActivity.this, MotherActivity.class);
 				startActivity(mIntent);
 			}
+			return true;
+		case R.id.action_like:
+			actionLikeQuiz();
 			return true;
 		case R.id.action_report:
 			Intent mIntent  = new Intent(QuizActivity.this, ReportActivity.class);
@@ -184,11 +212,15 @@ public class QuizActivity extends SwipeBackBaseActivity {
 		mQuizProgressTimerTextTv = (AppCompatTextView) findViewById(R.id.fragmentQuizTimerSecondTextTv);
 		mQuizQuestionHeaderTv = (AppCompatTextView) findViewById(R.id.fragmentQuizQuestionNumberTextTv);
 		mQuizQuestionPagerCounterTv = (AppCompatTextView) findViewById(R.id.fragmentQuizQuestionPageCountTv);
+		
+		mQuizDescriptionTv = (AppCompatTextView)findViewById(R.id.fragmentQuizDescriptionTv);
 
 		mQuizProgressTimerWheel = (ProgressTimerWheel) findViewById(R.id.fragmentQuizTimerProgressWheel);
 
 		mQuizNavigationNextBtn = (AppCompatButton) findViewById(R.id.fragmentQuizNextBtn);
 		mQuizNavigationPrevBtn = (AppCompatButton) findViewById(R.id.fragmentQuizPreviousBtn);
+		
+		mQuizLineView = (View)findViewById(R.id.fragmentQuizQuestionLineView);
 
 		mQuestionViewPager = (ViewPager) findViewById(R.id.fragmentQuizQuestionViewPager);
 
@@ -210,6 +242,16 @@ public class QuizActivity extends SwipeBackBaseActivity {
 	private void setUiListener() {
 		setMaterialRippleView();
 		setOnClickListener();
+	}
+	
+	private void applyTheme() {
+		try {
+			ThemeUtils.getInstance(QuizActivity.this).applyThemeFeedback(
+					QuizActivity.this, QuizActivity.this, mToolBar,
+					mQuizQuestionHeaderTv, mQuizLineView);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	private void getIntentData(){
@@ -286,13 +328,39 @@ public class QuizActivity extends SwipeBackBaseActivity {
 	private void setIntentDataToUi(){
 		try{
 			mToolBar.setTitle(mContentTitle);
-			mToolBar.setSubtitle(mContentDesc);
+//			mToolBar.setSubtitle(mContentDesc);
+			
+			if(!TextUtils.isEmpty(mContentDesc)){
+				mQuizDescriptionTv.setText(mContentDesc);
+			}
 			
 			setQuizViewPager();
 			setQuizTimerStart();
-			updateReadInDb();
+//			updateReadInDb();
 			if(!mContentIsRead){
 				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.READ, "");
+			}
+			if(mContentIsLike){
+				isContentLiked = true;
+			}
+			supportInvalidateOptionsMenu();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void actionLikeQuiz(){
+		try{
+			if(!mContentIsLike){
+				if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+					ContentValues values = new ContentValues();
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE, "true");
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, String.valueOf(Integer.parseInt(mContentLikeCount)+1));
+					getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
+				}
+				isContentLiked = true;
+				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LIKE, "");
+				supportInvalidateOptionsMenu();
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
@@ -304,6 +372,26 @@ public class QuizActivity extends SwipeBackBaseActivity {
 		 if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
 			values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, "true");
 			getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
+		}
+	}
+	
+	private void updateAttemptCountInDb(){
+		try{
+			ContentValues values = new ContentValues();
+			 if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+				Cursor mCursor = getContentResolver().query(DBConstant.Training_Quiz_Columns.CONTENT_URI, null, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ID + "=?", new String[]{mId}, null);
+				if(mCursor!=null && mCursor.getCount() > 0){
+					int mAttemptedCount = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ATTEMPT_COUNT)));
+					values.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ATTEMPT_COUNT, String.valueOf(mAttemptedCount+=1));
+					getContentResolver().update(DBConstant.Training_Quiz_Columns.CONTENT_URI, values, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_ID + "=?", new String[]{mId});
+				}
+				
+				if(mCursor!=null){
+					mCursor.close();
+				}
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 
@@ -376,8 +464,7 @@ public class QuizActivity extends SwipeBackBaseActivity {
 			
 			if (mArrayListQuizPagerInfo.size() == 1) {
 				mQuizNavigationPrevBtn.setVisibility(View.INVISIBLE);
-				mQuizNavigationNextBtn.setText(getResources().getString(
-						R.string.button_submit));
+				mQuizNavigationNextBtn.setText(getResources().getString(R.string.button_submit));
 			}
 		}
 	}
@@ -598,13 +685,21 @@ public class QuizActivity extends SwipeBackBaseActivity {
 								if (mCorrectAnswer.length() < 1) {
 									mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
 									mQuizScorePagerInfo.setmQuestionId(mQueId);
+									String [] mAnswerArr = mAnswer.split(",");
+									for (int k = 0; k < mAnswerArr.length; k++) {
+										if(mCorrectAnswer.equalsIgnoreCase(mAnswerArr[k])){
+											mQuizScore+=(mPoints/mAnswerArr.length);
+										}
+									}
 								}else{
 									String mCorrectAnswerArr1[] = mCorrectAnswer.split(",");
 									String mAnswerArr[] = mAnswer.split(",");
+									int mTempPoints = 0;
 									for (int j = 0; j < mCorrectAnswerArr1.length; j++) {
 										for (int l = 0; l < mAnswerArr.length; l++) {
 											if(mAnswerArr[l].equalsIgnoreCase(mCorrectAnswerArr1[j])){
 												mQuizScore += mPoints/mCorrectAnswerArr1.length;
+												mTempPoints+= mPoints/mCorrectAnswerArr1.length;
 											}
 										}
 									}
@@ -617,6 +712,9 @@ public class QuizActivity extends SwipeBackBaseActivity {
 									}else if(mAnswerArr.length < mCorrectAnswerArr1.length){
 										int mNumberExtraOption = mCorrectAnswerArr1.length - mAnswerArr.length;
 										mQuizScore = mQuizScore - (mPoints/mNumberExtraOption);
+										mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
+										mQuizScorePagerInfo.setmQuestionId(mQueId);
+									}else if(mTempPoints!= mPoints){
 										mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
 										mQuizScorePagerInfo.setmQuestionId(mQueId);
 									}
@@ -633,7 +731,7 @@ public class QuizActivity extends SwipeBackBaseActivity {
 									String [] mCorrectAnswerArr = mCorrectAnswer.split(",");
 									for (int k = 0; k < mCorrectAnswerArr.length; k++) {
 										if(mAnswer.equalsIgnoreCase(mCorrectAnswerArr[k])){
-											mQuizScore+=mPoints;
+											mQuizScore+=(mPoints/mCorrectAnswerArr.length);
 										}
 									}
 									mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
@@ -676,6 +774,8 @@ public class QuizActivity extends SwipeBackBaseActivity {
 
 	private void parseDataFromApi(String mResponseFromApi) {
 		if(Utilities.isSuccessFromApi(mResponseFromApi)){
+			updateReadInDb();
+			updateAttemptCountInDb();
 			Intent mIntent = new Intent(QuizActivity.this, QuizScoreActivity.class);
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.TIMETAKEN, String.valueOf(mQuizTimeTaken));
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.POINTS, String.valueOf(mQuizScore));

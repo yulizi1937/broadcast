@@ -46,6 +46,7 @@ import com.application.utils.FetchActionAsyncTask.OnPostExecuteTaskListener;
 import com.application.utils.FetchActionAsyncTask;
 import com.application.utils.FileLog;
 import com.application.utils.Style;
+import com.application.utils.ThemeUtils;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.daimajia.androidanimations.library.Techniques;
@@ -93,6 +94,7 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 	private RelativeLayout mXlsFileLayout;
 	
 	private boolean isShareOptionEnable = false;
+	private boolean isContentLiked = false;
 	
 	private Intent mIntent;
 	private String mId;
@@ -137,6 +139,7 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 		setUiListener();
 		setAnimation();
 		setSwipeRefreshLayoutCustomisation();
+		applyTheme();
 	}
 
 	@Override
@@ -153,6 +156,12 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 				menu.findItem(R.id.action_share).setVisible(true);
 			}else{
 				menu.findItem(R.id.action_share).setVisible(false);
+			}
+			
+			if (isContentLiked) {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_liked);
+			} else {
+				menu.findItem(R.id.action_like).setIcon(R.drawable.ic_like);
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
@@ -204,6 +213,9 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 				Intent mIntent = new Intent(XlsDetailActivity.this, MotherActivity.class);
 				startActivity(mIntent);
 			}
+			return true;
+		case R.id.action_like:
+			mXlsLikeTv.performClick();
 			return true;
 		case R.id.action_share:
 			showDialog(0);
@@ -271,6 +283,14 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 		
 		mXlsNewsLinkLayout = (LinearLayout)findViewById(R.id.fragmentXlsDetailViewSourceLayout);
 		
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(XlsDetailActivity.this).applyThemeWithBy(XlsDetailActivity.this, XlsDetailActivity.this, mToolBar, mXlsByTv);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	private void getIntentData(){
@@ -424,6 +444,7 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 			if(mContentIsLike){
 				mXlsLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
 				mXlsLikeTv.setTextColor(getResources().getColor(R.color.red));
+				isContentLiked =true;
 			}
 			
 			if(mContentLanguageList!=null && mContentLanguageList.size() > 1){
@@ -451,32 +472,36 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void downloadFileInBackground(){
-		if(Utilities.isInternetConnected()){
-			DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
-					XlsDetailActivity.this, false, false,
-					mContentFileLink, mContentFilePath,
-					AppConstants.TYPE.XLS, Long.parseLong(mContentFileSize), TAG);
-			mDownloadAsyncTask.execute();
-			mXlsDownloadBtn.setVisibility(View.VISIBLE);
-			mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
-				@Override
-				public void onPostExecute(boolean isDownloaded) {
-					// TODO Auto-generated method stub
-					if(isDownloaded){
-						if(checkIfFileExists(mContentFilePath)){
-							mXlsDownloadBtn.setVisibility(View.GONE);
+		try{
+			if(Utilities.isInternetConnected()){
+				DownloadAsyncTask mDownloadAsyncTask = new DownloadAsyncTask(
+						XlsDetailActivity.this, false, false,
+						mContentFileLink, mContentFilePath,
+						AppConstants.TYPE.XLS, Long.parseLong(mContentFileSize), TAG);
+				mDownloadAsyncTask.execute();
+				mXlsDownloadBtn.setVisibility(View.VISIBLE);
+				mDownloadAsyncTask.setOnPostExecuteListener(new OnPostExecuteListener() {
+					@Override
+					public void onPostExecute(boolean isDownloaded) {
+						// TODO Auto-generated method stub
+						if(isDownloaded){
+							if(checkIfFileExists(mContentFilePath)){
+								mXlsDownloadBtn.setVisibility(View.GONE);
+							}else{
+								mXlsDownloadBtn.setVisibility(View.VISIBLE);
+								AndroidUtilities.showSnackBar(XlsDetailActivity.this, getResources().getString(R.string.file_download));
+							}
 						}else{
 							mXlsDownloadBtn.setVisibility(View.VISIBLE);
 							AndroidUtilities.showSnackBar(XlsDetailActivity.this, getResources().getString(R.string.file_download));
 						}
-					}else{
-						mXlsDownloadBtn.setVisibility(View.VISIBLE);
-						AndroidUtilities.showSnackBar(XlsDetailActivity.this, getResources().getString(R.string.file_download));
 					}
-				}
-			});
-		}else{
-			Utilities.showCrouton(XlsDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.file_not_available), Style.ALERT);
+				});
+			}else{
+				Utilities.showCrouton(XlsDetailActivity.this, mCroutonViewGroup, getResources().getString(R.string.file_not_available), Style.ALERT);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 
@@ -553,10 +578,12 @@ public class XlsDetailActivity extends SwipeBackBaseActivity {
 							values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, String.valueOf(Integer.parseInt(mContentLikeCount)+1));
 							getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 						}
+						isContentLiked = true;
 						mXlsLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
 						mXlsLikeTv.setText(String.valueOf(Integer.parseInt(mContentLikeCount)+1));
 						mXlsLikeTv.setTextColor(getResources().getColor(R.color.red));
 						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LIKE, "");
+						supportInvalidateOptionsMenu();
 					}
 				}catch(Exception e){
 					FileLog.e(TAG, e.toString());

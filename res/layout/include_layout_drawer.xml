@@ -30,6 +30,7 @@
             ripple:mrl_rippleOverlay="true" >
 
             <FrameLayout
+                android:id="@+id/drawerProfileBgLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/toolbar_background"
@@ -55,7 +56,7 @@
                     android:layout_marginBottom="@dimen/drawer_item_profile_name_margin_bottom"
                     android:gravity="center"
                     android:text="@string/textview_profile_name"
-                    android:textColor="@color/text_highlight"
+                    android:textColor="@color/drawer_name"
                     android:textSize="@dimen/drawer_item_profile_name_text_size"
                     tools:ignore="RtlHardcoded" />
 
@@ -142,7 +143,7 @@
                     android:layout_marginLeft="16dp"
                     android:gravity="left|center"
                     android:text="@string/textview_last_sync"
-                    android:textColor="@color/toolbar_background"
+                    android:textColor="@color/drawer_item_title"
                     android:textSize="@dimen/drawer_item_last_sync_text_size"
                     tools:ignore="RtlHardcoded" />
 
@@ -154,7 +155,7 @@
                     android:layout_marginLeft="8dp"
                     android:gravity="left|center"
                     android:text="@string/textview_last_sync_content"
-                    android:textColor="@color/toolbar_background"
+                    android:textColor="@color/drawer_item_title"
                     android:textSize="@dimen/drawer_item_last_sync_text_size"
                     tools:ignore="RtlHardcoded" />
             </LinearLayout>

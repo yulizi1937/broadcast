@@ -202,6 +202,7 @@ public class AppConstants {
 		public static final String trainingQuizAnswer       = "trainingQuizAnswer";
 		public static final String trainingQuizScore        = "trainingQuizScore";
 		public static final String trainingQuizDuration     = "trainingQuizDuration";
+		public static final String isSingleAttempt          = "isSingleAttempt";
 		public static final String trainingQuizQueTitle     = "trainingQuizQueTitle";
 		public static final String trainingQuizOption1      = "trainingQuizOption1";
 		public static final String trainingQuizOption2      = "trainingQuizOption2";
@@ -335,6 +336,7 @@ public class AppConstants {
 		public static final String SHARE= "share";
 		public static final String ANYDO= "anydo";
 		public static final String JOIN = "join";
+		public static final String CALE = "cale";
 		public static final String DECL = "decline";
 		public static final String LINK = "link";
 		public static final String LIKE = "like";
