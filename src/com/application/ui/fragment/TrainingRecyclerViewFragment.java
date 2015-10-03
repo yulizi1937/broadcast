@@ -762,7 +762,9 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 					}
 					if(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE)))){
 						mArrayListTraining.get(position).setLike(true);
-						mArrayListTraining.get(position).setmLikeCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO)));
+						isToNotify = true;
+					}else{
+						mArrayListTraining.get(position).setLike(false);
 						isToNotify = true;
 					}
 					

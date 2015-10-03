@@ -17,7 +17,7 @@
     <string name="feedback_attempted">You already attempted feedback!</string>
     <string name="feedback_unread">You cannot mark as unread!</string>
     <string name="feedback_read">You cannot mark as read!</string>
-    <string name="resend_otp">We have sent another OTP</string>
+    <string name="resend_otp">We have sent you an OTP</string>
     <string name="quiz_incomplete">Please fill the quiz properly!</string>
     <string name="quiz_attempted">You already attempted quiz!</string>
     <string name="attempt">attempt</string>
@@ -25,7 +25,7 @@
     <string name="quiz_read">You cannot mark it as read!</string>
     <string name="api_connection_timeout">Server not responding!</string>
     <string name="api_unknown_error">Please try again in few minutes!</string>
-    <string name="share_advertisement">Share via Mobcast \n visit us at : www.mobcast.in</string>
+    <string name="share_advertisement">Shared via Mobcast \n visit us at : www.mobcast.in</string>
     <string name="file_delete_message">Are you sure want to delete these files?</string>
     <string name="logout_title_message">Are you sure want to Log Out?</string>
     <string name="content_delete_message">Are you sure want to delete </string>

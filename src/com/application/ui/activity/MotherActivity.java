@@ -381,8 +381,8 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 				mDrawerSyncLayout.setClickable(true);
 				mDrawerSyncIv.clearAnimation();
 				mDrawerSyncTv.setText(ApplicationLoader.getPreferences().getLastSyncTimeStampMessage());
-				ApplicationLoader.getPreferences().setRefreshMobcastWithNewDataAvail(true);
-				ApplicationLoader.getPreferences().setRefreshTrainingWithNewDataAvail(true);
+//				ApplicationLoader.getPreferences().setRefreshMobcastWithNewDataAvail(true);
+//				ApplicationLoader.getPreferences().setRefreshTrainingWithNewDataAvail(true);
 				onResume();
 				/*int mCurrentPosition = mPager.getCurrentItem();
 				int mLastPosition = mArrayListMotherHeader.size();
@@ -1203,6 +1203,23 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 			}
 			mDrawerSyncTv.setText(ApplicationLoader.getPreferences().getLastSyncTimeStampMessage());
 		} catch (Exception e) {
+		}
+		
+		try{
+			mDrawerLayout.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent drawerIntent = new Intent(MotherActivity.this, EditProfileActivity.class);
+					mDrawerLayout.closeDrawer(mScrimInsetsFrameLayout);
+					if (drawerIntent != null){
+						startActivity(drawerIntent);
+						AndroidUtilities.enterWindowAnimation(MotherActivity.this);	
+					}
+				}
+			});
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 

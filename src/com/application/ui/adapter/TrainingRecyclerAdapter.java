@@ -34,8 +34,10 @@ import android.widget.ImageView;
 
 import com.application.beans.Training;
 import com.application.ui.adapter.MobcastRecyclerAdapter.AudioViewHolder;
+import com.application.ui.adapter.MobcastRecyclerAdapter.ImageViewHolder;
 import com.application.ui.adapter.MobcastRecyclerAdapter.TextViewHolder;
 import com.application.ui.adapter.MobcastRecyclerAdapter.VideoViewHolder;
+import com.application.ui.adapter.MobcastRecyclerAdapter.YoutubeLiveStreamViewHolder;
 import com.application.ui.view.FlexibleDividerDecoration;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AppConstants;
@@ -1045,7 +1047,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 	}
 	
 	@SuppressWarnings("deprecation")
-	private void processLiveStreamViewHolder(RecyclerView.ViewHolder viewHolder, int position){
+	private void processLiveStreamViewHolder(final RecyclerView.ViewHolder viewHolder, int position){
 		try{
 			Training mObj = mArrayListTraining.get(position);
 			((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveTitleTv.setText(mObj.getmTitle());
@@ -1090,6 +1092,37 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 					AppConstants.TYPE.STREAM, mObj.isRead());
 			
 //			((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveThumbnailIv.setImageURI(Uri.parse(mObj.getmFileInfo().get(0).getmThumbnailPath()));
+			final String mThumbnailPath = mObj.getmFileInfo().get(0).getmThumbnailPath();
+			if(Utilities.checkIfFileExists(mThumbnailPath)){
+				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveThumbnailIv.setImageURI(Uri.parse(mThumbnailPath));
+			}else{
+				mImageLoader.displayImage(mObj.getmFileInfo().get(0).getmThumbnailLink(),((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveThumbnailIv, new ImageLoadingListener() {
+					@Override
+					public void onLoadingStarted(String arg0, View arg1) {
+						// TODO Auto-generated method stub
+						((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveThumbnailIv.setVisibility(View.GONE);
+					}
+					
+					@Override
+					public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+						// TODO Auto-generated method stub
+						((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveThumbnailIv.setVisibility(View.VISIBLE);
+					}
+					
+					@Override
+					public void onLoadingComplete(String arg0, View arg1, Bitmap mBitmap) {
+						// TODO Auto-generated method stub
+						((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveThumbnailIv.setVisibility(View.VISIBLE);
+						Utilities.writeBitmapToSDCard(mBitmap, mThumbnailPath);
+					}
+					
+					@Override
+					public void onLoadingCancelled(String arg0, View arg1) {
+						// TODO Auto-generated method stub
+						((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveThumbnailIv.setVisibility(View.VISIBLE);
+					}
+				});
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

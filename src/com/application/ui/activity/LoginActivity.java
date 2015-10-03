@@ -450,7 +450,6 @@ public class LoginActivity extends AppCompatActivity {
 					countryCodeValue = "IN";
 					isValidLoginId = false;
 				}
-
 			} else {
 				isValidLoginId = false;
 			}

@@ -57,6 +57,7 @@
                     android:gravity="center"
                     android:text="@string/sample_event_left_string"
                     android:textColor="@android:color/white"
+                    android:textStyle="bold"
                     android:textSize="@dimen/event_left_string_textview_size" />
             </LinearLayout>
 
@@ -482,7 +483,7 @@
                 android:layout_marginTop="8dp"
                 android:gravity="start|center"
                 android:text="@string/sample_event_summary"
-                android:textColor="@android:color/black"
+                android:textColor="@color/item_description_color"
                 android:textSize="@dimen/event_detail_event_summary_size" />
         </LinearLayout>
     </LinearLayout>

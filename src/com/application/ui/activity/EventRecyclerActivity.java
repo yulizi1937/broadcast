@@ -534,7 +534,9 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 					}
 					if(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_IS_LIKE)))){
 						mArrayListEvent.get(position).setLike(true);
-						mArrayListEvent.get(position).setmLikeCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO)));
+						isToNotify = true;
+					}else{
+						mArrayListEvent.get(position).setLike(false);
 						isToNotify = true;
 					}
 					
@@ -1051,6 +1053,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 				int mIntEventId = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_ID);
 				int mIntEventLikeCount = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO);
 				int mIntEventViewCount = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_READ_NO);
+				int mIntEventGoingCount = mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_GOING_NO);
 				int i = 0;
 				do{
 					Event Obj = mArrayListEvent.get(i);
@@ -1058,6 +1061,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 						if(Obj.getmId().equalsIgnoreCase(mCursor.getString(mIntEventId))){
 							Obj.setmLikeCount(mCursor.getString(mIntEventLikeCount));
 							Obj.setmViewCount(mCursor.getString(mIntEventViewCount));
+							Obj.setmGoingCount(mCursor.getString(mIntEventGoingCount));
 						}
 					}
 					i++;

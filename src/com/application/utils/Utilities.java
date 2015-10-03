@@ -346,7 +346,8 @@ public class Utilities {
         return storageDir;
     }
 
-    @SuppressLint("NewApi") public static String getPath(final Uri uri) {
+    @SuppressLint("NewApi") 
+    public static String getPath(final Uri uri) {
         try {
             final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
             if (isKitKat && DocumentsContract.isDocumentUri(ApplicationLoader.applicationContext, uri)) {

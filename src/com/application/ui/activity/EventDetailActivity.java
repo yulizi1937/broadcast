@@ -363,19 +363,37 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 				// TODO Auto-generated method stub
 				try{
 					if(!mContentIsLike){
+						mContentLikeCount  = String.valueOf(Integer.parseInt(mContentLikeCount)+1);
 						if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.EVENT)){
 							ContentValues values = new ContentValues();
 							values.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_LIKE, "true");
-							values.put(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO, String.valueOf(Integer.parseInt(mContentLikeCount)+1));
+							values.put(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO, mContentLikeCount);
 							getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, values, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId});
 						}
 						isContentLiked = true;
+						mContentIsLike = true;
 						mEventLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
-						mEventLikeTv.setText(String.valueOf(Integer.parseInt(mContentLikeCount)+1));
+						mEventLikeTv.setText(mContentLikeCount);
 						mEventLikeTv.setTextColor(getResources().getColor(R.color.red));
 						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LIKE, "");
-						supportInvalidateOptionsMenu();
+					}else{
+						if(isContentLiked){
+							mContentLikeCount = String.valueOf(Integer.parseInt(mContentLikeCount)-1);
+							if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.EVENT)){
+								ContentValues values = new ContentValues();
+								values.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_LIKE, "false");
+								values.put(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO, mContentLikeCount);
+								getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, values, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId});
+							}
+							isContentLiked = false;
+							mContentIsLike =false;
+							mEventLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like, 0, 0, 0);
+							mEventLikeTv.setText(mContentLikeCount);
+							mEventLikeTv.setTextColor(getResources().getColor(R.color.item_activity_color));
+							UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.UNLIKE, "");
+						}
 					}
+					supportInvalidateOptionsMenu();
 				}catch(Exception e){
 					FileLog.e(TAG, e.toString());
 				}
@@ -396,6 +414,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 				mEventAttendDeclineBtn.setBackgroundResource(R.drawable.shape_button_orange_border);
 				mEventAttendDeclineBtn.setTextColor(getResources().getColor(R.color.orange));
 				addEventToCalendarDirectly();
+				toolBarRefresh();
 			}
 		});
 		
@@ -412,6 +431,19 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 				mEventAttendDeclineBtn.setTextColor(getResources().getColor(R.color.white));
 				mEventAttendJoinBtn.setText(getResources().getString(R.string.fragment_event_detail_button_join));
 				mEventAttendJoinBtn.setBackgroundResource(R.drawable.shape_button_orange_fill);
+				toolBarRefresh();
+			}
+		});
+		
+		mEventCoverIv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent mIntent = new Intent(EventDetailActivity.this, ImageFullScreenActivity.class);
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.OBJECT, new String[]{mContentFilePath});
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.POSITION, 0);
+				startActivity(mIntent);
+				AndroidUtilities.enterWindowAnimation(EventDetailActivity.this);
 			}
 		});
 	}
@@ -448,22 +480,43 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void updateFeedActionToDBAndUi(String mViewCount, String mLikeCount){
-		if(mViewCount!=null){
-			ContentValues mValues = new ContentValues();
-			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.EVENT)){
-				mValues.put(DBConstant.Event_Columns.COLUMN_EVENT_READ_NO, mViewCount);
-				getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, mValues, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId});
+		try{
+			if(mViewCount!=null){
+				String[] mViewInvited = mViewCount.split(",");
+				String mView = mViewInvited[0];
+				String mInvited = mViewInvited[1];
+				if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.EVENT)){
+					ContentValues mValues = new ContentValues();
+					mValues.put(DBConstant.Event_Columns.COLUMN_EVENT_READ_NO, mView);
+					getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, mValues, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId});
+					
+					ContentValues mValues1 = new ContentValues();
+					mValues1.put(DBConstant.Event_Columns.COLUMN_EVENT_INVITED_NO, mInvited);
+					getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, mValues1, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId});
+				}
+				
+				mEventViewTv.setText(mView);
+				mEventAttendInvitedNumberTv.setText(mInvited);
 			}
-			mEventViewTv.setText(mViewCount);
-		}
-		
-		if(mLikeCount!=null){
-			ContentValues mValues = new ContentValues();
-			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.EVENT)){
-				mValues.put(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO, mViewCount);
-				getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, mValues, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId});
+			
+			if(mLikeCount!=null){
+				String[] mLikeGoing = mLikeCount.split(",");
+				String mLike = mLikeGoing[0];
+				String mGoing = mLikeGoing[1];
+				if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.EVENT)){
+					ContentValues mValues = new ContentValues();
+					mValues.put(DBConstant.Event_Columns.COLUMN_EVENT_LIKE_NO, mLike);
+					getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, mValues, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId});
+					
+					ContentValues mValues1 = new ContentValues();
+					mValues1.put(DBConstant.Event_Columns.COLUMN_EVENT_GOING_NO, mGoing);
+					getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, mValues1, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId});
+				}
+				mEventLikeTv.setText(mLike);
+				mEventAttendGoingNumberTv.setText(mGoing);
 			}
-			mEventLikeTv.setText(mLikeCount);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 	

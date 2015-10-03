@@ -117,6 +117,17 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		super.onResume();
 	}
 
+	@Override
+	protected boolean onPrepareOptionsPanel(View view, Menu menu) {
+		// TODO Auto-generated method stub
+		try{
+			menu.findItem(R.id.action_share).setVisible(true);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return super.onPrepareOptionsPanel(view, menu);
+	}
+	
 	@SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -294,6 +305,18 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 				}
 			}
 		});
+		
+		mBirthdayProfileCircleImageView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent mIntent = new Intent(BirthdayProfileActivity.this, ImageFullScreenActivity.class);
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.OBJECT, new String[]{mContentFileLink});
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.POSITION, 0);
+				startActivity(mIntent);
+				AndroidUtilities.enterWindowAnimation(BirthdayProfileActivity.this);
+			}
+		});
 	}
 	
 	private void getDataFromDBForBirthday(Cursor mCursor){
@@ -375,7 +398,9 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		}
 		
 		updateReadInDb();
+		supportInvalidateOptionsMenu();
 	}
+	
 	
 	private void calculateAge(){
 		try{
@@ -400,9 +425,8 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 	}
 
 	protected BottomSheet getShareAction() {
-		return getShareActions(
-				new BottomSheet.Builder(this).grid().title("Share To "),
-				"Hello ").limit(R.integer.bs_initial_grid_row).build();
+		String mShareContent = "Birthday"+"\n"+mContentName + "\n\n" + mContentCity +"\n\n"+mContentDep+ "\n\n"+ getResources().getString(R.string.share_advertisement);
+		return getShareActions(new BottomSheet.Builder(this).grid().title("Share To "),mShareContent).limit(R.integer.bs_initial_grid_row).build();
 	}
 
 	private void setMaterialRippleView() {

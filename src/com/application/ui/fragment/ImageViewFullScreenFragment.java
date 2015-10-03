@@ -14,8 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.application.ui.view.TouchImageView;
+import com.application.utils.ApplicationLoader;
 import com.application.utils.FileLog;
 import com.mobcast.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * @author Vikalp Patel(VikalpPatelCE)
@@ -28,6 +30,8 @@ public class ImageViewFullScreenFragment extends Fragment {
 	private TouchImageView mTouchImageView;
 	private int mPosition;
 	private List<String> mContentFilePath;
+	private ImageLoader mImageLoader;
+	
 
 	public static ImageViewFullScreenFragment newInstance(int mPosition, List<String> mContentFilePath) {//HDFC
 		ImageViewFullScreenFragment fragment = new ImageViewFullScreenFragment();
@@ -61,7 +65,12 @@ public class ImageViewFullScreenFragment extends Fragment {
 	
 	private void setUiWithIntentData(){
 		try{
-			mTouchImageView.setImageURI(Uri.parse(mContentFilePath.get(mPosition)));
+			if(mContentFilePath.get(mPosition).contains("http://")){
+				mImageLoader = ApplicationLoader.getUILImageLoader();
+				mImageLoader.displayImage(mContentFilePath.get(mPosition), mTouchImageView);				
+			}else{
+				mTouchImageView.setImageURI(Uri.parse(mContentFilePath.get(mPosition)));	
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

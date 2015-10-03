@@ -736,24 +736,47 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 				// TODO Auto-generated method stub
 				try{
 					if(!mContentIsLike){
+						mContentLikeCount  = String.valueOf(Integer.parseInt(mContentLikeCount)+1);
 						if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
 							ContentValues values = new ContentValues();
 							values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE, "true");
-							values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, String.valueOf(Integer.parseInt(mContentLikeCount)+1));
+							values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, mContentLikeCount);
 							getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, values, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
 						}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
 							ContentValues values = new ContentValues();
 							values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE, "true");
-							values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, String.valueOf(Integer.parseInt(mContentLikeCount)+1));
+							values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, mContentLikeCount);
 							getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 						}
 						isContentLiked = true;
+						mContentIsLike = true;
 						mAudioLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
-						mAudioLikeTv.setText(String.valueOf(Integer.parseInt(mContentLikeCount)+1));
+						mAudioLikeTv.setText(mContentLikeCount);
 						mAudioLikeTv.setTextColor(getResources().getColor(R.color.red));
 						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LIKE, "");
-						supportInvalidateOptionsMenu();
+					}else{
+						if(isContentLiked){
+							mContentLikeCount = String.valueOf(Integer.parseInt(mContentLikeCount)-1);
+							if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+								ContentValues values = new ContentValues();
+								values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE, "false");
+								values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, mContentLikeCount);
+								getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, values, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+							}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+								ContentValues values = new ContentValues();
+								values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE, "false");
+								values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, mContentLikeCount);
+								getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
+							}
+							isContentLiked = false;
+							mContentIsLike =false;
+							mAudioLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like, 0, 0, 0);
+							mAudioLikeTv.setText(mContentLikeCount);
+							mAudioLikeTv.setTextColor(getResources().getColor(R.color.item_activity_color));
+							UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.UNLIKE, "");
+						}
 					}
+					supportInvalidateOptionsMenu();
 				}catch(Exception e){
 					FileLog.e(TAG, e.toString());
 				}

@@ -1058,7 +1058,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 	}
 	
 	@SuppressWarnings("deprecation")
-	private void processLiveStreamViewHolder(RecyclerView.ViewHolder viewHolder, int position){
+	private void processLiveStreamViewHolder(final RecyclerView.ViewHolder viewHolder, int position){
 		try{
 			Mobcast mObj = mArrayListMobcast.get(position);
 			((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveTitleTv.setText(mObj.getmTitle());
@@ -1067,16 +1067,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveLikeCountTv.setText(mObj.getmLikeCount());
 			if(!mObj.isRead()){
 				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_live_stream_focused));
-//				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveIndicatorIv.setBackgroundColor(mContext.getResources().getColor(R.color.unread_background));
-//				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
-//				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveReadView.setVisibility(View.VISIBLE);
-//				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveRootLayout.setBackgroundResource(R.color.unread_background);
 			}else{
 				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_live_stream_normal));
-//				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveIndicatorIv.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
-//				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveTitleTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
-//				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveReadView.setVisibility(View.GONE);
-//				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveRootLayout.setBackgroundResource(R.color.white);
 			}
 			
 			if(!mObj.isLike()){
@@ -1103,6 +1095,38 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 					AppConstants.TYPE.STREAM, mObj.isRead());
 			
 //			((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveThumbnailIv.setImageURI(Uri.parse(mObj.getmFileInfo().get(0).getmThumbnailPath()));
+			
+			final String mThumbnailPath = mObj.getmFileInfo().get(0).getmThumbnailPath();
+			if(Utilities.checkIfFileExists(mThumbnailPath)){
+				((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveThumbnailIv.setImageURI(Uri.parse(mThumbnailPath));
+			}else{
+				mImageLoader.displayImage(mObj.getmFileInfo().get(0).getmThumbnailLink(), ((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveThumbnailIv, new ImageLoadingListener() {
+					@Override
+					public void onLoadingStarted(String arg0, View arg1) {
+						// TODO Auto-generated method stub
+						((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveThumbnailIv.setVisibility(View.GONE);
+					}
+					
+					@Override
+					public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+						// TODO Auto-generated method stub
+						((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveThumbnailIv.setVisibility(View.VISIBLE);
+					}
+					
+					@Override
+					public void onLoadingComplete(String arg0, View arg1, Bitmap mBitmap) {
+						// TODO Auto-generated method stub
+						((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveThumbnailIv.setVisibility(View.VISIBLE);
+						Utilities.writeBitmapToSDCard(mBitmap, mThumbnailPath);
+					}
+					
+					@Override
+					public void onLoadingCancelled(String arg0, View arg1) {
+						// TODO Auto-generated method stub
+						((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveThumbnailIv.setVisibility(View.VISIBLE);
+					}
+				});
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

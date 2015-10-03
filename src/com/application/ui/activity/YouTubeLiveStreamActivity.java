@@ -8,9 +8,11 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.app.AppCompatCallback;
 import android.support.v7.app.AppCompatDelegate;
@@ -70,6 +72,8 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 	private AppCompatTextView mVideoDescTotalTv;
 	
 	private AppCompatTextView mLiveStreamNewsLinkTv;
+	
+	private SwipeRefreshLayout mSwipeRefreshLayout;
 
 	private LinearLayout mLiveStreamNewsLinkLayout;
 	
@@ -113,6 +117,7 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 		initUiWithData();
 		getIntentData();
 		setUiListener();
+		setSwipeRefreshLayoutCustomisation();
 		applyTheme();
 	}
 
@@ -237,22 +242,17 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 			}
 		}
 	private void toolBarRefresh() {
-		mToolBarMenuRefresh.setVisibility(View.GONE);
-		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				mToolBarMenuRefresh.setVisibility(View.VISIBLE);
-				mToolBarMenuRefreshProgress.setVisibility(View.GONE);
-			}
-		}, 5000);
+//		mToolBarMenuRefresh.setVisibility(View.GONE);
+//		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
+		refreshFeedActionFromApi();
 	}
 
 	private void initUi() {
 		mCroutonViewGroup = (FrameLayout) findViewById(R.id.croutonViewGroup);
 
 		mVideoTitleTv = (AppCompatTextView) findViewById(R.id.fragmentLiveStreamYouTubeTitleTv);
+		
+		mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
 		mVideoByTv = (AppCompatTextView) findViewById(R.id.fragmentLiveStreamYouTubeByTv);
 		mVideoSummaryTextTv = (AppCompatTextView) findViewById(R.id.fragmentLiveStreamYouTubeSummaryTv);
@@ -332,7 +332,6 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 			}
 			
 			isContentLiked = mContentIsLike;
-			
 			isShareOptionEnable = mContentIsSharing;
 			setIntentDataToUi();
 		}
@@ -362,7 +361,7 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 			if(mCursorFileInfo!=null){
 				mCursorFileInfo.close();
 			}
-			
+			isContentLiked = mContentIsLike;
 			isShareOptionEnable = mContentIsSharing;
 			setIntentDataToUi();
 		}
@@ -385,17 +384,11 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 			if(TextUtils.isEmpty(mContentLink)){
 				mLiveStreamNewsLinkLayout.setVisibility(View.GONE);
 			}
-			mContentLiveStreamURL = mContentLiveStreamURL.substring(mContentLiveStreamURL.lastIndexOf("=")+1, mContentLiveStreamURL.length());
-			
-			try{
-				youTubePlayer.cueVideo(mContentLiveStreamURL);
-			}catch(Exception e){
-				
-			}
 			
 			if(mContentIsLike){
 				mVideoLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
 				mVideoLikeTv.setTextColor(getResources().getColor(R.color.red));
+				isContentLiked = true;
 			}
 			
 			updateReadInDb();
@@ -403,6 +396,13 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.READ, "");
 			}
 			invalidateOptionsMenu();
+			mContentLiveStreamURL = mContentLiveStreamURL.substring(mContentLiveStreamURL.lastIndexOf("=")+1, mContentLiveStreamURL.length());
+			
+			try{
+				youTubePlayer.cueVideo(mContentLiveStreamURL);
+			}catch(Exception e){
+				
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -450,6 +450,18 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 	private void setUiListener() {
 		setMaterialRippleView();
 		setOnClickListener();
+		setSwipeRefreshListener();
+	}
+	
+	@SuppressLint("NewApi") 
+	private void setSwipeRefreshListener() {
+		mSwipeRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				// TODO Auto-generated method stub
+				toolBarRefresh();
+			}
+		});
 	}
 
 	@SuppressLint("NewApi") private void setOnClickListener() {
@@ -471,18 +483,45 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 				// TODO Auto-generated method stub
 				try{
 					if(!mContentIsLike){
+						mContentLikeCount  = String.valueOf(Integer.parseInt(mContentLikeCount)+1);
 						if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
 							ContentValues values = new ContentValues();
 							values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE, "true");
-							values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, String.valueOf(Integer.parseInt(mContentLikeCount)+1));
+							values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, mContentLikeCount);
 							getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, values, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+						}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+							ContentValues values = new ContentValues();
+							values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE, "true");
+							values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, mContentLikeCount);
+							getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 						}
 						isContentLiked = true;
+						mContentIsLike = true;
 						mVideoLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
-						mVideoLikeTv.setText(String.valueOf(Integer.parseInt(mContentLikeCount)+1));
+						mVideoLikeTv.setText(mContentLikeCount);
 						mVideoLikeTv.setTextColor(getResources().getColor(R.color.red));
 						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LIKE, "");
-						invalidateOptionsMenu();
+					}else{
+						if(isContentLiked){
+							mContentLikeCount = String.valueOf(Integer.parseInt(mContentLikeCount)-1);
+							if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+								ContentValues values = new ContentValues();
+								values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE, "false");
+								values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, mContentLikeCount);
+								getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, values, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+							}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+								ContentValues values = new ContentValues();
+								values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE, "false");
+								values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, mContentLikeCount);
+								getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
+							}
+							isContentLiked = false;
+							mContentIsLike =false;
+							mVideoLikeTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like, 0, 0, 0);
+							mVideoLikeTv.setText(mContentLikeCount);
+							mVideoLikeTv.setTextColor(getResources().getColor(R.color.item_activity_color));
+							UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.UNLIKE, "");
+						}
 					}
 				}catch(Exception e){
 					FileLog.e(TAG, e.toString());
@@ -497,6 +536,52 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 	@SuppressWarnings("deprecation")
 	private void showShareDialog() {
 		showDialog(0);
+	}
+	
+	private void refreshFeedActionFromApi(){
+		if(Utilities.isInternetConnected()){
+			if(!mSwipeRefreshLayout.isRefreshing()){
+				mSwipeRefreshLayout.setRefreshing(true);
+			}
+			FetchActionAsyncTask mFetchActionAsyncTask = new FetchActionAsyncTask(YouTubeLiveStreamActivity.this, mId, mCategory, TAG);
+			mFetchActionAsyncTask.execute();
+			mFetchActionAsyncTask.setOnPostExecuteListener(new OnPostExecuteTaskListener() {
+				@Override
+				public void onPostExecute(String mViewCount, String mLikeCount) {
+					// TODO Auto-generated method stub
+					updateFeedActionToDBAndUi(mViewCount, mLikeCount);
+					mSwipeRefreshLayout.setRefreshing(false);
+//					mToolBarMenuRefresh.setVisibility(View.VISIBLE);
+//					mToolBarMenuRefreshProgress.setVisibility(View.GONE);
+				}
+			});
+		}
+	}
+	
+	private void updateFeedActionToDBAndUi(String mViewCount, String mLikeCount){
+		if(mViewCount!=null){
+			ContentValues mValues = new ContentValues();
+			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+				mValues.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT, mViewCount);
+				getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, mValues, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+			}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+				mValues.put(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT, mViewCount);
+				getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, mValues, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
+			}
+			mVideoViewTv.setText(mViewCount);
+		}
+		
+		if(mLikeCount!=null){
+			ContentValues mValues = new ContentValues();
+			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+				mValues.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO, mViewCount);
+				getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, mValues, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId});
+			}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+				mValues.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, mViewCount);
+				getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, mValues, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
+			}
+			mVideoLikeTv.setText(mLikeCount);
+		}
 	}
 
 	@Override
@@ -517,6 +602,15 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}
+	}
+	
+	private void setSwipeRefreshLayoutCustomisation() {
+		mSwipeRefreshLayout.setColorSchemeColors(
+				Color.parseColor(AppConstants.COLOR.MOBCAST_RED),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_YELLOW),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_PURPLE),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_GREEN),
+				Color.parseColor(AppConstants.COLOR.MOBCAST_BLUE));
 	}
 	/**
 	 * Google Analytics v3

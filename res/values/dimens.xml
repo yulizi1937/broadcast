@@ -70,8 +70,8 @@
     <dimen name="award_name_congratulate_textview_size">8sp</dimen>
 
     <!-- item_recycler_event -->
-    <dimen name="event_left_number_textview_size">18sp</dimen>
-    <dimen name="event_left_string_textview_size">8sp</dimen>
+    <dimen name="event_left_number_textview_size">20sp</dimen>
+    <dimen name="event_left_string_textview_size">12sp</dimen>
     <dimen name="event_title_textview_size">16sp</dimen>
     <dimen name="event_by_textview_size">10sp</dimen>
     <dimen name="event_view_textview_size">10sp</dimen>

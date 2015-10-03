@@ -476,20 +476,13 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 											+ mArrayListAward.get(mPosition)
 													.getmName(), Style.CONFIRM);
 							ContentValues mValues = new ContentValues();
-							mValues.put(
-									DBConstant.Award_Columns.COLUMN_AWARD_IS_CONGRATULATE,
-									"true");
-							getContentResolver().update(
-									DBConstant.Award_Columns.CONTENT_URI,
-									mValues,
-									DBConstant.Award_Columns.COLUMN_AWARD_ID
-											+ "=?",
-									new String[] { mArrayListAward.get(
-											mPosition).getmId() });
-							mArrayListAward.get(mPosition).setCongratulated(
-									true);
-							mRecyclerView.getAdapter().notifyItemChanged(
-									mPosition);
+							mValues.put(DBConstant.Award_Columns.COLUMN_AWARD_IS_CONGRATULATE,"true");
+							String mCongratsCount = String.valueOf(Integer.parseInt(mArrayListAward.get(mPosition).getmCongratulatedCount())+1);
+							mArrayListAward.get(mPosition).setmCongratulatedCount(mCongratsCount);
+							mValues.put(DBConstant.Award_Columns.COLUMN_AWARD_CONGRATULATE_NO, mCongratsCount);
+							getContentResolver().update(DBConstant.Award_Columns.CONTENT_URI,mValues,DBConstant.Award_Columns.COLUMN_AWARD_ID+ "=?",new String[] { mArrayListAward.get(mPosition).getmId() });
+							mArrayListAward.get(mPosition).setCongratulated(true);
+							mRecyclerView.getAdapter().notifyItemChanged(mPosition);
 						}
 					}
 
@@ -673,7 +666,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 			Obj.setmAwardDate(mCursor.getString(mIntAwardDate));
 			Obj.setmLikeCount(mCursor.getString(mIntAwardLikeCount));
 			Obj.setmViewCount(mCursor.getString(mIntAwardViewCount));
-			Obj.setmCongratulatedCount(mCursor.getString(mIntAwardCongratulatedCount));
+			Obj.setmCongratulatedCount(mCursor.getString(mIntAwardCongratulatedCount)==null?"0":mCursor.getString(mIntAwardCongratulatedCount));
 			Obj.setRead(Boolean.parseBoolean(mCursor.getString(mIntAwardIsRead)));
 			Obj.setLike(Boolean.parseBoolean(mCursor.getString(mIntAwardIsLike)));
 			Obj.setCongratulated(Boolean.parseBoolean(mCursor.getString(mIntAwardIsCongratulated)));
@@ -1088,6 +1081,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 					values.put(DBConstant.Award_Columns.COLUMN_AWARD_DATE,mDate);
 					values.put(DBConstant.Award_Columns.COLUMN_AWARD_TIME,mTime);
 					values.put(DBConstant.Award_Columns.COLUMN_AWARD_DATE_FORMATTED,Utilities.getMilliSecond(mDate, mTime));
+					values.put(DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE_FORMATTED, Utilities.getMilliSecond(mDate, mTime));
 					values.put(DBConstant.Award_Columns.COLUMN_AWARD_DESCRIPTION,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardDescription));
 					values.put(DBConstant.Award_Columns.COLUMN_AWARD_CITY,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardCity));
 					values.put(DBConstant.Award_Columns.COLUMN_AWARD_DEPARTMENT,mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.awardDepartment));

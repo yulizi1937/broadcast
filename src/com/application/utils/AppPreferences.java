@@ -417,7 +417,7 @@ public class AppPreferences {
 	}
 
 	public int getAppTheme() {
-		int AppTheme= sharedPreferences.getInt("AppTheme",1);
+		int AppTheme = sharedPreferences.getInt("AppTheme", 1);
 		return AppTheme;
 	}
 	
@@ -428,7 +428,7 @@ public class AppPreferences {
 	}
 
 	public int getTAppTheme() {
-		int TAppTheme= sharedPreferences.getInt("TAppTheme",1);
+		int TAppTheme = sharedPreferences.getInt("TAppTheme", 1);
 		return TAppTheme;
 	}
 	

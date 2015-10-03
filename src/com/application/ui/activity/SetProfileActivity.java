@@ -124,6 +124,7 @@ public class SetProfileActivity extends AppCompatActivity{
 	private boolean isValidEmail = false;
 	private boolean isValidEmployeeId = false;
 	private boolean isValid = false;
+	private boolean isRemovedProfile = false;
 	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -269,6 +270,7 @@ public class SetProfileActivity extends AppCompatActivity{
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
 				mProfileCirleIv.setImageResource(R.drawable.ic_sample_picture);
+				isRemovedProfile = true;
 			}
 		});
 		
@@ -681,6 +683,7 @@ public class SetProfileActivity extends AppCompatActivity{
 			options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 			Bitmap mBitmap = BitmapFactory.decodeFile(mPicturePath, options);
 			mProfileCirleIv.setImageBitmap(mBitmap);
+			isRemovedProfile = false;
 			
 //			mProfileCirleIv.setVisibility(View.GONE);
 //			mProgressWheel.setVisibility(View.VISIBLE);
@@ -703,9 +706,8 @@ public class SetProfileActivity extends AppCompatActivity{
 	
 	private String apiUpdateProfile(){
 		try {
-			JSONObject jsonObj = JSONRequestBuilder.getPostUserProfile(mNameEv
-					.getText().toString(), mEmailEv.getText().toString(),
-					mEmployeeIdEv.getText().toString(), mPicturePath, mFavouriteQuestionEv.getText().toString(), mFavouriteAnswerEv.getText().toString(), !TextUtils.isEmpty(mDOBEv.getText().toString())? mDOBEv.getText().toString(): " ");
+			JSONObject jsonObj = JSONRequestBuilder.getPostUserProfile(mNameEv.getText().toString(), mEmailEv.getText().toString(),
+					mEmployeeIdEv.getText().toString(), mPicturePath, mFavouriteQuestionEv.getText().toString(), mFavouriteAnswerEv.getText().toString(), !TextUtils.isEmpty(mDOBEv.getText().toString())? mDOBEv.getText().toString(): " ", isRemovedProfile);
 			if(BuildVars.USE_OKHTTP){
 				return RetroFitClient
 						.postJSON(new OkHttpClient(),AppConstants.API.API_UPDATE_USER, jsonObj.toString(), TAG);
@@ -733,6 +735,9 @@ public class SetProfileActivity extends AppCompatActivity{
 			String mFavouriteAnswer = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.favouriteAnswer);
 			if(!TextUtils.isEmpty(mProfileImage)){
 				ApplicationLoader.getPreferences().setUserProfileImageLink(mProfileImage);
+			}else{
+				ApplicationLoader.getPreferences().setUserProfileImageLink(null);
+				ApplicationLoader.getPreferences().setUserProfileImagePath(null);
 			}
 			
 			if(!TextUtils.isEmpty(name)){

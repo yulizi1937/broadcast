@@ -98,6 +98,15 @@
                     android:clickable="true"
                     android:orientation="horizontal"
                     android:padding="1dp" >
+                    
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/white"
+                        android:src="@drawable/ic_profile_name"
+                        android:contentDescription="@string/desc_activity_login_validation"
+                        android:scaleType="centerInside" />
 
                     <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/activitySetProfileNameEv"
@@ -137,6 +146,15 @@
                     android:clickable="true"
                     android:orientation="horizontal"
                     android:padding="1dp" >
+                    
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/white"
+                        android:src="@drawable/ic_profile_email"
+                        android:contentDescription="@string/desc_activity_login_validation"
+                        android:scaleType="centerInside" />
 
                     <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/activitySetProfileEmailEv"
@@ -176,6 +194,15 @@
                     android:clickable="true"
                     android:orientation="horizontal"
                     android:padding="1dp" >
+                    
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/white"
+                        android:src="@drawable/ic_profile_employeeid"
+                        android:contentDescription="@string/desc_activity_login_validation"
+                        android:scaleType="centerInside" />
 
                     <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/activitySetProfileEmployeeIdEv"
@@ -295,6 +322,15 @@
                     android:orientation="horizontal"
                     android:padding="1dp"
                     android:visibility="visible" >
+                    
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/white"
+                        android:src="@drawable/ic_profile_birthday"
+                        android:contentDescription="@string/desc_activity_login_validation"
+                        android:scaleType="centerInside" />
 
                     <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/activitySetProfileBirthdayEv"

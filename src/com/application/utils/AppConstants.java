@@ -97,6 +97,7 @@ public class AppConstants {
 		public static final String favouriteQuestion       = "favouriteQuestion";
 		public static final String favouriteAnswer         = "favouriteAnswer";
 		public static final String birthdate               = "birthDate";
+		public static final String removedProfile          = "removedProfile";
 		public static final String countryCode             = "countryCode";
 		public static final String category                = "category";
 		public static final String issue                   = "issue";
@@ -340,6 +341,7 @@ public class AppConstants {
 		public static final String DECL = "decline";
 		public static final String LINK = "link";
 		public static final String LIKE = "like";
+		public static final String UNLIKE = "unlike";
 		public static final String OPEN = "open";
 		public static final String CONG = "congratulate";
 		public static final String WISH = "wish";

@@ -78,7 +78,7 @@
                 android:layout_height="@dimen/fragment_birthday_profile_image_width"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/fragment_birthday_profile_margin_top"
-                android:src="@drawable/sample_picture_event_cover"
+                android:src="@drawable/ic_sample_picture"
                 circleimageview:border_color="@android:color/white"
                 circleimageview:border_width="2dp"
                 tools:ignore="RtlHardcoded,ContentDescription" />

@@ -744,11 +744,14 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 					boolean isToNotify = false;
 					if(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ)))){
 						mArrayListMobcast.get(position).setRead(true);
+						mArrayListMobcast.get(position).setmViewCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT)));
 						isToNotify = true;
 					}
 					if(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_LIKE)))){
 						mArrayListMobcast.get(position).setLike(true);
-						mArrayListMobcast.get(position).setmLikeCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO)));
+						isToNotify = true;
+					}else{
+						mArrayListMobcast.get(position).setLike(false);
 						isToNotify = true;
 					}
 					

@@ -352,16 +352,31 @@ public class QuizActivity extends SwipeBackBaseActivity {
 	private void actionLikeQuiz(){
 		try{
 			if(!mContentIsLike){
+				mContentLikeCount  = String.valueOf(Integer.parseInt(mContentLikeCount)+1);
 				if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
 					ContentValues values = new ContentValues();
 					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE, "true");
-					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, String.valueOf(Integer.parseInt(mContentLikeCount)+1));
+					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, mContentLikeCount);
 					getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
 				}
 				isContentLiked = true;
+				mContentIsLike = true;
 				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.LIKE, "");
-				supportInvalidateOptionsMenu();
+			}else{
+				if(isContentLiked){
+					mContentLikeCount = String.valueOf(Integer.parseInt(mContentLikeCount)-1);
+					if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+						ContentValues values = new ContentValues();
+						values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_LIKE, "false");
+						values.put(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO, mContentLikeCount);
+						getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId});
+					}
+					isContentLiked = false;
+					mContentIsLike =false;
+					UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.UNLIKE, "");
+				}
 			}
+			supportInvalidateOptionsMenu();
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

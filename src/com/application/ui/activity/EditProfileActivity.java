@@ -128,6 +128,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 	private boolean isValidEmail = false;
 	private boolean isValidEmployeeId = false;
 	private boolean isValid = false;
+	private boolean isRemovedProfile = false;
 	
 	private boolean isShareOptionEnable = false;
 	
@@ -311,6 +312,15 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				getPhotoFromGallery();
+			}
+		});
+		
+		mRemoveTv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				mProfileCirleIv.setImageResource(R.drawable.ic_sample_picture);
+				isRemovedProfile = true;
 			}
 		});
 		
@@ -692,6 +702,7 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 			options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 			Bitmap mBitmap = BitmapFactory.decodeFile(mPicturePath, options);
 			mProfileCirleIv.setImageBitmap(mBitmap);
+			isRemovedProfile = false;
 			
 //			mProfileCirleIv.setVisibility(View.GONE);
 //			mProgressWheel.setVisibility(View.VISIBLE);
@@ -700,15 +711,12 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 	
 	private String apiUpdateProfile(){
 		try {
-			JSONObject jsonObj = JSONRequestBuilder.getPostUserProfile(mNameEv
-					.getText().toString(), mEmailEv.getText().toString(),
-					mEmployeeIdEv.getText().toString(), mPicturePath, mQuestionEv.getText().toString(), mAnswerEv.getText().toString()," ");
+			JSONObject jsonObj = JSONRequestBuilder.getPostUserProfile(mNameEv.getText().toString(), mEmailEv.getText().toString(),
+					mEmployeeIdEv.getText().toString(), mPicturePath,mQuestionEv.getText().toString(), mAnswerEv.getText().toString(), !TextUtils.isEmpty(mDOBEv.getText().toString()) ? mDOBEv.getText().toString() : " ",isRemovedProfile);
 			if(BuildVars.USE_OKHTTP){
-				return RetroFitClient
-						.postJSON(new OkHttpClient(),AppConstants.API.API_UPDATE_USER, jsonObj.toString(), TAG);
+				return RetroFitClient.postJSON(new OkHttpClient(),AppConstants.API.API_UPDATE_USER, jsonObj.toString(), TAG);
 			}else{
-				return RestClient
-						.postJSON(AppConstants.API.API_UPDATE_USER, jsonObj, TAG);
+				return RestClient.postJSON(AppConstants.API.API_UPDATE_USER, jsonObj, TAG);
 			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -727,9 +735,13 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 			String employeeId =  mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.employeeId);
 			String mFavouriteQuestion = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.favouriteQuestion);
 			String mFavouriteAnswer = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.favouriteAnswer);
+			String mBirthDate = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.birthdate);
 			
 			if(!TextUtils.isEmpty(mProfileImage)){
 				ApplicationLoader.getPreferences().setUserProfileImageLink(mProfileImage);
+			}else{
+				ApplicationLoader.getPreferences().setUserProfileImageLink(null);
+				ApplicationLoader.getPreferences().setUserProfileImagePath(null);
 			}
 			
 			if(!TextUtils.isEmpty(name)){
@@ -751,6 +763,10 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 			
 			if(!TextUtils.isEmpty(mFavouriteQuestion)){
 				ApplicationLoader.getPreferences().setUserFavouriteQuestion(mFavouriteQuestion);
+			}
+			
+			if(!TextUtils.isEmpty(mBirthDate)){
+				ApplicationLoader.getPreferences().setUserBirthdate(mBirthDate);
 			}
 			
 			Utilities.showCrouton(EditProfileActivity.this, mCroutonViewGroup, Utilities.getSuccessMessageFromApi(mResponseFromApi), Style.CONFIRM);
