@@ -992,7 +992,7 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 		ApplicationLoader.getPreferences().setAudioPlayPosition(-1);
 		mReportStop = System.currentTimeMillis();
 		mReportDuration += mReportStop - mReportStart;
-		UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, Utilities.getTimeFromMilliSeconds(mReportDuration));
+		UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, Utilities.getTimeFromMilliSeconds(mTotalDuration));
 	}
 	
 	private void runOnSeekBarThread(){

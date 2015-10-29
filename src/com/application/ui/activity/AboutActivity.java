@@ -32,8 +32,8 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 
 /**
+ * <b>Description:</b></br>AboutActivity : Activity - Shows About MOBCAST</br>
  * @author Vikalp Patel(VikalpPatelCE)
- * 
  */
 public class AboutActivity extends SwipeBackBaseActivity {
 	private static final String TAG = AboutActivity.class.getSimpleName();
@@ -119,6 +119,10 @@ public class AboutActivity extends SwipeBackBaseActivity {
 		}
 	}
 
+	/**
+	 * <b>Description:</b></br>Initialize Ui Elements</br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void initUi() {
 		mCroutonViewGroup = (FrameLayout) findViewById(R.id.croutonViewGroup);
 
@@ -144,6 +148,10 @@ public class AboutActivity extends SwipeBackBaseActivity {
 		setWebViewData();
 	}
 
+	/**
+	 * <b>Description:</b></br>About Mobcast</br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void setWebViewData() {
 		String text = getResources().getString(R.string.sample_about_detail);
 		String htmlText = "<html><body style=\"text-align:justify\"><font size=\"1\" color=\"#545454\"> %s </font></body></Html>";
@@ -163,6 +171,10 @@ public class AboutActivity extends SwipeBackBaseActivity {
 		setSupportActionBar(mToolBar);
 	}
 
+	/**
+	 * <b>Description:</b></br>Animation : Shake Logo</br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void setAnimation() {
 		try {
 			YoYo.with(Techniques.Shake).duration(2000).playOn(mAboutLogoIv);
@@ -171,6 +183,10 @@ public class AboutActivity extends SwipeBackBaseActivity {
 		}
 	}
 	
+	/**
+	 * <b>Description:</b></br>ThemeUtils : ApplyTheme</br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void applyTheme(){
 		try{
 			ThemeUtils.getInstance(AboutActivity.this).applyThemeCountrySelect(AboutActivity.this, AboutActivity.this, mToolBar);

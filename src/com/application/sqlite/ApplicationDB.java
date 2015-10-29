@@ -17,6 +17,12 @@ import android.util.Log;
 
 import com.application.utils.BuildVars;
 
+/**
+ * <b>Description:</b></br>ApplicationDB : SQLite DB with ContentProvider which
+ * can be share accrosed with other application</br>
+ * 
+ * @author Vikalp Patel(VikalpPatelCE)
+ */
 public class ApplicationDB extends ContentProvider{
 	
 	public static final String AUTHORITY = "com.application.sqlite.mobcast.ApplicationDB";
@@ -34,6 +40,7 @@ public class ApplicationDB extends ContentProvider{
 	private static final int TRAINING_FILE     = 8;
 	private static final int MOBCAST_FEEDBACK  = 9;
 	private static final int TRAINING_QUIZ     = 10;
+	private static final int PARICHAY_REFERRED = 11;
 	
 	private static HashMap<String, String> mobcastProjectionMap;
 	private static HashMap<String, String> chatProjectionMap;
@@ -45,6 +52,7 @@ public class ApplicationDB extends ContentProvider{
 	private static HashMap<String, String> trainingFileProjectionMap;
 	private static HashMap<String, String> mobcastFeedbackProjectionMap;
 	private static HashMap<String, String> trainingQuizProjectionMap;
+	private static HashMap<String, String> parichayReferredProjectionMap;
 	
 	private static class OpenHelper extends SQLiteOpenHelper {
 
@@ -396,6 +404,37 @@ public class ApplicationDB extends ContentProvider{
 			Log.i(TAG, strBuilderTrainingQuiz.toString());
 		}
 		
+		//parichayReferred
+		StringBuilder strBuilderParichayReferred = new StringBuilder();
+		strBuilderParichayReferred.append("CREATE TABLE ");
+		strBuilderParichayReferred.append(DBConstant.TABLE_PARICHAY_REFERRAL);
+		strBuilderParichayReferred.append('(');
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_JOB_ID +" TEXT ," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_ID +" TEXT UNIQUE," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REASON +" TEXT ," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_DATE +" INTEGER ," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_FOR +" TEXT ," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_NAME +" TEXT ," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_TYPE +" TEXT ," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_IRF_MFCG +" NUMBER DEFAULT 0," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_TELEPHONIC +" NUMBER DEFAULT 0," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_ONLINE +" NUMBER DEFAULT 0," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_PR1 +" NUMBER DEFAULT 0," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_PR2 +" NUMBER DEFAULT 0," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_HR +" NUMBER DEFAULT 0," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL1 +" NUMBER DEFAULT 0," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL2 +" NUMBER DEFAULT 0," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL3 +" NUMBER DEFAULT 0," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL1_RS +" TEXT ," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL2_RS +" TEXT ," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL3_RS +" TEXT" );
+		strBuilderParichayReferred.append(')');
+		db.execSQL(strBuilderParichayReferred.toString());
+		if (BuildVars.DEBUG) {
+				Log.i(TAG, strBuilderParichayReferred.toString());
+		}
+		
 		/*
 		 * CREATE INDEX : FOR FAST RETREIVING 
 		 */
@@ -525,6 +564,20 @@ public class ApplicationDB extends ContentProvider{
 		if (BuildVars.DEBUG) {
 			Log.i(TAG, strBuilderTrainingQuizIndex.toString());
 		}
+		
+		StringBuilder strBuilderParichayReferredIndex = new StringBuilder();
+		strBuilderParichayReferredIndex.append("CREATE UNIQUE INDEX ");
+		strBuilderParichayReferredIndex.append(DBConstant.INDEX_PARICHAY_REFERRAL);
+		strBuilderParichayReferredIndex.append(" ON ");
+		strBuilderParichayReferredIndex.append(DBConstant.TABLE_PARICHAY_REFERRAL +" ");
+		strBuilderParichayReferredIndex.append('(');
+		strBuilderParichayReferredIndex.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_ID  );
+		strBuilderParichayReferredIndex.append(DBConstant.INDEX_ID_ORDER);
+		strBuilderParichayReferredIndex.append(')');
+		db.execSQL(strBuilderParichayReferredIndex.toString());
+		if (BuildVars.DEBUG) {
+			Log.i(TAG, strBuilderParichayReferredIndex.toString());
+		}
 	}
 
 		
@@ -540,6 +593,7 @@ public class ApplicationDB extends ContentProvider{
 			db.execSQL("DROP TABLE IF EXISTS " + DBConstant.TABLE_TRAINING_FILE);
 			db.execSQL("DROP TABLE IF EXISTS " + DBConstant.TABLE_MOBCAST_FEEDBACK);
 			db.execSQL("DROP TABLE IF EXISTS " + DBConstant.TABLE_TRAINING_QUIZ);
+			db.execSQL("DROP TABLE IF EXISTS " + DBConstant.TABLE_PARICHAY_REFERRAL);
 			
 			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_MOBCAST_ID);
 			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_TRAINING_ID);
@@ -550,6 +604,7 @@ public class ApplicationDB extends ContentProvider{
 			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_TRAINING_FILE);
 			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_MOBCAST_FEEDBACK);
 			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_TRAINING_QUIZ);
+			db.execSQL("DROP INDEX IF EXISTS " + DBConstant.INDEX_PARICHAY_REFERRAL);
 			
 			onCreate(db);
 		}
@@ -559,9 +614,10 @@ public class ApplicationDB extends ContentProvider{
 	 * ----------------------------------------------------------------
 	 * V 0.0.1             1              16/05/15        VIKALP PATEL
 	 * V 2.0.3             2              16/09/15        VIKALP PATEL : ALTER : ADDED ATTEMPT & ATTEMPT COUNT : FEEDBACK & QUIZ
+	 * V 2.0.9             3              17/10/15        VIKALP PATEL : ALTER : ADDED PARICHAY_REFERRED : LUPIN
 	 * -----------------------------------------------------------------
 	 */
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 		
 	OpenHelper openHelper;
 
@@ -602,6 +658,9 @@ public class ApplicationDB extends ContentProvider{
 		case TRAINING_QUIZ:
 			count = db.delete(DBConstant.TABLE_TRAINING_QUIZ, where, whereArgs);
 			break;
+		case PARICHAY_REFERRED:
+			count = db.delete(DBConstant.TABLE_PARICHAY_REFERRAL, where, whereArgs);
+			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI " + uri);
 		}
@@ -634,6 +693,8 @@ public class ApplicationDB extends ContentProvider{
 			return DBConstant.Mobcast_Feedback_Columns.CONTENT_TYPE;
 		case TRAINING_QUIZ:
 			return DBConstant.Training_Quiz_Columns.CONTENT_TYPE;
+		case PARICHAY_REFERRED:
+			return DBConstant.Parichay_Referral_Columns.CONTENT_TYPE;
 		default:
 			throw new IllegalArgumentException("Unknown URI " + uri);
 		}
@@ -647,7 +708,8 @@ public class ApplicationDB extends ContentProvider{
 				&& sUriMatcher.match(uri)!= CHAT && sUriMatcher.match(uri)!= TRAINING
 				&& sUriMatcher.match(uri)!=AWARDS && sUriMatcher.match(uri)!= BIRTHDAY
 				&& sUriMatcher.match(uri)!= TRAINING_FILE && sUriMatcher.match(uri)!= MOBCAST_FILE
-				&& sUriMatcher.match(uri)!= MOBCAST_FEEDBACK && sUriMatcher.match(uri)!= TRAINING_QUIZ)
+				&& sUriMatcher.match(uri)!= MOBCAST_FEEDBACK && sUriMatcher.match(uri)!= TRAINING_QUIZ
+				&& sUriMatcher.match(uri)!= PARICHAY_REFERRED)
 		{ 
 			throw new IllegalArgumentException("Unknown URI " + uri); 
 		}
@@ -755,6 +817,15 @@ public class ApplicationDB extends ContentProvider{
 					return noteUri;
 				}
 				break;
+			case PARICHAY_REFERRED:
+				 rowId = db.insertWithOnConflict(DBConstant.TABLE_PARICHAY_REFERRAL, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+				if (rowId > 0) 
+				{
+					Uri noteUri = ContentUris.withAppendedId(DBConstant.Parichay_Referral_Columns.CONTENT_URI, rowId);
+					getContext().getContentResolver().notifyChange(noteUri, null);
+					return noteUri;
+				}
+				break;
 			default:
 				throw new IllegalArgumentException("Unknown URI " + uri);
 				
@@ -817,6 +888,10 @@ public class ApplicationDB extends ContentProvider{
 			qb.setTables(DBConstant.TABLE_TRAINING_QUIZ);
 			qb.setProjectionMap(trainingQuizProjectionMap);
 			break;
+		case PARICHAY_REFERRED:
+			qb.setTables(DBConstant.TABLE_PARICHAY_REFERRAL);
+			qb.setProjectionMap(parichayReferredProjectionMap);
+			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI " + uri);
 		}
@@ -863,6 +938,9 @@ public class ApplicationDB extends ContentProvider{
 		case TRAINING_QUIZ:
 			count = db.update(DBConstant.TABLE_TRAINING_QUIZ, values, where, whereArgs);
 			break;
+		case PARICHAY_REFERRED:
+			count = db.update(DBConstant.TABLE_PARICHAY_REFERRAL, values, where, whereArgs);
+			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI " + uri);
 		}
@@ -882,6 +960,7 @@ public class ApplicationDB extends ContentProvider{
 		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_TRAINING_FILE, TRAINING_FILE);
 		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_MOBCAST_FEEDBACK, MOBCAST_FEEDBACK);
 		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_TRAINING_QUIZ, TRAINING_QUIZ);
+		sUriMatcher.addURI(AUTHORITY, DBConstant.TABLE_PARICHAY_REFERRAL, PARICHAY_REFERRED);
 
 		
 		mobcastProjectionMap = new HashMap<String, String>();
@@ -1133,5 +1212,28 @@ public class ApplicationDB extends ContentProvider{
 		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_DURATION, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_DURATION);
 		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_CORRECT_OPTION, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_CORRECT_OPTION);
 		trainingQuizProjectionMap.put(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION_POINTS, DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QUESTION_POINTS);
+		
+		parichayReferredProjectionMap = new HashMap<String, String>();
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_ID, DBConstant.Parichay_Referral_Columns.COLUMN_ID);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL1, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL1);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL1_RS, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL1_RS);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL2, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL2);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL2_RS, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL2_RS);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL3, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL3);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL3_RS, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL3_RS);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_HR, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_HR);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_IRF_MFCG, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_IRF_MFCG);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_ONLINE, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_ONLINE);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_PR1, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_PR1);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_PR2, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_PR2);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_TELEPHONIC, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_TELEPHONIC);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_JOB_ID, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_JOB_ID);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_ID, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_ID);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REASON, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REASON);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_DATE, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_DATE);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_FOR, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_FOR);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_NAME, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_NAME);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_TYPE, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_TYPE);
+		
 		}
 }

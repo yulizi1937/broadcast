@@ -24,6 +24,7 @@
     <integer name="bs_initial_list_row">5</integer>
     
     <integer name="max_lines">3</integer>
+    <integer name="max_lines_2">2</integer>
     <integer name="refresh_time_detail">4000</integer>
     <integer name="refresh_time_mother">5000</integer>
 

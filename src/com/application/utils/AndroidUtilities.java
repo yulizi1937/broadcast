@@ -30,15 +30,19 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.StateSet;
 import android.view.Display;
 import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.EdgeEffect;
 import android.widget.EditText;
+import android.widget.FrameLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.RemoteViews;
 import android.widget.TextView;
@@ -723,6 +727,59 @@ public class AndroidUtilities {
 			AppWidgetManager.getInstance(mContext).updateAppWidget(thisWidget,remoteViews);
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	/**
+	 * Animation
+	 */
+	
+	public static void expand(final View v) {
+		try {
+			v.measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+			final int targtetHeight = v.getMeasuredHeight();
+			v.getLayoutParams().height = 0;
+			v.setVisibility(View.VISIBLE);
+			Animation a = new Animation() {
+				@Override
+				protected void applyTransformation(float interpolatedTime,Transformation t) {
+					v.getLayoutParams().height = interpolatedTime == 1 ? LayoutParams.WRAP_CONTENT: (int) (targtetHeight * interpolatedTime);
+					v.requestLayout();
+				}
+				@Override
+				public boolean willChangeBounds() {
+					return true;
+				}
+			};
+			a.setDuration((int) (targtetHeight / v.getContext().getResources().getDisplayMetrics().density));
+			v.startAnimation(a);
+		} catch (Exception e) {
+			Log.i(TAG, e.toString());
+		}
+	}
+
+	public static void collapse(final View v) {
+		try {
+			final int initialHeight = v.getMeasuredHeight();
+			Animation a = new Animation() {
+				@Override
+				protected void applyTransformation(float interpolatedTime,Transformation t) {
+					if (interpolatedTime == 1) {
+						v.setVisibility(View.GONE);
+					} else {
+						v.getLayoutParams().height = initialHeight- (int) (initialHeight * interpolatedTime);
+						v.requestLayout();
+					}
+				}
+				@Override
+				public boolean willChangeBounds() {
+					return true;
+				}
+			};
+			a.setDuration((int) (initialHeight / v.getContext().getResources().getDisplayMetrics().density));
+			v.startAnimation(a);
+		} catch (Exception e) {
+			Log.i(TAG, e.toString());
 		}
 	}
 	

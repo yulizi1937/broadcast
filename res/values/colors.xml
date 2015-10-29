@@ -11,6 +11,7 @@
     <color name="item_title_color_default">#ff000000</color>
     <color name="item_description_color">#ff545454</color>
     <color name="item_activity_color">#ff545454</color>
+    <color name="item_transparent_color">#88000000</color>
     <color name="item_filename_color">#ff545454</color>
     <color name="item_by_color">#FE9915</color>
     <color name="item_text_info">#545454</color>
@@ -21,6 +22,8 @@
     <color name="editbox_color">#577995</color>
     <color name="textview_login_color">#577995</color>
     <color name="edittext_login_background">#F1F5F8</color>
+    <color name="unread_background_offwhite">#F1F5F8</color>
+    <color name="darker_gray">#a3a3a3</color>
 
     <!-- Theme.DarkBlue -->
     <color name="toolbar_background_dblue">#ff254E7A</color>
@@ -105,6 +108,64 @@
     <color name="edittext_login_background_brown">#FF9800</color>
     <color name="unread_background_brown">#D7CCC8</color>
     
+    <!-- Theme.Gray -->
+    <color name="toolbar_background_gray">#ff607D8B</color>
+    <color name="toolbar_background_statusbar_gray">#ff455A64</color>
+    <color name="item_by_color_gray">#FF4081</color>
+    <color name="item_unread_strip_color_gray">#607D8B</color>
+    <color name="item_recycler_mobcast_timeline_color_gray">#607D8B</color>
+    <color name="editbox_color_gray">#FF4081</color>
+    <color name="textview_login_color_gray">#FF4081</color>
+    <color name="edittext_login_background_gray">#FF4081</color>
+    <color name="unread_background_gray">#B6B6B6</color>
+	<color name="item_activity_color_gray">#ff636363</color>
+    <color name="item_filename_color_gray">#ff3F51B5</color>
+    <color name="item_text_info_gray">#636363</color>
+    
+    
+    <!-- Theme.Amber -->
+    <color name="toolbar_background_amber">#ffFFC107</color>
+    <color name="toolbar_background_statusbar_amber">#ffFFA000</color>
+    <color name="item_by_color_amber">#FF4081</color>
+    <color name="item_unread_strip_color_amber">#FFC107</color>
+    <color name="item_recycler_mobcast_timeline_color_amber">#FFC107</color>
+    <color name="editbox_color_amber">#FF4081</color>
+    <color name="textview_login_color_amber">#FF4081</color>
+    <color name="edittext_login_background_amber">#FF4081</color>
+    <color name="unread_background_amber">#FFECB3</color>
+	<color name="item_activity_color_amber">#ff636363</color>
+    <color name="item_filename_color_amber">#ff3F51B5</color>
+    <color name="item_text_info_amber">#636363</color>
+    
+    
+    <!-- Theme.Orange -->
+    <color name="toolbar_background_orange">#ffFF9800</color>
+    <color name="toolbar_background_statusbar_orange">#ffF57C00</color>
+    <color name="item_by_color_orange">#2196F3</color>
+    <color name="item_unread_strip_color_orange">#FF9800</color>
+    <color name="item_recycler_mobcast_timeline_color_orange">#FF9800</color>
+    <color name="editbox_color_orange">#2196F3</color>
+    <color name="textview_login_color_orange">#2196F3</color>
+    <color name="edittext_login_background_orange">#2196F3</color>
+    <color name="unread_background_orange">#FFE0B2</color>
+	<color name="item_activity_color_orange">#ff636363</color>
+    <color name="item_filename_color_orange">#ff3F51B5</color>
+    <color name="item_text_info_orange">#636363</color>
+    
+    <!-- Theme.Blue -->
+    <color name="toolbar_background_lblue">#ff2196F3</color>
+    <color name="toolbar_background_statusbar_lblue">#ff1976D2</color>
+    <color name="item_by_color_lblue">#FE9915</color>
+    <color name="item_unread_strip_color_lblue">#2196F3</color>
+    <color name="item_recycler_mobcast_timeline_color_lblue">#2196F3</color>
+    <color name="editbox_color_lblue">#FE9915</color>
+    <color name="textview_login_color_lblue">#FE9915</color>
+    <color name="edittext_login_background_lblue">#FE9915</color>
+    <color name="unread_background_lblue">#BBDEFB</color>
+	<color name="item_activity_color_lblue">#ff636363</color>
+    <color name="item_filename_color_lblue">#ff3F51B5</color>
+    <color name="item_text_info_lblue">#636363</color>
+    
     <!-- Default -->
 
     <color name="item_event_by">#FE9915</color>
@@ -136,6 +197,8 @@
     <color name="white_shade_light">#9AFFFFFF</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#FF0000</color>
+<!--     <color name="divider_color">#d8d8d8</color> -->
+	<color name="setting_divider_color">#d8d8d8</color>
     <color name="divider_color">#d8d8d8</color>
     <color name="light_gray">#FBFBFB</color>
     <color name="gray_empty_bg">#EDEDED</color>
@@ -246,5 +309,15 @@
     <color name="sb__dim_white">#20FFFFFF</color>
     <color name="sb__button_text_color">#FB6541</color>
     <color name="sb__snack_text_color">#EEFF41</color>
+    
+    <!-- CropImageview -->
+        <color name="crop__button_bar">#f3f3f3</color>
+    <color name="crop__button_text">#666666</color>
+    <color name="crop__selector_pressed">#1a000000</color>
+    <color name="crop__selector_focused">#77000000</color>
+    
+    <!-- FloatingActionButton -->
+    <color name="material_blue_500">#5677fc</color>
+    
 
 </resources>

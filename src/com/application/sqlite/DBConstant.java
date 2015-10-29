@@ -4,6 +4,10 @@ import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+/**
+ * <b>Description:</b></br>DBConstants : Table Names, Column Names, Index Names & Content Provider URI</br>
+ * @author Vikalp Patel(VikalpPatelCE)
+ */
 public class DBConstant {
 
 	public static final String DB_NAME                          = "ApplicationDB";
@@ -17,6 +21,7 @@ public class DBConstant {
 	public static final String TABLE_TRAINING_FILE	            = "trainingFileInfo";
 	public static final String TABLE_MOBCAST_FEEDBACK           = "mobcastFeedback";
 	public static final String TABLE_TRAINING_QUIZ              = "trainingQuiz";
+	public static final String TABLE_PARICHAY_REFERRAL          = "parichayReferral";
 	
 	public static final String INDEX_MOBCAST_ID	                    = "_id_unique_mobcast";
 	public static final String INDEX_CHAT_ID		                = "_id_unique_chat";
@@ -28,6 +33,7 @@ public class DBConstant {
 	public static final String INDEX_TRAINING_FILE		            = "_id_unique_training_file";
 	public static final String INDEX_MOBCAST_FEEDBACK	            = "_id_unique_mobcast_feedback";
 	public static final String INDEX_TRAINING_QUIZ		            = "_id_unique_training_quiz";
+	public static final String INDEX_PARICHAY_REFERRAL		        = "_id_unique_parichay_referral";
 	
 	public static final String INDEX_ID_ORDER                       = " ASC";
 	
@@ -339,6 +345,33 @@ public class DBConstant {
 		public static final String COLUMN_TRAINING_QUIZ_DURATION 	    = "_training_quiz_duration";
 		public static final String COLUMN_TRAINING_QUIZ_QUESTION_POINTS = "_training_quiz_question_points";
 		
+	}
+	
+	public static class Parichay_Referral_Columns implements BaseColumns
+	{
+		public static final Uri CONTENT_URI = Uri.parse("content://"+ ApplicationDB.AUTHORITY + "/parichayReferral");
+		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/parichayReferral";
+		
+		public static final String COLUMN_ID 							= "_id";
+		public static final String COLUMN_PARICHAY_JOB_ID				= "_parichay_job_id";
+		public static final String COLUMN_PARICHAY_REFERRED_ID				= "_parichay_referred_id";
+		public static final String COLUMN_PARICHAY_REFERRED_NAME 		= "_parichay_referred_name";
+		public static final String COLUMN_PARICHAY_REFERRED_FOR 		= "_parichay_referred_for";
+		public static final String COLUMN_PARICHAY_REFERRED_DATE    	= "_parichay_referred_date";
+		public static final String COLUMN_PARICHAY_REFERRED_TYPE  		= "_parichay_referred_type";
+		public static final String COLUMN_PARICHAY_IS_IRF_MFCG  		= "_parichay_is_irf_mfcg";
+		public static final String COLUMN_PARICHAY_REASON           	= "_parichay_reason";
+		public static final String COLUMN_PARICHAY_IS_TELEPHONIC 	    = "_parichay_is_telephonic";
+		public static final String COLUMN_PARICHAY_IS_ONLINE    	    = "_parichay_is_online_written";
+		public static final String COLUMN_PARICHAY_IS_PR1        	    = "_parichay_is_pr1";
+		public static final String COLUMN_PARICHAY_IS_PR2        	    = "_parichay_is_pr2";
+		public static final String COLUMN_PARICHAY_IS_HR        	    = "_parichay_is_hr";
+		public static final String COLUMN_PARICHAY_INSTALL1     	    = "_parichay_install1";
+		public static final String COLUMN_PARICHAY_INSTALL2 	        = "_parichay_install2";
+		public static final String COLUMN_PARICHAY_INSTALL3				= "_parichay_install3";
+		public static final String COLUMN_PARICHAY_INSTALL1_RS 	        = "_parichay_install1_rs";
+		public static final String COLUMN_PARICHAY_INSTALL2_RS 	        = "_parichay_install2_rs";
+		public static final String COLUMN_PARICHAY_INSTALL3_RS 	        = "_parichay_install3_rs";
 	}
 	
 	

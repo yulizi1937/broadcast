@@ -4,7 +4,7 @@
     xmlns:ripple="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/divider_color"
+    android:background="@color/setting_divider_color"
     android:fadingEdge="none" >
 
     <LinearLayout
@@ -154,7 +154,7 @@
                     android:textSize="@dimen/fragment_settings_title_text_size"
                     tools:ignore="RtlHardcoded" />
 
-                <android.support.v7.widget.AppCompatCheckBox
+                <android.support.v7.widget.SwitchCompat
                     android:id="@+id/fragmentSettingsNotificationBirthdayMuteCheckTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -191,7 +191,7 @@
                     android:textSize="@dimen/fragment_settings_title_text_size"
                     tools:ignore="RtlHardcoded" />
 
-                <android.support.v7.widget.AppCompatCheckBox
+                <android.support.v7.widget.SwitchCompat
                     android:id="@+id/fragmentSettingsNotificationDownloadAndNotifyCheckTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -228,7 +228,7 @@
                     android:textSize="@dimen/fragment_settings_title_text_size"
                     tools:ignore="RtlHardcoded" />
 
-                <android.support.v7.widget.AppCompatCheckBox
+                <android.support.v7.widget.SwitchCompat
                     android:id="@+id/fragmentSettingsNotificationAnyDoCheckTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -293,6 +293,45 @@
                     android:text="@string/sample_fragment_settings_sync_frquency_text"
                     android:textColor="@color/drawer_item_title"
                     android:textSize="@dimen/fragment_settings_title_text_size" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/drawer_item_title" />
+
+            <LinearLayout
+                android:id="@+id/fragmentSettingsSyncSleepingLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fragment_settings_relativelayout_height"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/fragment_settings_layout_padding_top_bottom"
+                android:paddingTop="@dimen/fragment_settings_layout_padding_top_bottom" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/fragmentSettingsSyncSleepingTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="2"
+                    android:gravity="start|center"
+                    android:text="@string/sample_fragment_settings_sync_midnight"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/fragment_settings_title_text_size" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/fragmentSettingsSyncSleepingCheckTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end|center"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text=""
+                    android:textOn=""
+                    android:textOff=""
+                    android:gravity="end|center"
+                    tools:ignore="RtlHardcoded" />
             </LinearLayout>
         </LinearLayout>
 

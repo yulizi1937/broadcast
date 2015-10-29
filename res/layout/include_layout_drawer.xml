@@ -33,6 +33,7 @@
                 android:id="@+id/drawerProfileBgLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:clickable="true"
                 android:background="@color/toolbar_background"
                 tools:ignore="RtlSymmetry" >
 
@@ -55,7 +56,6 @@
                     android:layout_gravity="bottom|center"
                     android:layout_marginBottom="@dimen/drawer_item_profile_name_margin_bottom"
                     android:gravity="center"
-                    android:text="@string/textview_profile_name"
                     android:textColor="@color/drawer_name"
                     android:textSize="@dimen/drawer_item_profile_name_text_size"
                     tools:ignore="RtlHardcoded" />
@@ -67,7 +67,6 @@
                     android:layout_gravity="bottom|center"
                     android:layout_marginBottom="@dimen/drawer_item_profile_email_margin_bottom"
                     android:gravity="center"
-                    android:text="@string/textview_profile_email"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/drawer_item_profile_email_text_size"
                     tools:ignore="RtlHardcoded" />

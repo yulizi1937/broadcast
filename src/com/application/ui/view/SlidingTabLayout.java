@@ -189,6 +189,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
         TAB_VIEW_TEXT_SIZE_SP = AndroidUtilities.getSlidingTabTextSize();
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, TAB_VIEW_TEXT_SIZE_SP);
         textView.setTypeface(Typeface.DEFAULT_BOLD);
+        textView.setSingleLine(true);
         textView.setTextColor(getResources().getColorStateList(R.color.selector_tab_text_color));
         
         if (mDistributeEvenly) {
@@ -213,7 +214,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
         }*/
         TAB_VIEW_PADDING_DIPS = AndroidUtilities.getSlidingTabPadding();
         int padding = (int) (TAB_VIEW_PADDING_DIPS * getResources().getDisplayMetrics().density);
-        textView.setPadding(padding, padding, padding, padding);
+        textView.setPadding(0, padding, 0, padding);
 
         return textView;
     }

@@ -27,7 +27,6 @@
     <dimen name="login_editbox_height">40dp</dimen>
     <dimen name="login_btn_next_width">200dp</dimen>
     <dimen name="login_btn_next_height">40dp</dimen>
-    
     <dimen name="download_btn_width">90dp</dimen>
     <dimen name="download_btn_height">32dp</dimen>
     <dimen name="download_btn_padding_left">4dp</dimen>
@@ -268,11 +267,29 @@
     <dimen name="item_recycler_mobcast_feedback_view_detail_image_margin_left">4dp</dimen>
     <dimen name="item_recycler_mobcast_feedback_view_detail_text_margin_left">14dp</dimen>
 
-    <!-- iten_recycler_recruitment -->
+    <!-- item_recycler_recruitment -->
     <dimen name="item_recycler_recruitment_indicator_date_text_size">11sp</dimen>
     <dimen name="item_recycler_recruitment_indicator_month_text_size">10sp</dimen>
     <dimen name="item_recycler_recruitment_indicator_date_height">16dp</dimen>
     <dimen name="item_recycler_recruitment_indicator_image_height">32dp</dimen>
+
+    <!-- item_recycler_parichay -->
+    <dimen name="item_recycler_parichay_margin_left">12dp</dimen>
+    <dimen name="item_recycler_parichay_title_left">54dp</dimen>
+    <dimen name="item_recycler_parichay_sequence_cirle_width">40dp</dimen>
+    <dimen name="item_recycler_parichay_referred_for_textsize">12sp</dimen>
+    <dimen name="item_recycler_parichay_referred_for_textsize_">11sp</dimen>
+    <dimen name="item_recycler_parichay_candidatesreferred_for_textsize">16sp</dimen>
+    <dimen name="item_recycler_parichay_lineview_width">1dp</dimen>
+    <dimen name="item_recycler_parichay_lineview_height">14dp</dimen>
+    <dimen name="item_recycler_parichay_lineview_padding">58dp</dimen>
+    <dimen name="item_recycler_parichay_process_height">20dp</dimen>
+    <dimen name="item_recycler_parichay_process_imageview_padding_left">10dp</dimen>
+    <dimen name="item_recycler_parichay_process_textsize">10sp</dimen>
+    <dimen name="item_recycler_parichay_installment_padding_left">52dp</dimen>
+    <dimen name="item_recycler_parichay_installment_text_padding_left">24dp</dimen>
+    <dimen name="item_recycler_parichay_cover_height">140dp</dimen>
+    <dimen name="item_recycler_parichay_cover_textsize">22sp</dimen>
 
     <!-- section_layout_birthday_header -->
     <dimen name="birthday_section_header_textview_size">11sp</dimen>
@@ -329,6 +346,9 @@
     <!-- layout_drawer_search_mother -->
     <dimen name="layout_drawer_search_mother_checkbox_padding">8dp</dimen>
 
+    <!-- layout_referral_form -->
+    <dimen name="layout_referral_form_input_paddingTop">16dp</dimen>
+
     <!-- Material Dialog L -->
     <!-- Margin around the dialog, excluding the button bar -->
     <dimen name="md_dialog_frame_margin">24dp</dimen>
@@ -336,7 +356,7 @@
     <dimen name="md_title_frame_margin_bottom">12dp</dimen>
     <!--
          The desired padding when no title is visible,
-         This plus md_content_padding_top should equals md_dialog_frame_margin
+         This plus md_content_padding_top should equals md_dialog_frame_margin
     -->
     <dimen name="md_notitle_vertical_padding">16dp</dimen>
     <dimen name="md_content_padding_top">8dp</dimen>
@@ -412,7 +432,7 @@
     <dimen name="snackbar_extra_spacing_horizontal">0dp</dimen>
     <!--
          The maximum width for a Snackbar's inline action. If the view is width than this then
-         the Snackbar will change to vertical stacking
+         the Snackbar will change to vertical stacking
     -->
     <dimen name="snackbar_action_inline_max_width">128dp</dimen>
     <dimen name="snackbar_text_size">14sp</dimen>
@@ -422,5 +442,14 @@
     <dimen name="sb__horizontal_margin">24dp</dimen>
     <dimen name="sb__vertical_margin_top">16dp</dimen>
     <dimen name="sb__vertical_margin_bottom">16dp</dimen>
+
+    <!-- CropImageView -->
+    <dimen name="crop__bar_height">56dp</dimen>
+
+    <!-- FloatingActionButton -->
+    <dimen name="fab_shadow_size">12dp</dimen>
+    <dimen name="fab_scroll_threshold">4dp</dimen>
+    <dimen name="fab_elevation_lollipop">8dp</dimen>
+    <dimen name="fab_press_translation_z">6dp</dimen>
 
 </resources>

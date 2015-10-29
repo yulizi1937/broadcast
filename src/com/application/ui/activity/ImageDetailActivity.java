@@ -41,15 +41,14 @@ import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.DownloadAsyncTask;
-import com.application.utils.Style;
-import com.application.utils.ThemeUtils;
 import com.application.utils.DownloadAsyncTask.OnPostExecuteListener;
 import com.application.utils.FetchActionAsyncTask;
 import com.application.utils.FetchActionAsyncTask.OnPostExecuteTaskListener;
 import com.application.utils.FileLog;
+import com.application.utils.Style;
+import com.application.utils.ThemeUtils;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
-import com.facebook.stetho.common.Util;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 
@@ -88,6 +87,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mImageNewsLinkTv;
 
 	private LinearLayout mImageNewsLinkLayout;
+	private LinearLayout mImageDownloadLayout;
 
 	private ImageView mImageNextIv;
 	private ImageView mImagePrevIv;
@@ -128,6 +128,8 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 	private ArrayList<String> mContentLanguageList = new ArrayList<>();
 	private ArrayList<String> mContentFileLinkList = new ArrayList<>();
 	private ArrayList<String> mContentFilePathList = new ArrayList<>();
+	
+	private boolean isFromNotification = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -220,6 +222,10 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 		case android.R.id.home:
 			finish();
 			AndroidUtilities.exitWindowAnimation(ImageDetailActivity.this);
+			if(isFromNotification){
+				Intent mIntent = new Intent(ImageDetailActivity.this, MotherActivity.class);
+				startActivity(mIntent);
+			}
 			return true;
 		case R.id.action_like:
 			mImageLikeTv.performClick();
@@ -237,6 +243,16 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		if(isFromNotification){
+			Intent mIntent = new Intent(ImageDetailActivity.this, MotherActivity.class);
+			startActivity(mIntent);
 		}
 	}
 
@@ -264,6 +280,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 		mLanguageHeaderTv = (AppCompatTextView) findViewById(R.id.fragmentImageDetailLanguageHeaderTv);
 		
 		mImageDownloadBtn = (AppCompatButton)findViewById(R.id.fragmentImageDetailDownloadBtn);
+		mImageDownloadLayout = (LinearLayout)findViewById(R.id.fragmentImageDetailDownloadLayout);
 
 		mImageTitleTv = (AppCompatTextView) findViewById(R.id.fragmentImageDetailTitleTv);
 		mImageByTv = (AppCompatTextView) findViewById(R.id.fragmentImageDetailByTv);
@@ -303,8 +320,8 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 			if (mIntent != null) {
 				Cursor mCursor = null;
 				mId = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.ID);
-				mCategory = mIntent.getStringExtra(
-						AppConstants.INTENTCONSTANTS.CATEGORY).toString();
+				mCategory = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY).toString();
+				isFromNotification = mIntent.getBooleanExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, false);
 				if (!TextUtils.isEmpty(mId) && !TextUtils.isEmpty(mCategory)) {
 					if (mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)) {
 						mCursor = getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI,null,DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID+ "=?",new String[] { mId },DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID+ " DESC");
@@ -455,6 +472,9 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 //					if (!TextUtils.isEmpty(mContentDecryptedFilePath.get(i))) {
 						if (!TextUtils.isEmpty(mContentFilePath.get(i))) {
 						isDownloadedAndExists &= true;
+						if(isDownloadedAndExists){
+							mImageDownloadLayout.setVisibility(View.GONE);
+						}
 					}else{
 						isDownloadedAndExists &= false;
 					}
@@ -490,7 +510,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 						mContentFileLink.get(position), mContentFilePath.get(position),
 						AppConstants.TYPE.IMAGE, Long.parseLong(mContentFileSize), TAG);
 				mDownloadAsyncTask.execute();
-				mImageDownloadBtn.setVisibility(View.VISIBLE);
+				mImageDownloadLayout.setVisibility(View.VISIBLE);
 				mDownloadAsyncTask
 						.setOnPostExecuteListener(new OnPostExecuteListener() {
 							@Override
@@ -503,15 +523,15 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 										if(mContentFilePath.size()-1 == position){
 //											setImageViewPager(mContentDecryptedFilePath);
 											setImageViewPager(mContentFilePath);
-											mImageDownloadBtn.setVisibility(View.GONE);
+											mImageDownloadLayout.setVisibility(View.GONE);
 											downloadThumbnailInBackground();
 										}
 									}else{
-										mImageDownloadBtn.setVisibility(View.VISIBLE);
+										mImageDownloadLayout.setVisibility(View.VISIBLE);
 										AndroidUtilities.showSnackBar(ImageDetailActivity.this, getResources().getString(R.string.file_download));
 									}
 								}else{
-									mImageDownloadBtn.setVisibility(View.VISIBLE);
+									mImageDownloadLayout.setVisibility(View.VISIBLE);
 									AndroidUtilities.showSnackBar(ImageDetailActivity.this, getResources().getString(R.string.file_download));
 								}
 							}

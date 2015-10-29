@@ -177,7 +177,7 @@
                         android:layout_weight="6"
                         android:gravity="left|bottom"
                         android:paddingTop="2dp"
-                        android:text="@string/sample_item_recycler_mobcast_audio_file_name"
+                        android:singleLine="true"
                         android:textColor="@color/item_filename_color"
                         android:textSize="@dimen/item_recycler_mobcast_audio_view_detail_file_type_name_text_size"
                         android:textStyle="bold" />

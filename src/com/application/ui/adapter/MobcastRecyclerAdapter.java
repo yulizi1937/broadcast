@@ -194,7 +194,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
 	@Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-		position-=1;
+		position = isGrid ? position - 2 : position - 1;
 		if (viewHolder instanceof TextViewHolder) {
 			processTextViewHolder(viewHolder, position);
 		} else if (viewHolder instanceof ImageViewHolder) {
@@ -925,16 +925,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			((TextViewHolder)viewHolder).mMobcastTextSummaryTv.setText(mObj.getmDescription());
 			if(!mObj.isRead()){
 				((TextViewHolder)viewHolder).mMobcastTextIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_text_focused));
-//				((TextViewHolder)viewHolder).mMobcastTextIndicatorIv.setBackgroundColor(mContext.getResources().getColor(R.color.unread_background));
-//				((TextViewHolder)viewHolder).mMobcastTextTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
-//				((TextViewHolder)viewHolder).mMobcastTextReadView.setVisibility(View.VISIBLE);
-//				((TextViewHolder)viewHolder).mMobcastTextRootLayout.setBackgroundResource(R.color.unread_background);
 			}else{
 				((TextViewHolder)viewHolder).mMobcastTextIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_text_normal));
-//				((TextViewHolder)viewHolder).mMobcastTextIndicatorIv.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
-//				((TextViewHolder)viewHolder).mMobcastTextTitleTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
-//				((TextViewHolder)viewHolder).mMobcastTextReadView.setVisibility(View.GONE);
-//				((TextViewHolder)viewHolder).mMobcastTextRootLayout.setBackgroundResource(R.color.white);
 			}
 			
 			if(!mObj.isLike()){
@@ -974,16 +966,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			((VideoViewHolder)viewHolder).mMobcastVideoLikeCountTv.setText(mObj.getmLikeCount());
 			if(!mObj.isRead()){
 				((VideoViewHolder)viewHolder).mMobcastVideoIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_video_focused));
-//				((VideoViewHolder)viewHolder).mMobcastVideoIndicatorIv.setBackgroundColor(mContext.getResources().getColor(R.color.unread_background));
-//				((VideoViewHolder)viewHolder).mMobcastVideoTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
-//				((VideoViewHolder)viewHolder).mMobcastVideoReadView.setVisibility(View.VISIBLE);
-//				((VideoViewHolder)viewHolder).mMobcastVideoRootLayout.setBackgroundResource(R.color.unread_background);
 			}else{
 				((VideoViewHolder)viewHolder).mMobcastVideoIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_video_normal));
-//				((VideoViewHolder)viewHolder).mMobcastVideoIndicatorIv.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
-//				((VideoViewHolder)viewHolder).mMobcastVideoTitleTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
-//				((VideoViewHolder)viewHolder).mMobcastVideoReadView.setVisibility(View.GONE);
-//				((VideoViewHolder)viewHolder).mMobcastVideoRootLayout.setBackgroundResource(R.color.white);
 			}
 			
 			if(!mObj.isLike()){
@@ -1032,6 +1016,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 						((VideoViewHolder)viewHolder).mMobcastVideoLoadingProgress.setVisibility(View.GONE);
 						((VideoViewHolder)viewHolder).mMobcastVideoThumbnailIv.setVisibility(View.VISIBLE);
 						((VideoViewHolder)viewHolder).mMobcastVideoPlayIv.setVisibility(View.VISIBLE);
+						((VideoViewHolder)viewHolder).mMobcastVideoThumbnailIv.setImageResource(R.drawable.placeholder_icon);
 					}
 					
 					@Override
@@ -1049,6 +1034,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 						((VideoViewHolder)viewHolder).mMobcastVideoLoadingProgress.setVisibility(View.GONE);
 						((VideoViewHolder)viewHolder).mMobcastVideoThumbnailIv.setVisibility(View.VISIBLE);
 						((VideoViewHolder)viewHolder).mMobcastVideoPlayIv.setVisibility(View.VISIBLE);
+						((VideoViewHolder)viewHolder).mMobcastVideoThumbnailIv.setImageResource(R.drawable.placeholder_icon);
 					}
 				});
 			}
@@ -1111,6 +1097,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 					public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
 						// TODO Auto-generated method stub
 						((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveThumbnailIv.setVisibility(View.VISIBLE);
+						((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveThumbnailIv.setImageResource(R.drawable.livestream_thumbnail);
 					}
 					
 					@Override
@@ -1124,6 +1111,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 					public void onLoadingCancelled(String arg0, View arg1) {
 						// TODO Auto-generated method stub
 						((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveThumbnailIv.setVisibility(View.VISIBLE);
+						((YoutubeLiveStreamViewHolder)viewHolder).mMobcastLiveThumbnailIv.setImageResource(R.drawable.livestream_thumbnail);
 					}
 				});
 			}
@@ -1142,16 +1130,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			((ImageViewHolder)viewHolder).mMobcastImageLikeCountTv.setText(mObj.getmLikeCount());
 			if(!mObj.isRead()){
 				((ImageViewHolder)viewHolder).mMobcastImageIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_image_focus));
-//				((ImageViewHolder)viewHolder).mMobcastImageIndicatorIv.setBackgroundColor(mContext.getResources().getColor(R.color.unread_background));
-//				((ImageViewHolder)viewHolder).mMobcastImageTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
-//				((ImageViewHolder)viewHolder).mMobcastImageReadView.setVisibility(View.VISIBLE);
-//				((ImageViewHolder)viewHolder).mMobcastImageRootLayout.setBackgroundResource(R.color.unread_background);
 			}else{
 				((ImageViewHolder)viewHolder).mMobcastImageIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_image_normal));
-//				((ImageViewHolder)viewHolder).mMobcastImageIndicatorIv.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
-//				((ImageViewHolder)viewHolder).mMobcastImageTitleTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
-//				((ImageViewHolder)viewHolder).mMobcastImageReadView.setVisibility(View.GONE);
-//				((ImageViewHolder)viewHolder).mMobcastImageRootLayout.setBackgroundResource(R.color.white);
 			}
 			
 			if(!mObj.isLike()){
@@ -1194,6 +1174,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 						// TODO Auto-generated method stub
 						((ImageViewHolder)viewHolder).mMobcastImageProgressWheel.setVisibility(View.GONE);
 						((ImageViewHolder)viewHolder).mMobcastImageMainImageViewIv.setVisibility(View.VISIBLE);
+						((ImageViewHolder)viewHolder).mMobcastImageMainImageViewIv.setImageResource(R.drawable.placeholder_icon);
 					}
 					
 					@Override
@@ -1209,6 +1190,7 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 						// TODO Auto-generated method stub
 						((ImageViewHolder)viewHolder).mMobcastImageProgressWheel.setVisibility(View.GONE);
 						((ImageViewHolder)viewHolder).mMobcastImageMainImageViewIv.setVisibility(View.VISIBLE);
+						((ImageViewHolder)viewHolder).mMobcastImageMainImageViewIv.setImageResource(R.drawable.placeholder_icon);
 					}
 				});
 			}
@@ -1227,16 +1209,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			((AudioViewHolder)viewHolder).mMobcastAudioLikeCountTv.setText(mObj.getmLikeCount());
 			if(!mObj.isRead()){
 				((AudioViewHolder)viewHolder).mMobcastAudioIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_audio_focused));
-//				((AudioViewHolder)viewHolder).mMobcastAudioIndicatorIv.setBackgroundColor(mContext.getResources().getColor(R.color.unread_background));
-//				((AudioViewHolder)viewHolder).mMobcastAudioTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
-//				((AudioViewHolder)viewHolder).mMobcastAudioReadView.setVisibility(View.VISIBLE);
-//				((AudioViewHolder)viewHolder).mMobcastAudioRootLayout.setBackgroundResource(R.color.unread_background);
 			}else{
 				((AudioViewHolder)viewHolder).mMobcastAudioIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_audio_normal));
-//				((AudioViewHolder)viewHolder).mMobcastAudioIndicatorIv.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
-//				((AudioViewHolder)viewHolder).mMobcastAudioTitleTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
-//				((AudioViewHolder)viewHolder).mMobcastAudioReadView.setVisibility(View.GONE);
-//				((AudioViewHolder)viewHolder).mMobcastAudioRootLayout.setBackgroundResource(R.color.white);
 			}
 			
 			if(!mObj.isLike()){
@@ -1284,16 +1258,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			((PdfViewHolder)viewHolder).mMobcastPdfLikeCountTv.setText(mObj.getmLikeCount());
 			if(!mObj.isRead()){
 				((PdfViewHolder)viewHolder).mMobcastPdfIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_pdf_focused));
-//				((PdfViewHolder)viewHolder).mMobcastPdfIndicatorIv.setBackgroundColor(mContext.getResources().getColor(R.color.unread_background));
-//				((PdfViewHolder)viewHolder).mMobcastPdfTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
-//				((PdfViewHolder)viewHolder).mMobcastPdfReadView.setVisibility(View.VISIBLE);
-//				((PdfViewHolder)viewHolder).mMobcastPdfRootLayout.setBackgroundResource(R.color.unread_background);
 			}else{
 				((PdfViewHolder)viewHolder).mMobcastPdfIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_pdf_normal));
-//				((PdfViewHolder)viewHolder).mMobcastPdfIndicatorIv.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
-//				((PdfViewHolder)viewHolder).mMobcastPdfTitleTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
-//				((PdfViewHolder)viewHolder).mMobcastPdfReadView.setVisibility(View.GONE);
-//				((PdfViewHolder)viewHolder).mMobcastPdfRootLayout.setBackgroundResource(R.color.white);
 			}
 			
 			if(!mObj.isLike()){
@@ -1337,16 +1303,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			((PptViewHolder)viewHolder).mMobcastPptLikeCountTv.setText(mObj.getmLikeCount());
 			if(!mObj.isRead()){
 				((PptViewHolder)viewHolder).mMobcastPptIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_ppt_focused));
-//				((PptViewHolder)viewHolder).mMobcastPptIndicatorIv.setBackgroundColor(mContext.getResources().getColor(R.color.unread_background));
-//				((PptViewHolder)viewHolder).mMobcastPptTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
-//				((PptViewHolder)viewHolder).mMobcastPptReadView.setVisibility(View.VISIBLE);
-//				((PptViewHolder)viewHolder).mMobcastPptRootLayout.setBackgroundResource(R.color.unread_background);
 			}else{
 				((PptViewHolder)viewHolder).mMobcastPptIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_ppt_normal));
-//				((PptViewHolder)viewHolder).mMobcastPptIndicatorIv.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
-//				((PptViewHolder)viewHolder).mMobcastPptTitleTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
-//				((PptViewHolder)viewHolder).mMobcastPptReadView.setVisibility(View.GONE);
-//				((PptViewHolder)viewHolder).mMobcastPptRootLayout.setBackgroundResource(R.color.white);
 			}
 			
 			if(!mObj.isLike()){
@@ -1390,16 +1348,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			((DocViewHolder)viewHolder).mMobcastDocLikeCountTv.setText(mObj.getmLikeCount());
 			if(!mObj.isRead()){
 				((DocViewHolder)viewHolder).mMobcastDocIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_doc_focus));
-//				((DocViewHolder)viewHolder).mMobcastDocIndicatorIv.setBackgroundColor(mContext.getResources().getColor(R.color.unread_background));
-//				((DocViewHolder)viewHolder).mMobcastDocTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
-//				((DocViewHolder)viewHolder).mMobcastDocReadView.setVisibility(View.VISIBLE);
-//				((DocViewHolder)viewHolder).mMobcastDocRootLayout.setBackgroundResource(R.color.unread_background);
 			}else{
 				((DocViewHolder)viewHolder).mMobcastDocIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_doc_normal));
-//				((DocViewHolder)viewHolder).mMobcastDocIndicatorIv.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
-//				((DocViewHolder)viewHolder).mMobcastDocTitleTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
-//				((DocViewHolder)viewHolder).mMobcastDocReadView.setVisibility(View.GONE);
-//				((DocViewHolder)viewHolder).mMobcastDocRootLayout.setBackgroundResource(R.color.white);
 			}
 			
 			if(!mObj.isLike()){
@@ -1442,16 +1392,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			((XlsViewHolder)viewHolder).mMobcastXlsLikeCountTv.setText(mObj.getmLikeCount());
 			if(!mObj.isRead()){
 				((XlsViewHolder)viewHolder).mMobcastXlsIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_xls_focused));
-//				((XlsViewHolder)viewHolder).mMobcastXlsIndicatorIv.setBackgroundColor(mContext.getResources().getColor(R.color.unread_background));
-//				((XlsViewHolder)viewHolder).mMobcastXlsTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
-//				((XlsViewHolder)viewHolder).mMobcastXlsReadView.setVisibility(View.VISIBLE);
-//				((XlsViewHolder)viewHolder).mMobcastXlsRootLayout.setBackgroundResource(R.color.unread_background);
 			}else{
 				((XlsViewHolder)viewHolder).mMobcastXlsIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_xls_normal));
-//				((XlsViewHolder)viewHolder).mMobcastXlsIndicatorIv.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
-//				((XlsViewHolder)viewHolder).mMobcastXlsTitleTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
-//				((XlsViewHolder)viewHolder).mMobcastXlsReadView.setVisibility(View.GONE);
-//				((XlsViewHolder)viewHolder).mMobcastXlsRootLayout.setBackgroundResource(R.color.white);
 			}
 			
 			if(!mObj.isLike()){
@@ -1495,16 +1437,8 @@ public class MobcastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			((FeedbackViewHolder)viewHolder).mMobcastFeedbackLikeCountTv.setText(mObj.getmLikeCount());
 			if(!mObj.isRead()){
 				((FeedbackViewHolder)viewHolder).mMobcastFeedbackIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_feedback_focused));
-//				((FeedbackViewHolder)viewHolder).mMobcastFeedbackIndicatorIv.setBackgroundColor(mContext.getResources().getColor(R.color.unread_background));
-//				((FeedbackViewHolder)viewHolder).mMobcastFeedbackTitleTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
-//				((FeedbackViewHolder)viewHolder).mMobcastFeedbackReadView.setVisibility(View.VISIBLE);
-//				((FeedbackViewHolder)viewHolder).mMobcastFeedbackRootLayout.setBackgroundResource(R.color.unread_background);
 			}else{
 				((FeedbackViewHolder)viewHolder).mMobcastFeedbackIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_feedback_normal));
-//				((FeedbackViewHolder)viewHolder).mMobcastFeedbackIndicatorIv.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
-//				((FeedbackViewHolder)viewHolder).mMobcastFeedbackTitleTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
-//				((FeedbackViewHolder)viewHolder).mMobcastFeedbackReadView.setVisibility(View.GONE);
-//				((FeedbackViewHolder)viewHolder).mMobcastFeedbackRootLayout.setBackgroundResource(R.color.white);
 			}
 			((FeedbackViewHolder)viewHolder).mMobcastFeedbackDetailQuestionCountTv.setText(mObj.getmFileInfo().get(0).getmPages());
 			

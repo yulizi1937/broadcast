@@ -69,6 +69,17 @@ public class JSONRequestBuilder {
 		return stringBuffer;
 	}
 	
+	public static JSONObject getPostResentOTPData(String mUserName, String mCategory) {
+		JSONObject stringBuffer = new JSONObject();
+		try {
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, mUserName);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, mCategory);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		return stringBuffer;
+	}
+	
 	public static JSONObject getPostAppFeedbackData(String mCategory, String mDescription) {
 		JSONObject stringBuffer = new JSONObject();
 		try {
@@ -286,6 +297,36 @@ public class JSONRequestBuilder {
 		return stringBuffer;
 	}
 	
+	public static JSONObject getPostFetchFeedParichay(boolean sortByAsc, int limit, String mLastParichayId) {
+		JSONObject stringBuffer = new JSONObject();
+		try {
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, AppConstants.INTENTCONSTANTS.PARICHAY);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.lastParichayId, mLastParichayId);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.sortByAsc, sortByAsc);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.limit, limit);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		return stringBuffer;
+	}
+	
+	public static JSONObject getPostFetchFeedParichayReferral(boolean sortByAsc, int limit, String mLastParichayReferralId) {
+		JSONObject stringBuffer = new JSONObject();
+		try {
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, AppConstants.INTENTCONSTANTS.PARICHAY);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.lastParichayReferralId, mLastParichayReferralId);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.sortByAsc, sortByAsc);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.limit, limit);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		return stringBuffer;
+	}
+	
 	public static JSONObject getPostFetchFeedActionForId(String mCategory, String mId) {
 		JSONObject stringBuffer = new JSONObject();
 		try {
@@ -323,6 +364,10 @@ public class JSONRequestBuilder {
 				mCursor = ApplicationLoader.getApplication().getApplicationContext().getContentResolver().query(DBConstant.
 						Award_Columns.CONTENT_URI	, new String[]{DBConstant.Award_Columns.COLUMN_ID, DBConstant.Award_Columns.COLUMN_AWARD_ID}, null, null, DBConstant.Award_Columns.COLUMN_AWARD_ID + " ASC");
 				mIntColumnMobcastId = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_ID);
+			}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.PARICHAY)){
+				mCursor = ApplicationLoader.getApplication().getApplicationContext().getContentResolver().query(DBConstant.
+						Parichay_Referral_Columns.CONTENT_URI	, new String[]{DBConstant.Parichay_Referral_Columns.COLUMN_ID, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_ID}, null, null, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_ID + " ASC");
+				mIntColumnMobcastId = mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_ID);
 			}
 			
 			if(mCursor!=null && mCursor.getCount() > 0){
@@ -438,6 +483,24 @@ public class JSONRequestBuilder {
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.deviceType, AppConstants.deviceType);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, AppConstants.INTENTCONSTANTS.ISSUE);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.issue, mIssue);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		return stringBuffer;
+	}
+	
+	public static JSONObject getPostAppData(String mCategory,
+			String mDescription, String mUniqueId, String mId) {
+		JSONObject stringBuffer = new JSONObject();
+		try {
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.uniqueId, mUniqueId);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER._id, mId);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.appVersion, Utilities.getApplicationVersion());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.deviceType, AppConstants.deviceType);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, mCategory);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.description, mDescription);
 		} catch (Exception e) {
 			FileLog.e(TAG, e.toString());
 		}

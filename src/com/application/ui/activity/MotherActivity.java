@@ -86,6 +86,7 @@ import com.application.utils.Scrollable;
 import com.application.utils.Style;
 import com.application.utils.ThemeUtils;
 import com.application.utils.Utilities;
+import com.apprater.AppRater;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 import com.nineoldandroids.view.ViewHelper;
@@ -171,6 +172,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		apiCheckVersionUpdate();
 		showCaseView();
 		whichTheme = ApplicationLoader.getPreferences().getAppTheme();
+		showAppRate();
 	}
 
 	@Override
@@ -341,6 +343,11 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 				});
 	}
 	
+	/**
+	 * <b>Description: </b></br>Apply Theme</br></br>
+	 * 
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void applyTheme(){
 		try{
 			ThemeUtils.getInstance(MotherActivity.this).applyThemeMother(MotherActivity.this, MotherActivity.this, mToolBar, mSlidingTabLayout);
@@ -350,7 +357,11 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		}
 	}
 	
-
+	/**
+	 * <b>Description: </b></br>Notify PagerSlidingTabStrip on New Data Added</br></br>
+	 * 
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private BroadcastReceiver mBroadCastReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent mIntent) {
@@ -358,6 +369,11 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		}
 	};
 	
+	/**
+	 * <b>Description: </b></br>Notify PagerSlidingTabStrip, Fragments & MenuItem Counts</br></br>
+	 * 
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void refreshMotherActivity(Intent mIntent){
 		try{
 			String mCategory = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY);
@@ -373,6 +389,10 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		}
 	}
 	
+	/**
+	 * <b>Description: </b></br>Broadcast Receiver : Syncing</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private BroadcastReceiver mSyncBroadCastReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent mIntent) {
@@ -381,42 +401,17 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 				mDrawerSyncLayout.setClickable(true);
 				mDrawerSyncIv.clearAnimation();
 				mDrawerSyncTv.setText(ApplicationLoader.getPreferences().getLastSyncTimeStampMessage());
-//				ApplicationLoader.getPreferences().setRefreshMobcastWithNewDataAvail(true);
-//				ApplicationLoader.getPreferences().setRefreshTrainingWithNewDataAvail(true);
 				onResume();
-				/*int mCurrentPosition = mPager.getCurrentItem();
-				int mLastPosition = mArrayListMotherHeader.size();
-				if(mCurrentPosition == 0){
-					if(mLastPosition!=mCurrentPosition){
-						if(mLastPosition-mCurrentPosition > 2){
-							mPager.setCurrentItem(mCurrentPosition+2);	
-						}else{
-							mPager.setCurrentItem(mCurrentPosition+1);
-						}
-						mPager.setCurrentItem(mCurrentPosition);
-					}
-				}else if(mCurrentPosition == mLastPosition){
-					if(mLastPosition!=mCurrentPosition){
-						if(mLastPosition-2 > 0){
-							mPager.setCurrentItem(mCurrentPosition-2);	
-						}else{
-							mPager.setCurrentItem(mCurrentPosition-1);
-						}
-						mPager.setCurrentItem(mCurrentPosition);
-					}
-				}else{
-					if(mLastPosition!=mCurrentPosition){
-						mPager.setCurrentItem(mCurrentPosition-1);
-						mPager.setCurrentItem(mCurrentPosition+1);
-						mPager.setCurrentItem(mCurrentPosition);
-					}
-				}*/
 			}catch(Exception e){
 				FileLog.e(TAG, e.toString());
 			}
 		}
 	};
 	
+	/**
+	 * <b>Description: </b></br>Notify MotherPagerAdapter : PagerSlidingTabStrip</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void notifySlidingTabLayoutChange(){
 		
 		mArrayListMotherHeader.get(0).setmIsUnread(Utilities.getUnreadOfMobcast(MotherActivity.this) > 0 ? true : false);
@@ -431,20 +426,33 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		notifyDrawerUnreadCount();
 	}
 	
+	/**
+	 * <b>Description: </b></br>Notify Drawer List Item and ProfileImage</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void notifyDrawerUnreadCount(){
 		try{
 			mDrawerAdapter.notifyDataSetChanged();
+			setDrawerProfileInfo(mDrawerUserNameTv, mDrawerUserEmailTv, mDrawerProfileIv, mDrawerProfileCoverIv);
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
 	}
 	
+	/**
+	 * <b>Description: </b></br>Notify Fragment</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void notifyFragmentWithIdAndCategory(int mId, String mCategory){
 		if (mId != -1) {
 			mFragmentCommunicator.passDataToFragment(mId, mCategory);
 		}
 	}
 	
+	/**
+	 * <b>Description: </b></br>Set MenuIcon According to Theme</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	@SuppressWarnings("deprecation")
 	private Drawable buildCounterDrawableWithPNG(int mType, int whichTheme){
 		Drawable mDrawable = null;
@@ -470,6 +478,18 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 					break;
 				case 5:
 					mDrawable =mResources.getDrawable(R.drawable.ic_toolbar_birthday_unread_brown);
+					break;
+				case 6:
+					mDrawable =mResources.getDrawable(R.drawable.ic_toolbar_birthday_unread_purple);
+					break;
+				case 7:
+					mDrawable =mResources.getDrawable(R.drawable.ic_toolbar_birthday_unread_purple);
+					break;
+				case 8:
+					mDrawable =mResources.getDrawable(R.drawable.ic_toolbar_birthday_unread_pink);
+					break;
+				case 9:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_birthday_unread_dblue);
 					break;
 				default:
 					mDrawable =mResources.getDrawable(R.drawable.ic_toolbar_birthday_unread_dblue);
@@ -497,6 +517,18 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 				case 5:
 					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_award_unread_brown);
 					break;
+				case 6:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_award_unread_purple);
+					break;
+				case 7:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_award_unread_purple);
+					break;
+				case 8:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_award_unread_pink);
+					break;
+				case 9:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_award_unread_dblue);
+					break;
 				default:
 					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_award_unread_dblue);
 					break;
@@ -522,6 +554,18 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 				case 5:
 					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_event_unread_brown);
 					break;
+				case 6:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_event_unread_purple);
+					break;
+				case 7:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_event_unread_purple);
+					break;
+				case 8:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_event_unread_pink);
+					break;
+				case 9:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_event_unread_dblue);
+					break;
 				default:
 					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_event_unread_dblue);
 					break;
@@ -535,6 +579,10 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		return mDrawable;
 	}
 	
+	/**
+	 * <b>Description: </b></br>Set Counter to MenuItem</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	@SuppressLint("InflateParams")
 	private Drawable buildCounterDrawable(int count, int backgroundImageId) {
 		LayoutInflater inflater = LayoutInflater.from(this);
@@ -565,6 +613,10 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		return new BitmapDrawable(getResources(), bitmap);
 	}
 
+	/**
+	 * <b>Description: </b></br>Set Adapter to PagerSlidingTabStrip</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void setSlidingTabPagerAdapter() {
 		mArrayListMotherHeader = getMotherPagerHeader();
 		// mPagerAdapter = new NavigationAdapter(getSupportFragmentManager());
@@ -575,6 +627,10 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		mSlidingTabLayout.setViewPager(mPager);
 	}
 
+	/**
+	 * <b>Description: </b></br>Set No of Tabs to PagerSlidingTabStrip</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private ArrayList<MotherHeader> getMotherPagerHeader() {
 		mArrayListMotherHeader = new ArrayList<MotherHeader>();
 
@@ -609,6 +665,10 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		return mArrayListMotherHeader;
 	}
 	
+	/**
+	 * <b>Description: </b></br>ObservableView</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	@Override
 	public void onScrollChanged(int scrollY, boolean firstScroll,
 			boolean dragging) {
@@ -778,7 +838,8 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	}
 	
 	/**
-	 * Activity-Fragment : Communicator
+	 * <b>Description: </b></br>Activity : Fragment Communicator</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
 	 */
 	@Override
 	public void passDataToActivity(int mId, String mCategory) {
@@ -787,9 +848,21 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	}
 	
 	/**
-	 * ShowCaseView
+	 * <b>Description: </b></br>AppRater : Show App Rate</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
 	 */
+	private void showAppRate(){
+		try{
+			AppRater.app_launched(MotherActivity.this, 3, 5, 3, 10);	
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
 	
+	/**
+	 * <b>Description: </b></br>ShowCaseView : Starts for the first time</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void showCaseView(){
 		if(!ApplicationLoader.getPreferences().isAppShowCaseViewMother()){
 			AndroidUtilities.runOnUIThread(new Runnable() {
@@ -810,6 +883,10 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		}
 	}
 	
+	/**
+	 * <b>Description: </b></br>Sequence ShowCaseView</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void startSequenceShowCaseView(int mDelay, int mSequenceDelay){
 		try{
 	        MaterialShowcaseView.Builder mMaterialShowcaseViewBuilder1 = new MaterialShowcaseView.Builder(MotherActivity.this);
@@ -900,7 +977,8 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	}
 	
 	/**
-	 * Log Out
+	 * <b>Description: </b></br>LogOut : Clear Preferences, Truncate Database, Delete Files, Update Api</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
 	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB) 
 	private void logOutFromApp(){
@@ -915,6 +993,10 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		}
 	}
 	
+	/**
+	 * <b>Description: </b></br>AsyncTask : LogOut</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	public class AsyncLogOutTask extends AsyncTask<Void, Void, Void>{
 		private MobcastProgressDialog mProgressDialog;
 		private String mResponseFromApi;
@@ -965,6 +1047,10 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		}
 	}
 	
+	/**
+	 * <b>Description: </b></br>Api : LogOut</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private String apiUserAppLogOut() {
 		try {
 				JSONObject jsonObj = JSONRequestBuilder.getPostAppLogOutData();
@@ -980,6 +1066,10 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		return null;
 	}
 	
+	/**
+	 * <b>Description: </b></br>Dialog : Logout Confirmation</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void showLogOutConfirmationMaterialDialog(){
 		MaterialDialog mMaterialDialog = new MaterialDialog.Builder(MotherActivity.this)
         .title(getResources().getString(R.string.logout_title_message))
@@ -1006,9 +1096,9 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	
 	
 	/**
-	 * Check Version Update
+	 * <b>Description: </b></br>Api : Check Version Update + Update Reg Id</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
 	 */
-	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB) 
 	private void apiCheckVersionUpdate(){
 		try{
@@ -1050,6 +1140,10 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		}
 	}
 	
+	/**
+	 * <b>Description: </b></br>New Data Bubble : Like Facebook - New Stores</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void checkMobcastForNewDataAvail(){
 		try{
 			if(ApplicationLoader.getPreferences().isRefreshMobcastWithNewDataAvail()){
@@ -1068,6 +1162,10 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		}
 	}
 	
+	/**
+	 * <b>Description: </b></br>onResume : CheckAppVersion - ForceUpdate</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void checkAppVersionOnResume(){
 		if(ApplicationLoader.getPreferences().isAppUpdateAvail()){
 			showUpdateAvailConfirmationMaterialDialog();
@@ -1075,6 +1173,10 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	}
 	
 	
+	/**
+	 * <b>Description: </b></br>Dialog : Update Available</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void showUpdateAvailConfirmationMaterialDialog(){
 		MaterialDialog mMaterialDialog = new MaterialDialog.Builder(MotherActivity.this)
         .title(getResources().getString(R.string.update_title_message))
@@ -1096,10 +1198,9 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
         .show();
 	}
 	
-	/*
+	/**
 	 * Drawer Initilization
 	 */
-
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	private void setDrawerLayout() {
 		mResources = getResources();
@@ -1123,11 +1224,11 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		
 		String[] mDrawerItemArray = getResources().getStringArray(
 				R.array.drawer_array);
-		int[] mDrawableResId = new int[] { R.drawable.ic_drawer_profile,/*R.drawable.ic_drawer_myoffice,*/
+		int[] mDrawableResId = new int[] { R.drawable.ic_drawer_profile,
 				R.drawable.ic_drawer_capture, R.drawable.ic_drawer_recruitment,
 				R.drawable.ic_drawer_settings, R.drawable.ic_drawer_help,
 				R.drawable.ic_drawer_report, R.drawable.ic_drawer_feedback,
-				R.drawable.ic_drawer_logout, R.drawable.ic_drawer_about };
+				R.drawable.ic_drawer_logout, R.drawable.ic_drawer_about,R.drawable.ic_drawer_about };
 
 		mDrawerAdapter = new DrawerArrayAdapter(MotherActivity.this,
 				mDrawerItemArray, mDrawableResId);
@@ -1187,7 +1288,9 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 				mDrawerSyncIv.startAnimation(animSyncDrawer);
 				mDrawerSyncLayout.setClickable(false);
 				mDrawerSyncLayout.setEnabled(false);
-				startService(new Intent(MotherActivity.this, SyncService.class));
+				Intent mSyncServiceIntent = new Intent(MotherActivity.this, SyncService.class);
+				mSyncServiceIntent.putExtra(AppConstants.INTENTCONSTANTS.ISFROMAPP, true);
+				startService(mSyncServiceIntent);
 			}
 		});
 
@@ -1206,7 +1309,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		}
 		
 		try{
-			mDrawerLayout.setOnClickListener(new View.OnClickListener() {
+			mDrawerProfileBgLayout.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
@@ -1275,6 +1378,9 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 			case 8:
 				drawerIntent = new Intent(MotherActivity.this, AboutActivity.class);
 				break;
+			case 9:
+				drawerIntent = new Intent(MotherActivity.this, ParichayActivity.class);
+				break;
 			default:
 				break;
 			}
@@ -1340,6 +1446,10 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		}
 	}
 	
+	/**
+	 * <b>Description: </b></br>Drawer : Set Profile</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void setDrawerProfileInfo(AppCompatTextView mNameTextView, AppCompatTextView mEmailTextView, CircleImageView mCircleImageView, final ImageView mImageView){
 		try{
 			if(!TextUtils.isEmpty(ApplicationLoader.getPreferences().getUserDisplayName())){

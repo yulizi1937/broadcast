@@ -353,6 +353,17 @@ public class AppPreferences {
 		return mDownloadAndNotify;
 	}
 	
+	public void setStopSyncAtSleepingHours(boolean mIsStopSyncAtSleepingHours) {
+		editor = sharedPreferences.edit();
+		editor.putBoolean("mIsStopSyncAtSleepingHours", mIsStopSyncAtSleepingHours);
+		editor.commit();
+	}
+
+	public boolean isStopSyncAtSleepingHours() {
+		boolean mIsStopSyncAtSleepingHours= sharedPreferences.getBoolean("mIsStopSyncAtSleepingHours",true);
+		return mIsStopSyncAtSleepingHours;
+	}
+	
 	public void setBirthdayNotificationMute(boolean isBirthdayNotificationMute) {
 		editor = sharedPreferences.edit();
 		editor.putBoolean("setBirthdayNotificationMute", isBirthdayNotificationMute);
@@ -465,6 +476,16 @@ public class AppPreferences {
 		return mAppUpdateAvail;
 	}
 	
+	public void setCropWork(boolean misCropWork) {
+		editor = sharedPreferences.edit();
+		editor.putBoolean("misCropWork", misCropWork);
+		editor.commit();
+	}
+
+	public boolean isCropWork() {
+		boolean misCropWork = sharedPreferences.getBoolean("misCropWork", true);
+		return misCropWork;
+	}
 	
 	/**
 	 * RecyclerView : Save Position 
@@ -524,6 +545,28 @@ public class AppPreferences {
 	public String getViewIdRecruitment() {
 		String mViewIdRecruitment= sharedPreferences.getString("setViewIdRecruitment","-1");
 		return mViewIdRecruitment;
+	}
+	
+	public void setViewIdParichay(String mLastIdParichay) {
+		editor = sharedPreferences.edit();
+		editor.putString("setViewIdParichay", mLastIdParichay);
+		editor.commit();
+	}
+
+	public String getViewIdParichay() {
+		String mViewIdParichay= sharedPreferences.getString("setViewIdParichay","-1");
+		return mViewIdParichay;
+	}
+	
+	public void setLikeIdParichay(String mLastIdParichay) {
+		editor = sharedPreferences.edit();
+		editor.putString("setLikeIdParichay", mLastIdParichay);
+		editor.commit();
+	}
+
+	public String getLikeIdParichay() {
+		String mLikeIdParichay= sharedPreferences.getString("setLikeIdParichay","-1");
+		return mLikeIdParichay;
 	}
 	
 	public void setViewIdBirthday(String mLastIdBirthday) {
@@ -658,6 +701,17 @@ public class AppPreferences {
 	public int getUnreadRecruitment() {
 		int mUnreadRecruitment= sharedPreferences.getInt("mUnreadRecruitment",0);
 		return mUnreadRecruitment;
+	}
+	
+	public void setUnreadParichay(int mUnreadParichay) {
+		editor = sharedPreferences.edit();
+		editor.putInt("mUnreadParichay", mUnreadParichay);
+		editor.commit();
+	}
+
+	public int getUnreadParichay() {
+		int mUnreadParichay= sharedPreferences.getInt("mUnreadParichay",0);
+		return mUnreadParichay;
 	}
 	
 	/**

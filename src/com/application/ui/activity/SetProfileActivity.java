@@ -3,6 +3,7 @@
  */
 package com.application.ui.activity;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,6 +43,7 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.application.crop.Crop;
 import com.application.ui.calligraphy.CalligraphyContextWrapper;
 import com.application.ui.view.CircleImageView;
 import com.application.ui.view.MaterialRippleLayout;
@@ -676,19 +678,47 @@ public class SetProfileActivity extends AppCompatActivity{
 	protected void onActivityResult(int requestCode, int resultCode, Intent mIntent) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, mIntent);
-		if(resultCode == Activity.RESULT_OK){
-			Uri selectedImage = mIntent.getData();
-			mPicturePath = Utilities.getPath(selectedImage);
+		if(requestCode == INTENT_PHOTO && resultCode == Activity.RESULT_OK){
+			if(ApplicationLoader.getPreferences().isCropWork()){
+				beginCrop(mIntent.getData());	
+			}else{
+				ApplicationLoader.getPreferences().setCropWork(true);
+				Uri selectedImage = mIntent.getData();
+	        	mPicturePath = Utilities.getPath(selectedImage);
+				BitmapFactory.Options options = new BitmapFactory.Options();
+				options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+				Bitmap mBitmap = BitmapFactory.decodeFile(mPicturePath, options);
+				mProfileCirleIv.setImageBitmap(mBitmap);
+				isRemovedProfile = false;	
+			}
+		}else if (requestCode == Crop.REQUEST_CROP) {
+            handleCrop(resultCode, mIntent);
+        }else{
+        	ApplicationLoader.getPreferences().setCropWork(true);
+        }
+	}
+	
+	
+	 private void beginCrop(Uri source) {
+	        Uri destination = Uri.fromFile(new File(getCacheDir(), "cropped"));
+	        Crop.of(source, destination).asSquare().start(this);
+	  }
+	    
+	private void handleCrop(int resultCode, Intent result) {
+        if (resultCode == RESULT_OK) {
+        	Uri selectedImage = Crop.getOutput(result);
+        	mPicturePath = Utilities.getPath(selectedImage);
 			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 			Bitmap mBitmap = BitmapFactory.decodeFile(mPicturePath, options);
 			mProfileCirleIv.setImageBitmap(mBitmap);
 			isRemovedProfile = false;
-			
-//			mProfileCirleIv.setVisibility(View.GONE);
-//			mProgressWheel.setVisibility(View.VISIBLE);
-		}
-	}
+        } else if (resultCode == Crop.RESULT_ERROR) {
+            AndroidUtilities.showSnackBar(SetProfileActivity.this, Crop.getError(result).getMessage());
+        }else{
+            ApplicationLoader.getPreferences().setCropWork(true);
+        }
+    }
 		
 	/**
 	 * Security : Couldn't capture ScreenShot

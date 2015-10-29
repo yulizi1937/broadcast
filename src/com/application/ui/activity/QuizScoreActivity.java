@@ -77,6 +77,8 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 	private String mTotalPoints;
 	private String mTotalQuestions = "0";
 	private String mIncorrectQuestions = "0";
+	
+	private boolean isFromNotification = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +115,10 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 		case android.R.id.home:
 			finish();
 			AndroidUtilities.exitWindowAnimation(QuizScoreActivity.this);
+			if(isFromNotification){
+				Intent mIntent = new Intent(QuizScoreActivity.this, MotherActivity.class);
+				startActivity(mIntent);
+			}
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -157,6 +163,16 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 		setOnClickListener();
 	}
 	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		if(isFromNotification){
+			Intent mIntent = new Intent(QuizScoreActivity.this, MotherActivity.class);
+			startActivity(mIntent);
+		}
+	}
+	
 	private void applyTheme(){
 		try{
 			ThemeUtils.getInstance(QuizScoreActivity.this).applyThemeCountrySelect(QuizScoreActivity.this, QuizScoreActivity.this, mToolBar);
@@ -172,6 +188,7 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 		mTotalPoints = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.POINTS);
 		mTotalQuestions = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.TOTAL);
 		mArrayListQuizScorePagerInfo = mIntent.getParcelableArrayListExtra(AppConstants.INTENTCONSTANTS.QUIZINCORRECT);
+		isFromNotification = mIntent.getBooleanExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, false);
 		if(mArrayListQuizScorePagerInfo!=null && mArrayListQuizScorePagerInfo.size() > 0){
 			mIncorrectQuestions = String.valueOf(Integer.parseInt(mTotalQuestions) - mArrayListQuizScorePagerInfo.size());	
 		}
@@ -299,6 +316,10 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
             	dialog.dismiss();
             	finish();
             	AndroidUtilities.exitWindowAnimation(QuizScoreActivity.this);
+            	if(isFromNotification){
+        			Intent mIntent = new Intent(QuizScoreActivity.this, MotherActivity.class);
+        			startActivity(mIntent);
+        		}
             }
         })
         .show();

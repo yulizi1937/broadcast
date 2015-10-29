@@ -68,8 +68,8 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 /**
+ * <b>Description:</b></br>Any.DO - Shows Any.DO Style Notification</br>
  * @author Vikalp Patel(VikalpPatelCE)
- * 
  */
 public class AnyDoNotificationActivity extends AppCompatActivity {
 
@@ -147,6 +147,10 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		refreshUserActivityWithApi();
 	}
 	
+	/**
+	 * <b>Description:</b></br>get Layout according to Type and push to contentLayout</br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private int getLayoutFromType(int mType) {
 		switch (mType) {
 		case AppConstants.TYPE.TEXT:
@@ -265,6 +269,10 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		UserReport.updateUserReportApi(String.valueOf(mId), mCategory, AppConstants.REPORT.ANYDO, "");
 	}
 	
+	/**
+	 * <b>Description:</b></br>Update User Activity : With Perodic Frequency</br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void refreshUserActivityWithApi(){
 		try{
 			if(mType == AppConstants.TYPE.TEXT || mType == AppConstants.TYPE.IMAGE
@@ -292,6 +300,10 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		}
 	};
 	
+	/**
+	 * <b>Description:</b></br>Sync User Activity : With Periodic frequency</br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void syncUserActivityDataWithApi(){
 		FetchActionAsyncTask mFetchActionAsyncTask = new FetchActionAsyncTask(AnyDoNotificationActivity.this, String.valueOf(mId), mCategory, TAG);
 		mFetchActionAsyncTask.execute();
@@ -304,6 +316,10 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		});
 	}
 	
+	/**
+	 * <b>Description:</b></br>Sync User Activity - Update to DB and Ui</br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void updateUserActivityToDBAndUi(String mViewCount, String mLikeCount){
 		try{
 			if(mContentLayout==null){
@@ -349,6 +365,10 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 		}
 	}
 	
+	/**
+	 * <b>Description:</b></br>Update User Activity - To DB</br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void updateUserActivityToDB(String mLikeCount , String mViewCount){
 		try{
 			ContentValues mValues = new ContentValues();
@@ -682,6 +702,7 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 						mProgressWheel.setVisibility(View.GONE);
 						mCoverImageView.setVisibility(View.VISIBLE);
 						mPlayImageView.setVisibility(View.VISIBLE);
+						mCoverImageView.setImageResource(R.drawable.placeholder_icon);
 					}
 					
 					@Override
@@ -699,6 +720,7 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 						mProgressWheel.setVisibility(View.GONE);
 						mCoverImageView.setVisibility(View.VISIBLE);
 						mPlayImageView.setVisibility(View.VISIBLE);
+						mCoverImageView.setImageResource(R.drawable.placeholder_icon);
 					}
 				});
 			}
@@ -810,6 +832,7 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 						// TODO Auto-generated method stub
 						mProgressWheel.setVisibility(View.GONE);
 						mCoverImageView.setVisibility(View.VISIBLE);
+						mCoverImageView.setImageResource(R.drawable.placeholder_icon);
 					}
 					
 					@Override
@@ -825,6 +848,7 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 						// TODO Auto-generated method stub
 						mProgressWheel.setVisibility(View.GONE);
 						mCoverImageView.setVisibility(View.VISIBLE);
+						mCoverImageView.setImageResource(R.drawable.placeholder_icon);
 					}
 				});
 			}
@@ -1312,6 +1336,7 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 						mProgressWheel.setVisibility(View.GONE);
 						mCoverImageView.setVisibility(View.VISIBLE);
 						mPlayImageView.setVisibility(View.VISIBLE);
+						mCoverImageView.setImageResource(R.drawable.livestream_thumbnail);
 					}
 					
 					@Override
@@ -1329,6 +1354,7 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 						mProgressWheel.setVisibility(View.GONE);
 						mCoverImageView.setVisibility(View.VISIBLE);
 						mPlayImageView.setVisibility(View.VISIBLE);
+						mCoverImageView.setImageResource(R.drawable.livestream_thumbnail);
 					}
 				});
 			}

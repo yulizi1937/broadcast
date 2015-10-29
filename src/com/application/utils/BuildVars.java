@@ -13,7 +13,7 @@ public class BuildVars {
 	 */
 	public static final boolean DEBUG = true;
 	public static final boolean DEBUG_VERSION = true;
-	public static final boolean DEBUG_SCREENSHOT = false;
+	public static final boolean DEBUG_SCREENSHOT = true;
 
 	
 	/**
@@ -59,7 +59,7 @@ public class BuildVars {
 	 */
 	public static String SEND_LOGS_EMAIL = "androidbugtrace@gmail.com";
 	public static String EMAIL_USERNAME = "androidbugtrace@gmail.com";
-	public static String EMAIL_PASSWORD = "android2";
+	public static String EMAIL_PASSWORD = "";
 	public static String EMAIL_TO = "vikalppatel043@gmail.com";
 	public static String EMAIL_SUBJECT = "Mobcast v2 |  Database";
 	

@@ -8,6 +8,7 @@ import java.io.File;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -71,6 +72,12 @@ public class VideoFullScreenActivity extends AppCompatActivity {
 	
 	private Intent mIntent;
 	private String mContentFilePath;
+	private String mId;
+	private String mCategory;
+	
+	private long mReportStart = 0;
+	private long mReportStop = 0;
+	private long mReportDuration = 0;
 	
 	private boolean isVideoPause = false;
 
@@ -129,9 +136,16 @@ public class VideoFullScreenActivity extends AppCompatActivity {
 	}
 	
 	private void getIntentData(){
-		mIntent = getIntent();
-		mContentFilePath = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.FILEPATH);
-		mProgress = mIntent.getIntExtra(AppConstants.INTENTCONSTANTS.TIME, -1);
+		try{
+			mIntent = getIntent();
+			mContentFilePath = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.FILEPATH);
+			mProgress = mIntent.getIntExtra(AppConstants.INTENTCONSTANTS.TIME, -1);
+			mId = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.ID);
+			mCategory = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY);
+			mReportStart = System.currentTimeMillis();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	@Override
@@ -163,40 +177,54 @@ public class VideoFullScreenActivity extends AppCompatActivity {
 	}
 
 	private void initVideoPlayer(String mVideoPath) {
-		mVideoView.setVideoPath(mVideoPath);
-		mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-			@Override
-			public void onPrepared(MediaPlayer mp) {
-				mTotalDuration = mVideoView.getDuration();
-				mVideoMediaControllerDiscreteSeekBar.setMax(mTotalDuration);
-				mVideoMediaControllerTotalDurationTv.setText(Utilities.getTimeFromMilliSeconds((long)mTotalDuration));
-				mVideoMediaControllerDiscreteSeekBar
-						.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
-							@Override
-							public int transform(int value) {
-								return value * 100;
-							}
+		try{
+			mVideoView.setVideoPath(mVideoPath);
+			mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+				@Override
+				public void onPrepared(MediaPlayer mp) {
+					mTotalDuration = mVideoView.getDuration();
+					mVideoMediaControllerDiscreteSeekBar.setMax(mTotalDuration);
+					mVideoMediaControllerTotalDurationTv.setText(Utilities.getTimeFromMilliSeconds((long)mTotalDuration));
+					mVideoMediaControllerDiscreteSeekBar
+							.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
+								@Override
+								public int transform(int value) {
+									return value * 100;
+								}
 
-							@Override
-							public String transformToString(int value) {
-								// TODO Auto-generated method stub
-								return Utilities.getTimeFromMilliSeconds((long)value);
-							}
+								@Override
+								public String transformToString(int value) {
+									// TODO Auto-generated method stub
+									return Utilities.getTimeFromMilliSeconds((long)value);
+								}
 
-							@Override
-							public boolean useStringTransform() {
-								// TODO Auto-generated method stub
-								return true;
-							}
+								@Override
+								public boolean useStringTransform() {
+									// TODO Auto-generated method stub
+									return true;
+								}
 
-						});
-				runOnSeekBarThread();
+							});
+					runOnSeekBarThread();
+					
+					mVideoView.setOnCompletionListener(new OnCompletionListener() {
+						@Override
+						public void onCompletion(MediaPlayer mediaPlayer) {
+							// TODO Auto-generated method stub
+							mReportStop = System.currentTimeMillis();
+							mReportDuration += mReportStop - mReportStart;
+							UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, Utilities.getTimeFromMilliSeconds(mTotalDuration));
+						}
+					});
+				}
+			});
+			if(mProgress!=-1){
+				mVideoView.requestFocus();
+				mVideoView.start();
+				mVideoView.seekTo(mProgress);
 			}
-		});
-		if(mProgress!=-1){
-			mVideoView.requestFocus();
-			mVideoView.start();
-			mVideoView.seekTo(mProgress);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 
@@ -339,6 +367,7 @@ public class VideoFullScreenActivity extends AppCompatActivity {
 					mVideoPauseIv.setVisibility(View.VISIBLE);
 //					runOnSeekBarThread();
 					mThreadSafe.unpause();
+					mReportStart = System.currentTimeMillis();
 				}	
 			}
 		});
@@ -352,10 +381,13 @@ public class VideoFullScreenActivity extends AppCompatActivity {
 				mVideoPauseIv.setVisibility(View.GONE);
 				mVideoPlayIv.setVisibility(View.VISIBLE);
 				isVideoPause = true;
+				mReportStop = System.currentTimeMillis();
+				mReportDuration += mReportStop - mReportStart;
 				try {
 					ApplicationLoader.getPreferences().setVideoViewPosition(mVideoView.getCurrentPosition());
 //					mSeekBarThread.interrupt();
 					mThreadSafe.pause();
+					UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, Utilities.getTimeFromMilliSeconds(mReportDuration));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

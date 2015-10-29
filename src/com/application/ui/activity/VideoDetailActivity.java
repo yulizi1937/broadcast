@@ -606,7 +606,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 						mVideoPlayIv.setVisibility(View.VISIBLE);
 						mReportStop = System.currentTimeMillis();
 						mReportDuration += mReportStop - mReportStart;
-						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, Utilities.getTimeFromMilliSeconds(mReportDuration));
+						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, Utilities.getTimeFromMilliSeconds(mTotalDuration));
 					}
 				});
 				
@@ -815,6 +815,8 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 					Intent mIntentVideoFullScreen = new Intent(VideoDetailActivity.this, VideoFullScreenActivity.class);
 					mIntentVideoFullScreen.putExtra(AppConstants.INTENTCONSTANTS.FILEPATH, mContentFilePath);
 					mIntentVideoFullScreen.putExtra(AppConstants.INTENTCONSTANTS.TIME, mVideoView.getCurrentPosition());
+					mIntentVideoFullScreen.putExtra(AppConstants.INTENTCONSTANTS.ID, mId);
+					mIntentVideoFullScreen.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, mCategory);
 					startActivity(mIntentVideoFullScreen);
 //					mSeekBarThread.interrupt();
 					mVideoView.pause();
@@ -1003,14 +1005,14 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		if (mVideoView.isPlaying()) {
 			mVideoMediaControllerFrameLayout.startAnimation(mAnimFadeIn);
 			mVideoMediaControllerFrameLayout.setVisibility(View.VISIBLE);
-			/*AndroidUtilities.runOnUIThread(new Runnable() {
+			AndroidUtilities.runOnUIThread(new Runnable() {
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
 					mVideoMediaControllerFrameLayout
 							.startAnimation(mAnimFadeOut);
 				}
-			}, 3000);*/
+			}, 3000);
 		}
 	}
 

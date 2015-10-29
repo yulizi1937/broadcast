@@ -127,6 +127,8 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	private boolean isGrid = false;
 	private int mGridColumn = 1;
 	
+	private int whichTheme = 0;
+	
     private boolean mLoadMore = false; 
     int mFirstVisibleItem, mVisibleItemCount, mTotalItemCount;
  
@@ -172,7 +174,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		mRecyclerView.setLayoutManager(mGridLayoutManager);
 		
 		ApplicationLoader.getPreferences().setViewIdMobcast("-1");
-		
+		whichTheme = ApplicationLoader.getPreferences().getAppTheme();
 		checkDataInAdapter();
 //		setRecyclerAdapter();
 
@@ -196,10 +198,13 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		setRecyclerAdapterListener();
 		setRecyclerScrollListener();
 		setSwipeRefreshListener();
-//		setMaterialRippleView();
 		setClickListener();
 	}
-	
+
+	/**
+	 * <b>Description: </b></br>Api : Sync Data - Calls on App Opens</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void syncDataWithApi(){
 		try{
 			if (mArrayListMobcast != null && mArrayListMobcast.size() > 0) {
@@ -272,6 +277,10 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		}
 	}
 
+	/**
+	 * <b>Description: </b></br>Adapter : Check Data available from DB and feed to Adapter</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void checkDataInAdapter() {
 		checkExpiredMobcastAndDeleteFromDB();
 		Cursor mCursor = getActivity().getContentResolver().query(
@@ -298,6 +307,10 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		mEmptyFrameLayout.setVisibility(View.VISIBLE);
 	}
 	
+	/**
+	 * <b>Description: </b></br>Bubble : New Mobcast Available bubble</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void setNewAvailBubbleLayout(){
 		try{
 			mAnimSlideInUp = AnimationUtils.loadAnimation(getActivity(),R.anim.slide_in_down);
@@ -384,8 +397,13 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		});
 	}
 	
+	/**
+	 * <b>Description: </b></br>Api : Refresh Feed</br></br>
+	 * <b>Parameters : </b></br>//sortByAsc:true-> new data //sortByAsc:false->Old Data //isAutoRefresh: true-> onResume ? false-> onPullToRefresh
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	@SuppressLint("NewApi") 
-	private void refreshFeedFromApi(boolean isRefreshFeed, boolean sortByAsc, int limit, boolean isAutoRefresh){//sortByAsc:true-> new data //sortByAsc:false->Old Data //isAutoRefresh: true-> onResme ? false-> onPullToRefresh
+	private void refreshFeedFromApi(boolean isRefreshFeed, boolean sortByAsc, int limit, boolean isAutoRefresh){
 		if(Utilities.isInternetConnected()){
 			if(AndroidUtilities.isAboveIceCreamSandWich()){
 				new AsyncRefreshTask(isRefreshFeed,sortByAsc,limit, isAutoRefresh).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
@@ -395,6 +413,10 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		}
 	}
 	
+	/**
+	 * <b>Description: </b></br>Sort : Mobcast Sort by Desc - mMobcastId</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	public class MobcastSort implements Comparator<Mobcast>{
 	    @Override
 	    public int compare(Mobcast Obj1, Mobcast Obj2) {
@@ -411,12 +433,19 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	    }
 	}
 	
+	/**
+	 * <b>Description: </b></br>Expiry : Check Expired Mobcast and delete</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void checkExpiredMobcastAndDeleteFromDB(){
 		long mCurrentTimeMillis = System.currentTimeMillis();
 		getActivity().getContentResolver().delete(DBConstant.Mobcast_Columns.CONTENT_URI, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME_FORMATTED + "<?", new String[]{String.valueOf(mCurrentTimeMillis)});
 	}
 	
-	
+	/**
+	 * <b>Description: </b></br>ObjectList : Add mobcast object list from DB</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
 	private void addMobcastObjectListFromDBToBeans(Cursor mCursor, boolean isFromBroadCastReceiver, boolean isToAddOldData){
 		int mIntMobcastId = mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID);
 		int mIntMobcastTitle = mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE);
@@ -544,10 +573,6 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	}
 
 	private void setRecyclerAdapter() {
-//		mArrayListMobcast = getDummyMobcastData();
-//		mAdapter = new MobcastRecyclerAdapter(getActivity(),
-//				mArrayListMobcast, headerView);
-		
 		mAdapter = new MobcastRecyclerAdapter(getActivity(),
 				mArrayListMobcast, headerView, isGrid);
 		mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -601,7 +626,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 				@Override
 				public void onItemClick(View view, int position) {
 					// TODO Auto-generated method stub
-					position-=1;
+					position = isGrid ? position - 2 : position - 1;
 					switch (view.getId()) {
 					case R.id.itemRecyclerMobcastVideoRootLayout:
 						Intent mIntentVideo = new Intent(mParentActivity,
@@ -708,9 +733,9 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 				public void onItemLongClick(View view, int position) {
 					// TODO Auto-generated method stub
 //					position=-1;
-					if(isGrid){
-						position+=1;
-					}
+//					if(isGrid){
+//						position+=1;
+//					}
 					showContextMenu(position, view);
 				}
 			});
@@ -827,7 +852,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	}
 	
 	
-	/*
+	/**
 	 * ContextMenu
 	 */
 	private void showContextMenu(int mPosition, View mView){
@@ -867,7 +892,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	
 	private BottomSheet getContextMenu(final int mPosition, int mType, final String mTitle, boolean isRead, final View mView){
 		BottomSheet mBottomSheet;
-		mBottomSheet = new BottomSheet.Builder(getActivity()).icon(Utilities.getRoundedBitmapForContextMenu(mType)).title(mTitle).sheet(R.menu.context_menu_mobcast).build();
+		mBottomSheet = new BottomSheet.Builder(getActivity()).icon(Utilities.getRoundedBitmapFromSVGForContextMenu(mType, whichTheme)).title(mTitle).sheet(R.menu.context_menu_mobcast).build();
          final Menu menu = mBottomSheet.getMenu();
          
          SpannableString mSpannabledRead = new SpannableString(getResources().getString(R.string.context_menu_read));
@@ -955,7 +980,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 			 values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ, "true");
 			 getActivity().getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, values, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mMobcastId});	
 	       	 mArrayListMobcast.get(mPosition).setRead(true);
-	       	 mRecyclerView.getAdapter().notifyItemChanged(mPosition+1);
+	       	 mRecyclerView.getAdapter().notifyItemChanged(isGrid ? mPosition+2 : mPosition+1);
 	       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.MOBCAST);
 	       	 UserReport.updateUserReportApi(mMobcastId, AppConstants.INTENTCONSTANTS.MOBCAST, AppConstants.REPORT.READ, "");
 	       	 Utilities.showBadgeNotification(getActivity());
@@ -974,7 +999,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 		     values.put(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ, "false");
 			 getActivity().getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, values, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mArrayListMobcast.get(mPosition).getmId()});
 			 mArrayListMobcast.get(mPosition).setRead(false);
-	       	 mRecyclerView.getAdapter().notifyItemChanged(mPosition+1);
+			 mRecyclerView.getAdapter().notifyItemChanged(isGrid ? mPosition+2 : mPosition+1);
 	       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.MOBCAST);
 	       	Utilities.showBadgeNotification(getActivity());
 		 }
@@ -1020,7 +1045,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 				 getActivity().getContentResolver().update(DBConstant.Mobcast_Columns.CONTENT_URI, values, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mMobcastId});
 				 mArrayListMobcast.get(mPosition).setLike(true);
 				 mArrayListMobcast.get(mPosition).setmLikeCount(String.valueOf(Integer.parseInt(mArrayListMobcast.get(mPosition).getmLikeCount())+1));
-		       	 mRecyclerView.getAdapter().notifyItemChanged(mPosition+1);
+				 mRecyclerView.getAdapter().notifyItemChanged(isGrid ? mPosition+2 : mPosition+1);
 		       	UserReport.updateUserReportApi(mMobcastId, AppConstants.INTENTCONSTANTS.MOBCAST, AppConstants.REPORT.LIKE, "");
 		       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.MOBCAST);
 			 }
@@ -1053,10 +1078,9 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
         .show();
 	}
 	
-	/*
+	/**
 	 * AsyncTask To Refresh
 	 */
-	
 	public String apiRefreshFeedMobcast(boolean sortByAsc, int limit){
 		try {
 			JSONObject jsonObj =null;
@@ -1301,8 +1325,8 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	/**
 	 * Async : Refresh Feed Like + Read count
 	 */
-	
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB) private void refreshFeedActionFromApi(boolean isAutoRefresh){
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB) 
+	private void refreshFeedActionFromApi(boolean isAutoRefresh){
 		try{
 			if(Utilities.isInternetConnected()){
 				if(!isAutoRefresh){

@@ -208,17 +208,6 @@ public class AwardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 			Award mObj = mArrayListAward.get(position);
 			((AwardViewHolder)viewHolder).mAwardNameTv.setText(mObj.getmRecognition());
 			((AwardViewHolder)viewHolder).mWinnerNameTv.setText(mObj.getmName());
-			if(!mObj.isRead()){
-//				((AwardViewHolder)viewHolder).mWinnerNameTv.setTextColor(mContext.getResources().getColor(R.color.text_highlight));
-//				((AwardViewHolder)viewHolder).mReadStripView.setVisibility(View.VISIBLE);
-//				((AwardViewHolder)viewHolder).mRootLayout.setBackgroundResource(R.color.unread_background);
-			}else{
-//				((AwardViewHolder)viewHolder).mWinnerNameTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
-//				((AwardViewHolder)viewHolder).mReadStripView.setVisibility(View.GONE);
-//				((AwardViewHolder)viewHolder).mRootLayout.setBackgroundResource(R.color.white);
-			}
-			
-			
 			if(mObj.isCongratulated()){
 				((AwardViewHolder)viewHolder).mCongratulateIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_award_cong_selected));
 			}else{
@@ -255,6 +244,7 @@ public class AwardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 						// TODO Auto-generated method stub
 						((AwardViewHolder)viewHolder).mProgressWheel.setVisibility(View.GONE);
 						((AwardViewHolder)viewHolder).mWinnerIv.setVisibility(View.VISIBLE);
+						((AwardViewHolder)viewHolder).mWinnerIv.setImageResource(R.drawable.ic_sample_picture);
 					}
 					
 					@Override
@@ -270,6 +260,7 @@ public class AwardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 						// TODO Auto-generated method stub
 						((AwardViewHolder)viewHolder).mProgressWheel.setVisibility(View.GONE);
 						((AwardViewHolder)viewHolder).mWinnerIv.setVisibility(View.VISIBLE);
+						((AwardViewHolder)viewHolder).mWinnerIv.setImageResource(R.drawable.ic_sample_picture);
 					}
 				});
 			}

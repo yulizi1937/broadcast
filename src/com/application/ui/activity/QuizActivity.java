@@ -796,6 +796,7 @@ public class QuizActivity extends SwipeBackBaseActivity {
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.POINTS, String.valueOf(mQuizScore));
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.TOTAL, String.valueOf(mArrayListQuizPagerInfo.size()));
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.QUIZINCORRECT, mArrayListQuizScorePagerInfo);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, isFromNotification);
 			startActivity(mIntent);
 			AndroidUtilities.enterWindowAnimation(QuizActivity.this);
 			finish();

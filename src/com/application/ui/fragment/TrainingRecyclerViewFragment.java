@@ -119,6 +119,8 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 	
 	private GridLayoutManager mGridLayoutManager;
 	
+	private int whichTheme = 0;
+	
 	private boolean isGrid = false;
 	private int mGridColumn = 1;
 	
@@ -167,7 +169,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 		mRecyclerView.setLayoutManager(mGridLayoutManager);
 		
 		ApplicationLoader.getPreferences().setViewIdTraining("-1");
-
+		whichTheme = ApplicationLoader.getPreferences().getAppTheme();
 		checkDataInAdapter();
 //		setRecyclerAdapter();
 
@@ -614,7 +616,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 				@Override
 				public void onItemClick(View view, int position) {
 					// TODO Auto-generated method stub
-					position-=1;
+					position = isGrid ? position - 2 : position - 1;
 					switch (view.getId()) {
 					case R.id.itemRecyclerTrainingVideoRootLayout:
 						Intent mIntentVideo = new Intent(mParentActivity,
@@ -722,9 +724,9 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 				public void onItemLongClick(View view, int position) {
 					// TODO Auto-generated method stub
 //					position=-1;
-					if(isGrid){
-						position+=1;
-					}
+//					if(isGrid){
+//						position+=1;
+//					}
 					showContextMenu(position, view);
 				}
 			});
@@ -881,7 +883,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 	
 	private BottomSheet getContextMenu(final int mPosition, int mType, final String mTitle, boolean isRead, final View mView){
 		BottomSheet mBottomSheet;
-		mBottomSheet = new BottomSheet.Builder(getActivity()).icon(Utilities.getRoundedBitmapForContextMenu(mType)).title(mTitle).sheet(R.menu.context_menu_mobcast).build();
+		mBottomSheet = new BottomSheet.Builder(getActivity()).icon(Utilities.getRoundedBitmapFromSVGForContextMenu(mType, whichTheme)).title(mTitle).sheet(R.menu.context_menu_mobcast).build();
          final Menu menu = mBottomSheet.getMenu();
          
          SpannableString mSpannabledRead = new SpannableString(getResources().getString(R.string.context_menu_read));
@@ -970,7 +972,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 			 values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, "true");
 			 getActivity().getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mTrainingId});	
 	       	 mArrayListTraining.get(mPosition).setRead(true);
-	       	 mRecyclerView.getAdapter().notifyItemChanged(mPosition+1);
+	       	mRecyclerView.getAdapter().notifyItemChanged(isGrid ? mPosition+2 : mPosition+1);
 	       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.TRAINING);
 	       	 UserReport.updateUserReportApi(mTrainingId, AppConstants.INTENTCONSTANTS.TRAINING, AppConstants.REPORT.READ, "");
 	       	Utilities.showBadgeNotification(getActivity());
@@ -989,7 +991,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 		     values.put(DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, "false");
 			 getActivity().getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mArrayListTraining.get(mPosition).getmId()});
 			 mArrayListTraining.get(mPosition).setRead(false);
-	       	 mRecyclerView.getAdapter().notifyItemChanged(mPosition+1);
+			 mRecyclerView.getAdapter().notifyItemChanged(isGrid ? mPosition+2 : mPosition+1);
 	       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.TRAINING);
 	       	Utilities.showBadgeNotification(getActivity());
 		 }else{
@@ -1034,7 +1036,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 				 getActivity().getContentResolver().update(DBConstant.Training_Columns.CONTENT_URI, values, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mTrainingId});
 				 mArrayListTraining.get(mPosition).setLike(true);
 				 mArrayListTraining.get(mPosition).setmLikeCount(String.valueOf(Integer.parseInt(mArrayListTraining.get(mPosition).getmLikeCount())+1));
-		       	 mRecyclerView.getAdapter().notifyItemChanged(mPosition+1);
+				 mRecyclerView.getAdapter().notifyItemChanged(isGrid ? mPosition+2 : mPosition+1);
 		       	UserReport.updateUserReportApi(mTrainingId, AppConstants.INTENTCONSTANTS.TRAINING, AppConstants.REPORT.LIKE, "");
 		       	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.TRAINING);
 			 }
@@ -1140,15 +1142,6 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_EXPIRY_DATE, mExpiryDate);
 					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_EXPIRY_TIME, mExpiryTime);
 					values.put(DBConstant.Training_Columns.COLUMN_TRAINING_TIME_FORMATTED, Utilities.getMilliSecond(mExpiryDate, mExpiryTime));
-					
-					Cursor mIsExistCursor = getActivity().getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, new String[]{DBConstant.Training_Columns.COLUMN_ID},  DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mTrainingId}, null);
-					if(mIsExistCursor!=null && mIsExistCursor.getCount() > 0){
-						mIsExistCursor.close();
-						return;
-					}
-					if(mIsExistCursor!=null)
-						mIsExistCursor.close();
-					
 					
 					Uri isInsertUri = getActivity().getContentResolver().insert(DBConstant.Training_Columns.CONTENT_URI, values);
 					boolean isInsertedInDB = Utilities.checkWhetherInsertedOrNot(TAG,isInsertUri);

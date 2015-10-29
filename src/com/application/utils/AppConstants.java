@@ -24,16 +24,18 @@ public class AppConstants {
 		//Content Type
 		public static final MediaType API_CONTENTTYPE = MediaType.parse("application/json; charset=utf-8");
 		// API V2
-		public static final String API_HOST        = "http://54.165.41.77";
-//		public static final String API_HOST        = "http://192.168.0.108:8100";
-		public static final String API_CLIENT      = "";
+//		public static final String API_HOST        = "http://54.165.41.77";
+//		public static final String API_CLIENT      = "";
+		public static final String API_HOST        = "http://52.0.29.242";
+		public static final String API_CLIENT      = "/demo";
 		public static final String API_VERSION     = "/v2";
 		public static final String API_FOLDER      ="/api/";
 		
-		public static final String API_URL                  = API_HOST + API_CLIENT +  API_VERSION + API_FOLDER ; //http://192.168.0.114/demo/v2/api/sample.php
+		public static final String API_URL                  = API_HOST + API_CLIENT +  API_VERSION + API_FOLDER ; //http://52.0.29.242/demo/v2/api/sample.php
 		
 		public static final String API_LOGIN                = API_URL + "checkUser";
 		public static final String API_VERIFY               = API_URL + "verifyUser";
+		public static final String API_RESEND_OTP           = API_URL + "resendOTP";
 		public static final String API_UPDATE_USER          = API_URL + "updateUser";
 		public static final String API_LOGOUT_USER          = API_URL + "appLogOut";
 		public static final String API_APP_VERSION          = API_URL + "checkAppVersion";
@@ -46,7 +48,9 @@ public class AppConstants {
 		public static final String API_FETCH_FEED_EVENT     = API_URL + "fetchFeedEvent";
 		public static final String API_FETCH_FEED_AWARD     = API_URL + "fetchFeedAward";
 		public static final String API_FETCH_FEED_RECRUITMENT= API_URL + "fetchFeedRecruitment";
+		public static final String API_FETCH_FEED_PARICHAY  = API_URL + "fetchFeedParichay";
 		public static final String API_FETCH_FEED_BIRTHDAY  = API_URL + "fetchFeedBirthday";
+		public static final String API_FETCH_FEED_PARICHAYREF= API_URL + "fetchFeedParichayReferral";
 		public static final String API_FETCH_FEED_ACTION    = API_URL + "fetchFeedAction";
 		public static final String API_SYNC                 = API_URL + "syncMobcastData";
 		public static final String API_UPDATE_REPORT        = API_URL + "updateUserReport";
@@ -60,6 +64,8 @@ public class AppConstants {
 		public static final String API_SEND_CHAT            = API_URL + "sendChatMessage";
 		public static final String API_SEARCH               = API_URL + "search";
 		public static final String API_SUBMIT_ISSUE         = API_URL + "submitAppIssue";
+		public static final String API_SUBMIT_APP_DATA      = API_URL + "getAppData";
+		public static final String API_SUBMIT_PARICHAY      = API_URL + "submitParichayReference";
 	}
 	
 	public interface API_KEY_PARAMETER{
@@ -102,6 +108,7 @@ public class AppConstants {
 		public static final String category                = "category";
 		public static final String issue                   = "issue";
 		public static final String uniqueId                = "uniqueId";
+		public static final String syncFrequencyMins           = "syncFrequencyMins";
 		public static final String description             = "description";
 		public static final String company                 = "company";
 		public static final String subcategory             = "subcategory";
@@ -115,6 +122,8 @@ public class AppConstants {
 		public static final String lastAwardId             = "lastAwardId";
 		public static final String lastBirthdayId          = "lastBirthdayId";
 		public static final String lastRecruitmentId       = "lastRecruitmentId";
+		public static final String lastParichayId          = "lastParichayId";
+		public static final String lastParichayReferralId  = "lastParichayReferralId";
 		public static final String mobcast                 = "mobcast";
 		public static final String training                = "training";
 		public static final String chat                    = "chat";
@@ -273,9 +282,11 @@ public class AppConstants {
 		public static final String jobDesignation          	= "jobDesignation";
 		public static final String jobLocation          	= "jobLocation";
 		public static final String jobExperience          	= "jobExperience";
+		public static final String jobAgeLimit          	= "jobAgeLimit";
 		public static final String jobSkills              	= "jobSkills";
 		public static final String jobDescription          	= "jobDescription";
 		public static final String jobQualification         = "jobQualification";
+		public static final String jobDesiredProfile         = "jobDesiredProfile";
 		public static final String jobCTC          	        = "jobCTC";
 		public static final String contactName          	= "contactName";
 		public static final String contactMobile          	= "contactMobile";
@@ -311,7 +322,33 @@ public class AppConstants {
 		public static final String birthdayUserCity         = "birthdayUserCity";
 		public static final String birthdayUserSunSign      = "birthdayUserSunSign";
 		public static final String birthdayUserIsMale       = "isMale";
-		
+		public static final String parichay                 = "parichay";
+		public static final String parichayReferral         = "parichayReferral";
+		public static final String jobId                	= "jobId";
+		public static final String jobUnit                  = "jobUnit";
+		public static final String jobPosition              = "jobPosition";
+		public static final String qualification        	= "qualification";
+		public static final String organization       		= "organization";
+		public static final String designation              = "designation";
+		public static final String experience        		= "experience";
+		public static final String relationship        		= "relationship";
+		public static final String city       				= "city";
+		public static final String age       				= "age";
+		public static final String region       			= "region";
+		public static final String divison       			= "division";
+		public static final String headquarter       		= "headquarter";
+		public static final String jobReferredFor       	= "jobReferredFor";
+		public static final String referredId		       	= "referredId";
+		public static final String referredDate		       	= "referredDate";
+		public static final String isTelephonic		       	= "isTelephonic";
+		public static final String isOnlineWritten		    = "isOnlineWritten";
+		public static final String isPR1		       		= "isPR1";
+		public static final String isPR2		       		= "isPR2";
+		public static final String isHR		       			= "isHR";
+		public static final String reason		       		= "reason";
+		public static final String installment1		       	= "installment1";
+		public static final String installment2		       	= "installment2";
+		public static final String installment3		       	= "installment3";
 	}
 	
 	public interface API_HEADER{
@@ -320,12 +357,12 @@ public class AppConstants {
 	}
 	
 	public interface PUSH{
-		public static final String PROJECT_ID ="798674642543";//"40394833851";
-		public static final String API_KEY    ="AIzaSyBQ5MYjN4U7U5E2nBLufyBKdCt-01IayJY";//"AIzaSyCK0tovRWYY_Iy42H-MfUntueLq-nZRNlg";
+		public static final String PROJECT_ID ="798674642543";
+		public static final String API_KEY    ="AIzaSyBQ5MYjN4U7U5E2nBLufyBKdCt-01IayJY";
 	}
 	
 	public interface YOUTUBE{
-		public static final String API_KEY = "AIzaSyCK0tovRWYY_Iy42H-MfUntueLq-nZRNlg";
+		public static final String API_KEY = "AIzaSyCnzuex7v-cNLcLN_ca39kQbPEfJcDCQaI";
 	}
 	
 	public interface REPORT{
@@ -376,6 +413,14 @@ public class AppConstants {
 		public static final String FOOTER   = "footer";//12
 	}
 	
+	public interface PARICHAY{
+		public static final String HEADER   = "header";//0
+		public static final String BANNER   = "banner";//1
+		public static final String IRF      = "irf";//2
+		public static final String FMCG     = "fmcg";//3
+		public static final String FOOTER   = "footer";//4
+	}
+	
 	public interface BIRTHDAY{
 		public static final String SECTION   = "section";//0
 		public static final String DETAIL    = "detail";//1
@@ -402,6 +447,7 @@ public class AppConstants {
 		public static final int RECRUITMENT= 17;
 		public static final int UPDATEAPP = 18;
 		public static final int BIRTHDAY  = 19;
+		public static final int PARICHAY  = 20;
 	}
 	
 	public interface TRAINING{
@@ -432,6 +478,7 @@ public class AppConstants {
 		public static final String CATEGORY         = "category";
 		public static final String ACTION           = "action";
 		public static final String ISFROMNOTIFICATION= "isFromNotification";
+		public static final String ISFROMAPP        = "isFromApp";
 		public static final String HELP             = "help";
 		public static final String USERNAME         = "userName";
 		public static final String COUNTRYCODE      = "countryCode";
@@ -450,7 +497,11 @@ public class AppConstants {
 		public static final String UPDATEAPP        = "updateApp";
 		public static final String GCMSUCCESS       = "gcmSuccess";
 		public static final String REMOTESUSPEND    = "remoteSuspend";
+		public static final String APPPULLDATA      = "appPullData";
+		public static final String SYNCFREQUENCY    = "syncFrequency";
 		public static final String RECRUITMENT      = "recruitment";
+		public static final String PARICHAY         = "parichay";
+		public static final String REFERRAL         = "referral";
 		public static final String RELOGIN          = "relogin";
 		public static final String LOGIN            = "login";
 		public static final String OBJECT           = "object";
@@ -471,6 +522,7 @@ public class AppConstants {
 		public static final String TO               = "to";
 		public static final String DP               = "dp";
 		public static final String CAPTURE          = "capture";
+		public static final String RESENDOTP        = "resendOTP";
 	}
 	
 	public interface NOTIFICATION{

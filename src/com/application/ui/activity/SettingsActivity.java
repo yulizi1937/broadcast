@@ -30,6 +30,7 @@ import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -88,6 +89,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mNotificationDownloadAndNotifyTv;
 	private AppCompatTextView mNotificationAnyDoTv;
 	private AppCompatTextView mSyncFrequencyTv;
+	private AppCompatTextView mSyncSleepingTv;
 	private AppCompatTextView mStyleTextFontTv;
 	private AppCompatTextView mAboutTv;
 	private AppCompatTextView mAboutBuildVersionTv;
@@ -95,9 +97,10 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mFileStorageAppTv;
 	private AppCompatTextView mFileStorageDeviceTv;
 	
-	private AppCompatCheckBox mNotificationBirthdayMuteCheckBox;
-	private AppCompatCheckBox mNotificationDownloadAndNotifyCheckBox;
-	private AppCompatCheckBox mNotificationAnyDoCheckBox;
+	private SwitchCompat mNotificationBirthdayMuteCheckBox;
+	private SwitchCompat mNotificationDownloadAndNotifyCheckBox;
+	private SwitchCompat mNotificationAnyDoCheckBox;
+	private SwitchCompat mSyncSleepingCheckBox;
 
 	private LinearLayout mGeneralLangugageLayout;
 	private LinearLayout mNotificationBirthdayTimeLayout;
@@ -105,6 +108,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	private LinearLayout mSyncFrequencyLayout;
 	private LinearLayout mStyleTextFontLayout;
 	private LinearLayout mStyleThemeAppLayout;
+	private LinearLayout mSyncSleepingLayout;
 	
 	private View mStyleThemeAppView;
 	
@@ -129,6 +133,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	private boolean isStyleAppTheme = false;
 	private boolean isCustomNotification = false;
 	private boolean isDownloadAndNotify = false;
+	private boolean isStopSyncAtSleepingHours = true;
 			
 	private int isDeveloperMode = 0;
 
@@ -196,11 +201,14 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		mFileStorageTv = (AppCompatTextView) findViewById(R.id.fragmentAboutFileStorageTv);
 		mFileStorageAppTv = (AppCompatTextView)findViewById(R.id.fragmentAboutFileStoragePercenetageAppTv);
 		mFileStorageDeviceTv = (AppCompatTextView)findViewById(R.id.fragmentAboutFileStoragePercenetageDeviceTv);
+		mSyncSleepingTv = (AppCompatTextView)findViewById(R.id.fragmentSettingsSyncSleepingTv);
+		
 
 
-		mNotificationBirthdayMuteCheckBox = (AppCompatCheckBox) findViewById(R.id.fragmentSettingsNotificationBirthdayMuteCheckTextView);
-		mNotificationDownloadAndNotifyCheckBox = (AppCompatCheckBox) findViewById(R.id.fragmentSettingsNotificationDownloadAndNotifyCheckTextView);
-		mNotificationAnyDoCheckBox = (AppCompatCheckBox) findViewById(R.id.fragmentSettingsNotificationAnyDoCheckTextView);
+		mNotificationBirthdayMuteCheckBox = (SwitchCompat) findViewById(R.id.fragmentSettingsNotificationBirthdayMuteCheckTextView);
+		mNotificationDownloadAndNotifyCheckBox = (SwitchCompat) findViewById(R.id.fragmentSettingsNotificationDownloadAndNotifyCheckTextView);
+		mNotificationAnyDoCheckBox = (SwitchCompat) findViewById(R.id.fragmentSettingsNotificationAnyDoCheckTextView);
+		mSyncSleepingCheckBox = (SwitchCompat) findViewById(R.id.fragmentSettingsSyncSleepingCheckTextView);
 
 		mGeneralLangugageLayout = (LinearLayout) findViewById(R.id.fragmentSettingsGeneralLanguageLayout);
 		mNotificationBirthdayTimeLayout = (LinearLayout) findViewById(R.id.fragmentSettingsNotificationBirthdayTimeLayout);
@@ -208,6 +216,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		mSyncFrequencyLayout = (LinearLayout)findViewById(R.id.fragmentSettingsSyncFrequencyLayout);
 		mStyleTextFontLayout = (LinearLayout)findViewById(R.id.fragmentSettingsStyleTextFontLayout);
 		mStyleThemeAppLayout = (LinearLayout)findViewById(R.id.fragmentSettingsStyleAppThemeLayout);
+		mSyncSleepingLayout = (LinearLayout)findViewById(R.id.fragmentSettingsSyncSleepingLayout);
 		
 		mNotificationBirthdayMuteLayout = (RelativeLayout) findViewById(R.id.fragmentSettingsNotificationBirthdayMuteLayout);
 		mNotificationDownloadAndNotifyLayout = (RelativeLayout) findViewById(R.id.fragmentSettingsNotificationDownloadAndNotifyLayout);
@@ -283,10 +292,18 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			mNotificationDownloadAndNotifyCheckBox.setChecked(false);
 		}
 		
-		if(ApplicationLoader.getPreferences().getSyncFrequency()!=60*4){
+		if(ApplicationLoader.getPreferences().getSyncFrequency()==60*24){
+			mSyncFrequencyTv.setText("24 hours");
+		}else if(ApplicationLoader.getPreferences().getSyncFrequency()!=60*4){
 			mSyncFrequencyTv.setText(ApplicationLoader.getPreferences().getSyncFrequency() + " mins");
-		}else{
+		}else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*4){
 			mSyncFrequencyTv.setText("4 hours");
+		}
+		
+		if(ApplicationLoader.getPreferences().isStopSyncAtSleepingHours()){
+			mSyncSleepingCheckBox.setChecked(true);
+		}else{
+			mSyncSleepingCheckBox.setChecked(false);
 		}
 		
 		switch (ApplicationLoader.getPreferences().getAppTheme()) {
@@ -307,6 +324,18 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			break;
 		case 5:
 			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_brown));
+			break;
+		case 6:
+			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_gray));
+			break;
+		case 7:
+			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_amber));
+			break;
+		case 8:
+			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_orange));
+			break;
+		case 9:
+			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_lblue));
 			break;
 		default:
 			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_dblue));
@@ -399,9 +428,11 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent mIntent = new Intent(SettingsActivity.this, FileManagerActivity.class);
-				startActivity(mIntent);
-				AndroidUtilities.enterWindowAnimation(SettingsActivity.this);
+				if(BuildVars.DEBUG){
+					Intent mIntent = new Intent(SettingsActivity.this, FileManagerActivity.class);
+					startActivity(mIntent);
+					AndroidUtilities.enterWindowAnimation(SettingsActivity.this);
+				}
 			}
 		});
 		
@@ -479,7 +510,23 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		    	   updateAppSettingsToApi();
 		       }
 		   }
-		);  
+		);
+		
+		mSyncSleepingCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+		       @Override
+		       public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+		    	   if(isChecked){
+		    		   mDescription = "on";
+		    	   }else{
+		    		   mDescription = "off";
+		    	   }
+		    	   mSubCategory = "stopSyncAtSleepingHours";
+		    	   ApplicationLoader.getPreferences().setStopSyncAtSleepingHours(isChecked);
+		    	   isStopSyncAtSleepingHours = isChecked;
+		    	   updateAppSettingsToApi();
+		       }
+		   }
+		);
 	}
 	
 	@Override
@@ -530,6 +577,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		final AppCompatRadioButton mSyncRadioButton2 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton2);
 		final AppCompatRadioButton mSyncRadioButton3 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton3);
 		final AppCompatRadioButton mSyncRadioButton4 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton4);
+		final AppCompatRadioButton mSyncRadioButton5 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton5);
 		final AppCompatButton mSyncSubmitBtn = (AppCompatButton) mView.findViewById(R.id.dialogSyncButton);
 		try {
 			setMaterialRippleWithGrayOnView(mSyncSubmitBtn);
@@ -541,7 +589,9 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 				mSyncRadioButton3.setChecked(true);
 			} else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*4){
 				mSyncRadioButton4.setChecked(true);
-			}  
+			} else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*24){
+				mSyncRadioButton5.setChecked(true);
+			}   
 		} catch (Exception e) {
 			FileLog.e(TAG, e.toString());
 		}
@@ -562,6 +612,9 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 					break;
 				case R.id.dialogSyncRadioButton4:
 					mSyncFreq = 60*4;
+					break;
+				case R.id.dialogSyncRadioButton5:
+					mSyncFreq = 60*24;
 					break;
 				}
 				applySyncFrequency(mSyncFreq);
@@ -696,7 +749,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		
 		final AppCompatDialog  mMateriaLDialog= new AppCompatDialog(SettingsActivity.this);
 		mMateriaLDialog.setContentView(R.layout.dialog_theme_list);
-		mMateriaLDialog.getWindow().setLayout(Utilities.dpToPx(320, getResources()), Utilities.dpToPx(500, getResources()));
+		mMateriaLDialog.getWindow().setLayout(Utilities.dpToPx(320, getResources()), Utilities.dpToPx(400, getResources()));
 		mMateriaLDialog.show();
 
 //		View mView = mMaterialDialog.getCustomView();
@@ -800,18 +853,37 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	private void applyStyleThemeApp(int whichTheme){
 		ApplicationLoader.getPreferences().setAppTheme(whichTheme);
 		mSubCategory = "style";
-		if(whichTheme==0){
+		switch(whichTheme){
+		case 0 :
 			mDescription = "dblue";
-		}else if(whichTheme==1){
+			break;
+		case 1 :
 			mDescription = "purple";
-		}else if(whichTheme==2){
+			break;
+		case 2 :
 			mDescription = "green";
-		}else if(whichTheme==3){
+			break;
+		case 3 :
 			mDescription = "pink";
-		}else if(whichTheme==4){
+			break;
+		case 4 :
 			mDescription = "teal";
-		}else if(whichTheme==5){
+			break;
+		case 5 :
 			mDescription = "brown";
+			break;
+		case 6 :
+			mDescription = "gray";
+			break;
+		case 7 :
+			mDescription = "amber";
+			break;
+		case 8 :
+			mDescription = "orange";
+			break;
+		case 9 :
+			mDescription = "lblue";
+			break;
 		}
 		isStyleAppTheme= true;
 		updateAppSettingsToApi();
@@ -830,6 +902,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			setMaterialRippleWithGrayOnView(mAboutLayout);
 			setMaterialRippleWithGrayOnView(mAboutBuildVersionLayout);
 			setMaterialRippleWithGrayOnView(mFileStorageLayout);
+			setMaterialRippleWithGrayOnView(mSyncSleepingLayout);
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}

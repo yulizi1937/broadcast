@@ -523,6 +523,10 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
             	dialog.dismiss();
             	finish();
             	AndroidUtilities.exitWindowAnimation(FeedbackActivity.this);
+            	if(isFromNotification){
+        			Intent mIntent = new Intent(FeedbackActivity.this, MotherActivity.class);
+        			startActivity(mIntent);
+        		}
             }
         })
         .show();

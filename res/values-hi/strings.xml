@@ -32,6 +32,15 @@
     <string name="action_app_feedback">ऐप प्रतिक्रिया</string>
     <string name="action_livestream_youtube">YouTube LiveStream</string>
 
+     <string name="context_menu_read">पढ़े हुए का चिह्न </string>
+    <string name="context_menu_unread">अपठित के रूप में चिह्नित करें </string>
+    <string name="context_menu_delete">हटाना </string>
+    <string name="context_menu_view">राय </string>
+    <string name="context_menu_like">जैसा </string>
+    <string name="context_menu_congrat">मुबारक हो </string>
+    <string name="context_menu_save">बचाना </string>
+    
+    
     <!-- Time -->
     <string name="Yesterday">yesterday</string>
     <string name="TodayAt">today at</string>
@@ -56,6 +65,18 @@
     <string name="formatterDay24H">HH:mm</string>
     <string name="formatterDay12H">h:mm a</string>
     <string name="formatDateAtTime">%1$s at %2$s</string>
+    
+    <!-- string formatters -->
+    <string name="content_by">द्वारा : </string>
+    <string name="days_left">बाएं </string>
+    <string name="going"> जा रहा </string>
+    <string name="accepted"> स्वीकार किए जाते हैं </string>
+    <string name="maybe"> शायद </string>
+    <string name="accept"> स्वीकार करना </string>
+    <string name="notgoing"> पतन </string>
+    <string name="addtocalendar"> कैलेंडर </string>
+    <string name="congratulated_text"> लोगों को बधाई दी! </string>
+    <string name="congratulated_action"> बधाई कहना! </string>
 
     <!-- activity_login -->
     <string name="textview_login">अपना मोबाइल नंबर दर्ज करें</string>

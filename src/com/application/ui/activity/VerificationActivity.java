@@ -530,11 +530,11 @@ public class VerificationActivity extends AppCompatActivity {
 	
 	private String apiRequestOTPAgain() {
 			try {
-					JSONObject jsonObj = JSONRequestBuilder.getPostLoginData(mUserName, mCountryCode);
+					JSONObject jsonObj = JSONRequestBuilder.getPostResentOTPData(mUserName, AppConstants.INTENTCONSTANTS.RESENDOTP);
 					if(BuildVars.USE_OKHTTP){
-						return RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_LOGIN, jsonObj.toString(), TAG);	
+						return RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_RESEND_OTP, jsonObj.toString(), TAG);	
 					}else{
-						return RestClient.postJSON(AppConstants.API.API_LOGIN, jsonObj, TAG);	
+						return RestClient.postJSON(AppConstants.API.API_RESEND_OTP, jsonObj, TAG);	
 					}	
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -546,9 +546,13 @@ public class VerificationActivity extends AppCompatActivity {
 	private void parseDataFromOTP(String mResponseFromApi){
 		try{
 			JSONObject mJSONObj = new JSONObject(mResponseFromApi);
-			mJSONObj.getString("otp");
-			AndroidUtilities.showSnackBar(VerificationActivity.this, getResources().getString(R.string.resend_otp));
-			isResendClicked = true;
+			if(Utilities.isSuccessFromApi(mResponseFromApi)){
+				mJSONObj.getString("otp");
+				AndroidUtilities.showSnackBar(VerificationActivity.this, mJSONObj.getString(AppConstants.API_KEY_PARAMETER.successMessage));
+				isResendClicked = true;	
+			}else{
+				AndroidUtilities.showSnackBar(VerificationActivity.this, mJSONObj.getString(AppConstants.API_KEY_PARAMETER.errorMessage));
+			}
 		}catch(Exception e){
 		}
 	}
@@ -563,8 +567,8 @@ public class VerificationActivity extends AppCompatActivity {
 			String emailAddress = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.emailAddress);
 			String employeeId =  mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.employeeId);
 			String mProfileImage = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.profileImage);
-			String mFavouriteQuestion = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.favouriteQuestion);
-			String mFavouriteAnswer = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.favouriteAnswer);
+//			String mFavouriteQuestion = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.favouriteQuestion);
+//			String mFavouriteAnswer = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.favouriteAnswer);
 			String mBirthDate = mJSONObjectUser.getString(AppConstants.API_KEY_PARAMETER.birthdate);
 			
 			if(!TextUtils.isEmpty(name)){
@@ -583,13 +587,13 @@ public class VerificationActivity extends AppCompatActivity {
 				ApplicationLoader.getPreferences().setUserProfileImageLink(mProfileImage);
 			}
 			
-			if(!TextUtils.isEmpty(mFavouriteAnswer)){
+			/*if(!TextUtils.isEmpty(mFavouriteAnswer)){
 				ApplicationLoader.getPreferences().setUserFavouriteAnswer(mFavouriteAnswer);
 			}
 			
 			if(!TextUtils.isEmpty(mFavouriteQuestion)){
 				ApplicationLoader.getPreferences().setUserFavouriteQuestion(mFavouriteQuestion);
-			}
+			}*/
 			
 			if(!TextUtils.isEmpty(mBirthDate)){
 				ApplicationLoader.getPreferences().setUserBirthdate(mBirthDate);

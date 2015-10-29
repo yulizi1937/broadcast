@@ -112,6 +112,8 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 	
 	private GridLayoutManager mGridLayoutManager;
 	
+	private int whichTheme;
+	
 	private boolean isGrid = false;
 	private int mGridColumn = 1;
 	
@@ -126,6 +128,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 		setSecurity();
 		initToolBar();
 		initUi();
+		whichTheme = ApplicationLoader.getPreferences().getAppTheme();
 		setMaterialRippleView();
 		syncDataWithApi();
 		applyTheme();
@@ -642,7 +645,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 	
 	private BottomSheet getContextMenu(final int mPosition, int mType, final String mTitle, boolean isRead, final View mView){
 		BottomSheet mBottomSheet;
-		mBottomSheet = new BottomSheet.Builder(EventRecyclerActivity.this).icon(Utilities.getRoundedBitmapForContextMenu(mType)).title(mTitle).sheet(R.menu.context_menu_mobcast).build();
+		mBottomSheet = new BottomSheet.Builder(EventRecyclerActivity.this).icon(Utilities.getRoundedBitmapFromSVGForContextMenu(mType, whichTheme)).title(mTitle).sheet(R.menu.context_menu_mobcast).build();
          final Menu menu = mBottomSheet.getMenu();
          
          SpannableString mSpannabledRead = new SpannableString(getResources().getString(R.string.context_menu_read));

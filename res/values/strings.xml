@@ -26,9 +26,9 @@
     <string name="api_connection_timeout">Server not responding!</string>
     <string name="api_unknown_error">Please try again in few minutes!</string>
     <string name="share_advertisement">Shared via Mobcast \n visit us at : www.mobcast.in</string>
-    <string name="file_delete_message">Are you sure want to delete these files?</string>
-    <string name="logout_title_message">Are you sure want to Log Out?</string>
-    <string name="content_delete_message">Are you sure want to delete </string>
+    <string name="file_delete_message">Are you sure you want to delete these files?</string>
+    <string name="logout_title_message">Are you sure you want to Log Out?</string>
+    <string name="content_delete_message">Are you sure you want to delete </string>
     <string name="button_delete">Delete</string>
     <string name="update_title_message">A New Update is Available!</string>
     <string name="update_delete_message">We made our application better than a previous one. Please update the application.</string>
@@ -46,15 +46,13 @@
     <string name="wished_message_validation">You already wished  </string>
     <string name="logout_content_message">Logging out will delete all your content from the app and files too.</string>
     <string name="logging_out" tools:ignore="TypographyEllipsis">Logging Out...</string>
-    
-    <string name="showcase_content1" tools:ignore="TypographyEllipsis">Update your profile, application settings and many more...</string>
-    <string name="showcase_content2" tools:ignore="TypographyEllipsis">Up to date with your organization events, meet ups and many more...</string>
-    <string name="showcase_content3" tools:ignore="TypographyEllipsis">Up to date with your organization rewards, success and many more...</string>
-    <string name="showcase_content4" tools:ignore="TypographyEllipsis">Up to date with your colleagues birthday, wish them and many more...</string>
+    <string name="showcase_content1" tools:ignore="TypographyEllipsis">Update your profile, application settings and more...</string>
+    <string name="showcase_content2" tools:ignore="TypographyEllipsis">Be Updated with your organization events, news and more...</string>
+    <string name="showcase_content3" tools:ignore="TypographyEllipsis">Be Updated with your organization awards, success stories and more...</string>
+    <string name="showcase_content4" tools:ignore="TypographyEllipsis">Be Updated with your colleague\'s birthday, wish them and more...</string>
     <string name="showcase_content5" tools:ignore="TypographyEllipsis">Search content easily throughout the application ...</string>
     <string name="showcase_gotit">GOT IT</string>
     <string name="showcase_next">NEXT</string>
-    
     <string name="new_mobcast_avail">New Mobcast</string>
     <string name="new_">New</string>
     <string name="unread">unread</string>
@@ -133,6 +131,7 @@
 
     <!-- string formatters -->
     <string name="content_by">By : </string>
+    <string name="content_unit">Unit : </string>
     <string name="days_left">left</string>
     <string name="going"> going</string>
     <string name="accepted"> Accepted</string>
@@ -146,7 +145,7 @@
     <string name="textview_login">Please enter your Mobile Number</string>
     <string name="textview_newbroadcast">New Broadcast</string>
     <string name="textview_login_countrycode">+91</string>
-    <string name="textview_login_administration">Contact your administration if you cannot login</string>
+    <string name="textview_login_administration">Contact your administrator if you cannot login</string>
     <string name="hint_login_id">98201</string>
     <string name="button_next">NEXT</string>
     <string name="button_download">Download</string>
@@ -168,10 +167,10 @@
     <string name="hint_country_search">Search</string>
 
     <!-- activity_verification -->
-    <string name="textview_verification">We have send you an OTP code to verify your phone number and prove you\'re a human!</string>
+    <string name="textview_verification">We have sent you an OTP code to verify your phone number and prove you\'re a human!</string>
     <string name="hint_verification_code">0</string>
     <string name="button_verify">VERIFY</string>
-    <string name="button_resend">RE-SEND</string>
+    <string name="button_resend">RESEND</string>
     <string name="button_raised_ticket">Contact Support</string>
     <string name="textview_verify_administration">Didn\'t receive one? Get another</string>
     <string name="textview_verify_administration_tryagain">Entered wrong number? Try again</string>
@@ -183,6 +182,18 @@
     <string name="textview_upload_another">Upload Another</string>
     <string name="textview_upload_remove">Remove</string>
     <string name="hint_email_id">Email id</string>
+    <string name="hint_mobilenumber">Mobile number</string>
+    <string name="hint_qualification">Qualification</string>
+    <string name="hint_organization">Current Organization</string>
+    <string name="hint_designation">Current Designation</string>
+    <string name="hint_city">City</string>
+    <string name="hint_age">Age</string>
+    <string name="hint_region">Region</string>
+    <string name="hint_headquarter">Headquarter</string>
+    <string name="hint_divison">Division</string>
+    <string name="hint_experience">Total Experience</string>
+    <string name="hint_relationship">Relationship with Employee</string>
+    <string name="hint_browse">Upload resume</string>
     <string name="hint_name">Name</string>
     <string name="hint_employee_id">Employee id</string>
     <string name="textview_skip">Skip</string>
@@ -211,9 +222,11 @@
     <string name="RecruitmentRecyclerActivityTitle">Recruitment</string>
     <string name="details">DETAILS</string>
     <string name="skills">SKILLS</string>
+    <string name="agelimit">AGE LIMIT</string>
     <string name="jobdescription">JOB DESCRIPTION</string>
     <string name="qualification">QUALIFICATION</string>
     <string name="ctc">CTC</string>
+    <string name="desiredProfile">DESIRED PROFILE</string>
     <string name="contact">CONTACT</string>
     <string name="sample_recruitment_job_title">SALES EXECUTIVE</string>
     <string name="sample_recruitment_job_location">MUMBAI</string>
@@ -242,13 +255,39 @@
     <!-- <string name="sample_event_summary">Lorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more\nLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more\nLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more</string> -->
     <!-- <string name="sample_event_summary">Content: Officials said with Chillr, HDFC Bank customers can transfer money to any person in India, once they download the app and register. The app is widely accessible as it works on Android and iOS operating syatems and will soon be launched for Windows phones as well.</string> -->
     <string name="sample_event_summary">Nielsen’s Consumer 360 is a global events series that brings you innovative thought leaders and industry experts who share exclusive insights to help you develop business solutions fueled with punch and ingenuity. Learn to drive successful outcomes from well-respected trailblazers who will share their cutting edge strategies and results. Explore uncommon ideas across the consumer spectrum to help you harness the power of people today and then delve into industry-specific discussions focused on your needs.</string>
+    
+    <!-- item_recycler_parichay -->
+    <string name="ParichayDetailActivityTitle">Parichay</string>
+    <string name="ParichayActivityTitle">Lupin</string>
+    <string name="ParichayReferralFormActivityTitle">Referral Form</string>
+    <string name="sample_parichay_title">BRAD PITT</string>
+    <string name="sample_parichay_referred_to">REFERRED TO : MARKET PROFESSIONAL</string>
+    <string name="sample_parichay_sequence">1</string>
+    <string name="sample_parichay_telephone">Telephonic</string>
+    <string name="sample_parichay_written">Online Written Assessment</string>
+    <string name="sample_parichay_pr1">Personal Interview Round 1</string>
+    <string name="sample_parichay_pr2">Personal Interview Round 2</string>
+    <string name="sample_parichay_hr">HR Interview</string>
+    <string name="sample_parichay_installment1">Installment1</string>
+    <string name="sample_parichay_installment2">Installment2</string>
+    <string name="sample_parichay_installment3">Installment3</string>
+    <string name="sample_parichay_candidates_referred">Candidates Referred</string>
+    <string name="sample_parichay_candidates_referred_for">POSITION DETAILS </string>
+    <string name="sample_parichay_candidates_referred_for_details">POSITION REFERRED FOR:</string>
+    <string name="sample_parichay_candidates_referred_for_markettrainee">MARKETING TRAINEE</string>
+    <string name="sample_parichay_candidates_referred_for_marketexec">MARKETING EXECUTIVE</string>
+    <string name="sample_parichay_candidates_referred_for_marketrepre">MEDICAL REPRESENTATIVE</string>
+    <string name="sample_parichay_candidates_details">CANDIDATE DETAILS </string>
+    <string name="sample_parichay_installement_text">Congratulations employee for your referral bonus</string>
 
     <!-- layout_mother -->
     <string name="layout_mother_mobcast">MOBCAST</string>
-<!--     <string name="layout_mother_mobcast">CK BULLETIN</string> -->
+    <!-- <string name="layout_mother_mobcast">CK BULLETIN</string> -->
     <string name="layout_mother_chat">CHAT</string>
-<!--     <string name="layout_mother_chat">MIS</string> -->
+    <!-- <string name="layout_mother_chat">MIS</string> -->
     <string name="layout_mother_training">TRAINING</string>
+    <string name="layout_mother_parichay">PARICHAY</string>
+    <string name="layout_mother_referred">REFERRED</string>
 
     <!-- layout_drawer_search_mother -->
     <string name="layout_drawer_search_mother_search_by">Search On</string>
@@ -294,6 +333,7 @@
     <string name="sample_quiz_pager_counter">12/60</string>
     <string name="button_previous">PREVIOUS</string>
     <string name="button_submit">SUBMIT</string>
+    <string name="button_browse">BROWSE</string>
     <string name="button_apply">APPLY</string>
     <string name="button_send">SEND</string>
     <string name="sample_question_header_box">QUESTION</string>
@@ -306,10 +346,10 @@
     <string name="sample_quiz_score_time_taken_sec">SECONDS</string>
     <string name="sample_quiz_score">348</string>
     <string name="sample_quiz_score_correct_answer_tv" tools:ignore="TypographyFractions">3/4</string>
-    <string name="sample_quiz_score_correct_answer_text">QUESTIONS RIGHT</string>
+    <string name="sample_quiz_score_correct_answer_text">ANSWERS RIGHT</string>
     <string name="sample_quiz_score_statement">YOU ARE CERTAINLY A PRO!</string>
     <string name="sample_quiz_score_goofed_up">YOU GOT 3 OUT OF 4 QUESTIONS RIGHT!</string>
-    <string name="sample_quiz_score_goofed_up_at">FIND OUT WHICH ANSWER DO YOU GOOFED UP AT!</string>
+    <string name="sample_quiz_score_goofed_up_at">FIND OUT WHICH QUESTIONS YOU GOOFED UP AT!</string>
     <string name="sample_quiz_score_correct_answer">CORRECT ANSWER IS:</string>
     <string name="fragment_quizscore_thank_you_header">Thank you for your valuable time!</string>
     <string name="fragment_quiztimes_up_header">Time Limit for Quiz is Up!</string>
@@ -404,7 +444,7 @@
     <string name="sample_about_send_feedback_detail">TELL US WHAT YOU THINK</string>
     <string name="sample_about_report_problem">REPORT A PROBLEM</string>
     <string name="sample_about_report_problem_detail">LET US KNOW ABOUT A BUG OR PROBLEM</string>
-    <string name="sample_about_detail">MobCast is the EASIEST and the MOST EFFECTIVE way to broadcast rich content on mobile devices.Enterprises and other entities can leverage this patent pending technology to communicate and build lasting relationship with their customers , employees and other stakeholders.The platform smartly identifies and distinguishes smartphones from feature phones and correspondingly publishes the communication with the application or as an SMS.Built by a team of award winning mobile experts, its notably the only platform of its kind and starts a new and revolutionary chapter in the field of group communication.</string>
+    <string name="sample_about_detail"><![CDATA[<p>]]>MobCast is the EASIEST and the MOST EFFECTIVE way to broadcast rich content on mobile devices.<![CDATA[</br></br></br>]]>Enterprises and other entities can leverage this patent pending technology to communicate and build lasting relationship with their customers , employees and other stakeholders.<![CDATA[</br></br>]]>The platform smartly identifies and distinguishes smartphones from feature phones and correspondingly publishes the communication with the application or as an SMS.<![CDATA[</br></br>]]>Built by a team of award winning mobile experts, its notably the only platform of its kind and starts a new and revolutionary chapter in the field of group communication.<![CDATA[<p>]]></string>
     <string name="sample_about_privacy_policy"><![CDATA[<u>]]>PRIVACY POLICY<![CDATA[<u>]]></string>
 
     <!-- fragment_report -->
@@ -471,6 +511,7 @@
     <string name="sample_fragment_settings_sync_notification">Sync</string>
     <string name="sample_fragment_settings_sync_frequency">Sync Frequency</string>
     <string name="sample_fragment_settings_sync_frquency_text">15 mins</string>
+    <string name="sample_fragment_settings_sync_midnight">Stop Sync between 11:00PM - 8:00AM</string>
     <string name="sample_fragment_settings_style_notification">Style</string>
     <string name="sample_fragment_settings_style_themeapp">Theme App</string>
     <string name="sample_fragment_settings_style_apptheme_dblue">Dark Blue - Orange</string>
@@ -496,6 +537,7 @@
     <string name="sample_fragment_settings_dialog_sync_freq2">Every 30 mins</string>
     <string name="sample_fragment_settings_dialog_sync_freq3">Every 60 mins</string>
     <string name="sample_fragment_settings_dialog_sync_freq4">Every 4 hours</string>
+    <string name="sample_fragment_settings_dialog_sync_freq5">Every 24 hours</string>
     <string name="sample_fragment_settings_dialog_theme_title">Choose app theme</string>
 
     <string-array name="langugae_array">
@@ -591,7 +633,7 @@ The inaugural set of “Preferred Platform Partners” includes BrightRoll, Doub
     <string name="sample_item_recycler_mobcast_audio_view_count">290</string>
     <string name="sample_item_recycler_mobcast_audio_summary">Lorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec, condimentum magna. Read More</string>
     <!-- <string name="sample_item_recycler_mobcast_audio_summary">The worst is behind us says HDFC Bank\'s Aditya Puri! He says the Government is working on unclogging many projects. Here he is speaking exclusively to ET NOW about Modi magic.</string> -->
-    <string name="sample_item_recycler_mobcast_audio_file_name">ADITYA_PURI.MP3</string>
+    <string name="sample_item_recycler_mobcast_audio_file_name">ADITYA_PURI.MP3ADITYA_PURI.MP3ADITYA_PURI.MP3ADITYA_PURI.MP3ADITYA_PURI.MP3</string>
     <string name="sample_item_recycler_mobcast_audio_file_info">0:00</string>
 
     <!-- item_recycler_mobcast_pdf -->
@@ -679,7 +721,7 @@ Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic 
 
     <string-array name="drawer_array">
         <item>Profile</item>
-<!--         <item>My Office – Attendance &amp; PJP</item> -->
+        <!-- <item>My Office – Attendance &amp; PJP</item> -->
         <item>Capture</item>
         <item>Recruitment</item>
         <item>Settings</item>
@@ -688,6 +730,7 @@ Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic 
         <item>App Feedback</item>
         <item>LogOut</item>
         <item>About</item>
+        <item>Parichay</item>
     </string-array>
 
     <!-- dialog_birthday_message -->
@@ -723,22 +766,38 @@ Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic 
 
     <!-- emptyMessages -->
     <string name="emptyTitle">Welcome to Mobcast!</string>
-    <string name="emptyMessage">When you\'ll receive mobcast, they will show up here.</string>
+    <string name="emptyMessage">When you\'ll receive Mobcast, it will show up here.</string>
     <string name="emptyRefresh">REFRESH</string>
     <string name="emptyTrainingTitle">Welcome to Training!</string>
-    <string name="emptyTrainingMessage">When you\'ll receive training, they will show up here.</string>
+    <string name="emptyTrainingMessage">When you\'ll receive training, it will show up here.</string>
     <string name="emptyEventTitle">Welcome to Event!</string>
-    <string name="emptyEventMessage">When you\'ll receive event, they will show up here.</string>
+    <string name="emptyEventMessage">When you\'ll receive event, it will show up here.</string>
     <string name="emptyAwardTitle">Welcome to Award!</string>
-    <string name="emptyAwardMessage">When you\'ll receive award, they will show up here.</string>
+    <string name="emptyAwardMessage">When you\'ll receive award, it will show up here.</string>
     <string name="emptyChatTitle">Welcome to Chat!</string>
-    <string name="emptyChatMessage">When you\'ll receive chat, they will show up here.</string>
+    <string name="emptyChatMessage">When you\'ll receive chat, it will show up here.</string>
     <string name="emptyCaptureTitle">Welcome to Capture!</string>
-    <string name="emptyCaptureMessage">When you\'ll add images, they will show up here.</string>
+    <string name="emptyCaptureMessage">When you\'ll add images, it will show up here.</string>
     <string name="emptyBirthdayTitle">Welcome to Birthday!</string>
-    <string name="emptyBirthdayMessage">When you\'ll receive birthday, they will show up here.</string>
+    <string name="emptyBirthdayMessage">When you\'ll receive birthday, it will show up here.</string>
     <string name="emptyRecruitmentTitle">Welcome to Recruitment!</string>
-    <string name="emptyRecruitmentMessage">When you\'ll receive recruitment, they will show up here.</string>
+    <string name="emptyRecruitmentMessage">When you\'ll receive recruitment, it will show up here.</string>
+    <string name="emptyParichayTitle">Welcome to Parichay!</string>
+    <string name="emptyParichayMessage">When you\'ll receive recruitment, it will show up here.</string>
     <string name="emptyRefreshOnSearch">SEARCH ONLINE</string>
+    
+    <!-- CropImageView -->
+    <string name="crop__saving">Saving picture…</string>
+    <string name="crop__wait">Please wait…</string>
+    <string name="crop__pick_error">No image sources available</string>
+    <string name="crop__done">DONE</string>
+    <string name="crop__cancel" tools:ignore="ButtonCase">CANCEL</string>
+    
+    <!-- Apprater -->
+    <string name="dialog_title">Rate %s</string>
+    <string name="rate_message">If you enjoy using this app, please take a moment to rate it. Thanks for your support!</string>
+    <string name="rate">Rate Now</string>
+    <string name="later">Later</string>
+    <string name="no_thanks">No thanks</string>
 
 </resources>

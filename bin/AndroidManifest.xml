@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mobcast"
-    android:versionCode="9"
-    android:versionName="2.0.6" >
+    android:versionCode="12"
+    android:versionName="2.0.9" >
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -54,7 +54,7 @@
         android:name="com.application.utils.ApplicationLoader"
         android:allowBackup="true"
         android:debuggable="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/mobcast_colour_icon"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/AppTheme"
@@ -85,7 +85,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.application.ui.activity.EditProfileActivity"
-            android:configChanges="locale|orientation"
+            android:configChanges="locale|orientation|screenSize"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.application.ui.activity.CountrySelectActivity"
@@ -233,6 +233,21 @@
         <activity
             android:name="com.application.ui.activity.RecruitmentDetailActivity"
             android:configChanges="locale|orientation" />
+        <activity
+            android:name="com.application.crop.CropImageActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="locale|orientation" />
+        <!-- Parichay -->
+        <activity
+            android:name="com.application.ui.activity.ParichayActivity"
+            android:configChanges="locale|orientation|screenSize" />
+        <activity
+            android:name="com.application.ui.activity.ParichayDetailActivity"
+            android:configChanges="locale|orientation|screenSize" />
+        <activity
+            android:name="com.application.ui.activity.ParichayReferralFormActivity"
+            android:configChanges="locale|orientation|screenSize" />
+        
 
         <!-- Notification ActionHandler Receiver -->
         <receiver android:name="com.application.receiver.NotificationActionAwardReceiver" />

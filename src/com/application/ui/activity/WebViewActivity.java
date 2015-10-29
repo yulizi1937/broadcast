@@ -29,6 +29,7 @@ import com.application.ui.view.SmoothProgressBar;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.FileLog;
+import com.application.utils.ThemeUtils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
 
@@ -66,6 +67,7 @@ public class WebViewActivity extends SwipeBackBaseActivity {
 		initUi();
 		getIntentData();
 		initWebViewClient();
+		applyTheme();
 	}
 
 	@Override
@@ -191,6 +193,14 @@ public class WebViewActivity extends SwipeBackBaseActivity {
 				R.string.WebViewActivity));
 		mToolBar.setNavigationIcon(R.drawable.ic_back_shadow);
 		setSupportActionBar(mToolBar);
+	}
+	
+	private void applyTheme(){
+		try{
+			ThemeUtils.getInstance(WebViewActivity.this).applyThemeCountrySelect(WebViewActivity.this, WebViewActivity.this, mToolBar);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	private void getIntentData(){

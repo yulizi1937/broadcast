@@ -35,6 +35,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPOutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.crypto.Cipher;
 
@@ -58,9 +60,11 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -1341,6 +1345,18 @@ public class Utilities {
 		}
 	}
 	
+	public static String formatUnit(String mUnit){
+		try{
+			StringBuilder strBuilder = new StringBuilder();
+			strBuilder.append(ApplicationLoader.getApplication().getResources().getString(R.string.content_unit));
+			strBuilder.append(" " + mUnit + " ");
+			return strBuilder.toString();
+		}catch(Exception e){
+			return "Unit : " +mUnit;
+		}
+	}
+	
+	
 	@SuppressWarnings("deprecation")
 	@SuppressLint("SimpleDateFormat") 
 	public static String getByDateTime(String mDate, String mTime) {
@@ -1601,6 +1617,57 @@ public class Utilities {
 		return null;
 	}
 	
+	
+	public static Drawable getRoundedBitmapFromSVGForContextMenu(int mType, int whichTheme) {
+		try{
+			Drawable mDrawable = ThemeUtils.applyThemeToTimeLineIconsWithSVG(ApplicationLoader.getApplication().getResources(), false, mType, whichTheme);
+			if(mDrawable!=null){
+				Bitmap src = Utilities.drawableToBitmap(mDrawable);
+				Bitmap dst;
+				if (src.getWidth() >= src.getHeight()) {
+					dst = Bitmap.createBitmap(src, src.getWidth() / 2 - src.getHeight()
+							/ 2, 0, src.getHeight(), src.getHeight());
+				} else {
+					dst = Bitmap.createBitmap(src, 0,
+							src.getHeight() / 2 - src.getWidth() / 2, src.getWidth(),
+							src.getWidth());
+				}
+				RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory
+						.create(ApplicationLoader.getApplication().getResources(), dst);
+				roundedBitmapDrawable.setCornerRadius(dst.getWidth() / 2);
+				roundedBitmapDrawable.setAntiAlias(true);
+				return roundedBitmapDrawable;
+			}else{
+				Utilities.getRoundedBitmapForContextMenu(mType);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return Utilities.getRoundedBitmapForContextMenu(mType);
+	}
+	
+	public static Bitmap drawableToBitmap (Drawable drawable) {
+	    Bitmap bitmap = null;
+
+	    if (drawable instanceof BitmapDrawable) {
+	        BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+	        if(bitmapDrawable.getBitmap() != null) {
+	            return bitmapDrawable.getBitmap();
+	        }
+	    }
+
+	    if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+	        bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
+	    } else {
+	        bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+	    }
+
+	    Canvas canvas = new Canvas(bitmap);
+	    drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+	    drawable.draw(canvas);
+	    return bitmap;
+	}
+	
 	@SuppressLint("NewApi") 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB) 
 	public static Bitmap blurBitmap(Bitmap bitmap) {
@@ -1639,6 +1706,10 @@ public class Utilities {
 		Theme Obj4 = new Theme("#ffE91E63", i==3?true:false);
 		Theme Obj5 = new Theme("#ff009688", i==4?true:false);
 		Theme Obj6 = new Theme("#ff795548", i==5?true:false);
+		Theme Obj7 = new Theme("#ff607D8B", i==5?true:false);
+		Theme Obj8 = new Theme("#ffFFC107", i==5?true:false);
+		Theme Obj9 = new Theme("#ffFF9800", i==5?true:false);
+		Theme Obj10 = new Theme("#ff2196F3", i==5?true:false);
 		
 		mList.add(Obj1);
 		mList.add(Obj2);
@@ -1646,6 +1717,10 @@ public class Utilities {
 		mList.add(Obj4);
 		mList.add(Obj5);
 		mList.add(Obj6);
+		mList.add(Obj7);
+		mList.add(Obj8);
+		mList.add(Obj9);
+		mList.add(Obj10);
 		return mList;
 	}
 	
@@ -1701,6 +1776,48 @@ public class Utilities {
 			FileLog.e(TAG, e.toString());
 		}
 	}
+	
+	public static String zipFolder(String inputFolderPath, String outZipPath) {
+	    try {
+	        FileOutputStream fos = new FileOutputStream(outZipPath);
+	        ZipOutputStream zos = new ZipOutputStream(fos);
+	        File srcFile = new File(inputFolderPath);
+	        File[] files = srcFile.listFiles();
+	        FileLog.e(TAG, "Zip directory: " + srcFile.getName());
+	        for (int i = 0; i < files.length; i++) {
+	            FileLog.e(TAG, "Adding file: " + files[i].getName());
+	            byte[] buffer = new byte[1024];
+	            FileInputStream fis = new FileInputStream(files[i]);
+	            zos.putNextEntry(new ZipEntry(files[i].getName()));
+	            int length;
+	            while ((length = fis.read(buffer)) > 0) {
+	                zos.write(buffer, 0, length);
+	            }
+	            zos.closeEntry();
+	            fis.close();
+	        }
+	        zos.close();
+	    } catch (IOException ioe) {
+	    	FileLog.e(TAG, ioe.toString());
+	    }catch(Exception e){
+	    	FileLog.e(TAG, e.toString());
+	    }
+	    return outZipPath;
+	}
+	
+    public static int darkenColor(int color) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        hsv[2] *= 0.9f;
+        return Color.HSVToColor(hsv);
+    }
+
+    public static int lightenColor(int color) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        hsv[2] *= 1.1f;
+        return Color.HSVToColor(hsv);
+    }
 
 
 	@SuppressWarnings("resource")
