@@ -13,7 +13,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -50,19 +49,15 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import android.widget.ImageView.ScaleType;
 
 import com.application.beans.MotherHeader;
-import com.application.sqlite.DBConstant;
 import com.application.ui.adapter.MotherPagerAdapter;
 import com.application.ui.calligraphy.CalligraphyContextWrapper;
 import com.application.ui.fragment.IActivityCommunicator;
 import com.application.ui.fragment.IFragmentCommunicator;
 import com.application.ui.materialdialog.MaterialDialog;
 import com.application.ui.service.SyncService;
-import com.application.ui.showcaseview.MaterialShowcaseSequence;
 import com.application.ui.showcaseview.MaterialShowcaseView;
-import com.application.ui.showcaseview.ShowcaseConfig;
 import com.application.ui.view.CircleImageView;
 import com.application.ui.view.DrawerArrowDrawable;
 import com.application.ui.view.MobcastProgressDialog;
@@ -491,6 +486,12 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 				case 9:
 					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_birthday_unread_dblue);
 					break;
+				case 10:
+					mDrawable =mResources.getDrawable(R.drawable.ic_toolbar_birthday_unread_pink);
+					break;
+				case 11:
+					mDrawable =mResources.getDrawable(R.drawable.ic_toolbar_birthday_unread_purple);
+					break;
 				default:
 					mDrawable =mResources.getDrawable(R.drawable.ic_toolbar_birthday_unread_dblue);
 					break;
@@ -529,6 +530,12 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 				case 9:
 					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_award_unread_dblue);
 					break;
+				case 10:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_award_unread_pink);
+					break;
+				case 11:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_award_unread_purple);
+					break;
 				default:
 					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_award_unread_dblue);
 					break;
@@ -565,6 +572,12 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 					break;
 				case 9:
 					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_event_unread_dblue);
+					break;
+				case 10:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_event_unread_pink);
+					break;
+				case 11:
+					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_event_unread_purple);
 					break;
 				default:
 					mDrawable = mResources.getDrawable(R.drawable.ic_toolbar_event_unread_dblue);
@@ -1037,12 +1050,16 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			if(mProgressDialog!=null){
-				mProgressDialog.dismiss();
-			}
-			if(isSuccess){
-				Toast.makeText(MotherActivity.this, Utilities.getSuccessMessageFromApi(mResponseFromApi), Toast.LENGTH_SHORT).show();
-				MotherActivity.this.finish();	
+			try{
+				if(mProgressDialog!=null){
+					mProgressDialog.dismiss();
+				}
+				if(isSuccess){
+					Toast.makeText(MotherActivity.this, Utilities.getSuccessMessageFromApi(mResponseFromApi), Toast.LENGTH_SHORT).show();
+					MotherActivity.this.finish();	
+				}
+			}catch(Exception e){
+				FileLog.e(TAG, e.toString());
 			}
 		}
 	}
@@ -1225,10 +1242,10 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		String[] mDrawerItemArray = getResources().getStringArray(
 				R.array.drawer_array);
 		int[] mDrawableResId = new int[] { R.drawable.ic_drawer_profile,
-				R.drawable.ic_drawer_capture, R.drawable.ic_drawer_recruitment,
+				R.drawable.ic_drawer_capture, R.drawable.ic_drawer_recruitment,R.drawable.ic_drawer_recruitment,
 				R.drawable.ic_drawer_settings, R.drawable.ic_drawer_help,
 				R.drawable.ic_drawer_report, R.drawable.ic_drawer_feedback,
-				R.drawable.ic_drawer_logout, R.drawable.ic_drawer_about,R.drawable.ic_drawer_about };
+				R.drawable.ic_drawer_logout, R.drawable.ic_drawer_about};
 
 		mDrawerAdapter = new DrawerArrayAdapter(MotherActivity.this,
 				mDrawerItemArray, mDrawableResId);
@@ -1357,29 +1374,29 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 				drawerIntent = new Intent(MotherActivity.this, CaptureActivity.class);
 				break;
 			case 2:
-				drawerIntent = new Intent(MotherActivity.this, RecruitmentRecyclerActivity.class);
+				drawerIntent = new Intent(MotherActivity.this, ParichayActivity.class);
 				break;
 			case 3:
-				drawerIntent = new Intent(MotherActivity.this, SettingsActivity.class);
+				drawerIntent = new Intent(MotherActivity.this, RecruitmentRecyclerActivity.class);
 				break;
 			case 4:
+				drawerIntent = new Intent(MotherActivity.this, SettingsActivity.class);
+				break;
+			case 5:
 				drawerIntent = new Intent(MotherActivity.this, TutorialActivity.class);
 				drawerIntent.putExtra(AppConstants.INTENTCONSTANTS.HELP, true);
 				break;
-			case 5:
+			case 6:
 				drawerIntent = new Intent(MotherActivity.this, ReportActivity.class);
 				break;
-			case 6:
+			case 7:
 				drawerIntent = new Intent(MotherActivity.this, FeedbackAppActivity.class);
 				break;
-			case 7:
+			case 8:
 				showLogOutConfirmationMaterialDialog();
 				break;
-			case 8:
-				drawerIntent = new Intent(MotherActivity.this, AboutActivity.class);
-				break;
 			case 9:
-				drawerIntent = new Intent(MotherActivity.this, ParichayActivity.class);
+				drawerIntent = new Intent(MotherActivity.this, AboutActivity.class);
 				break;
 			default:
 				break;

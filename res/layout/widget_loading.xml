@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="32dp"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="2dp" >
+
+    <TextView
+        android:id="@+id/widgetRowDescTv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:gravity="left|center"
+        android:text="@string/textview_login"
+        android:textColor="@color/item_description_color"
+        android:textSize="@dimen/widget_desc_textview_size"
+        tools:ignore="RtlHardcoded" />
+
+</LinearLayout>

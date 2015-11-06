@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.application.ui.view.FABObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/fragmentParichayDetailObservableScrollView"
+    android:layout_height="match_parent"
+    android:background="@color/background_application"
+    android:orientation="vertical"
+    tools:ignore="ScrollViewCount" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="vertical" >
+
+        <!-- JOB TITLE -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="UselessParent" >
+
+            <FrameLayout
+                android:id="@+id/activityParichayDetailExpandLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/unread_background"
+                android:clickable="true"
+                android:padding="@dimen/activity_recruitment_heading_padding" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityParichayDetailLabelTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:text="@string/details"
+                    android:textColor="@color/drawer_item_title"
+                    android:textSize="@dimen/activity_recruitment_detail_text_size"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <ImageView
+                    android:id="@+id/activityParichayDetailIv"
+                    android:layout_width="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_height="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_gravity="right|center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_recruitment_collapse"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/activityParichayDetailLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityParichayDetailTitleTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="@string/sample_recruitment_job_title"
+                    android:textColor="@color/item_title_color"
+                    android:textSize="@dimen/activity_recruitment_detail_title_size"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityParichayDetailDesignationTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/shape_by_orange_fill"
+                    android:gravity="center"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="2dp"
+                    android:text="@string/sample_recruitment_job_title"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/activity_recruitment_detail_designation_size"
+                    tools:ignore="RtlHardcoded" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:orientation="horizontal" >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_gravity="bottom|center"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_event_location"
+                            tools:ignore="NestedWeights,ContentDescription" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/activityParichayDetailLocationTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_gravity="top|center"
+                            android:layout_weight="1"
+                            android:text="@string/sample_recruitment_job_location"
+                            android:textColor="@color/unread_highlight"
+                            android:textSize="@dimen/activity_recruitment_detail_experience_size"
+                            android:textStyle="bold"
+                            tools:ignore="RtlHardcoded" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="8dp"
+                        android:visibility="gone"
+                        android:layout_marginTop="8dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:visibility="gone"
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_gravity="bottom|center"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_event_detail_hours"
+                            tools:ignore="NestedWeights,ContentDescription" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_gravity="top|center"
+                            android:layout_weight="1"
+                            android:text="@string/sample_recruitment_job_experience"
+                            android:textColor="@color/unread_highlight"
+                            android:textSize="@dimen/activity_recruitment_detail_experience_size"
+                            android:textStyle="bold"
+                            tools:ignore="RtlHardcoded" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        
+
+        <!-- JOB DESCRIPTOIN -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            tools:ignore="UselessParent" >
+
+            <FrameLayout
+                android:id="@+id/activityParichayDetailJobDescriptionExpandLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/unread_background"
+                android:clickable="true"
+                android:padding="@dimen/activity_recruitment_heading_padding" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityParichayDetailJobDescriptionLabelTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:text="@string/jobdescription"
+                    android:textColor="@color/drawer_item_title"
+                    android:textSize="@dimen/activity_recruitment_detail_text_size"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <ImageView
+                    android:id="@+id/activityParichayDetailJobDescriptionIv"
+                    android:layout_width="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_height="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_gravity="right|center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_recruitment_expand"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+            </FrameLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/activityParichayDetailJobDescriptionTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center"
+                android:padding="8dp"
+                android:text="@string/sample_item_recycler_mobcast_audio_summary"
+                android:textColor="@color/item_title_color"
+                android:textSize="@dimen/activity_recruitment_detail_text_size"
+                android:visibility="gone"
+                tools:ignore="RtlHardcoded" />
+        </LinearLayout>
+        
+        
+        <!-- MIN EXPERIENCE -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            tools:ignore="UselessParent" >
+
+            <FrameLayout
+                android:id="@+id/activityParichayDetailMinExperienceExpandLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/unread_background"
+                android:clickable="true"
+                android:padding="@dimen/activity_recruitment_heading_padding" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityParichayDetailMinExperienceLabelTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:text="@string/minexperience"
+                    android:textColor="@color/drawer_item_title"
+                    android:textSize="@dimen/activity_recruitment_detail_text_size"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <ImageView
+                    android:id="@+id/activityParichayDetailMinExperienceIv"
+                    android:layout_width="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_height="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_gravity="right|center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_recruitment_expand"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+            </FrameLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/activityParichayDetailExperienceTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center"
+                android:padding="8dp"
+                android:text="@string/sample_item_recycler_mobcast_audio_summary"
+                android:textColor="@color/item_title_color"
+                android:textSize="@dimen/activity_recruitment_detail_text_size"
+                android:visibility="gone"
+                tools:ignore="RtlHardcoded" />
+        </LinearLayout>
+        
+        <!-- DesiredProfile -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            tools:ignore="UselessParent" >
+
+            <FrameLayout
+                android:id="@+id/activityParichayDetailDesiredProfileExpandLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/unread_background"
+                android:clickable="true"
+                android:padding="@dimen/activity_recruitment_heading_padding" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityParichayDetailDesiredProfileLabelTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:text="@string/desiredProfile"
+                    android:textColor="@color/drawer_item_title"
+                    android:textSize="@dimen/activity_recruitment_detail_text_size"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <ImageView
+                    android:id="@+id/activityParichayDetailDesiredProfileIv"
+                    android:layout_width="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_height="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_gravity="right|center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_recruitment_expand"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+            </FrameLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/activityParichayDetailDesiredProfileTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center"
+                android:padding="8dp"
+                android:text="@string/sample_item_recycler_mobcast_audio_summary"
+                android:textColor="@color/item_title_color"
+                android:textSize="@dimen/activity_recruitment_detail_text_size"
+                android:visibility="gone"
+                tools:ignore="RtlHardcoded" />
+        </LinearLayout>
+
+        <!-- QUALIFICATION -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            tools:ignore="UselessParent" >
+
+            <FrameLayout
+                android:id="@+id/activityParichayDetailQualificationExpandLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/unread_background"
+                android:clickable="true"
+                android:padding="@dimen/activity_recruitment_heading_padding" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityParichayDetailQualificationLabelTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:text="@string/qualification"
+                    android:textColor="@color/drawer_item_title"
+                    android:textSize="@dimen/activity_recruitment_detail_text_size"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <ImageView
+                    android:id="@+id/activityParichayDetailQualificationIv"
+                    android:layout_width="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_height="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_gravity="right|center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_recruitment_expand"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+            </FrameLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/activityParichayDetailQualificationTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center"
+                android:padding="8dp"
+                android:text="@string/sample_item_recycler_mobcast_audio_summary"
+                android:textColor="@color/item_title_color"
+                android:textSize="@dimen/activity_recruitment_detail_text_size"
+                android:visibility="gone"
+                tools:ignore="RtlHardcoded" />
+        </LinearLayout>
+        
+        
+        <!-- SKILLS -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            tools:ignore="UselessParent" >
+
+            <FrameLayout
+                android:id="@+id/activityParichayDetailSkillsExpandLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/unread_background"
+                android:clickable="true"
+                android:padding="@dimen/activity_recruitment_heading_padding" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityParichayDetailSkillsLabelTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:text="@string/agelimit"
+                    android:textColor="@color/drawer_item_title"
+                    android:textSize="@dimen/activity_recruitment_detail_text_size"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <ImageView
+                    android:id="@+id/activityParichayDetailSkillsIv"
+                    android:layout_width="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_height="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_gravity="right|center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_recruitment_collapse"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+            </FrameLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/activityParichayDetailSkillsTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center"
+                android:padding="8dp"
+                android:text="@string/sample_item_recycler_mobcast_audio_summary"
+                android:textColor="@color/item_title_color"
+                android:textSize="@dimen/activity_recruitment_detail_text_size"
+                tools:ignore="RtlHardcoded" />
+        </LinearLayout>
+        
+
+        <!-- CTC -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:ignore="UselessParent" >
+
+            <FrameLayout
+                android:id="@+id/activityParichayDetailCTCExpandLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/unread_background"
+                android:clickable="true"
+                android:padding="@dimen/activity_recruitment_heading_padding" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityParichayDetailCTCLabelTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:text="@string/ctc"
+                    android:textColor="@color/drawer_item_title"
+                    android:textSize="@dimen/activity_recruitment_detail_text_size"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <ImageView
+                    android:id="@+id/activityParichayDetailCTCIv"
+                    android:layout_width="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_height="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_gravity="right|center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_recruitment_expand"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+            </FrameLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/activityParichayDetailCTCTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center"
+                android:padding="8dp"
+                android:text="@string/sample_item_recycler_mobcast_audio_summary"
+                android:textColor="@color/item_title_color"
+                android:textSize="@dimen/activity_recruitment_detail_text_size"
+                android:visibility="gone"
+                tools:ignore="RtlHardcoded" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.application.ui.view.FABObservableScrollView>

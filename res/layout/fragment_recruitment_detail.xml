@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_application"
+    android:orientation="vertical"
+    tools:ignore="ScrollViewCount" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="vertical" >
+
+        <!-- JOB TITLE -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="UselessParent" >
+
+            <FrameLayout
+                android:id="@+id/activityRecruitmentDetailExpandLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/unread_background"
+                android:clickable="true"
+                android:padding="@dimen/activity_recruitment_heading_padding" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityRecruitmentDetailLabelTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:text="@string/details"
+                    android:textColor="@color/drawer_item_title"
+                    android:textSize="@dimen/activity_recruitment_detail_text_size"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <ImageView
+                    android:id="@+id/activityRecruitmentDetailIv"
+                    android:layout_width="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_height="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_gravity="right|center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_recruitment_collapse"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/activityRecruitmentDetailLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityRecruitmentDetailTitleTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="@string/sample_recruitment_job_title"
+                    android:textColor="@color/item_title_color"
+                    android:textSize="@dimen/activity_recruitment_detail_title_size"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityRecruitmentDetailDesignationTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/shape_by_orange_fill"
+                    android:gravity="center"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="2dp"
+                    android:text="@string/sample_recruitment_job_title"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/activity_recruitment_detail_designation_size"
+                    tools:ignore="RtlHardcoded" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:orientation="horizontal" >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_gravity="bottom|center"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_event_location"
+                            tools:ignore="NestedWeights,ContentDescription" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/activityRecruitmentDetailLocationTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_gravity="top|center"
+                            android:layout_weight="1"
+                            android:text="@string/sample_recruitment_job_location"
+                            android:textColor="@color/unread_highlight"
+                            android:textSize="@dimen/activity_recruitment_detail_experience_size"
+                            android:textStyle="bold"
+                            tools:ignore="RtlHardcoded" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_gravity="bottom|center"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_event_detail_hours"
+                            tools:ignore="NestedWeights,ContentDescription" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/activityRecruitmentDetailExperienceTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_gravity="top|center"
+                            android:layout_weight="1"
+                            android:text="@string/sample_recruitment_job_experience"
+                            android:textColor="@color/unread_highlight"
+                            android:textSize="@dimen/activity_recruitment_detail_experience_size"
+                            android:textStyle="bold"
+                            tools:ignore="RtlHardcoded" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- SKILLS -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            tools:ignore="UselessParent" >
+
+            <FrameLayout
+                android:id="@+id/activityRecruitmentDetailSkillsExpandLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/unread_background"
+                android:clickable="true"
+                android:padding="@dimen/activity_recruitment_heading_padding" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityRecruitmentDetailSkillsLabelTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:text="@string/skills"
+                    android:textColor="@color/drawer_item_title"
+                    android:textSize="@dimen/activity_recruitment_detail_text_size"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <ImageView
+                    android:id="@+id/activityRecruitmentDetailSkillsIv"
+                    android:layout_width="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_height="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_gravity="right|center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_recruitment_collapse"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+            </FrameLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/activityRecruitmentDetailSkillsTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center"
+                android:padding="8dp"
+                android:text="@string/sample_item_recycler_mobcast_audio_summary"
+                android:textColor="@color/item_title_color"
+                android:textSize="@dimen/activity_recruitment_detail_text_size"
+                tools:ignore="RtlHardcoded" />
+        </LinearLayout>
+
+        <!-- JOB DESCRIPTOIN -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            tools:ignore="UselessParent" >
+
+            <FrameLayout
+                android:id="@+id/activityRecruitmentDetailJobDescriptionExpandLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/unread_background"
+                android:clickable="true"
+                android:padding="@dimen/activity_recruitment_heading_padding" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityRecruitmentDetailJobDescriptionLabelTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:text="@string/jobdescription"
+                    android:textColor="@color/drawer_item_title"
+                    android:textSize="@dimen/activity_recruitment_detail_text_size"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <ImageView
+                    android:id="@+id/activityRecruitmentDetailJobDescriptionIv"
+                    android:layout_width="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_height="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_gravity="right|center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_recruitment_expand"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+            </FrameLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/activityRecruitmentDetailJobDescriptionTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center"
+                android:padding="8dp"
+                android:text="@string/sample_item_recycler_mobcast_audio_summary"
+                android:textColor="@color/item_title_color"
+                android:textSize="@dimen/activity_recruitment_detail_text_size"
+                android:visibility="gone"
+                tools:ignore="RtlHardcoded" />
+        </LinearLayout>
+
+        <!-- QUALIFICATION -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            tools:ignore="UselessParent" >
+
+            <FrameLayout
+                android:id="@+id/activityRecruitmentDetailQualificationExpandLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/unread_background"
+                android:clickable="true"
+                android:padding="@dimen/activity_recruitment_heading_padding" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityRecruitmentDetailQualificationLabelTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:text="@string/qualification"
+                    android:textColor="@color/drawer_item_title"
+                    android:textSize="@dimen/activity_recruitment_detail_text_size"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <ImageView
+                    android:id="@+id/activityRecruitmentDetailQualificationIv"
+                    android:layout_width="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_height="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_gravity="right|center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_recruitment_expand"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+            </FrameLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/activityRecruitmentDetailQualificationTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center"
+                android:padding="8dp"
+                android:text="@string/sample_item_recycler_mobcast_audio_summary"
+                android:textColor="@color/item_title_color"
+                android:textSize="@dimen/activity_recruitment_detail_text_size"
+                android:visibility="gone"
+                tools:ignore="RtlHardcoded" />
+        </LinearLayout>
+
+        <!-- CTC -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            tools:ignore="UselessParent" >
+
+            <FrameLayout
+                android:id="@+id/activityRecruitmentDetailCTCExpandLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/unread_background"
+                android:clickable="true"
+                android:padding="@dimen/activity_recruitment_heading_padding" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityRecruitmentDetailCTCLabelTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:text="@string/ctc"
+                    android:textColor="@color/drawer_item_title"
+                    android:textSize="@dimen/activity_recruitment_detail_text_size"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <ImageView
+                    android:id="@+id/activityRecruitmentDetailCTCIv"
+                    android:layout_width="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_height="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_gravity="right|center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_recruitment_expand"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+            </FrameLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/activityRecruitmentDetailCTCTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center"
+                android:padding="8dp"
+                android:text="@string/sample_item_recycler_mobcast_audio_summary"
+                android:textColor="@color/item_title_color"
+                android:textSize="@dimen/activity_recruitment_detail_text_size"
+                android:visibility="gone"
+                tools:ignore="RtlHardcoded" />
+        </LinearLayout>
+
+        <!-- CONTACT -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            tools:ignore="UselessParent" >
+
+            <FrameLayout
+                android:id="@+id/activityRecruitmentDetailContactExpandLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/unread_background"
+                android:clickable="true"
+                android:padding="@dimen/activity_recruitment_heading_padding" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityRecruitmentDetailContactLabelTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:text="@string/contact"
+                    android:textColor="@color/drawer_item_title"
+                    android:textSize="@dimen/activity_recruitment_detail_text_size"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <ImageView
+                    android:id="@+id/activityRecruitmentDetailContactIv"
+                    android:layout_width="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_height="@dimen/activity_recruitment_heading_expand_width"
+                    android:layout_gravity="right|center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_recruitment_collapse"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/activityRecruitmentDetailContactLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityRecruitmentDetailContactNameTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="@string/sample_recruitment_job_title"
+                    android:textColor="@color/item_title_color"
+                    android:textSize="@dimen/activity_recruitment_detail_title_size"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/activityRecruitmentDetailContactDesignationTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/sample_recruitment_job_title"
+                    android:textColor="@color/item_title_color"
+                    android:textSize="@dimen/activity_recruitment_detail_designation_size"
+                    tools:ignore="RtlHardcoded" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:orientation="horizontal" >
+
+                    <LinearLayout
+                        android:id="@+id/activityRecruitmentContactMobileLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_gravity="bottom|center"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_recruitment_mobile"
+                            tools:ignore="NestedWeights,ContentDescription" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/activityRecruitmentDetailContactMobileTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_gravity="top|center"
+                            android:layout_weight="1"
+                            android:text="@string/sample_recruitment_job_location"
+                            android:textColor="@color/item_title_color"
+                            android:textSize="@dimen/activity_recruitment_detail_experience_size"
+                            tools:ignore="RtlHardcoded" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <LinearLayout
+                        android:id="@+id/activityRecruitmentContactEmailLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_gravity="bottom|center"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_recruitment_mail"
+                            tools:ignore="NestedWeights,ContentDescription" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/activityRecruitmentDetailContactEmailTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_gravity="top|center"
+                            android:layout_weight="1"
+                            android:text="@string/sample_recruitment_job_experience"
+                            android:textColor="@color/item_title_color"
+                            android:textSize="@dimen/activity_recruitment_detail_experience_size"
+                            tools:ignore="RtlHardcoded" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

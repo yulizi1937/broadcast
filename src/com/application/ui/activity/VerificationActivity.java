@@ -661,22 +661,25 @@ public class VerificationActivity extends AppCompatActivity {
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			
-			if(mProgressDialog!=null){
-				mProgressDialog.dismiss();
-			}
-			if (isSuccess) {
-				if(isResendOTP){
-					parseDataFromOTP(mResponseFromApi);
-				}else{
-					parseDataFromApi(mResponseFromApi);
+			try{
+				if(mProgressDialog!=null){
+					mProgressDialog.dismiss();
 				}
-				
-			} else {
-				mErrorMessage = Utilities
-						.getErrorMessageFromApi(mResponseFromApi);
-				Utilities.showCrouton(VerificationActivity.this, mCroutonViewGroup,
-						mErrorMessage, Style.ALERT);
+				if (isSuccess) {
+					if(isResendOTP){
+						parseDataFromOTP(mResponseFromApi);
+					}else{
+						parseDataFromApi(mResponseFromApi);
+					}
+					
+				} else {
+					mErrorMessage = Utilities
+							.getErrorMessageFromApi(mResponseFromApi);
+					Utilities.showCrouton(VerificationActivity.this, mCroutonViewGroup,
+							mErrorMessage, Style.ALERT);
+				}
+			}catch(Exception e){
+				FileLog.e(TAG, e.toString());
 			}
 		}
 	}

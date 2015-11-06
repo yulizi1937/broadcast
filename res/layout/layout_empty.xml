@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="16dp"
+    android:background="@color/gray_empty_bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp" >
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/layoutEmptyTitleTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/emptyTitle"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/login_countrycode_size" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/layoutEmptyMessageTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/emptyMessage"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/login_countrycode_size" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/layoutEmptyRefreshBtn"
+        android:layout_width="@dimen/login_btn_next_width"
+        android:layout_height="@dimen/login_btn_next_height"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/shape_button_normal"
+        android:gravity="center"
+        android:text="@string/emptyRefresh"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/layout_empty_refresh_text_size"
+        android:textStyle="bold" />
+
+</LinearLayout>

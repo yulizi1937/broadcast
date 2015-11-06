@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/contextMenuRead"
+        android:icon="@drawable/context_menu_read"
+        android:title="@string/context_menu_read"/>
+    <item
+        android:id="@+id/contextMenuUnread"
+        android:icon="@drawable/context_menu_unread"
+        android:title="@string/context_menu_unread"/>
+    
+    <item
+        android:id="@+id/contextMenuDelete"
+        android:icon="@drawable/context_menu_delete"
+        android:title="@string/context_menu_delete"/>
+    <item
+        android:id="@+id/contextMenuView"
+        android:icon="@drawable/context_menu_view"
+        android:title="@string/context_menu_view"/>
+    
+    
+
+</menu>

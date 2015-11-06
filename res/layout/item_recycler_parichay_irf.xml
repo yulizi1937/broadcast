@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.application.ui.view.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:circlepageindicator="http://schemas.android.com/apk/res-auto"
+    xmlns:progresswheel="http://schemas.android.com/apk/res-auto"
+    xmlns:ripple="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    ripple:mrl_rippleAlpha="@dimen/rippleAlpha"
+    ripple:mrl_rippleBackground="@android:color/transparent"
+    ripple:mrl_rippleColor="@android:color/darker_gray"
+    ripple:mrl_rippleHover="true"
+    ripple:mrl_rippleOverlay="true"
+    tools:ignore="UnusedNamespace" >
+
+    <FrameLayout
+        android:id="@+id/itemRecyclerParichayIRFRootLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:clickable="true"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:orientation="vertical"
+            tools:ignore="RtlHardcoded" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/unread_background"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/item_recycler_parichay_margin_left"
+                android:paddingLeft="@dimen/item_recycler_parichay_margin_left"
+                android:paddingRight="@dimen/item_recycler_parichay_margin_left"
+                android:paddingTop="@dimen/item_recycler_parichay_margin_left" >
+
+                <FrameLayout
+                    android:layout_width="@dimen/item_recycler_parichay_sequence_cirle_width"
+                    android:layout_height="@dimen/item_recycler_parichay_sequence_cirle_width"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="left|center"
+                    android:background="@drawable/shape_round_white_bg" >
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/itemRecyclerParichayIRFSequenceTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="@string/sample_parichay_sequence"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/event_title_textview_size"
+                        android:textStyle="bold" />
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/itemRecyclerParichayIRFCollapseIv"
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="right|center"
+                    android:scaleType="centerInside"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_parichay_expand"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/item_recycler_parichay_title_left"
+                    android:layout_marginTop="2dp"
+                    android:orientation="vertical" >
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/itemRecyclerParichayIRFTitleTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:gravity="left|center"
+                        android:maxLines="@integer/max_lines"
+                        android:text="@string/sample_parichay_title"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/event_title_textview_size"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/itemRecyclerParichayIRFReferredForTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:gravity="left|center"
+                        android:singleLine="true"
+                        android:text="@string/sample_parichay_referred_to"
+                        android:textColor="@color/unread_highlight"
+                        android:textSize="@dimen/item_recycler_parichay_referred_for_textsize"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/itemRecyclerParichayIRFProcessDetailLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:ignore="RtlSymmetry" >
+
+                <LinearLayout
+                    android:id="@+id/itemRecyclerParichayIRFProcessInterviewLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:paddingLeft="@dimen/item_recycler_parichay_lineview_padding"
+                    tools:ignore="UselessParent" >
+
+                    <!-- Telephonic -->
+
+                    <View
+                        android:id="@+id/itemRecyclerParichayIRFTelephoneLv"
+                        android:layout_width="@dimen/item_recycler_parichay_lineview_width"
+                        android:layout_height="@dimen/item_recycler_parichay_lineview_height"
+                        android:layout_marginLeft="@dimen/item_recycler_parichay_process_imageview_padding_left"
+                        android:background="@color/darker_gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/item_recycler_parichay_process_height"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:id="@+id/itemRecyclerParichayIRFTelephoneIv"
+                            android:layout_width="@dimen/item_recycler_parichay_process_height"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_parichay_check"
+                            tools:ignore="ContentDescription" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/itemRecyclerParichayIRFTelephoneTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left|center"
+                            android:layout_marginLeft="@dimen/item_recycler_parichay_margin_left"
+                            android:gravity="left|center"
+                            android:singleLine="true"
+                            android:text="@string/sample_parichay_telephone"
+                            android:textColor="@color/darker_gray"
+                            android:textSize="@dimen/item_recycler_parichay_process_textsize"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                    
+                    <!-- Online Written Test-->
+                    
+                     <View
+                        android:id="@+id/itemRecyclerParichayIRFWrittenLv"
+                        android:layout_width="@dimen/item_recycler_parichay_lineview_width"
+                        android:layout_height="@dimen/item_recycler_parichay_lineview_height"
+                        android:layout_marginLeft="@dimen/item_recycler_parichay_process_imageview_padding_left"
+                        android:background="@color/darker_gray" />
+                    
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/item_recycler_parichay_process_height"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:id="@+id/itemRecyclerParichayIRFWrittenIv"
+                            android:layout_width="@dimen/item_recycler_parichay_process_height"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_parichay_check"
+                            tools:ignore="ContentDescription" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/itemRecyclerParichayIRFWrittenTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left|center"
+                            android:layout_marginLeft="@dimen/item_recycler_parichay_margin_left"
+                            android:gravity="left|center"
+                            android:singleLine="true"
+                            android:text="@string/sample_parichay_written"
+                            android:textColor="@color/darker_gray"
+                            android:textSize="@dimen/item_recycler_parichay_process_textsize"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- PR1 -->
+
+                    <View
+                        android:id="@+id/itemRecyclerParichayIRFPR1Lv"
+                        android:layout_width="@dimen/item_recycler_parichay_lineview_width"
+                        android:layout_height="@dimen/item_recycler_parichay_lineview_height"
+                        android:layout_marginLeft="@dimen/item_recycler_parichay_process_imageview_padding_left"
+                        android:background="@color/darker_gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/item_recycler_parichay_process_height"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:id="@+id/itemRecyclerParichayIRFPR1Iv"
+                            android:layout_width="@dimen/item_recycler_parichay_process_height"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_parichay_check"
+                            tools:ignore="ContentDescription" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/itemRecyclerParichayIRFPR1Tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left|center"
+                            android:layout_marginLeft="@dimen/item_recycler_parichay_margin_left"
+                            android:gravity="left|center"
+                            android:singleLine="true"
+                            android:text="@string/sample_parichay_pr1"
+                            android:textColor="@color/darker_gray"
+                            android:textSize="@dimen/item_recycler_parichay_process_textsize"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- PR2 -->
+
+                    <View
+                        android:id="@+id/itemRecyclerParichayIRFPR2Lv"
+                        android:layout_width="@dimen/item_recycler_parichay_lineview_width"
+                        android:layout_height="@dimen/item_recycler_parichay_lineview_height"
+                        android:layout_marginLeft="@dimen/item_recycler_parichay_process_imageview_padding_left"
+                        android:background="@color/darker_gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/item_recycler_parichay_process_height"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:id="@+id/itemRecyclerParichayIRFPR2Iv"
+                            android:layout_width="@dimen/item_recycler_parichay_process_height"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_parichay_check"
+                            tools:ignore="ContentDescription" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/itemRecyclerParichayIRFPR2Tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left|center"
+                            android:layout_marginLeft="@dimen/item_recycler_parichay_margin_left"
+                            android:gravity="left|center"
+                            android:singleLine="true"
+                            android:text="@string/sample_parichay_pr2"
+                            android:textColor="@color/darker_gray"
+                            android:textSize="@dimen/item_recycler_parichay_process_textsize"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- HR -->
+
+                    <View
+                        android:id="@+id/itemRecyclerParichayIRFHRLv"
+                        android:layout_width="@dimen/item_recycler_parichay_lineview_width"
+                        android:layout_height="@dimen/item_recycler_parichay_lineview_height"
+                        android:layout_marginLeft="@dimen/item_recycler_parichay_process_imageview_padding_left"
+                        android:background="@color/darker_gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/item_recycler_parichay_process_height"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:id="@+id/itemRecyclerParichayIRFHRIv"
+                            android:layout_width="@dimen/item_recycler_parichay_process_height"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_parichay_check"
+                            tools:ignore="ContentDescription" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/itemRecyclerParichayIRFHRTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left|center"
+                            android:layout_marginLeft="@dimen/item_recycler_parichay_margin_left"
+                            android:gravity="left|center"
+                            android:singleLine="true"
+                            android:text="@string/sample_parichay_hr"
+                            android:textColor="@color/darker_gray"
+                            android:textSize="@dimen/item_recycler_parichay_process_textsize"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/itemRecyclerParichayIRFJoined"
+                        android:layout_width="@dimen/item_recycler_parichay_lineview_width"
+                        android:layout_height="@dimen/item_recycler_parichay_lineview_height"
+                        android:layout_marginLeft="@dimen/item_recycler_parichay_process_imageview_padding_left"
+                        android:background="@color/darker_gray" />
+                    
+                    <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/itemRecyclerParichayIRFReasonTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left|center"
+                            android:gravity="left|center"
+                            android:singleLine="true"
+                            android:padding="4dp"
+                            android:visibility="gone"
+                            android:text="@string/sample_parichay_hr"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/item_recycler_parichay_process_textsize"
+                            android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/itemRecyclerParichayIRFInstallmentLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:orientation="vertical" >
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/itemRecyclerParichayIRFInstallementTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:layout_marginLeft="@dimen/item_recycler_parichay_installment_text_padding_left"
+                        android:background="@drawable/shape_by_orange_fill"
+                        android:gravity="left|center"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        android:paddingTop="4dp"
+                        android:text="@string/sample_parichay_installement_text"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/item_recycler_parichay_process_textsize"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="@dimen/item_recycler_parichay_lineview_width"
+                        android:layout_height="@dimen/item_recycler_parichay_lineview_height"
+                        android:layout_gravity="center"
+                        android:background="@color/orange" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/item_recycler_parichay_lineview_width"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/item_recycler_parichay_installment_padding_left"
+                        android:layout_marginRight="@dimen/item_recycler_parichay_installment_padding_left"
+                        android:background="@color/orange" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal" >
+
+                        <!-- Installement1 -->
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical" >
+
+                            <View
+                                android:layout_width="@dimen/item_recycler_parichay_lineview_width"
+                                android:layout_height="@dimen/item_recycler_parichay_lineview_height"
+                                android:layout_gravity="center"
+                                android:background="@color/orange" />
+
+                            <ImageView
+                                android:id="@+id/itemRecyclerParichayIRFInstallment1Iv"
+                                android:layout_width="@dimen/item_recycler_parichay_process_height"
+                                android:layout_height="@dimen/item_recycler_parichay_process_height"
+                                android:layout_gravity="center"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/ic_parichay_check"
+                                tools:ignore="ContentDescription" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/itemRecyclerParichayIRFInstallment1Tv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="4dp"
+                                android:gravity="center"
+                                android:singleLine="true"
+                                android:text="@string/sample_parichay_installment1"
+                                android:textColor="@color/orange"
+                                android:textSize="@dimen/item_recycler_parichay_process_textsize"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <!-- Installment2 -->
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical" >
+
+                            <View
+                                android:layout_width="@dimen/item_recycler_parichay_lineview_width"
+                                android:layout_height="@dimen/item_recycler_parichay_lineview_height"
+                                android:layout_gravity="center"
+                                android:background="@color/orange" />
+
+                            <ImageView
+                                android:id="@+id/itemRecyclerParichayIRFInstallment2Iv"
+                                android:layout_width="@dimen/item_recycler_parichay_process_height"
+                                android:layout_height="@dimen/item_recycler_parichay_process_height"
+                                android:layout_gravity="center"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/ic_parichay_check"
+                                tools:ignore="ContentDescription" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/itemRecyclerParichayIRFInstallment2Tv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="4dp"
+                                android:gravity="center"
+                                android:singleLine="true"
+                                android:text="@string/sample_parichay_installment2"
+                                android:textColor="@color/orange"
+                                android:textSize="@dimen/item_recycler_parichay_process_textsize"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <!-- Installment3 -->
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical" >
+
+                            <View
+                                android:layout_width="@dimen/item_recycler_parichay_lineview_width"
+                                android:layout_height="@dimen/item_recycler_parichay_lineview_height"
+                                android:layout_gravity="center"
+                                android:background="@color/orange" />
+
+                            <ImageView
+                                android:id="@+id/itemRecyclerParichayIRFInstallment3Iv"
+                                android:layout_width="@dimen/item_recycler_parichay_process_height"
+                                android:layout_height="@dimen/item_recycler_parichay_process_height"
+                                android:layout_gravity="center"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/ic_parichay_check"
+                                tools:ignore="ContentDescription" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/itemRecyclerParichayIRFInstallment3Tv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="4dp"
+                                android:gravity="center"
+                                android:singleLine="true"
+                                android:text="@string/sample_parichay_installment3"
+                                android:textColor="@color/orange"
+                                android:textSize="@dimen/item_recycler_parichay_process_textsize"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+</com.application.ui.view.MaterialRippleLayout>

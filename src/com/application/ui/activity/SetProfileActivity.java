@@ -276,6 +276,14 @@ public class SetProfileActivity extends AppCompatActivity{
 			}
 		});
 		
+		mProfileCirleIv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				getPhotoFromGallery();
+			}
+		});
+		
 		mDOBEv.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -839,17 +847,20 @@ public class SetProfileActivity extends AppCompatActivity{
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			
-			if(mProgressDialog!=null){
-				mProgressDialog.dismiss();
-			}
-			if (isSuccess) {
-				parseDataFromApi(mResponseFromApi);
-			} else {
-				mErrorMessage = Utilities
-						.getErrorMessageFromApi(mResponseFromApi);
-				Utilities.showCrouton(SetProfileActivity.this, mCroutonViewGroup,
-						mErrorMessage, Style.ALERT);
+			try{
+				if(mProgressDialog!=null){
+					mProgressDialog.dismiss();
+				}
+				if (isSuccess) {
+					parseDataFromApi(mResponseFromApi);
+				} else {
+					mErrorMessage = Utilities
+							.getErrorMessageFromApi(mResponseFromApi);
+					Utilities.showCrouton(SetProfileActivity.this, mCroutonViewGroup,
+							mErrorMessage, Style.ALERT);
+				}
+			}catch(Exception e){
+				FileLog.e(TAG, e.toString());
 			}
 		}
 	}

@@ -764,24 +764,27 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-
-			if (isSuccess) {
-				parseDataFromApi(mResponseFromApi, !sortByAsc);
-			}else{
-				if(sortByAsc){
-					AndroidUtilities.showSnackBar(BirthdayRecyclerActivity.this, Utilities.getErrorMessageFromApi(mResponseFromApi));
+			try{
+				if (isSuccess) {
+					parseDataFromApi(mResponseFromApi, !sortByAsc);
+				}else{
+					if(sortByAsc){
+						AndroidUtilities.showSnackBar(BirthdayRecyclerActivity.this, Utilities.getErrorMessageFromApi(mResponseFromApi));
+					}
 				}
-			}
-			
+				
 
-			if (mProgressDialog != null) {
-				mProgressDialog.dismiss();
-			}
+				if (mProgressDialog != null) {
+					mProgressDialog.dismiss();
+				}
 
-			if (mSwipeRefreshLayout.isRefreshing()) {
-				mToolBarMenuRefresh.setVisibility(View.VISIBLE);
-				mToolBarMenuRefreshProgress.setVisibility(View.GONE);
-				mSwipeRefreshLayout.setRefreshing(false);
+				if (mSwipeRefreshLayout.isRefreshing()) {
+					mToolBarMenuRefresh.setVisibility(View.VISIBLE);
+					mToolBarMenuRefreshProgress.setVisibility(View.GONE);
+					mSwipeRefreshLayout.setRefreshing(false);
+				}
+			}catch(Exception e){
+				FileLog.e(TAG, e.toString());
 			}
 		}
 	}

@@ -324,6 +324,14 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 			}
 		});
 		
+		mProfileCirleIv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				getPhotoFromGallery();
+			}
+		});
+		
 		mDOBEv.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {

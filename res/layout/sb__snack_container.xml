@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.application.ui.view.SnackContainer
+        android:id="@+id/snackContainer"
+        style="@style/SnackBar.Container" >
+    </com.application.ui.view.SnackContainer>
+
+</FrameLayout>

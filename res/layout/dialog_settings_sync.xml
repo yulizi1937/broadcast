@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RadioGroup
+        android:id="@+id/dialogSyncRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent" >
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/dialogSyncRadioButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+            android:text="@string/sample_fragment_settings_dialog_sync_freq1"
+            android:textColor="@color/toolbar_background"
+            android:textSize="@dimen/fragment_settings_option_size" />
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/dialogSyncRadioButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+            android:text="@string/sample_fragment_settings_dialog_sync_freq2"
+            android:textColor="@color/toolbar_background"
+            android:textSize="@dimen/fragment_settings_option_size" />
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/dialogSyncRadioButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+            android:text="@string/sample_fragment_settings_dialog_sync_freq3"
+            android:textColor="@color/toolbar_background"
+            android:textSize="@dimen/fragment_settings_option_size" />
+        
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/dialogSyncRadioButton4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+            android:text="@string/sample_fragment_settings_dialog_sync_freq4"
+            android:textColor="@color/toolbar_background"
+            android:textSize="@dimen/fragment_settings_option_size" />
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/dialogSyncRadioButton5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+            android:text="@string/sample_fragment_settings_dialog_sync_freq5"
+            android:textColor="@color/toolbar_background"
+            android:textSize="@dimen/fragment_settings_option_size" />
+        
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/dialogSyncRadioButton6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+            android:text="@string/sample_fragment_settings_dialog_sync_freq6"
+            android:textColor="@color/toolbar_background"
+            android:textSize="@dimen/fragment_settings_option_size" />
+        
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/dialogSyncRadioButton7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:padding="@dimen/fragment_quiz_selective_quiz_option_padding"
+            android:text="@string/sample_fragment_settings_dialog_sync_freq7"
+            android:textColor="@color/toolbar_background"
+            android:textSize="@dimen/fragment_settings_option_size" />
+    </RadioGroup>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/dialogSyncButton"
+        android:layout_width="@dimen/dialog_progress_download_cancel_width"
+        android:layout_height="@dimen/dialog_progress_download_cancel_height"
+        android:layout_gravity="end|center"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="@string/button_submit"
+        android:textColor="@color/toolbar_background"
+        android:textSize="@dimen/dialog_progress_download_cancel_text_size"
+        tools:ignore="RtlHardcoded" />
+
+</LinearLayout>

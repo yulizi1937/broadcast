@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.application.ui.view.ScrimInsetsFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:circleimageview="http://schemas.android.com/apk/res-auto"
+    xmlns:ripple="http://schemas.android.com/apk/res-auto"
+    xmlns:scrim="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerRootLayout"
+    android:layout_width="270dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:background="#80111111"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    scrim:scrimInsetForeground="#4000" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@android:color/white"
+        android:padding="16dp" >
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/layoutDrawerSearchMotherSearchBy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="16dp"
+            android:gravity="start|center"
+            android:text="@string/layout_drawer_search_mother_search_by"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/login_textview_size" />
+
+        <View
+            android:id="@+id/layoutDrawerSearchMotherSearchByDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@id/layoutDrawerSearchMotherSearchBy"
+            android:background="@android:color/darker_gray" />
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/layoutDrawerSearchMotherSearchLocalCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutDrawerSearchMotherSearchByDivider"
+            android:checked="true"
+            android:padding="@dimen/layout_drawer_search_mother_checkbox_padding"
+            android:text="@string/layout_drawer_search_mother_search_local"
+            android:textColor="@color/drawer_item_title"
+            android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/layoutDrawerSearchMotherSearchWebCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutDrawerSearchMotherSearchLocalCheckbox"
+            android:checked="false"
+            android:padding="@dimen/layout_drawer_search_mother_checkbox_padding"
+            android:text="@string/layout_drawer_search_mother_search_web"
+            android:textColor="@color/drawer_item_title"
+            android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+
+        <RelativeLayout
+            android:id="@+id/layoutDrawerSearchMotherSearchForLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutDrawerSearchMotherSearchWebCheckbox" >
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/layoutDrawerSearchMotherSearchFor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="start|center"
+                android:text="@string/layout_drawer_search_mother_search_for"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/login_textview_size" />
+
+            <View
+                android:id="@+id/layoutDrawerSearchMotherSearchForDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@id/layoutDrawerSearchMotherSearchFor"
+                android:background="@android:color/darker_gray" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/layoutDrawerSearchMotherSearchAllCheckbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutDrawerSearchMotherSearchForDivider"
+                android:checked="true"
+                android:padding="@dimen/layout_drawer_search_mother_checkbox_padding"
+                android:text="@string/layout_drawer_search_mother_search_all"
+                android:textColor="@color/drawer_item_title"
+                android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/layoutDrawerSearchMotherSearchAudioCheckbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutDrawerSearchMotherSearchAllCheckbox"
+                android:checked="false"
+                android:padding="@dimen/layout_drawer_search_mother_checkbox_padding"
+                android:text="@string/layout_drawer_search_mother_search_audio"
+                android:textColor="@color/drawer_item_title"
+                android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/layoutDrawerSearchMotherSearchByCheckbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutDrawerSearchMotherSearchAudioCheckbox"
+                android:checked="false"
+                android:padding="@dimen/layout_drawer_search_mother_checkbox_padding"
+                android:text="@string/layout_drawer_search_mother_search_by_text"
+                android:textColor="@color/drawer_item_title"
+                android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/layoutDrawerSearchMotherSearchDocCheckbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutDrawerSearchMotherSearchByCheckbox"
+                android:checked="false"
+                android:padding="@dimen/layout_drawer_search_mother_checkbox_padding"
+                android:text="@string/layout_drawer_search_mother_search_doc"
+                android:textColor="@color/drawer_item_title"
+                android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/layoutDrawerSearchMotherSearchFeedbackCheckbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutDrawerSearchMotherSearchDocCheckbox"
+                android:checked="false"
+                android:padding="@dimen/layout_drawer_search_mother_checkbox_padding"
+                android:text="@string/layout_drawer_search_mother_search_feedback"
+                android:textColor="@color/drawer_item_title"
+                android:textSize="@dimen/fragment_quiz_selective_quiz_option_size"
+                android:visibility="gone" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/layoutDrawerSearchMotherSearchImageCheckbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutDrawerSearchMotherSearchFeedbackCheckbox"
+                android:checked="false"
+                android:padding="@dimen/layout_drawer_search_mother_checkbox_padding"
+                android:text="@string/layout_drawer_search_mother_search_image"
+                android:textColor="@color/drawer_item_title"
+                android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/layoutDrawerSearchMotherSearchLiveStreamCheckbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutDrawerSearchMotherSearchImageCheckbox"
+                android:checked="false"
+                android:padding="@dimen/layout_drawer_search_mother_checkbox_padding"
+                android:text="@string/layout_drawer_search_mother_search_livestream"
+                android:textColor="@color/drawer_item_title"
+                android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/layoutDrawerSearchMotherSearchTextCheckbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutDrawerSearchMotherSearchLiveStreamCheckbox"
+                android:checked="false"
+                android:padding="@dimen/layout_drawer_search_mother_checkbox_padding"
+                android:text="@string/layout_drawer_search_mother_search_text"
+                android:textColor="@color/drawer_item_title"
+                android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/layoutDrawerSearchMotherSearchVideoCheckbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutDrawerSearchMotherSearchTextCheckbox"
+                android:checked="false"
+                android:padding="@dimen/layout_drawer_search_mother_checkbox_padding"
+                android:text="@string/layout_drawer_search_mother_search_video"
+                android:textColor="@color/drawer_item_title"
+                android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/layoutDrawerSearchMotherSearchQuizCheckbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutDrawerSearchMotherSearchVideoCheckbox"
+                android:checked="false"
+                android:padding="@dimen/layout_drawer_search_mother_checkbox_padding"
+                android:text="@string/layout_drawer_search_mother_search_quiz"
+                android:textColor="@color/drawer_item_title"
+                android:textSize="@dimen/fragment_quiz_selective_quiz_option_size"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</com.application.ui.view.ScrimInsetsFrameLayout>

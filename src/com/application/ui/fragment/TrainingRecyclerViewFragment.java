@@ -1280,44 +1280,47 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			
-			if(!sortByAsc){
-				mLoadMore = false;
-				for(int i = 0; i < mGridColumn;i++){
-					mArrayListTraining.remove(mArrayListTraining.size()-1);
+			try{
+				if(!sortByAsc){
+					mLoadMore = false;
+					for(int i = 0; i < mGridColumn;i++){
+						mArrayListTraining.remove(mArrayListTraining.size()-1);
+					}
+					mRecyclerView.getAdapter().notifyDataSetChanged();
 				}
-				mRecyclerView.getAdapter().notifyDataSetChanged();
-			}
-			
-			if (isSuccess) {
-				parseDataFromApi(mResponseFromApi, !sortByAsc);
-				if(sortByAsc){
-					if(isAutoRefresh){
-						setNewAvailBubbleLayout();
+				
+				if (isSuccess) {
+					parseDataFromApi(mResponseFromApi, !sortByAsc);
+					if(sortByAsc){
+						if(isAutoRefresh){
+							setNewAvailBubbleLayout();
+						}
+					}
+				}else{
+					if(sortByAsc){
+						if(!isAutoRefresh){
+							AndroidUtilities.showSnackBar(getActivity(), Utilities.getErrorMessageFromApi(mResponseFromApi));	
+						}
 					}
 				}
-			}else{
+				
 				if(sortByAsc){
-					if(!isAutoRefresh){
-						AndroidUtilities.showSnackBar(getActivity(), Utilities.getErrorMessageFromApi(mResponseFromApi));	
-					}
+					refreshFeedActionFromApi(isAutoRefresh);
 				}
-			}
-			
-			if(sortByAsc){
-				refreshFeedActionFromApi(isAutoRefresh);
-			}
 
-			if(mProgressDialog!=null){
-				mProgressDialog.dismiss();
-			}
-			
-			if(mProgressDialog!=null){
-				mProgressDialog.dismiss();
-			}
-			
-			if(mSwipeRefreshLayout.isRefreshing()){
-				mSwipeRefreshLayout.setRefreshing(false);
+				if(mProgressDialog!=null){
+					mProgressDialog.dismiss();
+				}
+				
+				if(mProgressDialog!=null){
+					mProgressDialog.dismiss();
+				}
+				
+				if(mSwipeRefreshLayout.isRefreshing()){
+					mSwipeRefreshLayout.setRefreshing(false);
+				}
+			}catch(Exception e){
+				FileLog.e(TAG, e.toString());
 			}
 		}
 	}

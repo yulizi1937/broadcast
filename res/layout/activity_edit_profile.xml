@@ -68,6 +68,8 @@
                             android:layout_gravity="top|center"
                             android:layout_marginTop="@dimen/edit_profile_remove_margin_top"
                             android:gravity="center"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
                             android:text="@string/textview_upload_remove"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/set_profile_upload_another_size" />

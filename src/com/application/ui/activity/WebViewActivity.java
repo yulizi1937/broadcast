@@ -28,6 +28,7 @@ import com.application.ui.view.ProgressWheel;
 import com.application.ui.view.SmoothProgressBar;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.ApplicationLoader;
 import com.application.utils.FileLog;
 import com.application.utils.ThemeUtils;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -52,6 +53,8 @@ public class WebViewActivity extends SwipeBackBaseActivity {
 	private Intent mIntent;
     
 	private SmoothProgressBar mSmoothProgressBar;
+	
+	private int whichTheme = 0;
 	
 	private boolean isShareOptionEnable = true;
 	
@@ -197,7 +200,9 @@ public class WebViewActivity extends SwipeBackBaseActivity {
 	
 	private void applyTheme(){
 		try{
+			whichTheme = ApplicationLoader.getPreferences().getAppTheme();
 			ThemeUtils.getInstance(WebViewActivity.this).applyThemeCountrySelect(WebViewActivity.this, WebViewActivity.this, mToolBar);
+			ThemeUtils.applyThemeSmoothProgressBar(whichTheme, mSmoothProgressBar);
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

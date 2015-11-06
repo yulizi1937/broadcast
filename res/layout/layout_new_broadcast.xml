@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutNewBroadcastTv"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top|center"
+    android:layout_marginTop="16dp"
+    android:background="@drawable/shape_new_broadcast"
+    android:gravity="center"
+    android:paddingBottom="7dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="7dp"
+    android:text="@string/new_mobcast_avail"
+    android:textColor="@android:color/white"
+    android:textSize="@dimen/new_broadcast_text_size"
+    android:textStyle="bold" />

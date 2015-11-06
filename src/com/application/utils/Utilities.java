@@ -510,6 +510,18 @@ public class Utilities {
             return String.format("%.1f GB", size / 1024.0f / 1024.0f / 1024.0f);
         }
     }
+    
+    public static String formatFileSize(double size) {
+        if (size < 1024) {
+            return String.format("%d B", size);
+        } else if (size < 1024 * 1024) {
+            return String.format("%.1f KB", size / 1024.0f);
+        } else if (size < 1024 * 1024 * 1024) {
+            return String.format("%.1f MB", size / 1024.0f / 1024.0f);
+        } else {
+            return String.format("%.1f GB", size / 1024.0f / 1024.0f / 1024.0f);
+        }
+    }
 
     public static byte[] decodeQuotedPrintable(final byte[] bytes) {
         if (bytes == null) {
@@ -697,6 +709,18 @@ public class Utilities {
 		try{
 			long mCurrentTimeMillis = System.currentTimeMillis();
 			SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date mDate = new Date(mCurrentTimeMillis);
+			return mDateFormat.format(mDate);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return "2020-01-01";
+	}
+	
+	@SuppressLint("SimpleDateFormat") public static String getCurrentTime(){
+		try{
+			long mCurrentTimeMillis = System.currentTimeMillis();
+			SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			Date mDate = new Date(mCurrentTimeMillis);
 			return mDateFormat.format(mDate);
 		}catch(Exception e){
@@ -1163,6 +1187,23 @@ public class Utilities {
 			SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date contentTime;
 			contentTime = dateFormatter.parse(mDate + " " + mTime);
+			Calendar mCal = Calendar.getInstance();
+			mCal.setTime(contentTime);
+			return mCal.getTimeInMillis();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Calendar.getInstance().getTimeInMillis();
+		}
+
+	}
+	
+	@SuppressLint("SimpleDateFormat") 
+	public static long getMilliSecond(String mDateTime) {
+		try {
+			SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date contentTime;
+			contentTime = dateFormatter.parse(mDateTime);
 			Calendar mCal = Calendar.getInstance();
 			mCal.setTime(contentTime);
 			return mCal.getTimeInMillis();
@@ -1700,16 +1741,18 @@ public class Utilities {
 	public static ArrayList<Theme> getThemeList(){
 		ArrayList<Theme> mList = new ArrayList<>();
 		int i = ApplicationLoader.getPreferences().getAppTheme();
-		Theme Obj1 = new Theme("#ff254E7A", i==0?true:false);
-		Theme Obj2 = new Theme("#ff3F51B5", i==1?true:false);
-		Theme Obj3 = new Theme("#ff4CB050", i==2?true:false);
-		Theme Obj4 = new Theme("#ffE91E63", i==3?true:false);
-		Theme Obj5 = new Theme("#ff009688", i==4?true:false);
-		Theme Obj6 = new Theme("#ff795548", i==5?true:false);
-		Theme Obj7 = new Theme("#ff607D8B", i==5?true:false);
-		Theme Obj8 = new Theme("#ffFFC107", i==5?true:false);
-		Theme Obj9 = new Theme("#ffFF9800", i==5?true:false);
-		Theme Obj10 = new Theme("#ff2196F3", i==5?true:false);
+		Theme Obj1  = new Theme("#ff254E7A", i==0 ?true:false);
+		Theme Obj2  = new Theme("#ff3F51B5", i==1 ?true:false);
+		Theme Obj3  = new Theme("#ff4CB050", i==2 ?true:false);
+		Theme Obj4  = new Theme("#ffE91E63", i==3 ?true:false);
+		Theme Obj5  = new Theme("#ff009688", i==4 ?true:false);
+		Theme Obj6  = new Theme("#ff795548", i==5 ?true:false);
+		Theme Obj7  = new Theme("#ff607D8B", i==6 ?true:false);
+		Theme Obj8  = new Theme("#ffFFC107", i==7 ?true:false);
+		Theme Obj9  = new Theme("#ffFF9800", i==8 ?true:false);
+		Theme Obj10 = new Theme("#ff2196F3", i==9 ?true:false);
+		Theme Obj11 = new Theme("#ffF44336", i==10?true:false);
+		Theme Obj12 = new Theme("#ff9C27B0", i==11?true:false);
 		
 		mList.add(Obj1);
 		mList.add(Obj2);
@@ -1721,6 +1764,8 @@ public class Utilities {
 		mList.add(Obj8);
 		mList.add(Obj9);
 		mList.add(Obj10);
+		mList.add(Obj11);
+		mList.add(Obj12);
 		return mList;
 	}
 	
@@ -1762,6 +1807,7 @@ public class Utilities {
 			mContext.getContentResolver().delete(DBConstant.Training_File_Columns.CONTENT_URI, null, null);
 			mContext.getContentResolver().delete(DBConstant.Mobcast_Feedback_Columns.CONTENT_URI, null, null);
 			mContext.getContentResolver().delete(DBConstant.Training_Quiz_Columns.CONTENT_URI, null, null);
+			mContext.getContentResolver().delete(DBConstant.Parichay_Referral_Columns.CONTENT_URI, null, null);
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -1818,6 +1864,71 @@ public class Utilities {
         hsv[2] *= 1.1f;
         return Color.HSVToColor(hsv);
     }
+    
+    public static String getStatusMessageForParichayReferral(Cursor mCursor){
+		StringBuilder mMessage = new StringBuilder(" ");
+		try{
+			mMessage.append("Your referred candidate " + mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_NAME)));
+			mMessage.append(" for " + mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_FOR)));
+			int mInstall3 = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL3)));
+			int mInstall2 = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL2)));
+			int mInstall1 = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL1)));
+			
+			int mHR = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_HR)));
+			int mPR2 = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_PR2)));
+			int mPR1 = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_PR1)));
+			int mOnline = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_ONLINE)));
+			int mTelephonic = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_TELEPHONIC)));
+			String mReason = mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REASON));
+			
+			if(mInstall3==1){
+				mMessage.append(" has joined. You'll get your installment 3.");
+			}else if(mInstall2==1){
+				mMessage.append(" has joined. You'll get your installment 2.");
+			}else if(mInstall1==1){
+				mMessage.append(" has joined. You'll get your installment 1.");
+			}else if(mHR!=0){
+				if(mHR==2){
+					mMessage.append(" has been rejected at HR interview.With reason " + mReason);	
+				}else if(mHR==1){
+					mMessage.append(" has joined our company.");
+				}
+			}else if(mPR2!=0){
+				if(mPR2==2){
+					mMessage.append(" has been rejected at Personal Round 2. With reason " + mReason);	
+				}else if(mPR2==1){
+					mMessage.append(" has cleared Personal Round 2.");
+				}
+			}else if(mPR1!=0){
+				if(mPR1==2){
+					mMessage.append(" has been rejected at Personal Round 1. With reason " + mReason);	
+				}else if(mPR1==1){
+					mMessage.append(" has cleared Personal Round 1.");
+				}
+			}else if(mOnline!=0){
+				if(mOnline==2){
+					mMessage.append(" has been rejected at Online Written. With reason "+mReason);	
+				}else if(mOnline==1){
+					mMessage.append(" has cleared Online Written.");
+				}
+			}else if(mOnline!=0){
+				if(mOnline==2){
+					mMessage.append(" has been rejected at Online Written. With reason "+mReason);	
+				}else if(mOnline==1){
+					mMessage.append(" has cleared Online Written.");
+				}
+			}else if(mTelephonic!=0){
+				if(mTelephonic==2){
+					mMessage.append(" has been rejected at Telephonic Round. With reason "+mReason);	
+				}else if(mTelephonic==1){
+					mMessage.append(" has cleared Telephonic round.");
+				}
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return mMessage.toString();
+	}
 
 
 	@SuppressWarnings("resource")

@@ -487,6 +487,28 @@ public class AppPreferences {
 		return misCropWork;
 	}
 	
+	public void setAppSendPackets(String AppSendPackets) {
+		editor = sharedPreferences.edit();
+		editor.putString("AppSendPackets", AppSendPackets);
+		editor.commit();
+	}
+
+	public String getAppSendPackets() {
+		String AppSendPackets = sharedPreferences.getString("AppSendPackets", null);
+		return AppSendPackets;
+	}
+	
+	public void setAppReceivePackets(String AppReceivePackets) {
+		editor = sharedPreferences.edit();
+		editor.putString("AppReceivePackets", AppReceivePackets);
+		editor.commit();
+	}
+
+	public String getAppReceivePackets() {
+		String AppReceivePackets = sharedPreferences.getString("AppReceivePackets", null);
+		return AppReceivePackets;
+	}
+	
 	/**
 	 * RecyclerView : Save Position 
 	 */

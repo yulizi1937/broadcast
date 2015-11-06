@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="app_name">Mobcast </string>
+    <string name="LanguageName">मराठी </string>
+    <string name="LanguageNameInEnglish">Marathi </string>
+    <string name="LanguageCode">mr </string>
+    <string name="speak_now">बोल आता  </string>
+    <string name="internet_unavailable">आपले इंटरनेट कनेक्शन तपासा करा! </string>
+    <string name="relogin_title">पुन्हा लॉग इन करा!  </string>
+    <string name="relogin_message">आपण कृपया पुन्हा लॉगिन करणे आवश्यक आहे. </string>
+    <string name="sync_failed">उपलब्ध नाही इंटरनेट म्हणून अयशस्वी </string>
+    <string name="sync_passed">येथे समक्रमित  </string>
+    <string name="feedback_incomplete">प्रतिक्रिया व्यवस्थित भरा!  </string>
+    <string name="resend_otp">आम्ही दुसर्या वर OTP पाठविले आहे  </string>
+    <string name="quiz_incomplete">उत्तरे माहिती करून घ्या व्यवस्थित भरा!  </string>
+    <string name="api_connection_timeout">सर्व्हर प्रतिसाद देत नाही!  </string>
+    <string name="api_unknown_error">काही मिनिटांत पुन्हा प्रयत्न करा!  </string>
+    <string name="share_advertisement">www.mobcast.in : Mobcast अर्ज द्वारे सामायिक करा \ n आम्हाला भेट </string>
+    <string name="file_delete_message">आपली खात्री आहे की या फायली हटवू इच्छिता का?  </string>
+    <string name="logout_title_message">आपली खात्री आहे की आउट लॉग इन करा इच्छिता का?  </string>
+    <string name="content_delete_message">आपली खात्री आहे की हटवू इच्छिता  </string>
+    <string name="button_delete">हटवा  </string>
+    <string name="update_title_message">एक नवीन सुधारणा उपलब्ध आहे!  </string>
+    <string name="update_delete_message">या आवृत्ती यापुढे समर्थित आहे.अनुप्रयोग अद्यतनित करा.  </string>
+    <string name="birthday_title_message">वाढदिवसाच्या शुभेच्छा इच्छा! </string>
+    <string name="birthday_desc_message">आज वाढदिवस येत आपल्या सहकार्यांना ! </string>
+    <string name="update">अद्यतन  </string>
+    <string name="capture_validation">प्रतिमा जोडा करा!  </string>
+    <string name="file_not_available">फाईल उपलब्ध नाही. परत दाबा आणि पुन्हा उघडले करा! आपली खात्री आहे की इंटरनेट उपलब्ध आहे करा  </string>
+    <string name="file_download">कृपया पुन्हा डाउनलोड करा! क्लिक करणे डाउनलोड करून</string>
+    <string name="file_app_not_found">या फाइल उघडू शकतात ते अनुप्रयोग स्थापित करा!  </string>
+    <string name="congratulate_message">आपण फक्त अभिनंदन  </string>
+    <string name="save_message">स्थानिक पातळीवर जतन!</string>
+    <string name="congratulate_message_validation">आपण आधीच अभिनंदन  </string>
+    <string name="wished_message_validation">आपण आधीच शकले असते</string>
+    <string name="logout_content_message">लॉग आउट खूप अनुप्रयोग आणि फाइल्स आपल्या सर्व सामग्री हटवली जातील. </string>
+    <string name="logging_out" tools:ignore="TypographyEllipsis">लॉग आउट ... </string>
+    <string name="showcase_content1" tools:ignore="TypographyEllipsis">आपल्या प्रोफाइल अनुप्रयोग सेटिंग्ज आणि अनेक अद्यतनित करा ... </string>
+    <string name="showcase_content2" tools:ignore="TypographyEllipsis">आपल्या संस्थेच्या घटना अद्ययावत, अप आणि अनेक पूर्ण ... </string>
+    <string name="showcase_content3" tools:ignore="TypographyEllipsis">आपल्या संस्थेच्या बक्षिसे तारीख, यश आणि अनेक पर्यंत  .... </string>
+    <string name="showcase_content4" tools:ignore="TypographyEllipsis">आपल्या सहकार्यांना वाढदिवस, इच्छा एम आणि अनेक अद्ययावत ... </string>
+    <string name="showcase_content5" tools:ignore="TypographyEllipsis">अनुप्रयोग throughtout सहज सामग्री शोधा ... </string>
+    <string name="showcase_gotit">समजले  </string>
+    <string name="showcase_next">पुढील  </string>
+    <string name="new_mobcast_avail">नवीन  मोब्कॅस्त </string>
+    <string name="new_training_avail">नवीन प्रशिक्षण  </string>
+    <string name="action_settings">सेटिंग्ज  </string>
+    <string name="action_refresh">रिफ्रेश  </string>
+    <string name="action_report">अहवाल  </string>
+    <string name="action_contact">आमच्याशी संपर्क साधा  </string>
+    <string name="action_view_web">ब्राउझर पहा  </string>
+    <string name="action_search">शोध  </string>
+    <string name="action_event">कार्यक्रम  </string>
+    <string name="action_award">पुरस्कार  </string>
+    <string name="action_birthday">वाढदिवस  </string>
+    <string name="action_quiz">उत्तरे माहिती करून घ्या  </string>
+    <string name="action_feedback">अभिप्राय  </string>
+    <string name="search_hint">शोध इशारा  </string>
+    <string name="action_image">प्रतिमा  </string>
+    <string name="action_audio">ऑडिओ  </string>
+    <string name="action_video">व्हिडिओ  </string>
+    <string name="action_text">मजकूर  </string>
+    <string name="action_pdf">पीडीएफ  </string>
+    <string name="action_doc">डॉक </string>
+    <string name="action_xls">XLS </string>
+    <string name="action_ppt">पीपीटी </string>
+    <string name="action_news">बातम्या  </string>
+    <string name="action_about">बद्दल  </string>
+    <string name="action_app_feedback">अनुप्रयोग अभिप्राय  </string>
+    <string name="action_livestream_youtube">YouTube वर लाइव्हस्ट्रीम </string>
+    <string name="action_delete">हटवा </string>
+    <string name="action_info">माहिती  </string>
+    <string name="action_share">सामायिक करा  </string>
+    <string name="action_contact_share">फोनबुक पासून सामायिक करा संपर्क </string>
+    <string name="action_submit">सबमिट  </string>
+    <string name="action_help_mobcast">मोब्कॅस्त  बद्दल  </string>
+    <string name="action_help_video">कसे वापरावे? </string>
+    <string name="action_help_faq">नेहमी विचारले जाणारे प्रश्न </string>
+    <string name="action_add_cal">कॅलेंडरमध्ये जोडा </string>
+    <string name="context_menu_read">मार्क वाचा म्हणून  </string>
+    <string name="context_menu_unread">न वाचलेले म्हणून चिन्हांकित </string>
+    <string name="context_menu_delete">हटवा </string>
+    <string name="context_menu_view">पहा  </string>
+    <string name="context_menu_like">जसे  </string>
+    <string name="context_menu_save">जतन करा  </string>
+    <string name="content_by">करून:  </string>
+    <string name="days_left">बाकी  </string>
+    <string name="going"> जात  </string>
+    <string name="accepted"> स्वीकारले  </string>
+    <string name="maybe"> कदाचित </string>
+    <string name="accept"> स्वीकारा  </string>
+    <string name="notgoing"> झाडाच्या  </string>
+    <string name="congratulated_text"> लोक अभिनंदन! </string>
+    <string name="congratulated_action"> अभिनंदन म्हणू!  </string>
+    <string name="textview_login">आपला मोबाइल नंबर प्रविष्ट करा  </string>
+    <string name="textview_newbroadcast">नवीन प्रसारण  </string>
+    <string name="textview_login_administration">आपण लॉगिन करू शकत नाही तर आपल्या  </string>
+    <string name="button_next">पुढील  </string>
+    <string name="button_download">डाउनलोड </string>
+    <string name="button_download_str">डाउनलोड  </string>
+    <string name="button_cancel" tools:ignore="ButtonCase">रद्द  </string>
+    <string name="LoginActivityTitle">आपला फोन नंबर  </string>
+    <string name="CountrySelectActivityTitle">देश निवडा  </string>
+    <string name="NoResult">परिणाम नाहीत  </string>
+    <string name="hint_country_search">शोध  </string>
+    <string name="textview_verification">आम्ही आपला फोन नंबर सत्यापित करा आणि आपण एक मानवी पुन्हा  सिद्ध करण्यासाठी आपण OTP कोड पाठवू आहे! </string>
+    <string name="button_verify">पडताळणी करा  </string>
+    <string name="button_resend">पुन्हा पाठवू  </string>
+    <string name="textview_verify_administration">एखादा टी एक प्राप्त?? दुसरे मिळवा  </string>
+    <string name="textview_verify_administration_tryagain">चुकीच्या नंबर प्रविष्ट केला? पुन्हा प्रयत्न करा  </string>
+    <string name="validate_verfication_code_empty">योग्य वर OTP वर भरा  </string>
+    <string name="VerificationActivityTitle">OTP पडताळणी  </string>
+    <string name="raise_ticket_info">एक तिकीट लॉग-इन उठविले गेले आहे:  </string>
+    <string name="textview_upload_another">आणखी अपलोड करा </string>
+    <string name="textview_upload_remove">काढा  </string>
+    <string name="hint_email_id">ई-मेल आयडी  </string>
+    <string name="hint_name">नाव  </string>
+    <string name="hint_employee_id">कर्मचारी आयडी </string>
+    <string name="textview_skip">जा  </string>
+    <string name="SetProfileActivityTitle">आपले प्रोफाइल सेट  </string>
+    <string name="AwardRecyclerActivityTitle">पुरस्कार  </string>
+    <string name="EventRecyclerActivityTitle">आगामी कार्यक्रम  </string>
+    <string name="BirthdayRecyclerActivityTitle">वाढदिवस  </string>
+    <string name="EditProfileActivityTitle">प्रोफाइल  </string>
+    <string name="activity_edit_profile_update_btn">अद्यतन  </string>
+    <string name="activity_edit_profile_question">आपले आवडते प्रश्न  </string>
+    <string name="activity_edit_profile_birthday">जन्म तारीख  </string>
+    <string name="activity_edit_profile_answer">आपल्या आवडते प्रश्न आपले उत्तर  </string>
+    <string name="CaptureActivityTitle">कॅप्चर  </string>
+    <string name="RecruitmentRecyclerActivityTitle">भरती  </string>
+    <string name="details">तपशील  </string>
+    <string name="skills">कौशल्य  </string>
+    <string name="jobdescription">कामाचे स्वरूप  </string>
+    <string name="qualification">पात्रता </string>
+    <string name="ctc">सीटीसी </string>
+    <string name="contact">संपर्क </string>
+    <string name="layout_mother_mobcast">मोब्कॅस्त  </string>
+    <string name="layout_mother_chat">गप्पा </string>
+    <string name="layout_mother_training">प्रशिक्षण </string>
+    <string name="layout_drawer_search_mother_search_by">शोध </string>
+    <string name="layout_drawer_search_mother_search_local">डिव्हाइस रोजी </string>
+    <string name="layout_drawer_search_mother_search_web">वेब वर </string>
+    <string name="layout_drawer_search_mother_search_for">साठी शोध </string>
+    <string name="layout_drawer_search_mother_search_video">व्हिडिओ </string>
+    <string name="layout_drawer_search_mother_search_image">प्रतिमा </string>
+    <string name="layout_drawer_search_mother_search_feedback">अभिप्राय </string>
+    <string name="layout_drawer_search_mother_search_quiz">उत्तरे माहिती करून घ्या </string>
+    <string name="layout_drawer_search_mother_search_text">मजकूर </string>
+    <string name="layout_drawer_search_mother_search_audio">ऑडिओ </string>
+    <string name="layout_drawer_search_mother_search_doc">दस्तऐवज </string>
+    <string name="layout_drawer_search_mother_search_by_text">करून </string>
+    <string name="layout_drawer_search_mother_search_all">सर्व </string>
+    <string name="layout_drawer_search_mother_search_livestream">थेट प्रसारण </string>
+    <string name="sample_event_view_map"><![CDATA[ <u>]]>नकाशा पहा <![CDATA[ </u>]]></string>
+    <string name="fragment_event_detail_button_join">सामील व्हा </string>
+    <string name="fragment_event_detail_button_decline">घट </string>
+    <string name="fragment_event_detail_invite">आमंत्रित </string>
+    <string name="fragment_event_detail_going">जात </string>
+    <string name="fragment_event_detail_about">कार्यक्रम </string>
+    <string name="EventDetailActivityTitle">कार्यक्रम </string>
+    <string name="fragment_event_added">इव्हेंट दिनदर्शिका जोडले </string>
+    <string name="fragment_event_add_error">कार्यक्रम कॅलेंडरमध्ये जोडले जाऊ शकत नाही  </string>
+    <string name="button_previous">मागील </string>
+    <string name="button_submit">सादर </string>
+    <string name="button_send">पाठवा </string>
+    <string name="sample_question_header_box">प्रश्न </string>
+    <string name="QuizActivityTitle">उत्तरे माहिती करून घ्या </string>
+    <string name="sample_quiz_score_header_time_taken">एकूण वेळ घेतला </string>
+    <string name="sample_quiz_score_header_score">एकूण धावसंख्या </string>
+    <string name="sample_quiz_score_correct_answer_text">योग्य प्रश्न </string>
+    <string name="sample_quiz_score_statement">आपण निश्चितपणे एक प्रो आहेत! </string>
+    <string name="sample_quiz_score_goofed_up_at">तुमच्याकडे GOOFED जे उत्तर शोधा! </string>
+    <string name="sample_quiz_score_correct_answer">योग्य उत्तर आहे: </string>
+    <string name="fragment_quizscore_thank_you_header">आपल्या मौल्यवान वेळ धन्यवाद! </string>
+    <string name="fragment_quiztimes_up_header">उत्तरे माहिती करून घ्या वेळ मर्यादा आहे!</string>
+    <string name="hint_feedback_subjective_message_edittext">लिहा उत्तर </string>
+    <string name="FeedbackActivityTitle">अभिप्राय </string>
+    <string name="fragment_feedback_thank_you_header">आपल्या मौल्यवान अभिप्रायाबद्दल धन्यवाद! </string>
+    <string name="ImageDetailActivityTitle">चित्र </string>
+    <string name="fragment_image_language_header">उपलब्ध: </string>
+    <string name="AudioDetailActivityTitle">ऑडिओ </string>
+    <string name="sample_live_detail_seekbar">लाइव्ह </string>
+    <string name="VideoDetailActivityTitle">व्हिडिओ </string>
+    <string name="PdfDetailActivityTitle">PDF </string>
+    <string name="DocDetailActivityTitle">दस्तऐवज </string>
+    <string name="PptDetailActivityTitle">सादरीकरण </string>
+    <string name="XlsDetailActivityTitle">एक्सेल </string>
+    <string name="WebViewActivity">वेब </string>
+    <string name="BirthdayProfileActivityTitle">प्रोफाइल </string>
+    <string name="sample_fragment_birthday_profile_send_wishes">शुभेच्छा पाठवा </string>
+    <string name="sample_fragment_birthday_profile_send_sms">एसएमएस पाठवा</string>
+    <string name="AboutActivityTitle">बद्दल </string>
+    <string name="sample_about_version">आवृत्ती 2 </string>
+    <string name="sample_about_version_detail">2015 ALL RIGHTS RESERVED TO MOBCAST </string>
+    <string name="sample_about_send_feedback">प्रतिक्रिया पाठवा </string>
+    <string name="sample_about_send_feedback_detail">आपल्याला काय वाटते ते आम्हाला सांगा</string>
+    <string name="sample_about_report_problem">एक समस्या नोंदवा </string>
+    <string name="sample_about_report_problem_detail">अमेरिकन बग किंवा समस्या सांगू </string>
+    <string name="sample_about_detail">MobCast is the EASIEST and the MOST EFFECTIVE way to broadcast rich content on mobile devices.Enterprises and other entities can leverage this patent pending technology to communicate and build lasting relationship with their customers , employees and other stakeholders.The platform smartly identifies and distinguishes smartphones from feature phones and correspondingly publishes the communication with the application or as an SMS.Built by a team of award winning mobile experts, its notably the only platform of its kind and starts a new and revolutionary chapter in the field of group communication. </string>
+    <string name="sample_about_privacy_policy"><![CDATA[ <u>]]>गोपनीयता धोरण <![CDATA[ <u>]]></string>
+    <string name="sample_report_category_header">वर्ग निवडा </string>
+    <string name="sample_report_category_text">दुसरे काही </string>
+    <string name="sample_report_category_submit">सादर </string>
+    <string name="sample_report_category_hint">आम्हाला बग किंवा समस्या बद्दल कळवा </string>
+    <string name="ReportActivityTitle">अहवाल </string>
+
+    <string-array name="report_category_array">
+        <item>Android </item>
+        <item>Android: ऑडिओ</item>
+        <item>Android: दस्तऐवज </item>
+        <item>Android: अभिप्राय </item>
+        <item>Android: पुरस्कार </item>
+        <item>Android: इव्हेंट </item>
+        <item>Android: प्रतिमा </item>
+        <item>Android: संवादी</item>
+        <item>Android: संवादी </item>
+        <item>Android: लाइव्हस्ट्रीम </item>
+        <item>Android: बातम्या </item>
+        <item>Android:OTP </item>
+        <item>Android:PDF </item>
+        <item>Android: प्रोफाइल </item>
+        <item>Android: पीपीटी </item>
+        <item>Android: पुश </item>
+        <item>Android: सेटिंग्ज </item>
+        <item>Android: मजकूर </item>
+        <item>Android: व्हिडिओ </item>
+        <item>Android: क्विझ </item>
+        <item>Android:Xls </item>
+        <item> Android: कॅप्चर </item>
+        <item> Android: भरती  </item>
+        <item>वेब </item>
+        <item>सामान्य </item>
+        <item>दुसरे काही </item>
+        <item>समर्थन </item>
+    </string-array>
+
+    <string name="sample_app_feedback_hint">आपल्याला काय वाटते ते आम्हाला सांगा</string>
+    <string name="FeedbackAppActivityTitle">अनुप्रयोग अभिप्राय </string>
+
+    <string-array name="feedback_app_array">
+        <item>वैशिष्ट्य </item>
+        <item>अंक </item>
+        <item>वेब </item>
+        <item>सामान्य </item>
+        <item>समर्थन काही </item>
+        <item>આધાર </item>
+    </string-array>
+
+    <string name="sample_fragment_settings_header_general">सामान्य </string>
+    <string name="sample_fragment_settings_general_language_header">भाषा निवडा</string>
+    <string name="sample_fragment_settings_general_language_text">इंग्रजी </string>
+    <string name="sample_fragment_settings_notification_birthday_time_text">9:00 am </string>
+    <string name="sample_fragment_settings_header_notification">सूचना </string>
+    <string name="sample_fragment_settings_notification_birthday_time">येथे वाढदिवस सूचित करा </string>
+    <string name="sample_fragment_settings_notification_birthday_mute">निःशब्द वाढदिवस सूचना </string>
+    <string name="sample_fragment_settings_notification_download_notify">डाउनलोड करा आणि सूचित करा </string>
+    <string name="sample_fragment_settings_notification_anydo">सानुकूल सूचना  </string>
+    <string name="sample_fragment_settings_sync_notification">समक्रमण </string>
+    <string name="sample_fragment_settings_sync_frequency">समक्रमण वारंवारता  </string>
+    <string name="sample_fragment_settings_sync_frquency_text">15 मि </string>
+    <string name="sample_fragment_settings_style_notification">शैली </string>
+    <string name="sample_fragment_settings_style_textfont">मजकूर शैली </string>
+    <string name="sample_fragment_settings_header_about">बद्दल </string>
+    <string name="sample_fragment_settings_about_text">बद्दल Mobcast </string>
+    <string name="sample_fragment_settings_about_build_version_text">आवृत्ती तयार </string>
+    <string name="sample_fragment_settings_about_file_storage_text">अनुप्रयोग स्टोरेज </string>
+    <string name="sample_fragment_settings_dialog_language_title">आपली खात्री आहे की अर्ज भाषा बदलू इच्छिता का? </string>
+    <string name="sample_fragment_settings_dialog_language_positive">ठीक आहे </string>
+    <string name="sample_fragment_settings_dialog_language_negative" tools:ignore="ButtonCase">रद्द </string>
+    <string name="SettingsActivityTitle">सेटिंग्ज </string>
+    <string name="sample_fragment_settings_dialog_birthday_notify_1">09:00 सकाळी </string>
+    <string name="sample_fragment_settings_dialog_birthday_notify_2">12:00 दुपारी </string>
+    <string name="sample_fragment_settings_dialog_birthday_notify_3">03:00 वाजता </string>
+    <string name="sample_fragment_settings_dialog_sync_title">समक्रमण वारंवारता निवडा </string>
+    <string name="sample_fragment_settings_dialog_sync_freq1">प्रत्येक 15 मि </string>
+    <string name="sample_fragment_settings_dialog_sync_freq2">प्रत्येक 30 मि </string>
+    <string name="sample_fragment_settings_dialog_sync_freq3">प्रत्येक 60 मि </string>
+    <string name="sample_fragment_settings_dialog_sync_freq4">दर 4 तास </string>
+
+    <string-array name="birthday_time_array">
+        <item>09:00 सकाळी </item>
+        <item>12:00 दुपारी </item>
+        <item>03:00 वाजता </item>
+    </string-array>
+
+    <string name="LanguageActivityTitle">भाषा निवडा </string>
+    <string name="YouTubeLiveStreamActivityTitle">थेट प्रसारण </string>
+    <string name="fragment_tutorial_header">अधिक फोटो पहा </string>
+    <string name="fragment_tutorial_functionality">झूम चोरणे </string>
+    <string name="fragment_capture_note_hint">टीप </string>
+    <string name="fragment_capture_another_heading">અન્ય છબી સાથે જોડે છે </string>
+    <string name="fragment_capture_attached_heading">संलग्न प्रतिमा </string>
+    <string name="fragment_capture_browse">ब्राउज </string>
+    <string name="fragment_capture_submit">सादर </string>
+    <string name="fragment_capture_takeapic">एक PIC घ्या </string>
+    <string name="CategoryActivityTitle">वर्ग </string>
+    <string name="sample_item_recycler_event_detail_is_going">स्वीकारले </string>
+    <string name="textview_last_sync">गेल्या समक्रमण: </string>
+    <string name="textview_help">मदत </string>
+
+    <string-array name="drawer_array">
+        <item>प्रोफाइल </item>
+        <item>कॅप्चर </item>
+        <item>Parichay</item>
+        <item>कॅप्चर </item>
+        <item>सेटिंग्ज </item>
+        <item>मदत </item>
+        <item>अहवाल </item>
+        <item>अनुप्रयोग अभिप्राय </item>
+        <item>बाहेर पडणे </item>
+        <item>बद्दल </item>
+    </string-array>
+
+    <string name="dialog_birthday_message_textview">0/140 </string>
+    <string name="hint_dialog_birthday_message_edittext">लिहा संदेश </string>
+    <string name="dialog_birthday_message_title">संदेश पाठवा  </string>
+    <string name="dialog_birthday_message_positive">पाठवा </string>
+    <string name="dialog_birthday_message_negative" tools:ignore="ButtonCase">रद्द </string>
+    <string name="dialog_birthday_wish_title">आपली खात्री आहे की इच्छा इच्छिता का?  </string>
+    <string name="dialog_birthday_award_title">आपली खात्री आहे की अभिनंदन करू इच्छित आहे</string>
+    <string name="bs_more">अधिक </string>
+    <string name="error_thumbnail_view">There was an error initializing the YouTubeThumbnailView (%1$s) </string>
+    <string name="error_player">There was an error initializing the YouTubePlayer (%1$s) </string>
+    <string name="loadingLogin" tools:ignore="TypographyEllipsis">मध्ये साइन इन करा ... </string>
+    <string name="loadingRefresh" tools:ignore="TypographyEllipsis">रिफ्रेश करत आहे ... </string>
+    <string name="loadingVerify" tools:ignore="TypographyEllipsis">सत्यापित करीत आहे ... </string>
+    <string name="loadingUpdate" tools:ignore="TypographyEllipsis">अद्यतनित करीत आहे ... </string>
+    <string name="loadingSubmit" tools:ignore="TypographyEllipsis">सादर करीत आहे ... </string>
+    <string name="loadingMessage" tools:ignore="TypographyEllipsis">संदेश पाठवित आहे ...</string>
+    <string name="emptyTitle">आपले स्वागत आहे!  </string>
+    <string name="emptyMessage">तुम्ही तेव्हा ते येथे दर्शविले जातील मोब्कॅस्त  प्राप्त गेलो होतो. </string>
+    <string name="emptyRefresh">रीफ्रेश करा </string>
+    <string name="emptyTrainingTitle">प्रशिक्षण आपले स्वागत आहे! </string>
+    <string name="emptyTrainingMessage">आपण प्रशिक्षण प्राप्त आवृत्तीवर परत कधीही स्विच तेव्हा ते येथे दर्शविले जाईल. </string>
+    <string name="emptyEventTitle">इव्हेंट आपले स्वागत आहे! </string>
+    <string name="emptyEventMessage">आपण कार्यक्रम प्राप्त आवृत्तीवर परत कधीही स्विच तेव्हा ते येथे दर्शविले जाईल. </string>
+    <string name="emptyAwardTitle">पुरस्कार आपले स्वागत आहे! </string>
+    <string name="emptyAwardMessage">आपण पुरस्कार प्राप्त आवृत्तीवर परत कधीही स्विच तेव्हा ते येथे दर्शविले जाईल. </string>
+    <string name="emptyChatTitle">गप्पा आपले स्वागत आहे! </string>
+    <string name="emptyChatMessage">आपण गप्पा प्राप्त आवृत्तीवर परत कधीही स्विच तेव्हा ते येथे दर्शविले जाईल. </string>
+    <string name="emptyCaptureTitle">कॅप्चर आपले स्वागत आहे! </string>
+    <string name="emptyCaptureMessage">आपण प्रतिमा जोडा आवृत्तीवर परत कधीही स्विच  तेव्हा ते येथे दर्शविले जाईल. </string>
+    <string name="emptyBirthdayTitle">वाढदिवस आपले स्वागत आहे! </string>
+    <string name="emptyBirthdayMessage">आपण वाढदिवस प्राप्त आवृत्तीवर परत कधीही स्विच तेव्हा ते येथे दर्शविले जाईल.</string>
+    <string name="emptyRecruitmentTitle">भरती आपले स्वागत आहे! </string>
+    <string name="emptyRecruitmentMessage">आपण भरती प्राप्त आवृत्तीवर परत कधीही स्विच तेव्हा ते येथे दर्शविले जाईल. </string>
+    <string name="emptyRefreshOnSearch">शोधा Online </string>
+
+</resources>

@@ -54,7 +54,7 @@
     <string name="showcase_gotit">GOT IT</string>
     <string name="showcase_next">NEXT</string>
     <string name="new_mobcast_avail">New Mobcast</string>
-    <string name="new_">New</string>
+    <string name="new_">new</string>
     <string name="unread">unread</string>
     <string name="new_training_avail">New Training</string>
 
@@ -224,6 +224,7 @@
     <string name="skills">SKILLS</string>
     <string name="agelimit">AGE LIMIT</string>
     <string name="jobdescription">JOB DESCRIPTION</string>
+    <string name="minexperience">EXPERIENCE</string>
     <string name="qualification">QUALIFICATION</string>
     <string name="ctc">CTC</string>
     <string name="desiredProfile">DESIRED PROFILE</string>
@@ -536,8 +537,10 @@
     <string name="sample_fragment_settings_dialog_sync_freq1">Every 15 mins</string>
     <string name="sample_fragment_settings_dialog_sync_freq2">Every 30 mins</string>
     <string name="sample_fragment_settings_dialog_sync_freq3">Every 60 mins</string>
-    <string name="sample_fragment_settings_dialog_sync_freq4">Every 4 hours</string>
-    <string name="sample_fragment_settings_dialog_sync_freq5">Every 24 hours</string>
+    <string name="sample_fragment_settings_dialog_sync_freq4">Every 2 hours</string>
+    <string name="sample_fragment_settings_dialog_sync_freq5">Every 4 hours</string>
+    <string name="sample_fragment_settings_dialog_sync_freq6">Every 8 hours</string>
+    <string name="sample_fragment_settings_dialog_sync_freq7">Every 24 hours</string>
     <string name="sample_fragment_settings_dialog_theme_title">Choose app theme</string>
 
     <string-array name="langugae_array">
@@ -721,8 +724,8 @@ Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic 
 
     <string-array name="drawer_array">
         <item>Profile</item>
-        <!-- <item>My Office – Attendance &amp; PJP</item> -->
         <item>Capture</item>
+        <item>Parichay</item>
         <item>Recruitment</item>
         <item>Settings</item>
         <item>Help</item>
@@ -730,7 +733,6 @@ Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic 
         <item>App Feedback</item>
         <item>LogOut</item>
         <item>About</item>
-        <item>Parichay</item>
     </string-array>
 
     <!-- dialog_birthday_message -->
@@ -783,7 +785,9 @@ Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic 
     <string name="emptyRecruitmentTitle">Welcome to Recruitment!</string>
     <string name="emptyRecruitmentMessage">When you\'ll receive recruitment, it will show up here.</string>
     <string name="emptyParichayTitle">Welcome to Parichay!</string>
-    <string name="emptyParichayMessage">When you\'ll receive recruitment, it will show up here.</string>
+    <string name="emptyParichayMessage">When you\'ll receive parichay, it will show up here.</string>
+    <string name="emptyParichayReferredTitle">Welcome to Parichay Referred!</string>
+    <string name="emptyParichayReferredMessage">When you\'ll refer parichay, it will show up here.</string>
     <string name="emptyRefreshOnSearch">SEARCH ONLINE</string>
     
     <!-- CropImageView -->

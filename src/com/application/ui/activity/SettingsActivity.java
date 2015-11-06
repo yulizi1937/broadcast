@@ -8,17 +8,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.TrafficStats;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -26,7 +29,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.GridLayoutManager;
@@ -294,6 +296,10 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		
 		if(ApplicationLoader.getPreferences().getSyncFrequency()==60*24){
 			mSyncFrequencyTv.setText("24 hours");
+		}else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*8){
+			mSyncFrequencyTv.setText("8 hours");
+		}else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*2){
+			mSyncFrequencyTv.setText("2 hours");
 		}else if(ApplicationLoader.getPreferences().getSyncFrequency()!=60*4){
 			mSyncFrequencyTv.setText(ApplicationLoader.getPreferences().getSyncFrequency() + " mins");
 		}else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*4){
@@ -336,6 +342,12 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			break;
 		case 9:
 			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_lblue));
+			break;
+		case 10:
+			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_red));
+			break;
+		case 11:
+			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_dpurple));
 			break;
 		default:
 			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_dblue));
@@ -449,16 +461,18 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				/*if(!ApplicationLoader.getPreferences().isDeveloperMode()){
-					if(isDeveloperMode >=3){
-						ApplicationLoader.getPreferences().setDeveloperMode(true);
-						Utilities.showCrouton(SettingsActivity.this, mCroutonViewGroup, getResources().getString(R.string.developer_message), Style.INFO);
-					}else{
-						isDeveloperMode++;
+				if(BuildVars.DEBUG){
+					if(!ApplicationLoader.getPreferences().isDeveloperMode()){
+						if(isDeveloperMode >=3){
+							ApplicationLoader.getPreferences().setDeveloperMode(true);
+							AndroidUtilities.showSnackBar(SettingsActivity.this, getResources().getString(R.string.developer_message));
+						}else{
+							isDeveloperMode++;
+						}
+					}else{//Developer Mode
+						showTrafficDialog();
 					}
-				}else{//Developer Mode
-					showTrafficDialog();
-				}*/
+				}
 			}
 		});
 	}
@@ -578,6 +592,8 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		final AppCompatRadioButton mSyncRadioButton3 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton3);
 		final AppCompatRadioButton mSyncRadioButton4 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton4);
 		final AppCompatRadioButton mSyncRadioButton5 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton5);
+		final AppCompatRadioButton mSyncRadioButton6 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton6);
+		final AppCompatRadioButton mSyncRadioButton7 = (AppCompatRadioButton) mView.findViewById(R.id.dialogSyncRadioButton7);
 		final AppCompatButton mSyncSubmitBtn = (AppCompatButton) mView.findViewById(R.id.dialogSyncButton);
 		try {
 			setMaterialRippleWithGrayOnView(mSyncSubmitBtn);
@@ -587,11 +603,15 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 				mSyncRadioButton2.setChecked(true);
 			}else if(ApplicationLoader.getPreferences().getSyncFrequency()==60){
 				mSyncRadioButton3.setChecked(true);
-			} else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*4){
+			} else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*2){
 				mSyncRadioButton4.setChecked(true);
-			} else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*24){
+			} else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*4){
 				mSyncRadioButton5.setChecked(true);
-			}   
+			} else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*8){
+				mSyncRadioButton6.setChecked(true);
+			} else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*24){
+				mSyncRadioButton7.setChecked(true);
+			}  
 		} catch (Exception e) {
 			FileLog.e(TAG, e.toString());
 		}
@@ -611,9 +631,15 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 					mSyncFreq = 60;
 					break;
 				case R.id.dialogSyncRadioButton4:
-					mSyncFreq = 60*4;
+					mSyncFreq = 60*2;
 					break;
 				case R.id.dialogSyncRadioButton5:
+					mSyncFreq = 60*4;
+					break;
+				case R.id.dialogSyncRadioButton6:
+					mSyncFreq = 60*8;
+					break;
+				case R.id.dialogSyncRadioButton7:
 					mSyncFreq = 60*24;
 					break;
 				}
@@ -749,7 +775,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		
 		final AppCompatDialog  mMateriaLDialog= new AppCompatDialog(SettingsActivity.this);
 		mMateriaLDialog.setContentView(R.layout.dialog_theme_list);
-		mMateriaLDialog.getWindow().setLayout(Utilities.dpToPx(320, getResources()), Utilities.dpToPx(400, getResources()));
+		mMateriaLDialog.getWindow().setLayout(Utilities.dpToPx(320, getResources()), Utilities.dpToPx(450, getResources()));
 		mMateriaLDialog.show();
 
 //		View mView = mMaterialDialog.getCustomView();
@@ -884,6 +910,12 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		case 9 :
 			mDescription = "lblue";
 			break;
+		case 10 :
+			mDescription = "red";
+			break;
+		case 11 :
+			mDescription = "dpurple";
+			break;
 		}
 		isStyleAppTheme= true;
 		updateAppSettingsToApi();
@@ -953,11 +985,11 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	 */
 	
 	private void showTrafficDialog(){
-//		String mTrafficStatics = getTrafficStats();
-		getTrafficStats();
+		String mTrafficStatics = AndroidUtilities.getAppNetworkTraffic();
+//		getTrafficStats();
 		MaterialDialog mMaterialDialog = new MaterialDialog.Builder(SettingsActivity.this)
         .title(getResources().getString(R.string.sample_fragment_settings_dialog_traffic_title))
-//        .content(mTrafficStatics)
+        .content(mTrafficStatics)
         .titleColor(Utilities.getAppColor())
         .positiveText(getResources().getString(R.string.sample_fragment_settings_dialog_language_positive))
         .positiveColor(Utilities.getAppColor())
@@ -1015,9 +1047,9 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			HashMap<Integer, String> appNames=new HashMap<Integer, String>();
 			
 			for (ApplicationInfo app : ctxt.getPackageManager().getInstalledApplications(0)) {
-				if(app.packageName.equalsIgnoreCase(getResources().getString(R.string.package_name))){
+//				if(app.packageName.equalsIgnoreCase(getResources().getString(R.string.package_name))){
 					appNames.put(app.uid, app.packageName);	
-				}
+//				}
 			}
 			
 			for (Integer uid : appNames.keySet()) {

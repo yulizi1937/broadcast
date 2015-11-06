@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- End current session if app sleeps for a period of time -->
+    <integer name="ga_sessionTimeout">300</integer>
+
+    <!-- Enable automatic Activity measurement -->
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <!-- Enable automatic Crash Reporting -->
+    <bool name="ga_reportUncaughtExceptions">true</bool>
+
+    <!-- The property id associated with this analytics tracker -->
+    <!-- UA-49815183-4 -->
+    <string name="ga_trackingId">UA-67132880-1</string>
+    <string name="ga_sampleFrequency">100.0</string>
+    <string name="ga_appVersion">2.0.15</string>
+    <string name="ga_appName">Mobcast</string>
+
+    <!-- Prevent data from appearing in reports. Useful for testing. -->
+    <!-- <bool name="ga_dryRun">false</bool> -->
+    <!-- <string name="ga_logLevel">verbose</string> -->
+
+
+    <!-- The screen names that will appear in reports -->
+    <string name="com.application.ui.activity.SplashActivity">Splash</string>
+    <string name="com.application.ui.activity.LoginActivity">Login</string>
+    <string name="com.application.ui.activity.SetProfileActivity">Set Profile</string>
+    <string name="com.application.ui.activity.EditProfileActivity">Update Profile</string>
+    <string name="com.application.ui.activity.CountrySelectActivity">Select Country</string>
+    <string name="com.application.ui.activity.VerificationActivity">Verification</string>
+    <string name="com.application.ui.activity.AwardRecyclerActivity">Award List</string>
+    <string name="com.application.ui.activity.AwardProfileActivity">Award Profile</string>
+    <string name="com.application.ui.activity.BirthdayRecyclerActivity">Birthday List</string>
+    <string name="com.application.ui.activity.BirthdayProfileActivity">Birthday Profile</string>
+    <string name="com.application.ui.activity.EventRecyclerActivity">Event List</string>
+    <string name="com.application.ui.activity.QuizActivity">Quiz</string>
+    <string name="com.application.ui.activity.QuizScoreActivity">Quiz Score</string>
+    <string name="com.application.ui.activity.FeedbackActivity">Feedback</string>
+    <string name="com.application.ui.activity.EventDetailActivity">Event</string>
+    <string name="com.application.ui.activity.ImageDetailActivity">Image</string>
+    <string name="com.application.ui.activity.ImageFullScreenActivity">Image FullScreen</string>
+    <string name="com.application.ui.activity.AudioDetailActivity">Audio</string>
+    <string name="com.application.ui.activity.VideoDetailActivity">Video</string>
+    <string name="com.application.ui.activity.VideoFullScreenActivity">Video FullScreen</string>
+    <string name="com.application.ui.activity.YouTubeLiveStreamActivity">YouTube LiveStream</string>
+    <string name="com.application.ui.activity.TextDetailActivity">Text</string>
+    <string name="com.application.ui.activity.PdfDetailActivity">Pdf</string>
+    <string name="com.application.ui.activity.DocDetailActivity">Doc</string>
+    <string name="com.application.ui.activity.PptDetailActivity">Ppt</string>
+    <string name="com.application.ui.activity.XlsDetailActivity">Xls</string>
+    <string name="com.application.ui.activity.NewsDetailActivity">News</string>
+    <string name="com.application.ui.activity.InteractiveDetailActivity">Interactive</string>
+    <string name="com.application.ui.activity.WebViewActivity">Browser</string>
+    <string name="com.application.ui.activity.ReportActivity">App Report</string>
+    <string name="com.application.ui.activity.AboutActivity">About</string>
+    <string name="com.application.ui.activity.FeedbackAppActivity">App Feedback</string>
+    <string name="com.application.ui.activity.LanguageActivity">Language</string>
+    <string name="com.application.ui.activity.FileManagerActivity">File Storage</string>
+    <string name="com.application.ui.activity.SimpleRecyclerItemActivity">Category</string>
+    <string name="com.application.ui.activity.TutorialActivity">Help</string>
+    <string name="com.application.ui.activity.SearchActivity">Search</string>
+    <string name="com.application.ui.activity.YouTubeLiveFullScreenActivity">YouTube FullScreen</string>
+    <string name="com.application.ui.activity.ChatDetailActivity">Chat</string>
+    <string name="com.application.ui.activity.CaptureActivity">Capture</string>
+    <string name="com.application.ui.activity.RecruitmentRecyclerActivity">Recruitment List</string>
+    <string name="com.application.ui.activity.RecruitmentDetailActivity">Recruitment</string>
+    <string name="com.application.ui.activity.MotherActivity">Dashboard</string>
+    <string name="com.application.ui.activity.SettingsActivity">Settings</string>
+    <string name="com.application.ui.activity.AnyDoNotificationActivity">Any Do</string>
+    <string name="com.application.ui.activity.ParichayActivity">Parichay</string>
+    <string name="com.application.ui.activity.ParichayDetailActivity">Parichay Detail</string>
+    <string name="com.application.ui.activity.ParichayReferralFormActivity">Parichay Referral Form</string>
+    <string name="com.application.ui.fragment.MobcastRecyclerViewFragment">Mobcast List</string>
+    <string name="com.application.ui.fragment.TrainingRecyclerViewFragment">Training List</string>
+    <string name="com.application.ui.fragment.ChatRecyclerViewFragment">Chat List</string>
+    <string name="com.application.ui.fragment.ParichayFragment">Parichay List</string>
+    <string name="com.application.ui.fragment.ParichayReferralFragment">Parichay Referral List</string>
+
+</resources>

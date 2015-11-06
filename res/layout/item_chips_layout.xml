@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemChipsRootLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="24dp"
+    android:background="@drawable/selector_chips"
+    android:clickable="true"
+    android:orientation="horizontal"
+    tools:ignore="RtlSymmetry" >
+
+    <ImageView
+        android:id="@+id/itemChipsLayoutIv"
+        android:layout_width="24dp"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_chips_download"
+        tools:ignore="ContentDescription" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/itemChipsLayoutTv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingEnd="12dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="12dp"
+        android:paddingStart="8dp"
+        android:text="@string/textview_login"
+        android:textColor="@color/textview_login_color"
+        android:textSize="@dimen/login_textview_size"
+        tools:ignore="RtlHardcoded" />
+
+</LinearLayout>

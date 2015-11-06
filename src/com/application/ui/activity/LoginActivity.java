@@ -680,17 +680,20 @@ public class LoginActivity extends AppCompatActivity {
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			
-			if(mProgressDialog!=null){
-				mProgressDialog.dismiss();
-			}
-			if (isSuccess) {
-				parseDataFromApi(mResponseFromApi);
-			} else {
-				mErrorMessage = Utilities
-						.getErrorMessageFromApi(mResponseFromApi);
-				Utilities.showCrouton(LoginActivity.this, mCroutonViewGroup,
-						mErrorMessage, Style.ALERT);
+			try{
+				if(mProgressDialog!=null){
+					mProgressDialog.dismiss();
+				}
+				if (isSuccess) {
+					parseDataFromApi(mResponseFromApi);
+				} else {
+					mErrorMessage = Utilities
+							.getErrorMessageFromApi(mResponseFromApi);
+					Utilities.showCrouton(LoginActivity.this, mCroutonViewGroup,
+							mErrorMessage, Style.ALERT);
+				}
+			}catch(Exception e){
+				FileLog.e(TAG, e.toString());
 			}
 		}
 	}

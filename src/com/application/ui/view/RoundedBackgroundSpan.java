@@ -62,6 +62,12 @@ public class RoundedBackgroundSpan extends ReplacementSpan {
 		case 9:
 			paint.setColor(Color.parseColor("#FE9915"));//text color
 			break;
+		case 10:
+			paint.setColor(Color.parseColor("#3F51B5"));//text color
+			break;
+		case 11:
+			paint.setColor(Color.parseColor("#FF4081"));//text color
+			break;
 		default:
 			paint.setColor(Color.parseColor("#FF0000"));//background color	
 			break;

@@ -52,6 +52,7 @@ public class AppConstants {
 		public static final String API_FETCH_FEED_BIRTHDAY  = API_URL + "fetchFeedBirthday";
 		public static final String API_FETCH_FEED_PARICHAYREF= API_URL + "fetchFeedParichayReferral";
 		public static final String API_FETCH_FEED_ACTION    = API_URL + "fetchFeedAction";
+		public static final String API_FETCH_FEED_ACTION_PAR= API_URL + "fetchFeedActionParichay";
 		public static final String API_SYNC                 = API_URL + "syncMobcastData";
 		public static final String API_UPDATE_REPORT        = API_URL + "updateUserReport";
 		public static final String API_UPDATE_REMOTE_REPORT = API_URL + "updateUserRemoteReport";
@@ -123,7 +124,7 @@ public class AppConstants {
 		public static final String lastBirthdayId          = "lastBirthdayId";
 		public static final String lastRecruitmentId       = "lastRecruitmentId";
 		public static final String lastParichayId          = "lastParichayId";
-		public static final String lastParichayReferralId  = "lastParichayReferralId";
+		public static final String lastReferralId		   = "lastReferralId";
 		public static final String mobcast                 = "mobcast";
 		public static final String training                = "training";
 		public static final String chat                    = "chat";
@@ -448,6 +449,7 @@ public class AppConstants {
 		public static final int UPDATEAPP = 18;
 		public static final int BIRTHDAY  = 19;
 		public static final int PARICHAY  = 20;
+		public static final int REFERRAL  = 21;
 	}
 	
 	public interface TRAINING{
@@ -501,6 +503,7 @@ public class AppConstants {
 		public static final String SYNCFREQUENCY    = "syncFrequency";
 		public static final String RECRUITMENT      = "recruitment";
 		public static final String PARICHAY         = "parichay";
+		public static final String PARICHAYREF      = "parichayReferred";
 		public static final String REFERRAL         = "referral";
 		public static final String RELOGIN          = "relogin";
 		public static final String LOGIN            = "login";

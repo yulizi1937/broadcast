@@ -12,6 +12,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Hashtable;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
@@ -21,14 +22,18 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.net.TrafficStats;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.StateSet;
@@ -728,6 +733,40 @@ public class AndroidUtilities {
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
+	}
+	
+	public static String getAppNetworkTraffic() {
+		String mUsage = "Traffic Usage: \n";
+		try {
+			final PackageManager pm = ApplicationLoader.getApplication().getPackageManager();
+			List<ApplicationInfo> packages = pm.getInstalledApplications(0);
+			for (ApplicationInfo packageInfo : packages) {
+				// get the UID for the selected app
+				if (packageInfo.packageName.equalsIgnoreCase(ApplicationLoader.getApplication().getResources().getString(R.string.package_name))) {
+					int UID = packageInfo.uid;
+					double received = (double) TrafficStats.getUidRxBytes(UID);
+					double send = (double) TrafficStats.getUidTxBytes(UID);
+					
+					if(!TextUtils.isEmpty(ApplicationLoader.getPreferences().getAppReceivePackets())){
+						received = Double.parseDouble(ApplicationLoader.getPreferences().getAppReceivePackets()) + received;
+					}
+					
+					if(!TextUtils.isEmpty(ApplicationLoader.getPreferences().getAppSendPackets())){
+						send = Double.parseDouble(ApplicationLoader.getPreferences().getAppSendPackets()) + send;
+					}
+					
+					if(received+send >0){
+						mUsage += "Received: "+Utilities.formatFileSize(received) + "\n";
+						mUsage += "Send: "+Utilities.formatFileSize(send)+ "\n";
+						mUsage += "Total: "+Utilities.formatFileSize(received+send)+ "\n";
+					}
+				}
+			}
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+			mUsage = e.toString();
+		}
+		return mUsage;
 	}
 	
 	/**

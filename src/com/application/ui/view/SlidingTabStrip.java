@@ -97,6 +97,12 @@ class SlidingTabStrip extends LinearLayout {
 		case 8:
 			DEFAULT_SELECTED_INDICATOR_COLOR = 0xFF2196F3;
 			break;
+		case 10:
+			DEFAULT_SELECTED_INDICATOR_COLOR = 0xFFFFFFFF;
+			break;
+		case 11:
+			DEFAULT_SELECTED_INDICATOR_COLOR = 0xFFF40057;
+			break;
 		default:
 			DEFAULT_SELECTED_INDICATOR_COLOR = 0xFFFFFFFF;
 			break;

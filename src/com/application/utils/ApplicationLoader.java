@@ -25,6 +25,7 @@ import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
 import com.application.crashreporting.ExceptionHandler;
@@ -315,11 +316,26 @@ public class ApplicationLoader extends Application {
 		    exceptionReporter.setExceptionParser(new ExceptionParser() {
 		        @Override
 		        public String getDescription(String s, Throwable throwable) {
-		            return "Thread: " + s + ", Stacktrace: " + ExceptionUtils.getStackTrace(throwable);
+		            return "Thread: " + s + getUserInfo() +", Stacktrace: " + ExceptionUtils.getStackTrace(throwable);
 		        }
 		    });
 		}
 		GAServiceManager.getInstance().dispatchLocalHits();
+	}
+	
+	public static String getUserInfo(){
+		StringBuilder mInfo = new StringBuilder(" ");
+		try{
+			mInfo.append(", time: "+Utilities.getCurrentTime());
+			mInfo.append(", version: "+Utilities.getApplicationVersion());
+			mInfo.append(", deviceMfg: "+Utilities.getDeviceMfg());
+			mInfo.append(", deviceName: "+Utilities.getDeviceName());
+			String mUserName = TextUtils.isEmpty(ApplicationLoader.getPreferences().getUserName())?" not logged in" :ApplicationLoader.getPreferences().getUserName();
+			mInfo.append(", userName: " +  mUserName);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return mInfo.toString();
 	}
 	
 	public static void trackEventV3(String category, String action, String label) {

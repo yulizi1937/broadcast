@@ -1,0 +1,855 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:ignore="UselessParent" >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:clickable="true"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_recycler_parichay_cover_height"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_parichay_progress_cover"
+                    tools:ignore="ContentDescription" />
+
+                <View
+                    android:id="@+id/layoutReferralFormCoverImageBgView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_recycler_parichay_cover_height"
+                    android:background="@color/background_tab_pressed" />
+
+                <FrameLayout
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/shape_round_white_bg" >
+
+                    <ImageView
+                        android:id="@+id/layoutReferralFormCoverIv"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_parichay_referral_form"
+                        tools:ignore="ContentDescription" />
+                </FrameLayout>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center"
+                    android:text="@string/sample_parichay_candidates_referred_for"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/item_recycler_parichay_candidatesreferred_for_textsize"
+                    android:textStyle="bold" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/layoutReferralFormCandidatesReferredTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:layout_marginBottom="4dp"
+                    android:gravity="center"
+                    android:text="@string/sample_parichay_candidates_referred_for_details"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/item_recycler_parichay_candidatesreferred_for_textsize"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/layoutReferralFormCandidateLayout"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_round_green_fill" >
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_parichay_referral_candidate"
+                    tools:ignore="ContentDescription" />
+            </FrameLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/sample_parichay_candidates_details"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/item_recycler_parichay_candidatesreferred_for_textsize"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/layoutReferralFormIRFLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|left"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="@dimen/layout_referral_form_input_paddingTop"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:ignore="RtlHardcoded" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="left|center"
+                    android:text="@string/sample_parichay_candidates_referred_for_details"
+                    android:textColor="@color/drawer_item_title"
+                    android:textSize="@dimen/item_recycler_parichay_candidatesreferred_for_textsize"
+                    android:textStyle="bold" />
+
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/layoutReferralFormCheckBox1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:checked="false"
+                    android:padding="2dp"
+                    android:text="@string/sample_parichay_candidates_referred_for_markettrainee"
+                    android:textColor="@color/drawer_item_title"
+                    android:textSize="@dimen/item_recycler_parichay_referred_for_textsize_"
+                    android:textStyle="bold"
+                    tools:ignore="RtlSymmetry" />
+
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/layoutReferralFormCheckBox2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:checked="false"
+                    android:padding="2dp"
+                    android:text="@string/sample_parichay_candidates_referred_for_marketexec"
+                    android:textColor="@color/drawer_item_title"
+                    android:textSize="@dimen/item_recycler_parichay_referred_for_textsize_"
+                    android:textStyle="bold"
+                    tools:ignore="RtlSymmetry" />
+
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/layoutReferralFormCheckBox3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:checked="false"
+                    android:padding="2dp"
+                    android:text="@string/sample_parichay_candidates_referred_for_marketrepre"
+                    android:textColor="@color/drawer_item_title"
+                    android:textSize="@dimen/item_recycler_parichay_referred_for_textsize_"
+                    android:textStyle="bold"
+                    tools:ignore="RtlSymmetry" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutReferralFormNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_editbox_height"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="@dimen/layout_referral_form_input_paddingTop"
+                android:background="@drawable/shape_editbox_normal"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="1dp" >
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_profile_name" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/layoutReferralFormNameEv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="9"
+                    android:background="@android:color/white"
+                    android:gravity="start|center"
+                    android:hint="@string/hint_name"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:paddingEnd="1dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="1dp"
+                    android:paddingStart="4dp"
+                    android:textSize="@dimen/login_edittext_size" />
+
+                <ImageView
+                    android:id="@+id/layoutReferralFormNameValidateIv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="center" />
+            </LinearLayout>
+
+            <!-- Mobile -->
+
+            <LinearLayout
+                android:id="@+id/layoutReferralFormMobileLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_editbox_height"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="@dimen/layout_referral_form_input_paddingTop"
+                android:background="@drawable/shape_editbox_normal"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="1dp" >
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_profile_mobile" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/layoutReferralFormMobileEv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="9"
+                    android:background="@android:color/white"
+                    android:gravity="start|center"
+                    android:hint="@string/hint_mobilenumber"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:paddingEnd="1dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="1dp"
+                    android:paddingStart="4dp"
+                    android:textSize="@dimen/login_edittext_size" />
+
+                <ImageView
+                    android:id="@+id/layoutReferralFormMobileValidateIv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="center" />
+            </LinearLayout>
+
+            <!-- Divison -->
+
+            <LinearLayout
+                android:id="@+id/layoutReferralFormDivisonLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_editbox_height"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="@dimen/layout_referral_form_input_paddingTop"
+                android:background="@drawable/shape_editbox_normal"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="1dp"
+                android:visibility="gone" >
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_profile_organization" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/layoutReferralFormDivisonEv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="9"
+                    android:background="@android:color/white"
+                    android:gravity="start|center"
+                    android:hint="@string/hint_divison"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:paddingEnd="1dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="1dp"
+                    android:paddingStart="4dp"
+                    android:textSize="@dimen/login_edittext_size" />
+
+                <ImageView
+                    android:id="@+id/layoutReferralFormDivisonValidateIv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="center" />
+            </LinearLayout>
+
+            <!-- HeadQuarter -->
+
+            <LinearLayout
+                android:id="@+id/layoutReferralFormHeadQuarterLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_editbox_height"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="@dimen/layout_referral_form_input_paddingTop"
+                android:background="@drawable/shape_editbox_normal"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="1dp"
+                android:visibility="gone" >
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_profile_organization" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/layoutReferralFormHeadQuarterEv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="9"
+                    android:background="@android:color/white"
+                    android:gravity="start|center"
+                    android:hint="@string/hint_headquarter"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:paddingEnd="1dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="1dp"
+                    android:paddingStart="4dp"
+                    android:textSize="@dimen/login_edittext_size" />
+
+                <ImageView
+                    android:id="@+id/layoutReferralFormHeadQuarterValidateIv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="center" />
+            </LinearLayout>
+
+            <!-- Region -->
+
+            <LinearLayout
+                android:id="@+id/layoutReferralFormRegionLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_editbox_height"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="@dimen/layout_referral_form_input_paddingTop"
+                android:background="@drawable/shape_editbox_normal"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="1dp"
+                android:visibility="gone" >
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_profile_city" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/layoutReferralFormRegionEv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="9"
+                    android:background="@android:color/white"
+                    android:gravity="start|center"
+                    android:hint="@string/hint_region"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:paddingEnd="1dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="1dp"
+                    android:paddingStart="4dp"
+                    android:textSize="@dimen/login_edittext_size" />
+
+                <ImageView
+                    android:id="@+id/layoutReferralFormRegionValidateIv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="center" />
+            </LinearLayout>
+
+            <!-- Qualification -->
+
+            <LinearLayout
+                android:id="@+id/layoutReferralFormQualificationLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_editbox_height"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="@dimen/layout_referral_form_input_paddingTop"
+                android:background="@drawable/shape_editbox_normal"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="1dp" >
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_profile_qualification" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/layoutReferralFormQualificationEv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="9"
+                    android:background="@android:color/white"
+                    android:gravity="start|center"
+                    android:hint="@string/hint_qualification"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:paddingEnd="1dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="1dp"
+                    android:paddingStart="4dp"
+                    android:textSize="@dimen/login_edittext_size" />
+
+                <ImageView
+                    android:id="@+id/layoutReferralFormQualificationValidateIv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="center" />
+            </LinearLayout>
+
+            <!-- EmailAddress -->
+
+            <LinearLayout
+                android:id="@+id/layoutReferralFormEmailLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_editbox_height"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="@dimen/layout_referral_form_input_paddingTop"
+                android:background="@drawable/shape_editbox_normal"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="1dp" >
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_profile_email" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/layoutReferralFormEmailEv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="9"
+                    android:background="@android:color/white"
+                    android:gravity="start|center"
+                    android:hint="@string/hint_email_id"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:paddingEnd="1dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="1dp"
+                    android:paddingStart="4dp"
+                    android:textSize="@dimen/login_edittext_size" />
+
+                <ImageView
+                    android:id="@+id/layoutReferralFormEmailValidateIv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="center" />
+            </LinearLayout>
+
+            <!-- Current Organization -->
+
+            <LinearLayout
+                android:id="@+id/layoutReferralFormOrganizationLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_editbox_height"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="@dimen/layout_referral_form_input_paddingTop"
+                android:background="@drawable/shape_editbox_normal"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="1dp" >
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_profile_organization" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/layoutReferralFormOrganizationEv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="9"
+                    android:background="@android:color/white"
+                    android:gravity="start|center"
+                    android:hint="@string/hint_organization"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:paddingEnd="1dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="1dp"
+                    android:paddingStart="4dp"
+                    android:textSize="@dimen/login_edittext_size" />
+
+                <ImageView
+                    android:id="@+id/layoutReferralFormOrganizationValidateIv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="center" />
+            </LinearLayout>
+
+            <!-- Designation -->
+
+            <LinearLayout
+                android:id="@+id/layoutReferralFormDesignationLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_editbox_height"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="@dimen/layout_referral_form_input_paddingTop"
+                android:background="@drawable/shape_editbox_normal"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="1dp"
+                android:visibility="visible" >
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_profile_employeeid" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/layoutReferralFormDesignationEv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="9"
+                    android:background="@android:color/white"
+                    android:gravity="start|center"
+                    android:hint="@string/hint_designation"
+                    android:inputType="text"
+                    android:paddingEnd="1dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="1dp"
+                    android:paddingStart="4dp"
+                    android:textSize="@dimen/login_edittext_size" />
+
+                <ImageView
+                    android:id="@+id/layoutReferralFormDesignationValidateIv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="center" />
+            </LinearLayout>
+
+            <!-- City -->
+
+            <LinearLayout
+                android:id="@+id/layoutReferralFormAgeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_editbox_height"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="@dimen/layout_referral_form_input_paddingTop"
+                android:background="@drawable/shape_editbox_normal"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="1dp"
+                android:visibility="visible" >
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_profile_name" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/layoutReferralFormAgeEv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="9"
+                    android:background="@android:color/white"
+                    android:gravity="start|center"
+                    android:hint="@string/hint_age"
+                    android:inputType="number"
+                    android:paddingEnd="1dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="1dp"
+                    android:paddingStart="4dp"
+                    android:textSize="@dimen/login_edittext_size" />
+
+                <ImageView
+                    android:id="@+id/layoutReferralFormAgeValidateIv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="center" />
+            </LinearLayout>
+
+            <!-- Experience -->
+
+            <LinearLayout
+                android:id="@+id/layoutReferralFormExperienceLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_editbox_height"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="@dimen/layout_referral_form_input_paddingTop"
+                android:background="@drawable/shape_editbox_normal"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="1dp"
+                android:visibility="visible" >
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_profile_exp" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/layoutReferralFormExperienceEv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="9"
+                    android:background="@android:color/white"
+                    android:gravity="start|center"
+                    android:hint="@string/hint_experience"
+                    android:inputType="text"
+                    android:paddingEnd="1dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="1dp"
+                    android:paddingStart="4dp"
+                    android:textSize="@dimen/login_edittext_size" />
+
+                <ImageView
+                    android:id="@+id/layoutReferralFormExperienceValidateIv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="center" />
+            </LinearLayout>
+
+            <!-- RelationWithEmployee -->
+
+            <LinearLayout
+                android:id="@+id/layoutReferralFormRelationLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_editbox_height"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="@dimen/layout_referral_form_input_paddingTop"
+                android:background="@drawable/shape_editbox_normal"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="1dp"
+                android:visibility="visible" >
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_profile_relation" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/layoutReferralFormRelationEv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="9"
+                    android:background="@android:color/white"
+                    android:gravity="start|center"
+                    android:hint="@string/hint_relationship"
+                    android:inputType="text"
+                    android:paddingEnd="1dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="1dp"
+                    android:paddingStart="4dp"
+                    android:textSize="@dimen/login_edittext_size" />
+
+                <ImageView
+                    android:id="@+id/layoutReferralFormRelationValidateIv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="center" />
+            </LinearLayout>
+
+            <!-- Browse -->
+
+            <LinearLayout
+                android:id="@+id/layoutReferralFormBrowseLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_editbox_height"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="@dimen/layout_referral_form_input_paddingTop"
+                android:background="@drawable/shape_editbox_normal"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="1dp"
+                android:visibility="visible" >
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_profile_file" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/layoutReferralFormBrowseEv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="5"
+                    android:background="@android:color/white"
+                    android:editable="false"
+                    android:gravity="start|center"
+                    android:hint="@string/hint_browse"
+                    android:inputType="text"
+                    android:paddingEnd="1dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="1dp"
+                    android:paddingStart="4dp"
+                    android:textSize="@dimen/login_edittext_size"
+                    tools:ignore="Deprecated" />
+
+                <ImageView
+                    android:id="@+id/layoutReferralFormBrowseValidateIv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:contentDescription="@string/desc_activity_login_validation"
+                    android:scaleType="center" />
+                
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/layoutReferralFormBrowseBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="4"
+                    android:background="@drawable/shape_button_normal"
+                    android:gravity="center"
+                    android:text="@string/button_browse"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/login_edittext_size"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/layoutReferralFormSubmitBtn"
+                android:layout_width="@dimen/login_btn_next_width"
+                android:layout_height="@dimen/login_btn_next_height"
+                android:layout_gravity="center"
+                android:layout_marginBottom="32dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/shape_button_normal"
+                android:gravity="center"
+                android:text="@string/button_submit"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/login_edittext_size"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

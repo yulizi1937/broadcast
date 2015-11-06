@@ -166,6 +166,35 @@
     <color name="item_filename_color_lblue">#ff3F51B5</color>
     <color name="item_text_info_lblue">#636363</color>
     
+    <!-- Theme.Red -->
+    <color name="toolbar_background_red">#ffF44336</color>
+    <color name="toolbar_background_statusbar_red">#ffD32F2F</color>
+    <color name="item_by_color_red">#2196F3</color>
+    <color name="item_unread_strip_color_red">#F44336</color>
+    <color name="item_recycler_mobcast_timeline_color_red">#F44336</color>
+    <color name="editbox_color_red">#2196F3</color>
+    <color name="textview_login_color_red">#2196F3</color>
+    <color name="edittext_login_background_red">#2196F3</color>
+    <color name="unread_background_red">#FFE0B2</color>
+	<color name="item_activity_color_red">#ff636363</color>
+    <color name="item_filename_color_red">#ff3F51B5</color>
+    <color name="item_text_info_red">#636363</color>
+    
+    
+    <!-- Theme.DPurple -->
+    <color name="toolbar_background_dpurple">#ff9C27B0</color>
+    <color name="toolbar_background_statusbar_dpurple">#ff7B1FA2</color>
+    <color name="item_by_color_dpurple">#FF4081</color>
+    <color name="item_unread_strip_color_dpurple">#9C27B0</color>
+    <color name="item_recycler_mobcast_timeline_color_dpurple">#9C27B0</color>
+    <color name="editbox_color_dpurple">#FF4081</color>
+    <color name="textview_login_color_dpurple">#FF4081</color>
+    <color name="edittext_login_background_dpurple">#FF4081</color>
+    <color name="unread_background_dpurple">#B6B6B6</color>
+	<color name="item_activity_color_dpurple">#ff636363</color>
+    <color name="item_filename_color_dpurple">#ff3F51B5</color>
+    <color name="item_text_info_dpurple">#636363</color>
+    
     <!-- Default -->
 
     <color name="item_event_by">#FE9915</color>

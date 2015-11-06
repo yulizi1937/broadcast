@@ -977,40 +977,43 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			
-			if(!sortByAsc){
-				mLoadMore = false;
-				for(int i = 0; i < mGridColumn;i++){
-					mArrayListEvent.remove(mArrayListEvent.size()-1);	
+			try{
+				if(!sortByAsc){
+					mLoadMore = false;
+					for(int i = 0; i < mGridColumn;i++){
+						mArrayListEvent.remove(mArrayListEvent.size()-1);	
+					}
+					mRecyclerView.getAdapter().notifyDataSetChanged();
 				}
-				mRecyclerView.getAdapter().notifyDataSetChanged();
-			}
-			
-			if (isSuccess) {
-				parseDataFromApi(mResponseFromApi, !sortByAsc);
-			}else{
-				if(sortByAsc){
-					if(!isAutoRefresh){
-						AndroidUtilities.showSnackBar(EventRecyclerActivity.this, Utilities.getErrorMessageFromApi(mResponseFromApi));
-					}else{//show new events available
-						
+				
+				if (isSuccess) {
+					parseDataFromApi(mResponseFromApi, !sortByAsc);
+				}else{
+					if(sortByAsc){
+						if(!isAutoRefresh){
+							AndroidUtilities.showSnackBar(EventRecyclerActivity.this, Utilities.getErrorMessageFromApi(mResponseFromApi));
+						}else{//show new events available
+							
+						}
 					}
 				}
-			}
-			
-			if(sortByAsc){
-				refreshFeedActionFromApi(isAutoRefresh);
-			}
+				
+				if(sortByAsc){
+					refreshFeedActionFromApi(isAutoRefresh);
+				}
 
-			if(mProgressDialog!=null){
-				mProgressDialog.dismiss();
+				if(mProgressDialog!=null){
+					mProgressDialog.dismiss();
+				}
+				
+//				if(mSwipeRefreshLayout.isRefreshing()){
+					mToolBarMenuRefresh.setVisibility(View.VISIBLE);
+					mToolBarMenuRefreshProgress.setVisibility(View.GONE);
+					mSwipeRefreshLayout.setRefreshing(false);
+//				}
+			}catch(Exception e){
+				FileLog.e(TAG, e.toString());
 			}
-			
-//			if(mSwipeRefreshLayout.isRefreshing()){
-				mToolBarMenuRefresh.setVisibility(View.VISIBLE);
-				mToolBarMenuRefreshProgress.setVisibility(View.GONE);
-				mSwipeRefreshLayout.setRefreshing(false);
-//			}
 		}
 	}
 	
