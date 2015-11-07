@@ -14,7 +14,7 @@
     <!-- UA-49815183-4 -->
     <string name="ga_trackingId">UA-67132880-1</string>
     <string name="ga_sampleFrequency">100.0</string>
-    <string name="ga_appVersion">2.0.15</string>
+    <string name="ga_appVersion">2.0.16</string>
     <string name="ga_appName">Mobcast</string>
 
     <!-- Prevent data from appearing in reports. Useful for testing. -->
