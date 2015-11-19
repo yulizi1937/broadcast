@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
@@ -20,11 +21,13 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -89,6 +92,8 @@ import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.permission.OnPermissionCallback;
+import com.permission.PermissionHelper;
 import com.squareup.okhttp.OkHttpClient;
 
 /**
@@ -97,7 +102,7 @@ import com.squareup.okhttp.OkHttpClient;
  * 
  */
 @SuppressLint("InlinedApi") 
-public class MotherActivity extends BaseActivity implements ObservableScrollViewCallbacks,IActivityCommunicator {
+public class MotherActivity extends BaseActivity implements ObservableScrollViewCallbacks,IActivityCommunicator, OnPermissionCallback {
 	public  static final String SLIDINGTABACTION = "com.application.ui.activity.MotherActivity";
 	/*
 	 * Drawer
@@ -151,6 +156,8 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	private int whichTheme = 0;
 
 	private static final String TAG = MotherActivity.class.getSimpleName();
+	
+	private PermissionHelper mPermissionHelper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +166,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		setSecurity();
 		initToolBar();
 		initUi();
+		checkPermissionModel();
 		setSlidingTabPagerAdapter();
 		setUiListener();
 		propagateToolbarState(toolbarIsShown());
@@ -866,7 +874,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	 */
 	private void showAppRate(){
 		try{
-			AppRater.app_launched(MotherActivity.this, 3, 5, 3, 10);	
+			AppRater.app_launched(MotherActivity.this, 7, 20, 21, 40);	
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -1520,6 +1528,83 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 			FileLog.e(TAG, e.toString());
 		}
 	}
+	
+	/**
+	 * AndroidM: Permission Model
+	 */
+	private void checkPermissionModel() {
+		try{
+			if (AndroidUtilities.isAboveMarshMallow()) {
+				mPermissionHelper = PermissionHelper.getInstance(this);
+				mPermissionHelper.setForceAccepting(false)
+						.request(AppConstants.PERMISSION.STORAGE);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		mPermissionHelper.onActivityForResult(requestCode);
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode,
+			@NonNull String[] permissions, @NonNull int[] grantResults) {
+		mPermissionHelper.onRequestPermissionsResult(requestCode, permissions,
+				grantResults);
+	}
+
+	@SuppressLint("NewApi") @Override
+	public void onPermissionGranted(String[] permissionName) {
+		try{
+			recreate();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+
+	@Override
+	public void onPermissionDeclined(String[] permissionName) {
+		AndroidUtilities.showSnackBar(this, getString(R.string.permission_message_denied));
+	}
+
+	@Override
+	public void onPermissionPreGranted(String permissionName) {
+	}
+
+	@Override
+	public void onPermissionNeedExplanation(String permissionName) {
+		getAlertDialog(permissionName).show();
+	}
+
+	@Override
+	public void onPermissionReallyDeclined(String permissionName) {
+		AndroidUtilities.showSnackBar(this, getString(R.string.permission_message_denied));
+	}
+
+	@Override
+	public void onNoPermissionNeeded() {
+	}
+
+	public AlertDialog getAlertDialog(final String permission) {
+		AlertDialog builder = null;
+		if (builder == null) {
+			builder = new AlertDialog.Builder(this).setTitle(
+					getResources().getString(R.string.app_name)+ " requires " + permission + " permission").create();
+		}
+		builder.setButton(DialogInterface.BUTTON_POSITIVE, "Request",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						mPermissionHelper.requestAfterExplanation(permission);
+					}
+				});
+		builder.setMessage(getResources().getString(R.string.permission_message_externalstorage));
+		return builder;
+	}
+	
 	
 	/**
 	 * Google Analytics v3

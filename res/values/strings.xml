@@ -25,6 +25,8 @@
     <string name="quiz_read">You cannot mark it as read!</string>
     <string name="api_connection_timeout">Server not responding!</string>
     <string name="api_unknown_error">Please try again in few minutes!</string>
+    <string name="permission_message_externalstorage">We are storing data in your external storage. So you don\'t need to redownload. Please allow it to work smoothly.</string>
+    <string name="permission_message_denied">Some of the features won\'t work till you allow permission.</string>
     <string name="share_advertisement">Shared via Mobcast \n visit us at : www.mobcast.in</string>
     <string name="file_delete_message">Are you sure you want to delete these files?</string>
     <string name="logout_title_message">Are you sure you want to Log Out?</string>
@@ -82,6 +84,7 @@
     <string name="action_news">News</string>
     <string name="action_interactive">Interactive</string>
     <string name="action_about">About</string>
+    <string name="action_mobcast">Mobcast</string>
     <string name="action_app_feedback">App Feedback</string>
     <string name="action_livestream_youtube">YouTube LiveStream</string>
     <string name="action_delete">Delete</string>
@@ -727,6 +730,19 @@ Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic 
         <item>Capture</item>
         <item>Parichay</item>
         <item>Recruitment</item>
+        <item>Settings</item>
+        <item>Help</item>
+        <item>Report</item>
+        <item>App Feedback</item>
+        <item>LogOut</item>
+        <item>About</item>
+    </string-array>
+    
+    <string-array name="drawer_parichay_array">
+        <item>Profile</item>
+        <item>Capture</item>
+        <item>Mobcast</item>
+        <item>Training</item>
         <item>Settings</item>
         <item>Help</item>
         <item>Report</item>

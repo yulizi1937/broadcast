@@ -14,12 +14,13 @@ import com.application.ui.view.SwipeBackActivityHelper;
 import com.application.ui.view.SwipeBackLayout;
 import com.application.ui.view.SwipeBackUtils;
 import com.application.utils.AndroidUtilities;
+import com.permission.OnPermissionCallback;
 
 /**
  * @author Vikalp Patel(VikalpPatelCE)
  *
  */
-public class SwipeBackBaseActivity extends BaseActivity implements SwipeBackActivityBase {
+public class SwipeBackBaseActivity extends BaseActivity implements SwipeBackActivityBase, OnPermissionCallback{
     private SwipeBackActivityHelper mHelper;
 
     @Override
@@ -82,5 +83,64 @@ public class SwipeBackBaseActivity extends BaseActivity implements SwipeBackActi
     		return false;	
     	}
     }
+
+
+	/* (non-Javadoc)
+	 * @see com.permission.OnPermissionCallback#onPermissionGranted(java.lang.String[])
+	 */
+	@Override
+	public void onPermissionGranted(String[] permissionName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.permission.OnPermissionCallback#onPermissionDeclined(java.lang.String[])
+	 */
+	@Override
+	public void onPermissionDeclined(String[] permissionName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.permission.OnPermissionCallback#onPermissionPreGranted(java.lang.String)
+	 */
+	@Override
+	public void onPermissionPreGranted(String permissionsName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.permission.OnPermissionCallback#onPermissionNeedExplanation(java.lang.String)
+	 */
+	@Override
+	public void onPermissionNeedExplanation(String permissionName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.permission.OnPermissionCallback#onPermissionReallyDeclined(java.lang.String)
+	 */
+	@Override
+	public void onPermissionReallyDeclined(String permissionName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.permission.OnPermissionCallback#onNoPermissionNeeded()
+	 */
+	@Override
+	public void onNoPermissionNeeded() {
+		// TODO Auto-generated method stub
+	}
 }
 

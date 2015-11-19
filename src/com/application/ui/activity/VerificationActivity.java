@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -16,7 +17,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
@@ -55,13 +58,15 @@ import com.application.utils.Utilities;
 import com.facebook.stetho.common.Util;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
+import com.permission.OnPermissionCallback;
+import com.permission.PermissionHelper;
 import com.squareup.okhttp.OkHttpClient;
 
 /**
  * @author Vikalp Patel(VikalpPatelCE)
  * 
  */
-public class VerificationActivity extends AppCompatActivity {
+public class VerificationActivity extends SwipeBackBaseActivity implements OnPermissionCallback {
 	private static final String TAG = VerificationActivity.class
 			.getSimpleName();
 
@@ -101,6 +106,8 @@ public class VerificationActivity extends AppCompatActivity {
 
 	private Handler mHandler = new Handler();
 	private long mTimerStartFrom;
+	
+	private PermissionHelper mPermissionHelper;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,6 +117,7 @@ public class VerificationActivity extends AppCompatActivity {
 		setSecurity();
 		initUi();
 		initToolBar();
+		checkPermissionModel();
 		applyTheme();
 		setUiListener();
 		initTimer();
@@ -483,20 +491,6 @@ public class VerificationActivity extends AppCompatActivity {
 		
 	}
 
-	/**
-	 * Security : Couldn't capture ScreenShot
-	 * 
-	 * @author Vikalp Patel(VikalpPatelCE)
-	 */
-	private void setSecurity() {
-		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-			if (!BuildVars.DEBUG_SCREENSHOT) {
-				getWindow().setFlags(LayoutParams.FLAG_SECURE,
-						LayoutParams.FLAG_SECURE);
-			}
-		}
-	}
-
 	private void setMaterialRippleView() {
 		try {
 			setMaterialRippleOnView(mNextBtn);
@@ -614,12 +608,6 @@ public class VerificationActivity extends AppCompatActivity {
 		}
 	}
 	
-	private void setMaterialRippleOnView(View mView) {
-		MaterialRippleLayout.on(mView).rippleColor(Color.parseColor("#FFFFFF"))
-				.rippleAlpha(0.2f).rippleHover(true).rippleOverlay(true)
-				.rippleBackground(Color.parseColor("#00000000")).create();
-	}
-	
 	public class AsyncVerifyTask extends AsyncTask<Void, Void, Void> {
 		private String mResponseFromApi;
 		private boolean isSuccess = true;
@@ -682,6 +670,78 @@ public class VerificationActivity extends AppCompatActivity {
 				FileLog.e(TAG, e.toString());
 			}
 		}
+	}
+	
+	/**
+	 * AndroidM: Permission Model
+	 */
+	private void checkPermissionModel() {
+		try{
+			if (AndroidUtilities.isAboveMarshMallow()) {
+				final String STORAGE_SMS[] = new String[]{AppConstants.PERMISSION.STORAGE, AppConstants.PERMISSION.SMS};
+				mPermissionHelper = PermissionHelper.getInstance(this);
+				mPermissionHelper.setForceAccepting(false)
+						.request(STORAGE_SMS);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		mPermissionHelper.onActivityForResult(requestCode);
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode,
+			@NonNull String[] permissions, @NonNull int[] grantResults) {
+		mPermissionHelper.onRequestPermissionsResult(requestCode, permissions,
+				grantResults);
+	}
+
+	@Override
+	public void onPermissionGranted(String[] permissionName) {
+	}
+
+	@Override
+	public void onPermissionDeclined(String[] permissionName) {
+		AndroidUtilities.showSnackBar(this, getString(R.string.permission_message_denied));
+	}
+
+	@Override
+	public void onPermissionPreGranted(String permissionName) {
+	}
+
+	@Override
+	public void onPermissionNeedExplanation(String permissionName) {
+		getAlertDialog(permissionName).show();
+	}
+
+	@Override
+	public void onPermissionReallyDeclined(String permissionName) {
+		AndroidUtilities.showSnackBar(this, getString(R.string.permission_message_denied));
+	}
+
+	@Override
+	public void onNoPermissionNeeded() {
+	}
+
+	public AlertDialog getAlertDialog(final String permission) {
+		AlertDialog builder = null;
+		if (builder == null) {
+			builder = new AlertDialog.Builder(this).setTitle(
+					getResources().getString(R.string.app_name)+ " requires " + permission + " permission").create();
+		}
+		builder.setButton(DialogInterface.BUTTON_POSITIVE, "Request",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						mPermissionHelper.requestAfterExplanation(permission);
+					}
+				});
+		builder.setMessage(getResources().getString(R.string.permission_message_externalstorage));
+		return builder;
 	}
 	
 	/**

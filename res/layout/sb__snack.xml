@@ -6,12 +6,12 @@
     style="@style/SnackBar.SnackBar">
 
     <TextView
-        android:id="@id/snackMessage"
+        android:id="@+id/snackMessage"
         style="@style/SnackBar.Message"
         tools:text="Sample message"/>
 
     <TextView
-        android:id="@id/snackButton"
+        android:id="@+id/snackButton"
         style="@style/SnackBar.Button"
         tools:text="Action"/>
 </LinearLayout>

@@ -1247,6 +1247,8 @@ public class Utilities {
 			return false;
 		case AppConstants.TYPE.AWARD:
 			return false;
+		case AppConstants.TYPE.VIDEO:
+			return false;
 		default:
 			return true;
 		}

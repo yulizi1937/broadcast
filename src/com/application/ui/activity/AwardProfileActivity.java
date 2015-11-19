@@ -10,11 +10,14 @@ import java.util.Date;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -44,6 +47,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
+import com.permission.PermissionHelper;
 
 /**
  * @author Vikalp Patel(VikalpPatelCE)
@@ -102,6 +106,8 @@ public class AwardProfileActivity extends SwipeBackBaseActivity {
 	
 	private boolean isFromNotification = false;
 	
+	private PermissionHelper mPermissionHelper;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -110,6 +116,7 @@ public class AwardProfileActivity extends SwipeBackBaseActivity {
 		setSecurity();
 		initToolBar();
 		initUi();
+		checkPermissionModel();
 		getIntentData();
 		setUiListener();
 		setAnimation();
@@ -508,6 +515,82 @@ public class AwardProfileActivity extends SwipeBackBaseActivity {
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}
+	}
+	
+	/**
+	 * AndroidM: Permission Model
+	 */
+	private void checkPermissionModel() {
+		try{
+			if (AndroidUtilities.isAboveMarshMallow()) {
+				mPermissionHelper = PermissionHelper.getInstance(this);
+				mPermissionHelper.setForceAccepting(false)
+						.request(AppConstants.PERMISSION.STORAGE);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		mPermissionHelper.onActivityForResult(requestCode);
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode,
+			@NonNull String[] permissions, @NonNull int[] grantResults) {
+		mPermissionHelper.onRequestPermissionsResult(requestCode, permissions,
+				grantResults);
+	}
+
+	@Override
+	public void onPermissionGranted(String[] permissionName) {
+		try{
+			getIntentData();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+
+	@Override
+	public void onPermissionDeclined(String[] permissionName) {
+		AndroidUtilities.showSnackBar(this, getString(R.string.permission_message_denied));
+	}
+
+	@Override
+	public void onPermissionPreGranted(String permissionName) {
+	}
+
+	@Override
+	public void onPermissionNeedExplanation(String permissionName) {
+		getAlertDialog(permissionName).show();
+	}
+
+	@Override
+	public void onPermissionReallyDeclined(String permissionName) {
+		AndroidUtilities.showSnackBar(this, getString(R.string.permission_message_denied));
+	}
+
+	@Override
+	public void onNoPermissionNeeded() {
+	}
+
+	public AlertDialog getAlertDialog(final String permission) {
+		AlertDialog builder = null;
+		if (builder == null) {
+			builder = new AlertDialog.Builder(this).setTitle(
+					getResources().getString(R.string.app_name)+ " requires " + permission + " permission").create();
+		}
+		builder.setButton(DialogInterface.BUTTON_POSITIVE, "Request",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						mPermissionHelper.requestAfterExplanation(permission);
+					}
+				});
+		builder.setMessage(getResources().getString(R.string.permission_message_externalstorage));
+		return builder;
 	}
 	
 	/**

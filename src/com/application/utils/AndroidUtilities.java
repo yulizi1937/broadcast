@@ -659,6 +659,13 @@ public class AndroidUtilities {
 		return false;
 	}
 	
+	public static boolean isAboveMarshMallow() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			return true;
+		}
+		return false;
+	}
+	
 	public static boolean isBelowLollyPop() {
 		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
 			return true;

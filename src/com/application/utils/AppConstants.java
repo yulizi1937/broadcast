@@ -14,6 +14,7 @@
  */
 package com.application.utils;
 
+import android.Manifest;
 import android.os.Environment;
 
 import com.squareup.okhttp.MediaType;
@@ -283,6 +284,8 @@ public class AppConstants {
 		public static final String jobDesignation          	= "jobDesignation";
 		public static final String jobLocation          	= "jobLocation";
 		public static final String jobExperience          	= "jobExperience";
+		public static final String jobExperienceFrom        = "jobExperienceFrom";
+		public static final String jobExperienceTo          = "jobExperienceTo";
 		public static final String jobAgeLimit          	= "jobAgeLimit";
 		public static final String jobSkills              	= "jobSkills";
 		public static final String jobDescription          	= "jobDescription";
@@ -553,6 +556,14 @@ public class AppConstants {
 		public static final String SEQUENCE3 = "3456";
 		public static final String SEQUENCE4 = "4567";
 		public static final String SEQUENCE5 = "5678";	
+	}
+	
+	public interface PERMISSION{
+		public final String CALENDAR= Manifest.permission.WRITE_CALENDAR;
+		public final String CONTACTS= Manifest.permission.READ_CONTACTS;
+		public final String AUDIO   = Manifest.permission.RECORD_AUDIO;
+		public final String SMS     = Manifest.permission.READ_SMS;
+		public final String STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
 	}
 	
 	public static final String deviceType = "android";

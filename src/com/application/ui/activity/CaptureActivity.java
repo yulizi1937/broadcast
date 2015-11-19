@@ -29,6 +29,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -38,7 +39,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.PowerManager;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -77,6 +80,7 @@ import com.application.utils.ThemeUtils;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
+import com.permission.PermissionHelper;
 
 /**
  * @author Vikalp Patel(VikalpPatelCE)
@@ -121,6 +125,8 @@ public class CaptureActivity extends SwipeBackBaseActivity {
 	private LinearLayoutManager mLinearLayoutManager;
 	
 	private Uri cameraFileUri;
+	
+	private PermissionHelper mPermissionHelper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +136,7 @@ public class CaptureActivity extends SwipeBackBaseActivity {
 		setSecurity();
 		initToolBar();
 		initUi();
+		checkPermissionModel();
 		applyTheme();
 	}
 
@@ -505,6 +512,10 @@ public class CaptureActivity extends SwipeBackBaseActivity {
 				}
 				notifyAdapterOnDataChanged();
 			}
+			
+			if(AndroidUtilities.isAboveMarshMallow()){
+				mPermissionHelper.onActivityForResult(requestCode);
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -608,6 +619,24 @@ public class CaptureActivity extends SwipeBackBaseActivity {
 			HttpClient httpclient = new DefaultHttpClient(httpParams);
 			HttpPost httppost = new HttpPost(
 					AppConstants.API.API_SUBMIT_CAPTURE);
+			
+			  // Entity
+/*	        MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
+	        // Add your file
+	        multipartEntityBuilder.addPart("file", new FileBody(new File(params[0])));
+
+	        // Progress listener - updates task's progress
+	        MyHttpEntity.ProgressListener progressListener =
+	                new MyHttpEntity.ProgressListener() {
+	                    @Override
+	                    public void transferred(float progress) {
+	                        UploadAsyncTask.this.publishProgress((int) progress);
+	                    }
+	                };
+
+	        // POST
+	        post.setEntity(new MyHttpEntity(multipartEntityBuilder.build(),
+	                progressListener));*/
 			try {
 				ProgressMutliPartEntity entity = new ProgressMutliPartEntity(
 						new ProgressListener() {
@@ -721,6 +750,76 @@ public class CaptureActivity extends SwipeBackBaseActivity {
 			mCancelBtn.setVisibility(View.GONE);
 			mDownloadProgressTextView.setVisibility(View.GONE);
 		}
+	}
+	
+	/**
+	 * AndroidM: Permission Model
+	 */
+	private void checkPermissionModel() {
+		try{
+			if (AndroidUtilities.isAboveMarshMallow()) {
+				mPermissionHelper = PermissionHelper.getInstance(this);
+				mPermissionHelper.setForceAccepting(false)
+						.request(AppConstants.PERMISSION.STORAGE);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode,
+			@NonNull String[] permissions, @NonNull int[] grantResults) {
+		mPermissionHelper.onRequestPermissionsResult(requestCode, permissions,
+				grantResults);
+	}
+
+	@Override
+	public void onPermissionGranted(String[] permissionName) {
+		try{
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+
+	@Override
+	public void onPermissionDeclined(String[] permissionName) {
+		AndroidUtilities.showSnackBar(this, getString(R.string.permission_message_denied));
+	}
+
+	@Override
+	public void onPermissionPreGranted(String permissionName) {
+	}
+
+	@Override
+	public void onPermissionNeedExplanation(String permissionName) {
+		getAlertDialog(permissionName).show();
+	}
+
+	@Override
+	public void onPermissionReallyDeclined(String permissionName) {
+		AndroidUtilities.showSnackBar(this, getString(R.string.permission_message_denied));
+	}
+
+	@Override
+	public void onNoPermissionNeeded() {
+	}
+
+	public AlertDialog getAlertDialog(final String permission) {
+		AlertDialog builder = null;
+		if (builder == null) {
+			builder = new AlertDialog.Builder(this).setTitle(
+					getResources().getString(R.string.app_name)+ " requires " + permission + " permission").create();
+		}
+		builder.setButton(DialogInterface.BUTTON_POSITIVE, "Request",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						mPermissionHelper.requestAfterExplanation(permission);
+					}
+				});
+		builder.setMessage(getResources().getString(R.string.permission_message_externalstorage));
+		return builder;
 	}
 	
 	/**

@@ -6,12 +6,15 @@ package com.application.ui.activity;
 import java.io.File;
 
 import android.annotation.TargetApi;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.MenuItem;
@@ -36,12 +39,13 @@ import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
+import com.permission.PermissionHelper;
 
 /**
  * @author Vikalp Patel(VikalpPatelCE)
  * 
  */
-public class VideoFullScreenActivity extends AppCompatActivity {
+public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 	private static final String TAG = VideoFullScreenActivity.class
 			.getSimpleName();
 
@@ -80,6 +84,8 @@ public class VideoFullScreenActivity extends AppCompatActivity {
 	private long mReportDuration = 0;
 	
 	private boolean isVideoPause = false;
+	
+	private PermissionHelper mPermissionHelper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +95,7 @@ public class VideoFullScreenActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_video_fullscreen);
 		setSecurity();
 		initUi();
+		checkPermissionModel();
 		initAnimation();
 		getIntentData();
 		setUiListener();
@@ -503,14 +510,82 @@ public class VideoFullScreenActivity extends AppCompatActivity {
 		}
 	}
 	
-	private void setSecurity() {
-		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-			if (!BuildVars.DEBUG_SCREENSHOT) {
-				getWindow().setFlags(LayoutParams.FLAG_SECURE,
-						LayoutParams.FLAG_SECURE);
+	/**
+	 * AndroidM: Permission Model
+	 */
+	private void checkPermissionModel() {
+		try{
+			if (AndroidUtilities.isAboveMarshMallow()) {
+				mPermissionHelper = PermissionHelper.getInstance(this);
+				mPermissionHelper.setForceAccepting(false)
+						.request(AppConstants.PERMISSION.STORAGE);
 			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		mPermissionHelper.onActivityForResult(requestCode);
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode,
+			@NonNull String[] permissions, @NonNull int[] grantResults) {
+		mPermissionHelper.onRequestPermissionsResult(requestCode, permissions,
+				grantResults);
+	}
+
+	@Override
+	public void onPermissionGranted(String[] permissionName) {
+		try{
+			getIntentData();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+
+	@Override
+	public void onPermissionDeclined(String[] permissionName) {
+		AndroidUtilities.showSnackBar(this, getString(R.string.permission_message_denied));
+	}
+
+	@Override
+	public void onPermissionPreGranted(String permissionName) {
+	}
+
+	@Override
+	public void onPermissionNeedExplanation(String permissionName) {
+		getAlertDialog(permissionName).show();
+	}
+
+	@Override
+	public void onPermissionReallyDeclined(String permissionName) {
+		AndroidUtilities.showSnackBar(this, getString(R.string.permission_message_denied));
+	}
+
+	@Override
+	public void onNoPermissionNeeded() {
+	}
+
+	public AlertDialog getAlertDialog(final String permission) {
+		AlertDialog builder = null;
+		if (builder == null) {
+			builder = new AlertDialog.Builder(this).setTitle(
+					getResources().getString(R.string.app_name)+ " requires " + permission + " permission").create();
+		}
+		builder.setButton(DialogInterface.BUTTON_POSITIVE, "Request",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						mPermissionHelper.requestAfterExplanation(permission);
+					}
+				});
+		builder.setMessage(getResources().getString(R.string.permission_message_externalstorage));
+		return builder;
+	}
+	
 	
 	/**
 	 * Google Analytics v3

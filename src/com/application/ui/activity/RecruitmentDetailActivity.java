@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -17,6 +18,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -46,6 +49,7 @@ import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
+import com.permission.PermissionHelper;
 import com.squareup.okhttp.OkHttpClient;
 
 /**
@@ -123,6 +127,8 @@ public class RecruitmentDetailActivity extends SwipeBackBaseActivity {
 	private boolean isJobQualificationExpanded = false;
 	private boolean isJobCTCExpanded = false;
 	private boolean isContactExpanded = true;
+	
+	private PermissionHelper mPermissionHelper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -471,7 +477,19 @@ public class RecruitmentDetailActivity extends SwipeBackBaseActivity {
 	}
 
 	private void shareContactFromPhoneBook(){
-		startActivityForResult(new Intent(Intent.ACTION_PICK,ContactsContract.Contacts.CONTENT_URI), CONTACT_PICK);
+		try{
+			if(AndroidUtilities.isAboveMarshMallow()){
+				if(mPermissionHelper.isPermissionDeclined(AppConstants.PERMISSION.CONTACTS)){
+					startActivityForResult(new Intent(Intent.ACTION_PICK,ContactsContract.Contacts.CONTENT_URI), CONTACT_PICK);
+				}else{
+					checkPermissionModel();
+				}
+			}else{
+				startActivityForResult(new Intent(Intent.ACTION_PICK,ContactsContract.Contacts.CONTENT_URI), CONTACT_PICK);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB) @SuppressWarnings("deprecation")
@@ -479,6 +497,7 @@ public class RecruitmentDetailActivity extends SwipeBackBaseActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		// log.v("OnactivityResult", "reached");
+		mPermissionHelper.onActivityForResult(requestCode);
 		if (requestCode == CONTACT_PICK) {
 			if (resultCode == RESULT_OK) {
 				String mPhoneNumber = "";
@@ -521,6 +540,10 @@ public class RecruitmentDetailActivity extends SwipeBackBaseActivity {
 				
 				submitContactDetailsToApi(mName, mPhoneNumber, mEmailAddress, mStringEmailCompose);
 			}
+		}else{
+			if(AndroidUtilities.isAboveMarshMallow()){
+        		mPermissionHelper.onActivityForResult(requestCode);
+        	}
 		}
 	}
 	
@@ -666,6 +689,80 @@ public class RecruitmentDetailActivity extends SwipeBackBaseActivity {
 						mErrorMessage, Style.ALERT);
 			}
 		}
+	}
+	
+	/**
+	 * AndroidM: Permission Model
+	 */
+	private void checkPermissionModel() {
+		try{
+			if (AndroidUtilities.isAboveMarshMallow()) {
+				mPermissionHelper = PermissionHelper.getInstance(this);
+				mPermissionHelper.setForceAccepting(false)
+						.request(AppConstants.PERMISSION.CONTACTS);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode,
+			@NonNull String[] permissions, @NonNull int[] grantResults) {
+		mPermissionHelper.onRequestPermissionsResult(requestCode, permissions,
+				grantResults);
+	}
+
+	@Override
+	public void onPermissionGranted(String[] permissionName) {
+		try{
+			getIntentData();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+
+	@Override
+	public void onPermissionDeclined(String[] permissionName) {
+		AndroidUtilities.showSnackBar(this, getString(R.string.permission_message_denied));
+	}
+
+	@Override
+	public void onPermissionPreGranted(String permissionName) {
+		if(mPermissionHelper.isPermissionDeclined(AppConstants.PERMISSION.CONTACTS)){
+			startActivityForResult(new Intent(Intent.ACTION_PICK,ContactsContract.Contacts.CONTENT_URI), CONTACT_PICK);
+		}
+	}
+
+	@Override
+	public void onPermissionNeedExplanation(String permissionName) {
+		getAlertDialog(permissionName).show();
+	}
+
+	@Override
+	public void onPermissionReallyDeclined(String permissionName) {
+		AndroidUtilities.showSnackBar(this, getString(R.string.permission_message_denied));
+	}
+
+	@Override
+	public void onNoPermissionNeeded() {
+	}
+
+	public AlertDialog getAlertDialog(final String permission) {
+		AlertDialog builder = null;
+		if (builder == null) {
+			builder = new AlertDialog.Builder(this).setTitle(
+					getResources().getString(R.string.app_name)+ " requires " + permission + " permission").create();
+		}
+		builder.setButton(DialogInterface.BUTTON_POSITIVE, "Request",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						mPermissionHelper.requestAfterExplanation(permission);
+					}
+				});
+		builder.setMessage(getResources().getString(R.string.permission_message_externalstorage));
+		return builder;
 	}
 	
 	/**

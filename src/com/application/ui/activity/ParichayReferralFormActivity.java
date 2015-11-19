@@ -33,12 +33,15 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
@@ -76,6 +79,7 @@ import com.application.utils.ThemeUtils;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
+import com.permission.PermissionHelper;
 
 /**
  * @author Vikalp Patel(VikalpPatelCE)
@@ -169,6 +173,8 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 	private String mFilePath;
 	private int whichTheme = 0;
 	
+	private PermissionHelper mPermissionHelper;
+	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -177,6 +183,7 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 		setSecurity();
 		initUi();
 		initToolBar();
+		checkPermissionModel();
 		getIntentData();
 		applyTheme();
 		setUiListener();
@@ -1063,9 +1070,20 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 	}
 	
 	private void getFileFromDevice(){
-		Intent filePickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
-		filePickerIntent.setType("file/*");
-        startActivityForResult(filePickerIntent, INTENT_PICK_FILE);
+		if(AndroidUtilities.isAboveMarshMallow()){
+				if(mPermissionHelper.isPermissionGranted(AppConstants.PERMISSION.STORAGE)){
+					Intent filePickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+					filePickerIntent.setType("file/*");
+			        startActivityForResult(filePickerIntent, INTENT_PICK_FILE);		
+				}else{
+					checkPermissionModel();
+				}
+		}else{
+			Intent filePickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+			filePickerIntent.setType("file/*");
+	        startActivityForResult(filePickerIntent, INTENT_PICK_FILE);
+		}
+		
 	}
 	
 	
@@ -1090,6 +1108,8 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 				mFileValidateIv.setImageResource(R.drawable.ic_text_incorrect);
 				AndroidUtilities.showSnackBar(ParichayReferralFormActivity.this, "Only .doc, .docx, pdf or rtf is allowed!");
 			}
+		}else{
+			mPermissionHelper.onActivityForResult(requestCode);
 		}
 	}
 	
@@ -1331,6 +1351,77 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 				FileLog.e(TAG, e.toString());
 			}
 		}
+	}
+	
+	/**
+	 * AndroidM: Permission Model
+	 */
+	private void checkPermissionModel() {
+		try{
+			if (AndroidUtilities.isAboveMarshMallow()) {
+				mPermissionHelper = PermissionHelper.getInstance(this);
+				mPermissionHelper.setForceAccepting(false)
+						.request(AppConstants.PERMISSION.STORAGE);
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode,
+			@NonNull String[] permissions, @NonNull int[] grantResults) {
+		mPermissionHelper.onRequestPermissionsResult(requestCode, permissions,
+				grantResults);
+	}
+
+	@Override
+	public void onPermissionGranted(String[] permissionName) {
+		try{
+			getFileFromDevice();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+
+	@Override
+	public void onPermissionDeclined(String[] permissionName) {
+		AndroidUtilities.showSnackBar(this, getString(R.string.permission_message_denied));
+	}
+
+	@Override
+	public void onPermissionPreGranted(String permissionName) {
+	}
+
+	@Override
+	public void onPermissionNeedExplanation(String permissionName) {
+		getAlertDialog(permissionName).show();
+	}
+
+	@Override
+	public void onPermissionReallyDeclined(String permissionName) {
+		AndroidUtilities.showSnackBar(this, getString(R.string.permission_message_denied));
+	}
+
+	@Override
+	public void onNoPermissionNeeded() {
+	}
+
+	public AlertDialog getAlertDialog(final String permission) {
+		AlertDialog builder = null;
+		if (builder == null) {
+			builder = new AlertDialog.Builder(this).setTitle(
+					getResources().getString(R.string.app_name)+ " requires " + permission + " permission").create();
+		}
+		builder.setButton(DialogInterface.BUTTON_POSITIVE, "Request",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						mPermissionHelper.requestAfterExplanation(permission);
+					}
+				});
+		builder.setMessage(getResources().getString(R.string.permission_message_externalstorage));
+		return builder;
 	}
 	
 	/**

@@ -617,7 +617,6 @@ public class ParichayFragment extends BaseFragment implements IFragmentCommunica
 					Obj.setmJobUnit(Utilities.formatUnit(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.jobTitle)));
 					Obj.setmJobPosition(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.jobPosition));
 					Obj.setmJobLoc(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.jobLocation));
-					Obj.setmJobExp(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.jobExperience));
 					Obj.setmJobAgeLimit(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.jobAgeLimit));
 					Obj.setmJobDesc(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.jobDescription));
 					Obj.setmJobQualif(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.jobQualification));
@@ -626,6 +625,15 @@ public class ParichayFragment extends BaseFragment implements IFragmentCommunica
 					Obj.setRead(Boolean.parseBoolean(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.isRead)));
 					Obj.setmLikeCount(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.likeCount));
 					Obj.setmReadCount(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.viewCount));
+					String mYear = " yrs";
+					try {
+						if(Integer.parseInt(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.jobExperienceTo)) <= 0){
+							mYear = " yr";
+						}
+					} catch (Exception e) {
+						FileLog.e(TAG, e.toString());
+					}
+					Obj.setmJobExp(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.jobExperienceFrom) + " to " + mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.jobExperienceTo) + mYear);
 					
 					if(!Obj.isRead()){
 						UnreadCount++;
