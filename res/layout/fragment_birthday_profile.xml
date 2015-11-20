@@ -114,6 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/fragment_birthday_profile_sun_sign_layout_height"
             android:background="@color/background_light_blue"
+            android:visibility="gone"
             android:baselineAligned="false"
             android:orientation="horizontal" >
 

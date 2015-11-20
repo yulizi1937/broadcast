@@ -138,6 +138,7 @@ public class RecruitmentDetailActivity extends SwipeBackBaseActivity {
 		setSecurity();
 		initToolBar();
 		initUi();
+		checkPermissionModel();
 		getIntentData();
 		setUiListener();
 		applyTheme();

@@ -246,7 +246,7 @@ public class AwardProfileActivity extends SwipeBackBaseActivity {
 	private void initToolBar() {
 		mToolBar = (Toolbar) findViewById(R.id.toolbarLayout);
 		mToolBar.setTitle(getResources().getString(
-				R.string.BirthdayProfileActivityTitle));
+				R.string.AwardProfileActivityTitle));
 		mToolBar.setNavigationIcon(R.drawable.ic_back_shadow);
 		setSupportActionBar(mToolBar);
 	}

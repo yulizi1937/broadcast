@@ -607,10 +607,14 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	  }
 
 	  private void cleanUp(){
-	    if (mPlayer != null) {
-	      mVisualizerView.release();
-	      mPlayer.release();
-	      mPlayer = null;
+	    try{
+	    	if (mPlayer != null) {
+	  	      mVisualizerView.release();
+	  	      mPlayer.release();
+	  	      mPlayer = null;
+	  	    }
+	    }catch(Exception e){
+	    	FileLog.e(TAG, e.toString());
 	    }
 	  }
 	  

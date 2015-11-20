@@ -33,6 +33,7 @@ import android.net.TrafficStats;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -55,6 +56,7 @@ import android.widget.TextView;
 import com.application.ui.view.SnackBar;
 import com.application.widget.WidgetProvider;
 import com.mobcast.R;
+import com.permission.PermissionHelper;
 
 @SuppressLint("NewApi")
 public class AndroidUtilities {
@@ -662,6 +664,15 @@ public class AndroidUtilities {
 	public static boolean isAboveMarshMallow() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 			return true;
+		}
+		return false;
+	}
+	
+	public static boolean isPermissionStorageAllowed(){
+		try{
+			return ActivityCompat.checkSelfPermission(ApplicationLoader.getApplication().getApplicationContext(), AppConstants.PERMISSION.STORAGE) == PackageManager.PERMISSION_GRANTED;
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 		return false;
 	}

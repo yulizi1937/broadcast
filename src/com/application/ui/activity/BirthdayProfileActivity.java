@@ -3,6 +3,9 @@
  */
 package com.application.ui.activity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.ContentValues;
@@ -359,7 +362,7 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		}
 		
 		if(!TextUtils.isEmpty(mContentDOB)){
-			mBirthdayProfileDateTv.setText(mContentDOB);
+			setDOB();
 		}
 		
 		mBirthdayProfileActionChatIv.setVisibility(View.GONE);
@@ -399,6 +402,16 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		
 		updateReadInDb();
 		supportInvalidateOptionsMenu();
+	}
+	
+	@SuppressLint("SimpleDateFormat") private void setDOB(){
+		try{
+			SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+			Date contentDate = dateFormatter.parse(mContentDOB);
+			mBirthdayProfileDateTv.setText(String.valueOf(new SimpleDateFormat("dd-MM-yyyy").format(contentDate)));
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	

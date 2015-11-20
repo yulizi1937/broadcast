@@ -3,16 +3,12 @@
  */
 package com.application.ui.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
@@ -22,7 +18,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.application.ui.calligraphy.CalligraphyContextWrapper;
 import com.application.ui.view.ShimmerFrameLayout;
@@ -31,10 +26,8 @@ import com.application.utils.ApplicationLoader;
 import com.application.utils.BuildVars;
 import com.application.utils.FileLog;
 import com.application.utils.ThemeUtils;
-import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
-import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -43,7 +36,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
  * @author Vikalp Patel(VikalpPatelCE)
  * 
  */
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends SwipeBackBaseActivity {
 	private static final String TAG = SplashActivity.class.getSimpleName();
 
 	private AppCompatTextView mAppNameTv;
@@ -70,11 +63,10 @@ public class SplashActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		setFullScreen();
+		setFullScreenA();
 		super.onCreate(savedInstanceState);
 		setSecurity();
 		setContentView(R.layout.activity_splash);
-		setSecurity();
 		initUi();
 		applyTheme();
 		setAnimation();
@@ -203,16 +195,7 @@ public class SplashActivity extends AppCompatActivity {
 				});
 	}
 
-	private void setSecurity() {
-		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-			if (!BuildVars.DEBUG_SCREENSHOT) {
-				getWindow().setFlags(LayoutParams.FLAG_SECURE,
-						LayoutParams.FLAG_SECURE);
-			}
-		}
-	}
-
-	private void setFullScreen() {
+	private void setFullScreenA() {
 		if (!AndroidUtilities.isAboveLollyPop()) {
 			requestWindowFeature(Window.FEATURE_NO_TITLE);
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,

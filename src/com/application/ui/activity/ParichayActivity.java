@@ -212,8 +212,8 @@ public class ParichayActivity extends BaseActivity implements ObservableScrollVi
 			menuItemEvent.setIcon(buildCounterDrawable(Utilities.getUnreadOfEvent(ParichayActivity.this),R.drawable.ic_toolbar_event));
 			menuItemAward.setIcon(buildCounterDrawable(Utilities.getUnreadOfAward(ParichayActivity.this),R.drawable.ic_toolbar_award));
 			menuItemBirthday.setIcon(buildCounterDrawable(Utilities.getUnreadOfBirthday(ParichayActivity.this),R.drawable.ic_toolbar_birthday));
-		}*/
-		
+		}
+		*/
 		return true;
 	}
 

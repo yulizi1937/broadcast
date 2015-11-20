@@ -1073,7 +1073,7 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 		if(AndroidUtilities.isAboveMarshMallow()){
 				if(mPermissionHelper.isPermissionGranted(AppConstants.PERMISSION.STORAGE)){
 					Intent filePickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
-					filePickerIntent.setType("file/*");
+					filePickerIntent.setType("*/*");
 			        startActivityForResult(filePickerIntent, INTENT_PICK_FILE);		
 				}else{
 					checkPermissionModel();
@@ -1092,21 +1092,22 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, mIntent);
 		if(requestCode == INTENT_PICK_FILE && resultCode == Activity.RESULT_OK){
-			mFilePath = mIntent.getData().getPath();
+//			mFilePath = mIntent.getData().getPath();
+			mFilePath = Utilities.getPath(mIntent.getData());
 			if(!TextUtils.isEmpty(mFilePath)){
 				String mExt = mFilePath.substring(mFilePath.lastIndexOf(".")+1, mFilePath.length());
-				if(mExt.equalsIgnoreCase("doc") || mExt.equalsIgnoreCase("docx") || mExt.equalsIgnoreCase("pdf") || mExt.equalsIgnoreCase("rtf")){
+				if(mExt.equalsIgnoreCase("doc") || mExt.equalsIgnoreCase("docx") || mExt.equalsIgnoreCase("pdf") || mExt.equalsIgnoreCase("rtf") || mExt.equalsIgnoreCase("png") || mExt.equalsIgnoreCase("jpeg")|| mExt.equalsIgnoreCase("jpg")){
 					isValidFile = true;
 					mFileEv.append(mFilePath);
 					mFileValidateIv.setImageResource(R.drawable.ic_text_correct);	
 					setUiOfNextAccordingly();
 				}else{
-					AndroidUtilities.showSnackBar(ParichayReferralFormActivity.this, "Only .doc, .docx, pdf or rtf is allowed!");
+					AndroidUtilities.showSnackBar(ParichayReferralFormActivity.this, "Only .doc, .docx, pdf, jpeg, png or rtf is allowed!");
 				}
 			}else{
 				isValidFile = false;
 				mFileValidateIv.setImageResource(R.drawable.ic_text_incorrect);
-				AndroidUtilities.showSnackBar(ParichayReferralFormActivity.this, "Only .doc, .docx, pdf or rtf is allowed!");
+				AndroidUtilities.showSnackBar(ParichayReferralFormActivity.this, "Only .doc, .docx, pdf, jpeg, png or rtf is allowed!");
 			}
 		}else{
 			mPermissionHelper.onActivityForResult(requestCode);

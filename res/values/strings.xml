@@ -9,8 +9,8 @@
     <string name="LanguageCode">en</string>
     <string name="speak_now">Speak now</string>
     <string name="internet_unavailable">Please check your internet connection!</string>
-    <string name="relogin_title">Please re-login!</string>
-    <string name="relogin_message">You need to relogin.</string>
+    <string name="relogin_title">Please re-login to Mobcast!</string>
+    <string name="relogin_message">Someone just tried to logged in with your credentials in another device.</string>
     <string name="sync_failed">Failed as internet not avail at </string>
     <string name="sync_passed">Synced at </string>
     <string name="feedback_incomplete">Please fill the feedback properly!</string>
@@ -204,7 +204,8 @@
 
     <!-- activity_recycler_award -->
     <string name="AwardRecyclerActivityTitle">Awards</string>
-
+	<string name="AwardProfileActivityTitle">Award</string>
+	
     <!-- activity_recycler_event -->
     <string name="EventRecyclerActivityTitle">Events</string>
 
@@ -428,7 +429,7 @@
     <string name="InteractiveDetailActivityTitle">Interactive</string>
 
     <!-- fragment_birthday_profile -->
-    <string name="BirthdayProfileActivityTitle">Profile</string>
+    <string name="BirthdayProfileActivityTitle">Birthday</string>
     <string name="sample_fragment_birthday_profile_name">Ryan Gosling</string>
     <string name="sample_fragment_birthday_profile_city">MUMBAI</string>
     <string name="sample_fragment_birthday_profile_date">JAN 30 2015</string>

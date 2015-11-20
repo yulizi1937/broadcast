@@ -6724,12 +6724,13 @@ containing a value of this type.
         /**  fragment_about 
  fragment_about 
          */
-        public static final int AboutActivityTitle=0x7f0c01c1;
-        public static final int AccessError=0x7f0c0201;
+        public static final int AboutActivityTitle=0x7f0c01c2;
+        public static final int AccessError=0x7f0c0202;
         /**  fragment_audio 
  fragment_audio 
          */
-        public static final int AudioDetailActivityTitle=0x7f0c01ab;
+        public static final int AudioDetailActivityTitle=0x7f0c01ac;
+        public static final int AwardProfileActivityTitle=0x7f0c011d;
         /**  activity_recycler_award 
  activity_recycler_award 
          */
@@ -6737,18 +6738,18 @@ containing a value of this type.
         /**  fragment_birthday_profile 
  fragment_birthday_profile 
          */
-        public static final int BirthdayProfileActivityTitle=0x7f0c01b8;
+        public static final int BirthdayProfileActivityTitle=0x7f0c01b9;
         /**  activity recycler birthday 
  activity recycler birthday 
          */
-        public static final int BirthdayRecyclerActivityTitle=0x7f0c011e;
+        public static final int BirthdayRecyclerActivityTitle=0x7f0c011f;
         /**  activity_capture 
          */
-        public static final int CaptureActivityTitle=0x7f0c0124;
+        public static final int CaptureActivityTitle=0x7f0c0125;
         /**  item_simple 
  item_simple 
          */
-        public static final int CategoryActivityTitle=0x7f0c0217;
+        public static final int CategoryActivityTitle=0x7f0c0218;
         /**  activity_country_select 
  activity_country_select 
          */
@@ -6756,41 +6757,41 @@ containing a value of this type.
         /**  fragment_doc 
  fragment_doc 
          */
-        public static final int DocDetailActivityTitle=0x7f0c01b1;
+        public static final int DocDetailActivityTitle=0x7f0c01b2;
         /**  activity_edit_profile 
          */
-        public static final int EditProfileActivityTitle=0x7f0c011f;
-        public static final int EventDetailActivityTitle=0x7f0c0175;
+        public static final int EditProfileActivityTitle=0x7f0c0120;
+        public static final int EventDetailActivityTitle=0x7f0c0176;
         /**  activity_recycler_event 
  activity_recycler_event 
          */
-        public static final int EventRecyclerActivityTitle=0x7f0c011d;
-        public static final int ExternalStorage=0x7f0c0207;
+        public static final int EventRecyclerActivityTitle=0x7f0c011e;
+        public static final int ExternalStorage=0x7f0c0208;
         /**  fragment_feedback 
  fragment_feedback 
          */
-        public static final int FeedbackActivityTitle=0x7f0c01a7;
-        public static final int FeedbackAppActivityTitle=0x7f0c01d1;
-        public static final int FileManagerActivityTitle=0x7f0c020d;
-        public static final int FileUploadLimit=0x7f0c0203;
-        public static final int Folder=0x7f0c020a;
-        public static final int FreeOfTotal=0x7f0c01ff;
-        public static final int GalleryInfo=0x7f0c020b;
+        public static final int FeedbackActivityTitle=0x7f0c01a8;
+        public static final int FeedbackAppActivityTitle=0x7f0c01d2;
+        public static final int FileManagerActivityTitle=0x7f0c020e;
+        public static final int FileUploadLimit=0x7f0c0204;
+        public static final int Folder=0x7f0c020b;
+        public static final int FreeOfTotal=0x7f0c0200;
+        public static final int GalleryInfo=0x7f0c020c;
         public static final int GlobalSearch=0x7f0c00d3;
         /**  fragment_image 
  fragment_image 
          */
-        public static final int ImageDetailActivityTitle=0x7f0c01a9;
+        public static final int ImageDetailActivityTitle=0x7f0c01aa;
         /**  fragment_interactive 
  fragment_interactive 
          */
-        public static final int InteractiveDetailActivityTitle=0x7f0c01b7;
-        public static final int InternalStorage=0x7f0c0206;
+        public static final int InteractiveDetailActivityTitle=0x7f0c01b8;
+        public static final int InternalStorage=0x7f0c0207;
         public static final int InviteFriends=0x7f0c00d2;
         /**  fragment_language 
  fragment_language 
          */
-        public static final int LanguageActivityTitle=0x7f0c01fc;
+        public static final int LanguageActivityTitle=0x7f0c01fd;
         public static final int LanguageCode=0x7f0c006c;
         public static final int LanguageName=0x7f0c006a;
         public static final int LanguageNameInEnglish=0x7f0c006b;
@@ -6801,59 +6802,59 @@ containing a value of this type.
         /**  fragment_news 
  fragment_news 
          */
-        public static final int NewsDetailActivityTitle=0x7f0c01b4;
-        public static final int NoFiles=0x7f0c0202;
+        public static final int NewsDetailActivityTitle=0x7f0c01b5;
+        public static final int NoFiles=0x7f0c0203;
         public static final int NoResult=0x7f0c00fd;
-        public static final int NotMounted=0x7f0c0204;
-        public static final int OK=0x7f0c020c;
+        public static final int NotMounted=0x7f0c0205;
+        public static final int OK=0x7f0c020d;
         public static final int Online=0x7f0c00cf;
-        public static final int ParichayActivityTitle=0x7f0c013e;
+        public static final int ParichayActivityTitle=0x7f0c013f;
         /**  item_recycler_parichay 
          */
-        public static final int ParichayDetailActivityTitle=0x7f0c013d;
-        public static final int ParichayReferralFormActivityTitle=0x7f0c013f;
+        public static final int ParichayDetailActivityTitle=0x7f0c013e;
+        public static final int ParichayReferralFormActivityTitle=0x7f0c0140;
         /**  fragment_pdf 
  fragment_pdf 
          */
-        public static final int PdfDetailActivityTitle=0x7f0c01b0;
+        public static final int PdfDetailActivityTitle=0x7f0c01b1;
         /**  fragment_ppt 
  fragment_ppt 
          */
-        public static final int PptDetailActivityTitle=0x7f0c01b2;
-        public static final int QuizActivityTitle=0x7f0c0182;
+        public static final int PptDetailActivityTitle=0x7f0c01b3;
+        public static final int QuizActivityTitle=0x7f0c0183;
         /**  activity_recycler_recruitment 
          */
-        public static final int RecruitmentRecyclerActivityTitle=0x7f0c0125;
-        public static final int ReportActivityTitle=0x7f0c01cf;
-        public static final int SdCard=0x7f0c0209;
+        public static final int RecruitmentRecyclerActivityTitle=0x7f0c0126;
+        public static final int ReportActivityTitle=0x7f0c01d0;
+        public static final int SdCard=0x7f0c020a;
         /**  fragment_file_manager 
          */
-        public static final int SelectFile=0x7f0c01fe;
+        public static final int SelectFile=0x7f0c01ff;
         public static final int SetProfileActivityTitle=0x7f0c011b;
-        public static final int SettingsActivityTitle=0x7f0c01ef;
-        public static final int SystemRoot=0x7f0c0208;
+        public static final int SettingsActivityTitle=0x7f0c01f0;
+        public static final int SystemRoot=0x7f0c0209;
         /**  fragment_text 
  fragment_text 
          */
-        public static final int TextDetailActivityTitle=0x7f0c01af;
+        public static final int TextDetailActivityTitle=0x7f0c01b0;
         public static final int TodayAt=0x7f0c00cd;
-        public static final int UnknownError=0x7f0c0200;
-        public static final int UsbActive=0x7f0c0205;
+        public static final int UnknownError=0x7f0c0201;
+        public static final int UsbActive=0x7f0c0206;
         public static final int VerificationActivityTitle=0x7f0c0107;
         /**  fragment_video 
  fragment_video 
          */
-        public static final int VideoDetailActivityTitle=0x7f0c01ae;
+        public static final int VideoDetailActivityTitle=0x7f0c01af;
         /**  fragment_webview 
  fragment_webview 
          */
-        public static final int WebViewActivity=0x7f0c01b6;
+        public static final int WebViewActivity=0x7f0c01b7;
         public static final int WithinAMonth=0x7f0c00d6;
         public static final int WithinAWeek=0x7f0c00d5;
         /**  fragment_xls 
  fragment_xls 
          */
-        public static final int XlsDetailActivityTitle=0x7f0c01b3;
+        public static final int XlsDetailActivityTitle=0x7f0c01b4;
         /**  Time 
  Time 
          */
@@ -6861,7 +6862,7 @@ containing a value of this type.
         public static final int YesterdayAt=0x7f0c00ce;
         /**  fragment_livestream_youtube 
          */
-        public static final int YouTubeLiveStreamActivityTitle=0x7f0c01fd;
+        public static final int YouTubeLiveStreamActivityTitle=0x7f0c01fe;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abc_action_bar_home_description=0x7f0c0001;
@@ -6967,18 +6968,18 @@ containing a value of this type.
         public static final int action_video=0x7f0c00af;
         public static final int action_view_web=0x7f0c00a5;
         public static final int action_xls=0x7f0c00b3;
-        public static final int activity_edit_profile_answer=0x7f0c0123;
-        public static final int activity_edit_profile_birthday=0x7f0c0122;
-        public static final int activity_edit_profile_question=0x7f0c0121;
-        public static final int activity_edit_profile_update_btn=0x7f0c0120;
+        public static final int activity_edit_profile_answer=0x7f0c0124;
+        public static final int activity_edit_profile_birthday=0x7f0c0123;
+        public static final int activity_edit_profile_question=0x7f0c0122;
+        public static final int activity_edit_profile_update_btn=0x7f0c0121;
         public static final int addtocalendar=0x7f0c00e9;
-        public static final int agelimit=0x7f0c0128;
+        public static final int agelimit=0x7f0c0129;
         public static final int api_connection_timeout=0x7f0c007d;
         public static final int api_unknown_error=0x7f0c007e;
         public static final int app_name=0x7f0c0067;
         /**  design support library 
          */
-        public static final int appbar_scrolling_view_behavior=0x7f0c026a;
+        public static final int appbar_scrolling_view_behavior=0x7f0c026b;
         public static final int attempt=0x7f0c007a;
         /**   Title for notification shown when GooglePlayServices needs to be
         enabled for a application to work. [CHAR LIMIT=70] 
@@ -7008,9 +7009,9 @@ containing a value of this type.
         /**  BottomSheet 
  BottomSheet 
          */
-        public static final int bs_more=0x7f0c0267;
-        public static final int button_apply=0x7f0c017f;
-        public static final int button_browse=0x7f0c017e;
+        public static final int bs_more=0x7f0c0268;
+        public static final int button_apply=0x7f0c0180;
+        public static final int button_browse=0x7f0c017f;
         public static final int button_cancel=0x7f0c00f4;
         public static final int button_decrypt=0x7f0c00f7;
         public static final int button_delete=0x7f0c0085;
@@ -7021,11 +7022,11 @@ containing a value of this type.
          */
         public static final int button_encrypt=0x7f0c00f6;
         public static final int button_next=0x7f0c00f1;
-        public static final int button_previous=0x7f0c017c;
+        public static final int button_previous=0x7f0c017d;
         public static final int button_raised_ticket=0x7f0c0103;
         public static final int button_resend=0x7f0c0102;
-        public static final int button_send=0x7f0c0180;
-        public static final int button_submit=0x7f0c017d;
+        public static final int button_send=0x7f0c0181;
+        public static final int button_submit=0x7f0c017e;
         public static final int button_verify=0x7f0c0101;
         public static final int capture_validation=0x7f0c008c;
         public static final int chatDate=0x7f0c00db;
@@ -7160,7 +7161,7 @@ containing a value of this type.
         public static final int congratulate_message_validation=0x7f0c0092;
         public static final int congratulated_action=0x7f0c00eb;
         public static final int congratulated_text=0x7f0c00ea;
-        public static final int contact=0x7f0c012e;
+        public static final int contact=0x7f0c012f;
         /**  string formatters 
  string formatters 
          */
@@ -7176,62 +7177,62 @@ containing a value of this type.
         public static final int context_menu_save=0x7f0c00cb;
         public static final int context_menu_unread=0x7f0c00c6;
         public static final int context_menu_view=0x7f0c00c8;
-        public static final int crop__cancel=0x7f0c028c;
-        public static final int crop__done=0x7f0c028b;
-        public static final int crop__pick_error=0x7f0c028a;
+        public static final int crop__cancel=0x7f0c028d;
+        public static final int crop__done=0x7f0c028c;
+        public static final int crop__pick_error=0x7f0c028b;
         /**  CropImageView 
          */
-        public static final int crop__saving=0x7f0c0288;
-        public static final int crop__wait=0x7f0c0289;
-        public static final int ctc=0x7f0c012c;
+        public static final int crop__saving=0x7f0c0289;
+        public static final int crop__wait=0x7f0c028a;
+        public static final int ctc=0x7f0c012d;
         public static final int days_left=0x7f0c00e3;
-        public static final int desc_activity_login_logo=0x7f0c0265;
-        public static final int desc_activity_login_validation=0x7f0c0266;
+        public static final int desc_activity_login_logo=0x7f0c0266;
+        public static final int desc_activity_login_validation=0x7f0c0267;
         /**  ImageView Description 
  ImageView Description 
          */
-        public static final int desc_toolbar_plain_back=0x7f0c0264;
-        public static final int desiredProfile=0x7f0c012d;
-        public static final int details=0x7f0c0126;
+        public static final int desc_toolbar_plain_back=0x7f0c0265;
+        public static final int desiredProfile=0x7f0c012e;
+        public static final int details=0x7f0c0127;
         public static final int developer_message=0x7f0c008a;
-        public static final int dialog_birthday_award_title=0x7f0c0263;
-        public static final int dialog_birthday_message_negative=0x7f0c0261;
-        public static final int dialog_birthday_message_positive=0x7f0c0260;
+        public static final int dialog_birthday_award_title=0x7f0c0264;
+        public static final int dialog_birthday_message_negative=0x7f0c0262;
+        public static final int dialog_birthday_message_positive=0x7f0c0261;
         /**  dialog_birthday_message 
  dialog_birthday_message 
          */
-        public static final int dialog_birthday_message_textview=0x7f0c025d;
-        public static final int dialog_birthday_message_title=0x7f0c025f;
-        public static final int dialog_birthday_wish_title=0x7f0c0262;
+        public static final int dialog_birthday_message_textview=0x7f0c025e;
+        public static final int dialog_birthday_message_title=0x7f0c0260;
+        public static final int dialog_birthday_wish_title=0x7f0c0263;
         /**  Apprater 
          */
-        public static final int dialog_title=0x7f0c028d;
-        public static final int emptyAwardMessage=0x7f0c027a;
-        public static final int emptyAwardTitle=0x7f0c0279;
-        public static final int emptyBirthdayMessage=0x7f0c0280;
-        public static final int emptyBirthdayTitle=0x7f0c027f;
-        public static final int emptyCaptureMessage=0x7f0c027e;
-        public static final int emptyCaptureTitle=0x7f0c027d;
-        public static final int emptyChatMessage=0x7f0c027c;
-        public static final int emptyChatTitle=0x7f0c027b;
-        public static final int emptyEventMessage=0x7f0c0278;
-        public static final int emptyEventTitle=0x7f0c0277;
-        public static final int emptyMessage=0x7f0c0273;
-        public static final int emptyParichayMessage=0x7f0c0284;
-        public static final int emptyParichayReferredMessage=0x7f0c0286;
-        public static final int emptyParichayReferredTitle=0x7f0c0285;
-        public static final int emptyParichayTitle=0x7f0c0283;
-        public static final int emptyRecruitmentMessage=0x7f0c0282;
-        public static final int emptyRecruitmentTitle=0x7f0c0281;
-        public static final int emptyRefresh=0x7f0c0274;
-        public static final int emptyRefreshOnSearch=0x7f0c0287;
+        public static final int dialog_title=0x7f0c028e;
+        public static final int emptyAwardMessage=0x7f0c027b;
+        public static final int emptyAwardTitle=0x7f0c027a;
+        public static final int emptyBirthdayMessage=0x7f0c0281;
+        public static final int emptyBirthdayTitle=0x7f0c0280;
+        public static final int emptyCaptureMessage=0x7f0c027f;
+        public static final int emptyCaptureTitle=0x7f0c027e;
+        public static final int emptyChatMessage=0x7f0c027d;
+        public static final int emptyChatTitle=0x7f0c027c;
+        public static final int emptyEventMessage=0x7f0c0279;
+        public static final int emptyEventTitle=0x7f0c0278;
+        public static final int emptyMessage=0x7f0c0274;
+        public static final int emptyParichayMessage=0x7f0c0285;
+        public static final int emptyParichayReferredMessage=0x7f0c0287;
+        public static final int emptyParichayReferredTitle=0x7f0c0286;
+        public static final int emptyParichayTitle=0x7f0c0284;
+        public static final int emptyRecruitmentMessage=0x7f0c0283;
+        public static final int emptyRecruitmentTitle=0x7f0c0282;
+        public static final int emptyRefresh=0x7f0c0275;
+        public static final int emptyRefreshOnSearch=0x7f0c0288;
         /**  emptyMessages 
          */
-        public static final int emptyTitle=0x7f0c0272;
-        public static final int emptyTrainingMessage=0x7f0c0276;
-        public static final int emptyTrainingTitle=0x7f0c0275;
-        public static final int error_player=0x7f0c0269;
-        public static final int error_thumbnail_view=0x7f0c0268;
+        public static final int emptyTitle=0x7f0c0273;
+        public static final int emptyTrainingMessage=0x7f0c0277;
+        public static final int emptyTrainingTitle=0x7f0c0276;
+        public static final int error_player=0x7f0c026a;
+        public static final int error_thumbnail_view=0x7f0c0269;
         public static final int feedback_attempted=0x7f0c0074;
         public static final int feedback_incomplete=0x7f0c0073;
         public static final int feedback_read=0x7f0c0076;
@@ -7250,30 +7251,30 @@ containing a value of this type.
         public static final int formatterWeek=0x7f0c00dd;
         public static final int formatterYear=0x7f0c00d9;
         public static final int formatterYearMax=0x7f0c00da;
-        public static final int fragment_capture_another_heading=0x7f0c0212;
-        public static final int fragment_capture_attached_heading=0x7f0c0213;
-        public static final int fragment_capture_browse=0x7f0c0214;
-        public static final int fragment_capture_note_char_limit=0x7f0c0211;
+        public static final int fragment_capture_another_heading=0x7f0c0213;
+        public static final int fragment_capture_attached_heading=0x7f0c0214;
+        public static final int fragment_capture_browse=0x7f0c0215;
+        public static final int fragment_capture_note_char_limit=0x7f0c0212;
         /**  fragment_capture 
          */
-        public static final int fragment_capture_note_hint=0x7f0c0210;
-        public static final int fragment_capture_submit=0x7f0c0215;
-        public static final int fragment_capture_takeapic=0x7f0c0216;
-        public static final int fragment_event_add_error=0x7f0c0177;
-        public static final int fragment_event_added=0x7f0c0176;
-        public static final int fragment_event_detail_about=0x7f0c0174;
-        public static final int fragment_event_detail_button_decline=0x7f0c016f;
-        public static final int fragment_event_detail_button_join=0x7f0c016e;
-        public static final int fragment_event_detail_going=0x7f0c0173;
-        public static final int fragment_event_detail_invite=0x7f0c0172;
-        public static final int fragment_feedback_thank_you_header=0x7f0c01a8;
-        public static final int fragment_image_language_header=0x7f0c01aa;
-        public static final int fragment_quizscore_thank_you_header=0x7f0c018e;
-        public static final int fragment_quiztimes_up_header=0x7f0c018f;
-        public static final int fragment_tutorial_functionality=0x7f0c020f;
+        public static final int fragment_capture_note_hint=0x7f0c0211;
+        public static final int fragment_capture_submit=0x7f0c0216;
+        public static final int fragment_capture_takeapic=0x7f0c0217;
+        public static final int fragment_event_add_error=0x7f0c0178;
+        public static final int fragment_event_added=0x7f0c0177;
+        public static final int fragment_event_detail_about=0x7f0c0175;
+        public static final int fragment_event_detail_button_decline=0x7f0c0170;
+        public static final int fragment_event_detail_button_join=0x7f0c016f;
+        public static final int fragment_event_detail_going=0x7f0c0174;
+        public static final int fragment_event_detail_invite=0x7f0c0173;
+        public static final int fragment_feedback_thank_you_header=0x7f0c01a9;
+        public static final int fragment_image_language_header=0x7f0c01ab;
+        public static final int fragment_quizscore_thank_you_header=0x7f0c018f;
+        public static final int fragment_quiztimes_up_header=0x7f0c0190;
+        public static final int fragment_tutorial_functionality=0x7f0c0210;
         /**  fragment_tutorial 
          */
-        public static final int fragment_tutorial_header=0x7f0c020e;
+        public static final int fragment_tutorial_header=0x7f0c020f;
         public static final int ga_appName=0x7f0c0030;
         public static final int ga_appVersion=0x7f0c002f;
         public static final int ga_sampleFrequency=0x7f0c002e;
@@ -7287,7 +7288,7 @@ containing a value of this type.
         public static final int hint_city=0x7f0c0110;
         public static final int hint_country_search=0x7f0c00fe;
         public static final int hint_designation=0x7f0c010f;
-        public static final int hint_dialog_birthday_message_edittext=0x7f0c025e;
+        public static final int hint_dialog_birthday_message_edittext=0x7f0c025f;
         public static final int hint_divison=0x7f0c0114;
         public static final int hint_email_id=0x7f0c010b;
         public static final int hint_employee_id=0x7f0c0119;
@@ -7295,7 +7296,7 @@ containing a value of this type.
         /**  fragment_feedback_subjective 
  fragment_feedback_subjective 
          */
-        public static final int hint_feedback_subjective_message_edittext=0x7f0c0195;
+        public static final int hint_feedback_subjective_message_edittext=0x7f0c0196;
         public static final int hint_headquarter=0x7f0c0113;
         public static final int hint_login_id=0x7f0c00f0;
         public static final int hint_mobilenumber=0x7f0c010c;
@@ -7306,394 +7307,394 @@ containing a value of this type.
         public static final int hint_relationship=0x7f0c0116;
         public static final int hint_verification_code=0x7f0c0100;
         public static final int internet_unavailable=0x7f0c006e;
-        public static final int item_recycler_mobcast_feedback_question=0x7f0c0248;
-        public static final int item_recycler_mobcast_feedback_questions=0x7f0c0249;
-        public static final int item_recycler_training_quiz_attempt=0x7f0c024e;
-        public static final int item_recycler_training_quiz_attempts=0x7f0c024f;
-        public static final int item_recycler_training_quiz_points=0x7f0c024d;
-        public static final int jobdescription=0x7f0c0129;
-        public static final int later=0x7f0c0290;
-        public static final int layout_drawer_search_mother_search_all=0x7f0c0164;
-        public static final int layout_drawer_search_mother_search_audio=0x7f0c0161;
+        public static final int item_recycler_mobcast_feedback_question=0x7f0c0249;
+        public static final int item_recycler_mobcast_feedback_questions=0x7f0c024a;
+        public static final int item_recycler_training_quiz_attempt=0x7f0c024f;
+        public static final int item_recycler_training_quiz_attempts=0x7f0c0250;
+        public static final int item_recycler_training_quiz_points=0x7f0c024e;
+        public static final int jobdescription=0x7f0c012a;
+        public static final int later=0x7f0c0291;
+        public static final int layout_drawer_search_mother_search_all=0x7f0c0165;
+        public static final int layout_drawer_search_mother_search_audio=0x7f0c0162;
         /**  layout_drawer_search_mother 
          */
-        public static final int layout_drawer_search_mother_search_by=0x7f0c0158;
-        public static final int layout_drawer_search_mother_search_by_text=0x7f0c0163;
-        public static final int layout_drawer_search_mother_search_doc=0x7f0c0162;
-        public static final int layout_drawer_search_mother_search_feedback=0x7f0c015e;
-        public static final int layout_drawer_search_mother_search_for=0x7f0c015b;
-        public static final int layout_drawer_search_mother_search_image=0x7f0c015d;
-        public static final int layout_drawer_search_mother_search_livestream=0x7f0c0165;
-        public static final int layout_drawer_search_mother_search_local=0x7f0c0159;
-        public static final int layout_drawer_search_mother_search_quiz=0x7f0c015f;
-        public static final int layout_drawer_search_mother_search_text=0x7f0c0160;
-        public static final int layout_drawer_search_mother_search_video=0x7f0c015c;
-        public static final int layout_drawer_search_mother_search_web=0x7f0c015a;
+        public static final int layout_drawer_search_mother_search_by=0x7f0c0159;
+        public static final int layout_drawer_search_mother_search_by_text=0x7f0c0164;
+        public static final int layout_drawer_search_mother_search_doc=0x7f0c0163;
+        public static final int layout_drawer_search_mother_search_feedback=0x7f0c015f;
+        public static final int layout_drawer_search_mother_search_for=0x7f0c015c;
+        public static final int layout_drawer_search_mother_search_image=0x7f0c015e;
+        public static final int layout_drawer_search_mother_search_livestream=0x7f0c0166;
+        public static final int layout_drawer_search_mother_search_local=0x7f0c015a;
+        public static final int layout_drawer_search_mother_search_quiz=0x7f0c0160;
+        public static final int layout_drawer_search_mother_search_text=0x7f0c0161;
+        public static final int layout_drawer_search_mother_search_video=0x7f0c015d;
+        public static final int layout_drawer_search_mother_search_web=0x7f0c015b;
         /**  <string name="layout_mother_mobcast">CK BULLETIN</string> 
          */
-        public static final int layout_mother_chat=0x7f0c0154;
+        public static final int layout_mother_chat=0x7f0c0155;
         /**  layout_mother 
  layout_mother 
          */
-        public static final int layout_mother_mobcast=0x7f0c0153;
-        public static final int layout_mother_parichay=0x7f0c0156;
-        public static final int layout_mother_referred=0x7f0c0157;
+        public static final int layout_mother_mobcast=0x7f0c0154;
+        public static final int layout_mother_parichay=0x7f0c0157;
+        public static final int layout_mother_referred=0x7f0c0158;
         /**  <string name="layout_mother_chat">MIS</string> 
          */
-        public static final int layout_mother_training=0x7f0c0155;
+        public static final int layout_mother_training=0x7f0c0156;
         /**  loadingMessages 
          */
-        public static final int loadingLogin=0x7f0c026b;
-        public static final int loadingMessage=0x7f0c0271;
-        public static final int loadingRefresh=0x7f0c026c;
-        public static final int loadingRequest=0x7f0c026e;
-        public static final int loadingSubmit=0x7f0c0270;
-        public static final int loadingUpdate=0x7f0c026f;
-        public static final int loadingVerify=0x7f0c026d;
+        public static final int loadingLogin=0x7f0c026c;
+        public static final int loadingMessage=0x7f0c0272;
+        public static final int loadingRefresh=0x7f0c026d;
+        public static final int loadingRequest=0x7f0c026f;
+        public static final int loadingSubmit=0x7f0c0271;
+        public static final int loadingUpdate=0x7f0c0270;
+        public static final int loadingVerify=0x7f0c026e;
         public static final int logging_out=0x7f0c0095;
         public static final int logout_content_message=0x7f0c0094;
         public static final int logout_title_message=0x7f0c0083;
         public static final int maybe=0x7f0c00e6;
-        public static final int minexperience=0x7f0c012a;
+        public static final int minexperience=0x7f0c012b;
         public static final int new_=0x7f0c009e;
         public static final int new_mobcast_avail=0x7f0c009d;
         public static final int new_notifications=0x7f0c00fa;
         public static final int new_training_avail=0x7f0c00a0;
-        public static final int no_thanks=0x7f0c0291;
+        public static final int no_thanks=0x7f0c0292;
         public static final int notgoing=0x7f0c00e8;
         public static final int notification_title=0x7f0c00fb;
         public static final int package_name=0x7f0c0068;
         public static final int permission_message_denied=0x7f0c0080;
         public static final int permission_message_externalstorage=0x7f0c007f;
-        public static final int qualification=0x7f0c012b;
+        public static final int qualification=0x7f0c012c;
         public static final int quiz_attempted=0x7f0c0079;
         public static final int quiz_incomplete=0x7f0c0078;
         public static final int quiz_read=0x7f0c007c;
         public static final int quiz_unread=0x7f0c007b;
         public static final int raise_ticket_info=0x7f0c0108;
-        public static final int rate=0x7f0c028f;
-        public static final int rate_message=0x7f0c028e;
+        public static final int rate=0x7f0c0290;
+        public static final int rate_message=0x7f0c028f;
         public static final int relogin_message=0x7f0c0070;
         public static final int relogin_title=0x7f0c006f;
         public static final int resend_otp=0x7f0c0077;
-        public static final int sample_about_detail=0x7f0c01c8;
-        public static final int sample_about_privacy_policy=0x7f0c01c9;
-        public static final int sample_about_report_problem=0x7f0c01c6;
-        public static final int sample_about_report_problem_detail=0x7f0c01c7;
-        public static final int sample_about_send_feedback=0x7f0c01c4;
-        public static final int sample_about_send_feedback_detail=0x7f0c01c5;
+        public static final int sample_about_detail=0x7f0c01c9;
+        public static final int sample_about_privacy_policy=0x7f0c01ca;
+        public static final int sample_about_report_problem=0x7f0c01c7;
+        public static final int sample_about_report_problem_detail=0x7f0c01c8;
+        public static final int sample_about_send_feedback=0x7f0c01c5;
+        public static final int sample_about_send_feedback_detail=0x7f0c01c6;
         /**  fragment_about 
  fragment_about 
          */
-        public static final int sample_about_version=0x7f0c01c2;
-        public static final int sample_about_version_detail=0x7f0c01c3;
+        public static final int sample_about_version=0x7f0c01c3;
+        public static final int sample_about_version_detail=0x7f0c01c4;
         /**  fragment_app_feedback 
  fragment_app_feedback 
          */
-        public static final int sample_app_feedback_hint=0x7f0c01d0;
-        public static final int sample_audio_detail_seekbar=0x7f0c01ac;
+        public static final int sample_app_feedback_hint=0x7f0c01d1;
+        public static final int sample_audio_detail_seekbar=0x7f0c01ad;
         /**  <string name="sample_award_name">AWARD FOR BEST SALES OF THE WEEK</string> 
          */
-        public static final int sample_award_name=0x7f0c0133;
-        public static final int sample_birthday_department=0x7f0c0136;
+        public static final int sample_award_name=0x7f0c0134;
+        public static final int sample_birthday_department=0x7f0c0137;
         /**  item_recycler_birthday 
  item_recycler_birthday 
          */
-        public static final int sample_birthday_name=0x7f0c0135;
-        public static final int sample_event_attend_count=0x7f0c0170;
-        public static final int sample_event_attend_going_count=0x7f0c0171;
-        public static final int sample_event_by=0x7f0c0138;
+        public static final int sample_birthday_name=0x7f0c0136;
+        public static final int sample_event_attend_count=0x7f0c0171;
+        public static final int sample_event_attend_going_count=0x7f0c0172;
+        public static final int sample_event_by=0x7f0c0139;
         /**  fragment_event_detail 
  fragment_event_detail 
          */
-        public static final int sample_event_date=0x7f0c0166;
-        public static final int sample_event_day=0x7f0c0168;
-        public static final int sample_event_hours=0x7f0c0169;
-        public static final int sample_event_hours_text=0x7f0c016b;
-        public static final int sample_event_left_number=0x7f0c013a;
-        public static final int sample_event_left_string=0x7f0c013b;
+        public static final int sample_event_date=0x7f0c0167;
+        public static final int sample_event_day=0x7f0c0169;
+        public static final int sample_event_hours=0x7f0c016a;
+        public static final int sample_event_hours_text=0x7f0c016c;
+        public static final int sample_event_left_number=0x7f0c013b;
+        public static final int sample_event_left_string=0x7f0c013c;
         /**  <string name="sample_event_location_text">Conference Room, Head Office, Bandra, Mumbai, Maharastra, India</string> 
          */
-        public static final int sample_event_location_text=0x7f0c016c;
-        public static final int sample_event_month=0x7f0c0167;
+        public static final int sample_event_location_text=0x7f0c016d;
+        public static final int sample_event_month=0x7f0c0168;
         /**  <string name="sample_event_summary">Lorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more\nLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more\nLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read moreLorem ipsum dolor sit amet consectetur adipiscing elit. Ut vitae ex interdum, ultrices lorem nec condimentum manga. Read more</string> 
  <string name="sample_event_summary">Content: Officials said with Chillr, HDFC Bank customers can transfer money to any person in India, once they download the app and register. The app is widely accessible as it works on Android and iOS operating syatems and will soon be launched for Windows phones as well.</string> 
          */
-        public static final int sample_event_summary=0x7f0c013c;
-        public static final int sample_event_till=0x7f0c016a;
+        public static final int sample_event_summary=0x7f0c013d;
+        public static final int sample_event_till=0x7f0c016b;
         /**  item_recycler_event 
  <string name="sample_event_title">SUNDAY - 8TH MARCH 15  WOMEN DAYS SPECIAL</string> 
  <string name="sample_event_title">Announcing launch of Chillr</string> 
  item_recycler_event 
          */
-        public static final int sample_event_title=0x7f0c0137;
-        public static final int sample_event_view=0x7f0c0139;
-        public static final int sample_event_view_map=0x7f0c016d;
-        public static final int sample_feedback_multiple_title=0x7f0c0196;
-        public static final int sample_feedback_multiple_title_a=0x7f0c0199;
-        public static final int sample_feedback_rating_title=0x7f0c019a;
-        public static final int sample_feedback_selective_title=0x7f0c0198;
-        public static final int sample_feedback_subjective_title=0x7f0c0197;
-        public static final int sample_fragment_birthday_profile_age=0x7f0c01be;
-        public static final int sample_fragment_birthday_profile_city=0x7f0c01ba;
-        public static final int sample_fragment_birthday_profile_date=0x7f0c01bb;
-        public static final int sample_fragment_birthday_profile_department=0x7f0c01bc;
-        public static final int sample_fragment_birthday_profile_name=0x7f0c01b9;
-        public static final int sample_fragment_birthday_profile_send_sms=0x7f0c01c0;
-        public static final int sample_fragment_birthday_profile_send_wishes=0x7f0c01bf;
-        public static final int sample_fragment_birthday_profile_sun_sign=0x7f0c01bd;
-        public static final int sample_fragment_settings_about_build_version_text=0x7f0c01e9;
-        public static final int sample_fragment_settings_about_file_storage_text=0x7f0c01ea;
-        public static final int sample_fragment_settings_about_text=0x7f0c01e8;
-        public static final int sample_fragment_settings_dialog_birthday_notify_1=0x7f0c01f0;
-        public static final int sample_fragment_settings_dialog_birthday_notify_2=0x7f0c01f1;
-        public static final int sample_fragment_settings_dialog_birthday_notify_3=0x7f0c01f2;
-        public static final int sample_fragment_settings_dialog_language_negative=0x7f0c01ed;
-        public static final int sample_fragment_settings_dialog_language_positive=0x7f0c01ec;
-        public static final int sample_fragment_settings_dialog_language_title=0x7f0c01eb;
-        public static final int sample_fragment_settings_dialog_sync_freq1=0x7f0c01f4;
-        public static final int sample_fragment_settings_dialog_sync_freq2=0x7f0c01f5;
-        public static final int sample_fragment_settings_dialog_sync_freq3=0x7f0c01f6;
-        public static final int sample_fragment_settings_dialog_sync_freq4=0x7f0c01f7;
-        public static final int sample_fragment_settings_dialog_sync_freq5=0x7f0c01f8;
-        public static final int sample_fragment_settings_dialog_sync_freq6=0x7f0c01f9;
-        public static final int sample_fragment_settings_dialog_sync_freq7=0x7f0c01fa;
-        public static final int sample_fragment_settings_dialog_sync_title=0x7f0c01f3;
-        public static final int sample_fragment_settings_dialog_theme_title=0x7f0c01fb;
-        public static final int sample_fragment_settings_dialog_traffic_title=0x7f0c01ee;
-        public static final int sample_fragment_settings_general_language_header=0x7f0c01d3;
-        public static final int sample_fragment_settings_general_language_text=0x7f0c01d4;
-        public static final int sample_fragment_settings_header_about=0x7f0c01e7;
+        public static final int sample_event_title=0x7f0c0138;
+        public static final int sample_event_view=0x7f0c013a;
+        public static final int sample_event_view_map=0x7f0c016e;
+        public static final int sample_feedback_multiple_title=0x7f0c0197;
+        public static final int sample_feedback_multiple_title_a=0x7f0c019a;
+        public static final int sample_feedback_rating_title=0x7f0c019b;
+        public static final int sample_feedback_selective_title=0x7f0c0199;
+        public static final int sample_feedback_subjective_title=0x7f0c0198;
+        public static final int sample_fragment_birthday_profile_age=0x7f0c01bf;
+        public static final int sample_fragment_birthday_profile_city=0x7f0c01bb;
+        public static final int sample_fragment_birthday_profile_date=0x7f0c01bc;
+        public static final int sample_fragment_birthday_profile_department=0x7f0c01bd;
+        public static final int sample_fragment_birthday_profile_name=0x7f0c01ba;
+        public static final int sample_fragment_birthday_profile_send_sms=0x7f0c01c1;
+        public static final int sample_fragment_birthday_profile_send_wishes=0x7f0c01c0;
+        public static final int sample_fragment_birthday_profile_sun_sign=0x7f0c01be;
+        public static final int sample_fragment_settings_about_build_version_text=0x7f0c01ea;
+        public static final int sample_fragment_settings_about_file_storage_text=0x7f0c01eb;
+        public static final int sample_fragment_settings_about_text=0x7f0c01e9;
+        public static final int sample_fragment_settings_dialog_birthday_notify_1=0x7f0c01f1;
+        public static final int sample_fragment_settings_dialog_birthday_notify_2=0x7f0c01f2;
+        public static final int sample_fragment_settings_dialog_birthday_notify_3=0x7f0c01f3;
+        public static final int sample_fragment_settings_dialog_language_negative=0x7f0c01ee;
+        public static final int sample_fragment_settings_dialog_language_positive=0x7f0c01ed;
+        public static final int sample_fragment_settings_dialog_language_title=0x7f0c01ec;
+        public static final int sample_fragment_settings_dialog_sync_freq1=0x7f0c01f5;
+        public static final int sample_fragment_settings_dialog_sync_freq2=0x7f0c01f6;
+        public static final int sample_fragment_settings_dialog_sync_freq3=0x7f0c01f7;
+        public static final int sample_fragment_settings_dialog_sync_freq4=0x7f0c01f8;
+        public static final int sample_fragment_settings_dialog_sync_freq5=0x7f0c01f9;
+        public static final int sample_fragment_settings_dialog_sync_freq6=0x7f0c01fa;
+        public static final int sample_fragment_settings_dialog_sync_freq7=0x7f0c01fb;
+        public static final int sample_fragment_settings_dialog_sync_title=0x7f0c01f4;
+        public static final int sample_fragment_settings_dialog_theme_title=0x7f0c01fc;
+        public static final int sample_fragment_settings_dialog_traffic_title=0x7f0c01ef;
+        public static final int sample_fragment_settings_general_language_header=0x7f0c01d4;
+        public static final int sample_fragment_settings_general_language_text=0x7f0c01d5;
+        public static final int sample_fragment_settings_header_about=0x7f0c01e8;
         /**  fragment_settings 
  fragment_settings 
          */
-        public static final int sample_fragment_settings_header_general=0x7f0c01d2;
-        public static final int sample_fragment_settings_header_notification=0x7f0c01d6;
-        public static final int sample_fragment_settings_notification_anydo=0x7f0c01da;
-        public static final int sample_fragment_settings_notification_birthday_mute=0x7f0c01d8;
-        public static final int sample_fragment_settings_notification_birthday_time=0x7f0c01d7;
-        public static final int sample_fragment_settings_notification_birthday_time_text=0x7f0c01d5;
-        public static final int sample_fragment_settings_notification_download_notify=0x7f0c01d9;
-        public static final int sample_fragment_settings_style_apptheme_dblue=0x7f0c01e1;
-        public static final int sample_fragment_settings_style_apptheme_green=0x7f0c01e3;
-        public static final int sample_fragment_settings_style_apptheme_purple=0x7f0c01e2;
-        public static final int sample_fragment_settings_style_notification=0x7f0c01df;
-        public static final int sample_fragment_settings_style_textfont=0x7f0c01e4;
-        public static final int sample_fragment_settings_style_textfont_default=0x7f0c01e6;
-        public static final int sample_fragment_settings_style_textfont_selected=0x7f0c01e5;
-        public static final int sample_fragment_settings_style_themeapp=0x7f0c01e0;
-        public static final int sample_fragment_settings_sync_frequency=0x7f0c01dc;
-        public static final int sample_fragment_settings_sync_frquency_text=0x7f0c01dd;
-        public static final int sample_fragment_settings_sync_midnight=0x7f0c01de;
-        public static final int sample_fragment_settings_sync_notification=0x7f0c01db;
-        public static final int sample_item_recycler_event_detail_attendance=0x7f0c0219;
+        public static final int sample_fragment_settings_header_general=0x7f0c01d3;
+        public static final int sample_fragment_settings_header_notification=0x7f0c01d7;
+        public static final int sample_fragment_settings_notification_anydo=0x7f0c01db;
+        public static final int sample_fragment_settings_notification_birthday_mute=0x7f0c01d9;
+        public static final int sample_fragment_settings_notification_birthday_time=0x7f0c01d8;
+        public static final int sample_fragment_settings_notification_birthday_time_text=0x7f0c01d6;
+        public static final int sample_fragment_settings_notification_download_notify=0x7f0c01da;
+        public static final int sample_fragment_settings_style_apptheme_dblue=0x7f0c01e2;
+        public static final int sample_fragment_settings_style_apptheme_green=0x7f0c01e4;
+        public static final int sample_fragment_settings_style_apptheme_purple=0x7f0c01e3;
+        public static final int sample_fragment_settings_style_notification=0x7f0c01e0;
+        public static final int sample_fragment_settings_style_textfont=0x7f0c01e5;
+        public static final int sample_fragment_settings_style_textfont_default=0x7f0c01e7;
+        public static final int sample_fragment_settings_style_textfont_selected=0x7f0c01e6;
+        public static final int sample_fragment_settings_style_themeapp=0x7f0c01e1;
+        public static final int sample_fragment_settings_sync_frequency=0x7f0c01dd;
+        public static final int sample_fragment_settings_sync_frquency_text=0x7f0c01de;
+        public static final int sample_fragment_settings_sync_midnight=0x7f0c01df;
+        public static final int sample_fragment_settings_sync_notification=0x7f0c01dc;
+        public static final int sample_item_recycler_event_detail_attendance=0x7f0c021a;
         /**  item_recycler_event 
  item_recycler_event 
          */
-        public static final int sample_item_recycler_event_detail_days_left=0x7f0c0218;
-        public static final int sample_item_recycler_event_detail_is_going=0x7f0c021a;
-        public static final int sample_item_recycler_mobcast_audio_by=0x7f0c0228;
-        public static final int sample_item_recycler_mobcast_audio_file_info=0x7f0c022c;
+        public static final int sample_item_recycler_event_detail_days_left=0x7f0c0219;
+        public static final int sample_item_recycler_event_detail_is_going=0x7f0c021b;
+        public static final int sample_item_recycler_mobcast_audio_by=0x7f0c0229;
+        public static final int sample_item_recycler_mobcast_audio_file_info=0x7f0c022d;
         /**  <string name="sample_item_recycler_mobcast_audio_summary">The worst is behind us says HDFC Bank\'s Aditya Puri! He says the Government is working on unclogging many projects. Here he is speaking exclusively to ET NOW about Modi magic.</string> 
          */
-        public static final int sample_item_recycler_mobcast_audio_file_name=0x7f0c022b;
-        public static final int sample_item_recycler_mobcast_audio_summary=0x7f0c022a;
+        public static final int sample_item_recycler_mobcast_audio_file_name=0x7f0c022c;
+        public static final int sample_item_recycler_mobcast_audio_summary=0x7f0c022b;
         /**  item_recycler_mobcast_audio 
  <string name="sample_item_recycler_mobcast_audio_title">SUSPENDISSE DIFNISSIM MAGNA EU VEHICULA CONVALLIS MASSA DUI FERMENTUM TORTOR NON VENENTIS DOLOR ELIT IN PURUS</string> 
  item_recycler_mobcast_audio 
          */
-        public static final int sample_item_recycler_mobcast_audio_title=0x7f0c0227;
-        public static final int sample_item_recycler_mobcast_audio_view_count=0x7f0c0229;
-        public static final int sample_item_recycler_mobcast_doc_by=0x7f0c0235;
-        public static final int sample_item_recycler_mobcast_doc_desc=0x7f0c0234;
-        public static final int sample_item_recycler_mobcast_doc_file_info=0x7f0c0238;
-        public static final int sample_item_recycler_mobcast_doc_file_name=0x7f0c0237;
+        public static final int sample_item_recycler_mobcast_audio_title=0x7f0c0228;
+        public static final int sample_item_recycler_mobcast_audio_view_count=0x7f0c022a;
+        public static final int sample_item_recycler_mobcast_doc_by=0x7f0c0236;
+        public static final int sample_item_recycler_mobcast_doc_desc=0x7f0c0235;
+        public static final int sample_item_recycler_mobcast_doc_file_info=0x7f0c0239;
+        public static final int sample_item_recycler_mobcast_doc_file_name=0x7f0c0238;
         /**  item_recycler_mobcast_doc 
  <string name="sample_item_recycler_mobcast_doc_title">PELLENTESQUE VEHICULA DAPIBUS</string> 
  item_recycler_mobcast_doc 
          */
-        public static final int sample_item_recycler_mobcast_doc_title=0x7f0c0233;
-        public static final int sample_item_recycler_mobcast_doc_view_count=0x7f0c0236;
-        public static final int sample_item_recycler_mobcast_feedback_by=0x7f0c0245;
-        public static final int sample_item_recycler_mobcast_feedback_count=0x7f0c0246;
-        public static final int sample_item_recycler_mobcast_feedback_question=0x7f0c0247;
+        public static final int sample_item_recycler_mobcast_doc_title=0x7f0c0234;
+        public static final int sample_item_recycler_mobcast_doc_view_count=0x7f0c0237;
+        public static final int sample_item_recycler_mobcast_feedback_by=0x7f0c0246;
+        public static final int sample_item_recycler_mobcast_feedback_count=0x7f0c0247;
+        public static final int sample_item_recycler_mobcast_feedback_question=0x7f0c0248;
         /**  item_recycler_mobcast_feedback 
  <string name="sample_item_recycler_mobcast_feedback_title">HDFC Bank Quiz</string> 
  item_recycler_mobcast_feedback 
          */
-        public static final int sample_item_recycler_mobcast_feedback_title=0x7f0c0244;
-        public static final int sample_item_recycler_mobcast_image_by=0x7f0c0220;
-        public static final int sample_item_recycler_mobcast_image_detail=0x7f0c0222;
+        public static final int sample_item_recycler_mobcast_feedback_title=0x7f0c0245;
+        public static final int sample_item_recycler_mobcast_image_by=0x7f0c0221;
+        public static final int sample_item_recycler_mobcast_image_detail=0x7f0c0223;
         /**  item_recycler_mobcast_image 
  <string name="sample_item_recycler_mobcast_image_title">SUSPENDISSE CONVALLIS SED ORCI A ELEMENTUM</string> 
  item_recycler_mobcast_image 
          */
-        public static final int sample_item_recycler_mobcast_image_title=0x7f0c021f;
-        public static final int sample_item_recycler_mobcast_image_view_count=0x7f0c0221;
+        public static final int sample_item_recycler_mobcast_image_title=0x7f0c0220;
+        public static final int sample_item_recycler_mobcast_image_view_count=0x7f0c0222;
         /**  item_reycler_mobcast_news 
  item_reycler_mobcast_news 
          */
-        public static final int sample_item_recycler_mobcast_news_link=0x7f0c0250;
-        public static final int sample_item_recycler_mobcast_pdf_by=0x7f0c022f;
+        public static final int sample_item_recycler_mobcast_news_link=0x7f0c0251;
+        public static final int sample_item_recycler_mobcast_pdf_by=0x7f0c0230;
         /**  <string name="sample_item_recycler_mobcast_pdf_desc">HDFC Bank has been named the Strongest Bank in India in the Asian Banker 500 (AB 500) Strongest Bank by Balance Sheet Ranking 2014. The announcement was made at a recognition ceremony held in conjunction with SWIFT’s SIBOS convention at the Boston Convention and Exhibition Centre from 29 September to 2 October 2014 in Boston, USA.The AB 500 ranking is the most comprehensive annual evaluation that captures the quality and sustainability of the balance sheets of banks in the region. It tracks the relative financial strengths of banks in response to their respective market conditions, based on a common scorecard.</string> 
          */
-        public static final int sample_item_recycler_mobcast_pdf_desc=0x7f0c022e;
-        public static final int sample_item_recycler_mobcast_pdf_file_info=0x7f0c0232;
-        public static final int sample_item_recycler_mobcast_pdf_file_name=0x7f0c0231;
+        public static final int sample_item_recycler_mobcast_pdf_desc=0x7f0c022f;
+        public static final int sample_item_recycler_mobcast_pdf_file_info=0x7f0c0233;
+        public static final int sample_item_recycler_mobcast_pdf_file_name=0x7f0c0232;
         /**  item_recycler_mobcast_pdf 
  <string name="sample_item_recycler_mobcast_pdf_title">DONEC TEMPOR SED MASSA TEMPOR MAXIMUS PORTA IN SCELERISQUE NON FEUGIAT LEO INTERDUM VITA</string> 
  <string name="sample_item_recycler_mobcast_pdf_title">HDFC Bank has been named the Strongest Bank in India in the Asian Banker 500 (AB 500)</string> 
  item_recycler_mobcast_pdf 
          */
-        public static final int sample_item_recycler_mobcast_pdf_title=0x7f0c022d;
-        public static final int sample_item_recycler_mobcast_pdf_view_count=0x7f0c0230;
-        public static final int sample_item_recycler_mobcast_ppt_by=0x7f0c0240;
-        public static final int sample_item_recycler_mobcast_ppt_file_info=0x7f0c0243;
-        public static final int sample_item_recycler_mobcast_ppt_file_name=0x7f0c0242;
+        public static final int sample_item_recycler_mobcast_pdf_title=0x7f0c022e;
+        public static final int sample_item_recycler_mobcast_pdf_view_count=0x7f0c0231;
+        public static final int sample_item_recycler_mobcast_ppt_by=0x7f0c0241;
+        public static final int sample_item_recycler_mobcast_ppt_file_info=0x7f0c0244;
+        public static final int sample_item_recycler_mobcast_ppt_file_name=0x7f0c0243;
         /**  item_recycler_mobcast_ppt 
  item_recycler_mobcast_ppt 
          */
-        public static final int sample_item_recycler_mobcast_ppt_title=0x7f0c023f;
-        public static final int sample_item_recycler_mobcast_ppt_view_count=0x7f0c0241;
-        public static final int sample_item_recycler_mobcast_text_by=0x7f0c021c;
+        public static final int sample_item_recycler_mobcast_ppt_title=0x7f0c0240;
+        public static final int sample_item_recycler_mobcast_ppt_view_count=0x7f0c0242;
+        public static final int sample_item_recycler_mobcast_text_by=0x7f0c021d;
         /**  <string name="sample_item_recycler_mobcast_text_summary">Proin ac risus eu metus confimentim viverra. Donce ut neque sed elit tincidunt condimentum. Read More</string> 
          */
-        public static final int sample_item_recycler_mobcast_text_summary=0x7f0c021e;
+        public static final int sample_item_recycler_mobcast_text_summary=0x7f0c021f;
         /**  item_recycler_mobcast_text 
  <string name="sample_item_recycler_mobcast_text_title">ALIQUAM AC ENIM IN NIBH ULLAMCORPER AUCTOR AC A DOLOR</string> 
  item_recycler_mobcast_text 
          */
-        public static final int sample_item_recycler_mobcast_text_title=0x7f0c021b;
-        public static final int sample_item_recycler_mobcast_text_view_count=0x7f0c021d;
-        public static final int sample_item_recycler_mobcast_video_by=0x7f0c0225;
+        public static final int sample_item_recycler_mobcast_text_title=0x7f0c021c;
+        public static final int sample_item_recycler_mobcast_text_view_count=0x7f0c021e;
+        public static final int sample_item_recycler_mobcast_video_by=0x7f0c0226;
         /**  <string name="sample_item_recycler_mobcast_video_desc">We are Everywhere You Go </string> 
          */
-        public static final int sample_item_recycler_mobcast_video_desc=0x7f0c0224;
+        public static final int sample_item_recycler_mobcast_video_desc=0x7f0c0225;
         /**  item_recycler_mobcast_video 
  <string name="sample_item_recycler_mobcast_video_title">PRAESENT SED LEO IN SEM VENENATI</string> 
  <string name="sample_item_recycler_mobcast_video_title">HDFC Bank Commercial </string> 
  item_recycler_mobcast_video 
          */
-        public static final int sample_item_recycler_mobcast_video_title=0x7f0c0223;
-        public static final int sample_item_recycler_mobcast_video_view_count=0x7f0c0226;
-        public static final int sample_item_recycler_mobcast_xls_by=0x7f0c023b;
-        public static final int sample_item_recycler_mobcast_xls_desc=0x7f0c023a;
-        public static final int sample_item_recycler_mobcast_xls_file_info=0x7f0c023e;
-        public static final int sample_item_recycler_mobcast_xls_file_name=0x7f0c023d;
+        public static final int sample_item_recycler_mobcast_video_title=0x7f0c0224;
+        public static final int sample_item_recycler_mobcast_video_view_count=0x7f0c0227;
+        public static final int sample_item_recycler_mobcast_xls_by=0x7f0c023c;
+        public static final int sample_item_recycler_mobcast_xls_desc=0x7f0c023b;
+        public static final int sample_item_recycler_mobcast_xls_file_info=0x7f0c023f;
+        public static final int sample_item_recycler_mobcast_xls_file_name=0x7f0c023e;
         /**  item_recycler_mobcast_xls 
  <string name="sample_item_recycler_mobcast_xls_title">QUISQUE TINCIDUNT LIBERO SEM ID LACINIA ODIO FERMENTUM SIT AMET</string> 
  item_recycler_mobcast_xls 
          */
-        public static final int sample_item_recycler_mobcast_xls_title=0x7f0c0239;
-        public static final int sample_item_recycler_mobcast_xls_view_count=0x7f0c023c;
+        public static final int sample_item_recycler_mobcast_xls_title=0x7f0c023a;
+        public static final int sample_item_recycler_mobcast_xls_view_count=0x7f0c023d;
         /**  item_recycler_training_audio 
          */
-        public static final int sample_item_recycler_training_audio_title=0x7f0c0255;
-        public static final int sample_item_recycler_training_image_desc=0x7f0c0252;
+        public static final int sample_item_recycler_training_audio_title=0x7f0c0256;
+        public static final int sample_item_recycler_training_image_desc=0x7f0c0253;
         /**  item_recycler_training_image 
  <string name="sample_item_recycler_training_image_title">Indian Business Icons 2015: Aditya Puri, Managing Director, HDFC Bank</string> 
          */
-        public static final int sample_item_recycler_training_image_title=0x7f0c0251;
-        public static final int sample_item_recycler_training_question_attempted=0x7f0c024b;
-        public static final int sample_item_recycler_training_question_score=0x7f0c024c;
+        public static final int sample_item_recycler_training_image_title=0x7f0c0252;
+        public static final int sample_item_recycler_training_question_attempted=0x7f0c024c;
+        public static final int sample_item_recycler_training_question_score=0x7f0c024d;
         /**  item_recylcer_training_quiz 
  item_recylcer_training_quiz 
          */
-        public static final int sample_item_recycler_training_question_time=0x7f0c024a;
+        public static final int sample_item_recycler_training_question_time=0x7f0c024b;
         /**  <string name="sample_item_recycler_training_text_desc">HDFC Bank is morphing into a full-scale digital bank and is also exploring opportunities in the semi-urban and rural areas, says MD and CEO Aditya Puri. Edited excerpts of an interview with Business Today </string> 
          */
-        public static final int sample_item_recycler_training_text_desc=0x7f0c0254;
+        public static final int sample_item_recycler_training_text_desc=0x7f0c0255;
         /**  item_recycler_training_text 
  <string name="sample_item_recycler_training_text_title">Essence of banking is in taking calculated risk, says HDFC Bank CEO Aditya Puri</string> 
          */
-        public static final int sample_item_recycler_training_text_title=0x7f0c0253;
-        public static final int sample_live_detail_seekbar=0x7f0c01ad;
-        public static final int sample_news_detail_link=0x7f0c01b5;
-        public static final int sample_parichay_candidates_details=0x7f0c0151;
-        public static final int sample_parichay_candidates_referred=0x7f0c014b;
-        public static final int sample_parichay_candidates_referred_for=0x7f0c014c;
-        public static final int sample_parichay_candidates_referred_for_details=0x7f0c014d;
-        public static final int sample_parichay_candidates_referred_for_marketexec=0x7f0c014f;
-        public static final int sample_parichay_candidates_referred_for_marketrepre=0x7f0c0150;
-        public static final int sample_parichay_candidates_referred_for_markettrainee=0x7f0c014e;
-        public static final int sample_parichay_hr=0x7f0c0147;
-        public static final int sample_parichay_installement_text=0x7f0c0152;
-        public static final int sample_parichay_installment1=0x7f0c0148;
-        public static final int sample_parichay_installment2=0x7f0c0149;
-        public static final int sample_parichay_installment3=0x7f0c014a;
-        public static final int sample_parichay_pr1=0x7f0c0145;
-        public static final int sample_parichay_pr2=0x7f0c0146;
-        public static final int sample_parichay_referred_to=0x7f0c0141;
-        public static final int sample_parichay_sequence=0x7f0c0142;
-        public static final int sample_parichay_telephone=0x7f0c0143;
-        public static final int sample_parichay_title=0x7f0c0140;
-        public static final int sample_parichay_written=0x7f0c0144;
-        public static final int sample_question_header_box=0x7f0c0181;
-        public static final int sample_quiz_header_number_text=0x7f0c017a;
-        public static final int sample_quiz_multiple_check_group_a=0x7f0c019b;
-        public static final int sample_quiz_multiple_check_group_aa=0x7f0c019f;
-        public static final int sample_quiz_multiple_check_group_ab=0x7f0c01a0;
-        public static final int sample_quiz_multiple_check_group_ac=0x7f0c01a1;
-        public static final int sample_quiz_multiple_check_group_ad=0x7f0c01a2;
-        public static final int sample_quiz_multiple_check_group_b=0x7f0c019c;
-        public static final int sample_quiz_multiple_check_group_c=0x7f0c019d;
-        public static final int sample_quiz_multiple_check_group_d=0x7f0c019e;
-        public static final int sample_quiz_pager_counter=0x7f0c017b;
-        public static final int sample_quiz_score=0x7f0c0187;
-        public static final int sample_quiz_score_correct_answer=0x7f0c018d;
-        public static final int sample_quiz_score_correct_answer_text=0x7f0c0189;
-        public static final int sample_quiz_score_correct_answer_tv=0x7f0c0188;
-        public static final int sample_quiz_score_goofed_up=0x7f0c018b;
-        public static final int sample_quiz_score_goofed_up_at=0x7f0c018c;
-        public static final int sample_quiz_score_header_score=0x7f0c0184;
+        public static final int sample_item_recycler_training_text_title=0x7f0c0254;
+        public static final int sample_live_detail_seekbar=0x7f0c01ae;
+        public static final int sample_news_detail_link=0x7f0c01b6;
+        public static final int sample_parichay_candidates_details=0x7f0c0152;
+        public static final int sample_parichay_candidates_referred=0x7f0c014c;
+        public static final int sample_parichay_candidates_referred_for=0x7f0c014d;
+        public static final int sample_parichay_candidates_referred_for_details=0x7f0c014e;
+        public static final int sample_parichay_candidates_referred_for_marketexec=0x7f0c0150;
+        public static final int sample_parichay_candidates_referred_for_marketrepre=0x7f0c0151;
+        public static final int sample_parichay_candidates_referred_for_markettrainee=0x7f0c014f;
+        public static final int sample_parichay_hr=0x7f0c0148;
+        public static final int sample_parichay_installement_text=0x7f0c0153;
+        public static final int sample_parichay_installment1=0x7f0c0149;
+        public static final int sample_parichay_installment2=0x7f0c014a;
+        public static final int sample_parichay_installment3=0x7f0c014b;
+        public static final int sample_parichay_pr1=0x7f0c0146;
+        public static final int sample_parichay_pr2=0x7f0c0147;
+        public static final int sample_parichay_referred_to=0x7f0c0142;
+        public static final int sample_parichay_sequence=0x7f0c0143;
+        public static final int sample_parichay_telephone=0x7f0c0144;
+        public static final int sample_parichay_title=0x7f0c0141;
+        public static final int sample_parichay_written=0x7f0c0145;
+        public static final int sample_question_header_box=0x7f0c0182;
+        public static final int sample_quiz_header_number_text=0x7f0c017b;
+        public static final int sample_quiz_multiple_check_group_a=0x7f0c019c;
+        public static final int sample_quiz_multiple_check_group_aa=0x7f0c01a0;
+        public static final int sample_quiz_multiple_check_group_ab=0x7f0c01a1;
+        public static final int sample_quiz_multiple_check_group_ac=0x7f0c01a2;
+        public static final int sample_quiz_multiple_check_group_ad=0x7f0c01a3;
+        public static final int sample_quiz_multiple_check_group_b=0x7f0c019d;
+        public static final int sample_quiz_multiple_check_group_c=0x7f0c019e;
+        public static final int sample_quiz_multiple_check_group_d=0x7f0c019f;
+        public static final int sample_quiz_pager_counter=0x7f0c017c;
+        public static final int sample_quiz_score=0x7f0c0188;
+        public static final int sample_quiz_score_correct_answer=0x7f0c018e;
+        public static final int sample_quiz_score_correct_answer_text=0x7f0c018a;
+        public static final int sample_quiz_score_correct_answer_tv=0x7f0c0189;
+        public static final int sample_quiz_score_goofed_up=0x7f0c018c;
+        public static final int sample_quiz_score_goofed_up_at=0x7f0c018d;
+        public static final int sample_quiz_score_header_score=0x7f0c0185;
         /**  fragment_quiz_score 
  fragment_quiz_score 
          */
-        public static final int sample_quiz_score_header_time_taken=0x7f0c0183;
-        public static final int sample_quiz_score_statement=0x7f0c018a;
-        public static final int sample_quiz_score_time_taken=0x7f0c0185;
-        public static final int sample_quiz_score_time_taken_sec=0x7f0c0186;
-        public static final int sample_quiz_selective_radio_group_a=0x7f0c0191;
-        public static final int sample_quiz_selective_radio_group_aa=0x7f0c01a3;
-        public static final int sample_quiz_selective_radio_group_ab=0x7f0c01a4;
-        public static final int sample_quiz_selective_radio_group_ac=0x7f0c01a5;
-        public static final int sample_quiz_selective_radio_group_ad=0x7f0c01a6;
-        public static final int sample_quiz_selective_radio_group_b=0x7f0c0192;
-        public static final int sample_quiz_selective_radio_group_c=0x7f0c0193;
-        public static final int sample_quiz_selective_radio_group_d=0x7f0c0194;
+        public static final int sample_quiz_score_header_time_taken=0x7f0c0184;
+        public static final int sample_quiz_score_statement=0x7f0c018b;
+        public static final int sample_quiz_score_time_taken=0x7f0c0186;
+        public static final int sample_quiz_score_time_taken_sec=0x7f0c0187;
+        public static final int sample_quiz_selective_radio_group_a=0x7f0c0192;
+        public static final int sample_quiz_selective_radio_group_aa=0x7f0c01a4;
+        public static final int sample_quiz_selective_radio_group_ab=0x7f0c01a5;
+        public static final int sample_quiz_selective_radio_group_ac=0x7f0c01a6;
+        public static final int sample_quiz_selective_radio_group_ad=0x7f0c01a7;
+        public static final int sample_quiz_selective_radio_group_b=0x7f0c0193;
+        public static final int sample_quiz_selective_radio_group_c=0x7f0c0194;
+        public static final int sample_quiz_selective_radio_group_d=0x7f0c0195;
         /**  fragment_quiz_selective_radio 
  <string name="sample_quiz_selective_radio_title">INDICATOR OF MUNLIER LC KIDS?</string> 
  fragment_quiz_selective_radio 
          */
-        public static final int sample_quiz_selective_radio_title=0x7f0c0190;
+        public static final int sample_quiz_selective_radio_title=0x7f0c0191;
         /**  fragment_quiz 
  fragment_quiz 
          */
-        public static final int sample_quiz_timer_seconds=0x7f0c0178;
-        public static final int sample_quiz_timer_seconds_text=0x7f0c0179;
-        public static final int sample_recruitment_job_experience=0x7f0c0131;
-        public static final int sample_recruitment_job_location=0x7f0c0130;
-        public static final int sample_recruitment_job_title=0x7f0c012f;
+        public static final int sample_quiz_timer_seconds=0x7f0c0179;
+        public static final int sample_quiz_timer_seconds_text=0x7f0c017a;
+        public static final int sample_recruitment_job_experience=0x7f0c0132;
+        public static final int sample_recruitment_job_location=0x7f0c0131;
+        public static final int sample_recruitment_job_title=0x7f0c0130;
         /**  fragment_report 
  fragment_report 
          */
-        public static final int sample_report_category_header=0x7f0c01ca;
-        public static final int sample_report_category_hint=0x7f0c01ce;
-        public static final int sample_report_category_include_logs=0x7f0c01cc;
-        public static final int sample_report_category_submit=0x7f0c01cd;
-        public static final int sample_report_category_text=0x7f0c01cb;
+        public static final int sample_report_category_header=0x7f0c01cb;
+        public static final int sample_report_category_hint=0x7f0c01cf;
+        public static final int sample_report_category_include_logs=0x7f0c01cd;
+        public static final int sample_report_category_submit=0x7f0c01ce;
+        public static final int sample_report_category_text=0x7f0c01cc;
         /**  section_layout_birthday_header 
  section_layout_birthday_header 
          */
-        public static final int sample_section_layout_birthday_header=0x7f0c0256;
+        public static final int sample_section_layout_birthday_header=0x7f0c0257;
         /**  <string name="sample_winner_designation">Country Head-Operations, HDFC bank</string> 
          */
-        public static final int sample_winner_designation=0x7f0c0134;
+        public static final int sample_winner_designation=0x7f0c0135;
         /**  item_recycler_award 
  <string name="sample_winner_name">MR. BHAVESH ZAVERI</string> 
  item_recycler_award 
          */
-        public static final int sample_winner_name=0x7f0c0132;
+        public static final int sample_winner_name=0x7f0c0133;
         public static final int save_message=0x7f0c0091;
         public static final int search_hint=0x7f0c00ac;
         public static final int share_advertisement=0x7f0c0081;
@@ -7704,7 +7705,7 @@ containing a value of this type.
         public static final int showcase_content5=0x7f0c009a;
         public static final int showcase_gotit=0x7f0c009b;
         public static final int showcase_next=0x7f0c009c;
-        public static final int skills=0x7f0c0127;
+        public static final int skills=0x7f0c0128;
         public static final int spb_default_speed=0x7f0c0066;
         public static final int speak_now=0x7f0c006d;
         /**  Text to use when the number in a notification info is too large
@@ -7716,12 +7717,12 @@ containing a value of this type.
         public static final int status_bar_notification_info_overflow=0x7f0c0011;
         public static final int sync_failed=0x7f0c0071;
         public static final int sync_passed=0x7f0c0072;
-        public static final int textview_help=0x7f0c025c;
+        public static final int textview_help=0x7f0c025d;
         /**  include_layout_drawer 
  include_layout_drawer 
          */
-        public static final int textview_last_sync=0x7f0c0257;
-        public static final int textview_last_sync_content=0x7f0c025b;
+        public static final int textview_last_sync=0x7f0c0258;
+        public static final int textview_last_sync_content=0x7f0c025c;
         /**  activity_login 
  activity_login 
          */
@@ -7729,10 +7730,10 @@ containing a value of this type.
         public static final int textview_login_administration=0x7f0c00ef;
         public static final int textview_login_countrycode=0x7f0c00ee;
         public static final int textview_newbroadcast=0x7f0c00ed;
-        public static final int textview_profile_email=0x7f0c025a;
-        public static final int textview_profile_name=0x7f0c0259;
+        public static final int textview_profile_email=0x7f0c025b;
+        public static final int textview_profile_name=0x7f0c025a;
         public static final int textview_skip=0x7f0c011a;
-        public static final int textview_unread=0x7f0c0258;
+        public static final int textview_unread=0x7f0c0259;
         /**  activity_set_login 
  activity_set_login 
          */

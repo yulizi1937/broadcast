@@ -82,6 +82,7 @@ import android.renderscript.ScriptIntrinsicBlur;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DimenRes;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.telephony.TelephonyManager;
@@ -100,6 +101,7 @@ import android.view.WindowManager;
 import com.application.beans.Theme;
 import com.application.sqlite.DBConstant;
 import com.mobcast.R;
+import com.permission.PermissionHelper;
 import com.squareup.okhttp.OkHttpClient;
 
 public class Utilities {
@@ -1520,7 +1522,11 @@ public class Utilities {
 	
 	public static boolean downloadFile(int mType, boolean mIsThumbnail,boolean mIsEncrypt,String mUrl, String mFileName){
 		File mFile = new File(Utilities.getFilePath(mType, mIsThumbnail, mFileName));
-		
+		if(AndroidUtilities.isAboveMarshMallow()){
+			if(!AndroidUtilities.isPermissionStorageAllowed()){
+				return false;
+			}
+		}
 		return RetroFitClient.downloadFileWith(new OkHttpClient(), mUrl, mFile.getAbsolutePath(), mIsThumbnail, mIsEncrypt,TAG);
 	}
 	
