@@ -154,10 +154,17 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 	private String mPicturePath;
 	
 	private boolean isValidName = false;
+	private boolean isValidMobile = false;
 	private boolean isValidEmail = false;
+	private boolean isValidQualification = false;
+	private boolean isValidAge = false;
+	private boolean isValidExperience = false;
+	private boolean isValidOrg = false;
+	private boolean isValidDes = false;
+	private boolean isValidRel = false;
 	private boolean isValidEmployeeId = false;
 	private boolean isValid = false;
-	private boolean isValidMobile = false;
+	
 	private boolean isValidFile = false;
 	private boolean isReferralSucess = false;
 	
@@ -165,6 +172,10 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 	private String mReferredFor;
 	private String mJobUnit;
 	private String mJobReferredFor;
+	private String mJobHQ;
+	private String mJobDivision;
+	private String mJobRegion;
+	private String mInstallment = "2";
 	
 	private Intent mIntent;
 	
@@ -352,15 +363,28 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 			mId = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.ID);
 			mReferredFor = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.ACTIVITYTITLE);
 			mJobUnit = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.CATEGORY);
+			mJobHQ = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.HQ);
+			mJobRegion = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.REGION);
+			mJobDivision = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.DIVISION);
+			mInstallment = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.INSTALLMENT);
 			mReferredForTv.setText(mReferredFor);
 			mJobReferredFor = mReferredFor;
 			
 			mJobUnit = mJobUnit.substring(mJobUnit.lastIndexOf(":")+2, mJobUnit.length()).trim();
 			if(mJobUnit.equalsIgnoreCase("irf")){
-				mIRFLayout.setVisibility(View.VISIBLE);
+//				mIRFLayout.setVisibility(View.VISIBLE);
 				mDivisonLayout.setVisibility(View.VISIBLE);
 				mRegionLayout.setVisibility(View.VISIBLE);
 				mHeadquarterLayout.setVisibility(View.VISIBLE);
+				if(!TextUtils.isEmpty(mJobRegion) && !mJobRegion.equalsIgnoreCase("-1")){
+					mRegionEv.setText(mJobRegion);
+				}
+				if(!TextUtils.isEmpty(mJobHQ) && !mJobHQ.equalsIgnoreCase("-1")){
+					mRegionEv.setText(mJobHQ);
+				}
+				if(!TextUtils.isEmpty(mJobDivision) && !mJobDivision.equalsIgnoreCase("-1")){
+					mRegionEv.setText(mJobDivision);
+				}
 			}else{
 				mIRFLayout.setVisibility(View.GONE);
 				mDivisonLayout.setVisibility(View.GONE);
@@ -403,6 +427,8 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 						} else {
 							new AsyncUpdateReferralTask().execute();
 						}
+					}else{
+						showValidationPopUp();
 					}
 				} else {
 					Utilities.showCrouton(ParichayReferralFormActivity.this,mCroutonViewGroup,getResources().getString(R.string.internet_unavailable),Style.ALERT);
@@ -963,8 +989,10 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 		mQualificationValidateIv.setImageResource(R.drawable.ic_text_process);
 		if (!TextUtils.isEmpty(mCharsequence.toString())) {
 			mQualificationValidateIv.setImageResource(R.drawable.ic_text_correct);
+			isValidQualification = true;
 		}else{
 			mQualificationValidateIv.setImageResource(R.drawable.ic_text_incorrect);
+			isValidQualification = false;
 		}
 		setUiOfNextAccordingly();
 	}
@@ -973,8 +1001,10 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 		mOrganizationValidateIv.setImageResource(R.drawable.ic_text_process);
 		if (!TextUtils.isEmpty(mCharsequence.toString())) {
 			mOrganizationValidateIv.setImageResource(R.drawable.ic_text_correct);
+			isValidOrg = true;
 		}else{
 			mOrganizationValidateIv.setImageResource(R.drawable.ic_text_incorrect);
+			isValidOrg = false;
 		}
 		setUiOfNextAccordingly();
 	}
@@ -983,8 +1013,10 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 		mDesignationValidateIv.setImageResource(R.drawable.ic_text_process);
 		if (!TextUtils.isEmpty(mCharsequence.toString())) {
 			mDesignationValidateIv.setImageResource(R.drawable.ic_text_correct);
+			isValidDes = true;
 		}else{
 			mDesignationValidateIv.setImageResource(R.drawable.ic_text_incorrect);
+			isValidDes = false;
 		}
 		setUiOfNextAccordingly();
 	}
@@ -993,8 +1025,10 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 		mExperienceValidateIv.setImageResource(R.drawable.ic_text_process);
 		if (!TextUtils.isEmpty(mCharsequence.toString())) {
 			mExperienceValidateIv.setImageResource(R.drawable.ic_text_correct);
+			isValidExperience = true;
 		}else{
 			mExperienceValidateIv.setImageResource(R.drawable.ic_text_incorrect);
+			isValidExperience = false;
 		}
 		setUiOfNextAccordingly();
 	}
@@ -1003,8 +1037,10 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 		mRelationValidateIv.setImageResource(R.drawable.ic_text_process);
 		if (!TextUtils.isEmpty(mCharsequence.toString())) {
 			mRelationValidateIv.setImageResource(R.drawable.ic_text_correct);
+			isValidRel = true;
 		}else{
 			mRelationValidateIv.setImageResource(R.drawable.ic_text_incorrect);
+			isValidRel = false;
 		}
 		setUiOfNextAccordingly();
 	}
@@ -1013,8 +1049,10 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 		mAgeValidateIv.setImageResource(R.drawable.ic_text_process);
 		if (!TextUtils.isEmpty(mCharsequence.toString())) {
 			mAgeValidateIv.setImageResource(R.drawable.ic_text_correct);
+			isValidAge = true;
 		}else{
 			mAgeValidateIv.setImageResource(R.drawable.ic_text_incorrect);
+			isValidAge = false;
 		}
 		setUiOfNextAccordingly();
 	}
@@ -1051,12 +1089,47 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 	
 	@SuppressWarnings("deprecation")
 	private void setUiOfNextAccordingly(){
-		if(isValidName && isValidEmail && isValidMobile && isValidFile){
+		if(isValidName && isValidEmail && isValidMobile && isValidQualification && isValidAge && isValidExperience && isValidOrg && isValidRel && isValidDes){
 			isValid = true;
 			ThemeUtils.getInstance(ParichayReferralFormActivity.this).applyThemeButton(ParichayReferralFormActivity.this, ParichayReferralFormActivity.this, mSubmitBtn);
 		}else{
 			isValid = false;
 			mSubmitBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_button_normal));
+		}
+	}
+	
+	private void showValidationPopUp(){
+		try{
+			if(!isValidName){
+				Utilities.showCrouton(ParichayReferralFormActivity.this, mCroutonViewGroup, "Please enter valid name!", Style.ALERT);
+				mNameLayout.requestFocus();
+			}else if(!isValidMobile){
+				Utilities.showCrouton(ParichayReferralFormActivity.this, mCroutonViewGroup, "Please enter valid mobile!", Style.ALERT);
+				mPhoneLayout.requestFocus();
+			}else if(!isValidEmail){
+				Utilities.showCrouton(ParichayReferralFormActivity.this, mCroutonViewGroup, "Please enter valid emailaddress!", Style.ALERT);
+				mEmailLayout.requestFocus();
+			}else if(!isValidQualification){
+				Utilities.showCrouton(ParichayReferralFormActivity.this, mCroutonViewGroup, "Please enter valid qualification!", Style.ALERT);
+				mQualificationLayout.requestFocus();
+			}else if(!isValidAge){
+				Utilities.showCrouton(ParichayReferralFormActivity.this, mCroutonViewGroup, "Please enter valid age!", Style.ALERT);
+				mAgeLayout.requestFocus();
+			}else if(!isValidExperience){
+				Utilities.showCrouton(ParichayReferralFormActivity.this, mCroutonViewGroup, "Please enter valid experience!", Style.ALERT);
+				mExperienceLayout.requestFocus();
+			}else if(!isValidOrg){
+				Utilities.showCrouton(ParichayReferralFormActivity.this, mCroutonViewGroup, "Please enter valid organization!", Style.ALERT);
+				mOrganizationLayout.requestFocus();
+			}else if(!isValidDes){
+				Utilities.showCrouton(ParichayReferralFormActivity.this, mCroutonViewGroup, "Please enter valid designation!", Style.ALERT);
+				mDesignationLayout.requestFocus();
+			}else if(!isValidRel){
+				Utilities.showCrouton(ParichayReferralFormActivity.this, mCroutonViewGroup, "Please enter valid relationship!", Style.ALERT);
+				mRelationLayout.requestFocus();
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 	
@@ -1152,6 +1225,7 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 			mValues.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_FOR, mReferredFor);
 			mValues.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_NAME, mNameEv.getText().toString());
 			mValues.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_TYPE, Utilities.formatUnit(mJobUnit));
+			mValues.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL, mInstallment);
 			getContentResolver().insert(DBConstant.Parichay_Referral_Columns.CONTENT_URI, mValues);
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
@@ -1231,8 +1305,10 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 								publishProgress((int) ((num / (float) totalSize) * 100));
 							}
 						});
-				File mUploadFilePath = new File(mFilePath);
-				entity.addPart(AppConstants.API_KEY_PARAMETER.captureFile, new FileBody(mUploadFilePath));
+				if(!TextUtils.isEmpty(mFilePath)){
+					File mUploadFilePath = new File(mFilePath);
+					entity.addPart(AppConstants.API_KEY_PARAMETER.captureFile, new FileBody(mUploadFilePath));	
+				}
 				entity.addPart(AppConstants.API_KEY_PARAMETER.accessToken,new StringBody(ApplicationLoader.getPreferences().getAccessToken()));
 				entity.addPart(AppConstants.API_KEY_PARAMETER.userName, new StringBody(String.valueOf(TextUtils.isEmpty(mPhoneEv.getText().toString())? "":mPhoneEv.getText().toString())));
 				entity.addPart(AppConstants.API_KEY_PARAMETER.jobId, new StringBody(mId));

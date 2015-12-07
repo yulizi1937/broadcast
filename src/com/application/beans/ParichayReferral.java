@@ -27,6 +27,8 @@ public class ParichayReferral implements Parcelable {
 	private int isInstallment1;
 	private int isInstallment2;
 	private int isInstallment3;
+	private int install;
+	private int isDuplicate;
 	private boolean isExpand;
 
 	public ParichayReferral() {
@@ -38,7 +40,7 @@ public class ParichayReferral implements Parcelable {
 			String mDate, String mName, String mReferredFor, String mType,
 			String mReason, int isTelephone, int isOnlineWritten, int isPR1,
 			int isPR2, int isHR, int isInstallment1, int isInstallment2,
-			int isInstallment3, boolean isExpand) {
+			int isInstallment3, int install, int isDuplicate, boolean isExpand) {
 		super();
 		this.mJobId = mJobId;
 		this.mJobUnit = mJobUnit;
@@ -56,6 +58,8 @@ public class ParichayReferral implements Parcelable {
 		this.isInstallment1 = isInstallment1;
 		this.isInstallment2 = isInstallment2;
 		this.isInstallment3 = isInstallment3;
+		this.install = install;
+		this.isDuplicate = isDuplicate;
 		this.isExpand = isExpand;
 	}
 
@@ -187,6 +191,22 @@ public class ParichayReferral implements Parcelable {
 		this.isInstallment3 = isInstallment3;
 	}
 
+	public int getInstall() {
+		return install;
+	}
+
+	public void setInstall(int install) {
+		this.install = install;
+	}
+
+	public int getIsDuplicate() {
+		return isDuplicate;
+	}
+
+	public void setIsDuplicate(int isDuplicate) {
+		this.isDuplicate = isDuplicate;
+	}
+
 	public boolean isExpand() {
 		return isExpand;
 	}
@@ -212,6 +232,8 @@ public class ParichayReferral implements Parcelable {
 		isInstallment1 = in.readInt();
 		isInstallment2 = in.readInt();
 		isInstallment3 = in.readInt();
+		install = in.readInt();
+		isDuplicate = in.readInt();
 		isExpand = in.readByte() != 0x00;
 	}
 
@@ -238,6 +260,8 @@ public class ParichayReferral implements Parcelable {
 		dest.writeInt(isInstallment1);
 		dest.writeInt(isInstallment2);
 		dest.writeInt(isInstallment3);
+		dest.writeInt(install);
+		dest.writeInt(isDuplicate);
 		dest.writeByte((byte) (isExpand ? 0x01 : 0x00));
 	}
 

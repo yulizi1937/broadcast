@@ -498,7 +498,6 @@ public class RecruitmentDetailActivity extends SwipeBackBaseActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		// log.v("OnactivityResult", "reached");
-		mPermissionHelper.onActivityForResult(requestCode);
 		if (requestCode == CONTACT_PICK) {
 			if (resultCode == RESULT_OK) {
 				String mPhoneNumber = "";

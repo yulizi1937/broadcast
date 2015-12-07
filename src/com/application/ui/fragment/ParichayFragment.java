@@ -155,7 +155,6 @@ public class ParichayFragment extends BaseFragment implements IFragmentCommunica
 		
 		whichTheme = ApplicationLoader.getPreferences().getAppTheme();
 		ApplicationLoader.getPreferences().setViewIdParichay("-1");
-		
 		checkDataInAdapter();
 		setSwipeRefreshLayoutCustomisation();
 		setMaterialRippleView();
@@ -621,6 +620,10 @@ public class ParichayFragment extends BaseFragment implements IFragmentCommunica
 					Obj.setmJobDesc(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.jobDescription));
 					Obj.setmJobQualif(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.jobQualification));
 					Obj.setmJobDesiredProfile(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.jobDesiredProfile));
+					Obj.setmJobHQ(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.jobHQ));
+					Obj.setmJobRegion(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.jobRegion));
+					Obj.setmJobDivision(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.jobDivision));
+					Obj.setmInstall(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.installment));
 					Obj.setLike(Boolean.parseBoolean(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.isLiked)));
 					Obj.setRead(Boolean.parseBoolean(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.isRead)));
 					Obj.setmLikeCount(mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.likeCount));
@@ -752,5 +755,12 @@ public class ParichayFragment extends BaseFragment implements IFragmentCommunica
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
+	}
+	
+	public ArrayList<Parichay> getArrayListParichay(){
+		if(mArrayListParichay!=null && mArrayListParichay.size() > 0){
+			return mArrayListParichay;
+		}
+		return null;
 	}
 }

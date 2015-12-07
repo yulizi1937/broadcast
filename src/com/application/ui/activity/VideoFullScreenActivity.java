@@ -105,7 +105,7 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		decryptFileOnResume();
+//		decryptFileOnResume();
 		initVideoPlayer(mContentFilePath);
 		mThreadSafe.unpause();
 	}
@@ -168,7 +168,7 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 	@Override
 	protected void onPause() {
 		cleanUp();
-		deleteDecryptedFile();
+//		deleteDecryptedFile();
 		super.onPause();
 	}
 

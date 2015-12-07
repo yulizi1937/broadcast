@@ -82,7 +82,6 @@ import android.renderscript.ScriptIntrinsicBlur;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DimenRes;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.telephony.TelephonyManager;
@@ -98,10 +97,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.application.beans.Parichay;
 import com.application.beans.Theme;
 import com.application.sqlite.DBConstant;
 import com.mobcast.R;
-import com.permission.PermissionHelper;
 import com.squareup.okhttp.OkHttpClient;
 
 public class Utilities {
@@ -1878,6 +1877,8 @@ public class Utilities {
 		try{
 			mMessage.append("Your referred candidate " + mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_NAME)));
 			mMessage.append(" for " + mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_FOR)));
+			
+			int mIsDuplicate = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_DUPLICATE)));
 			int mInstall3 = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL3)));
 			int mInstall2 = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL2)));
 			int mInstall1 = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL1)));
@@ -1888,6 +1889,10 @@ public class Utilities {
 			int mOnline = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_ONLINE)));
 			int mTelephonic = Integer.parseInt(mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_TELEPHONIC)));
 			String mReason = mCursor.getString(mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REASON));
+			
+			if(mIsDuplicate == 1){
+				mMessage.append(" has already been referred before for the same position. We're dismissing your referral as it's duplicate record.");
+			}
 			
 			if(mInstall3==1){
 				mMessage.append(" has joined. You'll get your installment 3.");
@@ -1937,8 +1942,7 @@ public class Utilities {
 		}
 		return mMessage.toString();
 	}
-
-
+    
 	@SuppressWarnings("resource")
 	public static void devSendDBInMail(Context c) {
 		if(BuildVars.DEBUG_VERSION){

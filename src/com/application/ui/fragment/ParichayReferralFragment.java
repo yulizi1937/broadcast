@@ -504,6 +504,7 @@ public class ParichayReferralFragment extends BaseFragment implements IFragmentC
 					mValues.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_PR1, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.isPR1));
 					mValues.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_PR2, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.isPR2));
 					mValues.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_HR, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.isHR));
+					mValues.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_DUPLICATE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.isDuplicate));
 					mValues.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REASON, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.reason));
 					mValues.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL1, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.installment1));
 					mValues.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL2, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.installment2));
@@ -541,6 +542,7 @@ public class ParichayReferralFragment extends BaseFragment implements IFragmentC
 					mValues.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_PR1, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.isPR1));
 					mValues.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_PR2, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.isPR2));
 					mValues.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_HR, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.isHR));
+					mValues.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_DUPLICATE, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.isDuplicate));
 					mValues.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REASON, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.reason));
 					mValues.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL1, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.installment1));
 					mValues.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL2, mJSONMobObj.getString(AppConstants.API_KEY_PARAMETER.installment2));
@@ -567,6 +569,7 @@ public class ParichayReferralFragment extends BaseFragment implements IFragmentC
 				int mIntPR1 = mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_PR1);
 				int mIntPR2 = mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_PR2);
 				int mIntHR = mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_HR);
+				int mIntDuplicate = mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_DUPLICATE);
 				int mIntInstall1 = mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL1);
 				int mIntInstall2 = mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL2);
 				int mIntInstall3 = mCursor.getColumnIndex(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL3);
@@ -586,6 +589,7 @@ public class ParichayReferralFragment extends BaseFragment implements IFragmentC
 							Obj.setIsInstallment1(Integer.parseInt(mCursor.getString(mIntInstall1)));
 							Obj.setIsInstallment2(Integer.parseInt(mCursor.getString(mIntInstall2)));
 							Obj.setIsInstallment3(Integer.parseInt(mCursor.getString(mIntInstall3)));
+							Obj.setIsDuplicate(Integer.parseInt(mCursor.getString(mIntDuplicate)));
 						}
 					}
 					i++;

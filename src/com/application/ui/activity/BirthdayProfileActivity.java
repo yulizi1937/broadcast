@@ -6,18 +6,28 @@ package com.application.ui.activity;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,14 +38,24 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.application.sqlite.DBConstant;
+import com.application.ui.activity.BirthdayRecyclerActivity.AsyncSendMessageTask;
+import com.application.ui.materialdialog.MaterialDialog;
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.CircleImageView;
+import com.application.ui.view.LoadToast;
+import com.application.ui.view.MobcastProgressDialog;
 import com.application.ui.view.ProgressWheel;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
+import com.application.utils.BuildVars;
 import com.application.utils.FileLog;
+import com.application.utils.JSONRequestBuilder;
+import com.application.utils.RestClient;
+import com.application.utils.RetroFitClient;
+import com.application.utils.Style;
 import com.application.utils.ThemeUtils;
+import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -44,6 +64,7 @@ import com.mobcast.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.squareup.okhttp.OkHttpClient;
 
 /**
  * @author Vikalp Patel(VikalpPatelCE)
@@ -66,6 +87,7 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 
 	private CircleImageView mBirthdayProfileCircleImageView;
 
+	private ImageView mBirthdayProfileActionWishIv;
 	private ImageView mBirthdayProfileActionCallIv;
 	private ImageView mBirthdayProfileActionChatIv;
 	private ImageView mBirthdayProfileActionMsgIv;
@@ -96,6 +118,7 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 	private String mContentDOB;
 	private String mContentFileLink;
 	private boolean isMale = false;
+	private boolean isContentWish = false;
 	
 	private boolean isFromNotification = false;
 	
@@ -198,6 +221,7 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		mBirthdayProfileActionChatIv = (ImageView) findViewById(R.id.fragmentBirthdayProfileChatIv);
 		mBirthdayProfileActionMsgIv = (ImageView) findViewById(R.id.fragmentBirthdayProfileMessageIv);
 		mBirthdayProfileActionEmailIv = (ImageView) findViewById(R.id.fragmentBirthdayProfileEmailIv);
+		mBirthdayProfileActionWishIv = (ImageView) findViewById(R.id.fragmentBirthdayProfileWishIv);
 	}
 	
 	public void applyTheme(){
@@ -254,6 +278,8 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 			YoYo.with(Techniques.ZoomIn).duration(1000)
 					.playOn(mBirthdayProfileCircleImageView);
 			YoYo.with(Techniques.BounceInUp).delay(1000).duration(500)
+					.playOn(mBirthdayProfileActionWishIv);
+			YoYo.with(Techniques.BounceInUp).delay(1000).duration(500)
 					.playOn(mBirthdayProfileActionChatIv);
 			YoYo.with(Techniques.BounceInUp).delay(1500).duration(500)
 					.playOn(mBirthdayProfileActionCallIv);
@@ -272,6 +298,15 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 	}
 
 	private void setOnClickListener() {
+		
+		mBirthdayProfileActionWishIv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				showBirthdayWishDialog();
+			}
+		});
+		
 		mBirthdayProfileActionCallIv.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -302,9 +337,10 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if(!TextUtils.isEmpty(mContentMobile)){
-					Intent smsIntent = new Intent(Intent.ACTION_SENDTO,Uri.parse("smsto:"+mContentMobile));
+					/*Intent smsIntent = new Intent(Intent.ACTION_SENDTO,Uri.parse("smsto:"+mContentMobile));
 					smsIntent.putExtra("sms_body", "Happy Birthday " + mContentName);
-					startActivity(smsIntent);
+					startActivity(smsIntent);*/
+					showBirthdayMessageDialog();
 				}
 			}
 		});
@@ -333,10 +369,12 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 			mContentFileLink =  mCursor.getString(mCursor.getColumnIndex(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_FILE_LINK));
 			mContentMobile =  mCursor.getString(mCursor.getColumnIndex(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVER_MOBILE));
 			mContentEmail =  mCursor.getString(mCursor.getColumnIndex(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVER_EMAIL));
+			isContentWish = Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_WISHED)));
 			setIntentDataToUi();
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void setIntentDataToUi(){
 		if(!TextUtils.isEmpty(mContentName)){
 			mBirthdayProfileNameTv.setText(mContentName);
@@ -352,6 +390,10 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		
 		if(!TextUtils.isEmpty(mContentCity)){
 			mBirthdayProfileCityTv.setText(mContentCity);
+		}
+		
+		if(isContentWish){
+			mBirthdayProfileActionWishIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_birthday_wish_selected));
 		}
 		
 		if(TextUtils.isEmpty(mContentAge)){
@@ -448,6 +490,222 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 			setMaterialRippleOnView(mBirthdayProfileCircleImageView);
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
+		}
+	}
+	
+	
+	private void showBirthdayWishDialog(){
+		MaterialDialog mMaterialDialog = new MaterialDialog.Builder(BirthdayProfileActivity.this)
+        .title(getResources().getString(R.string.dialog_birthday_wish_title) + " ?")
+        .titleColor(Utilities.getAppColor())
+        .positiveText(getResources().getString(R.string.sample_fragment_settings_dialog_language_positive))
+        .positiveColor(Utilities.getAppColor())
+        .negativeText(getResources().getString(R.string.sample_fragment_settings_dialog_language_negative))
+        .negativeColor(Utilities.getAppColor())
+        .callback(new MaterialDialog.ButtonCallback() {
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB) @Override
+            public void onPositive(MaterialDialog dialog) {
+            	if (!isContentWish) {
+					UserReport.updateUserReportApi(mId,AppConstants.INTENTCONSTANTS.BIRTHDAY,AppConstants.REPORT.WISH, "");
+					Utilities.showCrouton(BirthdayProfileActivity.this,mCroutonViewGroup,getResources().getString(R.string.congratulate_message)+ " "+ mId, Style.CONFIRM);
+					ContentValues mValues = new ContentValues();
+					mValues.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_WISHED,"true");
+					getContentResolver().update(DBConstant.Birthday_Columns.CONTENT_URI, mValues, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID + "=?", new String[]{mId});
+					mBirthdayProfileActionWishIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_birthday_wish_selected));
+				}
+            	dialog.dismiss();
+            }
+
+            @Override
+            public void onNegative(MaterialDialog dialog) {
+            	dialog.dismiss();
+            }
+        })
+        .show();
+	}
+	
+	
+	private void showBirthdayMessageDialog() {
+		final MaterialDialog mMaterialDialog = new MaterialDialog.Builder(BirthdayProfileActivity.this)
+				.title(getResources().getString(R.string.dialog_birthday_message_title))
+				.titleColor(Utilities.getAppColor())
+				.customView(R.layout.dialog_birthday_message, true)
+				.cancelable(true).show();
+
+		View mView = mMaterialDialog.getCustomView();
+		final AppCompatEditText mMessageEd = (AppCompatEditText) mView
+				.findViewById(R.id.dialogBirthdayMessageEd);
+		AppCompatButton mSendBtn = (AppCompatButton) mView
+				.findViewById(R.id.dialogBirthdayMessageSendBtn);
+		final AppCompatTextView mMessageEdCounterTv = (AppCompatTextView) mView
+				.findViewById(R.id.dialogBirthdayMessageTv);
+
+		mMessageEd.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence mCharsequence, int start,
+					int before, int count) {
+				// TODO Auto-generated method stub
+				if (mCharsequence.length() > 140) {
+					mMessageEdCounterTv.setTextColor(Color.RED);
+				} else {
+					mMessageEdCounterTv.setTextColor(Utilities.getAppColor());
+				}
+				mMessageEdCounterTv.setText(mCharsequence.length() + "/140");
+
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence mCharsequence,
+					int start, int count, int after) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void afterTextChanged(Editable mEditable) {
+				// TODO Auto-generated method stub
+			}
+		});
+
+		try {
+			setMaterialRippleWithGrayOnView(mSendBtn);
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		mSendBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				if(!TextUtils.isEmpty(mMessageEd.getText().toString())){
+					sendMessage(mMessageEd.getText().toString(), mId, "0");
+					mMaterialDialog.dismiss();
+				}
+			}
+		});
+	}
+	
+	/**
+	 * AsyncTask : Sent Chat to Server
+	 */
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void sendMessage(String mMessage, String mId, String mPosition) {
+		if (!TextUtils.isEmpty(mMessage)) {
+			if (Utilities.isInternetConnected()) {
+				if (AndroidUtilities.isAboveIceCreamSandWich()) {
+					new AsyncSendMessageTask(mMessage, mId, mPosition).executeOnExecutor(
+							AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+				} else {
+					new AsyncSendMessageTask(mMessage, mId, mPosition).execute();
+				}
+			} else {
+				Utilities.showCrouton(BirthdayProfileActivity.this,mCroutonViewGroup,getResources().getString(R.string.internet_unavailable),Style.ALERT);
+			}
+		}
+	}
+
+	private String apiSendMessage(String mMessage, String mCategory, String mId) {
+		try {
+			JSONObject jsonObj = JSONRequestBuilder.getPostMessage(mMessage,
+					mId, mCategory);
+			if (BuildVars.USE_OKHTTP) {
+				return RetroFitClient.postJSON(new OkHttpClient(),AppConstants.API.API_SUBMIT_AWARD_MESSAGE,jsonObj.toString(), TAG);
+			} else {
+				return RestClient.postJSON(AppConstants.API.API_SUBMIT_AWARD_MESSAGE,jsonObj, TAG);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			FileLog.e(TAG, e.toString());
+		}
+		return null;
+	}
+
+	private void parseDataFromApi(String mResponseFromApi, String mId, String mPosition) {
+		try {
+			if (!TextUtils.isEmpty(mResponseFromApi)) {
+//				Utilities.showCrouton(BirthdayRecyclerActivity.this,mCroutonViewGroup,Utilities.getSuccessMessageFromApi(mResponseFromApi),Style.CONFIRM);
+				ContentValues mValues = new ContentValues();
+				mValues.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_MESSAGE,"true");
+				getContentResolver().update(DBConstant.Birthday_Columns.CONTENT_URI, mValues, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID + "=?", new String[]{mId});
+			}
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+	}
+
+	public class AsyncSendMessageTask extends AsyncTask<Void, Void, Void> {
+		private String mResponseFromApi;
+		private boolean isSuccess = true;
+		private String mErrorMessage = "";
+		private String mMessage;
+		private String mId;
+		private String mPosition;
+		private MobcastProgressDialog mProgressDialog;
+		private LoadToast mLoadToast;
+
+		public AsyncSendMessageTask(String mMessage, String mId, String mPosition) {
+			this.mMessage = mMessage;
+			this.mId = mId;
+			this.mPosition = mPosition;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			/*mProgressDialog = new MobcastProgressDialog(BirthdayRecyclerActivity.this);
+			mProgressDialog.setMessage(ApplicationLoader.getApplication()
+					.getResources().getString(R.string.loadingSubmit));
+			mProgressDialog.show();*/
+			
+			mLoadToast = new LoadToast(BirthdayProfileActivity.this);
+			mLoadToast.setText(ApplicationLoader.getApplication()
+					.getResources().getString(R.string.loadingMessage));
+			mLoadToast.setProgressColor(ApplicationLoader.getApplication().getResources().getColor(R.color.toolbar_background));
+			mLoadToast.setTranslationY(170);
+			mLoadToast.show();
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			try {
+				mResponseFromApi = apiSendMessage(mMessage,AppConstants.INTENTCONSTANTS.BIRTHDAY, mId);
+				isSuccess = Utilities.isSuccessFromApi(mResponseFromApi);
+			} catch (Exception e) {
+				FileLog.e(TAG, e.toString());
+				if (mProgressDialog != null) {
+					mProgressDialog.dismiss();
+				}
+				
+				if(mLoadToast!=null){
+					mLoadToast.error();
+				}
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+
+			if (mProgressDialog != null) {
+				mProgressDialog.dismiss();
+			}
+
+			if (isSuccess) {
+				if(mLoadToast!=null){
+					mLoadToast.success();
+				}
+				parseDataFromApi(mResponseFromApi, mId,mPosition);
+			} else {
+				mErrorMessage = Utilities
+						.getErrorMessageFromApi(mResponseFromApi);
+//				Utilities.showCrouton(BirthdayRecyclerActivity.this,mCroutonViewGroup, mErrorMessage, Style.ALERT);
+				if(mLoadToast!=null){
+					mLoadToast.error();
+				}
+			}
 		}
 	}
 	

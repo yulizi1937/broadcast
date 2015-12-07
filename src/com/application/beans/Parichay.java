@@ -21,6 +21,9 @@ public class Parichay implements Parcelable {
 	private String mJobQualif;
 	private String mJobDesiredProfile;
 	private String mLikeCount;
+	private String mJobHQ;
+	private String mJobDivision;
+	private String mJobRegion;
 	private String mReadCount;
 	private String mReceivedDate;
 	private String mReceivedTime;
@@ -29,6 +32,7 @@ public class Parichay implements Parcelable {
 	private String mExpiryDate;
 	private String mExpiryTime;
 	private String mFileType;
+	private String mInstall;
 	private boolean isRead;
 	private boolean isLike;
 
@@ -40,10 +44,11 @@ public class Parichay implements Parcelable {
 	public Parichay(String mId, String mJobPosition, String mJobUnit,
 			String mJobLoc, String mJobExp, String mJobAgeLimit,
 			String mJobDesc, String mJobQualif, String mJobDesiredProfile,
-			String mLikeCount, String mReadCount, String mReceivedDate,
+			String mLikeCount, String mJobHQ, String mJobDivision,
+			String mJobRegion, String mReadCount, String mReceivedDate,
 			String mReceivedTime, String mDate, String mMonth,
 			String mExpiryDate, String mExpiryTime, String mFileType,
-			boolean isRead, boolean isLike) {
+			String mInstall, boolean isRead, boolean isLike) {
 		super();
 		this.mId = mId;
 		this.mJobPosition = mJobPosition;
@@ -55,6 +60,9 @@ public class Parichay implements Parcelable {
 		this.mJobQualif = mJobQualif;
 		this.mJobDesiredProfile = mJobDesiredProfile;
 		this.mLikeCount = mLikeCount;
+		this.mJobHQ = mJobHQ;
+		this.mJobDivision = mJobDivision;
+		this.mJobRegion = mJobRegion;
 		this.mReadCount = mReadCount;
 		this.mReceivedDate = mReceivedDate;
 		this.mReceivedTime = mReceivedTime;
@@ -63,6 +71,7 @@ public class Parichay implements Parcelable {
 		this.mExpiryDate = mExpiryDate;
 		this.mExpiryTime = mExpiryTime;
 		this.mFileType = mFileType;
+		this.mInstall = mInstall;
 		this.isRead = isRead;
 		this.isLike = isLike;
 	}
@@ -147,6 +156,30 @@ public class Parichay implements Parcelable {
 		this.mLikeCount = mLikeCount;
 	}
 
+	public String getmJobHQ() {
+		return mJobHQ;
+	}
+
+	public void setmJobHQ(String mJobHQ) {
+		this.mJobHQ = mJobHQ;
+	}
+
+	public String getmJobDivision() {
+		return mJobDivision;
+	}
+
+	public void setmJobDivision(String mJobDivision) {
+		this.mJobDivision = mJobDivision;
+	}
+
+	public String getmJobRegion() {
+		return mJobRegion;
+	}
+
+	public void setmJobRegion(String mJobRegion) {
+		this.mJobRegion = mJobRegion;
+	}
+
 	public String getmReadCount() {
 		return mReadCount;
 	}
@@ -211,6 +244,14 @@ public class Parichay implements Parcelable {
 		this.mFileType = mFileType;
 	}
 
+	public String getmInstall() {
+		return mInstall;
+	}
+
+	public void setmInstall(String mInstall) {
+		this.mInstall = mInstall;
+	}
+
 	public boolean isRead() {
 		return isRead;
 	}
@@ -238,6 +279,9 @@ public class Parichay implements Parcelable {
 		mJobQualif = in.readString();
 		mJobDesiredProfile = in.readString();
 		mLikeCount = in.readString();
+		mJobHQ = in.readString();
+		mJobDivision = in.readString();
+		mJobRegion = in.readString();
 		mReadCount = in.readString();
 		mReceivedDate = in.readString();
 		mReceivedTime = in.readString();
@@ -246,6 +290,7 @@ public class Parichay implements Parcelable {
 		mExpiryDate = in.readString();
 		mExpiryTime = in.readString();
 		mFileType = in.readString();
+		mInstall = in.readString();
 		isRead = in.readByte() != 0x00;
 		isLike = in.readByte() != 0x00;
 	}
@@ -267,6 +312,9 @@ public class Parichay implements Parcelable {
 		dest.writeString(mJobQualif);
 		dest.writeString(mJobDesiredProfile);
 		dest.writeString(mLikeCount);
+		dest.writeString(mJobHQ);
+		dest.writeString(mJobDivision);
+		dest.writeString(mJobRegion);
 		dest.writeString(mReadCount);
 		dest.writeString(mReceivedDate);
 		dest.writeString(mReceivedTime);
@@ -275,6 +323,7 @@ public class Parichay implements Parcelable {
 		dest.writeString(mExpiryDate);
 		dest.writeString(mExpiryTime);
 		dest.writeString(mFileType);
+		dest.writeString(mInstall);
 		dest.writeByte((byte) (isRead ? 0x01 : 0x00));
 		dest.writeByte((byte) (isLike ? 0x01 : 0x00));
 	}

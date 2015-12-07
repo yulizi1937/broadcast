@@ -353,7 +353,8 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_dblue));
 			break;
 		}
-		mAboutBuildVersionTv.setText(getResources().getString(R.string.sample_fragment_settings_about_build_version_text) + "\n v"+Utilities.getApplicationVersion() + " ( "+ Utilities.getApplicationVersionCode() + " ) ");
+		
+		mAboutBuildVersionTv.setText(getResources().getString(R.string.sample_fragment_settings_about_build_version_text) + "\n v"+Utilities.getApplicationVersion() + " ( "+ Utilities.getApplicationVersionCode() + getResources().getString(R.string.app_build)+" ) ");
 	}
 
 	private void setUiListener() {

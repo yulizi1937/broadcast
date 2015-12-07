@@ -406,9 +406,11 @@
                         <!-- Installment3 -->
 
                         <LinearLayout
+                            android:id="@+id/itemRecyclerParichayFMCGInstallment3Layout"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:visibility="gone"
                             android:orientation="vertical" >
 
                             <View

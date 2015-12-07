@@ -286,8 +286,10 @@
     <dimen name="item_recycler_parichay_process_height">20dp</dimen>
     <dimen name="item_recycler_parichay_process_imageview_padding_left">10dp</dimen>
     <dimen name="item_recycler_parichay_process_textsize">10sp</dimen>
-    <dimen name="item_recycler_parichay_installment_padding_left">52dp</dimen>
-    <dimen name="item_recycler_parichay_installment_text_padding_left">24dp</dimen>
+    <dimen name="item_recycler_parichay_installment_padding_left">79dp</dimen>
+    <dimen name="item_recycler_parichay_installment_text_padding_left">59dp</dimen>
+<!--     <dimen name="item_recycler_parichay_installment_padding_left">52dp</dimen> -->
+<!--     <dimen name="item_recycler_parichay_installment_text_padding_left">24dp</dimen> -->
     <dimen name="item_recycler_parichay_cover_height">140dp</dimen>
     <dimen name="item_recycler_parichay_cover_textsize">22sp</dimen>
 

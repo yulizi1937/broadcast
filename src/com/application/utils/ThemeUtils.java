@@ -3306,6 +3306,7 @@ public class ThemeUtils {
 					break;
 				case 2:
 					mForTextView.setBackgroundDrawable(mResources.getDrawable(R.drawable.shape_by_blue_fill));
+					mDateTextView.setTextColor(mResources.getColor(R.color.item_by_color_green));
 					mMonthTextView.setTextColor(mResources.getColor(R.color.item_by_color_green));
 					mTitleTextView.setTextColor(mResources.getColor(R.color.toolbar_background_statusbar_green));
 					mTimeLineView.setBackgroundColor(mResources.getColor(R.color.item_by_color_green));

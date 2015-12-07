@@ -714,6 +714,14 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 						mArrayListAward.get(position).setRead(true);
 						isToNotify = true;
 					}
+					
+					if (Boolean
+							.parseBoolean(mCursor.getString(mCursor
+									.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_IS_CONGRATULATE)))) {
+						mArrayListAward.get(position).setCongratulated(true);
+						isToNotify = true;
+					}
+					
 					if (Boolean
 							.parseBoolean(mCursor.getString(mCursor
 									.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_IS_LIKE)))) {

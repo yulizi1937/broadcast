@@ -267,8 +267,8 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_DEPARTMENT +" TEXT ," );
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVER_EMAIL +" TEXT ," );
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVER_MOBILE +" TEXT ," );
-		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVED_DATE_FORMATTED +" TEXT ," );
-		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVER_TIME_FORMATTED +" TEXT ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVED_DATE_FORMATTED +" INTEGER ," );
+		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVER_TIME_FORMATTED +" INTEGER ," );
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_MALE +" NUMBER DEFAULT 0," );
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_LIKE +" NUMBER DEFAULT 0," );
 		strBuilderBirthday.append(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_MESSAGE +" NUMBER DEFAULT 0," );
@@ -417,6 +417,8 @@ public class ApplicationDB extends ContentProvider{
 		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_FOR +" TEXT ," );
 		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_NAME +" TEXT ," );
 		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_REFERRED_TYPE +" TEXT ," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_DUPLICATE +" NUMBER DEFAULT 0," );
+		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL +" NUMBER DEFAULT 2," );
 		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_IRF_MFCG +" NUMBER DEFAULT 0," );
 		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_TELEPHONIC +" NUMBER DEFAULT 0," );
 		strBuilderParichayReferred.append(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_ONLINE +" NUMBER DEFAULT 0," );
@@ -615,9 +617,11 @@ public class ApplicationDB extends ContentProvider{
 	 * V 0.0.1             1              16/05/15        VIKALP PATEL
 	 * V 2.0.3             2              16/09/15        VIKALP PATEL : ALTER : ADDED ATTEMPT & ATTEMPT COUNT : FEEDBACK & QUIZ
 	 * V 2.0.9             3              17/10/15        VIKALP PATEL : ALTER : ADDED PARICHAY_REFERRED : LUPIN
+	 * V 2.0.17            4              21/11/15        VIKALP PATEL : ALTER : PARICHAY_REFERRED : ADDED INSTALL, DUPLICATE
+	 * V 2.0.19            5              07/12/15        VIKALP PATEL : ALTER : BIRTHDAY : COLUMN_BIRTHDAY_RECEIVED_DATE_FORMATTED
 	 * -----------------------------------------------------------------
 	 */
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 5;
 		
 	OpenHelper openHelper;
 
@@ -1222,6 +1226,8 @@ public class ApplicationDB extends ContentProvider{
 		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL3, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL3);
 		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL3_RS, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL3_RS);
 		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_HR, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_HR);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_DUPLICATE, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_DUPLICATE);
+		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_INSTALL);
 		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_IRF_MFCG, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_IRF_MFCG);
 		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_ONLINE, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_ONLINE);
 		parichayReferredProjectionMap.put(DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_PR1, DBConstant.Parichay_Referral_Columns.COLUMN_PARICHAY_IS_PR1);

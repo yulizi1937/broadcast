@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mobcast"
-    android:versionCode="17"
-    android:versionName="2.0.17" >
+    android:versionCode="19"
+    android:versionName="2.0.19" >
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -248,6 +248,9 @@
             android:configChanges="locale|orientation|screenSize" />
         <activity
             android:name="com.application.ui.activity.ParichayReferralFormActivity"
+            android:configChanges="locale|orientation|screenSize" />
+        <activity
+            android:name="com.application.ui.activity.ParichaySearchActivity"
             android:configChanges="locale|orientation|screenSize" />
         
 

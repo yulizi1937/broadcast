@@ -66,7 +66,7 @@ import com.squareup.okhttp.OkHttpClient;
  * @author Vikalp Patel(VikalpPatelCE)
  * 
  */
-public class VerificationActivity extends SwipeBackBaseActivity implements OnPermissionCallback {
+public class VerificationActivity extends SwipeBackBaseActivity {
 	private static final String TAG = VerificationActivity.class
 			.getSimpleName();
 

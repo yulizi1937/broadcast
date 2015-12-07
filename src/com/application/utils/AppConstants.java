@@ -290,7 +290,11 @@ public class AppConstants {
 		public static final String jobSkills              	= "jobSkills";
 		public static final String jobDescription          	= "jobDescription";
 		public static final String jobQualification         = "jobQualification";
-		public static final String jobDesiredProfile         = "jobDesiredProfile";
+		public static final String jobDesiredProfile        = "jobDesiredProfile";
+		public static final String jobHQ        			= "jobHQ";
+		public static final String jobRegion       		  	= "jobRegion";
+		public static final String jobDivision         		= "jobDivision";
+		public static final String installment         		= "installment";
 		public static final String jobCTC          	        = "jobCTC";
 		public static final String contactName          	= "contactName";
 		public static final String contactMobile          	= "contactMobile";
@@ -349,6 +353,7 @@ public class AppConstants {
 		public static final String isPR1		       		= "isPR1";
 		public static final String isPR2		       		= "isPR2";
 		public static final String isHR		       			= "isHR";
+		public static final String isDuplicate		       	= "isDuplicate";
 		public static final String reason		       		= "reason";
 		public static final String installment1		       	= "installment1";
 		public static final String installment2		       	= "installment2";
@@ -481,6 +486,10 @@ public class AppConstants {
 		public static final String ACTIVITYTITLE    = "activityTitle";
 		public static final String CATEGORYARRAY    = "categoryArray";
 		public static final String CATEGORY         = "category";
+		public static final String INSTALLMENT		= "installment";
+		public static final String HQ		        = "hq";
+		public static final String REGION		    = "region";
+		public static final String DIVISION		    = "division";
 		public static final String ACTION           = "action";
 		public static final String ISFROMNOTIFICATION= "isFromNotification";
 		public static final String ISFROMAPP        = "isFromApp";
@@ -587,7 +596,7 @@ public class AppConstants {
 	public static final String GREEN = "#006400";
 	public static final String BLUE = "#01AFD2";
 	
-	public static final int DRAWER_RECRUITMENT_POS = 2;//3-CK
+	public static final int DRAWER_RECRUITMENT_POS = 3;//3-CK
 	
 	public static final int NOTIFICATION_ID = 434;
 	public static final int BULK = 20;

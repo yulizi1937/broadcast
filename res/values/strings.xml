@@ -3,6 +3,7 @@
 
     <string name="app_name">Mobcast</string>
     <string name="package_name">com.mobcast</string>
+    <string name="app_build">_151125_57</string>
     <string name="toolbar_background">#254E7A</string>
     <string name="LanguageName">English</string>
     <string name="LanguageNameInEnglish">English</string>
@@ -64,6 +65,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_report">Report</string>
+    <string name="action_referral">Refer</string>
     <string name="action_contact">Contact Us</string>
     <string name="action_view_web">View in Browser</string>
     <string name="action_search">Search</string>
@@ -283,7 +285,7 @@
     <string name="sample_parichay_candidates_referred_for_marketexec">MARKETING EXECUTIVE</string>
     <string name="sample_parichay_candidates_referred_for_marketrepre">MEDICAL REPRESENTATIVE</string>
     <string name="sample_parichay_candidates_details">CANDIDATE DETAILS </string>
-    <string name="sample_parichay_installement_text">Congratulations employee for your referral bonus</string>
+    <string name="sample_parichay_installement_text">Congratulations for your referral bonus</string>
 
     <!-- layout_mother -->
     <string name="layout_mother_mobcast">MOBCAST</string>
@@ -309,6 +311,16 @@
     <string name="layout_drawer_search_mother_search_by_text">By</string>
     <string name="layout_drawer_search_mother_search_all">All</string>
     <string name="layout_drawer_search_mother_search_livestream">Live Stream</string>
+    
+    <!-- layout_drawer_search_parichay -->
+    <string name="layout_drawer_search_parichay_search_unit">Unit</string>
+    <string name="layout_drawer_search_parichay_search_position">Position</string>
+    <string name="layout_drawer_search_parichay_search_location">Location</string>
+    <string name="layout_drawer_search_parichay_search_qualification">Qualification</string>
+    <string name="layout_drawer_search_parichay_search_desc">Description</string>
+    <string name="layout_drawer_search_parichay_search_age">Age</string>
+    <string name="layout_drawer_search_parichay_search_exp">Experience</string>
+    
 
     <!-- fragment_event_detail -->
     <string name="sample_event_date">17</string>

@@ -352,6 +352,19 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 		}
 	}
 	
+	/**
+	 * <b>Description: </b></br>Expiry : Check Expired Mobcast and delete</br></br>
+	 * @author Vikalp Patel(VikalpPatelCE)
+	 */
+	private void checkExpiredBirthdayAndDeleteFromDB(){
+		try{
+			long mCurrentTimeMillis = System.currentTimeMillis() - 604800000;
+			int  i = getContentResolver().delete(DBConstant.Birthday_Columns.CONTENT_URI, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVED_DATE_FORMATTED + "<?", new String[]{String.valueOf(mCurrentTimeMillis)});
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
 	private void checkDataInAdapter() {
 		checkExpiredBirthdayAndDeleteFromDB();
 		Cursor mCursor = getContentResolver().query(DBConstant.Birthday_Columns.CONTENT_URI,null,null,null,DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID+ " DESC");
@@ -384,15 +397,6 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 				FileLog.e(TAG, e.toString());
 				return -1;
 			}
-		}
-	}
-	
-	private void checkExpiredBirthdayAndDeleteFromDB(){
-		try{
-			long mCurrentTimeMillis = System.currentTimeMillis();
-			getContentResolver().delete(DBConstant.Birthday_Columns.CONTENT_URI, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_RECEIVER_TIME_FORMATTED + "<?", new String[]{String.valueOf(mCurrentTimeMillis)});
-		}catch(Exception e){
-			FileLog.e(TAG, e.toString());
 		}
 	}
 
@@ -496,6 +500,14 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 						mArrayListBirthday.get(position).setRead(true);
 						isToNotify = true;
 					}
+					
+					if (Boolean
+							.parseBoolean(mCursor.getString(mCursor
+									.getColumnIndex(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_WISHED)))) {
+						mArrayListBirthday.get(position).setWished(true);
+						isToNotify = true;
+					}
+					
 					if (isToNotify) {
 						mRecyclerView.getAdapter().notifyDataSetChanged();
 					}

@@ -366,6 +366,8 @@ public class DBConstant {
 		public static final String COLUMN_PARICHAY_IS_PR1        	    = "_parichay_is_pr1";
 		public static final String COLUMN_PARICHAY_IS_PR2        	    = "_parichay_is_pr2";
 		public static final String COLUMN_PARICHAY_IS_HR        	    = "_parichay_is_hr";
+		public static final String COLUMN_PARICHAY_INSTALL        	    = "_parichay_no_install";
+		public static final String COLUMN_PARICHAY_IS_DUPLICATE        	= "_parichay_is_duplicate";
 		public static final String COLUMN_PARICHAY_INSTALL1     	    = "_parichay_install1";
 		public static final String COLUMN_PARICHAY_INSTALL2 	        = "_parichay_install2";
 		public static final String COLUMN_PARICHAY_INSTALL3				= "_parichay_install3";

@@ -14,7 +14,7 @@
     <!-- UA-49815183-4 -->
     <string name="ga_trackingId">UA-67132880-1</string>
     <string name="ga_sampleFrequency">100.0</string>
-    <string name="ga_appVersion">2.0.17</string>
+    <string name="ga_appVersion">2.0.19</string>
     <string name="ga_appName">Mobcast</string>
 
     <!-- Prevent data from appearing in reports. Useful for testing. -->
@@ -71,6 +71,7 @@
     <string name="com.application.ui.activity.ParichayActivity">Parichay</string>
     <string name="com.application.ui.activity.ParichayDetailActivity">Parichay Detail</string>
     <string name="com.application.ui.activity.ParichayReferralFormActivity">Parichay Referral Form</string>
+    <string name="com.application.ui.activity.ParichaySearchActivity">Parichay Search</string>
     <string name="com.application.ui.fragment.MobcastRecyclerViewFragment">Mobcast List</string>
     <string name="com.application.ui.fragment.TrainingRecyclerViewFragment">Training List</string>
     <string name="com.application.ui.fragment.ChatRecyclerViewFragment">Chat List</string>

@@ -92,6 +92,10 @@ public class ParichayDetailActivity extends SwipeBackBaseActivity {
 	private String mJobDescription;
 	private String mJobCTC;
 	private String mJobQualification;
+	private String mJobHQ;
+	private String mJobRegion;
+	private String mJobDivison;
+	private String mInstallment;
 	
 	private String mContentLikeCount;
 	private boolean isContentLiked = false;
@@ -254,6 +258,10 @@ public class ParichayDetailActivity extends SwipeBackBaseActivity {
 			mJobQualification = mParichay.getmJobQualif();
 			isContentLiked = mParichay.isLike();
 			mContentLikeCount = mParichay.getmLikeCount();
+			mJobHQ = mParichay.getmJobHQ();
+			mJobDivison = mParichay.getmJobDivision();
+			mJobRegion = mParichay.getmJobRegion();
+			mInstallment = mParichay.getmInstall();
 			setIntentDataToUi();			
 			
 			if(isContentLiked){
@@ -443,6 +451,10 @@ public class ParichayDetailActivity extends SwipeBackBaseActivity {
 				mIntent.putExtra(AppConstants.INTENTCONSTANTS.ID, mId);
 				mIntent.putExtra(AppConstants.INTENTCONSTANTS.ACTIVITYTITLE, mJobTitle);
 				mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, mJobUnit);
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.HQ, mJobHQ);
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.REGION, mJobRegion);
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.DIVISION, mJobDivison);
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.INSTALLMENT, mInstallment);
 				startActivity(mIntent);
 				AndroidUtilities.enterWindowAnimation(ParichayDetailActivity.this);
 			}

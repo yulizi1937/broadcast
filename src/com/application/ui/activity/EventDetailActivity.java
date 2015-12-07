@@ -232,6 +232,9 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 				startActivity(mIntent);
 			}
 			return true;
+		case R.id.action_share:
+			showDialog(0);
+			return true;
 		case R.id.action_like:
 			mEventLikeTv.performClick();
 			return true;
@@ -801,9 +804,12 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 	}
 
 	protected BottomSheet getShareAction() {
+		String mShareContent = mContentTitle + "\n\n" + mContentDesc + "\n\n\n on"
+				+ mContentEventDate+" at "+ mContentEventFromTime + "\n\n" + mContentEventVenue + "\n\n"
+				+ getResources().getString(R.string.share_advertisement); 
 		return getShareActions(
 				new BottomSheet.Builder(this).grid().title("Share To "),
-				"Hello ").limit(R.integer.bs_initial_grid_row).build();
+				mShareContent).limit(R.integer.bs_initial_grid_row).build();
 	}
 
 	private void setMaterialRippleView() {

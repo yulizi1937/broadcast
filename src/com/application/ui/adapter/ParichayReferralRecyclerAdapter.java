@@ -184,6 +184,7 @@ public class ParichayReferralRecyclerAdapter extends RecyclerView.Adapter<Recycl
 		LinearLayout mIRFInterviewLayout;
 		LinearLayout mIRFInstallmentLayout;
 		LinearLayout mIRFProcessLayout;
+		LinearLayout mIRFInstallment3Layout;
 		
 		View mTelephonicView;
 		View mOnlineWrittenView;
@@ -222,6 +223,7 @@ public class ParichayReferralRecyclerAdapter extends RecyclerView.Adapter<Recycl
 			mIRFInterviewLayout = (LinearLayout)view.findViewById(R.id.itemRecyclerParichayIRFProcessInterviewLayout);
 			mIRFInstallmentLayout = (LinearLayout)view.findViewById(R.id.itemRecyclerParichayIRFInstallmentLayout);
 			mIRFProcessLayout = (LinearLayout)view.findViewById(R.id.itemRecyclerParichayIRFProcessDetailLayout);
+			mIRFInstallment3Layout = (LinearLayout)view.findViewById(R.id.itemRecyclerParichayIRFInstallment3Layout);
 			
 			mTelephonicView = (View)view.findViewById(R.id.itemRecyclerParichayIRFTelephoneLv);
 			mOnlineWrittenView = (View)view.findViewById(R.id.itemRecyclerParichayIRFWrittenLv);
@@ -259,6 +261,7 @@ public class ParichayReferralRecyclerAdapter extends RecyclerView.Adapter<Recycl
 		
 		LinearLayout mFMCGInterviewLayout;
 		LinearLayout mFMCGInstallmentLayout;
+		LinearLayout mFMCGInstallment3Layout;
 		
 		View mTelephonicView;
 		View mPR1View;
@@ -293,6 +296,7 @@ public class ParichayReferralRecyclerAdapter extends RecyclerView.Adapter<Recycl
 			
 			mFMCGInterviewLayout = (LinearLayout)view.findViewById(R.id.itemRecyclerParichayFMCGProcessInterviewLayout);
 			mFMCGInstallmentLayout = (LinearLayout)view.findViewById(R.id.itemRecyclerParichayFMCGInstallmentLayout);
+			mFMCGInstallment3Layout = (LinearLayout)view.findViewById(R.id.itemRecyclerParichayIRFInstallment3Layout);
 			
 			mTelephonicView = (View)view.findViewById(R.id.itemRecyclerParichayFMCGTelephoneLv);
 			mPR1View = (View)view.findViewById(R.id.itemRecyclerParichayFMCGPR1Lv);
@@ -424,11 +428,23 @@ public class ParichayReferralRecyclerAdapter extends RecyclerView.Adapter<Recycl
 				}
 			});
 			
+			if(mObj.getIsDuplicate() == 0){
+				((ParichayIRFViewHolder)viewHolder).mRootLayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+			}else{
+				((ParichayIRFViewHolder)viewHolder).mRootLayout.setBackgroundColor(mContext.getResources().getColor(R.color.gray));
+			}
+			
+			if(mObj.getInstall() == 3){
+				((ParichayIRFViewHolder)viewHolder).mIRFInstallment3Layout.setVisibility(View.VISIBLE);
+			}else{
+				((ParichayIRFViewHolder)viewHolder).mIRFInstallment3Layout.setVisibility(View.GONE);
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void processParichayFMCGViewHolder(final RecyclerView.ViewHolder viewHolder, int position){
 		try{
 			final ParichayReferral mObj = mArrayListParichayReferral.get(isGrid ? position-3 : position-2);
@@ -478,6 +494,18 @@ public class ParichayReferralRecyclerAdapter extends RecyclerView.Adapter<Recycl
 					mObj.setExpand(!mObj.isExpand());
 				}
 			});
+			
+			if(mObj.getIsDuplicate() == 0){
+				((ParichayFMCGViewHolder)viewHolder).mRootLayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+			}else{
+				((ParichayFMCGViewHolder)viewHolder).mRootLayout.setBackgroundColor(mContext.getResources().getColor(R.color.gray));
+			}
+			
+			if(mObj.getInstall() == 3){
+				((ParichayFMCGViewHolder)viewHolder).mFMCGInstallment3Layout.setVisibility(View.VISIBLE);
+			}else{
+				((ParichayFMCGViewHolder)viewHolder).mFMCGInstallment3Layout.setVisibility(View.GONE);
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

@@ -797,6 +797,20 @@ public class AppPreferences {
 	}
 	
 	/**
+	 * Parichay
+	 */
+	
+	public void setParichayJSON(String str) {// Parichay JSON
+		editor = sharedPreferences.edit();
+		editor.putString("parichayJSON", str);
+		editor.commit();
+	}
+
+	public String getParichayJSON() { // Parichay JSON
+		return sharedPreferences.getString("parichayJSON", null);
+	}
+	
+	/**
 	 * clear Preferences
 	 */
 	

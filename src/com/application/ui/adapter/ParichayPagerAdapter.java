@@ -45,7 +45,7 @@ public class ParichayPagerAdapter extends CacheFragmentStatePagerAdapter {
 	private static final String TAG = ParichayPagerAdapter.class.getSimpleName();
 	private ArrayList<MotherHeader> mArrayListMotherHeader;
 	private int mScrollY;
-
+	private Fragment mParichayFragment;
 	public ParichayPagerAdapter(FragmentManager fm,
 			ArrayList<MotherHeader> mArrayListMotherHeader) {
 		super(fm);
@@ -102,6 +102,7 @@ public class ParichayPagerAdapter extends CacheFragmentStatePagerAdapter {
 		switch (position) {
 		case 0:
 			f = new ParichayFragment();
+			mParichayFragment = f;
 			if (0 <= mScrollY) {
 				args.putInt(ParichayFragment.ARG_INITIAL_POSITION, 1);
 			}
@@ -115,5 +116,14 @@ public class ParichayPagerAdapter extends CacheFragmentStatePagerAdapter {
 		}
 		f.setArguments(args);
 		return f;
+	}
+	
+	public ParichayFragment getParichayFragment(){
+		if(mParichayFragment!=null){
+			if(mParichayFragment instanceof ParichayFragment){
+				return (ParichayFragment) mParichayFragment;
+			}
+		}
+		return null;
 	}
 }

@@ -50,12 +50,14 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.application.beans.MotherHeader;
+import com.application.beans.Parichay;
 import com.application.sqlite.DBConstant;
 import com.application.ui.activity.MotherActivity.AsyncLogOutTask;
 import com.application.ui.adapter.ParichayPagerAdapter;
 import com.application.ui.calligraphy.CalligraphyContextWrapper;
 import com.application.ui.fragment.IActivityCommunicator;
 import com.application.ui.fragment.IFragmentCommunicator;
+import com.application.ui.fragment.ParichayFragment;
 import com.application.ui.materialdialog.MaterialDialog;
 import com.application.ui.service.SyncService;
 import com.application.ui.view.CircleImageView;
@@ -186,18 +188,19 @@ public class ParichayActivity extends BaseActivity implements ObservableScrollVi
 		// TODO Auto-generated method stub
 		super.onResume();
 		notifySlidingTabLayoutChange();
+		supportInvalidateOptionsMenu();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_recruitment, menu);
-		/*MenuItem menuItemEvent = menu.findItem(R.id.action_event);
-		MenuItem menuItemAward = menu.findItem(R.id.action_award);
-		MenuItem menuItemBirthday = menu.findItem(R.id.action_birthday);
+		inflater.inflate(R.menu.menu_parichay, menu);
+		MenuItem menuItemEvent = menu.findItem(R.id.action_event).setVisible(false);
+		MenuItem menuItemAward = menu.findItem(R.id.action_award).setVisible(false);
+		MenuItem menuItemBirthday = menu.findItem(R.id.action_birthday).setVisible(false);
 		
-		try{
+		/*try{
 			if(Utilities.getUnreadOfEvent(ParichayActivity.this) != 0){
 				menuItemEvent.setIcon(buildCounterDrawableWithPNG(AppConstants.TYPE.EVENT, whichTheme));
 			}
@@ -212,8 +215,8 @@ public class ParichayActivity extends BaseActivity implements ObservableScrollVi
 			menuItemEvent.setIcon(buildCounterDrawable(Utilities.getUnreadOfEvent(ParichayActivity.this),R.drawable.ic_toolbar_event));
 			menuItemAward.setIcon(buildCounterDrawable(Utilities.getUnreadOfAward(ParichayActivity.this),R.drawable.ic_toolbar_award));
 			menuItemBirthday.setIcon(buildCounterDrawable(Utilities.getUnreadOfBirthday(ParichayActivity.this),R.drawable.ic_toolbar_birthday));
-		}
-		*/
+		}*/
+		
 		return true;
 	}
 
@@ -228,6 +231,21 @@ public class ParichayActivity extends BaseActivity implements ObservableScrollVi
 				Intent mIntent = new Intent(ParichayActivity.this, MotherActivity.class);
 				startActivity(mIntent);
 			}
+			return true;
+		case R.id.action_search:
+			getArrayListParichay();
+			return true;
+		case R.id.action_referral:
+			Intent mIntentRefer = new Intent(ParichayActivity.this, ParichayReferralFormActivity.class);
+			mIntentRefer.putExtra(AppConstants.INTENTCONSTANTS.ID, String.valueOf(System.currentTimeMillis()));
+			mIntentRefer.putExtra(AppConstants.INTENTCONSTANTS.ACTIVITYTITLE, "Open Position");
+			mIntentRefer.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, "Unit : IRF");
+			mIntentRefer.putExtra(AppConstants.INTENTCONSTANTS.HQ, "-1");
+			mIntentRefer.putExtra(AppConstants.INTENTCONSTANTS.REGION, "-1");
+			mIntentRefer.putExtra(AppConstants.INTENTCONSTANTS.DIVISION, "-1");
+			mIntentRefer.putExtra(AppConstants.INTENTCONSTANTS.INSTALLMENT, "2");
+			startActivity(mIntentRefer);
+			AndroidUtilities.enterWindowAnimation(ParichayActivity.this);
 			return true;
 		case R.id.action_award:
 			Intent mIntent = new Intent(ParichayActivity.this,
@@ -1318,6 +1336,28 @@ public class ParichayActivity extends BaseActivity implements ObservableScrollVi
 							// TODO Auto-generated method stub
 						}
 					});
+				}
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	/**
+	 * Get data from fragment
+	 */
+	
+	public void getArrayListParichay(){
+		try{
+			ParichayFragment mParichayFragment = mPagerAdapter.getParichayFragment();
+			if(mParichayFragment!=null){
+				ArrayList<Parichay> mList = mParichayFragment.getArrayListParichay();
+				if(mList!=null && mList.size() > 0){
+					Intent mIntentParichay = new Intent(ParichayActivity.this,ParichaySearchActivity.class);
+					mIntentParichay.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.PARICHAY);
+					mIntentParichay.putParcelableArrayListExtra(AppConstants.INTENTCONSTANTS.OBJECT, mList);
+					startActivity(mIntentParichay);
+					AndroidUtilities.enterWindowAnimation(ParichayActivity.this);
 				}
 			}
 		}catch(Exception e){
