@@ -3,13 +3,17 @@
  */
 package com.application.ui.activity;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,10 +24,8 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.os.StatFs;
 import android.support.annotation.NonNull;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -37,7 +39,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -46,14 +47,11 @@ import android.widget.TextView;
 import com.application.sqlite.DBConstant;
 import com.application.ui.adapter.BaseFragmentAdapter;
 import com.application.ui.materialdialog.MaterialDialog;
-import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
 import com.application.ui.view.SharedDocumentCell;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
-import com.application.utils.ApplicationLoader;
 import com.application.utils.FileLog;
-import com.application.utils.LocaleController;
 import com.application.utils.ThemeUtils;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -90,6 +88,8 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 	private final static int done = 3;
 	
 	private PermissionHelper mPermissionHelper;
+	
+	private ArrayList<String> mSelectedFiles = new ArrayList<>();
 
 	private class ListItem {
 		int icon;
@@ -149,27 +149,6 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_file_storage, menu);
-		if (AndroidUtilities.isAboveGingerBread()) {
-			MenuItem refreshItem = menu
-					.findItem(R.id.action_refresh_actionable);
-			if (refreshItem != null) {
-				View mView = MenuItemCompat.getActionView(refreshItem);
-				MaterialRippleLayout mToolBarMenuRefreshLayout = (MaterialRippleLayout) mView
-						.findViewById(R.id.toolBarActionItemRefresh);
-				mToolBarMenuRefreshProgress = (ProgressWheel) mView
-						.findViewById(R.id.toolBarActionItemProgressWheel);
-				mToolBarMenuRefresh = (ImageView) mView
-						.findViewById(R.id.toolBarActionItemImageView);
-				mToolBarMenuRefreshLayout
-						.setOnClickListener(new View.OnClickListener() {
-							@Override
-							public void onClick(View mView) {
-								// TODO Auto-generated method stub
-								toolBarRefresh();
-							}
-						});
-			}
-		}
 		return true;
 	}
 
@@ -177,9 +156,6 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		switch (item.getItemId()) {
-		case R.id.action_refresh_actionable:
-			toolBarRefresh();
-			return true;
 		case android.R.id.home:
 			finish();
 			AndroidUtilities.exitWindowAnimation(FileManagerActivity.this);
@@ -231,19 +207,6 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 		} catch (Exception e) {
 			FileLog.e("tmessages", e);
 		}
-	}
-
-	private void toolBarRefresh() {
-		mToolBarMenuRefresh.setVisibility(View.GONE);
-		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				mToolBarMenuRefresh.setVisibility(View.VISIBLE);
-				mToolBarMenuRefreshProgress.setVisibility(View.GONE);
-			}
-		}, 5000);
 	}
 
 	private void initReceivers() {
@@ -305,7 +268,7 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 			}
 		});
 
-		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+		/*listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@SuppressLint("NewApi") @Override
 			public boolean onItemLongClick(AdapterView<?> adapterView,
@@ -322,7 +285,7 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 				}
 				return true;
 			}
-		});
+		});*/
 
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@SuppressLint("NewApi") @Override
@@ -378,22 +341,24 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 					listView.setSelection(0);
 				} else {
 					if (!file.canRead()) {
-						showErrorBox(LocaleController.getString("AccessError",
-								R.string.AccessError));
+						showErrorBox("AccessError");
 						return;
 					}
 					if (sizeLimit != 0) {
 						if (file.length() > sizeLimit) {
-							showErrorBox(LocaleController.formatString(
-									"FileUploadLimit",
-									R.string.FileUploadLimit,
-									Utilities.formatFileSize(sizeLimit)));
+							showErrorBox("FileUploadLimit");
 							return;
 						}
 					}
 					if (file.length() == 0) {
 						return;
 					}
+					
+					Intent mIntent = new Intent();
+					mSelectedFiles.add(file.getAbsolutePath());
+					mIntent.putExtra("SelectedFiles", mSelectedFiles);
+					setResult(Activity.RESULT_OK, mIntent);
+					finish();
 				}
 			}
 		});
@@ -428,11 +393,9 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 					items.clear();
 					String state = Environment.getExternalStorageState();
 					if (Environment.MEDIA_SHARED.equals(state)) {
-						emptyView.setText(LocaleController.getString(
-								"UsbActive", R.string.UsbActive));
+						emptyView.setText("UsbActive");
 					} else {
-						emptyView.setText(LocaleController.getString(
-								"NotMounted", R.string.NotMounted));
+						emptyView.setText("NotMounted");
 					}
 					AndroidUtilities.clearDrawableAnimation(listView);
 					scrolling = true;
@@ -440,12 +403,10 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 					return true;
 				}
 			}
-			showErrorBox(LocaleController.getString("AccessError",
-					R.string.AccessError));
+			showErrorBox("AccessError");
 			return false;
 		}
-		emptyView.setText(LocaleController.getString("NoFiles",
-				R.string.NoFiles));
+		emptyView.setText("NoFiles");
 		File[] files = null;
 		try {
 			files = dir.listFiles();
@@ -454,8 +415,7 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 			return false;
 		}
 		if (files == null) {
-			showErrorBox(LocaleController.getString("UnknownError",
-					R.string.UnknownError));
+			showErrorBox("UnknownError");
 			return false;
 		}
 		currentDir = dir;
@@ -483,8 +443,7 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 			item.file = file;
 			if (file.isDirectory()) {
 				item.icon = R.drawable.ic_directory;
-				item.subtitle = LocaleController.getString("Folder",
-						R.string.Folder);
+				item.subtitle = "Folder";
 			} else {
 				String fname = file.getName();
 				String[] sp = fname.split("\\.");
@@ -503,14 +462,12 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 		if (history.size() > 0) {
 			HistoryEntry entry = history.get(history.size() - 1);
 			if (entry.dir == null) {
-				item.subtitle = LocaleController.getString("Folder",
-						R.string.Folder);
+				item.subtitle = "Folder";
 			} else {
 				item.subtitle = entry.dir.toString();
 			}
 		} else {
-			item.subtitle = LocaleController.getString("Folder",
-					R.string.Folder);
+			item.subtitle = "Folder";
 		}
 		item.icon = R.drawable.ic_directory;
 		item.file = null;
@@ -523,9 +480,9 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 
 	private void showErrorBox(String error) {
 		new MaterialDialog.Builder(FileManagerActivity.this)
-				.title(LocaleController.getString("AppName", R.string.app_name))
+				.title("Mobcast")
 				.content(error)
-				.positiveText(LocaleController.getString("OK", R.string.OK))
+				.positiveText("OK")
 				.show();
 	}
 
@@ -535,12 +492,11 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 		String extStorage = Environment.getExternalStorageDirectory()
 				.getAbsolutePath();
 		ListItem ext = new ListItem();
-		/*if (Build.VERSION.SDK_INT < 9
+		if (Build.VERSION.SDK_INT < 9
 				|| Environment.isExternalStorageRemovable()) {
-			ext.title = LocaleController.getString("SdCard", R.string.SdCard);
+			ext.title = "SdCard";
 		} else {
-			ext.title = LocaleController.getString("InternalStorage",
-					R.string.InternalStorage);
+			ext.title = "InternalStorage";
 		}
 		ext.icon = Build.VERSION.SDK_INT < 9
 				|| Environment.isExternalStorageRemovable() ? R.drawable.ic_external_storage
@@ -579,12 +535,9 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 					try {
 						ListItem item = new ListItem();
 						if (path.toLowerCase().contains("sd")) {
-							ext.title = LocaleController.getString("SdCard",
-									R.string.SdCard);
+							ext.title = "SdCard";
 						} else {
-							ext.title = LocaleController
-									.getString("ExternalStorage",
-											R.string.ExternalStorage);
+							ext.title = "ExternalStorage";
 						}
 						item.icon = R.drawable.ic_external_storage;
 						item.subtitle = getRootSubtitle(path);
@@ -597,16 +550,15 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 			}
 		} catch (Exception e) {
 			FileLog.e("tmessages", e);
-		}*/
+		}
 		ListItem fs = new ListItem();
-		/*fs.title = "/";
-		fs.subtitle = LocaleController.getString("SystemRoot",
-				R.string.SystemRoot);
+		fs.title = "/";
+		fs.subtitle = "SystemRoot";
 		fs.icon = R.drawable.ic_directory;
 		fs.file = new File("/");
-		items.add(fs);*/
+		items.add(fs);
 
-		try {
+		/*try {
 			File telegramPath = new File(
 					Environment.getExternalStorageDirectory(), AppConstants.FOLDER.BUILD_FOLDER_FILE_MANAGER);
 			if (telegramPath.exists()) {
@@ -619,7 +571,7 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 			}
 		} catch (Exception e) {
 			FileLog.e("tmessages", e);
-		}
+		}*/
 
 		AndroidUtilities.clearDrawableAnimation(listView);
 		scrolling = true;
@@ -634,9 +586,7 @@ public class FileManagerActivity extends SwipeBackBaseActivity {
 		if (total == 0) {
 			return "";
 		}
-		return LocaleController.formatString("FreeOfTotal",
-				R.string.FreeOfTotal, Utilities.formatFileSize(free),
-				Utilities.formatFileSize(total));
+		return "FreeOfTotal" + Utilities.formatFileSize(free) + " / " +Utilities.formatFileSize(total);
 	}
 
 	@SuppressLint("NewApi") 

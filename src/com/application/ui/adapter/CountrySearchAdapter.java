@@ -1,11 +1,3 @@
-/*
- * This is the source code of Telegram for Android v. 1.7.x.
- * It is licensed under GNU GPL v. 2 or later.
- * You should have received a copy of the license in this archive (see LICENSE).
- *
- * Copyright Nikolai Kudashov, 2013-2014.
- */
-
 package com.application.ui.adapter;
 
 import java.util.ArrayList;
@@ -44,7 +36,7 @@ public class CountrySearchAdapter extends BaseFragmentAdapter {
                     searchTimer.cancel();
                 }
             } catch (Exception e) {
-                FileLog.e("tmessages", e);
+                FileLog.e("tmessages", e.toString());
             }
             searchTimer = new Timer();
             searchTimer.schedule(new TimerTask() {
@@ -54,7 +46,7 @@ public class CountrySearchAdapter extends BaseFragmentAdapter {
                         searchTimer.cancel();
                         searchTimer = null;
                     } catch (Exception e) {
-                        FileLog.e("tmessages", e);
+                        FileLog.e("tmessages", e.toString());
                     }
                     processSearch(query);
                 }
@@ -63,7 +55,7 @@ public class CountrySearchAdapter extends BaseFragmentAdapter {
     }
 
     private void processSearch(final String query) {
-        Utilities.searchQueue.postRunnable(new Runnable() {
+        Utilities.downloadQueue.postRunnable(new Runnable() {
             @Override
             public void run() {
 

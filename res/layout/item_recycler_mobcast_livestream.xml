@@ -161,8 +161,8 @@
 
                 <ImageView
                     android:id="@+id/itemRecyclerMobcastLivePlayImageIv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/item_recycler_mobcast_video_play_width"
+                    android:layout_height="@dimen/item_recycler_mobcast_video_play_width"
                     android:layout_gravity="center"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_play_video"

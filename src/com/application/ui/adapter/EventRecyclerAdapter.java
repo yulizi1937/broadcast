@@ -217,7 +217,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 				((EventViewHolder)viewHolder).mEventIsGoingTextIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_event_declined));
 			}else if(mObj.getIsGoingToAttend().equalsIgnoreCase("1")){
 				((EventViewHolder)viewHolder).mEventIsGoingTextTv.setTextColor(mContext.getResources().getColor(R.color.green));
-				((EventViewHolder)viewHolder).mEventIsGoingTextTv.setText(mContext.getResources().getString(R.string.accepted));
+				((EventViewHolder)viewHolder).mEventIsGoingTextTv.setText(mContext.getResources().getString(R.string._going));
 				((EventViewHolder)viewHolder).mEventIsGoingTextIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_event_accepted));				
 			}else{
 				((EventViewHolder)viewHolder).mEventIsGoingTextTv.setTextColor(mContext.getResources().getColor(R.color.drawer_item_title));

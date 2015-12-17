@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
-            android:src="@drawable/ic_share"
+            android:src="@drawable/ic_refer"
             fab:fab_colorNormal="@color/toolbar_background"
             fab:fab_colorPressed="@color/item_transparent_color"
             fab:fab_colorRipple="@color/transparency_event_cover"

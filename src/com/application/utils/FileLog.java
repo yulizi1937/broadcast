@@ -9,18 +9,13 @@
 package com.application.utils;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import android.net.Uri;
 import android.util.Log;
 
 public class FileLog {
-    private OutputStreamWriter streamWriter = null;
-    private FastDateFormat dateFormat = null;
-    private DispatchQueue logQueue = null;
     private File currentFile = null;
 
     private static volatile FileLog Instance = null;
@@ -41,7 +36,7 @@ public class FileLog {
         if (!BuildVars.DEBUG_VERSION) {
             return;
         }
-        dateFormat = FastDateFormat.getInstance("dd_MM_yyyy_HH_mm_ss", Locale.US);
+       /* dateFormat = FastDateFormat.getInstance("dd_MM_yyyy_HH_mm_ss", Locale.US);
         try {
 //            File sdCard = ApplicationLoader.applicationContext.getExternalFilesDir(null);
 //            if (sdCard == null) {
@@ -65,28 +60,7 @@ public class FileLog {
             streamWriter.flush();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    public static void e(final String tag, final String message, final Throwable exception) {
-        if (!BuildVars.DEBUG_VERSION) {
-            return;
-        }
-        Log.e(tag, message, exception);
-        if (getInstance().streamWriter != null) {
-            getInstance().logQueue.postRunnable(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        getInstance().streamWriter.write(getInstance().dateFormat.format(System.currentTimeMillis()) + " E/" + tag + "﹕ " + message + "\n");
-                        getInstance().streamWriter.write(exception.toString());
-                        getInstance().streamWriter.flush();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        }
+        }*/
     }
     
     public static void e(final String tag, final String message) {
@@ -94,7 +68,7 @@ public class FileLog {
             return;
         }
         Log.e(tag, message);
-        try{
+       /* try{
         	if (getInstance().streamWriter != null) {
                 getInstance().logQueue.postRunnable(new Runnable() {
                     @Override
@@ -110,41 +84,17 @@ public class FileLog {
             }
         }catch(Exception e){
         	
-        }
+        }*/
     }
 
-    public static void e(final String tag, boolean isShowMethodName,final String message) {
-        if (!BuildVars.DEBUG_VERSION) {
-            return;
-        }
-        Log.e(tag, message);
-        try{
-        	StackTraceElement[] stackTraceElement = Thread.currentThread().getStackTrace();
-            final String method = stackTraceElement[3].getMethodName();
-        	if (getInstance().streamWriter != null) {
-                getInstance().logQueue.postRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            getInstance().streamWriter.write(getInstance().dateFormat.format(System.currentTimeMillis()) + " E/" + tag + "﹕ "+ method + "﹕ " + message + "\n");
-                            getInstance().streamWriter.flush();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        	stackTraceElement =null;
-        }catch(Exception e){
-        }
-    }
+  
 
     public static void e(final String tag, final Throwable e) {
         if (!BuildVars.DEBUG_VERSION) {
             return;
         }
         e.printStackTrace();
-        if (getInstance().streamWriter != null) {
+        /*if (getInstance().streamWriter != null) {
             getInstance().logQueue.postRunnable(new Runnable() {
                 @Override
                 public void run() {
@@ -162,28 +112,10 @@ public class FileLog {
             });
         } else {
             e.printStackTrace();
-        }
+        }*/
     }
 
-    public static void d(final String tag, final String message) {
-        if (!BuildVars.DEBUG_VERSION) {
-            return;
-        }
-        Log.d(tag, message);
-        if (getInstance().streamWriter != null) {
-            getInstance().logQueue.postRunnable(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        getInstance().streamWriter.write(getInstance().dateFormat.format(System.currentTimeMillis()) + " D/" + tag + "﹕ " + message + "\n");
-                        getInstance().streamWriter.flush();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        }
-    }
+   
 
     public static void cleanupLogs() {
         ArrayList<Uri> uris = new ArrayList<Uri>();

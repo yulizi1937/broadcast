@@ -6,4 +6,8 @@
         <ignore path="src/com/application/ui/view/PinnedSectionGridView.java" />
     </issue>
     <issue id="MissingTranslation" severity="ignore" />
+    <issue id="NewApi">
+        <ignore path="src/com/application/ui/activity/AnyDoNotificationActivity.java" />
+        <ignore path="src/com/application/ui/activity/LoginActivity.java" />
+    </issue>
 </lint>

@@ -93,6 +93,7 @@ public class VerificationActivity extends SwipeBackBaseActivity {
 
 	private boolean isValidVerificationCode = false;
 	private boolean isResendClicked = false;
+	private boolean isRaisedClicked = false;
 
 	private String OTP;
 	private String mUserName;
@@ -136,6 +137,7 @@ public class VerificationActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		super.onPause();
 		SmsRadar.stopSmsRadarService(ApplicationLoader.getApplication());
+		isResendClicked = false;
 	}
 
 	@Override
@@ -168,6 +170,9 @@ public class VerificationActivity extends SwipeBackBaseActivity {
 		mEnteredAgainTv = (AppCompatTextView) findViewById(R.id.activityVerificationAdminstrationTryAgain);
 
 		mCroutonViewGroup = (FrameLayout) findViewById(R.id.croutonViewGroup);
+		
+		mReSendBtn.setEnabled(false);
+		mRaisedTicket.setEnabled(false);
 	}
 
 	private void initToolBar() {
@@ -265,28 +270,22 @@ public class VerificationActivity extends SwipeBackBaseActivity {
 
 	private Runnable updateTimerThread = new Runnable() {
 		public void run() {
-			/*
-			 * mTimeInMilliSeconds = SystemClock.uptimeMillis() - mStartTime;
-			 * mUpdatedTime = mTimeSwapBuff + mTimeInMilliSeconds; int secs =
-			 * (int)mUpdatedTime/1000; if(secs >
-			 * MobcastConfig.BUILD.VERIFICATION_TIMER_OUT){
-			 * mHandler.removeCallbacks(updateTimerThread);
-			 * mTimerTv.setVisibility(View.GONE);
-			 * mReSendBtn.setVisibility(View.VISIBLE); } int mins = secs/60;
-			 * secs %=60;
-			 */
-
 			mTimerStartFrom--;
 			int mins = (int) mTimerStartFrom / 60;
 			int secs = (int) mTimerStartFrom % 60;
 			if (secs < 1 && mins == 0) {
 				mHandler.removeCallbacks(updateTimerThread);
 				mTimerTv.setVisibility(View.GONE);
-				if (isResendClicked) {
+				if (isResendClicked && !isRaisedClicked) {
+					mRaisedTicket.setEnabled(true);
+					mReSendBtn.setEnabled(false);
 					mRaisedTicket.setVisibility(View.VISIBLE);
 					mReSendBtn.setVisibility(View.GONE);
 				}else{
-					mReSendBtn.setVisibility(View.VISIBLE);					
+					if(!isRaisedClicked){
+						mReSendBtn.setEnabled(true);
+						mReSendBtn.setVisibility(View.VISIBLE);
+					}
 				}
 			}
 			mTimerTv.setText("" + mins + ":" + String.format("%02d", secs));
@@ -399,9 +398,9 @@ public class VerificationActivity extends SwipeBackBaseActivity {
 									.toString())) {
 						if (Utilities.isInternetConnected()) {
 							if (AndroidUtilities.isAboveIceCreamSandWich()) {
-								new AsyncVerifyTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+								new AsyncVerifyTask(false).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
 							} else {
-								new AsyncVerifyTask().execute();
+								new AsyncVerifyTask(false).execute();
 							}
 						} else {
 							Utilities.showCrouton(
@@ -451,12 +450,13 @@ public class VerificationActivity extends SwipeBackBaseActivity {
 				mReSendBtn.setVisibility(View.GONE);
 				mTimerTv.setVisibility(View.VISIBLE);
 				isResendClicked = true;
+				mReSendBtn.setEnabled(false);
 				initTimer();
 				if (Utilities.isInternetConnected()) {
 					if (AndroidUtilities.isAboveIceCreamSandWich()) {
-						new AsyncVerifyTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+						new AsyncVerifyTask(true).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
 					} else {
-						new AsyncVerifyTask().execute();
+						new AsyncVerifyTask(true).execute();
 					}
 				} else {
 					Utilities.showCrouton(
@@ -475,6 +475,10 @@ public class VerificationActivity extends SwipeBackBaseActivity {
 				// TODO Auto-generated method stub
 				try{
 					if(!TextUtils.isEmpty(mUserName)){
+						isRaisedClicked = true;
+						mRaisedTicket.setEnabled(false);
+						mReSendBtn.setEnabled(false);
+						mRaisedTicket.setVisibility(View.GONE);
 						UserReport.updateUserIssueApi(AppConstants.INTENTCONSTANTS.OTP, mUserName);
 						Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",AppConstants.mSupportEmail, null));
 						emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Suport : Unable to Login | " + getResources().getString(R.string.app_name));
@@ -615,6 +619,9 @@ public class VerificationActivity extends SwipeBackBaseActivity {
 		private MobcastProgressDialog mProgressDialog;
 		private boolean isResendOTP = false;
 
+		public AsyncVerifyTask(boolean isToRequestOTP){
+			this.isResendOTP = isToRequestOTP;
+		}
 		@Override
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
@@ -632,9 +639,7 @@ public class VerificationActivity extends SwipeBackBaseActivity {
 		protected Void doInBackground(Void... params) {
 			// TODO Auto-generated method stub
 			try{
-				isResendOTP = isResendClicked; 
-				mResponseFromApi = !isResendClicked ? apiVerifyUser()
-						: apiRequestOTPAgain();
+				mResponseFromApi = !isResendOTP ? apiVerifyUser() : apiRequestOTPAgain();
 				isSuccess = Utilities.isSuccessFromApi(mResponseFromApi);
 			}catch(Exception e){
 				FileLog.e(TAG, e.toString());

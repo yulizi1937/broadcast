@@ -38,7 +38,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
@@ -78,7 +77,7 @@ import com.squareup.okhttp.OkHttpClient;
  * @author Vikalp Patel(VikalpPatelCE)
  * 
  */
-public class LoginActivity extends AppCompatActivity {
+    public class LoginActivity extends AppCompatActivity {
 	private static final String TAG = LoginActivity.class.getSimpleName();
 	private static final int INTENT_COUNTRY_CODE = 1001;
 
@@ -141,6 +140,7 @@ public class LoginActivity extends AppCompatActivity {
 		tryToGetUserId();
 		tryToGetUserCountryCode();
 		isViaOTPSupport();
+		setAppOpenRemindService();
 	}
 
 	@Override
@@ -513,7 +513,7 @@ public class LoginActivity extends AppCompatActivity {
 				}
 				// getUserMobileFromMessages();
 			} catch (Exception e) {
-				FileLog.e(TAG, true, e.toString());
+				FileLog.e(TAG, e.toString());
 			}
 		}
 	}
@@ -543,7 +543,7 @@ public class LoginActivity extends AppCompatActivity {
 
 			}
 		} catch (Exception e) {
-			FileLog.e(TAG, true, e.toString());
+			FileLog.e(TAG, e.toString());
 		}
 	}
 
@@ -553,7 +553,7 @@ public class LoginActivity extends AppCompatActivity {
 			userId = tm.getLine1Number();
 			return userId;
 		} catch (Exception e) {
-			FileLog.e(TAG, true, e.toString());
+			FileLog.e(TAG, e.toString());
 			return null;
 		}
 	}
@@ -569,7 +569,7 @@ public class LoginActivity extends AppCompatActivity {
 			}
 			return userId;
 		} catch (Exception e) {
-			FileLog.e(TAG, true, e.toString());
+			FileLog.e(TAG, e.toString());
 			return null;
 		}
 	}
@@ -578,6 +578,17 @@ public class LoginActivity extends AppCompatActivity {
 		if (ApplicationLoader.getPreferences().isToByPassOTP()) {
 		}
 	}
+	
+	private void setAppOpenRemindService(){
+		try{
+			if(!ApplicationLoader.getPreferences().isLastAppOpenService()){
+				ApplicationLoader.setAppOpenRemindServiceAlarm();
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
@@ -714,7 +725,7 @@ public class LoginActivity extends AppCompatActivity {
 				ApplicationLoader.getPreferences().setRegId(regid);
 			}
 		} else {
-			FileLog.d("tmessages", "No valid Google Play Services APK found.");
+			FileLog.e(TAG, "No Play Services Error");
 		}
 	}
 
@@ -728,14 +739,14 @@ public class LoginActivity extends AppCompatActivity {
 		final SharedPreferences prefs = getGCMPreferences(applicationContext);
 		String registrationId = prefs.getString(PROPERTY_REG_ID, "");
 		if (registrationId.length() == 0) {
-			FileLog.d("tmessages", "Registration not found.");
+			FileLog.e("tmessages", "Registration not found.");
 			return "";
 		}
 		int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION,
 				Integer.MIN_VALUE);
 		int currentVersion = ApplicationLoader.getAppVersion();
 		if (registeredVersion != currentVersion) {
-			FileLog.d("tmessages", "App version changed.");
+			FileLog.e("tmessages", "App version changed.");
 			return "";
 		}
 		return registrationId;

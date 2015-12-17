@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mobcast"
-    android:versionCode="19"
-    android:versionName="2.0.19" >
+    android:versionCode="21"
+    android:versionName="2.0.21" >
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -153,8 +153,7 @@
         <activity
             android:name="com.application.ui.activity.VideoFullScreenActivity"
             android:configChanges="locale|orientation|screenSize"
-            android:screenOrientation="landscape"
-            />
+            android:screenOrientation="landscape" />
         <activity
             android:name="com.application.ui.activity.YouTubeLiveStreamActivity"
             android:configChanges="locale|orientation|screenSize" />
@@ -219,15 +218,15 @@
             android:configChanges="locale|orientation" />
         <activity
             android:name="com.application.ui.activity.YouTubeLiveFullScreenActivity"
-            android:screenOrientation="landscape"
-            android:configChanges="locale|orientation|screenSize" />
+            android:configChanges="locale|orientation|screenSize"
+            android:screenOrientation="landscape" />
         <activity
             android:name="com.application.ui.activity.ChatDetailActivity"
             android:configChanges="locale|orientation" />
         <activity
             android:name="com.application.ui.activity.CaptureActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:configChanges="locale|orientation|screenSize" />
+            android:configChanges="locale|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.application.ui.activity.RecruitmentRecyclerActivity"
             android:configChanges="locale|orientation" />
@@ -236,23 +235,22 @@
             android:configChanges="locale|orientation" />
         <activity
             android:name="com.application.crop.CropImageActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="locale|orientation" />
+            android:configChanges="locale|orientation"
+            android:screenOrientation="portrait" />
         <!-- Parichay -->
         <activity
             android:name="com.application.ui.activity.ParichayActivity"
             android:configChanges="locale|orientation|screenSize" />
         <activity
             android:name="com.application.ui.activity.ParichayDetailActivity"
-            android:noHistory="true"
-            android:configChanges="locale|orientation|screenSize" />
+            android:configChanges="locale|orientation|screenSize"
+            android:noHistory="true" />
         <activity
             android:name="com.application.ui.activity.ParichayReferralFormActivity"
             android:configChanges="locale|orientation|screenSize" />
         <activity
             android:name="com.application.ui.activity.ParichaySearchActivity"
             android:configChanges="locale|orientation|screenSize" />
-        
 
         <!-- Notification ActionHandler Receiver -->
         <receiver android:name="com.application.receiver.NotificationActionAwardReceiver" />
@@ -306,6 +304,10 @@
 
         <service android:name="com.application.ui.service.SyncService" />
 
+        <!-- APP REMIND SERVICE -->
+        <service android:name="com.application.ui.service.AppOpenRemindService" />
+
+        <receiver android:name="com.application.receiver.AppOpenRemindAlarmReceiver" />
         <!-- Google Analytics -->
         <!-- Used for Google Play Store Campaign Measurement -->
         <service android:name="com.google.analytics.tracking.android.CampaignTrackingService" />
@@ -332,6 +334,7 @@
         <!-- APP WIDGET -->
         <receiver android:name="com.application.widget.WidgetProvider" >
             <intent-filter>
+
                 <!-- This widget provider receives broadcast with following action name or simply onUpdate of AppWidgetProvider is called -->
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

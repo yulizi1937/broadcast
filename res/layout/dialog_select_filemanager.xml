@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="12dp"
+    android:orientation="vertical" >
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/dialogSelectMobcastFileManagerTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center"
+        android:background="@android:color/transparent"
+        android:gravity="left|center"
+        android:padding="8dp"
+        android:text="@string/filemanger_mobcast"
+        android:textColor="@color/toolbar_background"
+        android:textSize="18sp"
+        tools:ignore="RtlHardcoded" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/dialogSelectSystemFileManagerTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center"
+        android:background="@android:color/transparent"
+        android:gravity="left|center"
+        android:padding="8dp"
+        android:text="@string/filemanger_system"
+        android:textColor="@color/toolbar_background"
+        android:textSize="18sp"
+        tools:ignore="RtlHardcoded" />
+
+</LinearLayout>

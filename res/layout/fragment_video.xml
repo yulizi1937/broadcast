@@ -42,16 +42,16 @@
 
                 <ImageView
                     android:id="@+id/fragmentVideoDetailVideoPlayIv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/item_recycler_mobcast_video_play_width"
+                    android:layout_height="@dimen/item_recycler_mobcast_video_play_width"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_play_video"
                     tools:ignore="ContentDescription" />
 
                 <ImageView
                     android:id="@+id/fragmentVideoDetailVideoPauseIv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/item_recycler_mobcast_video_play_width"
+                    android:layout_height="@dimen/item_recycler_mobcast_video_play_width"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_pause_video"
                     android:visibility="gone"

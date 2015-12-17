@@ -1170,7 +1170,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_LANG, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFileLang));
 							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_SIZE, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFileSize));
 							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_DURATION, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFileDuration));
-							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PAGES, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFilePages));
+							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PAGES, Utilities.getFileMetaData(mIntType, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingFilePages)));
 							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_IS_DEFAULT, mIsDefault);
 							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_LIVE_STREAM, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingLiveStream));
 							valuesFileInfo.put(DBConstant.Training_File_Columns.COLUMN_TRAINING_LIVE_STREAM_YOUTUBE, mJSONFileInfoObj.getString(AppConstants.API_KEY_PARAMETER.trainingLiveStreamYouTube));

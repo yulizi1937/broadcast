@@ -692,27 +692,31 @@ public class SetProfileActivity extends AppCompatActivity implements OnPermissio
 	protected void onActivityResult(int requestCode, int resultCode, Intent mIntent) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, mIntent);
-		if(requestCode == INTENT_PHOTO && resultCode == Activity.RESULT_OK){
-			if(ApplicationLoader.getPreferences().isCropWork()){
-				beginCrop(mIntent.getData());	
-			}else{
-				ApplicationLoader.getPreferences().setCropWork(true);
-				Uri selectedImage = mIntent.getData();
-	        	mPicturePath = Utilities.getPath(selectedImage);
-				BitmapFactory.Options options = new BitmapFactory.Options();
-				options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-				Bitmap mBitmap = BitmapFactory.decodeFile(mPicturePath, options);
-				mProfileCirleIv.setImageBitmap(mBitmap);
-				isRemovedProfile = false;	
-			}
-		}else if (requestCode == Crop.REQUEST_CROP) {
-            handleCrop(resultCode, mIntent);
-        }else{
-        	ApplicationLoader.getPreferences().setCropWork(true);
-        	if(AndroidUtilities.isAboveMarshMallow()){
-        		mPermissionHelper.onActivityForResult(requestCode);
-        	}
-        }
+		try{
+			if(requestCode == INTENT_PHOTO && resultCode == Activity.RESULT_OK){
+				if(ApplicationLoader.getPreferences().isCropWork()){
+					beginCrop(mIntent.getData());	
+				}else{
+					ApplicationLoader.getPreferences().setCropWork(true);
+					Uri selectedImage = mIntent.getData();
+		        	mPicturePath = Utilities.getPath(selectedImage);
+					BitmapFactory.Options options = new BitmapFactory.Options();
+					options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+					Bitmap mBitmap = BitmapFactory.decodeFile(mPicturePath, options);
+					mProfileCirleIv.setImageBitmap(mBitmap);
+					isRemovedProfile = false;	
+				}
+			}else if (requestCode == Crop.REQUEST_CROP) {
+	            handleCrop(resultCode, mIntent);
+	        }else{
+	        	ApplicationLoader.getPreferences().setCropWork(true);
+	        	if(AndroidUtilities.isAboveMarshMallow()){
+	        		mPermissionHelper.onActivityForResult(requestCode);
+	        	}
+	        }
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	

@@ -458,6 +458,8 @@ public class AppConstants {
 		public static final int BIRTHDAY  = 19;
 		public static final int PARICHAY  = 20;
 		public static final int REFERRAL  = 21;
+		public static final int APPREMIND = 22;
+		public static final int NOTIFREMIND = 23;
 	}
 	
 	public interface TRAINING{
@@ -518,6 +520,8 @@ public class AppConstants {
 		public static final String PARICHAYREF      = "parichayReferred";
 		public static final String REFERRAL         = "referral";
 		public static final String RELOGIN          = "relogin";
+		public static final String APPREMIND        = "appRemind";
+		public static final String NOTIFREMIND      = "notifRemind";
 		public static final String LOGIN            = "login";
 		public static final String OBJECT           = "object";
 		public static final String POSITION         = "position";

@@ -45,7 +45,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8dp"
                     android:paddingTop="2dp"
-                    android:text="@string/sample_item_recycler_mobcast_ppt_file_name"
                     android:textColor="@color/item_filename_color"
                     android:textSize="@dimen/item_recycler_mobcast_audio_view_detail_file_type_name_text_size"
                     android:textStyle="bold" />
@@ -57,11 +56,9 @@
                     android:layout_below="@id/fragmentPptDetailFileNameIv"
                     android:layout_centerHorizontal="true"
                     android:paddingTop="2dp"
-                    android:text="@string/sample_item_recycler_mobcast_ppt_file_info"
-                    android:textColor="@color/item_recycler_mobcast_doc_color"
+                    android:textColor="@color/red"
                     android:textSize="@dimen/item_recycler_mobcast_audio_view_detail_file_type_detail_text_size"
-                    android:textStyle="bold"
-                    android:visibility="invisible" />
+                    android:textStyle="bold" />
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/fragmentPptDetailDownloadBtn"

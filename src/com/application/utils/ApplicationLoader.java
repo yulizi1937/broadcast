@@ -8,7 +8,6 @@
 
 package com.application.utils;
 
-import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -28,7 +27,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
-import com.application.crashreporting.ExceptionHandler;
+import com.application.receiver.AppOpenRemindAlarmReceiver;
 import com.application.receiver.SyncAlarmReceiver;
 import com.application.ui.calligraphy.CalligraphyConfig;
 import com.application.ui.service.AnyDoNotificationService;
@@ -89,9 +88,6 @@ public class ApplicationLoader extends Application {
 
 		preferences = new AppPreferences(this);
 		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-		if(BuildVars.DEBUG_CRASH_EMAIL){
-			ExceptionHandler.register(applicationLoader);	
-		}		
 		if (!ApplicationLoader.getPreferences().getAppLanguageCode()
 				.equalsIgnoreCase("en")) {
 			changeApplicationLanguage(ApplicationLoader.getPreferences()
@@ -107,7 +103,7 @@ public class ApplicationLoader extends Application {
 		if (BuildVars.DEBUG_STETHO) {
 			initStetho(applicationLoader);
 		}
-
+		setAppOpenTimeStamp();
 		initImageLoader();
 		initAnalyticsV3();
 	}
@@ -154,6 +150,18 @@ public class ApplicationLoader extends Application {
 		syncAlarmReceiver.cancelAlarm(getApplication().getApplicationContext());
 		ApplicationLoader.getPreferences().setSyncAlarmService(false);
 	}
+	
+	public static void setAppOpenRemindServiceAlarm() {
+		AppOpenRemindAlarmReceiver appOpenRemindAlarmReceiver = new AppOpenRemindAlarmReceiver();
+		appOpenRemindAlarmReceiver.setAlarm(getApplication().getApplicationContext());
+		ApplicationLoader.getPreferences().setLastAppOpenService(true);
+	}
+
+	public static void cancelAppOpenRemindServiceAlarm() {
+		AppOpenRemindAlarmReceiver appOpenRemindAlarmReceiver = new AppOpenRemindAlarmReceiver();
+		appOpenRemindAlarmReceiver.cancelAlarm(getApplication().getApplicationContext());
+		ApplicationLoader.getPreferences().setLastAppOpenService(false);
+	}
 
 	@SuppressWarnings("deprecation")
 	public static void initImageLoader() {
@@ -168,6 +176,14 @@ public class ApplicationLoader extends Application {
 			initImageLoader();
 		}
 		return mImageLoader;
+	}
+	
+	public static void setAppOpenTimeStamp(){
+		try{
+			ApplicationLoader.getPreferences().setLastAppOpenTimeStamp(System.currentTimeMillis());
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 
 	public static void startAnyDoNotificationService() {
@@ -205,7 +221,7 @@ public class ApplicationLoader extends Application {
 	 * Google Analytics
 	 */
 
-	public static void initAnalyticsV4() {
+	/*public static void initAnalyticsV4() {
 		AnalyticsTrackersV4.initialize(ApplicationLoader.getApplication());
 		AnalyticsTrackersV4.getInstance().get(AnalyticsTrackersV4.Target.APP);
 	}
@@ -218,13 +234,13 @@ public class ApplicationLoader extends Application {
 
 	public static void trackScreenViewV4(String screenName) {
 		Tracker t = getGoogleAnalyticsTrackerV4();
-		/**
+		*//**
 		 * Google Analytics v4//
 		 * // Set screen name. t.setScreenName(screenName); // Send a screen
 		 * view. t.send(new HitBuilders.ScreenViewBuilder().build());
 		 * GoogleAnalytics
 		 * .getInstance(ApplicationLoader.getApplication()).dispatchLocalHits();
-		 */		
+		 *//*		
 		t.set(Fields.SCREEN_NAME, screenName);
 		t.send(MapBuilder.createAppView().build());
 	}
@@ -232,13 +248,13 @@ public class ApplicationLoader extends Application {
 	public static void trackExceptionV4(Exception e) {
 		if (e != null) {
 			Tracker t = getGoogleAnalyticsTrackerV4();
-			/**
+			*//**
 			 * Google Analytics v4// t.send(new HitBuilders.ExceptionBuilder()
 			 * .setDescription( new
 			 * StandardExceptionParser(ApplicationLoader.getApplication(), null)
 			 * .getDescription(Thread.currentThread() .getName(),
 			 * e)).setFatal(false) .build());
-			 */
+			 *//*
 			t.send(MapBuilder.createException(
 					new StandardExceptionParser(ApplicationLoader
 							.getApplication(), null).getDescription(Thread
@@ -250,14 +266,14 @@ public class ApplicationLoader extends Application {
 		Tracker t = getGoogleAnalyticsTrackerV4();
 
 		// Build and send an Event.
-		/**
+		*//**
 		 * Google Analytics v4// t.send(new
 		 * HitBuilders.EventBuilder().setCategory(category)
 		 * .setAction(action).setLabel(label).build());
-		 */
+		 *//*
 
 		t.send(MapBuilder.createEvent(category, action, label, null).build());
-	}
+	}*/
 	
 	public static void initAnalyticsV3() {
 		AnalyticsTrackersV3.initialize(ApplicationLoader.getApplication());
@@ -365,7 +381,7 @@ public class ApplicationLoader extends Application {
 				ApplicationLoader.getPreferences().setRegId(regid);
 			}
 		} else {
-			FileLog.d("tmessages", "No valid Google Play Services APK found.");
+			FileLog.e("tmessages", "No valid Google Play Services APK found.");
 		}
 	}
 
@@ -379,14 +395,14 @@ public class ApplicationLoader extends Application {
 		final SharedPreferences prefs = getGCMPreferences(applicationContext);
 		String registrationId = prefs.getString(PROPERTY_REG_ID, "");
 		if (registrationId.length() == 0) {
-			FileLog.d("tmessages", "Registration not found.");
+			FileLog.e("tmessages", "Registration not found.");
 			return "";
 		}
 		int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION,
 				Integer.MIN_VALUE);
 		int currentVersion = getAppVersion();
 		if (registeredVersion != currentVersion) {
-			FileLog.d("tmessages", "App version changed.");
+			FileLog.e("tmessages", "App version changed.");
 			return "";
 		}
 		return registrationId;

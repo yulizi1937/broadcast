@@ -153,7 +153,7 @@ public class NotificationsController {
             .setGroupSummary(true)
             .setColor(0xff2ca5e0);
             
-            int priority = 0; //Notification SDK 21+ has priority
+            int priority = 1; //Notification SDK 21+ has priority
             if (priority == 0) {
                 mBuilder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
             } else if (priority == 1) {
@@ -277,6 +277,10 @@ public class NotificationsController {
             	break;
             case AppConstants.TYPE.PDF:
             	break;
+            case AppConstants.TYPE.NOTIFREMIND:
+            	mBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(message));
+            	mBuilder.setSubText("unread reminder");
+            	break;
             }
             
             notificationManager.notify(AppConstants.NOTIFICATION_ID, mBuilder.build());
@@ -289,6 +293,8 @@ public class NotificationsController {
             	if((mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.RELOGIN) 
             			|| mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.UPDATEAPP)
             			|| mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.REFERRAL)
+            			|| mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.LOGIN)
+            			|| mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.APPREMIND)
             			|| mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.BIRTHDAY))){
             		
             	}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.CHAT)){
@@ -371,13 +377,13 @@ public class NotificationsController {
             final Intent i = new Intent("com.getpebble.action.SEND_NOTIFICATION");
 
             final HashMap<String, String> data = new HashMap<>();
-            data.put("title", LocaleController.getString("AppName", R.string.app_name));
+            data.put("title", "Mobcast");
             data.put("body", message);
             final JSONObject jsonData = new JSONObject(data);
             final String notificationData = new JSONArray().put(jsonData).toString();
 
             i.putExtra("messageType", "PEBBLE_ALERT");
-            i.putExtra("sender", LocaleController.formatString("AppName", R.string.app_name));
+            i.putExtra("sender", "Mobcast");
             i.putExtra("notificationData", notificationData);
 
             ApplicationLoader.applicationContext.sendBroadcast(i);

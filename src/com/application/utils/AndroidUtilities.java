@@ -1,10 +1,4 @@
-/*
- * This is the source code of Telegram for Android v. 1.4.x.
- * It is licensed under GNU GPL v. 2 or later.
- * You should have received a copy of the license in this archive (see LICENSE).
- *
- * Copyright Nikolai Kudashov, 2013-2014.
- */
+
 
 package com.application.utils;
 
@@ -56,7 +50,6 @@ import android.widget.TextView;
 import com.application.ui.view.SnackBar;
 import com.application.widget.WidgetProvider;
 import com.mobcast.R;
-import com.permission.PermissionHelper;
 
 @SuppressLint("NewApi")
 public class AndroidUtilities {
@@ -78,6 +71,7 @@ public class AndroidUtilities {
 		checkDisplaySize();
 	}
 
+	@SuppressWarnings("ResourceType")
 	public static void lockOrientation(Activity activity) {
 		if (activity == null || prevOrientation != -10) {
 			return;
@@ -123,7 +117,7 @@ public class AndroidUtilities {
 				}
 			}
 		} catch (Exception e) {
-			FileLog.e("tmessages", e);
+			FileLog.e("tmessages", e.toString());
 		}
 	}
 
@@ -139,20 +133,6 @@ public class AndroidUtilities {
 		} else {
 			return 11;//13//12
 		}
-		
-//		double diagonalInches = getScreenSizeInInches();
-//		
-//		if (diagonalInches < 4) {
-//			return 9;//10//9
-//		} else if (diagonalInches >= 4 && diagonalInches < 5) {
-//			return 11;//11//10
-//		} else if (diagonalInches >= 5 && diagonalInches < 6) {
-//			return 12;//12//11
-//		} else if (diagonalInches >= 6 && diagonalInches < 7) {
-//			return 14;//12//11
-//		}else {
-//			return 15;//13//12
-//		}
 	}
 
 	public static int getSlidingTabPadding() {
@@ -167,20 +147,6 @@ public class AndroidUtilities {
 		} else {
 			return 16;//16
 		}
-		
-//		double diagonalInches = getScreenSizeInInches();
-//		
-//		if (diagonalInches < 4) {
-//			return 19;//18//19
-//		} else if (diagonalInches >= 4 && diagonalInches < 5) {
-//			return 18;//17//18
-//		} else if (diagonalInches >= 5 && diagonalInches < 6) {
-//			return 16;//15//16
-//		} else if (diagonalInches >= 6 && diagonalInches < 7) {
-//			return 15;//15//16
-//		}else {
-//			return 14;//16
-//		}
 	}
 	
 	@SuppressLint("DefaultLocale") public static double getScreenSizeInInches(){
@@ -205,6 +171,7 @@ public class AndroidUtilities {
 		return 5.0;
 	}
 
+	@SuppressWarnings("ResourceType")
 	public static void unlockOrientation(Activity activity) {
 		if (activity == null) {
 			return;
@@ -215,7 +182,7 @@ public class AndroidUtilities {
 				prevOrientation = -10;
 			}
 		} catch (Exception e) {
-			FileLog.e("tmessages", e);
+			FileLog.e("tmessages", e.toString());
 		}
 	}
 
@@ -234,20 +201,6 @@ public class AndroidUtilities {
 				}
 			}
 			return typefaceCache.get(assetPath);
-		}
-	}
-
-	public static boolean isWaitingForSms() {
-		boolean value = false;
-		synchronized (smsLock) {
-			value = waitingForSms;
-		}
-		return value;
-	}
-
-	public static void setWaitingForSms(boolean value) {
-		synchronized (smsLock) {
-			waitingForSms = value;
 		}
 	}
 
@@ -295,7 +248,7 @@ public class AndroidUtilities {
 					return file;
 				}
 			} catch (Exception e) {
-				FileLog.e("tmessages", e);
+				FileLog.e("tmessages", e.toString());
 			}
 		}
 		try {
@@ -304,7 +257,7 @@ public class AndroidUtilities {
 				return file;
 			}
 		} catch (Exception e) {
-			FileLog.e("tmessages", e);
+			FileLog.e("tmessages", e.toString());
 		}
 		return new File("");
 	}
@@ -355,29 +308,9 @@ public class AndroidUtilities {
 			}
 			return "display size = manager==null ";
 		} catch (Exception e) {
-			FileLog.e("tmessages", e);
+			FileLog.e("tmessages", e.toString());
 			return "display size = exception "+e;
 		}
-	}
-
-	public static long makeBroadcastId(int id) {
-		return 0x0000000100000000L | ((long) id & 0x00000000FFFFFFFFL);
-	}
-
-	public static int getMyLayerVersion(int layer) {
-		return layer & 0xffff;
-	}
-
-	public static int getPeerLayerVersion(int layer) {
-		return (layer >> 16) & 0xffff;
-	}
-
-	public static int setMyLayerVersion(int layer, int version) {
-		return layer & 0xffff0000 | version;
-	}
-
-	public static int setPeerLayerVersion(int layer, int version) {
-		return layer & 0x0000ffff | (version << 16);
 	}
 
 	public static void runOnUIThread(Runnable runnable) {
@@ -426,40 +359,7 @@ public class AndroidUtilities {
 			return Math.min(smallSide, maxSide - leftSide);
 		}
 	}
-
-	public static int getPhotoSize() {
-		if (photoSize == null) {
-			if (Build.VERSION.SDK_INT >= 16) {
-				photoSize = 1280;
-			} else {
-				photoSize = 800;
-			}
-		}
-		return photoSize;
-	}
-
-	public static String formatTTLString(int ttl) {
-		if (ttl < 60) {
-			return LocaleController.formatPluralString("Seconds", ttl);
-		} else if (ttl < 60 * 60) {
-			return LocaleController.formatPluralString("Minutes", ttl / 60);
-		} else if (ttl < 60 * 60 * 24) {
-			return LocaleController.formatPluralString("Hours", ttl / 60 / 60);
-		} else if (ttl < 60 * 60 * 24 * 7) {
-			return LocaleController.formatPluralString("Days",
-					ttl / 60 / 60 / 24);
-		} else {
-			int days = ttl / 60 / 60 / 24;
-			if (ttl % 7 == 0) {
-				return LocaleController.formatPluralString("Weeks", days / 7);
-			} else {
-				return String.format("%s %s",
-						LocaleController.formatPluralString("Weeks", days / 7),
-						LocaleController.formatPluralString("Days", days % 7));
-			}
-		}
-	}
-
+	
 	public static void clearCursorDrawable(EditText editText) {
 		if (editText == null || Build.VERSION.SDK_INT < 12) {
 			return;
@@ -470,7 +370,7 @@ public class AndroidUtilities {
 			mCursorDrawableRes.setAccessible(true);
 			mCursorDrawableRes.setInt(editText, 0);
 		} catch (Exception e) {
-			FileLog.e("tmessages", e);
+			FileLog.e("tmessages", e.toString());
 		}
 	}
 
@@ -490,7 +390,7 @@ public class AndroidUtilities {
 				return insets.bottom;
 			}
 		} catch (Exception e) {
-			FileLog.e("tmessages", e);
+			FileLog.e("tmessages", e.toString());
 		}
 		return 0;
 	}
@@ -525,11 +425,11 @@ public class AndroidUtilities {
 				} catch (Exception e) {
 					size.set(windowManager.getDefaultDisplay().getWidth(),
 							windowManager.getDefaultDisplay().getHeight());
-					FileLog.e("tmessages", e);
+					FileLog.e("tmessages", e.toString());
 				}
 			}
 		} catch (Exception e) {
-			FileLog.e("tmessages", e);
+			FileLog.e("tmessages", e.toString());
 		}
 		return size;
 	}
@@ -553,7 +453,7 @@ public class AndroidUtilities {
 					mEdgeGlowBottom.setColor(color);
 				}
 			} catch (Exception e) {
-				FileLog.e("tmessages", e);
+				FileLog.e("tmessages", e.toString());
 			}
 		}
 	}

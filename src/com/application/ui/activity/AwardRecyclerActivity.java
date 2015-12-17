@@ -222,7 +222,12 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);
 		if (!mLoadMore) {
 			mLoadMore = true;
-			refreshFeedFromApi(true, true, 0,false);
+			if(mArrayListAward!=null && mArrayListAward.size() > 0){
+				refreshFeedFromApi(true, true, 0,false);	
+			}else{
+				refreshFeedFromApi(true, true, AppConstants.BULK,false);
+			}
+			
 		}
 	}
 
@@ -700,7 +705,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 		if (position >= 0 && position < mArrayListAward.size()) {
 			if (mArrayListAward != null && mArrayListAward.size() > 0) {
 				Cursor mCursor = getContentResolver()
-						.query(DBConstant.Award_Columns.CONTENT_URI,new String[] {DBConstant.Award_Columns.COLUMN_AWARD_ID,DBConstant.Award_Columns.COLUMN_AWARD_IS_READ,DBConstant.Award_Columns.COLUMN_AWARD_IS_LIKE,DBConstant.Award_Columns.COLUMN_AWARD_LIKE_NO },
+						.query(DBConstant.Award_Columns.CONTENT_URI,new String[] {DBConstant.Award_Columns.COLUMN_AWARD_ID,DBConstant.Award_Columns.COLUMN_AWARD_IS_READ,DBConstant.Award_Columns.COLUMN_AWARD_IS_LIKE,DBConstant.Award_Columns.COLUMN_AWARD_LIKE_NO,DBConstant.Award_Columns.COLUMN_AWARD_IS_CONGRATULATE, DBConstant.Award_Columns.COLUMN_AWARD_CONGRATULATE_NO },
 								DBConstant.Award_Columns.COLUMN_AWARD_ID + "=?",
 								new String[] { mArrayListAward.get(position)
 										.getmId() }, null);
@@ -719,6 +724,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 							.parseBoolean(mCursor.getString(mCursor
 									.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_IS_CONGRATULATE)))) {
 						mArrayListAward.get(position).setCongratulated(true);
+						mArrayListAward.get(position).setmCongratulatedCount(mCursor.getString(mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_CONGRATULATE_NO)));
 						isToNotify = true;
 					}
 					
@@ -1400,7 +1406,7 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 	
 	private void updateArrayListAwardObjectWithLatestFeedActionCount(){
 		try{
-			Cursor mCursor = getContentResolver().query(DBConstant.Award_Columns.CONTENT_URI, new String[]{DBConstant.Award_Columns.COLUMN_ID, DBConstant.Award_Columns.COLUMN_AWARD_ID, DBConstant.Award_Columns.COLUMN_AWARD_LIKE_NO, DBConstant.Award_Columns.COLUMN_AWARD_READ_NO},  null, null, DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE_FORMATTED + " DESC");
+			Cursor mCursor = getContentResolver().query(DBConstant.Award_Columns.CONTENT_URI, new String[]{DBConstant.Award_Columns.COLUMN_ID, DBConstant.Award_Columns.COLUMN_AWARD_ID, DBConstant.Award_Columns.COLUMN_AWARD_LIKE_NO, DBConstant.Award_Columns.COLUMN_AWARD_READ_NO, DBConstant.Award_Columns.COLUMN_AWARD_CONGRATULATE_NO},  null, null, DBConstant.Award_Columns.COLUMN_AWARD_RECEIVED_DATE_FORMATTED + " DESC");
 			if(mCursor!=null && mCursor.getCount() > 0){
 				mCursor.moveToFirst();
 				int mIntAwardId = mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_ID);

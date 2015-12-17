@@ -110,6 +110,8 @@ public class BottomSheetAnyDo extends Dialog implements DialogInterface {
 	private int mId;
 	private int mLayoutId;
 	private String mCategory;
+	private TextView mTextCounterTv;
+	private TextView mTextUnreadTv;
 	private TextView mTextViewTv;
 	private TextView mTextCloseTv;
 
@@ -300,6 +302,8 @@ public class BottomSheetAnyDo extends Dialog implements DialogInterface {
 				.findViewById(R.id.bottom_sheet_frame);
 		mTextViewTv = (TextView)mDialogView.findViewById(R.id.bottom_sheet_view);
 		mTextCloseTv = (TextView)mDialogView.findViewById(R.id.bottom_sheet_close);
+		mTextUnreadTv = (TextView)mDialogView.findViewById(R.id.bottom_sheet_new);
+		mTextCounterTv = (TextView)mDialogView.findViewById(R.id.bottom_sheet_read_count);
 		rootLayout.addView(contentLayout);
 		if (!cancelOnSwipeDown)
 			mDialogView.swipeable = cancelOnSwipeDown;
@@ -356,6 +360,14 @@ public class BottomSheetAnyDo extends Dialog implements DialogInterface {
 	
 	public TextView getTextCloseTv(){
 		return mTextCloseTv;
+	}
+	
+	public TextView getTextUnreadTv(){
+		return mTextUnreadTv;
+	}
+	
+	public TextView getTextCountTv(){
+		return mTextCounterTv;
 	}
 	
 	public View getContentView(){

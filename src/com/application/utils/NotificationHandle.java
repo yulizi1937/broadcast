@@ -70,6 +70,12 @@ public class NotificationHandle {
 			getIntentForBirthday(mIntent);
 		}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.REFERRAL)){
 			getIntentForParichayReferral(mIntent);
+		}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.APPREMIND)){
+			getIntentForAppRemind(mIntent);
+		}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.NOTIFREMIND)){
+			getIntentForAppRemind(mIntent);
+		}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.LOGIN)){
+			getIntentForLogin(mIntent);
 		}
 		return mIntent;
 	}
@@ -124,6 +130,12 @@ public class NotificationHandle {
 		case AppConstants.TYPE.UPDATEAPP:
 			mIntent = new Intent(mContext, MotherActivity.class);
 			break;
+		case AppConstants.TYPE.APPREMIND:
+			mIntent = new Intent(mContext, MotherActivity.class);
+			break;
+		case AppConstants.TYPE.NOTIFREMIND:
+			mIntent = new Intent(mContext, MotherActivity.class);
+			break;
 		case AppConstants.TYPE.BIRTHDAY:
 			mIntent = new Intent(mContext, BirthdayRecyclerActivity.class);
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.BIRTHDAY);
@@ -135,6 +147,9 @@ public class NotificationHandle {
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.REFERRAL);
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.ID, mId);
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, true);
+			break;
+		default:
+			mIntent = new Intent(mContext, MotherActivity.class);
 			break;
 		}
 		
@@ -238,6 +253,45 @@ public class NotificationHandle {
 			mIntent.putExtra(AppConstants.NOTIFICATION.SIZE, " ");
 			mIntent.putExtra(AppConstants.NOTIFICATION.THUMBPATH, " ");
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, true);
+		return mIntent;
+	}
+	
+	public Intent getIntentForLogin(Intent mIntent){
+		mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.LOGIN);
+		mIntent.putExtra(AppConstants.INTENTCONSTANTS.ID, String.valueOf(mId));
+		mIntent.putExtra(AppConstants.NOTIFICATION.TITLE, mContext.getResources().getString(R.string.login_title));
+		mIntent.putExtra(AppConstants.NOTIFICATION.MESSAGE, mContext.getResources().getString(R.string.login_message));
+		mIntent.putExtra(AppConstants.NOTIFICATION.DURATION, " ");
+		mIntent.putExtra(AppConstants.NOTIFICATION.PAGES, " ");
+		mIntent.putExtra(AppConstants.NOTIFICATION.SIZE, " ");
+		mIntent.putExtra(AppConstants.NOTIFICATION.THUMBPATH, " ");
+		mIntent.putExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, true);
+	return mIntent;
+	}
+	
+	public Intent getIntentForAppRemind(Intent mIntent){
+		mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.APPREMIND);
+		mIntent.putExtra(AppConstants.INTENTCONSTANTS.ID, String.valueOf(mId));
+		mIntent.putExtra(AppConstants.NOTIFICATION.TITLE, mContext.getResources().getString(R.string.appremind_title));
+		mIntent.putExtra(AppConstants.NOTIFICATION.MESSAGE, mContext.getResources().getString(R.string.appremind_message));
+		mIntent.putExtra(AppConstants.NOTIFICATION.DURATION, " ");
+		mIntent.putExtra(AppConstants.NOTIFICATION.PAGES, " ");
+		mIntent.putExtra(AppConstants.NOTIFICATION.SIZE, " ");
+		mIntent.putExtra(AppConstants.NOTIFICATION.THUMBPATH, " ");
+		mIntent.putExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, true);
+		return mIntent;
+	}
+	
+	public Intent getIntentForNotifRemind(Intent mIntent){
+		mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, AppConstants.INTENTCONSTANTS.NOTIFREMIND);
+		mIntent.putExtra(AppConstants.INTENTCONSTANTS.ID, String.valueOf(mId));
+		mIntent.putExtra(AppConstants.NOTIFICATION.TITLE, mContext.getResources().getString(R.string.notifremind_title));
+		mIntent.putExtra(AppConstants.NOTIFICATION.MESSAGE, mContext.getResources().getString(R.string.notifremind_message));
+		mIntent.putExtra(AppConstants.NOTIFICATION.DURATION, " ");
+		mIntent.putExtra(AppConstants.NOTIFICATION.PAGES, " ");
+		mIntent.putExtra(AppConstants.NOTIFICATION.SIZE, " ");
+		mIntent.putExtra(AppConstants.NOTIFICATION.THUMBPATH, " ");
+		mIntent.putExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, true);
 		return mIntent;
 	}
 	

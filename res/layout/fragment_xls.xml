@@ -45,7 +45,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8dp"
                     android:paddingTop="2dp"
-                    android:text="@string/sample_item_recycler_mobcast_xls_file_name"
                     android:textColor="@color/item_filename_color"
                     android:textSize="@dimen/item_recycler_mobcast_audio_view_detail_file_type_name_text_size"
                     android:textStyle="bold"
@@ -58,8 +57,6 @@
                     android:layout_below="@id/fragmentXlsDetailFileNameIv"
                     android:layout_centerHorizontal="true"
                     android:paddingTop="2dp"
-                    android:visibility="invisible"
-                    android:text="@string/sample_item_recycler_mobcast_xls_file_info"
                     android:textColor="@color/item_recycler_mobcast_xls_color"
                     android:textSize="@dimen/item_recycler_mobcast_audio_view_detail_file_type_detail_text_size"
                     android:textStyle="bold" />

@@ -14,11 +14,13 @@ import android.content.Intent;
 // BEGIN_INCLUDE(autostart)
 public class BootReceiver extends BroadcastReceiver {
     SyncAlarmReceiver syncAlarmReceiver = new SyncAlarmReceiver();
+    AppOpenRemindAlarmReceiver appOpenRemindAlarmReceiver = new AppOpenRemindAlarmReceiver();
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED"))
         {
         	syncAlarmReceiver.setAlarm(context);
+        	appOpenRemindAlarmReceiver.setAlarm(context);
         }
     }
 }

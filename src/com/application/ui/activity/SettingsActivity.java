@@ -8,25 +8,28 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.TimePickerDialog;
+import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
+import android.content.DialogInterface.OnClickListener;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.TrafficStats;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatRadioButton;
@@ -47,6 +50,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.application.beans.Theme;
 import com.application.ui.adapter.SimpleThemeRecyclerAdapter;
@@ -90,6 +94,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	private AppCompatTextView mNotificationBirthdayMuteTv;
 	private AppCompatTextView mNotificationDownloadAndNotifyTv;
 	private AppCompatTextView mNotificationAnyDoTv;
+	private AppCompatTextView mNotificationRemindTv;
 	private AppCompatTextView mSyncFrequencyTv;
 	private AppCompatTextView mSyncSleepingTv;
 	private AppCompatTextView mStyleTextFontTv;
@@ -106,6 +111,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 
 	private LinearLayout mGeneralLangugageLayout;
 	private LinearLayout mNotificationBirthdayTimeLayout;
+	private LinearLayout mNotificationRemindLayout;
 	private LinearLayout mFileStorageAppLayout;
 	private LinearLayout mSyncFrequencyLayout;
 	private LinearLayout mStyleTextFontLayout;
@@ -135,7 +141,11 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	private boolean isStyleAppTheme = false;
 	private boolean isCustomNotification = false;
 	private boolean isDownloadAndNotify = false;
+	private boolean isNotificationRemind = false;
 	private boolean isStopSyncAtSleepingHours = true;
+	
+	private boolean workAroundTimePicker = false;
+	
 			
 	private int isDeveloperMode = 0;
 
@@ -196,6 +206,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		mNotificationBirthdayMuteTv = (AppCompatTextView) findViewById(R.id.fragmentSettingsNotificationBirthdayMuteTv);
 		mNotificationDownloadAndNotifyTv = (AppCompatTextView) findViewById(R.id.fragmentSettingsNotificationBirthdayDownloadAndNotifyTv);
 		mNotificationAnyDoTv = (AppCompatTextView) findViewById(R.id.fragmentSettingsNotificationAnyDoTv);
+		mNotificationRemindTv = (AppCompatTextView) findViewById(R.id.fragmentSettingsNotificationUnreadRemindAtTv);
 		mSyncFrequencyTv = (AppCompatTextView) findViewById(R.id.fragmentSettingsSyncFrequencySelectedTv);
 		mStyleTextFontTv = (AppCompatTextView) findViewById(R.id.fragmentSettingsStyleTextFontSelectedTv);
 		mAboutTv = (AppCompatTextView) findViewById(R.id.fragmentSettingsNotificationAboutTv);
@@ -214,6 +225,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 
 		mGeneralLangugageLayout = (LinearLayout) findViewById(R.id.fragmentSettingsGeneralLanguageLayout);
 		mNotificationBirthdayTimeLayout = (LinearLayout) findViewById(R.id.fragmentSettingsNotificationBirthdayTimeLayout);
+		mNotificationRemindLayout = (LinearLayout) findViewById(R.id.fragmentSettingsNotificationUnreadRemindLayout);
 		mFileStorageAppLayout = (LinearLayout)findViewById(R.id.fragmentAboutFileStoragePercentageLayout);
 		mSyncFrequencyLayout = (LinearLayout)findViewById(R.id.fragmentSettingsSyncFrequencyLayout);
 		mStyleTextFontLayout = (LinearLayout)findViewById(R.id.fragmentSettingsStyleTextFontLayout);
@@ -355,6 +367,13 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		}
 		
 		mAboutBuildVersionTv.setText(getResources().getString(R.string.sample_fragment_settings_about_build_version_text) + "\n v"+Utilities.getApplicationVersion() + " ( "+ Utilities.getApplicationVersionCode() + getResources().getString(R.string.app_build)+" ) ");
+		
+		if(ApplicationLoader.getPreferences().getAppOpenRemindHour()!=-1 && ApplicationLoader.getPreferences().getAppOpenRemindMinute()!=-1){
+			mNotificationRemindTv.setText(String.format("%02d", ApplicationLoader.getPreferences().getAppOpenRemindHour()) + ":" + String.format("%02d", ApplicationLoader.getPreferences().getAppOpenRemindMinute()));	
+		}else{
+			mNotificationRemindTv.setText("Never remind me");
+		}
+		
 	}
 
 	private void setUiListener() {
@@ -407,6 +426,14 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				mNotificationAnyDoCheckBox.performClick();
+			}
+		});
+		
+		mNotificationRemindLayout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				showNotificationRemindPicker();
 			}
 		});
 		
@@ -666,6 +693,86 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 			FileLog.e(TAG, e.toString());
 		}
 	}
+	
+	private void showNotificationRemindPicker(){
+		try{
+			TimePickerDialog mTimePicker = new TimePickerDialog(SettingsActivity.this, new OnTimeSetListener() {
+				@Override
+				public void onTimeSet(TimePicker view, final int hourOfDay, final int minute) {
+					// TODO Auto-generated method stub
+						showConfirmationNotificationReminder(hourOfDay, minute);	
+				}
+			}, ApplicationLoader.getPreferences().getAppOpenRemindHour(), ApplicationLoader.getPreferences().getAppOpenRemindMinute(), true);
+			mTimePicker.setOnCancelListener(new OnCancelListener() {
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					// TODO Auto-generated method stub
+				}
+			});
+			mTimePicker.setOnDismissListener(new OnDismissListener() {
+				public void onDismiss(DialogInterface arg0) {
+					// TODO Auto-generated method stub
+				}
+			});
+			mTimePicker.setTitle(getResources().getString(R.string.sample_fragment_settings_notification_remind_title));
+			mTimePicker.show();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void showConfirmationNotificationReminder(final int hourOfDay, final int minute){
+		try{
+			AlertDialog.Builder mAlertDialog;
+			mAlertDialog = new AlertDialog.Builder(SettingsActivity.this)
+					.setTitle(getResources().getString(R.string.sample_fragment_settings_notification_remind_dialog_title)+ " "+ String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute) + "?")
+					.setPositiveButton(getResources().getString(R.string.OK), new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							applyNotificationReminder(hourOfDay, minute);
+						}
+					})
+					.setNeutralButton(getResources().getString(R.string.never_remindme), new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							applyNotificationReminder(-1, -1);
+						}
+					})
+					.setNegativeButton(getResources().getString(R.string.cancel), new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+						}
+					});
+			mAlertDialog.show();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void applyNotificationReminder(int hourOfDay, int minute){
+		try{
+			ApplicationLoader.getPreferences().setAppOpenRemindHour(hourOfDay);
+			ApplicationLoader.getPreferences().setAppOpenRemindMinute(minute);
+			ApplicationLoader.cancelAppOpenRemindServiceAlarm();
+			if(hourOfDay!=-1 && minute != -1){
+				ApplicationLoader.setAppOpenRemindServiceAlarm();
+			}
+			mSubCategory = "notifReminder";
+ 		    mDescription = String.valueOf(ApplicationLoader.getPreferences().getAppOpenRemindHour() + ":" + ApplicationLoader.getPreferences().getAppOpenRemindMinute());
+ 		    isNotificationRemind = true;
+ 		    updateAppSettingsToApi();
+ 		   if(ApplicationLoader.getPreferences().getAppOpenRemindHour()!=-1 && ApplicationLoader.getPreferences().getAppOpenRemindMinute()!=-1){
+ 				mNotificationRemindTv.setText(String.format("%02d", ApplicationLoader.getPreferences().getAppOpenRemindHour()) + ":" + String.format("%02d", ApplicationLoader.getPreferences().getAppOpenRemindMinute()));	
+ 			}else{
+ 				mNotificationRemindTv.setText("Never remind me");
+ 			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
 
 	private void showLanguageConfirmationDialog(final int position, final String[] values){
 		MaterialDialog mMaterialDialog = new MaterialDialog.Builder(SettingsActivity.this)
@@ -776,6 +883,7 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 		
 		final AppCompatDialog  mMateriaLDialog= new AppCompatDialog(SettingsActivity.this);
 		mMateriaLDialog.setContentView(R.layout.dialog_theme_list);
+		mMateriaLDialog.setTitle(getResources().getString(R.string.sample_fragment_settings_dialog_theme_title));
 		mMateriaLDialog.getWindow().setLayout(Utilities.dpToPx(320, getResources()), Utilities.dpToPx(450, getResources()));
 		mMateriaLDialog.show();
 
@@ -1145,6 +1253,8 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 							mNotificationDownloadAndNotifyCheckBox.setChecked(false);
 						}
 						isDownloadAndNotify = false;
+					}else if(isNotificationRemind){
+						isNotificationRemind = false;
 					}else if(isSyncFrequency){
 						isSyncFrequency = false;
 					}else if(isStyleTextFont){

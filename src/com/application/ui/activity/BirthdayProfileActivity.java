@@ -393,7 +393,7 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
 		}
 		
 		if(isContentWish){
-			mBirthdayProfileActionWishIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_birthday_wish_selected));
+			mBirthdayProfileActionWishIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_birthday_wish_focused));
 		}
 		
 		if(TextUtils.isEmpty(mContentAge)){
@@ -507,11 +507,11 @@ public class BirthdayProfileActivity extends SwipeBackBaseActivity {
             public void onPositive(MaterialDialog dialog) {
             	if (!isContentWish) {
 					UserReport.updateUserReportApi(mId,AppConstants.INTENTCONSTANTS.BIRTHDAY,AppConstants.REPORT.WISH, "");
-					Utilities.showCrouton(BirthdayProfileActivity.this,mCroutonViewGroup,getResources().getString(R.string.congratulate_message)+ " "+ mId, Style.CONFIRM);
+					Utilities.showCrouton(BirthdayProfileActivity.this,mCroutonViewGroup,getResources().getString(R.string.congratulate_message)+ " "+ mContentName, Style.CONFIRM);
 					ContentValues mValues = new ContentValues();
 					mValues.put(DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_WISHED,"true");
 					getContentResolver().update(DBConstant.Birthday_Columns.CONTENT_URI, mValues, DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID + "=?", new String[]{mId});
-					mBirthdayProfileActionWishIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_birthday_wish_selected));
+					mBirthdayProfileActionWishIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_birthday_wish_focused));
 				}
             	dialog.dismiss();
             }

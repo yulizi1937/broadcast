@@ -5,15 +5,16 @@ package com.application.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.WindowManager.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
@@ -23,7 +24,6 @@ import com.application.ui.calligraphy.CalligraphyContextWrapper;
 import com.application.ui.view.ShimmerFrameLayout;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.ApplicationLoader;
-import com.application.utils.BuildVars;
 import com.application.utils.FileLog;
 import com.application.utils.ThemeUtils;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -76,12 +76,17 @@ public class SplashActivity extends SwipeBackBaseActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		mShimmerFrameLayout.startShimmerAnimation();
+        if(mShimmerFrameLayout!=null){
+            mShimmerFrameLayout.startShimmerAnimation();
+        }
 	}
 
 	@Override
 	public void onPause() {
-		mShimmerFrameLayout.stopShimmerAnimation();
+        if(mShimmerFrameLayout!=null){
+            mShimmerFrameLayout.stopShimmerAnimation();
+            removeResourcesFromMemory();
+        }
 		super.onPause();
 	}
 
@@ -161,6 +166,21 @@ public class SplashActivity extends SwipeBackBaseActivity {
 			}
 		}, mDelay);
 	}
+	
+	 private void removeResourcesFromMemory(){
+	        try{
+	            mShimmerFrameLayout = null;
+	            Drawable mDrawable = mAppLogoIv.getDrawable();
+	            if (mDrawable instanceof BitmapDrawable) {
+	                BitmapDrawable bitmapDrawable = (BitmapDrawable) mDrawable;
+	                Bitmap bitmap = bitmapDrawable.getBitmap();
+	                bitmap.recycle();
+	            }
+	            mAppLogoIv = null;
+	        }catch(Exception e){
+	            FileLog.e(TAG, e.toString());
+	        }
+	    }
 
 	private void setAnimation() {
 		mAnimRotate = AnimationUtils

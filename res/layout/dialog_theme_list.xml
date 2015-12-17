@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="top|center"
         android:layout_marginBottom="48dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="8dp"
         android:scrollbars="vertical" />
 
     <TextView
@@ -36,6 +36,7 @@
         android:layout_gravity="top"
         android:gravity="left|center"
         android:padding="2dp"
+        android:visibility="gone"
         android:text="@string/sample_fragment_settings_dialog_theme_title"
         android:textColor="@color/toolbar_background"
         android:textSize="20sp"

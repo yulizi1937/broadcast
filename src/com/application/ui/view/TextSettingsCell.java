@@ -1,11 +1,3 @@
-/*
- * This is the source code of Telegram for Android v. 1.7.x.
- * It is licensed under GNU GPL v. 2 or later.
- * You should have received a copy of the license in this archive (see LICENSE).
- *
- * Copyright Nikolai Kudashov, 2013-2014.
- */
-
 package com.application.ui.view;
 
 import android.content.Context;
@@ -19,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.application.utils.AndroidUtilities;
-import com.application.utils.LocaleController;
 
 public class TextSettingsCell extends FrameLayout {
 
@@ -45,14 +36,14 @@ public class TextSettingsCell extends FrameLayout {
         textView.setMaxLines(1);
         textView.setSingleLine(true);
         textView.setEllipsize(TextUtils.TruncateAt.END);
-        textView.setGravity((LocaleController.isRTL ? Gravity.RIGHT : Gravity.LEFT) | Gravity.CENTER_VERTICAL);
+        textView.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         addView(textView);
         LayoutParams layoutParams = (LayoutParams) textView.getLayoutParams();
         layoutParams.width = LayoutParams.MATCH_PARENT;
         layoutParams.height = LayoutParams.MATCH_PARENT;
         layoutParams.leftMargin = AndroidUtilities.dp(17);
         layoutParams.rightMargin = AndroidUtilities.dp(17);
-        layoutParams.gravity = LocaleController.isRTL ? Gravity.RIGHT : Gravity.LEFT;
+        layoutParams.gravity = Gravity.LEFT;
         textView.setLayoutParams(layoutParams);
 
         valueTextView = new TextView(context);
@@ -62,14 +53,14 @@ public class TextSettingsCell extends FrameLayout {
         valueTextView.setMaxLines(1);
         valueTextView.setSingleLine(true);
         valueTextView.setEllipsize(TextUtils.TruncateAt.END);
-        valueTextView.setGravity((LocaleController.isRTL ? Gravity.LEFT : Gravity.RIGHT) | Gravity.CENTER_VERTICAL);
+        valueTextView.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         addView(valueTextView);
         layoutParams = (LayoutParams) valueTextView.getLayoutParams();
         layoutParams.width = LayoutParams.WRAP_CONTENT;
         layoutParams.height = LayoutParams.MATCH_PARENT;
         layoutParams.leftMargin = AndroidUtilities.dp(17);
         layoutParams.rightMargin = AndroidUtilities.dp(17);
-        layoutParams.gravity = LocaleController.isRTL ? Gravity.LEFT : Gravity.RIGHT;
+        layoutParams.gravity = Gravity.RIGHT;
         valueTextView.setLayoutParams(layoutParams);
 
         valueImageView = new ImageView(context);
@@ -79,9 +70,9 @@ public class TextSettingsCell extends FrameLayout {
         layoutParams = (LayoutParams) valueImageView.getLayoutParams();
         layoutParams.width = LayoutParams.WRAP_CONTENT;
         layoutParams.height = LayoutParams.WRAP_CONTENT;
-        layoutParams.leftMargin = AndroidUtilities.dp(LocaleController.isRTL ? 17 : 0);
-        layoutParams.rightMargin = AndroidUtilities.dp(LocaleController.isRTL ? 0 : 17);
-        layoutParams.gravity = (LocaleController.isRTL ? Gravity.LEFT : Gravity.RIGHT) | Gravity.CENTER_VERTICAL;
+        layoutParams.leftMargin = AndroidUtilities.dp( 0);
+        layoutParams.rightMargin = AndroidUtilities.dp(17);
+        layoutParams.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
         valueImageView.setLayoutParams(layoutParams);
     }
 

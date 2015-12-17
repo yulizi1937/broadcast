@@ -613,6 +613,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 						mVideoPlayIv.setVisibility(View.VISIBLE);
 						mReportStop = System.currentTimeMillis();
 						mReportDuration += mReportStop - mReportStart;
+						mReportDuration = 0;
 						UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, Utilities.getTimeFromMilliSeconds(mTotalDuration));
 					}
 				});

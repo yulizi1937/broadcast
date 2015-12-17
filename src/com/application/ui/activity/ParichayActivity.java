@@ -196,9 +196,9 @@ public class ParichayActivity extends BaseActivity implements ObservableScrollVi
 		// TODO Auto-generated method stub
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_parichay, menu);
-		MenuItem menuItemEvent = menu.findItem(R.id.action_event).setVisible(false);
+		/*MenuItem menuItemEvent = menu.findItem(R.id.action_event).setVisible(false);
 		MenuItem menuItemAward = menu.findItem(R.id.action_award).setVisible(false);
-		MenuItem menuItemBirthday = menu.findItem(R.id.action_birthday).setVisible(false);
+		MenuItem menuItemBirthday = menu.findItem(R.id.action_birthday).setVisible(false);*/
 		
 		/*try{
 			if(Utilities.getUnreadOfEvent(ParichayActivity.this) != 0){

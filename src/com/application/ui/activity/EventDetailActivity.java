@@ -419,7 +419,7 @@ public class EventDetailActivity extends SwipeBackBaseActivity {
 				ContentValues mValues = new ContentValues();
 				mValues.put(DBConstant.Event_Columns.COLUMN_EVENT_IS_JOIN, "1");
 				getContentResolver().update(DBConstant.Event_Columns.CONTENT_URI, mValues, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId});
-				mEventAttendJoinBtn.setText(getResources().getString(R.string.accepted));
+				mEventAttendJoinBtn.setText(getResources().getString(R.string.going));
 				mEventAttendJoinBtn.setBackgroundResource(R.drawable.shape_button_green_fill);
 				mEventAttendDeclineBtn.setText(getResources().getString(R.string.fragment_event_detail_button_decline));
 				mEventAttendDeclineBtn.setBackgroundResource(R.drawable.shape_button_orange_border);

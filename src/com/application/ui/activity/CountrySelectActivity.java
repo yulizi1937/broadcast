@@ -1,13 +1,9 @@
-/**
- * 
- */
 package com.application.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -31,10 +27,8 @@ import android.widget.TextView;
 import com.application.ui.adapter.CountryAdapter;
 import com.application.ui.adapter.CountryAdapter.Country;
 import com.application.ui.adapter.CountrySearchAdapter;
-import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.SectionsListView;
 import com.application.utils.AndroidUtilities;
-import com.application.utils.LocaleController;
 import com.application.utils.ThemeUtils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.mobcast.R;
@@ -239,8 +233,7 @@ public class CountrySelectActivity extends SwipeBackBaseActivity {
 		emptyTextView.setTextColor(0xff808080);
 		emptyTextView.setTextSize(20);
 		emptyTextView.setGravity(Gravity.CENTER);
-		emptyTextView.setText(LocaleController.getString("NoResult",
-				R.string.NoResult));
+		emptyTextView.setText("No Result");
 		emptyTextLayout.addView(emptyTextView);
 		LinearLayout.LayoutParams layoutParams1 = (LinearLayout.LayoutParams) emptyTextView
 				.getLayoutParams();
@@ -268,8 +261,7 @@ public class CountrySelectActivity extends SwipeBackBaseActivity {
 		listView.setAdapter(listViewAdapter);
 		if (Build.VERSION.SDK_INT >= 11) {
 			listView.setFastScrollAlwaysVisible(true);
-			listView.setVerticalScrollbarPosition(LocaleController.isRTL ? ListView.SCROLLBAR_POSITION_LEFT
-					: ListView.SCROLLBAR_POSITION_RIGHT);
+			listView.setVerticalScrollbarPosition(ListView.SCROLLBAR_POSITION_LEFT);
 		}
 		((FrameLayout) fragmentView).addView(listView);
 		layoutParams = (FrameLayout.LayoutParams) listView.getLayoutParams();

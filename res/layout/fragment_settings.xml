@@ -238,6 +238,43 @@
                     android:text=""
                     tools:ignore="RtlHardcoded" />
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:id="@+id/fragmentSettingsNotificationUnreadRemindLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fragment_settings_relativelayout_height"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/fragment_settings_layout_padding_top_bottom"
+                android:paddingTop="@dimen/fragment_settings_layout_padding_top_bottom" >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/fragmentSettingsNotificationUnreadRemindTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="2"
+                    android:gravity="start|center"
+                    android:text="@string/sample_fragment_settings_notification_remind"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/fragment_settings_title_text_size" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/fragmentSettingsNotificationUnreadRemindAtTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end|center"
+                    android:layout_weight="1"
+                    android:gravity="end|center"
+                    android:text="@string/sample_fragment_settings_notifcation_remind_at"
+                    android:textColor="@color/drawer_item_title"
+                    android:textSize="@dimen/fragment_settings_title_text_size" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -327,10 +364,10 @@
                     android:layout_gravity="end|center"
                     android:layout_weight="1"
                     android:checked="true"
-                    android:text=""
-                    android:textOn=""
-                    android:textOff=""
                     android:gravity="end|center"
+                    android:text=""
+                    android:textOff=""
+                    android:textOn=""
                     tools:ignore="RtlHardcoded" />
             </LinearLayout>
         </LinearLayout>

@@ -669,6 +669,7 @@ public class AwardProfileActivity extends SwipeBackBaseActivity {
 											+ mContentTitle, Style.CONFIRM);
 							ContentValues mValues = new ContentValues();
 							mValues.put(DBConstant.Award_Columns.COLUMN_AWARD_IS_CONGRATULATE,"true");
+							mValues.put(DBConstant.Award_Columns.COLUMN_AWARD_CONGRATULATE_NO,String.valueOf(Integer.parseInt(mContentCongratulateCount)+1));
 							getContentResolver().update(DBConstant.Award_Columns.CONTENT_URI,mValues,DBConstant.Award_Columns.COLUMN_AWARD_ID+ "=?",new String[] { mId});
 							mAwardProfileActionCongIv.setImageDrawable(getResources().getDrawable(R.drawable.ic_award_cong_selected));
 						}

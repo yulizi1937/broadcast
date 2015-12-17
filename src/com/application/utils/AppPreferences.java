@@ -761,6 +761,53 @@ public class AppPreferences {
 	}
 	
 	/**
+	 * App : Remind
+	 */
+	
+	public void setLastAppOpenService(boolean value) {
+		editor = sharedPreferences.edit();
+		editor.putBoolean("isLastAppOpenService", value);
+		editor.commit();
+	}
+
+	public boolean isLastAppOpenService() {
+		return sharedPreferences.getBoolean("isLastAppOpenService", false);
+	}
+	
+	public void setLastAppOpenTimeStamp(Long mLastAppOpenTimeStamp) {
+		editor = sharedPreferences.edit();
+		editor.putLong("mLastAppOpenTimeStamp", mLastAppOpenTimeStamp);
+		editor.commit();
+	}
+
+	public Long getLastAppOpenTimeStamp() {
+		Long mLastAppOpenTimeStamp= sharedPreferences.getLong("mLastAppOpenTimeStamp",-1);
+		return mLastAppOpenTimeStamp;
+	}
+	
+	public void setAppOpenRemindHour(int mAppOpenRemindHour) {
+		editor = sharedPreferences.edit();
+		editor.putInt("mAppOpenRemindHour", mAppOpenRemindHour);
+		editor.commit();
+	}
+
+	public int getAppOpenRemindHour() {
+		int mAppOpenRemindHour= sharedPreferences.getInt("mAppOpenRemindHour",10);
+		return mAppOpenRemindHour;
+	}
+	
+	public void setAppOpenRemindMinute(int mAppOpenRemindMinute) {
+		editor = sharedPreferences.edit();
+		editor.putInt("mAppOpenRemindMinute", mAppOpenRemindMinute);
+		editor.commit();
+	}
+
+	public int getAppOpenRemindMinute() {
+		int mAppOpenRemindMinute= sharedPreferences.getInt("mAppOpenRemindMinute",5);
+		return mAppOpenRemindMinute;
+	}
+	
+	/**
 	 * Chat
 	 */
 	public void setChatOppositePerson(String mChatOppositePerson) {

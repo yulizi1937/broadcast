@@ -64,9 +64,9 @@ import android.widget.TextView;
 
 import com.application.sqlite.DBConstant;
 import com.application.ui.calligraphy.CalligraphyContextWrapper;
+import com.application.ui.materialdialog.MaterialDialog;
 import com.application.ui.view.DownloadProgressDialog;
 import com.application.ui.view.NumberProgressBar;
-import com.application.ui.view.SnackBar;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
@@ -89,7 +89,8 @@ import com.permission.PermissionHelper;
 public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 	private static final String TAG = ParichayReferralFormActivity.class.getSimpleName();
 	
-	private static final int INTENT_PICK_FILE = 1001;
+	private static final int INTENT_PICK_FILE_SYSTEM = 1001;
+	private static final int INTENT_PICK_FILE_MOBCAST = 1002;
 	
 	private Toolbar mToolBar;
 	
@@ -380,10 +381,10 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 					mRegionEv.setText(mJobRegion);
 				}
 				if(!TextUtils.isEmpty(mJobHQ) && !mJobHQ.equalsIgnoreCase("-1")){
-					mRegionEv.setText(mJobHQ);
+					mHeadquarterEv.setText(mJobHQ);
 				}
 				if(!TextUtils.isEmpty(mJobDivision) && !mJobDivision.equalsIgnoreCase("-1")){
-					mRegionEv.setText(mJobDivision);
+					mDivisonEv.setText(mJobDivision);
 				}
 			}else{
 				mIRFLayout.setVisibility(View.GONE);
@@ -440,7 +441,7 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				getFileFromDevice();
+				showFileManagerDialog();
 			}
 		});
 	}
@@ -657,7 +658,7 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				getFileFromDevice();
+				showFileManagerDialog();
 			}
 		});
 	}
@@ -1142,48 +1143,105 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 		}
 	}
 	
-	private void getFileFromDevice(){
+	private void getFileFromDevice(boolean isSystemFileManager){
 		if(AndroidUtilities.isAboveMarshMallow()){
 				if(mPermissionHelper.isPermissionGranted(AppConstants.PERMISSION.STORAGE)){
-					Intent filePickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
-					filePickerIntent.setType("*/*");
-			        startActivityForResult(filePickerIntent, INTENT_PICK_FILE);		
+					if(isSystemFileManager){
+						Intent filePickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+						filePickerIntent.setType("*/*");
+				        startActivityForResult(filePickerIntent, INTENT_PICK_FILE_SYSTEM);		
+					}else{
+						Intent filePickerIntent = new Intent(ParichayReferralFormActivity.this, FileManagerActivity.class);
+						startActivityForResult(filePickerIntent, INTENT_PICK_FILE_MOBCAST);
+						AndroidUtilities.enterWindowAnimation(ParichayReferralFormActivity.this);
+					}
 				}else{
 					checkPermissionModel();
 				}
 		}else{
-			Intent filePickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
-			filePickerIntent.setType("file/*");
-	        startActivityForResult(filePickerIntent, INTENT_PICK_FILE);
+			if(isSystemFileManager){
+				Intent filePickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+				filePickerIntent.setType("*/*");
+		        startActivityForResult(filePickerIntent, INTENT_PICK_FILE_SYSTEM);		
+			}else{
+				Intent filePickerIntent = new Intent(ParichayReferralFormActivity.this, FileManagerActivity.class);
+				startActivityForResult(filePickerIntent, INTENT_PICK_FILE_MOBCAST);
+				AndroidUtilities.enterWindowAnimation(ParichayReferralFormActivity.this);
+			}
 		}
 		
 	}
 	
 	
+	private void showFileManagerDialog() {
+		final MaterialDialog mMaterialDialog = new MaterialDialog.Builder(ParichayReferralFormActivity.this)
+				.title(getResources().getString(R.string.select_filemanger_title))
+				.titleColor(Utilities.getAppColor())
+				.customView(R.layout.dialog_select_filemanager, true)
+				.cancelable(true).show();
+
+		View mView = mMaterialDialog.getCustomView();
+		final AppCompatTextView mMobcastFileManager = (AppCompatTextView) mView.findViewById(R.id.dialogSelectMobcastFileManagerTv);
+		final AppCompatTextView mSystemFileManager = (AppCompatTextView) mView.findViewById(R.id.dialogSelectSystemFileManagerTv);
+		
+		try {
+			setMaterialRippleWithGrayOnView(mMobcastFileManager);
+			setMaterialRippleWithGrayOnView(mSystemFileManager);
+			mMobcastFileManager.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					getFileFromDevice(false);
+					mMaterialDialog.dismiss();
+				}
+			});
+			
+			mSystemFileManager.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					getFileFromDevice(true);
+					mMaterialDialog.dismiss();	
+				}
+			});
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent mIntent) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, mIntent);
-		if(requestCode == INTENT_PICK_FILE && resultCode == Activity.RESULT_OK){
-//			mFilePath = mIntent.getData().getPath();
-			mFilePath = Utilities.getPath(mIntent.getData());
-			if(!TextUtils.isEmpty(mFilePath)){
-				String mExt = mFilePath.substring(mFilePath.lastIndexOf(".")+1, mFilePath.length());
-				if(mExt.equalsIgnoreCase("doc") || mExt.equalsIgnoreCase("docx") || mExt.equalsIgnoreCase("pdf") || mExt.equalsIgnoreCase("rtf") || mExt.equalsIgnoreCase("png") || mExt.equalsIgnoreCase("jpeg")|| mExt.equalsIgnoreCase("jpg")){
-					isValidFile = true;
-					mFileEv.append(mFilePath);
-					mFileValidateIv.setImageResource(R.drawable.ic_text_correct);	
-					setUiOfNextAccordingly();
+		try{
+			if((requestCode == INTENT_PICK_FILE_SYSTEM || requestCode == INTENT_PICK_FILE_MOBCAST ) && resultCode == Activity.RESULT_OK){
+//				mFilePath = mIntent.getData().getPath();
+				mFilePath = Utilities.getPath(mIntent.getData());
+				if(TextUtils.isEmpty(mFilePath)){
+					mFilePath = mIntent.getExtras().getStringArrayList("SelectedFiles").get(0);
+				}
+				if(!TextUtils.isEmpty(mFilePath)){
+					String mExt = mFilePath.substring(mFilePath.lastIndexOf(".")+1, mFilePath.length());
+					if(mExt.equalsIgnoreCase("doc") || mExt.equalsIgnoreCase("docx") || mExt.equalsIgnoreCase("pdf") || mExt.equalsIgnoreCase("rtf") || mExt.equalsIgnoreCase("png") || mExt.equalsIgnoreCase("jpeg")|| mExt.equalsIgnoreCase("jpg")){
+						isValidFile = true;
+						mFileEv.append(mFilePath);
+						mFileValidateIv.setImageResource(R.drawable.ic_text_correct);	
+						setUiOfNextAccordingly();
+					}else{
+						AndroidUtilities.showSnackBar(ParichayReferralFormActivity.this, "Only .doc, .docx, pdf, jpeg, png or rtf is allowed!");
+					}
 				}else{
+					isValidFile = false;
+					mFileValidateIv.setImageResource(R.drawable.ic_text_incorrect);
 					AndroidUtilities.showSnackBar(ParichayReferralFormActivity.this, "Only .doc, .docx, pdf, jpeg, png or rtf is allowed!");
 				}
 			}else{
-				isValidFile = false;
-				mFileValidateIv.setImageResource(R.drawable.ic_text_incorrect);
-				AndroidUtilities.showSnackBar(ParichayReferralFormActivity.this, "Only .doc, .docx, pdf, jpeg, png or rtf is allowed!");
+				mPermissionHelper.onActivityForResult(requestCode);
 			}
-		}else{
-			mPermissionHelper.onActivityForResult(requestCode);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 	
@@ -1455,7 +1513,7 @@ public class ParichayReferralFormActivity extends SwipeBackBaseActivity{
 	@Override
 	public void onPermissionGranted(String[] permissionName) {
 		try{
-			getFileFromDevice();
+			showFileManagerDialog();
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

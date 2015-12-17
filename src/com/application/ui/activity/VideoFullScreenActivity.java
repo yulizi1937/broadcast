@@ -221,6 +221,7 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 							mReportStop = System.currentTimeMillis();
 							mReportDuration += mReportStop - mReportStart;
 							UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, Utilities.getTimeFromMilliSeconds(mTotalDuration));
+							mReportDuration = 0;
 						}
 					});
 				}

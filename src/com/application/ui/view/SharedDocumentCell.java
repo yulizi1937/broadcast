@@ -1,11 +1,3 @@
-/*
- * This is the source code of Telegram for Android v. 2.0.x.
- * It is licensed under GNU GPL v. 2 or later.
- * You should have received a copy of the license in this archive (see LICENSE).
- *
- * Copyright Nikolai Kudashov, 2013-2014.
- */
-
 package com.application.ui.view;
 
 import android.content.Context;
@@ -19,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.application.utils.AndroidUtilities;
-import com.application.utils.LocaleController;
 import com.mobcast.R;
 
 public class SharedDocumentCell extends FrameLayout {
@@ -76,12 +67,10 @@ public class SharedDocumentCell extends FrameLayout {
 		layoutParams.width = AndroidUtilities.dp(32);
 		layoutParams.height = LayoutParams.WRAP_CONTENT;
 		layoutParams.topMargin = AndroidUtilities.dp(22);
-		layoutParams.leftMargin = LocaleController.isRTL ? 0 : AndroidUtilities
+		layoutParams.leftMargin = AndroidUtilities
 				.dp(16);
-		layoutParams.rightMargin = LocaleController.isRTL ? AndroidUtilities
-				.dp(16) : 0;
-		layoutParams.gravity = LocaleController.isRTL ? Gravity.RIGHT
-				: Gravity.LEFT;
+		layoutParams.rightMargin = 0;
+		layoutParams.gravity = Gravity.LEFT;
 		extTextView.setLayoutParams(layoutParams);
 
 		nameTextView = new TextView(context);
@@ -93,19 +82,15 @@ public class SharedDocumentCell extends FrameLayout {
 		nameTextView.setMaxLines(1);
 		nameTextView.setSingleLine(true);
 		nameTextView.setEllipsize(TextUtils.TruncateAt.END);
-		nameTextView.setGravity((LocaleController.isRTL ? Gravity.RIGHT
-				: Gravity.LEFT) | Gravity.CENTER_VERTICAL);
+		nameTextView.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
 		addView(nameTextView);
 		layoutParams = (LayoutParams) nameTextView.getLayoutParams();
 		layoutParams.width = LayoutParams.MATCH_PARENT;
 		layoutParams.height = LayoutParams.WRAP_CONTENT;
 		layoutParams.topMargin = AndroidUtilities.dp(5);
-		layoutParams.leftMargin = LocaleController.isRTL ? AndroidUtilities
-				.dp(8) : AndroidUtilities.dp(72);
-		layoutParams.rightMargin = LocaleController.isRTL ? AndroidUtilities
-				.dp(72) : AndroidUtilities.dp(8);
-		layoutParams.gravity = LocaleController.isRTL ? Gravity.RIGHT
-				: Gravity.LEFT;
+		layoutParams.leftMargin = AndroidUtilities.dp(72);
+		layoutParams.rightMargin = AndroidUtilities.dp(8);
+		layoutParams.gravity = Gravity.LEFT;
 		nameTextView.setLayoutParams(layoutParams);
 
 		statusImageView = new ImageView(context);
@@ -115,12 +100,9 @@ public class SharedDocumentCell extends FrameLayout {
 		layoutParams.width = LayoutParams.WRAP_CONTENT;
 		layoutParams.height = LayoutParams.WRAP_CONTENT;
 		layoutParams.topMargin = AndroidUtilities.dp(35);
-		layoutParams.leftMargin = LocaleController.isRTL ? AndroidUtilities
-				.dp(8) : AndroidUtilities.dp(72);
-		layoutParams.rightMargin = LocaleController.isRTL ? AndroidUtilities
-				.dp(72) : AndroidUtilities.dp(8);
-		layoutParams.gravity = LocaleController.isRTL ? Gravity.RIGHT
-				: Gravity.LEFT;
+		layoutParams.leftMargin = AndroidUtilities.dp(72);
+		layoutParams.rightMargin = AndroidUtilities.dp(8);
+		layoutParams.gravity = Gravity.LEFT;
 		statusImageView.setLayoutParams(layoutParams);
 
 		dateTextView = new TextView(context);
@@ -130,8 +112,7 @@ public class SharedDocumentCell extends FrameLayout {
 		dateTextView.setMaxLines(1);
 		dateTextView.setSingleLine(true);
 		dateTextView.setEllipsize(TextUtils.TruncateAt.END);
-		dateTextView.setGravity((LocaleController.isRTL ? Gravity.RIGHT
-				: Gravity.LEFT) | Gravity.CENTER_VERTICAL);
+		dateTextView.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
 		addView(dateTextView);
 		layoutParams = (LayoutParams) dateTextView.getLayoutParams();
 		layoutParams.width = LayoutParams.MATCH_PARENT;

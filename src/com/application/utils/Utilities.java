@@ -1,10 +1,4 @@
-/*
- * This is the source code of Telegram for Android v. 1.3.2.
- * It is licensed under GNU GPL v. 2 or later.
- * You should have received a copy of the license in this archive (see LICENSE).
- *
- * Copyright Nikolai Kudashov, 2013.
- */
+
 
 package com.application.utils;
 
@@ -17,14 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.math.BigInteger;
-import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.security.KeyFactory;
-import java.security.MessageDigest;
-import java.security.PublicKey;
-import java.security.SecureRandom;
-import java.security.spec.RSAPublicKeySpec;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,22 +19,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.zip.GZIPOutputStream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
-import javax.crypto.Cipher;
 
 import org.apache.commons.io.FileUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -58,7 +37,6 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -69,16 +47,11 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.Settings.Secure;
-import android.renderscript.Allocation;
-import android.renderscript.Element;
-import android.renderscript.RenderScript;
-import android.renderscript.ScriptIntrinsicBlur;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DimenRes;
@@ -97,7 +70,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import com.application.beans.Parichay;
 import com.application.beans.Theme;
 import com.application.sqlite.DBConstant;
 import com.mobcast.R;
@@ -105,142 +77,11 @@ import com.squareup.okhttp.OkHttpClient;
 
 public class Utilities {
 	private static final String TAG = Utilities.class.getSimpleName();
-    public static Pattern pattern = Pattern.compile("[0-9]+");
-    public static SecureRandom random = new SecureRandom();
     public static Point displaySize = new Point();
 
-    public static ArrayList<String> goodPrimes = new ArrayList<String>();
-
-    public static class TPFactorizedValue {
-        public long p, q;
-    }
-
     public static volatile DispatchQueue stageQueue = new DispatchQueue("stageQueue");
-    public static volatile DispatchQueue globalQueue = new DispatchQueue("globalQueue");
-    public static volatile DispatchQueue searchQueue = new DispatchQueue("searchQueue");
-    public static volatile DispatchQueue photoBookQueue = new DispatchQueue("photoBookQueue");
     public static volatile DispatchQueue downloadQueue = new DispatchQueue("downloadQueue");
     public static volatile DispatchQueue reportQueue = new DispatchQueue("reportQueue");
-
-    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
-
-    public static Integer parseInt(String value) {
-        if (value == null) {
-            return 0;
-        }
-        Integer val = 0;
-        try {
-            Matcher matcher = pattern.matcher(value);
-            if (matcher.find()) {
-                String num = matcher.group(0);
-                val = Integer.parseInt(num);
-            }
-        } catch (Exception e) {
-            FileLog.e("tmessages", e);
-        }
-        return val;
-    }
-
-    public static String parseIntToString(String value) {
-        Matcher matcher = pattern.matcher(value);
-        if (matcher.find()) {
-            return matcher.group(0);
-        }
-        return null;
-    }
-
-    public static String bytesToHex(byte[] bytes) {
-        char[] hexChars = new char[bytes.length * 2];
-        int v;
-        for (int j = 0; j < bytes.length; j++) {
-            v = bytes[j] & 0xFF;
-            hexChars[j * 2] = hexArray[v >>> 4];
-            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
-        }
-        return new String(hexChars);
-    }
-
-    public static byte[] hexToBytes(String hex) {
-        int len = hex.length();
-        byte[] data = new byte[len / 2];
-        for (int i = 0; i < len; i += 2) {
-            data[i / 2] = (byte) ((Character.digit(hex.charAt(i), 16) << 4) + Character.digit(hex.charAt(i + 1), 16));
-        }
-        return data;
-    }
-
-
-    public static boolean isGoodGaAndGb(BigInteger g_a, BigInteger p) {
-        return !(g_a.compareTo(BigInteger.valueOf(1)) != 1 || g_a.compareTo(p.subtract(BigInteger.valueOf(1))) != -1);
-    }
-
-    public static boolean arraysEquals(byte[] arr1, int offset1, byte[] arr2, int offset2) {
-        if (arr1 == null || arr2 == null || arr1.length - offset1 != arr2.length - offset2 || arr1.length - offset1 < 0) {
-            return false;
-        }
-        for (int a = offset1; a < arr1.length; a++) {
-            if (arr1[a + offset1] != arr2[a + offset2]) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static byte[] computeSHA1(byte[] convertme, int offset, int len) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-1");
-            md.update(convertme, offset, len);
-            return md.digest();
-        } catch (Exception e) {
-            FileLog.e("tmessages", e);
-        }
-        return null;
-    }
-
-    public static byte[] computeSHA1(ByteBuffer convertme, int offset, int len) {
-        int oldp = convertme.position();
-        int oldl = convertme.limit();
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-1");
-            convertme.position(offset);
-            convertme.limit(len);
-            md.update(convertme);
-            return md.digest();
-        } catch (Exception e) {
-            FileLog.e("tmessages", e);
-        } finally {
-            convertme.limit(oldl);
-            convertme.position(oldp);
-        }
-        return null;
-    }
-
-    public static byte[] computeSHA1(ByteBuffer convertme) {
-        return computeSHA1(convertme, 0, convertme.limit());
-    }
-
-    public static byte[] computeSHA1(byte[] convertme) {
-        return computeSHA1(convertme, 0, convertme.length);
-    }
-
-    public static byte[] encryptWithRSA(BigInteger[] key, byte[] data) {
-        try {
-            KeyFactory fact = KeyFactory.getInstance("RSA");
-            RSAPublicKeySpec keySpec = new RSAPublicKeySpec(key[0], key[1]);
-            PublicKey publicKey = fact.generatePublic(keySpec);
-            final Cipher cipher = Cipher.getInstance("RSA");
-            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-            return cipher.doFinal(data);
-        } catch (Exception e) {
-            FileLog.e("tmessages", e);
-        }
-        return null;
-    }
-
-    public static long bytesToLong(byte[] bytes) {
-        return ((long) bytes[7] << 56) + (((long) bytes[6] & 0xFF) << 48) + (((long) bytes[5] & 0xFF) << 40) + (((long) bytes[4] & 0xFF) << 32)
-                + (((long) bytes[3] & 0xFF) << 24) + (((long) bytes[2] & 0xFF) << 16) + (((long) bytes[1] & 0xFF) << 8) + ((long) bytes[0] & 0xFF);
-    }
 
     public static byte[] compress(byte[] data) {
         if (data == null) {
@@ -255,7 +96,7 @@ public class Utilities {
             zip.close();
             packedData = bytesStream.toByteArray();
         } catch (IOException e) {
-            FileLog.e("tmessages", e);
+            FileLog.e("tmessages", e.toString());
         }
         return packedData;
     }
@@ -283,7 +124,7 @@ public class Utilities {
             destination = new FileOutputStream(destFile).getChannel();
             destination.transferFrom(source, 0, source.size());
         } catch (Exception e) {
-            FileLog.e("tmessages", e);
+            FileLog.e("tmessages", e.toString());
             return false;
         } finally {
             if(source != null) {
@@ -294,24 +135,6 @@ public class Utilities {
             }
         }
         return true;
-    }
-
-    public static String MD5(String md5) {
-        if (md5 == null) {
-            return null;
-        }
-        try {
-            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
-            byte[] array = md.digest(md5.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for (byte anArray : array) {
-                sb.append(Integer.toHexString((anArray & 0xFF) | 0x100).substring(1, 3));
-            }
-            return sb.toString();
-        } catch (java.security.NoSuchAlgorithmException e) {
-            FileLog.e("tmessages", e);
-        }
-        return null;
     }
 
     public static void addMediaToGallery(String fromPath) {
@@ -339,13 +162,13 @@ public class Utilities {
             if (storageDir != null) {
                 if (!storageDir.mkdirs()) {
                     if (!storageDir.exists()){
-                        FileLog.d("tmessages", "failed to create directory");
+                        FileLog.e("tmessages", "failed to create directory");
                         return null;
                     }
                 }
             }
         } else {
-            FileLog.d("tmessages", "External storage is not mounted READ/WRITE.");
+            FileLog.e("tmessages", "External storage is not mounted READ/WRITE.");
         }
 
         return storageDir;
@@ -394,7 +217,7 @@ public class Utilities {
                 return uri.getPath();
             }
         } catch (Exception e) {
-            FileLog.e("tmessages", e);
+            FileLog.e("tmessages", e.toString());
         }
         return null;
     }
@@ -414,7 +237,7 @@ public class Utilities {
                 return cursor.getString(column_index);
             }
         } catch (Exception e) {
-            FileLog.e("tmessages", e);
+            FileLog.e("tmessages", e.toString());
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -441,7 +264,7 @@ public class Utilities {
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             return new File(storageDir, "IMG_" + timeStamp + ".jpg");
         } catch (Exception e) {
-            FileLog.e("tmessages", e);
+            FileLog.e("tmessages", e.toString());
         }
         return null;
     }
@@ -495,7 +318,7 @@ public class Utilities {
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             return new File(storageDir, "VID_" + timeStamp + ".mp4");
         } catch (Exception e) {
-            FileLog.e("tmessages", e);
+            FileLog.e("tmessages", e.toString());
         }
         return null;
     }
@@ -522,29 +345,6 @@ public class Utilities {
         } else {
             return String.format("%.1f GB", size / 1024.0f / 1024.0f / 1024.0f);
         }
-    }
-
-    public static byte[] decodeQuotedPrintable(final byte[] bytes) {
-        if (bytes == null) {
-            return null;
-        }
-        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        for (int i = 0; i < bytes.length; i++) {
-            final int b = bytes[i];
-            if (b == '=') {
-                try {
-                    final int u = Character.digit((char) bytes[++i], 16);
-                    final int l = Character.digit((char) bytes[++i], 16);
-                    buffer.write((char) ((u << 4) + l));
-                } catch (Exception e) {
-                    FileLog.e("tmessages", e);
-                    return null;
-                }
-            } else {
-                buffer.write(b);
-            }
-        }
-        return buffer.toByteArray();
     }
     
     public static void showCrouton(Activity mActivity, String mMessage, Style mStyle){
@@ -573,15 +373,15 @@ public class Utilities {
     }
     
     public static int getAppColor(){
-    	return Color.parseColor(ApplicationLoader.getApplication().getResources().getString(R.color.toolbar_background));
+    	return Color.parseColor(ApplicationLoader.getApplication().getResources().getString(R.string.toolbar_background_default));
     }
     
     public static int getDividerColor(){
-    	return Color.parseColor(ApplicationLoader.getApplication().getResources().getString(R.color.divider_color));
+    	return Color.parseColor(ApplicationLoader.getApplication().getResources().getString(R.string.divider_color));
     }
     
     public static int getAppHighlightedColor(){
-    	return Color.parseColor(ApplicationLoader.getApplication().getResources().getString(R.color.text_highlight));
+    	return Color.parseColor(ApplicationLoader.getApplication().getResources().getString(R.string.text_highlight));
     }
     
 	public static int dpToPx(float dp, Resources resources) {
@@ -831,7 +631,7 @@ public class Utilities {
 			return milliSeconds + " sec";
 		}
 	}
-	
+
     public static int resolveDimension(Context context, @AttrRes int attr, @DimenRes int fallbackRes) {
         TypedArray a = context.getTheme().obtainStyledAttributes(new int[]{attr});
         try {
@@ -940,7 +740,7 @@ public class Utilities {
 //					+ (displaySize.y * displaySize.y)) + AndroidUtilities.getScreenSizeInInches();
 			return   displaySize.x+ " x " + displaySize.y  + " "+ AndroidUtilities.getScreenSizeInInches();
 		} catch (Exception e) {
-			FileLog.e("tmessages", e);
+			FileLog.e("tmessages", e.toString());
 			return "0";
 		}
 	}
@@ -982,6 +782,16 @@ public class Utilities {
 			return "VERSION NAME NOT FOUND";
 		}
 	}
+
+    public static String getChatResourceName(){
+        StringBuilder mStringBuilder =  new StringBuilder("Android");
+        try{
+            mStringBuilder.append("_").append(getApplicationVersion());
+        }catch(Exception e){
+            FileLog.e(TAG, e.toString());
+        }
+        return mStringBuilder.toString();
+    }
 	
 	public static String getApplicationVersionCode() {
 		PackageInfo pInfo = null;
@@ -1085,7 +895,7 @@ public class Utilities {
 	
 	public static String getFileName(String mFilePath){
 		return mFilePath.substring(mFilePath.lastIndexOf("/") + 1,
-				mFilePath.length());
+                mFilePath.length());
 	}
 	
 	public static String getFilePath(int mType, boolean mIsThumbnail, String mFileName){
@@ -1365,6 +1175,24 @@ public class Utilities {
 					}
 				}
 			} else {
+				int mCurrentYear = currentCalendar.get(Calendar.YEAR);
+				int mEventYear = targetCalendar.get(Calendar.YEAR);
+				numberOfDays = Math.abs(numberOfDays);
+				if(mCurrentYear > mEventYear){
+					numberOfDays -= (mCurrentYear - mEventYear) * 365; 
+					if (numberOfDays == 1) {
+						return String.format("%02d", Math.abs(numberOfDays)) + "day ago";
+					} else if(String.valueOf(numberOfDays).contains("-")){
+						return String.format("%02d", Math.abs(numberOfDays)) + " days ago";
+					}
+				}else{
+					numberOfDays -= (mEventYear - mCurrentYear) * 365; 
+					if (numberOfDays == 1) {
+						return String.format("%02d", Math.abs(numberOfDays)) + "day left";
+					} else if(String.valueOf(numberOfDays).contains("-")){
+						return String.format("%02d", Math.abs(numberOfDays)) + " days left";
+					}
+				}
 				return dateFormatterWithYear.format(contentDate);
 			}
 		} catch (ParseException e) {
@@ -1716,35 +1544,6 @@ public class Utilities {
 	    return bitmap;
 	}
 	
-	@SuppressLint("NewApi") 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB) 
-	public static Bitmap blurBitmap(Bitmap bitmap) {
-
-		Bitmap outBitmap = Bitmap.createBitmap(bitmap.getWidth(),
-				bitmap.getHeight(), Config.ARGB_8888);
-
-		RenderScript rs = RenderScript.create(ApplicationLoader.getApplication().getApplicationContext());
-
-		ScriptIntrinsicBlur blurScript = ScriptIntrinsicBlur.create(rs,Element.U8_4(rs));
-
-		Allocation allIn = Allocation.createFromBitmap(rs, bitmap);
-		Allocation allOut = Allocation.createFromBitmap(rs, outBitmap);
-
-		blurScript.setRadius(25.f);
-
-		blurScript.setInput(allIn);
-		blurScript.forEach(allOut);
-
-		allOut.copyTo(outBitmap);
-
-		bitmap.recycle();
-
-		rs.destroy();
-
-		return outBitmap;
-
-	}
-	
 	public static ArrayList<Theme> getThemeList(){
 		ArrayList<Theme> mList = new ArrayList<>();
 		int i = ApplicationLoader.getPreferences().getAppTheme();
@@ -1823,39 +1622,11 @@ public class Utilities {
 	public static void checkLogOut(){
 		try{
 			Context mContext= ApplicationLoader.getApplication().getApplicationContext();
-			Log.i(TAG, ApplicationLoader.getPreferences().getAccessToken()!=null?ApplicationLoader.getPreferences().getAccessToken():"null");
+			Log.i(TAG, ApplicationLoader.getPreferences().getAccessToken() != null ? ApplicationLoader.getPreferences().getAccessToken() : "null");
 			Log.i(TAG, String.valueOf(mContext.getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, null, null, null).getCount()));
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
-	}
-	
-	public static String zipFolder(String inputFolderPath, String outZipPath) {
-	    try {
-	        FileOutputStream fos = new FileOutputStream(outZipPath);
-	        ZipOutputStream zos = new ZipOutputStream(fos);
-	        File srcFile = new File(inputFolderPath);
-	        File[] files = srcFile.listFiles();
-	        FileLog.e(TAG, "Zip directory: " + srcFile.getName());
-	        for (int i = 0; i < files.length; i++) {
-	            FileLog.e(TAG, "Adding file: " + files[i].getName());
-	            byte[] buffer = new byte[1024];
-	            FileInputStream fis = new FileInputStream(files[i]);
-	            zos.putNextEntry(new ZipEntry(files[i].getName()));
-	            int length;
-	            while ((length = fis.read(buffer)) > 0) {
-	                zos.write(buffer, 0, length);
-	            }
-	            zos.closeEntry();
-	            fis.close();
-	        }
-	        zos.close();
-	    } catch (IOException ioe) {
-	    	FileLog.e(TAG, ioe.toString());
-	    }catch(Exception e){
-	    	FileLog.e(TAG, e.toString());
-	    }
-	    return outZipPath;
 	}
 	
     public static int darkenColor(int color) {
@@ -1870,6 +1641,33 @@ public class Utilities {
         Color.colorToHSV(color, hsv);
         hsv[2] *= 1.1f;
         return Color.HSVToColor(hsv);
+    }
+    
+    public static String getFileMetaData(int mType, String mMetaData){
+    	String mString = " ";
+    	try{
+    		int mIntMetaData = Integer.parseInt(mMetaData);
+    		if(mIntMetaData!=-1){
+    			switch(mType){
+    			case AppConstants.TYPE.PDF:
+					return mIntMetaData > 1 ? mIntMetaData + " PAGES"
+							: mIntMetaData + " PAGE";
+    			case AppConstants.TYPE.PPT:
+					return mIntMetaData > 1 ? mIntMetaData + " SLIDES"
+							: mIntMetaData + " SLIDE";
+    			case AppConstants.TYPE.DOC:
+					return mIntMetaData > 1 ? mIntMetaData + " PAGES"
+							: mIntMetaData + " PAGE";
+    			case AppConstants.TYPE.XLS:
+					return mIntMetaData > 1 ? mIntMetaData + " SHEETS"
+							: mIntMetaData + " SHEET";
+    			
+    			}
+    		}
+    	}catch(Exception e){
+    		FileLog.e(TAG, e.toString());
+    	}
+    	return mString;
     }
     
     public static String getStatusMessageForParichayReferral(Cursor mCursor){
@@ -1942,84 +1740,4 @@ public class Utilities {
 		}
 		return mMessage.toString();
 	}
-    
-	@SuppressWarnings("resource")
-	public static void devSendDBInMail(Context c) {
-		if(BuildVars.DEBUG_VERSION){
-			try {
-				File sd = Environment.getExternalStorageDirectory();
-
-				if (sd.canWrite()) {
-					String currentDBPath = "/data/data/"
-							+ ApplicationLoader.getApplication().getPackageName()
-							+ "/databases/ApplicationDB";
-					String backupDBPath = "ApplicationDB.db_Dev.db";
-					File currentDB = new File(currentDBPath);
-					File backupDB = new File(sd, backupDBPath);
-
-					if (currentDB.exists()) {
-						FileChannel src = new FileInputStream(currentDB)
-								.getChannel();
-						FileChannel dst = new FileOutputStream(backupDB)
-								.getChannel();
-						dst.transferFrom(src, 0, src.size());
-						src.close();
-						dst.close();
-						new MailTask(c, backupDB.getAbsolutePath()).execute();
-					}
-				}
-			} catch (Exception e) {
-			}
-		}
-	}
-
-	public static class MailTask extends AsyncTask<String, Void, String> {
-		public Context mContext;
-		public ProgressDialog pDialog;
-		private String compressedPath;
-
-		public MailTask(Context c, String compressedPath) {
-			this.compressedPath = compressedPath;
-			mContext = c;
-		}
-
-		@Override
-		protected String doInBackground(String... params) {
-			/** MAIL SENDING */
-			Mail m = new Mail(BuildVars.EMAIL_USERNAME,
-					BuildVars.EMAIL_PASSWORD);
-			String[] toArr = { BuildVars.EMAIL_TO };
-			m.setTo(toArr);
-			m.setFrom(BuildVars.EMAIL_USERNAME);
-			m.setSubject(BuildVars.EMAIL_SUBJECT);
-			// m.setBody("<html><body><b><p>Dear Sir,"
-			// + "  Following are the details added on Portfolio Application."
-			// + "  Name:"+ _name +"  Contact No:"+_contact
-			// +"  Address:"+_address+"</p><p> These is autogenerated mail. </p></b></body></html>");
-
-			m.setBody(BuildVars.EMAIL_BODY);
-			try {
-				if (compressedPath != null && compressedPath.length() > 0)
-					m.addAttachment(compressedPath);
-				if (m.send()) {
-					Log.e("MailApp", "Mail sent successfully!");
-				} else {
-					Log.e("MailApp", "Could not send email");
-				}
-			} catch (Exception e) {
-				Log.e("MailApp", "Could not send email", e);
-			}
-			return "MailSent";
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-		}
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-		}
-	}
-	
 }

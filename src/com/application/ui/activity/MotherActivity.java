@@ -1044,6 +1044,7 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 					Utilities.deleteTables();
 					Utilities.deleteAppFolder(new File(AppConstants.FOLDER.BUILD_FOLDER));
 					ApplicationLoader.cancelSyncServiceAlarm();
+					ApplicationLoader.cancelAppOpenRemindServiceAlarm();
 					Utilities.showBadgeNotification(MotherActivity.this);
 				}else{
 					mErrorMessage = Utilities.getErrorMessageFromApi(mResponseFromApi);

@@ -1,11 +1,3 @@
-/*
- * This is the source code of Telegram for Android v. 1.7.x.
- * It is licensed under GNU GPL v. 2 or later.
- * You should have received a copy of the license in this archive (see LICENSE).
- *
- * Copyright Nikolai Kudashov, 2013-2014.
- */
-
 package com.application.ui.view;
 
 import java.util.ArrayList;
@@ -22,7 +14,6 @@ import android.widget.ListView;
 import com.application.ui.adapter.BaseSectionsAdapter;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.FileLog;
-import com.application.utils.LocaleController;
 
 public class SectionsListView extends ListView implements AbsListView.OnScrollListener {
 
@@ -177,7 +168,7 @@ public class SectionsListView extends ListView implements AbsListView.OnScrollLi
             try {
                 header.measure(widthSpec, heightSpec);
             } catch (Exception e) {
-                FileLog.e("tmessages", e);
+                FileLog.e("tmessages", e.toString());
             }
             header.layout(0, 0, header.getMeasuredWidth(), header.getMeasuredHeight());
         }
@@ -192,7 +183,7 @@ public class SectionsListView extends ListView implements AbsListView.OnScrollLi
         for (View header : headers) {
             int saveCount = canvas.save();
             int top = (Integer)header.getTag();
-            canvas.translate(LocaleController.isRTL ? getWidth() - header.getWidth() : 0, top);
+            canvas.translate(0, top);
             canvas.clipRect(0, 0, getWidth(), header.getMeasuredHeight());
             if (top < 0) {
                 canvas.saveLayerAlpha(0, top, header.getWidth(), top + canvas.getHeight(), (int)(255 * (1.0f + (float)top / (float)header.getMeasuredHeight())), Canvas.HAS_ALPHA_LAYER_SAVE_FLAG);

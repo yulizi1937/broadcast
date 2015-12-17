@@ -251,6 +251,7 @@
     <!-- item_recycler_mobcast_video -->
     <dimen name="item_recycler_mobcast_video_view_layout_height">120dp</dimen>
     <dimen name="item_recycler_mobcast_video_progress_width">32dp</dimen>
+    <dimen name="item_recycler_mobcast_video_play_width">52dp</dimen>
 
     <!-- item_recycler_mobcast_audio -->
     <dimen name="item_recycler_mobcast_audio_view_detail_layout_height">48dp</dimen>

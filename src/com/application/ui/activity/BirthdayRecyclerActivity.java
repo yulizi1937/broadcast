@@ -486,7 +486,7 @@ public class BirthdayRecyclerActivity extends SwipeBackBaseActivity {
 		if (position >= 0 && position < mArrayListBirthday.size()) {
 			if (mArrayListBirthday != null && mArrayListBirthday.size() > 0) {
 				Cursor mCursor = getContentResolver()
-						.query(DBConstant.Birthday_Columns.CONTENT_URI,new String[] {DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID,DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_READ,DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_LIKE},
+						.query(DBConstant.Birthday_Columns.CONTENT_URI,new String[] {DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID,DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_READ,DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_LIKE,DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_IS_WISHED},
 								DBConstant.Birthday_Columns.COLUMN_BIRTHDAY_ID + "=?",
 								new String[] { mArrayListBirthday.get(position)
 										.getmId() }, null);

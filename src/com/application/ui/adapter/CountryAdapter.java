@@ -1,11 +1,3 @@
-/*
- * This is the source code of Telegram for Android v. 1.7.x.
- * It is licensed under GNU GPL v. 2 or later.
- * You should have received a copy of the license in this archive (see LICENSE).
- *
- * Copyright Nikolai Kudashov, 2013-2014.
- */
-
 package com.application.ui.adapter;
 
 import java.io.BufferedReader;
@@ -26,7 +18,6 @@ import com.application.ui.view.TextSettingsCell;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.FileLog;
-import com.application.utils.LocaleController;
 
 public class CountryAdapter extends BaseSectionsAdapter {
 
@@ -65,7 +56,7 @@ public class CountryAdapter extends BaseSectionsAdapter {
             reader.close();
             stream.close();
         } catch (Exception e) {
-            FileLog.e("tmessages", e);
+            FileLog.e("tmessages", e.toString());
         }
 
         Collections.sort(sortedCountries, new Comparator<String>() {
@@ -137,12 +128,10 @@ public class CountryAdapter extends BaseSectionsAdapter {
         if (type == 1) {
             if (convertView == null) {
                 convertView = new DividerCell(mContext);
-                convertView.setPadding(AndroidUtilities.dp(LocaleController.isRTL ? 24 : 72), 0, AndroidUtilities.dp(LocaleController.isRTL ? 72 : 24), 0);
             }
         } else if (type == 0) {
             if (convertView == null) {
                 convertView = new TextSettingsCell(mContext);
-                convertView.setPadding(AndroidUtilities.dp(LocaleController.isRTL ? 16 : 54), 0, AndroidUtilities.dp(LocaleController.isRTL ? 54 : 16), 0);
             }
 
             ArrayList<Country> arr = countries.get(sortedCountries.get(section));

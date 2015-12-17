@@ -190,8 +190,6 @@
                         android:layout_weight="4"
                         android:gravity="left|top"
                         android:paddingTop="2dp"
-                        android:visibility="invisible"
-                        android:text="@string/sample_item_recycler_mobcast_pdf_file_info"
                         android:textColor="@color/item_recycler_mobcast_pdf_color"
                         android:textSize="@dimen/item_recycler_mobcast_audio_view_detail_file_type_detail_text_size"
                         android:textStyle="bold" />
