@@ -173,6 +173,7 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 			AndroidUtilities.exitWindowAnimation(YouTubeLiveStreamActivity.this);
 			if(isFromNotification){
 				Intent mIntent = new Intent(YouTubeLiveStreamActivity.this, MotherActivity.class);
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 				startActivity(mIntent);
 			}
 			return true;
@@ -238,9 +239,24 @@ public class YouTubeLiveStreamActivity extends YouTubeFailureRecoveryActivity im
 			super.onBackPressed();
 			if(isFromNotification){
 				Intent mIntent = new Intent(YouTubeLiveStreamActivity.this, MotherActivity.class);
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 				startActivity(mIntent);
 			}
 		}
+		
+	private int isFromTraining(String mCategory){
+		try{
+			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+				return 0;
+			}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+				return 1;
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return 0;
+	}
+		
 	private void toolBarRefresh() {
 //		mToolBarMenuRefresh.setVisibility(View.GONE);
 //		mToolBarMenuRefreshProgress.setVisibility(View.VISIBLE);

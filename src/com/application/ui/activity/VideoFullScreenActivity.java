@@ -8,8 +8,10 @@ import java.io.File;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.media.MediaPlayer.OnErrorListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -182,6 +184,7 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 		ApplicationLoader.getPreferences().setVideoViewPosition(
 				mVideoView.getCurrentPosition());
 	}
+	
 
 	private void initVideoPlayer(String mVideoPath) {
 		try{
@@ -231,6 +234,36 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 				mVideoView.start();
 				mVideoView.seekTo(mProgress);
 			}
+			mVideoView.setOnErrorListener(new OnErrorListener() {
+				@Override
+				public boolean onError(MediaPlayer mp, int what, int extra) {
+					// TODO Auto-generated method stub
+					catchErrorOnVideoView();
+					return true;
+				}
+			});
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void catchErrorOnVideoView(){
+		try{
+			AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(VideoFullScreenActivity.this);
+			mAlertDialog.setTitle(getResources().getString(R.string.videoview_error));
+			mAlertDialog.setMessage(getResources().getString(R.string.videoview_error_message));
+			mAlertDialog.setCancelable(true);
+			mAlertDialog.setPositiveButton(getResources().getString(R.string.OK), new OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					dialog.dismiss();
+					Utilities.deleteAppFolder(new File(mContentFilePath));
+					startActivity(mIntent);
+					finish();
+				}
+			});
+			mAlertDialog.show();
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

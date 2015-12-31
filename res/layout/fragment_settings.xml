@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:ripple="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/setting_divider_color"
@@ -161,6 +162,7 @@
                     android:layout_alignParentRight="true"
                     android:checked="false"
                     android:gravity="end|center"
+                    app:theme="@style/SettingSwitchStyle"
                     android:text=""
                     tools:ignore="RtlHardcoded" />
             </RelativeLayout>
@@ -198,6 +200,7 @@
                     android:layout_alignParentRight="true"
                     android:checked="true"
                     android:gravity="end|center"
+                    app:theme="@style/SettingSwitchStyle"
                     android:text=""
                     tools:ignore="RtlHardcoded" />
             </RelativeLayout>
@@ -235,6 +238,7 @@
                     android:layout_alignParentRight="true"
                     android:checked="true"
                     android:gravity="end|center"
+                    app:theme="@style/SettingSwitchStyle"
                     android:text=""
                     tools:ignore="RtlHardcoded" />
             </RelativeLayout>
@@ -366,6 +370,7 @@
                     android:checked="true"
                     android:gravity="end|center"
                     android:text=""
+                    app:theme="@style/SettingSwitchStyle"
                     android:textOff=""
                     android:textOn=""
                     tools:ignore="RtlHardcoded" />

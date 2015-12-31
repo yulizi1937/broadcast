@@ -1243,8 +1243,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 					mCursor.moveToFirst();
 					mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE)));
 					mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TIME))));
-					mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO)));
-					mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT)));
+					mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO)));
+					mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT)));
 				}
 				
 				Cursor mCursorFileInfo = getContentResolver().query(DBConstant.Training_File_Columns.CONTENT_URI, null, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID + "=?", new String[]{String.valueOf(mId)}, DBConstant.Training_File_Columns.COLUMN_ID + " ASC");
@@ -1665,6 +1665,7 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 								break;
 							}
 							if(mIntent!=null){
+								mIntent.putExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, true);
 								startActivity(mIntent);
 								NotificationsController.getInstance().dismissNotification();
 								mBottomSheetAnyDo.dismiss();

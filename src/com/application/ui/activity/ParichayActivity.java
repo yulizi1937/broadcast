@@ -314,7 +314,7 @@ public class ParichayActivity extends BaseActivity implements ObservableScrollVi
 	private void initToolBar() {
 		mToolBar = (Toolbar) findViewById(R.id.toolbarLayout);
 		mToolBar.setNavigationIcon(R.drawable.ic_back_shadow);
-		mToolBar.setTitle(getResources().getString(R.string.ParichayActivityTitle));
+		mToolBar.setTitle("Mobcast");
 		setSupportActionBar(mToolBar);
 	}
 

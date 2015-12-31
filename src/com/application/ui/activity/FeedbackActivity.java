@@ -155,6 +155,7 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 			AndroidUtilities.exitWindowAnimation(FeedbackActivity.this);
 			if(isFromNotification){
 				Intent mIntent = new Intent(FeedbackActivity.this, MotherActivity.class);
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 				startActivity(mIntent);
 			}
 			return true;
@@ -178,6 +179,7 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 		super.onBackPressed();
 		if(isFromNotification){
 			Intent mIntent = new Intent(FeedbackActivity.this, MotherActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 			startActivity(mIntent);
 		}
 	}

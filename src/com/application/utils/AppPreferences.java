@@ -510,6 +510,20 @@ public class AppPreferences {
 	}
 	
 	/**
+	 * Remove Video Encryption 
+	 */
+	public void setEncryptedVideoDeleted(boolean mIsEncryptedVideoDeleted) {
+		editor = sharedPreferences.edit();
+		editor.putBoolean("mIsEncryptedVideoDeleted", mIsEncryptedVideoDeleted);
+		editor.commit();
+	}
+
+	public boolean isEncryptedVideoDeleted() {
+		boolean mIsEncryptedVideoDeleted= sharedPreferences.getBoolean("mIsEncryptedVideoDeleted",false);
+		return mIsEncryptedVideoDeleted;
+	}
+	
+	/**
 	 * RecyclerView : Save Position 
 	 */
 

@@ -285,95 +285,99 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void setDataFromPreferences(){
-		mGeneralLanguageSelectedTv.setText(ApplicationLoader.getPreferences().getAppLanguage());
-		mNotificationBirthdayTimeSelectedTv.setText(ApplicationLoader.getPreferences().getBirthdayNotifyAt());
+		try{
+			mGeneralLanguageSelectedTv.setText(ApplicationLoader.getPreferences().getAppLanguage());
+			mNotificationBirthdayTimeSelectedTv.setText(ApplicationLoader.getPreferences().getBirthdayNotifyAt());
+			
+			if(ApplicationLoader.getPreferences().isAnyDoNotification()){
+				mNotificationAnyDoCheckBox.setChecked(true);
+			}else{
+				mNotificationAnyDoCheckBox.setChecked(false);
+			}
+			
+			if(ApplicationLoader.getPreferences().isBirthdayNotificationMute()){
+				mNotificationBirthdayMuteCheckBox.setChecked(true);
+			}else{
+				mNotificationBirthdayMuteCheckBox.setChecked(false);
+			}
+			
+			if(ApplicationLoader.getPreferences().getDownloadAndNotify()){
+				mNotificationDownloadAndNotifyCheckBox.setChecked(true);
+			}else{
+				mNotificationDownloadAndNotifyCheckBox.setChecked(false);
+			}
+			
+			if(ApplicationLoader.getPreferences().getSyncFrequency()==60*24){
+				mSyncFrequencyTv.setText("24 hours");
+			}else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*8){
+				mSyncFrequencyTv.setText("8 hours");
+			}else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*2){
+				mSyncFrequencyTv.setText("2 hours");
+			}else if(ApplicationLoader.getPreferences().getSyncFrequency()!=60*4){
+				mSyncFrequencyTv.setText(ApplicationLoader.getPreferences().getSyncFrequency() + " mins");
+			}else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*4){
+				mSyncFrequencyTv.setText("4 hours");
+			}
+			
+			if(ApplicationLoader.getPreferences().isStopSyncAtSleepingHours()){
+				mSyncSleepingCheckBox.setChecked(true);
+			}else{
+				mSyncSleepingCheckBox.setChecked(false);
+			}
+			
+			switch (ApplicationLoader.getPreferences().getAppTheme()) {
+			case 0:
+				mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_dblue));
+				break;
+			case 1:
+				mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_purple));
+				break;
+			case 2:
+				mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_green));
+				break;
+			case 3:
+				mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_pink));
+				break;
+			case 4:
+				mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_teal));
+				break;
+			case 5:
+				mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_brown));
+				break;
+			case 6:
+				mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_gray));
+				break;
+			case 7:
+				mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_amber));
+				break;
+			case 8:
+				mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_orange));
+				break;
+			case 9:
+				mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_lblue));
+				break;
+			case 10:
+				mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_red));
+				break;
+			case 11:
+				mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_dpurple));
+				break;
+			default:
+				mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_dblue));
+				break;
+			}
+			
+			mAboutBuildVersionTv.setText(getResources().getString(R.string.sample_fragment_settings_about_build_version_text) + "\n v"+Utilities.getApplicationVersion() + " ( "+ Utilities.getApplicationVersionCode() + getResources().getString(R.string.app_build)+" ) ");
+			
+			if(ApplicationLoader.getPreferences().getAppOpenRemindHour()!=-1 && ApplicationLoader.getPreferences().getAppOpenRemindMinute()!=-1){
+				mNotificationRemindTv.setText(String.format("%02d", ApplicationLoader.getPreferences().getAppOpenRemindHour()) + ":" + String.format("%02d", ApplicationLoader.getPreferences().getAppOpenRemindMinute()));	
+			}else{
+				mNotificationRemindTv.setText("Never remind me");
+			}
 		
-		if(ApplicationLoader.getPreferences().isAnyDoNotification()){
-			mNotificationAnyDoCheckBox.setChecked(true);
-		}else{
-			mNotificationAnyDoCheckBox.setChecked(false);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());	
 		}
-		
-		if(ApplicationLoader.getPreferences().isBirthdayNotificationMute()){
-			mNotificationBirthdayMuteCheckBox.setChecked(true);
-		}else{
-			mNotificationBirthdayMuteCheckBox.setChecked(false);
-		}
-		
-		if(ApplicationLoader.getPreferences().getDownloadAndNotify()){
-			mNotificationDownloadAndNotifyCheckBox.setChecked(true);
-		}else{
-			mNotificationDownloadAndNotifyCheckBox.setChecked(false);
-		}
-		
-		if(ApplicationLoader.getPreferences().getSyncFrequency()==60*24){
-			mSyncFrequencyTv.setText("24 hours");
-		}else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*8){
-			mSyncFrequencyTv.setText("8 hours");
-		}else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*2){
-			mSyncFrequencyTv.setText("2 hours");
-		}else if(ApplicationLoader.getPreferences().getSyncFrequency()!=60*4){
-			mSyncFrequencyTv.setText(ApplicationLoader.getPreferences().getSyncFrequency() + " mins");
-		}else if(ApplicationLoader.getPreferences().getSyncFrequency()==60*4){
-			mSyncFrequencyTv.setText("4 hours");
-		}
-		
-		if(ApplicationLoader.getPreferences().isStopSyncAtSleepingHours()){
-			mSyncSleepingCheckBox.setChecked(true);
-		}else{
-			mSyncSleepingCheckBox.setChecked(false);
-		}
-		
-		switch (ApplicationLoader.getPreferences().getAppTheme()) {
-		case 0:
-			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_dblue));
-			break;
-		case 1:
-			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_purple));
-			break;
-		case 2:
-			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_green));
-			break;
-		case 3:
-			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_pink));
-			break;
-		case 4:
-			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_teal));
-			break;
-		case 5:
-			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_brown));
-			break;
-		case 6:
-			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_gray));
-			break;
-		case 7:
-			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_amber));
-			break;
-		case 8:
-			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_orange));
-			break;
-		case 9:
-			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_lblue));
-			break;
-		case 10:
-			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_red));
-			break;
-		case 11:
-			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_dpurple));
-			break;
-		default:
-			mStyleThemeAppView.setBackgroundColor(getResources().getColor(R.color.toolbar_background_dblue));
-			break;
-		}
-		
-		mAboutBuildVersionTv.setText(getResources().getString(R.string.sample_fragment_settings_about_build_version_text) + "\n v"+Utilities.getApplicationVersion() + " ( "+ Utilities.getApplicationVersionCode() + getResources().getString(R.string.app_build)+" ) ");
-		
-		if(ApplicationLoader.getPreferences().getAppOpenRemindHour()!=-1 && ApplicationLoader.getPreferences().getAppOpenRemindMinute()!=-1){
-			mNotificationRemindTv.setText(String.format("%02d", ApplicationLoader.getPreferences().getAppOpenRemindHour()) + ":" + String.format("%02d", ApplicationLoader.getPreferences().getAppOpenRemindMinute()));	
-		}else{
-			mNotificationRemindTv.setText("Never remind me");
-		}
-		
 	}
 
 	private void setUiListener() {

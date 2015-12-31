@@ -30,6 +30,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -194,6 +195,8 @@ public class SetProfileActivity extends AppCompatActivity implements OnPermissio
 		
 		mCroutonViewGroup = (FrameLayout)findViewById(R.id.croutonViewGroup);
 		mProfileImageLayout = (FrameLayout)findViewById(R.id.activitySetProfileImageLayout);
+		
+		mSkipTv.setText(Html.fromHtml(getString(R.string.textview_skip)));
 	}
 	
 	private void initToolBar() {

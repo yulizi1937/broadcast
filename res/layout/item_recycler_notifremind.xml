@@ -4,7 +4,7 @@
     android:id="@+id/itemRecyclerNotifRemindRootLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
+    android:background="@drawable/selector_item_notifremind"
     android:clickable="true"
     android:orientation="horizontal"
     android:paddingBottom="8dp"
@@ -29,7 +29,7 @@
         android:layout_marginStart="@dimen/item_recycler_mobcast_text_indicator_image_margin_left"
         android:background="@android:color/white"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_mobcast_text_normal"
+        android:src="@drawable/ic_launcher"
         tools:ignore="ContentDescription" />
 
     <android.support.v7.widget.AppCompatTextView

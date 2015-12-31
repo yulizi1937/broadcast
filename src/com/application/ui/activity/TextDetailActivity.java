@@ -176,6 +176,7 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 			AndroidUtilities.exitWindowAnimation(TextDetailActivity.this);
 			if(isFromNotification){
 				Intent mIntent = new Intent(TextDetailActivity.this, MotherActivity.class);
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 				startActivity(mIntent);
 			}
 			return true;
@@ -204,6 +205,7 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 		super.onBackPressed();
 		if(isFromNotification){
 			Intent mIntent = new Intent(TextDetailActivity.this, MotherActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 			startActivity(mIntent);
 		}
 	}

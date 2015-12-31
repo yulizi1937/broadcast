@@ -119,6 +119,7 @@ public class QuizActivity extends SwipeBackBaseActivity {
 	
 	private int mQuizScore = 0;
 	private int mQuizTimeTaken = 0;
+	private int mQuizTotalPoints = 0;
 	
 	private boolean isFromNotification = false;
 	
@@ -175,6 +176,7 @@ public class QuizActivity extends SwipeBackBaseActivity {
 			AndroidUtilities.exitWindowAnimation(QuizActivity.this);
 			if(isFromNotification){
 				Intent mIntent = new Intent(QuizActivity.this, MotherActivity.class);
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 				startActivity(mIntent);
 			}
 			return true;
@@ -199,6 +201,7 @@ public class QuizActivity extends SwipeBackBaseActivity {
 		super.onBackPressed();
 		if(isFromNotification){
 			Intent mIntent = new Intent(QuizActivity.this, MotherActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 			startActivity(mIntent);
 		}
 	}
@@ -459,82 +462,96 @@ public class QuizActivity extends SwipeBackBaseActivity {
 	}
 
 	private void setQuizViewPager() {
-		if(mArrayListQuizPagerInfo!=null && mArrayListQuizPagerInfo.size()>0){
-			if (mArrayListQuizPagerInfo.size() < 7) {
-				isCirclePagerIndicatorEnable = true;
+		try{
+			if(mArrayListQuizPagerInfo!=null && mArrayListQuizPagerInfo.size()>0){
+				if (mArrayListQuizPagerInfo.size() < 7) {
+					isCirclePagerIndicatorEnable = true;
+				}
+				mAdapter = new QuizViewPagerAdapter(getSupportFragmentManager(),
+						mArrayListQuizPagerInfo);
+				setViewPagerListener();
+				mQuestionViewPager.setAdapter(mAdapter);
+				if (isCirclePagerIndicatorEnable) {
+					mQuestionCirclePageIndicator.setViewPager(mQuestionViewPager);
+					mQuestionCirclePageIndicator
+							.setOnPageChangeListener(mPagerListener);
+				} else {
+					mQuizQuestionPagerCounterTv.setVisibility(View.VISIBLE);
+					mQuestionCirclePageIndicator.setVisibility(View.GONE);
+					mQuestionViewPager.setOnPageChangeListener(mPagerListener);
+					mQuizQuestionPagerCounterTv.setText(1 + " / "
+							+ mArrayListQuizPagerInfo.size());
+				}
+				
+				if (mArrayListQuizPagerInfo.size() == 1) {
+					mQuizNavigationPrevBtn.setVisibility(View.INVISIBLE);
+					mQuizNavigationNextBtn.setText(getResources().getString(R.string.button_submit));
+				}
 			}
-			mAdapter = new QuizViewPagerAdapter(getSupportFragmentManager(),
-					mArrayListQuizPagerInfo);
-			setViewPagerListener();
-			mQuestionViewPager.setAdapter(mAdapter);
-			if (isCirclePagerIndicatorEnable) {
-				mQuestionCirclePageIndicator.setViewPager(mQuestionViewPager);
-				mQuestionCirclePageIndicator
-						.setOnPageChangeListener(mPagerListener);
-			} else {
-				mQuizQuestionPagerCounterTv.setVisibility(View.VISIBLE);
-				mQuestionCirclePageIndicator.setVisibility(View.GONE);
-				mQuestionViewPager.setOnPageChangeListener(mPagerListener);
-			}
-			
-			if (mArrayListQuizPagerInfo.size() == 1) {
-				mQuizNavigationPrevBtn.setVisibility(View.INVISIBLE);
-				mQuizNavigationNextBtn.setText(getResources().getString(R.string.button_submit));
-			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 
 	private void setViewPagerListener() {
-		mPagerListener = new ViewPager.OnPageChangeListener() {
-			@Override
-			public void onPageSelected(int position) {
-				// TODO Auto-generated method stub
-				int mNumberQuestion = position + 1;
-				uiOnChangeOfPagerListener(mNumberQuestion);
-			}
+		try{
+			mPagerListener = new ViewPager.OnPageChangeListener() {
+				@Override
+				public void onPageSelected(int position) {
+					// TODO Auto-generated method stub
+					int mNumberQuestion = position + 1;
+					uiOnChangeOfPagerListener(mNumberQuestion);
+				}
 
-			@Override
-			public void onPageScrolled(int position, float positionOffset,
-					int positionOffsetPixels) {
-				// TODO Auto-generated method stub
+				@Override
+				public void onPageScrolled(int position, float positionOffset,
+						int positionOffsetPixels) {
+					// TODO Auto-generated method stub
 
-			}
+				}
 
-			@Override
-			public void onPageScrollStateChanged(int state) {
-				// TODO Auto-generated method stub
+				@Override
+				public void onPageScrollStateChanged(int state) {
+					// TODO Auto-generated method stub
 
-			}
-		};
+				}
+			};
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 
 	private void uiOnChangeOfPagerListener(int mNumberQuestion) {
-		mQuizQuestionHeaderTv.setText(getResources().getString(
-				R.string.sample_question_header_box)
-				+ " " + mNumberQuestion);
-		if (!isCirclePagerIndicatorEnable) {
-			mQuizQuestionPagerCounterTv.setText(mNumberQuestion + " / "
-					+ mArrayListQuizPagerInfo.size());
-		}
+		try{
+			mQuizQuestionHeaderTv.setText(getResources().getString(
+					R.string.sample_question_header_box)
+					+ " " + mNumberQuestion);
+			if (!isCirclePagerIndicatorEnable) {
+				mQuizQuestionPagerCounterTv.setText(mNumberQuestion + " / "
+						+ mArrayListQuizPagerInfo.size());
+			}
 
-		if (mNumberQuestion == mArrayListQuizPagerInfo.size()) {
-			mQuizNavigationNextBtn.setText(getResources().getString(
-					R.string.button_submit));
-		} else {
-			mQuizNavigationNextBtn.setText(getResources().getString(
-					R.string.button_next));
-		}
-		
-		if (mNumberQuestion == 1) {
-			mQuizNavigationPrevBtn.setEnabled(false);
-		} else {
-			mQuizNavigationPrevBtn.setEnabled(true);
-		}
+			if (mNumberQuestion == mArrayListQuizPagerInfo.size()) {
+				mQuizNavigationNextBtn.setText(getResources().getString(
+						R.string.button_submit));
+			} else {
+				mQuizNavigationNextBtn.setText(getResources().getString(
+						R.string.button_next));
+			}
+			
+			if (mNumberQuestion == 1) {
+				mQuizNavigationPrevBtn.setEnabled(false);
+			} else {
+				mQuizNavigationPrevBtn.setEnabled(true);
+			}
 
-		if (mArrayListQuizPagerInfo.size() == 1) {
-			mQuizNavigationPrevBtn.setVisibility(View.INVISIBLE);
-			mQuizNavigationNextBtn.setText(getResources().getString(
-					R.string.button_submit));
+			if (mArrayListQuizPagerInfo.size() == 1) {
+				mQuizNavigationPrevBtn.setVisibility(View.INVISIBLE);
+				mQuizNavigationNextBtn.setText(getResources().getString(
+						R.string.button_submit));
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 
@@ -687,6 +704,7 @@ public class QuizActivity extends SwipeBackBaseActivity {
 					String mQueType = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_TYPE));
 					String mQueId = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_QID));
 					String mCorrectAnswer = mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Quiz_Columns.COLUMN_TRAINING_QUIZ_CORRECT_OPTION));
+					mQuizTotalPoints +=mPoints;
 					if(!TextUtils.isEmpty(mAnswer) && !TextUtils.isEmpty(mCorrectAnswer)){
 						if(mQueType.equalsIgnoreCase("selective")){
 							if(mAnswer.equalsIgnoreCase(mCorrectAnswer)){
@@ -794,6 +812,7 @@ public class QuizActivity extends SwipeBackBaseActivity {
 			Intent mIntent = new Intent(QuizActivity.this, QuizScoreActivity.class);
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.TIMETAKEN, String.valueOf(mQuizTimeTaken));
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.POINTS, String.valueOf(mQuizScore));
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.TOTALPOINTS, String.valueOf(mQuizTotalPoints));
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.TOTAL, String.valueOf(mArrayListQuizPagerInfo.size()));
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.QUIZINCORRECT, mArrayListQuizScorePagerInfo);
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, isFromNotification);

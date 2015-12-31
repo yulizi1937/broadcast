@@ -1,5 +1,6 @@
 package com.application.ui.fragment;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -1013,6 +1014,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 	
 	private void contextMenuDelete(int mPosition){
 		try{
+		 deleteFiles(mArrayListMobcast.get(mPosition).getmId());
 		 getActivity().getContentResolver().delete(DBConstant.Mobcast_Columns.CONTENT_URI, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mArrayListMobcast.get(mPosition).getmId()});
        	 getActivity().getContentResolver().delete(DBConstant.Mobcast_File_Columns.CONTENT_URI, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mArrayListMobcast.get(mPosition).getmId()});
        	 mArrayListMobcast.remove(mPosition);
@@ -1023,6 +1025,24 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
        	 }
        	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.MOBCAST);		
        	Utilities.showBadgeNotification(getActivity());
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void deleteFiles(String mId){
+		try{
+			Cursor mCursor = getActivity().getContentResolver().query(DBConstant.Mobcast_File_Columns.CONTENT_URI, null, DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{mId}, null);
+			if(mCursor!=null && mCursor.getCount() > 0){
+				mCursor.moveToFirst();
+				do {
+					Utilities.deleteAppFolder(new File(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_PATH))));
+					Utilities.deleteAppFolder(new File(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_File_Columns.COLUMN_MOBCAST_FILE_THUMBNAIL_PATH))));
+				} while (mCursor.moveToNext());
+			}
+			if(mCursor!=null){
+				mCursor.close();
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

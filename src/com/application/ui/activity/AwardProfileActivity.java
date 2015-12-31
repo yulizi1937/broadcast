@@ -201,6 +201,7 @@ public class AwardProfileActivity extends SwipeBackBaseActivity {
 			}
 			return true;
 		case R.id.action_share:
+			showDialog(0);
 			return true;
 		case R.id.action_report:
 			Intent mIntent = new Intent(AwardProfileActivity.this,

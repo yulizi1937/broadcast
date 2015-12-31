@@ -55,6 +55,7 @@ public class GCMIntentNotificationService extends IntentService {
 	private boolean isPullAppData = false;
 	private boolean isSyncFrequency = false;
 	private boolean isParichayReferral = false;
+	private boolean isGCMUnreadNotify = false;
 
 	private String _id;
 	private String mBroadcastType;
@@ -145,6 +146,9 @@ public class GCMIntentNotificationService extends IntentService {
 				isParichayReferral = true;
 				fetchParichayReferral(mIntent);
 				return false;
+			}else if(mBroadcastType.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.GCMUNREADREMIND)){
+				isGCMUnreadNotify = true;
+				return gcmUnreadNotify(mIntent);
 			}
 			return false;
 		}catch(Exception e){
@@ -332,8 +336,7 @@ public class GCMIntentNotificationService extends IntentService {
 					}
 				}
 				
-				NotificationsController.getInstance()
-				.showOrUpdateNotification(isFileDownloaded,isThumbnailDownloaded,Integer.parseInt(mMobcastId),AppConstants.INTENTCONSTANTS.MOBCAST,mIntType);
+				NotificationsController.getInstance().showOrUpdateNotification(isFileDownloaded,isThumbnailDownloaded,Integer.parseInt(mMobcastId),AppConstants.INTENTCONSTANTS.MOBCAST,mIntType);
 				
 				UserReport.updateUserReportApi(mMobcastId, AppConstants.INTENTCONSTANTS.MOBCAST, AppConstants.REPORT.PUSH, "");
 			}
@@ -815,6 +818,90 @@ public class GCMIntentNotificationService extends IntentService {
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
+	}
+	
+	/**
+	 * GCM Unread Notify : Check Whether exist or not and notify accordingly
+	 */
+	private boolean gcmUnreadNotify(Intent mIntent){
+		try{
+			String mMobcastType = mIntent.getStringExtra(AppConstants.API_KEY_PARAMETER.mobcastType);
+			Cursor mCursor = null;
+			if(mMobcastType.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+				mCursor = getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, new String[]{DBConstant.Mobcast_Columns.COLUMN_ID, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_IS_READ, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TYPE},  DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?" , new String[]{_id}, null);
+				if(mCursor!=null && mCursor.getCount() > 0){
+					mCursor.moveToFirst();
+					int mIntType = Utilities.getMediaType(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TYPE)));
+					NotificationsController.getInstance().showOrUpdateNotification(false,false,Integer.parseInt(_id),AppConstants.INTENTCONSTANTS.MOBCAST,mIntType);
+					if(mCursor!=null){
+						mCursor.close();
+					}
+					return false;
+				}else{
+					isMobcast = true;
+					mBroadcastType = mMobcastType;
+					if(mCursor!=null){
+						mCursor.close();
+					}
+					return true;
+				}
+			}else if(mMobcastType.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+				mCursor = getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, new String[]{DBConstant.Training_Columns.COLUMN_ID, DBConstant.Training_Columns.COLUMN_TRAINING_IS_READ, DBConstant.Training_Columns.COLUMN_TRAINING_TYPE},  DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?" , new String[]{_id}, null);
+				if(mCursor!=null && mCursor.getCount() > 0){
+					mCursor.moveToFirst();
+					int mIntType = Utilities.getMediaType(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TYPE)));
+					NotificationsController.getInstance().showOrUpdateNotification(false,false,Integer.parseInt(_id),AppConstants.INTENTCONSTANTS.TRAINING,mIntType);
+					if(mCursor!=null){
+						mCursor.close();
+					}
+					return false;
+				}else{
+					isTraining = true;
+					mBroadcastType = mMobcastType;
+					if(mCursor!=null){
+						mCursor.close();
+					}
+					return true;
+				}
+			}else if(mMobcastType.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.EVENT)){
+				mCursor = getContentResolver().query(DBConstant.Event_Columns.CONTENT_URI, new String[]{DBConstant.Event_Columns.COLUMN_ID, DBConstant.Event_Columns.COLUMN_EVENT_IS_READ},  DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?" , new String[]{_id}, null);
+				if(mCursor!=null && mCursor.getCount() > 0){
+					mCursor.moveToFirst();
+					NotificationsController.getInstance().showOrUpdateNotification(false,false,Integer.parseInt(_id),AppConstants.INTENTCONSTANTS.EVENT,AppConstants.TYPE.EVENT);
+					if(mCursor!=null){
+						mCursor.close();
+					}
+					return false;
+				}else{
+					isEvent = true;
+					mBroadcastType = mMobcastType;
+					if(mCursor!=null){
+						mCursor.close();
+					}
+					return true;
+				}
+			}else if(mMobcastType.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.AWARD)){
+				mCursor = getContentResolver().query(DBConstant.Award_Columns.CONTENT_URI, new String[]{DBConstant.Award_Columns.COLUMN_ID, DBConstant.Award_Columns.COLUMN_AWARD_IS_READ},  DBConstant.Award_Columns.COLUMN_AWARD_ID + "=?" , new String[]{_id}, null);
+				if(mCursor!=null && mCursor.getCount() > 0){
+					mCursor.moveToFirst();
+					NotificationsController.getInstance().showOrUpdateNotification(false,false,Integer.parseInt(_id),AppConstants.INTENTCONSTANTS.AWARD,AppConstants.TYPE.AWARD);
+					if(mCursor!=null){
+						mCursor.close();
+					}
+					return false;
+				}else{
+					isAward = true;
+					mBroadcastType = mMobcastType;
+					if(mCursor!=null){
+						mCursor.close();
+					}
+					return true;
+				}
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return false;
 	}
 	
 	/**

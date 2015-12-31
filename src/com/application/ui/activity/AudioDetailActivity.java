@@ -11,11 +11,13 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.Bundle;
@@ -253,6 +255,7 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 			AndroidUtilities.exitWindowAnimation(AudioDetailActivity.this);
 			if(isFromNotification){
 				Intent mIntent = new Intent(AudioDetailActivity.this, MotherActivity.class);
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 				startActivity(mIntent);
 			}
 			return true;
@@ -279,6 +282,7 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 		super.onBackPressed();
 		if(isFromNotification){
 			Intent mIntent = new Intent(AudioDetailActivity.this, MotherActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 			startActivity(mIntent);
 		}
 	}
@@ -604,6 +608,15 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 
 	    // Start with just line renderer
 	    addLineRenderer();
+	    
+	    mPlayer.setOnErrorListener(new OnErrorListener() {
+			@Override
+			public boolean onError(MediaPlayer mp, int what, int extra) {
+				// TODO Auto-generated method stub
+				catchErrorOnMediaPlayer();
+				return true;
+			}
+		});
 	  }
 
 	  private void cleanUp(){
@@ -1005,6 +1018,29 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 		mReportDuration += mReportStop - mReportStart;
 		UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, Utilities.getTimeFromMilliSeconds(mTotalDuration));
 		mReportDuration = 0;
+	}
+	
+	private void catchErrorOnMediaPlayer(){
+		try{
+			AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(AudioDetailActivity.this);
+			mAlertDialog.setTitle(getResources().getString(R.string.mediaplayer_error));
+			mAlertDialog.setMessage(getResources().getString(R.string.videoview_error_message));
+			mAlertDialog.setCancelable(true);
+			mAlertDialog.setPositiveButton(getResources().getString(R.string.OK), new OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					dialog.dismiss();
+					Utilities.deleteAppFolder(new File(mContentFilePath));
+					startActivity(mIntent);
+					AndroidUtilities.enterWindowAnimation(AudioDetailActivity.this);
+					finish();
+				}
+			});
+			mAlertDialog.show();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	private void runOnSeekBarThread(){

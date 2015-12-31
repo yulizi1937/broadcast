@@ -117,7 +117,7 @@
                         android:background="@android:color/white"
                         android:gravity="start|center"
                         android:hint="@string/hint_name"
-                        android:inputType="text"
+                        android:inputType="textCapWords"
                         android:paddingEnd="1dp"
                         android:imeOptions="actionNext"
                         android:paddingLeft="4dp"

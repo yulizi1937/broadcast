@@ -233,6 +233,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 			AndroidUtilities.exitWindowAnimation(ImageDetailActivity.this);
 			if(isFromNotification){
 				Intent mIntent = new Intent(ImageDetailActivity.this, MotherActivity.class);
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 				startActivity(mIntent);
 			}
 			return true;
@@ -261,6 +262,7 @@ public class ImageDetailActivity extends SwipeBackBaseActivity {
 		super.onBackPressed();
 		if(isFromNotification){
 			Intent mIntent = new Intent(ImageDetailActivity.this, MotherActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 			startActivity(mIntent);
 		}
 	}

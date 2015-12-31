@@ -85,7 +85,7 @@ public class SplashActivity extends SwipeBackBaseActivity {
 	public void onPause() {
         if(mShimmerFrameLayout!=null){
             mShimmerFrameLayout.stopShimmerAnimation();
-            removeResourcesFromMemory();
+//            removeResourcesFromMemory();
         }
 		super.onPause();
 	}

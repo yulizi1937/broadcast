@@ -16,6 +16,8 @@
 
 package com.application.ui.activity;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -514,5 +516,30 @@ public abstract class BaseActivity extends AppCompatActivity {
 	
 	protected void setToolBarOption(){
 		supportInvalidateOptionsMenu();
+	}
+	
+	protected boolean isFileCorrupted(String mFilePath, String mFileSize){
+		try{
+			if(new File(mFilePath).length() == Long.parseLong(mFileSize)){
+				return false;
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+			return false;
+		}
+		return true;
+	}
+	
+	protected int isFromTraining(String mCategory){
+		try{
+			if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+				return 0;
+			}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+				return 1;
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return 0;
 	}
 }

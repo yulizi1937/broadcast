@@ -1152,11 +1152,16 @@ public class Utilities {
 											+ " mins ago";
 							}
 						} else {
-							if (Math.abs(contentHours - todayHours) != 1)
+							if (contentHours - todayHours < 0){
+								return String.format("%02d", Math.abs(todayHours - contentHours))
+										+ " hours ago";
+							}else if (Math.abs(contentHours - todayHours) != 1){
 								return String.format("%02d", Math.abs(todayHours - contentHours))
 										+ " hours left";
-							else
+							}
+							else{
 								return "01 hour left";
+							}
 						}
 					} else if (numberOfDays == 1){
 						return String.format("%02d", Math.abs(numberOfDays)) + " day left";
@@ -1394,7 +1399,7 @@ public class Utilities {
 			}
 			try {
 			       FileOutputStream out = new FileOutputStream(file);
-			       mBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+			       mBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
 			       out.flush();
 			       out.close();
 			} catch (Exception e) {

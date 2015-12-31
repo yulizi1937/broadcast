@@ -31,6 +31,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -138,7 +139,7 @@ import com.squareup.okhttp.OkHttpClient;
 		setAutomatePager();
 		setUiListener();
 		tryToGetUserId();
-		tryToGetUserCountryCode();
+//		tryToGetUserCountryCode();
 		isViaOTPSupport();
 		setAppOpenRemindService();
 	}
@@ -173,6 +174,8 @@ import com.squareup.okhttp.OkHttpClient;
 
 		mLoginLayout = (LinearLayout) findViewById(R.id.activityLoginLayout);
 		mCroutonViewGroup = (FrameLayout) findViewById(R.id.croutonViewGroup);
+		
+		mAdminTv.setText(Html.fromHtml(getString(R.string.textview_login_administration)));
 	}
 
 	private void initToolBar() {
@@ -424,16 +427,15 @@ import com.squareup.okhttp.OkHttpClient;
 		if (!TextUtils.isEmpty(mCharsequence.toString())) {
 			Pattern p = Pattern.compile("[0-9]+");
 			Matcher matcher = p.matcher(mCharsequence.toString());
-			if (matcher.matches()) {
+			if (matcher.matches() && !TextUtils.isEmpty(countryCodeValue)) {
 				Phonenumber.PhoneNumber mPhoneNumber;
 				try {
-					mPhoneNumber = PhoneNumberUtil.getInstance().parse(
-							mCharsequence.toString(), countryCodeValue);
-					if (PhoneNumberUtil.getInstance().isValidNumber(
-							mPhoneNumber)) {
-						if (PhoneNumberUtil.getInstance()
-								.isValidNumberForRegion(mPhoneNumber,
-										countryCodeValue)) {
+					mPhoneNumber = PhoneNumberUtil.getInstance().parse(mCharsequence.toString(), countryCodeValue);
+					FileLog.e(TAG, countryCodeValue + " : " + mCharsequence.toString());
+					if (PhoneNumberUtil.getInstance().isValidNumber(mPhoneNumber)) {
+						FileLog.e(TAG, countryCodeValue + " : isValid " + mCharsequence.toString());
+						if (PhoneNumberUtil.getInstance().isValidNumberForRegion(mPhoneNumber,countryCodeValue)) {
+							FileLog.e(TAG, countryCodeValue + " : isValidReg " + mCharsequence.toString());
 							isValidLoginId = true;
 						} else {
 							isValidLoginId = false;
@@ -599,6 +601,7 @@ import com.squareup.okhttp.OkHttpClient;
 			if (requestCode == INTENT_COUNTRY_CODE) {
 				mCountryCodeTv.setText(mIntent.getStringExtra("country_code"));
 				countryCodeValue = mIntent.getStringExtra("country_code_");
+				FileLog.e(TAG, "onActivityResult : "+countryCodeValue);
 			}
 		}
 	}

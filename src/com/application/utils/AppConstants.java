@@ -514,6 +514,7 @@ public class AppConstants {
 		public static final String GCMSUCCESS       = "gcmSuccess";
 		public static final String REMOTESUSPEND    = "remoteSuspend";
 		public static final String APPPULLDATA      = "appPullData";
+		public static final String GCMUNREADREMIND  = "gcmUnreadRemind";
 		public static final String SYNCFREQUENCY    = "syncFrequency";
 		public static final String RECRUITMENT      = "recruitment";
 		public static final String PARICHAY         = "parichay";
@@ -526,6 +527,7 @@ public class AppConstants {
 		public static final String OBJECT           = "object";
 		public static final String POSITION         = "position";
 		public static final String POINTS           = "points";
+		public static final String TOTALPOINTS      = "totalPoints";
 		public static final String TOTAL            = "total";
 		public static final String TIMETAKEN        = "timeTaken";
 		public static final String QUIZINCORRECT    = "quizInCorrect";

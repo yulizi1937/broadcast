@@ -10,11 +10,13 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.media.MediaPlayer.OnErrorListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,7 +35,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.TextureView;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -55,12 +56,12 @@ import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.DownloadAsyncTask;
-import com.application.utils.ThemeUtils;
 import com.application.utils.DownloadAsyncTask.OnPostExecuteListener;
 import com.application.utils.FetchActionAsyncTask;
 import com.application.utils.FetchActionAsyncTask.OnPostExecuteTaskListener;
 import com.application.utils.FileLog;
 import com.application.utils.Style;
+import com.application.utils.ThemeUtils;
 import com.application.utils.UserReport;
 import com.application.utils.Utilities;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -270,6 +271,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 			AndroidUtilities.exitWindowAnimation(VideoDetailActivity.this);
 			if(isFromNotification){
 				Intent mIntent = new Intent(VideoDetailActivity.this, MotherActivity.class);
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 				startActivity(mIntent);
 			}
 			return true;
@@ -298,6 +300,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 		super.onBackPressed();
 		if(isFromNotification){
 			Intent mIntent = new Intent(VideoDetailActivity.this, MotherActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 			startActivity(mIntent);
 		}
 	}
@@ -621,6 +624,38 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 				runOnSeekBarThread();
 			}
 		});
+		
+		mVideoView.setOnErrorListener(new OnErrorListener() {
+			@Override
+			public boolean onError(MediaPlayer mp, int what, int extra) {
+				// TODO Auto-generated method stub
+				catchErrorOnVideoView();
+				return true;
+			}
+		});
+	}
+	
+	private void catchErrorOnVideoView(){
+		try{
+			AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(VideoDetailActivity.this);
+			mAlertDialog.setTitle(getResources().getString(R.string.videoview_error));
+			mAlertDialog.setMessage(getResources().getString(R.string.videoview_error_message));
+			mAlertDialog.setCancelable(true);
+			mAlertDialog.setPositiveButton(getResources().getString(R.string.OK), new OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					dialog.dismiss();
+					Utilities.deleteAppFolder(new File(mContentFilePath));
+					startActivity(mIntent);
+					AndroidUtilities.enterWindowAnimation(VideoDetailActivity.this);
+					finish();
+				}
+			});
+			mAlertDialog.show();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 
 	private void runOnSeekBarThread() {

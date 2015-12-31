@@ -313,9 +313,13 @@ public class PanningViewAttacher implements ViewTreeObserver.OnGlobalLayoutListe
 	}
 
 	private void setCurrentImageMatrix() {
-		getImageView().setImageMatrix(mMatrix);
-		getImageView().invalidate();
-		getImageView().requestLayout();
+		try{
+			getImageView().setImageMatrix(mMatrix);
+			getImageView().invalidate();
+			getImageView().requestLayout();
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 
 	private void refreshDisplayRect() {

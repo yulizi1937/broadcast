@@ -17,6 +17,7 @@
     <color name="item_text_info">#545454</color>
     <color name="item_unread_strip_color">#00AFF0</color>
     <color name="item_recycler_mobcast_timeline_color">#FE9915</color>
+    <color name="item_recycler_selector">#d1d1d1</color>
     <color name="slidingtablayout_text_default">#99ffffff</color>
     <color name="slidingtablayout_text_focused">#ffffffff</color>
     <color name="editbox_color">#577995</color>

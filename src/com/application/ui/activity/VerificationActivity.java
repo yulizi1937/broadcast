@@ -26,6 +26,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -173,6 +174,8 @@ public class VerificationActivity extends SwipeBackBaseActivity {
 		
 		mReSendBtn.setEnabled(false);
 		mRaisedTicket.setEnabled(false);
+		
+		mEnteredAgainTv.setText(Html.fromHtml(getString(R.string.textview_verify_administration_tryagain)));
 	}
 
 	private void initToolBar() {

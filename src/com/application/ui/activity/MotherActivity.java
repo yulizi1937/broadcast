@@ -172,10 +172,12 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		propagateToolbarState(toolbarIsShown());
 		setDrawerLayout();
 		applyTheme();
+		getIntentData();
 		apiCheckVersionUpdate();
 		showCaseView();
 		whichTheme = ApplicationLoader.getPreferences().getAppTheme();
 		showAppRate();
+		checkVideoEncrypted();
 	}
 
 	@Override
@@ -355,6 +357,17 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 		try{
 			ThemeUtils.getInstance(MotherActivity.this).applyThemeMother(MotherActivity.this, MotherActivity.this, mToolBar, mSlidingTabLayout);
 			ThemeUtils.getInstance(MotherActivity.this).applyThemeDrawer(MotherActivity.this, MotherActivity.this, mDrawerProfileBgLayout, mDrawerUserNameTv);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void getIntentData(){
+		try{
+			int isTrainingTab = getIntent().getIntExtra(AppConstants.INTENTCONSTANTS.CATEGORY, 0);
+			if(isTrainingTab == 1){
+				mPager.setCurrentItem(1, true);
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
@@ -875,6 +888,17 @@ public class MotherActivity extends BaseActivity implements ObservableScrollView
 	private void showAppRate(){
 		try{
 			AppRater.app_launched(MotherActivity.this, 7, 20, 21, 40);	
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void checkVideoEncrypted(){
+		try{
+			if(!ApplicationLoader.getPreferences().isEncryptedVideoDeleted()){
+				Utilities.deleteAppFolder(new File(AppConstants.FOLDER.VIDEO_FOLDER));
+				ApplicationLoader.getPreferences().setEncryptedVideoDeleted(true);
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

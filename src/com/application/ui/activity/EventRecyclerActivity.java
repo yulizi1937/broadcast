@@ -3,6 +3,7 @@
  */
 package com.application.ui.activity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -37,7 +38,6 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.Toolbar;
@@ -50,7 +50,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.application.beans.Award;
 import com.application.beans.Event;
 import com.application.sqlite.DBConstant;
 import com.application.ui.adapter.EventRecyclerAdapter;
@@ -770,6 +769,7 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
 	
 	private void contextMenuDelete(int mPosition){
 		try{
+		 deleteFiles(mArrayListEvent.get(mPosition).getmId());
 		 getContentResolver().delete(DBConstant.Event_Columns.CONTENT_URI, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mArrayListEvent.get(mPosition).getmId()});
        	 mArrayListEvent.remove(mPosition);
        	 if(mArrayListEvent.size() == 0){
@@ -778,6 +778,23 @@ public class EventRecyclerActivity extends SwipeBackBaseActivity {
        		mRecyclerView.getAdapter().notifyDataSetChanged();
        	 }
        	Utilities.showBadgeNotification(EventRecyclerActivity.this);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void deleteFiles(String mId){
+		try{
+			Cursor mCursor = getContentResolver().query(DBConstant.Event_Columns.CONTENT_URI, null, DBConstant.Event_Columns.COLUMN_EVENT_ID + "=?", new String[]{mId}, null);
+			if(mCursor!=null && mCursor.getCount() > 0){
+				mCursor.moveToFirst();
+				do {
+					Utilities.deleteAppFolder(new File(mCursor.getString(mCursor.getColumnIndex(DBConstant.Event_Columns.COLUMN_EVENT_FILE_PATH))));
+				} while (mCursor.moveToNext());
+			}
+			if(mCursor!=null){
+				mCursor.close();
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

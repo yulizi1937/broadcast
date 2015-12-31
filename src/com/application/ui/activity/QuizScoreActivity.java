@@ -75,6 +75,7 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 	
 	private String mTimeTaken;
 	private String mTotalPoints;
+	private String mOverallPoints;
 	private String mTotalQuestions = "0";
 	private String mIncorrectQuestions = "0";
 	
@@ -144,6 +145,7 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 		mQuestionScoreViewPager = (ViewPager) findViewById(R.id.fragmentQuizScoreQuestionViewPager);
 
 		mQuestionScoreCirclePageIndicator = (CirclePageIndicator) findViewById(R.id.fragmentQuizScoreQuestionCirclePageIndicator);
+		mQuizScoreQuestionPagerCounterTv = (AppCompatTextView) findViewById(R.id.fragmentQuizScoreQuestionPageCountTv);
 	}
 
 	/**
@@ -186,6 +188,7 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 		mIntent = getIntent();
 		mTimeTaken = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.TIMETAKEN);
 		mTotalPoints = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.POINTS);
+		mOverallPoints = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.TOTALPOINTS);
 		mTotalQuestions = mIntent.getStringExtra(AppConstants.INTENTCONSTANTS.TOTAL);
 		mArrayListQuizScorePagerInfo = mIntent.getParcelableArrayListExtra(AppConstants.INTENTCONSTANTS.QUIZINCORRECT);
 		isFromNotification = mIntent.getBooleanExtra(AppConstants.INTENTCONSTANTS.ISFROMNOTIFICATION, false);
@@ -196,61 +199,69 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 	}
 	
 	private void setIntentDataToUi(){
-		
-		if(!TextUtils.isEmpty(mTotalPoints)){
-			mQuizScoreTv.setText(mTotalPoints);
-		}
-		
-		if(!TextUtils.isEmpty(mTimeTaken)){
-			String[] mTime = Utilities.convertTimeFromSecsTo(Long.parseLong(mTimeTaken)).split(" ");
-			mQuizScoreTimeTakenTv.setText(mTime[0]);
-			mQuizScoreTimeTakenTextTv.setText(mTime[1]);
-		}
-		
-		if(mArrayListQuizScorePagerInfo!=null && mArrayListQuizScorePagerInfo.size() > 0){
-			mQuizScoreCorrectAnswerTv.setText(mIncorrectQuestions + "/" + mTotalQuestions);
-		}else{
-			mQuizScoreCorrectAnswerTv.setText(mTotalQuestions+ "/" + mTotalQuestions);
-		}
-		
-		
-		if(mArrayListQuizScorePagerInfo!=null && mArrayListQuizScorePagerInfo.size() > 0){
-			setQuizViewPager();	
-		}else{
-			mQuestionScoreViewPager.setVisibility(View.GONE);
-			mQuizScoreNavigationPrevBtn.setVisibility(View.GONE);
-			mQuizScoreGoofedUpAtTv.setVisibility(View.GONE);
-			mQuizScoreNavigationNextBtn.setText(getResources().getString(
-					R.string.button_submit));
+		try{
+			if(!TextUtils.isEmpty(mTotalPoints)){
+				mQuizScoreTv.setText(mTotalPoints + "/" + mOverallPoints);
+			}
+			
+			if(!TextUtils.isEmpty(mTimeTaken)){
+				String[] mTime = Utilities.convertTimeFromSecsTo(Long.parseLong(mTimeTaken)).split(" ");
+				mQuizScoreTimeTakenTv.setText(mTime[0]);
+				mQuizScoreTimeTakenTextTv.setText(mTime[1]);
+			}
+			
+			if(mArrayListQuizScorePagerInfo!=null && mArrayListQuizScorePagerInfo.size() > 0){
+				mQuizScoreCorrectAnswerTv.setText(mIncorrectQuestions + "/" + mTotalQuestions);
+			}else{
+				mQuizScoreCorrectAnswerTv.setText(mTotalQuestions+ "/" + mTotalQuestions);
+			}
+			
+			
+			if(mArrayListQuizScorePagerInfo!=null && mArrayListQuizScorePagerInfo.size() > 0){
+				setQuizViewPager();	
+			}else{
+				mQuestionScoreViewPager.setVisibility(View.GONE);
+				mQuizScoreNavigationPrevBtn.setVisibility(View.GONE);
+				mQuizScoreGoofedUpAtTv.setVisibility(View.GONE);
+				mQuizScoreNavigationNextBtn.setText(getResources().getString(
+						R.string.button_submit));
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 
 	@SuppressWarnings("deprecation")
 	private void setQuizViewPager() {
-		if (mArrayListQuizScorePagerInfo.size() < 7) {
-			isCirclePagerIndicatorEnable = true;
-		}
-		mAdapter = new QuizScoreViewPagerAdapter(getSupportFragmentManager(),
-				mArrayListQuizScorePagerInfo);
-		setViewPagerListener();
-		mQuestionScoreViewPager.setAdapter(mAdapter);
-		if (isCirclePagerIndicatorEnable) {
-			mQuestionScoreCirclePageIndicator
-					.setViewPager(mQuestionScoreViewPager);
-			mQuestionScoreCirclePageIndicator
-					.setOnPageChangeListener(mPagerListener);
-		} else {
-			mQuizScoreQuestionPagerCounterTv.setVisibility(View.VISIBLE);
-			mQuestionScoreCirclePageIndicator.setVisibility(View.GONE);
-			mQuestionScoreViewPager.setOnPageChangeListener(mPagerListener);
-		}
-		
-		if (mArrayListQuizScorePagerInfo.size() == 1) {
-			mQuizScoreNavigationPrevBtn.setVisibility(View.GONE);
-			mQuizScoreNavigationNextBtn.setText(getResources().getString(
-					R.string.button_submit));
-		}
+		try{
+			if (mArrayListQuizScorePagerInfo.size() < 7) {
+				isCirclePagerIndicatorEnable = true;
+			}
+			mAdapter = new QuizScoreViewPagerAdapter(getSupportFragmentManager(),
+					mArrayListQuizScorePagerInfo);
+			setViewPagerListener();
+			mQuestionScoreViewPager.setAdapter(mAdapter);
+			if (isCirclePagerIndicatorEnable) {
+				mQuestionScoreCirclePageIndicator
+						.setViewPager(mQuestionScoreViewPager);
+				mQuestionScoreCirclePageIndicator
+						.setOnPageChangeListener(mPagerListener);
+			} else {
+				mQuizScoreQuestionPagerCounterTv.setVisibility(View.VISIBLE);
+				mQuestionScoreCirclePageIndicator.setVisibility(View.GONE);
+				mQuestionScoreViewPager.setOnPageChangeListener(mPagerListener);
+				mQuizScoreQuestionPagerCounterTv.setText("1" + " / "+ mArrayListQuizScorePagerInfo.size());
+			}
+			
+			if (mArrayListQuizScorePagerInfo.size() == 1) {
+				mQuizScoreNavigationPrevBtn.setVisibility(View.GONE);
+				mQuizScoreNavigationNextBtn.setText(getResources().getString(
+						R.string.button_submit));
+			}
 
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());	
+		}
 	}
 
 	private void setViewPagerListener() {
@@ -278,29 +289,33 @@ public class QuizScoreActivity extends SwipeBackBaseActivity {
 	}
 
 	private void uiOnChangeOfPagerListener(int mNumberQuestion) {
-		if (!isCirclePagerIndicatorEnable) {
-			mQuizScoreQuestionPagerCounterTv.setText(mNumberQuestion + " / "
-					+ mArrayListQuizScorePagerInfo.size());
-		}
+		try{
+			if (!isCirclePagerIndicatorEnable) {
+				mQuizScoreQuestionPagerCounterTv.setText(mNumberQuestion + " / "
+						+ mArrayListQuizScorePagerInfo.size());
+			}
 
-		if (mNumberQuestion == mArrayListQuizScorePagerInfo.size()) {
-			mQuizScoreNavigationNextBtn.setText(getResources().getString(
-					R.string.button_submit));
-		} else {
-			mQuizScoreNavigationNextBtn.setText(getResources().getString(
-					R.string.button_next));
-		}
+			if (mNumberQuestion == mArrayListQuizScorePagerInfo.size()) {
+				mQuizScoreNavigationNextBtn.setText(getResources().getString(
+						R.string.button_submit));
+			} else {
+				mQuizScoreNavigationNextBtn.setText(getResources().getString(
+						R.string.button_next));
+			}
 
-		if (mNumberQuestion == 1) {
-			mQuizScoreNavigationPrevBtn.setEnabled(false);
-		} else {
-			mQuizScoreNavigationPrevBtn.setEnabled(true);
-		}
+			if (mNumberQuestion == 1) {
+				mQuizScoreNavigationPrevBtn.setEnabled(false);
+			} else {
+				mQuizScoreNavigationPrevBtn.setEnabled(true);
+			}
 
-		if (mArrayListQuizScorePagerInfo.size() == 1) {
-			mQuizScoreNavigationPrevBtn.setVisibility(View.INVISIBLE);
-			mQuizScoreNavigationNextBtn.setText(getResources().getString(
-					R.string.button_submit));
+			if (mArrayListQuizScorePagerInfo.size() == 1) {
+				mQuizScoreNavigationPrevBtn.setVisibility(View.INVISIBLE);
+				mQuizScoreNavigationNextBtn.setText(getResources().getString(
+						R.string.button_submit));
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 	

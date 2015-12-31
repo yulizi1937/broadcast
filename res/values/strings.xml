@@ -3,7 +3,7 @@
 
     <string name="app_name">Mobcast</string>
     <string name="package_name">com.mobcast</string>
-    <string name="app_build">_151210_59</string>
+    <string name="app_build">_151231_62</string>
     <string name="toolbar_background">#254E7A</string>
     <string name="LanguageName">English</string>
     <string name="LanguageNameInEnglish">English</string>
@@ -11,13 +11,13 @@
     <string name="speak_now">Speak now</string>
     <string name="internet_unavailable">Please check your internet connection!</string>
     <string name="relogin_title">Please re-login to Mobcast!</string>
-    <string name="relogin_message">Someone just tried to logged in with your credentials in another device.</string>
+    <string name="relogin_message">You are logged out as someone else has logged in with this number.</string>
     <string name="login_title">Please login to Mobcast!</string>
     <string name="login_message">Stay connected with your organization</string>
     <string name="appremind_title">Mobcast - We\'ve missed you!</string>
-    <string name="appremind_message">Please open mobcast to get connected with your organization.</string>
-    <string name="notifremind_title">Mobcast - You\'ve some unread contents!</string>
-    <string name="notifremind_message">Please open app to see what you\'re missing out.</string>
+    <string name="appremind_message">Please open Mobcast to get connected with your organization.</string>
+    <string name="notifremind_title">Mobcast - You\'ve some unread content!</string>
+    <string name="notifremind_message">Please open app to see what you\'re missing.</string>
     <string name="sync_failed">Failed as internet not avail at </string>
     <string name="sync_passed">Synced at </string>
     <string name="feedback_incomplete">Please fill the feedback properly!</string>
@@ -32,6 +32,10 @@
     <string name="quiz_read">You cannot mark it as read!</string>
     <string name="api_connection_timeout">Server not responding!</string>
     <string name="api_unknown_error">Please try again in few minutes!</string>
+    <string name="videoview_error">Can\'t Play Video</string>
+    <string name="mediaplayer_error">Can\'t Play Audio</string>
+    <string name="doc_error">Can\'t Open File</string>
+    <string name="videoview_error_message">File could not be downloaded.</string>
     <string name="permission_message_externalstorage">We are storing data in your external storage. So you don\'t need to redownload. Please allow it to work smoothly.</string>
     <string name="permission_message_denied">Some of the features won\'t work till you allow permission.</string>
     <string name="share_advertisement">Shared via Mobcast \n visit us at : www.mobcast.in</string>
@@ -161,7 +165,7 @@
     <string name="textview_login">Please enter your Mobile Number</string>
     <string name="textview_newbroadcast">New Broadcast</string>
     <string name="textview_login_countrycode">+91</string>
-    <string name="textview_login_administration">Contact your administrator if you cannot login</string>
+    <string name="textview_login_administration"><![CDATA[<u>]]>Contact your administrator if you cannot login<![CDATA[<u>]]></string>
     <string name="hint_login_id">98201</string>
     <string name="button_next">NEXT</string>
     <string name="button_download">Download</string>
@@ -189,7 +193,7 @@
     <string name="button_resend">RESEND</string>
     <string name="button_raised_ticket">Contact Support</string>
     <string name="textview_verify_administration">Didn\'t receive one? Get another</string>
-    <string name="textview_verify_administration_tryagain">Entered wrong number? Try again</string>
+    <string name="textview_verify_administration_tryagain"><![CDATA[<u>]]>Entered wrong number? Try again<![CDATA[</u>]]></string>
     <string name="validate_verfication_code_empty">Please fill up the OTP correctly</string>
     <string name="VerificationActivityTitle">OTP Verification</string>
     <string name="raise_ticket_info">A ticket has been raised for Login : </string>
@@ -212,7 +216,7 @@
     <string name="hint_browse">Upload resume</string>
     <string name="hint_name">Name</string>
     <string name="hint_employee_id">Employee id</string>
-    <string name="textview_skip">Skip</string>
+    <string name="textview_skip"><![CDATA[<u>]]>Skip<![CDATA[</u>]]></string>
     <string name="SetProfileActivityTitle">Set Your Profile</string>
 
     <!-- activity_recycler_award -->

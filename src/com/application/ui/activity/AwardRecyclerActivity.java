@@ -3,6 +3,7 @@
  */
 package com.application.ui.activity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -967,9 +968,8 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 
 	private void contextMenuDelete(int mPosition) {
 		try {
-			getContentResolver().delete(DBConstant.Award_Columns.CONTENT_URI,
-					DBConstant.Award_Columns.COLUMN_AWARD_ID + "=?",
-					new String[] { mArrayListAward.get(mPosition).getmId() });
+			deleteFiles(mArrayListAward.get(mPosition).getmId());
+			getContentResolver().delete(DBConstant.Award_Columns.CONTENT_URI,DBConstant.Award_Columns.COLUMN_AWARD_ID + "=?",new String[] { mArrayListAward.get(mPosition).getmId() });
 			mArrayListAward.remove(mPosition);
 			if (mArrayListAward.size() == 0) {
 				checkDataInAdapter();
@@ -978,6 +978,24 @@ public class AwardRecyclerActivity extends SwipeBackBaseActivity {
 			}
 			Utilities.showBadgeNotification(AwardRecyclerActivity.this);
 		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void deleteFiles(String mId){
+		try{
+			Cursor mCursor = getContentResolver().query(DBConstant.Award_Columns.CONTENT_URI, null, DBConstant.Award_Columns.COLUMN_AWARD_ID + "=?", new String[]{mId}, null);
+			if(mCursor!=null && mCursor.getCount() > 0){
+				mCursor.moveToFirst();
+				do {
+					Utilities.deleteAppFolder(new File(mCursor.getString(mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_FILE_PATH))));
+					Utilities.deleteAppFolder(new File(mCursor.getString(mCursor.getColumnIndex(DBConstant.Award_Columns.COLUMN_AWARD_THUMBNAIL_PATH))));
+				} while (mCursor.moveToNext());
+			}
+			if(mCursor!=null){
+				mCursor.close();
+			}
+		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
 	}

@@ -1,5 +1,6 @@
 package com.application.ui.fragment;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -1004,6 +1005,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 	
 	private void contextMenuDelete(int mPosition){
 		try{
+		 deleteFiles(mArrayListTraining.get(mPosition).getmId());
 		 getActivity().getContentResolver().delete(DBConstant.Training_Columns.CONTENT_URI, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mArrayListTraining.get(mPosition).getmId()});
        	 getActivity().getContentResolver().delete(DBConstant.Training_File_Columns.CONTENT_URI, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mArrayListTraining.get(mPosition).getmId()});
        	 mArrayListTraining.remove(mPosition);
@@ -1014,6 +1016,24 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
        	 }
        	 mActivityCommunicator.passDataToActivity(0, AppConstants.INTENTCONSTANTS.TRAINING);	
        	Utilities.showBadgeNotification(getActivity());
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void deleteFiles(String mId){
+		try{
+			Cursor mCursor = getActivity().getContentResolver().query(DBConstant.Training_File_Columns.CONTENT_URI, null, DBConstant.Training_File_Columns.COLUMN_TRAINING_ID + "=?", new String[]{mId}, null);
+			if(mCursor!=null && mCursor.getCount() > 0){
+				mCursor.moveToFirst();
+				do {
+					Utilities.deleteAppFolder(new File(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_PATH))));
+					Utilities.deleteAppFolder(new File(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_File_Columns.COLUMN_TRAINING_FILE_THUMBNAIL_PATH))));
+				} while (mCursor.moveToNext());
+			}
+			if(mCursor!=null){
+				mCursor.close();
+			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

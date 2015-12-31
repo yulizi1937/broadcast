@@ -3,6 +3,7 @@
  */
 package com.application.ui.activity;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
@@ -10,6 +11,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -219,6 +221,7 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 			AndroidUtilities.exitWindowAnimation(DocDetailActivity.this);
 			if(isFromNotification){
 				Intent mIntent = new Intent(DocDetailActivity.this, MotherActivity.class);
+				mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 				startActivity(mIntent);
 			}
 			return true;
@@ -247,6 +250,7 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 		super.onBackPressed();
 		if(isFromNotification){
 			Intent mIntent = new Intent(DocDetailActivity.this, MotherActivity.class);
+			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 			startActivity(mIntent);
 		}
 	}
@@ -468,12 +472,12 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 			if(checkIfFileExists(mContentFilePath)){
 //				mContentFilePath = Utilities.fbConcealDecryptFile(TAG, new File(mContentFilePath));
 				if(!TextUtils.isEmpty(mContentFilePath)){
+					if(isFileCorrupted(mContentFilePath, mContentFileSize)){
+						catchErrorOnFileCorrupted();
+					}
 				}
 			}else{
 				downloadFileInBackground();
-			}
-			
-			if(checkIfFileExists(mContentFileThumbPath)){
 			}
 			
 			updateReadInDb();
@@ -481,6 +485,29 @@ public class DocDetailActivity extends SwipeBackBaseActivity {
 			if(!mContentIsRead){
 				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.READ, "");
 			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void catchErrorOnFileCorrupted(){
+		try{
+			AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(DocDetailActivity.this);
+			mAlertDialog.setTitle(getResources().getString(R.string.doc_error));
+			mAlertDialog.setMessage(getResources().getString(R.string.videoview_error_message));
+			mAlertDialog.setCancelable(true);
+			mAlertDialog.setPositiveButton(getResources().getString(R.string.OK), new OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					dialog.dismiss();
+					Utilities.deleteAppFolder(new File(mContentFilePath));
+					startActivity(mIntent);
+					AndroidUtilities.enterWindowAnimation(DocDetailActivity.this);
+					finish();
+				}
+			});
+			mAlertDialog.show();
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}
