@@ -133,6 +133,7 @@
             android:text="@string/sample_item_recycler_mobcast_text_summary"
             android:textColor="@color/item_description_color"
             android:textSize="@dimen/event_detail_event_summary_size" />
+        
     </LinearLayout>
 
 </ScrollView>

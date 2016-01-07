@@ -10,24 +10,37 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/fragment_detail_padding" >
+        android:orientation="vertical" >
+
+        <com.application.ui.view.SmoothProgressBar
+            android:id="@+id/fragmentWebViewProgressBar"
+            style="@style/SmoothProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_gravity="top"
+            android:indeterminate="true" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/fragmentInteractiveDetailTitleTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
+            android:layout_marginLeft="@dimen/fragment_detail_padding"
+            android:layout_marginRight="@dimen/fragment_detail_padding"
+            android:layout_marginTop="@dimen/fragment_detail_padding"
             android:gravity="start|center"
-            android:text="@string/sample_event_title"
-            android:textColor="@color/toolbar_background"
+            android:text="@string/sample_item_recycler_mobcast_text_title"
+            android:textColor="@color/item_title_color"
             android:textSize="@dimen/event_title_textview_size"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="RtlHardcoded" />
 
         <RelativeLayout
             android:id="@+id/fragmentInteractiveDetailByLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fragment_detail_padding"
+            android:layout_marginRight="@dimen/fragment_detail_padding"
             android:layout_marginTop="@dimen/fragment_detail_title_by_content_margin_top"
             android:orientation="horizontal" >
 
@@ -60,7 +73,7 @@
                 android:gravity="right|center"
                 android:paddingRight="4dp"
                 android:text="@string/sample_item_recycler_mobcast_text_view_count"
-                android:textColor="@color/toolbar_background"
+                android:textColor="@color/item_activity_color"
                 android:textSize="@dimen/event_view_textview_size"
                 tools:ignore="RtlSymmetry,RtlHardcoded" />
 
@@ -76,7 +89,7 @@
                 android:gravity="center"
                 android:paddingRight="4dp"
                 android:text="@string/sample_item_recycler_mobcast_text_view_count"
-                android:textColor="@color/toolbar_background"
+                android:textColor="@color/item_activity_color"
                 android:textSize="@dimen/event_view_textview_size"
                 tools:ignore="RtlSymmetry,RtlHardcoded" />
         </RelativeLayout>
@@ -85,6 +98,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/fragment_detail_padding"
+            android:layout_marginRight="@dimen/fragment_detail_padding"
             android:layout_marginTop="@dimen/fragment_detail_title_by_content_margin_top"
             ripple:mrl_rippleAlpha="@dimen/rippleAlpha"
             ripple:mrl_rippleBackground="@android:color/transparent"
@@ -98,14 +113,15 @@
                 android:layout_height="@dimen/fragment_news_view_source_layout_height"
                 android:clickable="true"
                 android:gravity="start|center"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:visibility="visible" >
 
                 <ImageView
                     android:id="@+id/fragmentInteractiveDetailLinkIv"
                     android:layout_width="@dimen/fragment_news_view_source_image_width"
                     android:layout_height="match_parent"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_item_feedback_points"
+                    android:src="@drawable/ic_source_link"
                     tools:ignore="ContentDescription" />
 
                 <android.support.v7.widget.AppCompatTextView
@@ -127,11 +143,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/fragment_detail_padding"
+            android:layout_marginRight="@dimen/fragment_detail_padding"
             android:layout_marginTop="@dimen/fragment_detail_title_by_content_margin_top"
             android:gravity="start|center"
-            android:text="@string/sample_event_summary"
-            android:textColor="@color/toolbar_background"
+            android:text="@string/sample_item_recycler_mobcast_text_summary"
+            android:textColor="@color/item_description_color"
             android:textSize="@dimen/event_detail_event_summary_size" />
+
+        <WebView
+            android:id="@+id/fragmentWebViewWebView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill"
+            android:layout_marginTop="4dp"
+            tools:ignore="WebViewLayout" />
+
     </LinearLayout>
 
 </ScrollView>

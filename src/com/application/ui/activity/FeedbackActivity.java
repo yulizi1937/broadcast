@@ -334,7 +334,7 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 	
 	private void setIntentDataToUi(){
 		try{
-			mToolBar.setTitle(mContentTitle);
+//			mToolBar.setTitle(mContentTitle);
 //			mToolBar.setSubtitle(mContentDesc);
 			
 			if(!TextUtils.isEmpty(mContentDesc)){

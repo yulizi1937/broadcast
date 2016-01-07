@@ -32,9 +32,11 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.application.beans.Mobcast;
 import com.application.beans.Training;
 import com.application.ui.adapter.MobcastRecyclerAdapter.AudioViewHolder;
 import com.application.ui.adapter.MobcastRecyclerAdapter.ImageViewHolder;
+import com.application.ui.adapter.MobcastRecyclerAdapter.InteractiveViewHolder;
 import com.application.ui.adapter.MobcastRecyclerAdapter.TextViewHolder;
 import com.application.ui.adapter.MobcastRecyclerAdapter.VideoViewHolder;
 import com.application.ui.adapter.MobcastRecyclerAdapter.YoutubeLiveStreamViewHolder;
@@ -183,7 +185,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     	case VIEW_TYPE_QUIZ:
     		return  new QuizViewHolder(mInflater.inflate(R.layout.item_recycler_training_quiz, parent, false));
     	case VIEW_TYPE_INTERACTIVE:
-    		return  new InteractiveViewHolder(mInflater.inflate(R.layout.item_recycler_training_interactive, parent, false));
+    		return  new InteractiveViewHolder(mInflater.inflate(R.layout.item_recycler_mobcast_interactive, parent, false));
     	case VIEW_TYPE_STREAM:
     		return  new YoutubeLiveStreamViewHolder(mInflater.inflate(R.layout.item_recycler_mobcast_livestream, parent, false));
     	case VIEW_TYPE_FOOTER:
@@ -217,6 +219,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 		} else if (viewHolder instanceof YoutubeLiveStreamViewHolder) {
 			processLiveStreamViewHolder(viewHolder, position);
 		}else if (viewHolder instanceof InteractiveViewHolder) {
+			processInteractiveViewHolder(viewHolder, position);
 		}
     }
     
@@ -774,32 +777,39 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
     
     public class InteractiveViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
-    	FrameLayout mTrainingInteractiveRootLayout;
+    	FrameLayout mMobcastInteractiveRootLayout;
     	
-    	View mTrainingInteractiveReadView;
-        ImageView mTrainingInteractiveIndicatorIv;
+    	View mMobcastInteractiveReadView;
+    	View mMobcastInteractiveLineView;
+        ImageView mMobcastInteractiveIndicatorIv;
         
-        AppCompatTextView mTrainingInteractiveTitleTv;
-        AppCompatTextView mTrainingInteractiveByTv;
-        AppCompatTextView mTrainingInteractiveViewCountTv;
-        AppCompatTextView mTrainingInteractiveDetailLinkTv;
-        
+        AppCompatTextView mMobcastInteractiveTitleTv;
+        AppCompatTextView mMobcastInteractiveByTv;
+        AppCompatTextView mMobcastInteractiveViewCountTv;
+        AppCompatTextView mMobcastInteractiveLikeCountTv;
+        ImageView mMobcastInteractiveLinkTv;
+        AppCompatTextView mMobcastInteractiveSummaryTv;
         
         public InteractiveViewHolder(View view) {
             super(view);
-            mTrainingInteractiveRootLayout = (FrameLayout)view.findViewById(R.id.itemRecyclerTrainingInteractiveRootLayout);
+            mMobcastInteractiveRootLayout = (FrameLayout)view.findViewById(R.id.itemRecyclerMobcastInteractiveRootLayout);
             
-            mTrainingInteractiveReadView = (View)view.findViewById(R.id.itemRecyclerTrainingInteractiveReadView);
+            mMobcastInteractiveReadView = (View)view.findViewById(R.id.itemRecyclerMobcastInteractiveReadView);
+            mMobcastInteractiveLineView = (View)view.findViewById(R.id.itemRecyclerMobcastInteractiveLineView);
             
-            mTrainingInteractiveIndicatorIv = (ImageView)view.findViewById(R.id.itemRecyclerTrainingInteractiveIndicatorImageView);
+            mMobcastInteractiveIndicatorIv = (ImageView)view.findViewById(R.id.itemRecyclerMobcastInteractiveIndicatorImageView);
             
-            mTrainingInteractiveTitleTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingInteractiveTitleTv);
-            mTrainingInteractiveByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingInteractiveByTv);
-            mTrainingInteractiveViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingInteractiveViewCountTv);
-            mTrainingInteractiveDetailLinkTv= (AppCompatTextView) view.findViewById(R.id.itemRecyclerTrainingInteractiveDetailLinkTv);
+            mMobcastInteractiveTitleTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastInteractiveTitleTv);
+            mMobcastInteractiveByTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastInteractiveByTv);
+            mMobcastInteractiveViewCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastInteractiveViewCountTv);
+            mMobcastInteractiveLikeCountTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastInteractiveLikeCountTv);
+            mMobcastInteractiveLinkTv = (ImageView) view.findViewById(R.id.itemRecyclerMobcastInteractiveLinkTv);
+            mMobcastInteractiveSummaryTv = (AppCompatTextView) view.findViewById(R.id.itemRecyclerMobcastInteractiveSummaryTv);
             
-            mTrainingInteractiveRootLayout.setOnClickListener(this);
-            mTrainingInteractiveRootLayout.setOnLongClickListener(this);
+            mMobcastInteractiveReadView.setVisibility(View.INVISIBLE);
+            
+            mMobcastInteractiveRootLayout.setOnClickListener(this);
+            mMobcastInteractiveRootLayout.setOnLongClickListener(this);
         }
         
         public void onClick(View v) {
@@ -807,8 +817,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 				mItemClickListener.onItemClick(v, getLayoutPosition());
 			}
 		}
-        
-        /* (non-Javadoc)
+
+		/* (non-Javadoc)
 		 * @see android.view.View.OnLongClickListener#onLongClick(android.view.View)
 		 */
 		@Override
@@ -1409,6 +1419,48 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 					((XlsViewHolder) viewHolder).mTrainingXlsByTv,
 					((XlsViewHolder) viewHolder).mTrainingXlsIndicatorIv,
 					AppConstants.TYPE.XLS, mObj.isRead());
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void processInteractiveViewHolder(RecyclerView.ViewHolder viewHolder, int position){
+		try{
+			Training mObj = mArrayListTraining.get(position);
+			((InteractiveViewHolder)viewHolder).mMobcastInteractiveTitleTv.setText(mObj.getmTitle());
+			((InteractiveViewHolder)viewHolder).mMobcastInteractiveByTv.setText(mObj.getmBy());
+			((InteractiveViewHolder)viewHolder).mMobcastInteractiveViewCountTv.setText(mObj.getmViewCount());
+			((InteractiveViewHolder)viewHolder).mMobcastInteractiveLikeCountTv.setText(mObj.getmLikeCount());
+			((InteractiveViewHolder)viewHolder).mMobcastInteractiveSummaryTv.setText(mObj.getmDescription());
+			if(!mObj.isRead()){
+				((InteractiveViewHolder)viewHolder).mMobcastInteractiveIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_interactive_read_focused));
+			}else{
+				((InteractiveViewHolder)viewHolder).mMobcastInteractiveIndicatorIv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mobcast_interactive_read_normal));
+			}
+			
+			if(!mObj.isLike()){
+				((InteractiveViewHolder)viewHolder).mMobcastInteractiveLikeCountTv.setTextColor(mContext.getResources().getColor(R.color.toolbar_background));
+				((InteractiveViewHolder)viewHolder).mMobcastInteractiveLikeCountTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like, 0, 0, 0);
+			}else{
+				((InteractiveViewHolder)viewHolder).mMobcastInteractiveLikeCountTv.setTextColor(mContext.getResources().getColor(R.color.red));
+				((InteractiveViewHolder)viewHolder).mMobcastInteractiveLikeCountTv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bitmap_item_like_done, 0, 0, 0);
+			}
+			
+			if(TextUtils.isEmpty(mObj.getmLink())){
+				((InteractiveViewHolder)viewHolder).mMobcastInteractiveLinkTv.setVisibility(View.GONE);
+			}else{
+				((InteractiveViewHolder)viewHolder).mMobcastInteractiveLinkTv.setVisibility(View.VISIBLE);
+			}
+			
+			ThemeUtils.applyThemeItemMobcast(mContext, whichTheme,
+					((InteractiveViewHolder) viewHolder).mMobcastInteractiveReadView,
+					((InteractiveViewHolder) viewHolder).mMobcastInteractiveLineView,
+					((InteractiveViewHolder) viewHolder).mMobcastInteractiveRootLayout,
+					((InteractiveViewHolder) viewHolder).mMobcastInteractiveTitleTv,
+					((InteractiveViewHolder) viewHolder).mMobcastInteractiveByTv,
+					((InteractiveViewHolder) viewHolder).mMobcastInteractiveIndicatorIv,
+					AppConstants.TYPE.INTERACTIVE, mObj.isRead());
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

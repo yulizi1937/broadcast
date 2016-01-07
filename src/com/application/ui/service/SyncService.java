@@ -245,7 +245,7 @@ public class SyncService extends IntentService{
 					
 					final int mIntType = Utilities.getMediaType(mType);
 					
-					if (mIntType != AppConstants.TYPE.FEEDBACK && mIntType != AppConstants.TYPE.TEXT) {
+					if (mIntType != AppConstants.TYPE.FEEDBACK && (mIntType != AppConstants.TYPE.TEXT || mIntType != AppConstants.TYPE.INTERACTIVE)) {
 						JSONArray mJSONArrMobFileObj = mJSONMobObj.getJSONArray(AppConstants.API_KEY_PARAMETER.mobcastFileInfo);
 						
 						for (int j = 0; j < mJSONArrMobFileObj.length(); j++) {
@@ -375,7 +375,7 @@ public class SyncService extends IntentService{
 					
 					int mIntType = Utilities.getMediaType(mType);
 					
-					if(mIntType!= AppConstants.TYPE.QUIZ && mIntType!= AppConstants.TYPE.TEXT){
+					if(mIntType!= AppConstants.TYPE.QUIZ && (mIntType != AppConstants.TYPE.TEXT || mIntType != AppConstants.TYPE.INTERACTIVE)){
 						JSONArray mJSONArrMobFileObj = mJSONMobObj.getJSONArray(AppConstants.API_KEY_PARAMETER.trainingFileInfo);
 						
 						for (int j = 0; j < mJSONArrMobFileObj.length(); j++) {

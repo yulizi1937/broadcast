@@ -273,6 +273,15 @@ public class TextDetailActivity extends SwipeBackBaseActivity {
 		}
 	}
 	
+	
+	
+	@Override
+	protected void onNewIntent(Intent intent) {
+		// TODO Auto-generated method stub
+		super.onNewIntent(intent);
+		FileLog.e(TAG, "onNewIntent");
+	}
+
 	private void getDataFromDBForMobcast(Cursor mCursor){
 		if(mCursor!=null && mCursor.getCount() > 0){
 			mCursor.moveToFirst();

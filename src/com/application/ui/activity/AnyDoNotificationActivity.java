@@ -195,6 +195,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 			return R.layout.item_recycler_award;
 		case AppConstants.TYPE.NOTIFREMIND:
 			return R.layout.fragment_recyclerview;
+		case AppConstants.TYPE.INTERACTIVE:
+			return R.layout.item_recycler_mobcast_interactive;
 		default:
 			return R.layout.item_recycler_mobcast_text;
 		}
@@ -296,7 +298,8 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 			if(mType == AppConstants.TYPE.TEXT || mType == AppConstants.TYPE.IMAGE
 					|| mType == AppConstants.TYPE.AUDIO || mType == AppConstants.TYPE.VIDEO
 					|| mType == AppConstants.TYPE.PDF   || mType == AppConstants.TYPE.PPT
-					|| mType == AppConstants.TYPE.XLS   || mType == AppConstants.TYPE.DOC){
+					|| mType == AppConstants.TYPE.XLS   || mType == AppConstants.TYPE.DOC
+					|| mType == AppConstants.TYPE.INTERACTIVE){
 					
 					mHandler.postDelayed(repeatableRunnable, delayInStartMillis);	
 				}
@@ -377,6 +380,10 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastXlsLikeCountTv)).setText(mLikeCount);
 				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastXlsViewCountTv)).setText(mViewCount);
 				break;
+			case AppConstants.TYPE.INTERACTIVE:
+				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastInteractiveLikeCountTv)).setText(mLikeCount);
+				((AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastInteractiveViewCountTv)).setText(mViewCount);
+				break;
 			}
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
@@ -440,6 +447,7 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 						// TODO Auto-generated method stub
 						removeRepeatableRunnable();
 						Intent mIntent = new NotificationHandle(ApplicationLoader.getApplication().getApplicationContext(), mId, mCategory, mType).getIntent();
+						mIntent.setFlags(32768);
 						startActivity(mIntent);
 						NotificationsController.getInstance().dismissNotification();
 						mBottomSheetAnyDo.dismiss();
@@ -454,6 +462,7 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 						// TODO Auto-generated method stub
 						removeRepeatableRunnable();
 						Intent mIntent = new NotificationHandle(ApplicationLoader.getApplication().getApplicationContext(), mId, mCategory, mType).getIntent();
+						mIntent.setFlags(32768);
 						startActivity(mIntent);
 						NotificationsController.getInstance().dismissNotification();
 						mBottomSheetAnyDo.dismiss();
@@ -585,6 +594,9 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 			break;
 		case AppConstants.TYPE.AWARD:
 			processNotificationAward();
+			break;
+		case AppConstants.TYPE.INTERACTIVE:
+			processNotificationInteractive();
 			break;
 		case AppConstants.TYPE.NOTIFREMIND:
 			processNotificationNotifRemind();
@@ -1568,6 +1580,44 @@ public class AnyDoNotificationActivity extends AppCompatActivity {
 			}
 		} catch (Exception e) {
 			FileLog.e(TAG, e.toString());
+		}
+		
+		if(mCursor!=null)
+			mCursor.close();
+	}
+	
+	private void processNotificationInteractive(){
+		AppCompatTextView mTitleTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastInteractiveTitleTv);
+		AppCompatTextView mByTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastInteractiveByTv);
+		AppCompatTextView mSummaryTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastInteractiveSummaryTv);
+		AppCompatTextView mLikeCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastInteractiveLikeCountTv);
+		AppCompatTextView mViewCountTv = (AppCompatTextView)mContentLayout.findViewById(R.id.itemRecyclerMobcastInteractiveViewCountTv);
+		ImageView mImageView = (ImageView)mContentLayout.findViewById(R.id.itemRecyclerMobcastInteractiveIndicatorImageView);
+		View mTimeLineView = (View)mContentLayout.findViewById(R.id.itemRecyclerMobcastInteractiveLineView);
+		mContentLayout.findViewById(R.id.itemRecyclerMobcastInteractiveReadView).setVisibility(View.GONE);
+		
+		ThemeUtils.applyThemeAnyDOBy(mByTv, mImageView, mTimeLineView, AppConstants.TYPE.INTERACTIVE, whichTheme, AnyDoNotificationActivity.this);
+		Cursor mCursor = null;
+		if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.MOBCAST)){
+			mCursor = getContentResolver().query(DBConstant.Mobcast_Columns.CONTENT_URI, null, DBConstant.Mobcast_Columns.COLUMN_MOBCAST_ID + "=?", new String[]{String.valueOf(mId)}, null);
+			if(mCursor!=null && mCursor.getCount() > 0){
+				mCursor.moveToFirst();
+				mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TITLE)));
+				mSummaryTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DESC)));
+				mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_TIME))));
+				mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_LIKE_NO)));
+				mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Mobcast_Columns.COLUMN_MOBCAST_VIEWCOUNT)));
+			}
+		}else if(mCategory.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.TRAINING)){
+			mCursor = getContentResolver().query(DBConstant.Training_Columns.CONTENT_URI, null, DBConstant.Training_Columns.COLUMN_TRAINING_ID + "=?", new String[]{String.valueOf(mId)}, null);
+			if(mCursor!=null && mCursor.getCount() > 0){
+				mCursor.moveToFirst();
+				mTitleTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TITLE)));
+				mSummaryTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DESC)));
+				mByTv.setText(Utilities.formatBy(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_BY)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_DATE)), mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_TIME))));
+				mLikeCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_LIKE_NO)));
+				mViewCountTv.setText(mCursor.getString(mCursor.getColumnIndex(DBConstant.Training_Columns.COLUMN_TRAINING_VIEWCOUNT)));
+			}
 		}
 		
 		if(mCursor!=null)

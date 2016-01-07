@@ -10,6 +10,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlarmManager;
@@ -133,13 +134,15 @@ public class NotificationsController {
         }
     }
     
+    @SuppressLint("InlinedApi") 
     public void showOrUpdateNotification(boolean isFileDownloaded,boolean isThumbnailDownloaded, int mId, String mCategory, int mType){
     	try{
         	mContext = ApplicationLoader.getApplication().getApplicationContext();
         	Intent intent =  new NotificationHandle(ApplicationLoader.applicationContext, mId, mCategory, mType).getIntent();
             intent.setFlags(32768);
             
-            PendingIntent contentIntent = PendingIntent.getActivity(ApplicationLoader.applicationContext, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+            
+			PendingIntent contentIntent = PendingIntent.getActivity(ApplicationLoader.applicationContext, 0, intent,PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_UPDATE_CURRENT);
             
             String mTitle = intent.getStringExtra(AppConstants.NOTIFICATION.TITLE);
             
@@ -280,6 +283,10 @@ public class NotificationsController {
             case AppConstants.TYPE.NOTIFREMIND:
             	mBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(message));
             	mBuilder.setSubText("unread reminder");
+            	break;
+            case AppConstants.TYPE.INTERACTIVE:
+            	mBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(message));
+            	mBuilder.setSubText("1 "+mContext.getResources().getString(R.string.new_) + " "+ mCategory);
             	break;
             }
             

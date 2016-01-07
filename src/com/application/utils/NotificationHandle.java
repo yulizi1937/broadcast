@@ -16,6 +16,7 @@ import com.application.ui.activity.DocDetailActivity;
 import com.application.ui.activity.EventDetailActivity;
 import com.application.ui.activity.FeedbackActivity;
 import com.application.ui.activity.ImageDetailActivity;
+import com.application.ui.activity.InteractiveDetailActivity;
 import com.application.ui.activity.LoginActivity;
 import com.application.ui.activity.MotherActivity;
 import com.application.ui.activity.ParichayActivity;
@@ -120,6 +121,9 @@ public class NotificationHandle {
 			break;
 		case AppConstants.TYPE.AWARD:
 			mIntent = new Intent(mContext, AwardProfileActivity.class);
+			break;
+		case AppConstants.TYPE.INTERACTIVE:
+			mIntent = new Intent(mContext, InteractiveDetailActivity.class);
 			break;
 		case AppConstants.TYPE.RELOGIN:
 			mIntent = new Intent(mContext, LoginActivity.class);

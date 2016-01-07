@@ -420,6 +420,7 @@ public class AppConstants {
 		public static final String FEEDBACK = "feedback";//10
 		public static final String STREAM   = "livestreamyoutube";//11
 		public static final String FOOTER   = "footer";//12
+		public static final String INTERACTIVE= "interactive";//13
 	}
 	
 	public interface PARICHAY{
@@ -460,6 +461,7 @@ public class AppConstants {
 		public static final int REFERRAL  = 21;
 		public static final int APPREMIND = 22;
 		public static final int NOTIFREMIND = 23;
+		public static final int INTERACTIVE = 24;
 	}
 	
 	public interface TRAINING{

@@ -265,7 +265,7 @@ public class GCMIntentNotificationService extends IntentService {
 				
 				int mIntType = Utilities.getMediaType(mType);
 				
-				if(mIntType!= AppConstants.TYPE.FEEDBACK && mIntType!= AppConstants.TYPE.TEXT){
+				if(mIntType!= AppConstants.TYPE.FEEDBACK && (mIntType != AppConstants.TYPE.TEXT || mIntType != AppConstants.TYPE.INTERACTIVE)){
 					JSONArray mJSONArrMobFileObj = mJSONMobObj.getJSONArray(AppConstants.API_KEY_PARAMETER.mobcastFileInfo);
 					
 					for (int i = 0; i < mJSONArrMobFileObj.length(); i++) {
@@ -398,7 +398,7 @@ public class GCMIntentNotificationService extends IntentService {
 				
 				int mIntType = Utilities.getMediaType(mType);
 				
-				if(mIntType!= AppConstants.TYPE.QUIZ && mIntType!= AppConstants.TYPE.TEXT){
+				if(mIntType!= AppConstants.TYPE.QUIZ && (mIntType != AppConstants.TYPE.TEXT || mIntType != AppConstants.TYPE.INTERACTIVE)){
 					JSONArray mJSONArrMobFileObj = mJSONMobObj.getJSONArray(AppConstants.API_KEY_PARAMETER.trainingFileInfo);
 					
 					for (int i = 0; i < mJSONArrMobFileObj.length(); i++) {

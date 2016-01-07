@@ -676,6 +676,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_read_purple).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_read_purple).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 				case 2:
@@ -728,6 +732,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_read_green).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_read_green).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 				case 3:
@@ -778,6 +786,10 @@ public class ThemeUtils {
 						break;
 					case TYPE.QUIZ:
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_read_pink).build();
+						mDrawable = mSVG.getDrawable();
+						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_read_pink).build();
 						mDrawable = mSVG.getDrawable();
 						break;
 					}
@@ -834,6 +846,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_read_brown).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_read_brown).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 					
@@ -885,6 +901,10 @@ public class ThemeUtils {
 						break;
 					case TYPE.QUIZ:
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_read_purple).build();
+						mDrawable = mSVG.getDrawable();
+						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_read_purple).build();
 						mDrawable = mSVG.getDrawable();
 						break;
 					}
@@ -940,6 +960,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_read_purple).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_read_purple).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 					
@@ -991,6 +1015,10 @@ public class ThemeUtils {
 						break;
 					case TYPE.QUIZ:
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_read_green).build();
+						mDrawable = mSVG.getDrawable();
+						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_read_green).build();
 						mDrawable = mSVG.getDrawable();
 						break;
 					}
@@ -1045,6 +1073,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_read_green).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_read_green).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 				case 11:
@@ -1095,6 +1127,10 @@ public class ThemeUtils {
 						break;
 					case TYPE.QUIZ:
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_read_purple).build();
+						mDrawable = mSVG.getDrawable();
+						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_read_purple).build();
 						mDrawable = mSVG.getDrawable();
 						break;
 					}
@@ -1154,6 +1190,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_unread_purple).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_unread_purple).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 				case 2:
@@ -1206,6 +1246,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_unread_green).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_unread_green).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 				case 3:
@@ -1256,6 +1300,10 @@ public class ThemeUtils {
 						break;
 					case TYPE.QUIZ:
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_unread_pink).build();
+						mDrawable = mSVG.getDrawable();
+						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_unread_pink).build();
 						mDrawable = mSVG.getDrawable();
 						break;
 					}
@@ -1312,6 +1360,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_unread_brown).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_unread_brown).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 					
@@ -1363,6 +1415,10 @@ public class ThemeUtils {
 						break;
 					case TYPE.QUIZ:
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_unread_purple).build();
+						mDrawable = mSVG.getDrawable();
+						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_unread_purple).build();
 						mDrawable = mSVG.getDrawable();
 						break;
 					}
@@ -1418,6 +1474,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_unread_purple).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_unread_purple).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 					
@@ -1469,6 +1529,10 @@ public class ThemeUtils {
 						break;
 					case TYPE.QUIZ:
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_unread_green).build();
+						mDrawable = mSVG.getDrawable();
+						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_unread_green).build();
 						mDrawable = mSVG.getDrawable();
 						break;
 					}
@@ -1524,6 +1588,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_unread_green).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_unread_green).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 				case 11:
@@ -1574,6 +1642,10 @@ public class ThemeUtils {
 						break;
 					case TYPE.QUIZ:
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_unread_purple).build();
+						mDrawable = mSVG.getDrawable();
+						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_unread_purple).build();
 						mDrawable = mSVG.getDrawable();
 						break;
 					}
@@ -1647,6 +1719,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_read_purple).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_read_purple).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 				case 2:
@@ -1699,6 +1775,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_read_green).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_read_green).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 				case 3:
@@ -1749,6 +1829,10 @@ public class ThemeUtils {
 						break;
 					case TYPE.QUIZ:
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_read_pink).build();
+						mDrawable = mSVG.getDrawable();
+						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_read_pink).build();
 						mDrawable = mSVG.getDrawable();
 						break;
 					}
@@ -1805,6 +1889,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_read_brown).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_read_brown).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 					
@@ -1858,6 +1946,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_read_purple).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_read_purple).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 				case 7:
@@ -1908,6 +2000,10 @@ public class ThemeUtils {
 						break;
 					case TYPE.QUIZ:
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_read_purple).build();
+						mDrawable = mSVG.getDrawable();
+						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_read_purple).build();
 						mDrawable = mSVG.getDrawable();
 						break;
 					}
@@ -1963,6 +2059,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_read_green).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_read_green).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 				case 10:
@@ -2013,6 +2113,10 @@ public class ThemeUtils {
 						break;
 					case TYPE.QUIZ:
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_read_green).build();
+						mDrawable = mSVG.getDrawable();
+						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_read_green).build();
 						mDrawable = mSVG.getDrawable();
 						break;
 					}
@@ -2066,6 +2170,10 @@ public class ThemeUtils {
 						break;
 					case TYPE.QUIZ:
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_read_purple).build();
+						mDrawable = mSVG.getDrawable();
+						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_read_purple).build();
 						mDrawable = mSVG.getDrawable();
 						break;
 					}
@@ -2125,6 +2233,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_unread_purple).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_unread_purple).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 				case 2:
@@ -2177,6 +2289,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_unread_green).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_unread_green).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 				case 3:
@@ -2227,6 +2343,10 @@ public class ThemeUtils {
 						break;
 					case TYPE.QUIZ:
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_unread_pink).build();
+						mDrawable = mSVG.getDrawable();
+						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_unread_pink).build();
 						mDrawable = mSVG.getDrawable();
 						break;
 					}
@@ -2283,6 +2403,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_unread_brown).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_unread_brown).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 					
@@ -2334,6 +2458,10 @@ public class ThemeUtils {
 						break;
 					case TYPE.QUIZ:
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_unread_purple).build();
+						mDrawable = mSVG.getDrawable();
+						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_unread_purple).build();
 						mDrawable = mSVG.getDrawable();
 						break;
 					}
@@ -2389,6 +2517,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_unread_purple).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_unread_purple).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 					
@@ -2440,6 +2572,10 @@ public class ThemeUtils {
 						break;
 					case TYPE.QUIZ:
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_unread_green).build();
+						mDrawable = mSVG.getDrawable();
+						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_unread_green).build();
 						mDrawable = mSVG.getDrawable();
 						break;
 					}
@@ -2494,6 +2630,10 @@ public class ThemeUtils {
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_unread_green).build();
 						mDrawable = mSVG.getDrawable();
 						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_unread_green).build();
+						mDrawable = mSVG.getDrawable();
+						break;
 					}
 					break;
 				case 11:
@@ -2544,6 +2684,10 @@ public class ThemeUtils {
 						break;
 					case TYPE.QUIZ:
 						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.quiz_unread_purple).build();
+						mDrawable = mSVG.getDrawable();
+						break;
+					case TYPE.INTERACTIVE:
+						mSVG = new SVGBuilder().readFromResource(mResources, R.raw.interactive_unread_purple).build();
 						mDrawable = mSVG.getDrawable();
 						break;
 					}

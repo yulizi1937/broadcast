@@ -966,6 +966,8 @@ public class Utilities {
 			return AppConstants.TYPE.AWARD;
 		}else if(mType.toLowerCase().equalsIgnoreCase("event")){
 			return AppConstants.TYPE.EVENT;
+		}else if(mType.toLowerCase().equalsIgnoreCase("interactive")){
+			return AppConstants.TYPE.INTERACTIVE;
 		}else{
 			return AppConstants.TYPE.OTHER;	
 		}
@@ -1399,7 +1401,7 @@ public class Utilities {
 			}
 			try {
 			       FileOutputStream out = new FileOutputStream(file);
-			       mBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+			       mBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
 			       out.flush();
 			       out.close();
 			} catch (Exception e) {

@@ -52,6 +52,7 @@ import com.application.sqlite.DBConstant;
 import com.application.ui.activity.AudioDetailActivity;
 import com.application.ui.activity.DocDetailActivity;
 import com.application.ui.activity.ImageDetailActivity;
+import com.application.ui.activity.InteractiveDetailActivity;
 import com.application.ui.activity.MotherActivity;
 import com.application.ui.activity.PdfDetailActivity;
 import com.application.ui.activity.PptDetailActivity;
@@ -681,6 +682,14 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 						startActivity(mIntentText);
 						AndroidUtilities.enterWindowAnimation(mParentActivity);
 						break;
+					case R.id.itemRecyclerMobcastInteractiveRootLayout:
+						Intent mIntentInteractive = new Intent(mParentActivity,InteractiveDetailActivity.class);
+						mIntentInteractive.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.TRAINING);
+						mIntentInteractive.putExtra(AppConstants.INTENTCONSTANTS.ID, mArrayListTraining.get(position).getmId());
+						saveViewPosition(position);
+						startActivity(mIntentInteractive);
+						AndroidUtilities.enterWindowAnimation(mParentActivity);
+						break;
 					case R.id.itemRecyclerTrainingPdfRootLayout:
 						Intent mIntentPdf = new Intent(mParentActivity,PdfDetailActivity.class);
 						mIntentPdf.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.TRAINING);
@@ -1172,7 +1181,7 @@ public class TrainingRecyclerViewFragment extends BaseFragment implements IFragm
 					
 					int mIntType = Utilities.getMediaType(mType);
 					
-					if(mIntType!= AppConstants.TYPE.QUIZ && mIntType!= AppConstants.TYPE.TEXT){
+					if(mIntType!= AppConstants.TYPE.QUIZ && (mIntType != AppConstants.TYPE.TEXT || mIntType != AppConstants.TYPE.INTERACTIVE)){
 						JSONArray mJSONArrMobFileObj = mJSONMobObj.getJSONArray(AppConstants.API_KEY_PARAMETER.trainingFileInfo);
 						
 						for (int j = 0; j < mJSONArrMobFileObj.length(); j++) {

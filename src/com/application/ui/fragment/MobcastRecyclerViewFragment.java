@@ -53,6 +53,7 @@ import com.application.ui.activity.AudioDetailActivity;
 import com.application.ui.activity.DocDetailActivity;
 import com.application.ui.activity.FeedbackActivity;
 import com.application.ui.activity.ImageDetailActivity;
+import com.application.ui.activity.InteractiveDetailActivity;
 import com.application.ui.activity.MotherActivity;
 import com.application.ui.activity.PdfDetailActivity;
 import com.application.ui.activity.PptDetailActivity;
@@ -689,6 +690,14 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 						startActivity(mIntentText);
 						AndroidUtilities.enterWindowAnimation(mParentActivity);
 						break;
+					case R.id.itemRecyclerMobcastInteractiveRootLayout:
+						Intent mIntentInteractive = new Intent(mParentActivity,InteractiveDetailActivity.class);
+						mIntentInteractive.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.MOBCAST);
+						mIntentInteractive.putExtra(AppConstants.INTENTCONSTANTS.ID, mArrayListMobcast.get(position).getmId());
+						saveViewPosition(position);
+						startActivity(mIntentInteractive);
+						AndroidUtilities.enterWindowAnimation(mParentActivity);
+						break;
 					case R.id.itemRecyclerMobcastPdfRootLayout:
 						Intent mIntentPdf = new Intent(mParentActivity,PdfDetailActivity.class);
 						mIntentPdf.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.MOBCAST);
@@ -1179,7 +1188,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 					}*/
 					final int mIntType = Utilities.getMediaType(mType);
 					
-					if (mIntType != AppConstants.TYPE.FEEDBACK && mIntType != AppConstants.TYPE.TEXT) {
+					if (mIntType != AppConstants.TYPE.FEEDBACK && (mIntType != AppConstants.TYPE.TEXT || mIntType != AppConstants.TYPE.INTERACTIVE)) {
 						JSONArray mJSONArrMobFileObj = mJSONMobObj.getJSONArray(AppConstants.API_KEY_PARAMETER.mobcastFileInfo);
 						
 						for (int j = 0; j < mJSONArrMobFileObj.length(); j++) {
