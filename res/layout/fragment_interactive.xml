@@ -5,6 +5,7 @@
     xmlns:ripple="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fragmentInteractiveScrollView"
     android:fadingEdge="none" >
 
     <LinearLayout
@@ -97,6 +98,7 @@
         <com.application.ui.view.MaterialRippleLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/fragment_detail_padding"
             android:layout_marginRight="@dimen/fragment_detail_padding"
@@ -157,6 +159,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="fill"
             android:layout_marginTop="4dp"
+            android:hardwareAccelerated="true" 
             tools:ignore="WebViewLayout" />
 
     </LinearLayout>

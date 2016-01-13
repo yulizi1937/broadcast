@@ -38,7 +38,7 @@ import com.mobcast.R;
  * @author Vikalp Patel(VikalpPatelCE)
  * 
  */
-public class QuizScoreActivity extends SwipeBackBaseActivity {
+public class QuizScoreActivity extends BaseActivity {
 	private static final String TAG = QuizScoreActivity.class.getSimpleName();
 	private Toolbar mToolBar;
 

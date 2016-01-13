@@ -72,4 +72,18 @@ public class UserReport {
 			}
 		});
 	}
+	
+	public static void updateUserAppDataUsageApi(final String mId,
+			final String mUniqueId, final String mSend, final String mReceived,
+			final String mTotal, final String mCategory) {
+		Utilities.reportQueue.postRunnable(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				FileLog.e(TAG,  mUniqueId + " -> " +mUniqueId);
+				JSONObject mJSONobj = JSONRequestBuilder.getPostAppDataUsage(mCategory, mSend, mReceived, mTotal, mUniqueId, mId);
+				RetroFitClient.postJSON(new OkHttpClient(), AppConstants.API.API_SUBMIT_APP_DATA_USAGE, mJSONobj.toString(), TAG);
+			}
+		});
+	}
 }

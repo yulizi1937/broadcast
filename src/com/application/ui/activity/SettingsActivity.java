@@ -1098,11 +1098,12 @@ public class SettingsActivity extends SwipeBackBaseActivity {
 	 */
 	
 	private void showTrafficDialog(){
-		String mTrafficStatics = AndroidUtilities.getAppNetworkTraffic();
+		String mTrafficStatics[] = AndroidUtilities.getAppNetworkTraffic();
+		String mTrafficString = "Traffic Usage : \n Send :"+mTrafficStatics[0]+"\n Received : "+mTrafficStatics[1]+"\n Total : "+mTrafficStatics[2];
 //		getTrafficStats();
 		MaterialDialog mMaterialDialog = new MaterialDialog.Builder(SettingsActivity.this)
         .title(getResources().getString(R.string.sample_fragment_settings_dialog_traffic_title))
-        .content(mTrafficStatics)
+        .content(mTrafficString)
         .titleColor(Utilities.getAppColor())
         .positiveText(getResources().getString(R.string.sample_fragment_settings_dialog_language_positive))
         .positiveColor(Utilities.getAppColor())

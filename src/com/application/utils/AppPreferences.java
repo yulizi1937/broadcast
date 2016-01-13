@@ -509,6 +509,17 @@ public class AppPreferences {
 		return AppReceivePackets;
 	}
 	
+	public void setLastBootDevice(Long mLastBootDevice) {
+		editor = sharedPreferences.edit();
+		editor.putLong("mLastBootDevice", mLastBootDevice);
+		editor.commit();
+	}
+
+	public Long getLastBootDevice() {
+		Long mLastBootDevice= sharedPreferences.getLong("mLastBootDevice",-1);
+		return mLastBootDevice;
+	}
+	
 	/**
 	 * Remove Video Encryption 
 	 */

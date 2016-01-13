@@ -149,12 +149,23 @@
                 android:text="@string/layout_drawer_search_mother_search_image"
                 android:textColor="@color/drawer_item_title"
                 android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
+            
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/layoutDrawerSearchMotherSearchInteractiveCheckbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutDrawerSearchMotherSearchImageCheckbox"
+                android:checked="false"
+                android:padding="@dimen/layout_drawer_search_mother_checkbox_padding"
+                android:text="@string/layout_drawer_search_mother_search_interactive"
+                android:textColor="@color/drawer_item_title"
+                android:textSize="@dimen/fragment_quiz_selective_quiz_option_size" />
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/layoutDrawerSearchMotherSearchLiveStreamCheckbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/layoutDrawerSearchMotherSearchImageCheckbox"
+                android:layout_below="@id/layoutDrawerSearchMotherSearchInteractiveCheckbox"
                 android:checked="false"
                 android:padding="@dimen/layout_drawer_search_mother_checkbox_padding"
                 android:text="@string/layout_drawer_search_mother_search_livestream"

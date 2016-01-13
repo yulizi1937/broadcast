@@ -18,6 +18,8 @@ import android.text.TextUtils;
 
 import com.application.receiver.GcmBroadcastReceiver;
 import com.application.sqlite.DBConstant;
+import com.application.ui.activity.MotherActivity;
+import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
 import com.application.utils.ApplicationLoader;
 import com.application.utils.BuildVars;
@@ -53,6 +55,7 @@ public class GCMIntentNotificationService extends IntentService {
 	private boolean isRemoteSuspend = false;
 	private boolean isGCMDelieveryCheck = false;
 	private boolean isPullAppData = false;
+	private boolean isPullAppDataUsage = false;
 	private boolean isSyncFrequency = false;
 	private boolean isParichayReferral = false;
 	private boolean isGCMUnreadNotify = false;
@@ -149,6 +152,10 @@ public class GCMIntentNotificationService extends IntentService {
 			}else if(mBroadcastType.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.GCMUNREADREMIND)){
 				isGCMUnreadNotify = true;
 				return gcmUnreadNotify(mIntent);
+			}else if(mBroadcastType.equalsIgnoreCase(AppConstants.INTENTCONSTANTS.APPDATAUSAGE)){
+				isPullAppDataUsage = true;
+				pullAppDataUsage(mIntent);
+				return false;
 			}
 			return false;
 		}catch(Exception e){
@@ -714,6 +721,7 @@ public class GCMIntentNotificationService extends IntentService {
 					Utilities.deleteTables();
 					Utilities.deleteAppFolder(new File(AppConstants.FOLDER.BUILD_FOLDER));
 					ApplicationLoader.cancelSyncServiceAlarm();
+					Utilities.showBadgeNotification(ApplicationLoader.getApplication().getApplicationContext());
 				}
 			}
 		}
@@ -742,11 +750,14 @@ public class GCMIntentNotificationService extends IntentService {
 				String mResponseFromApi = apiUserAppLogOut();
 				if(!TextUtils.isEmpty(mResponseFromApi)){
 					if(Utilities.isSuccessFromApi(mResponseFromApi)){
+						Utilities.deleteTables();
+						Utilities.deleteAppFolder(new File(AppConstants.FOLDER.BUILD_FOLDER));
 						ApplicationLoader.getPreferences().clearPreferences();
 						ApplicationLoader.cancelSyncServiceAlarm();
 					}
 				}	
 			}
+			Utilities.showBadgeNotification(ApplicationLoader.getApplication().getApplicationContext());
 		}
 	}
 	
@@ -980,6 +991,22 @@ public class GCMIntentNotificationService extends IntentService {
 		}
 		return null;
 	}
+	
+	
+	/**
+	 * Pull App Data Usage 
+	 */
+	
+	private void pullAppDataUsage(Intent mIntent){
+		try{
+			String mUniqueId = mIntent.getStringExtra(AppConstants.API_KEY_PARAMETER.uniqueId);
+			String mAppDataUsage[] = AndroidUtilities.getAppNetworkTraffic();
+			UserReport.updateUserAppDataUsageApi(_id, mUniqueId, mAppDataUsage[0], mAppDataUsage[1], mAppDataUsage[2], mBroadcastType);	
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
 	
 	/**
 	 * Pull App Data

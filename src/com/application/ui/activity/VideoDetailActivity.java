@@ -267,6 +267,7 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 			toolBarRefresh();
 			return true;
 		case android.R.id.home:
+			checkWhetherUserPlayVideoOrNotAndUpdateToApi();
 			finish();
 			AndroidUtilities.exitWindowAnimation(VideoDetailActivity.this);
 			if(isFromNotification){
@@ -297,11 +298,24 @@ public class VideoDetailActivity extends SwipeBackBaseActivity {
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-		super.onBackPressed();
+		checkWhetherUserPlayVideoOrNotAndUpdateToApi();
 		if(isFromNotification){
 			Intent mIntent = new Intent(VideoDetailActivity.this, MotherActivity.class);
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 			startActivity(mIntent);
+		}
+		super.onBackPressed();
+	}
+	
+	private void checkWhetherUserPlayVideoOrNotAndUpdateToApi(){
+		try{
+			if(mReportStart > 0){
+				mReportStop = System.currentTimeMillis();
+				mReportDuration += mReportStop - mReportStart;
+				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, Utilities.getTimeFromMilliSeconds(mReportDuration));
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 	

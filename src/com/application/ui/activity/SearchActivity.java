@@ -140,6 +140,7 @@ public class SearchActivity extends BaseActivity{
 	private AppCompatCheckBox mFilterDoc;
 	private AppCompatCheckBox mFilterFeedback;
 	private AppCompatCheckBox mFilterImage;
+	private AppCompatCheckBox mFilterInteractive;
 	private AppCompatCheckBox mFilterLiveStream;
 	private AppCompatCheckBox mFilterText;
 	private AppCompatCheckBox mFilterVideo;
@@ -201,6 +202,7 @@ public class SearchActivity extends BaseActivity{
 	private boolean isFilterDoc = false;
 	private boolean isFilterFeedback = false;
 	private boolean isFilterImage = false;
+	private boolean isFilterInteractive = false;
 	private boolean isFilterLiveStream = false;
 	private boolean isFilterText = false;
 	private boolean isFilterVideo = false;
@@ -372,6 +374,7 @@ public class SearchActivity extends BaseActivity{
 		mFilterDoc = (AppCompatCheckBox)findViewById(R.id.layoutDrawerSearchMotherSearchDocCheckbox);
 		mFilterFeedback = (AppCompatCheckBox)findViewById(R.id.layoutDrawerSearchMotherSearchFeedbackCheckbox);
 		mFilterImage = (AppCompatCheckBox)findViewById(R.id.layoutDrawerSearchMotherSearchImageCheckbox);
+		mFilterInteractive = (AppCompatCheckBox)findViewById(R.id.layoutDrawerSearchMotherSearchInteractiveCheckbox);
 		mFilterLiveStream = (AppCompatCheckBox)findViewById(R.id.layoutDrawerSearchMotherSearchLiveStreamCheckbox);
 		mFilterText = (AppCompatCheckBox)findViewById(R.id.layoutDrawerSearchMotherSearchTextCheckbox);
 		mFilterVideo = (AppCompatCheckBox)findViewById(R.id.layoutDrawerSearchMotherSearchVideoCheckbox);
@@ -600,6 +603,19 @@ public class SearchActivity extends BaseActivity{
 			}
 		});
 		
+		mFilterInteractive.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				// TODO Auto-generated method stub
+				if(isChecked){
+					isFilterInteractive = true;
+				}else{
+					isFilterInteractive = false;
+				}
+				applyFilter();
+			}
+		});
+		
 
 		mFilterLiveStream.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
@@ -675,6 +691,7 @@ public class SearchActivity extends BaseActivity{
 			mFilterDoc.setEnabled(false);
 			mFilterFeedback.setEnabled(false);
 			mFilterImage.setEnabled(false);
+			mFilterInteractive.setEnabled(false);
 			mFilterLiveStream.setEnabled(false);
 			mFilterText.setEnabled(false);
 			mFilterVideo.setEnabled(false);
@@ -699,6 +716,7 @@ public class SearchActivity extends BaseActivity{
 			mFilterDoc.setEnabled(true);
 			mFilterFeedback.setEnabled(true);
 			mFilterImage.setEnabled(true);
+			mFilterInteractive.setEnabled(true);
 			mFilterLiveStream.setEnabled(true);
 			mFilterText.setEnabled(true);
 			mFilterVideo.setEnabled(true);
@@ -1111,6 +1129,13 @@ public class SearchActivity extends BaseActivity{
 						startActivity(mIntentImage);
 						AndroidUtilities.enterWindowAnimation(SearchActivity.this);
 						break;
+					case R.id.itemRecyclerMobcastInteractiveRootLayout:
+						Intent mIntentInteractive = new Intent(SearchActivity.this,InteractiveDetailActivity.class);
+						mIntentInteractive.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.MOBCAST);
+						mIntentInteractive.putExtra(AppConstants.INTENTCONSTANTS.ID, mId);
+						startActivity(mIntentInteractive);
+						AndroidUtilities.enterWindowAnimation(SearchActivity.this);
+						break;
 					case R.id.itemRecyclerMobcastFeedbackRootLayout:
 						boolean feedbackSingleAttemptAndRead = false;
 						boolean isSingleAttempt = false;
@@ -1463,6 +1488,17 @@ public class SearchActivity extends BaseActivity{
 							}
 						}
 						
+						if(isFilterInteractive && !isAlreadyAdded){
+							if (Obj.getmTitle().toLowerCase()
+									.contains(mSearchQuery)
+									|| Obj.getmDescription().toLowerCase().contains(mSearchQuery)
+									|| Obj.getmFileType().toLowerCase().contains(AppConstants.MOBCAST.INTERACTIVE)
+									|| Obj.getmBy().toLowerCase().contains(mSearchQuery)) {
+								mArrayListMobcastFilter.add(Obj);
+								isAlreadyAdded = true;
+							}
+						}
+						
 						if(isFilterLiveStream && !isAlreadyAdded){
 							if (Obj.getmTitle().toLowerCase()
 									.contains(mSearchQuery)
@@ -1588,6 +1624,13 @@ public class SearchActivity extends BaseActivity{
 							mIntentImage.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.TRAINING);
 							mIntentImage.putExtra(AppConstants.INTENTCONSTANTS.ID,mId);
 							startActivity(mIntentImage);
+							AndroidUtilities.enterWindowAnimation(SearchActivity.this);
+							break;
+						case R.id.itemRecyclerMobcastInteractiveRootLayout:
+							Intent mIntentInteractive = new Intent(SearchActivity.this,InteractiveDetailActivity.class);
+							mIntentInteractive.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.TRAINING);
+							mIntentInteractive.putExtra(AppConstants.INTENTCONSTANTS.ID, mId);
+							startActivity(mIntentInteractive);
 							AndroidUtilities.enterWindowAnimation(SearchActivity.this);
 							break;
 						case R.id.itemRecyclerTrainingQuizRootLayout:
@@ -1949,6 +1992,17 @@ public class SearchActivity extends BaseActivity{
 										.contains(mSearchQuery)
 										|| Obj.getmDescription().toLowerCase().contains(mSearchQuery)
 										|| Obj.getmFileType().toLowerCase().contains(AppConstants.TRAINING.IMAGE)
+										|| Obj.getmBy().toLowerCase().contains(mSearchQuery)) {
+									mArrayListTrainingFilter.add(Obj);
+									isAlreadyAdded = true;
+								}
+							}
+							
+							if(isFilterInteractive && !isAlreadyAdded){
+								if (Obj.getmTitle().toLowerCase()
+										.contains(mSearchQuery)
+										|| Obj.getmDescription().toLowerCase().contains(mSearchQuery)
+										|| Obj.getmFileType().toLowerCase().contains(AppConstants.TRAINING.INTERACTIVE)
 										|| Obj.getmBy().toLowerCase().contains(mSearchQuery)) {
 									mArrayListTrainingFilter.add(Obj);
 									isAlreadyAdded = true;
@@ -2472,6 +2526,7 @@ public class SearchActivity extends BaseActivity{
 		Log.i(TAG, "isFilterDoc : "+String.valueOf(isFilterDoc));
 		Log.i(TAG, "isFilterFeed : "+String.valueOf(isFilterFeedback));
 		Log.i(TAG, "isFilterImage : "+String.valueOf(isFilterImage));
+		Log.i(TAG, "isFilterInteractive : "+String.valueOf(isFilterInteractive));
 		Log.i(TAG, "isFilterStream : "+String.valueOf(isFilterLiveStream));
 		Log.i(TAG, "isFilterQuiz : "+String.valueOf(isFilterQuiz));
 		Log.i(TAG, "isFilterText : "+String.valueOf(isFilterText));
@@ -3048,6 +3103,14 @@ public class SearchActivity extends BaseActivity{
 			}
 		}
 		
+		if(isFilterInteractive){
+			if(!isAdded){
+				mFilter+=AppConstants.MOBCAST.INTERACTIVE;	
+			}else{
+				mFilter+=","+AppConstants.MOBCAST.INTERACTIVE;				
+			}
+		}
+		
 		if(isFilterLiveStream){
 			if(!isAdded){
 				mFilter+=AppConstants.MOBCAST.STREAM;
@@ -3087,7 +3150,11 @@ public class SearchActivity extends BaseActivity{
 	}
 	
 	private String getFilterSearchBy(){
-		return mSearchTerm;
+		if(isFilterBy){
+			return mSearchTerm;	
+		}else{
+			return "";
+		}
 	}
 	
 	private String getIdForWebSearch(boolean sortByAsc){
@@ -3114,6 +3181,9 @@ public class SearchActivity extends BaseActivity{
 		try {
 				String mFilter = getFiltersForApi();
 				String mSearchBy = getFilterSearchBy();
+				if(!TextUtils.isEmpty(mSearchBy) && TextUtils.isEmpty(mFilter)){
+					mFilter = "all";
+				}
 				String mLastId=getIdForWebSearch(sortByAsc); 
 				JSONObject jsonObj = JSONRequestBuilder.getPostSearchData(mCategory, mLastId, mSearchTerm, mSearchBy!=null?mSearchBy:" ", mFilter!=null?mFilter :"", AppConstants.BULK, sortByAsc);
 				if(BuildVars.USE_OKHTTP){

@@ -530,6 +530,18 @@ public class Utilities {
 		return "2020-01-01";
 	}
 	
+	@SuppressLint("SimpleDateFormat") 
+	public static String getDateTimeFromMilliSeconds(long mCurrentTimeMillis){
+		try{
+			SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date mDate = new Date(mCurrentTimeMillis);
+			return mDateFormat.format(mDate);
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return "2020-01-01";
+	}
+	
 	public static String getCurrentYear(){
 		try{
 			long mCurrentTimeMillis = System.currentTimeMillis();

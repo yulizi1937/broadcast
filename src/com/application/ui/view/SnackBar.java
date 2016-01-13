@@ -31,7 +31,7 @@ import com.mobcast.R;
 
 public class SnackBar {
 
-    public static final short LONG_SNACK = 5000;
+    public static final short LONG_SNACK = 15000;
 
     public static final short MED_SNACK = 3500;
 

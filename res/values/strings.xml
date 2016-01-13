@@ -3,7 +3,7 @@
 
     <string name="app_name">Mobcast</string>
     <string name="package_name">com.mobcast</string>
-    <string name="app_build">_160107_62</string>
+    <string name="app_build">_160108_63</string>
     <string name="toolbar_background">#254E7A</string>
     <string name="LanguageName">English</string>
     <string name="LanguageNameInEnglish">English</string>
@@ -30,7 +30,7 @@
     <string name="attempt">attempt</string>
     <string name="quiz_unread">You cannot mark it as unread!</string>
     <string name="quiz_read">You cannot mark it as read!</string>
-    <string name="api_connection_timeout">Server not responding!</string>
+    <string name="api_connection_timeout">You seem to be offline!</string>
     <string name="api_unknown_error">Please try again in few minutes!</string>
     <string name="videoview_error">Can\'t Play Video</string>
     <string name="mediaplayer_error">Can\'t Play Audio</string>
@@ -318,6 +318,7 @@
     <string name="layout_drawer_search_mother_search_for">Search For</string>
     <string name="layout_drawer_search_mother_search_video">Video</string>
     <string name="layout_drawer_search_mother_search_image">Image</string>
+    <string name="layout_drawer_search_mother_search_interactive">Interactive</string>
     <string name="layout_drawer_search_mother_search_feedback">Feedback</string>
     <string name="layout_drawer_search_mother_search_quiz">Quiz</string>
     <string name="layout_drawer_search_mother_search_text">Text</string>
@@ -833,7 +834,7 @@ Julanne Schiffer from Nielsen Entertainment was a featured speaker on the topic 
     <string name="emptyChatTitle">Welcome to Chat!</string>
     <string name="emptyChatMessage">When you\'ll receive chat, it will show up here.</string>
     <string name="emptyCaptureTitle">Welcome to Capture!</string>
-    <string name="emptyCaptureMessage">When you\'ll add images, it will show up here.</string>
+    <string name="emptyCaptureMessage">As you add images, it will show up here.</string>
     <string name="emptyBirthdayTitle">Welcome to Birthday!</string>
     <string name="emptyBirthdayMessage">When you\'ll receive birthday, it will show up here.</string>
     <string name="emptyRecruitmentTitle">Welcome to Recruitment!</string>

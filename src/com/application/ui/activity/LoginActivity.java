@@ -640,6 +640,7 @@ import com.squareup.okhttp.OkHttpClient;
 				startActivity(mIntent);
 				ApplicationLoader.getPreferences().setAttemptedToLoginDidntReceiveOTP(true);
 				ApplicationLoader.getPreferences().setUserName(mLoginIdEt.getText().toString());
+				ApplicationLoader.getPreferences().setLastBootDevice(System.currentTimeMillis());
 				AndroidUtilities.enterWindowAnimation(LoginActivity.this);
 				finish();
 			}

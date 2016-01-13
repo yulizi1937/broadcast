@@ -565,6 +565,28 @@ public class JSONRequestBuilder {
 		return stringBuffer;
 	}
 	
+	public static JSONObject getPostAppDataUsage(String mCategory,
+			String mSend, String mReceived, String mTotal, String mUniqueId,
+			String mId) {
+		JSONObject stringBuffer = new JSONObject();
+		try {
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.userName, ApplicationLoader.getPreferences().getUserName());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.uniqueId, mUniqueId);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER._id, mId);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.appVersion, Utilities.getApplicationVersion());
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.deviceType, AppConstants.deviceType);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.category, mCategory);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.send, mSend);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.received, mReceived);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.total, mTotal);
+			stringBuffer.put(AppConstants.API_KEY_PARAMETER.lastBoot, Utilities.getDateTimeFromMilliSeconds(ApplicationLoader.getPreferences().getLastBootDevice()));
+		} catch (Exception e) {
+			FileLog.e(TAG, e.toString());
+		}
+		return stringBuffer;
+	}
+	
 	public static JSONObject getErrorMessageFromStatusCode(String mResponseCode, String mResponseMessage){
 		JSONObject stringBuffer = new JSONObject();
 		try {
@@ -602,6 +624,7 @@ public class JSONRequestBuilder {
 			try{
 				mJSONObjUser.put(AppConstants.API_KEY_PARAMETER.profileImage, Utilities.getEncodedFileToByteArray(new File(mProfilePath).getAbsolutePath()));
 			}catch(Exception e){
+				FileLog.e(TAG, e.toString());
 			}
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.user, mJSONObjUser);
 			stringBuffer.put(AppConstants.API_KEY_PARAMETER.accessToken, ApplicationLoader.getPreferences().getAccessToken());

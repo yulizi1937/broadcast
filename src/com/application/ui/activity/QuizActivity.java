@@ -59,7 +59,7 @@ import com.squareup.okhttp.OkHttpClient;
  * @author Vikalp Patel(VikalpPatelCE)
  * 
  */
-public class QuizActivity extends SwipeBackBaseActivity {
+public class QuizActivity extends BaseActivity {
 	private static final String TAG = QuizActivity.class.getSimpleName();
 	private Toolbar mToolBar;
 
@@ -714,7 +714,50 @@ public class QuizActivity extends SwipeBackBaseActivity {
 								mQuizScorePagerInfo.setmQuestionId(mQueId);
 							}
 						}else{
-							if (mAnswer.length() > 1) {
+							/**
+							 *Business Logic, if all option are correct, then only correct else count as wroung 
+							 */
+							if(mAnswer.length() == mCorrectAnswer.length()){
+								if(mAnswer.length() == 1){
+									if(mAnswer.equalsIgnoreCase(mCorrectAnswer)){
+										mQuizScore+=mPoints;		
+									}else{
+										mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
+										mQuizScorePagerInfo.setmQuestionId(mQueId);		
+									}
+								}else {
+									if(mAnswer.length() > 1 && mCorrectAnswer.length() > 1){
+										String mCorrectAnswerArr1[] = mCorrectAnswer.split(",");
+										String mAnswerArr[] = mAnswer.split(",");
+										float mTempPoints = 0;
+										for (int j = 0; j < mCorrectAnswerArr1.length; j++) {
+											for (int l = 0; l < mAnswerArr.length; l++) {
+												if(mAnswerArr[l].equalsIgnoreCase(mCorrectAnswerArr1[j])){
+													mTempPoints+= (float)mPoints/mCorrectAnswerArr1.length;
+												}
+											}
+										}
+										
+										if(mPoints == Math.ceil(mTempPoints)){
+											mQuizScore+=mPoints;			
+										}else{
+											mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
+											mQuizScorePagerInfo.setmQuestionId(mQueId);	
+										}
+									}else{
+										mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
+										mQuizScorePagerInfo.setmQuestionId(mQueId);		
+									}
+								}
+							}else{
+								mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
+								mQuizScorePagerInfo.setmQuestionId(mQueId);
+							}
+							
+							/**
+							 * Business Logic according to number of correct option and relevant score
+							 */
+							/*if (mAnswer.length() > 1) {
 								if (mCorrectAnswer.length() < 1) {
 									mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
 									mQuizScorePagerInfo.setmQuestionId(mQueId);
@@ -770,7 +813,7 @@ public class QuizActivity extends SwipeBackBaseActivity {
 									mQuizScorePagerInfo.setmQuestionNo(String.valueOf(i+1));
 									mQuizScorePagerInfo.setmQuestionId(mQueId);
 								}
-							}						
+							}*/						
 						}
 					}
 				}

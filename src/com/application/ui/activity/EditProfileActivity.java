@@ -8,6 +8,7 @@ package com.application.ui.activity;
  *
  */
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,6 +26,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -744,20 +747,74 @@ public class EditProfileActivity extends SwipeBackBaseActivity{
 	  }
 	    
 	private void handleCrop(int resultCode, Intent result) {
-        if (resultCode == RESULT_OK) {
-        	Uri selectedImage = Crop.getOutput(result);
-        	mPicturePath = Utilities.getPath(selectedImage);
-			BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-			Bitmap mBitmap = BitmapFactory.decodeFile(mPicturePath, options);
-			mProfileCirleIv.setImageBitmap(mBitmap);
-			isRemovedProfile = false;
-        } else if (resultCode == Crop.RESULT_ERROR) {
-            AndroidUtilities.showSnackBar(EditProfileActivity.this, Crop.getError(result).getMessage());
-        }else{
-            ApplicationLoader.getPreferences().setCropWork(true);
-        }
+       try{
+    	   if (resultCode == RESULT_OK) {
+           	Uri selectedImage = Crop.getOutput(result);
+           	mPicturePath = Utilities.getPath(selectedImage);
+   			BitmapFactory.Options options = new BitmapFactory.Options();
+   			options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+   			Bitmap mBitmap = BitmapFactory.decodeFile(mPicturePath, options);
+   			Bitmap mConvertedBitmap = checkPhotoRotation(mPicturePath,mBitmap);
+   			if(mConvertedBitmap!=null){
+   				mProfileCirleIv.setImageBitmap(mConvertedBitmap);
+   			}else{
+   				mProfileCirleIv.setImageBitmap(mBitmap);	
+   			}
+   			isRemovedProfile = false;
+           } else if (resultCode == Crop.RESULT_ERROR) {
+               AndroidUtilities.showSnackBar(EditProfileActivity.this, Crop.getError(result).getMessage());
+           }else{
+               ApplicationLoader.getPreferences().setCropWork(true);
+           }
+       }catch(Exception e){
+    	   FileLog.e(TAG, e.toString());
+       }
     }
+	
+	private Bitmap checkPhotoRotation(String mPicturePath, Bitmap sourceBitmap){
+		try{
+			ExifInterface exif = new ExifInterface(mPicturePath);
+			int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+			int rotationInDegrees = exifToDegrees(rotation);
+			Matrix matrix = new Matrix();
+			if (rotation != 0f) {
+				matrix.preRotate(rotationInDegrees);
+				Bitmap adjustedBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight(), matrix, true);
+				saveAdjustedBitmap(mPicturePath, adjustedBitmap);
+				if(adjustedBitmap!=null){
+					return adjustedBitmap;	
+				}
+			}else{
+				return null;
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+		return null;
+	}
+	
+	private int exifToDegrees(int exifOrientation) {
+		if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+			return 90;
+		} else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+			return 180;
+		} else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+			return 270;
+		}
+		return 0;
+	}
+	
+	private void saveAdjustedBitmap(String mImagePath, Bitmap mBitmap){
+		 try {
+			 File mFile = new File(new File(mImagePath).getAbsolutePath());
+	         FileOutputStream outStream = new FileOutputStream(mFile);
+	         mBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outStream);
+	         outStream.flush();
+	         outStream.close();
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+	}
 	
 	private String apiUpdateProfile(){
 		try {

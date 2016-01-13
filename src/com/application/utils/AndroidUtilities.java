@@ -653,8 +653,11 @@ public class AndroidUtilities {
 		}
 	}
 	
-	public static String getAppNetworkTraffic() {
-		String mUsage = "Traffic Usage: \n";
+	public static String[] getAppNetworkTraffic() {
+		String mUsage[] = new String[3];
+		mUsage[0] = "0";
+		mUsage[1] = "0";
+		mUsage[2] = "0";
 		try {
 			final PackageManager pm = ApplicationLoader.getApplication().getPackageManager();
 			List<ApplicationInfo> packages = pm.getInstalledApplications(0);
@@ -674,18 +677,19 @@ public class AndroidUtilities {
 					}
 					
 					if(received+send >0){
-						mUsage += "Received: "+Utilities.formatFileSize(received) + "\n";
-						mUsage += "Send: "+Utilities.formatFileSize(send)+ "\n";
-						mUsage += "Total: "+Utilities.formatFileSize(received+send)+ "\n";
+						mUsage[0] = Utilities.formatFileSize(received);
+						mUsage[1] = Utilities.formatFileSize(send);
+						mUsage[2] = Utilities.formatFileSize(received+send);
 					}
 				}
 			}
 		} catch (Exception e) {
 			FileLog.e(TAG, e.toString());
-			mUsage = e.toString();
 		}
 		return mUsage;
 	}
+	
+	
 	
 	/**
 	 * Animation

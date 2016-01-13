@@ -631,8 +631,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 					position = isGrid ? position - 2 : position - 1;
 					switch (view.getId()) {
 					case R.id.itemRecyclerMobcastVideoRootLayout:
-						Intent mIntentVideo = new Intent(mParentActivity,
-								VideoDetailActivity.class);
+						Intent mIntentVideo = new Intent(mParentActivity,VideoDetailActivity.class);
 						mIntentVideo.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.MOBCAST);
 						mIntentVideo.putExtra(AppConstants.INTENTCONSTANTS.ID, mArrayListMobcast.get(position).getmId());
 						saveViewPosition(position);
@@ -640,8 +639,7 @@ public class MobcastRecyclerViewFragment extends BaseFragment implements IFragme
 						AndroidUtilities.enterWindowAnimation(mParentActivity);
 						break;
 					case R.id.itemRecyclerMobcastLiveRootLayout:
-						Intent mIntentLive = new Intent(mParentActivity,
-								YouTubeLiveStreamActivity.class);
+						Intent mIntentLive = new Intent(mParentActivity,YouTubeLiveStreamActivity.class);
 						mIntentLive.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY,AppConstants.INTENTCONSTANTS.MOBCAST);
 						mIntentLive.putExtra(AppConstants.INTENTCONSTANTS.ID, mArrayListMobcast.get(position).getmId());
 						saveViewPosition(position);

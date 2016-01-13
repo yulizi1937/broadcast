@@ -67,6 +67,7 @@ public class AppConstants {
 		public static final String API_SEARCH               = API_URL + "search";
 		public static final String API_SUBMIT_ISSUE         = API_URL + "submitAppIssue";
 		public static final String API_SUBMIT_APP_DATA      = API_URL + "getAppData";
+		public static final String API_SUBMIT_APP_DATA_USAGE= API_URL + "getAppDataUsage";
 		public static final String API_SUBMIT_PARICHAY      = API_URL + "submitParichayReference";
 	}
 	
@@ -110,8 +111,12 @@ public class AppConstants {
 		public static final String category                = "category";
 		public static final String issue                   = "issue";
 		public static final String uniqueId                = "uniqueId";
-		public static final String syncFrequencyMins           = "syncFrequencyMins";
+		public static final String syncFrequencyMins       = "syncFrequencyMins";
 		public static final String description             = "description";
+		public static final String send 		           = "send";
+		public static final String received                = "received";
+		public static final String total                   = "total";
+		public static final String lastBoot                = "lastBoot";
 		public static final String company                 = "company";
 		public static final String subcategory             = "subcategory";
 		public static final String subCategory             = "subCategory";
@@ -516,6 +521,7 @@ public class AppConstants {
 		public static final String GCMSUCCESS       = "gcmSuccess";
 		public static final String REMOTESUSPEND    = "remoteSuspend";
 		public static final String APPPULLDATA      = "appPullData";
+		public static final String APPDATAUSAGE     = "appDataUsage";
 		public static final String GCMUNREADREMIND  = "gcmUnreadRemind";
 		public static final String SYNCFREQUENCY    = "syncFrequency";
 		public static final String RECRUITMENT      = "recruitment";

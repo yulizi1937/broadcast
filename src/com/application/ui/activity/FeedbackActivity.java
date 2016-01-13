@@ -56,7 +56,7 @@ import com.squareup.okhttp.OkHttpClient;
  * @author Vikalp Patel(VikalpPatelCE)
  * 
  */
-public class FeedbackActivity extends SwipeBackBaseActivity {
+public class FeedbackActivity extends BaseActivity {
 	private static final String TAG = FeedbackActivity.class.getSimpleName();
 	private Toolbar mToolBar;
 
@@ -383,6 +383,8 @@ public class FeedbackActivity extends SwipeBackBaseActivity {
 				mFeedbackQuestionPagerCounterTv.setVisibility(View.VISIBLE);
 				mFeedbackCirclePageIndicator.setVisibility(View.GONE);
 				mFeedbackViewPager.setOnPageChangeListener(mPagerListener);
+				mFeedbackQuestionPagerCounterTv.setText(1 + " / "
+						+ mArrayListFeedbackPagerInfo.size());
 			}
 			
 			if (mArrayListFeedbackPagerInfo.size() == 1) {

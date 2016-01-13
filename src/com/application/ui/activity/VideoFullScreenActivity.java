@@ -117,6 +117,7 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 		// TODO Auto-generated method stub
 		switch (item.getItemId()) {
 		case android.R.id.home:
+			checkWhetherUserPlayVideoOrNotAndUpdateToApi();
 			finish();
 			AndroidUtilities.exitWindowAnimation(VideoFullScreenActivity.this);
 			return true;
@@ -163,8 +164,21 @@ public class VideoFullScreenActivity extends SwipeBackBaseActivity {
 		saveVideoViewPosition();
 		onPause();
 		mThreadSafe.pause();
+		checkWhetherUserPlayVideoOrNotAndUpdateToApi();
 		AndroidUtilities.exitWindowAnimation(VideoFullScreenActivity.this);
 		super.onBackPressed();
+	}
+	
+	private void checkWhetherUserPlayVideoOrNotAndUpdateToApi(){
+		try{
+			if(mReportStart > 0){
+				mReportStop = System.currentTimeMillis();
+				mReportDuration += mReportStop - mReportStart;
+				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, Utilities.getTimeFromMilliSeconds(mReportDuration));
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
 	}
 	
 	@Override

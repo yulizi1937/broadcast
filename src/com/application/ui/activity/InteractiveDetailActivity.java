@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
@@ -30,17 +31,20 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.application.sqlite.DBConstant;
 import com.application.ui.view.BottomSheet;
 import com.application.ui.view.MaterialRippleLayout;
 import com.application.ui.view.ProgressWheel;
 import com.application.ui.view.SmoothProgressBar;
+import com.application.ui.view.SnackBar;
+import com.application.ui.view.SnackBar.OnMessageClickListener;
 import com.application.utils.AndroidUtilities;
 import com.application.utils.AppConstants;
+import com.application.utils.ApplicationLoader;
 import com.application.utils.FetchActionAsyncTask;
 import com.application.utils.FetchActionAsyncTask.OnPostExecuteTaskListener;
-import com.application.utils.ApplicationLoader;
 import com.application.utils.FileLog;
 import com.application.utils.ThemeUtils;
 import com.application.utils.UserReport;
@@ -80,6 +84,8 @@ public class InteractiveDetailActivity extends SwipeBackBaseActivity {
 	private SwipeRefreshLayout mSwipeRefreshLayout;
 
 	private LinearLayout mInteractiveNewsLinkLayout;
+	
+	private ScrollView mScrollView;
 
 	private boolean isShareOptionEnable = true;
 	private boolean isContentLiked = false;
@@ -152,7 +158,7 @@ public class InteractiveDetailActivity extends SwipeBackBaseActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_text_detail, menu);
+		inflater.inflate(R.menu.menu_interactive_detail, menu);
 		if (AndroidUtilities.isAboveGingerBread()) {
 			MenuItem refreshItem = menu
 					.findItem(R.id.action_refresh_actionable);
@@ -192,6 +198,12 @@ public class InteractiveDetailActivity extends SwipeBackBaseActivity {
 				mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 				startActivity(mIntent);
 			}
+			return true;
+		case R.id.action_view_web:
+			Intent mIntentWebView = new Intent(InteractiveDetailActivity.this, WebViewActivity.class);
+			mIntentWebView.putExtra(AppConstants.INTENTCONSTANTS.ACTIVITYTITLE, AppConstants.INTENTCONSTANTS.OPEN);
+			mIntentWebView.putExtra(AppConstants.INTENTCONSTANTS.LINK, mContentLink);
+			startActivity(mIntentWebView);
 			return true;
 		case R.id.action_like:
 			mInteractiveLikeTv.performClick();
@@ -252,10 +264,15 @@ public class InteractiveDetailActivity extends SwipeBackBaseActivity {
 		
 		mWebView = (WebView)findViewById(R.id.fragmentWebViewWebView);
 		mSmoothProgressBar = (SmoothProgressBar)findViewById(R.id.fragmentWebViewProgressBar);
+		
+		mScrollView = (ScrollView)findViewById(R.id.fragmentInteractiveScrollView);
+		
+		mSwipeRefreshLayout.setEnabled(false);
 	}
 	
 	@SuppressLint("NewApi") 
 	private void initWebViewClient(){
+//		setWebViewHeight();
 		mWebView.setWebChromeClient(new MyWebViewChromeClient());
 		mWebView.setWebViewClient(new MyWebViewClient());
 		try{
@@ -275,6 +292,43 @@ public class InteractiveDetailActivity extends SwipeBackBaseActivity {
 			mWebView.loadUrl(mUrl);	
 		}else{
 			AndroidUtilities.showSnackBar(InteractiveDetailActivity.this, getResources().getString(R.string.internet_unavailable));
+		}
+		showSnackBar();
+	}
+	
+	private void showSnackBar(){
+		try{
+			if(Utilities.isInternetConnected()){
+				new SnackBar.Builder(InteractiveDetailActivity.this)
+			    .withMessage("To Open in Full Screen")
+			    .withStyle(SnackBar.Style.ALERT)
+			    .withTextColorId(R.color.sb__snack_text_color)
+			    .withDuration(SnackBar.LONG_SNACK)
+			    .withActionMessage("VIEW").withOnClickListener(new OnMessageClickListener() {
+					@Override
+					public void onMessageClick(Parcelable token) {
+						// TODO Auto-generated method stub
+						Intent mIntentWebView = new Intent(InteractiveDetailActivity.this, WebViewActivity.class);
+						mIntentWebView.putExtra(AppConstants.INTENTCONSTANTS.ACTIVITYTITLE, AppConstants.INTENTCONSTANTS.OPEN);
+						mIntentWebView.putExtra(AppConstants.INTENTCONSTANTS.LINK, mContentLink);
+						startActivity(mIntentWebView);
+					}
+				})
+			    .show();
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
+		}
+	}
+	
+	private void setWebViewHeight(){
+		try{
+			int mHeight = getResources().getDisplayMetrics().heightPixels;
+			if(mHeight > 0){
+				mWebView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, mHeight));	
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 	
@@ -390,6 +444,7 @@ public class InteractiveDetailActivity extends SwipeBackBaseActivity {
 			if(!mContentIsRead){
 				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.READ, "");
 			}
+			
 		}catch(Exception e){
 			FileLog.e(TAG, e.toString());
 		}

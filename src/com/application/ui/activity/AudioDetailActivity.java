@@ -251,6 +251,7 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 			toolBarRefresh();
 			return true;
 		case android.R.id.home:
+			checkWhetherUserPlayAudioOrNotAndUpdateToApi();
 			finish();
 			AndroidUtilities.exitWindowAnimation(AudioDetailActivity.this);
 			if(isFromNotification){
@@ -280,10 +281,23 @@ public class AudioDetailActivity extends SwipeBackBaseActivity {
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
+		checkWhetherUserPlayAudioOrNotAndUpdateToApi();
 		if(isFromNotification){
 			Intent mIntent = new Intent(AudioDetailActivity.this, MotherActivity.class);
 			mIntent.putExtra(AppConstants.INTENTCONSTANTS.CATEGORY, isFromTraining(mCategory));
 			startActivity(mIntent);
+		}
+	}
+	
+	private void checkWhetherUserPlayAudioOrNotAndUpdateToApi(){
+		try{
+			if(mReportStart > 0){
+				mReportStop = System.currentTimeMillis();
+				mReportDuration += mReportStop - mReportStart;
+				UserReport.updateUserReportApi(mId, mCategory, AppConstants.REPORT.PLAY, Utilities.getTimeFromMilliSeconds(mReportDuration));
+			}
+		}catch(Exception e){
+			FileLog.e(TAG, e.toString());
 		}
 	}
 	
